@@ -1,66 +1,32 @@
-import { useCallback, useState, useRef, useEffect } from "react";
 import { X, AlertCircle } from "lucide-react";
 import IconYoutube from "@/shared/components/icons/IconYoutube";
-
-const YT_VIDEO_ID_LENGTH = 11;
+import { useCreateChannelForm } from "../hooks/useCreateChannelForm";
+import { YT_VIDEO_ID_LENGTH } from "../utils/validation";
 
 type Props = {
   onClose: () => void;
-  onCreate: ({ ytVideoId }: { ytVideoId: string }) => void;
+  onSubmit: ({ ytVideoId }: { ytVideoId: string }) => void;
 };
 
-// TODO this component is ugly and needs refinement
-export default function CreateChannel({
-  onCreate,
+export default function CreateChannelForm({
+  onSubmit,
   onClose,
 }: Props): JSX.Element {
-  const [ytVideoId, setVideoId] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const {
+    ytVideoId,
+    error,
+    inputRef,
+    isInputValid,
+    handleInputChange,
+    clearInput,
+    validateInput,
+  } = useCreateChannelForm();
 
-  useEffect(() => {
-    if (inputRef.current) {
-      setTimeout(() => {
-        inputRef.current?.focus();
-      }, 100);
-    }
-  }, []);
-
-  const validateYoutubeId = useCallback((id: string): boolean => {
-    const trimmedId = id.trim();
-    if (trimmedId.length !== YT_VIDEO_ID_LENGTH) {
-      setError(`YouTube ID must be exactly ${YT_VIDEO_ID_LENGTH} characters`);
-      return false;
-    }
-    setError(null);
-    return true;
-  }, []);
-
-  const handleCreate = useCallback(() => {
-    if (validateYoutubeId(ytVideoId)) {
-      onCreate({ ytVideoId });
-    }
-  }, [onCreate, validateYoutubeId, ytVideoId]);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.trim();
-    setVideoId(value);
-
-    if (!value) {
-      setError(null);
-    } else if (value.length > YT_VIDEO_ID_LENGTH) {
-      setError(`YouTube ID must be exactly ${YT_VIDEO_ID_LENGTH} characters`);
-    } else if (value.length === YT_VIDEO_ID_LENGTH) {
-      validateYoutubeId(value);
+  const handleSubmit = () => {
+    if (validateInput(ytVideoId)) {
+      onSubmit({ ytVideoId });
     }
   };
-
-  const clearInput = () => {
-    setVideoId("");
-    setError(null);
-  };
-
-  const isInputValid = ytVideoId.trim().length === YT_VIDEO_ID_LENGTH;
 
   return (
     <div className="bg-transparent p-4 w-[90%] mx-auto min-h-[400px] flex flex-col justify-center">
@@ -76,7 +42,7 @@ export default function CreateChannel({
               YouTube Video ID
             </span>
             <span className="label-text-alt text-xs opacity-70">
-              Must be YT_VIDEO_ID_LENGTH characters
+              Must be {YT_VIDEO_ID_LENGTH} characters
             </span>
           </label>
           <div className="relative">
@@ -111,7 +77,7 @@ export default function CreateChannel({
           ) : (
             <label className="label py-1">
               <span className="label-text-alt text-xs">
-                Example: dQw4w9WgXcQ ({ytVideoId.length}/YT_VIDEO_ID_LENGTH
+                Example: dQw4w9WgXcQ ({ytVideoId.length}/{YT_VIDEO_ID_LENGTH}{" "}
                 characters)
               </span>
             </label>
@@ -125,7 +91,7 @@ export default function CreateChannel({
           <button
             type="submit"
             className="btn btn-primary h-12 px-6 gap-2"
-            onClick={handleCreate}
+            onClick={handleSubmit}
             disabled={!isInputValid}
           >
             Create Channel
