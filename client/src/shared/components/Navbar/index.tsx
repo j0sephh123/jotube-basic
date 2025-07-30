@@ -35,16 +35,6 @@ export default function Navbar(): JSX.Element {
               { name: "Today", link: `screenshots/${getCurrentDay()}` },
             ]}
           />
-          <DropdownMenu
-            title="Channels"
-            items={[
-              { name: "New Channels", link: routes.newChannels() },
-              {
-                name: "Channels Without Screenshots",
-                link: routes.channelsWithoutScreenshots(),
-              },
-            ]}
-          />
           <PlayButton />
         </div>
         <div className="relative flex items-center gap-4 w-80">

@@ -1,7 +1,7 @@
 export const routes = {
   home: () => "/",
-  newChannels: () => "/channels-without-uploads",
-  channelsWithoutScreenshots: () => "/channels-without-screenshots",
+  newChannels: () => "/dashboard/channels-without-uploads",
+  channelsWithoutScreenshots: () => "/dashboard/channels-without-screenshots",
   config: () => "/config",
   dashboard: (viewType: string) => `/dashboard/${viewType}`,
   channel: (ytChannelId: string) => `/channels/${ytChannelId}`,

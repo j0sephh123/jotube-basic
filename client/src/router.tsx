@@ -24,12 +24,15 @@ export const Router = (
         <Route path="/" element={<Navigate to="/dashboard/saved" />} />
         <Route path="dashboard" element={<DashboardWrapper />}>
           <Route path=":viewType" element={<Dashboard />} />
+          <Route
+            path="channels-without-uploads"
+            element={<NewChannelsPage />}
+          />
+          <Route
+            path="channels-without-screenshots"
+            element={<ChannelsWithoutScreenshotsPage />}
+          />
         </Route>
-        <Route path="/channels-without-uploads" element={<NewChannelsPage />} />
-        <Route
-          path="/channels-without-screenshots"
-          element={<ChannelsWithoutScreenshotsPage />}
-        />
         <Route path="/channels/:ytChannelId" element={<ChannelsPageWrapper />}>
           <Route index element={<DefaultUploadsPage />} />
           <Route path="saved" element={<SavedUploads />} />
