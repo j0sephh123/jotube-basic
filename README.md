@@ -1,8 +1,20 @@
 # JoTube
 
-Download YouTube videos, capture screenshots from a video and generate composite images wrongly called thumbnails. Then the users can pick the screenshots they want. Youtube data is fetched from YouTube data api and kept in a local MySQL.  
-All screenshots/videos/thumbnails are kept in the local file system. The application is only tested on Ubuntu.
-Note that the goal of this tool is not an automation tool, the goal is for the users to pick screenshots manually.
+## Table of Contents
+
+- [Quick note](#quick-note)
+- [History](#history)
+- [How it works quick explanation](#how-it-works-quick-explanation)
+- [Db structure explained](#db-structure-explained)
+- [Tech Stack](#tech-stack)
+  - [Front end (client)](#front-end-client)
+  - [Back end (server)](#back-end-server)
+  - [Download-service (python)](#download-service-python)
+- [Server folder structure explanation](#server-folder-structure-explanation)
+  - [Core](#core)
+  - [Modules](#modules)
+- [How files are kept locally](#how-files-are-kept-locally)
+- [Running locally](#running-locally)
 
 ## Quick note
 
@@ -10,7 +22,7 @@ What you see in this repo is a simplified version with only the basic functional
 
 ## History
 
-I've been working on typical CRUD style applications for managing YouTube videos for many years. However my interests have evolved with time and so have the applications. Initially I just wanted to manage videos along with channels and playlists, maybe take notes and capture progress. Now I'm trying to create a platform that will enable the users to analyse many images very quickly.  
+I've been working on typical CRUD style applications for managing YouTube videos for many years. However my interests have evolved with time and so have the applications. Initially I just wanted to manage videos along with channels and playlists, maybe take notes and capture progress. Now I'm trying to create a platform that will enable the users to view, extract and analyse many images quickly.  
 **Note**: what you see is a part of my original application. I have omitted many functionalities since it would make it very hard to review. Tried to keep only very basic stuff - how you go from adding a channel to the application to extracting screenshots from a video.
 
 ## How it works quick explanation
@@ -101,6 +113,7 @@ I'm going to mention only the relevant ones
 ### Core
 
 ```
+
 ├── database
 │   └── very simple prisma service
 ├── external-services
@@ -112,15 +125,17 @@ I'm going to mention only the relevant ones
 │       └── uses youtube data api to obtain data about channels and uploads
 │           the code there is very old
 └── events
-    └── A way to send events from the server to the UI. It is very rudimentary
-        implementation now with Server side events. I have used web sockets and
-        RabbitMQ before. I will probably do a revamp at some point and I guess
-        it will be RabbitMQ again
+└── A way to send events from the server to the UI. It is very rudimentary
+implementation now with Server side events. I have used web sockets and
+RabbitMQ before. I will probably do a revamp at some point and I guess
+it will be RabbitMQ again
+
 ```
 
 ### Modules
 
 ```
+
 ├── channels
 │   ├── POST /channel - create channel
 │   ├── DELETE /channel/:id - delete channel
@@ -160,6 +175,7 @@ I'm going to mention only the relevant ones
 │   ├── POST /uploads-video/saved-uploads - get saved uploads
 │   └── GET /uploads-video/uploads-list/:ytChannelId - get uploads list
 └── video-worker
+
 ```
 
 ## How files are kept locally
@@ -169,22 +185,26 @@ I'm going to mention only the relevant ones
 - `{root_folder}/{youtube_channel_id}/{youtube_video_id}/{youtube_video_id}.mp4`
 - `{root_folder}/{youtube_channel_id}/{youtube_video_id}/thumbnails/{youtube_video_id}-{index}.png`
 
-## How to start
+## Running locally
 
 Right now there are 2 env files  
 `server/.env`
 
 ```
+
 DATABASE_URL="mysql://your_user:your_password@localhost:3306/db_name" or something completely different
-YOUTUBE_API_KEY=this is obtained from google https://developers.google.com/youtube/v3/getting-started
+YOUTUBE_API_KEY=this is obtained from google [https://developers.google.com/youtube/v3/getting-started](https://developers.google.com/youtube/v3/getting-started)
 PORT=3003 or some other one
 FILE_PATH_YOUTUBE=a local folder on your computer where you are going to store the screenshots
-PUBLIC_FOLDER="http://localhost:3003/images/" - what does the front end need to call to get images
-DL_SERVICE_URL="http://localhost:8081" - the address of download-service
+PUBLIC_FOLDER="[http://localhost:3003/images/](http://localhost:3003/images/)" - what does the front end need to call to get images
+DL_SERVICE_URL="[http://localhost:8081](http://localhost:8081)" - the address of download-service
+
 ```
 
 `download-service/.env`
 
 ```
+
 YOUTUBE_DIR=same as FILE_PATH_YOUTUBE. Obviously unnecessary duplication and will be resolved at some point
+
 ```
