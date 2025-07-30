@@ -1,0 +1,47 @@
+{
+  "name": "monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "license": "MIT",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev:client": "pnpm --filter client dev",
+    "dev:server": "pnpm --filter server start:dev",
+    "lint": "pnpm --filter client lint && pnpm --filter server lint",
+    "test": "pnpm --filter client test && pnpm --filter server test",
+    "watch:all": "tsc -b --watch",
+    "dev:monorepo": "concurrently \"tsc -b --watch\" \"pnpm --filter client dev\" \"pnpm --filter server start:dev\"",
+    "clean:node_modules": "rimraf client/node_modules server/node_modules packages/common/node_modules",
+    "install:all": "pnpm install",
+    "build": "pnpm --filter client build && pnpm --filter server build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.5.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "typescript": "5.7.3"
+    },
+    "ignoredBuiltDependencies": [
+      "@swc/core",
+      "esbuild"
+    ],
+    "onlyBuiltDependencies": [
+      "@nestjs/core",
+      "@prisma/client",
+      "@prisma/engines",
+      "@scarf/scarf",
+      "@swc/core",
+      "esbuild",
+      "msgpackr-extract",
+      "prisma",
+      "puppeteer",
+      "sharp"
+    ]
+  }
+}

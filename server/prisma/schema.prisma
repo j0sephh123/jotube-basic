@@ -1,0 +1,85 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["typedSql"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Channel {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title String @unique @db.VarChar(255)
+  ytId  String @unique @db.VarChar(24)
+  src   String @unique @db.VarChar(255)
+
+  videoCount Int
+
+  fetchStartVideoId String    @db.VarChar(11)
+  fetchedUntilEnd   Boolean   @default(false)
+  lastSyncedAt      DateTime?
+
+  uploads     UploadsVideo[]
+  screenshots Screenshot[]
+}
+
+enum ArtifactType {
+  VIDEO
+  SAVED
+  DOWNLOADED
+  THUMBNAIL
+  SCREENSHOT
+}
+
+model UploadsVideo {
+  id            Int          @id @default(autoincrement())
+  ytId          String       @unique @db.VarChar(11)
+  title         String
+  src           String
+  publishedAt   String
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  channelId     Int
+  channel       Channel      @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  nextPageToken String?
+  duration      Int?
+  status        Int          @default(0)
+  artifact      ArtifactType @default(VIDEO)
+
+  thumbnail Thumbnail? @relation
+
+  @@index([channelId, status])
+}
+
+model Thumbnail {
+  id             Int          @id @default(autoincrement())
+  uploadsVideoId Int          @unique
+  uploadsVideo   UploadsVideo @relation(fields: [uploadsVideoId], references: [id], onDelete: Cascade)
+
+  perRow       Int
+  totalSeconds Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Screenshot {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  second Int
+
+  ytChannelId String
+  channel     Channel @relation(fields: [ytChannelId], references: [ytId], onDelete: Cascade)
+
+  ytVideoId String
+
+  isFav Boolean?
+
+  @@index([ytChannelId])
+}
