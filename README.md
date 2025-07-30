@@ -111,6 +111,13 @@ I've been working on typical CRUD style applications for managing YouTube videos
 - **api caching** - tanstack-query  
   The rest are small libs
 
+__Take a look into the following sections for review__:
+- `client/src/features/Channel`
+- `client/src/features/Dashboard`
+- `client/src/features/Thumbnail`
+
+as well as the related zustand slice and react-query hooks.
+
 ### Back end (server)
 
 - NestJS
