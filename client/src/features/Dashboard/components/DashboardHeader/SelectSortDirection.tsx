@@ -1,5 +1,5 @@
 import { ArrowUp, ArrowDown } from "lucide-react";
-import { useDashboardContext } from "./useDashboardContext";
+import { useDashboardContext } from "../../hooks/useDashboardContext";
 
 export default function SelectSortDirection(): JSX.Element {
   const { requestBody, setRequestBody } = useDashboardContext();

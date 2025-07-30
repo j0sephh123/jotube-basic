@@ -1,4 +1,12 @@
-import { defaults } from "@/features/Dashboard/components/helper";
+export const defaults = {
+  sortOrder: "desc" as "asc" | "desc",
+  page: 1,
+  min: 0,
+  max: null as number | null,
+  defaultMin: 0,
+  defaultMax: null as number | null,
+  viewType: "saved" as "saved" | "processed",
+};
 
 export type DashboardSlice = {
   requestBody: typeof defaults;

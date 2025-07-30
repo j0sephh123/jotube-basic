@@ -7,14 +7,12 @@ import ScreenshotsLayout from "./features/Screenshot/components/ScreenshotsPageL
 import SavedUploads from "./pages/SavedUploadsPage";
 import ChannelsPageWrapper from "./features/Channel/ChannelsPageLayout";
 import ThumbnailsPage from "./pages/ThumbnailsPage";
-import ChannelsWithoutScreenshotsPage from "./pages/ChannelsWithoutScreenshotsPage";
 import GalleryPage from "./pages/GalleryPage";
 import GalleryLayout from "./features/Gallery/components/GalleryLayout";
-import Dashboard from "@/features/Dashboard/components/Dashboard";
+import Dashboard from "@/features/Dashboard/components";
 import DashboardWrapper from "@/features/Dashboard/components/DashboardWrapper";
 import The404 from "./shared/components/404";
 import DefaultUploadsPage from "./pages/DefaultUploadsPage";
-import NewChannelsPage from "./pages/ChannelsWithoutUploadsPage";
 import GalleryVideoPage from "./features/Gallery/components/GalleryVideoPage";
 
 export const Router = (
@@ -24,14 +22,6 @@ export const Router = (
         <Route path="/" element={<Navigate to="/dashboard/saved" />} />
         <Route path="dashboard" element={<DashboardWrapper />}>
           <Route path=":viewType" element={<Dashboard />} />
-          <Route
-            path="channels-without-uploads"
-            element={<NewChannelsPage />}
-          />
-          <Route
-            path="channels-without-screenshots"
-            element={<ChannelsWithoutScreenshotsPage />}
-          />
         </Route>
         <Route path="/channels/:ytChannelId" element={<ChannelsPageWrapper />}>
           <Route index element={<DefaultUploadsPage />} />

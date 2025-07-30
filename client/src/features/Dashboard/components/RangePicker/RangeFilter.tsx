@@ -1,5 +1,5 @@
 import { useMemo, useEffect } from "react";
-import { useDashboardContext } from "./useDashboardContext";
+import { useDashboardContext } from "../../hooks/useDashboardContext";
 import { useStore } from "@/store/store";
 import { RangePickerTypes, DashboardSlice } from "@/store/store-types";
 import RangePicker from "./RangePicker";
@@ -10,7 +10,7 @@ type RangeFilterBaseProps = {
   rangeKey: RangePickerTypes;
   minKey: RequestBodyKey;
   maxKey: RequestBodyKey;
-}
+};
 
 export function RangeFilterBase({
   rangeKey,

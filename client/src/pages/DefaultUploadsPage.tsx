@@ -3,7 +3,7 @@ import { useTypedChannelYtId } from "@/shared/hooks/useTypedParams";
 import { useDeleteUploads } from "@/features/Upload/hooks/useUploadsDelete";
 import { useSaveUpload } from "@/features/Upload/hooks/useSaveUpload";
 import useUploadsList from "@/features/Upload/hooks/useUploadsList";
-import { DefaultUploadCard } from "@/features/Dashboard/components/DefaultUploadCard";
+import { DefaultUploadCard } from "@/features/Upload/components/DefaultUploadCard";
 import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMetadata";
 
 export default function DefaultUploadsPage() {

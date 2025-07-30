@@ -1,12 +1,11 @@
-import { ReactNode, useState } from "react";
+import { PropsWithChildren, ReactNode, useState } from "react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 
-type CommonRangeFilterPopoverProps = {
+type CommonRangeFilterPopoverProps = PropsWithChildren<{
   buttonLabel: string;
   title: string;
   icon: ReactNode;
-  children: ReactNode;
-}
+}>;
 
 export function CommonRangeFilterPopover({
   buttonLabel,

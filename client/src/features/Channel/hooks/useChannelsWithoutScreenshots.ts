@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import nestFetcher from "@/shared/api/nestFetcher";
 
-export type ChannelsWithoutScreenshotsResponse = {
+type ChannelsWithoutScreenshotsResponse = {
   channels: {
     id: number;
     title: string;
@@ -13,14 +13,14 @@ export type ChannelsWithoutScreenshotsResponse = {
 };
 
 export function useChannelsWithoutScreenshots({
-  sortOrder,
-  page,
-  perPage,
+  sortOrder = "desc",
+  page = 1,
+  perPage = 20,
 }: {
-  sortOrder: "asc" | "desc";
-  page: number;
-  perPage: number;
-}) {
+  sortOrder?: "asc" | "desc";
+  page?: number;
+  perPage?: number;
+} = {}) {
   return useQuery<ChannelsWithoutScreenshotsResponse>({
     queryKey: [
       "dashboard/channels-without-screenshots",

@@ -201,6 +201,16 @@ it will be RabbitMQ again
 - `{root_folder}/{youtube_channel_id}/{youtube_video_id}/{youtube_video_id}.mp4`
 - `{root_folder}/{youtube_channel_id}/{youtube_video_id}/thumbnails/{youtube_video_id}-{index}.png`
 
+## Client architecture
+
+The client app is rudimentary. It doesn't contain complex logic. It has:
+
+- a simple router
+- a simple zustand store
+- several contexts for smaller pieces
+- tanstack-query for caching
+- daisyui (a plugin for tailwind) for styling
+
 ## Running locally
 
 Right now there are 2 env files  

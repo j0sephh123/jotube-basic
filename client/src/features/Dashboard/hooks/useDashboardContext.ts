@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from "react";
 import { useSearchParams, useParams } from "react-router-dom";
 import { useStore } from "@/store/store";
-import { defaults } from "./helper";
+import { defaults } from "../store/dashboard-slice";
 
 type RequestBody =
   | "sortOrder"
@@ -96,7 +96,10 @@ export const useDashboardContext = () => {
 
       Object.entries(updates).forEach(([key, value]) => {
         if (key in defaults) {
-          setRequestBody(key as RequestBody, value);
+          setRequestBody(
+            key as RequestBody,
+            value as (typeof defaults)[keyof typeof defaults]
+          );
         }
       });
     },
@@ -176,10 +179,10 @@ export const useDashboardContext = () => {
     setURLSearchParams(newParams);
 
     setRequestBodyBatch({
-      min: null,
-      max: null,
-      defaultMin: null,
-      defaultMax: null,
+      min: undefined,
+      max: undefined,
+      defaultMin: undefined,
+      defaultMax: undefined,
       page: 1,
     });
   }, [urlSearchParams, setURLSearchParams, setRequestBodyBatch]);

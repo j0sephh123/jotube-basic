@@ -1,24 +1,23 @@
 import { RotateCcw } from "lucide-react";
-import { useLocation } from "react-router-dom";
-import RangeFilterPopover from "./RangeFilterPopover";
-import DefaultsRangeFilterPopover from "./DefaultsRangeFilterPopover";
+import { useParams } from "react-router-dom";
+import RangeFilterPopover from "../RangePicker/RangeFilterPopover";
+import DefaultsRangeFilterPopover from "../RangePicker/DefaultsRangeFilterPopover";
 import SelectSortDirection from "./SelectSortDirection";
 import ViewTypeToggle from "./ViewTypeToggle";
 import { useDashboardQuery } from "@/features/Dashboard/hooks/useDashboardQuery";
-import PaginationControl from "./PaginationControl";
-import { useDashboardContext } from "./useDashboardContext";
-import { routes } from "@/shared/utils/routes";
+import PaginationControl from "../PaginationControl";
+import { useDashboardContext } from "../../hooks/useDashboardContext";
 
 export default function DashboardHeader() {
-  const location = useLocation();
-  const { viewType, handleClearFilters } = useDashboardContext();
+  const { viewType } = useParams();
+  const { handleClearFilters } = useDashboardContext();
   const { data } = useDashboardQuery();
 
-  const isChannelsWithoutUploads = location.pathname === routes.newChannels();
-  const isChannelsWithoutScreenshots =
-    location.pathname === routes.channelsWithoutScreenshots();
+  const isChannelsView =
+    viewType === "channels-without-uploads" ||
+    viewType === "channels-without-screenshots";
 
-  if (isChannelsWithoutUploads || isChannelsWithoutScreenshots) {
+  if (isChannelsView) {
     return (
       <div className="p-3 border-b border-base-300">
         <div className="flex flex-wrap items-center justify-between gap-2">

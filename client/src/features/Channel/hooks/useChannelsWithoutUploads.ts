@@ -11,8 +11,8 @@ type ChannelWithoutUploads = {
 }
 
 export function useChannelsWithoutUploads(
-  sortField: string,
-  direction: string
+  sortField: string = "createdAt",
+  direction: string = "desc"
 ) {
   return useQuery<ChannelWithoutUploads[]>({
     queryKey: ["newChannels", sortField, direction],

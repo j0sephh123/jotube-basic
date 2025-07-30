@@ -1,11 +1,11 @@
 import { Loader } from "lucide-react";
-import ItemList from "./ItemsList";
+import ItemList from "./SavedOrProcessedCardsList";
 import ErrorMessage from "@/shared/components/ErrorMessage";
 import { useDashboardQuery } from "@/features/Dashboard/hooks/useDashboardQuery";
 import useAddUploadsToQueue from "@/features/Upload/hooks/useAddUploadsToQueue";
 import { useDeleteUploads } from "@/features/Upload/hooks/useUploadsDelete";
 
-export default function Dashboard() {
+export default function DashboardMain() {
   const downloadMutation = useAddUploadsToQueue();
   const deleteUploadsMutation = useDeleteUploads();
 
