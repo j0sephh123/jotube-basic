@@ -209,7 +209,9 @@ The client app is rudimentary. It doesn't contain complex logic. It has:
 - a simple zustand store
 - several contexts for smaller pieces
 - tanstack-query for caching
-- daisyui (a plugin for tailwind) for styling
+- daisyui (a plugin for tailwind) for styling  
+
+I suggest to take a look at `client/src/features/Dashboard` since it has enough components
 
 ## Running locally
 
