@@ -21,6 +21,8 @@
 
 JoTube is a YouTube video management and screenshot extraction platform that enables users to organize, process, and analyze YouTube content at scale. The application provides a complete workflow from channel discovery to screenshot extraction and management.
 
+Tried to record a [video](https://streamable.com/oohprz), but my presenting skills are not the best, but you should be able to get a general idea how it works. Note that the playlist that you see in prisma is actually a leftover and here it is deleted.
+
 **Core Features:**
 
 - **Channel Management**: Add YouTube channels by video ID, automatically fetch channel metadata and uploads using YouTube Data API

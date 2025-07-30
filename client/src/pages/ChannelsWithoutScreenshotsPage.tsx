@@ -1,6 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { ArrowDown, ArrowUp } from "lucide-react";
+import { useState } from "react";
 import ChannelLink from "@/shared/components/ChannelLink";
 import { useChannelsWithoutScreenshots } from "@/features/Channel/hooks/useChannelsWithoutScreenshots";
 import { ChannelsWithoutScreenshotsResponse } from "@/features/Channel/hooks/useChannelsWithoutScreenshots";
@@ -37,6 +38,44 @@ function getPaginationRange(
     range = [1, "dots", ...middleRange, "dots", totalPages];
   }
   return range;
+}
+
+function ChannelCard({
+  channel,
+}: {
+  channel: ChannelsWithoutScreenshotsResponse["channels"][0];
+}) {
+  const [imageError, setImageError] = useState(false);
+
+  return (
+    <ChannelLink ytId={channel.ytId} where="index">
+      <div className="flex gap-4 p-2 rounded transition-colors relative border-2 border-gray-500/30 h-fit max-w-full w-full hover:bg-gray-700/50 cursor-pointer">
+        {imageError ? (
+          <div className="w-32 h-20 bg-gray-600 rounded ml-2 my-2 shrink-0 flex items-center justify-center">
+            <span className="text-gray-400 text-xs">No Image</span>
+          </div>
+        ) : (
+          <img
+            src={channel.src}
+            alt={channel.title}
+            className="w-32 h-20 object-cover rounded ml-2 my-2 shrink-0"
+            onError={() => setImageError(true)}
+          />
+        )}
+        <div className="w-[36%] flex flex-col justify-center gap-1 min-w-0">
+          <h3 className="font-medium truncate block w-[95%] text-base leading-tight mb-0.5">
+            {channel.title}
+          </h3>
+          <span className="text-xs text-gray-400">
+            Created:{" "}
+            <span className="font-semibold text-gray-200">
+              {new Date(channel.createdAt).toLocaleDateString()}
+            </span>
+          </span>
+        </div>
+      </div>
+    </ChannelLink>
+  );
 }
 
 export default function ChannelsWithoutScreenshotsPage() {
@@ -98,26 +137,7 @@ export default function ChannelsWithoutScreenshotsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 p-2">
           {(data as ChannelsWithoutScreenshotsResponse).channels.map(
             (channel) => (
-              <ChannelLink key={channel.id} ytId={channel.ytId} where="index">
-                <div className="flex gap-4 p-2 rounded transition-colors relative border-2 border-gray-500/30 h-fit max-w-full w-full hover:bg-gray-700/50 cursor-pointer">
-                  <img
-                    src={channel.src}
-                    alt={channel.title}
-                    className="w-32 h-20 object-cover rounded ml-2 my-2 shrink-0"
-                  />
-                  <div className="w-[36%] flex flex-col justify-center gap-1 min-w-0">
-                    <h3 className="font-medium truncate block w-[95%] text-base leading-tight mb-0.5">
-                      {channel.title}
-                    </h3>
-                    <span className="text-xs text-gray-400">
-                      Created:{" "}
-                      <span className="font-semibold text-gray-200">
-                        {new Date(channel.createdAt).toLocaleDateString()}
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </ChannelLink>
+              <ChannelCard key={channel.id} channel={channel} />
             )
           )}
         </div>
