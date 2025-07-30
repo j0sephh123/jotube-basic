@@ -2,6 +2,7 @@
 
 ## Table of Contents
 
+- [Summary][#summary]
 - [Quick note](#quick-note)
 - [History](#history)
 - [How it works quick explanation](#how-it-works-quick-explanation)
@@ -15,6 +16,17 @@
   - [Modules](#modules)
 - [How files are kept locally](#how-files-are-kept-locally)
 - [Running locally](#running-locally)
+
+## Summary
+
+JoTube is a YouTube video management and screenshot extraction platform that enables users to organize, process, and analyze YouTube content at scale. The application provides a complete workflow from channel discovery to screenshot extraction and management.
+
+**Core Features:**
+
+- **Channel Management**: Add YouTube channels by video ID, automatically fetch channel metadata and uploads using YouTube Data API
+- **Video Processing Pipeline**: Download videos using yt-dlp, extract screenshots with ffmpeg, and generate composite thumbnails
+- **Screenshot Extraction**: Automatically capture screenshots at regular intervals throughout videos, with user-selectable frames
+- **Gallery & Organization**: View screenshots by channel, date, or month with favorites and deletion capabilities
 
 ## Quick note
 
@@ -36,24 +48,26 @@ I've been working on typical CRUD style applications for managing YouTube videos
 3. Syncing uploads
    When the channel has newer uploads, which we don't have yet in the db, the user can call `syncUploads` to get the latest. Before I was using a background job for that, but I felt that it ruins the UX.
 4. Picking videos for processing
-The users can either save or delete a video
+   The users can either save or delete a video
 
 5. Processing videos 3 phases
-  - 1. Download: Python service and ytdlp
-  - 2. Capture Screenshots: ffmpeg as a child process
-  - 3. Generate composite image from screenshots, for example 40 images in one video: sharp
-more technical details below
+
+- 1. Download: Python service and ytdlp
+- 2. Capture Screenshots: ffmpeg as a child process
+- 3. Generate composite image from screenshots, for example 40 images in one video: sharp
+     more technical details below
 
 6. Picking screenshots
-The users can view the so called thumbnails in a viewer and pick the ones that they want. There is a simple grid above the thumbnail where the user can either zoom on an image, which gets the original one with highest quality or select it
-When the users Submit, only the selected screenshots are saved and the rest is deleted.
+   The users can view the so called thumbnails in a viewer and pick the ones that they want. There is a simple grid above the thumbnail where the user can either zoom on an image, which gets the original one with highest quality or select it
+   When the users Submit, only the selected screenshots are saved and the rest is deleted.
 
 7. Viewing screenshots
-The users can view all, only for a channel or have a gallery where they can make a screenshot a favorite or delete. Additionally when clicking on a screenshot, an iframe opens to start the video from youtube from a specific second.
+   The users can view all, only for a channel or have a gallery where they can make a screenshot a favorite or delete. Additionally when clicking on a screenshot, an iframe opens to start the video from youtube from a specific second.
 
 ## Db structure explained
 
 - Channel
+
   - `title`, `ytId`, `src`, `videoCount`: populated from youtube api
   - `fefetchedUntilEnd`: indicating whether we have all the uploads for the channel
   - `lastSyncedAt` and `fetchStartVideoId` are indicators for fetching new videos. lastSyncedAt shows when was the last time we did a refetch. `fetchStartVideoId` is the newest video that we have. I used to have this done in the background, but this is not good for UX. How it works is we start fetching from the latest video until we hit `fetchStartVideoId`. Since the batch is 50, we are creating a loop in order to do that until we reach `fetchStartVideoId`
@@ -65,16 +79,16 @@ The users can view all, only for a channel or have a gallery where they can make
   - `channel` relation
   - `thumbnail` relation
   - `status` (legacy): before that i was using status to capture the 3 possible states.
-    - 0: when the upload is added to the channel but no actions have been applied 
-    - 1: this would include saved, downloaded and also ones with thumbnails. 
+    - 0: when the upload is added to the channel but no actions have been applied
+    - 1: this would include saved, downloaded and also ones with thumbnails.
     - 2: when it has screenshots captured
   - `artifact`: this captures more more accurately the possible states of an upload
     - VIDEO: initial state after fetched from youtube and added to the db
-    - SAVED: when the video has been saved 
+    - SAVED: when the video has been saved
     - DOWNLOADED: when the video has been downloaded
     - THUMBNAIL: when thumbnails are generated
     - SCREENSHOT: when screenshots are captured
-  Note that not all states artifacts are used in this implementation since it is a simplified one 
+      Note that not all states artifacts are used in this implementation since it is a simplified one
 - `Thumbnail`
   - relation to UploadsVideo
   - `perRow` - right now it is hard coded
@@ -82,7 +96,7 @@ The users can view all, only for a channel or have a gallery where they can make
 - `Screenshot`
   - second - locally it gets saved as `{youtube_video_id}-{second}.png`
   - isFav: it has limited purpose in this implementation
-  - relation to `ytChannelId` and 
+  - relation to `ytChannelId` and
   - `ytVideoId` - not a relation
 
 ## Tech Stack
