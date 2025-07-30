@@ -1,17 +1,17 @@
-import { useParams } from "react-router-dom";
+
 import DashboardMain from "./DashboardMain";
 import ChannelsWithoutUploads from "./ChannelsWithoutUploads";
 import ChannelsWithoutScreenshots from "./ChannelsWithoutScreenshots";
+import { useTypedViewType, ViewType } from "@/shared/hooks/useTypedParams";
 
 export default function Dashboard() {
-  // TODO: extract as a separate hook so we can add types to it
-  const { viewType } = useParams();
+  const viewType = useTypedViewType();
 
-  if (viewType === "channels-without-uploads") {
+  if (viewType === ViewType.CHANNELS_WITHOUT_UPLOADS) {
     return <ChannelsWithoutUploads />;
   }
 
-  if (viewType === "channels-without-screenshots") {
+  if (viewType === ViewType.CHANNELS_WITHOUT_SCREENSHOTS) {
     return <ChannelsWithoutScreenshots />;
   }
 

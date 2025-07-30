@@ -2,6 +2,7 @@ import { useEffect, useCallback } from "react";
 import { useSearchParams, useParams } from "react-router-dom";
 import { useStore } from "@/store/store";
 import { defaults } from "../store/dashboard-slice";
+import { ViewType } from "@/shared/hooks/useTypedParams";
 
 type RequestBody =
   | "sortOrder"
@@ -155,7 +156,8 @@ export const useDashboardContext = () => {
 
     if (
       params.viewType &&
-      (params.viewType === "saved" || params.viewType === "processed")
+      (params.viewType === ViewType.SAVED ||
+        params.viewType === ViewType.PROCESSED)
     ) {
       newRequestBody.viewType = params.viewType;
     }
@@ -164,7 +166,10 @@ export const useDashboardContext = () => {
   }, [urlSearchParams]);
 
   useEffect(() => {
-    if (viewType && (viewType === "saved" || viewType === "processed")) {
+    if (
+      viewType &&
+      (viewType === ViewType.SAVED || viewType === ViewType.PROCESSED)
+    ) {
       setRequestBody("viewType", viewType);
     }
   }, [viewType, setRequestBody]);

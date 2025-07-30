@@ -1,11 +1,20 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { routes } from "@/shared/utils/routes";
+import { useTypedViewType, ViewType } from "@/shared/hooks/useTypedParams";
+import clsx from "clsx";
+
+const VIEW_TYPE_CONFIG = [
+  { type: ViewType.SAVED, label: "Saved" },
+  { type: ViewType.PROCESSED, label: "Processed" },
+  { type: ViewType.CHANNELS_WITHOUT_UPLOADS, label: "New Channels" },
+  { type: ViewType.CHANNELS_WITHOUT_SCREENSHOTS, label: "No Screenshots" },
+] as const;
 
 export default function ViewTypeToggle() {
   const navigate = useNavigate();
-  const { viewType } = useParams();
+  const viewType = useTypedViewType();
 
-  const handleToggle = (newViewType: "saved" | "processed" | "channels-without-uploads" | "channels-without-screenshots") => {
+  const handleToggle = (newViewType: ViewType) => {
     navigate(routes.dashboard(newViewType), {
       replace: true,
       state: { viewType: newViewType, timestamp: Date.now() },
@@ -16,38 +25,18 @@ export default function ViewTypeToggle() {
     <div className="flex items-center gap-2">
       <span className="text-sm font-medium">View:</span>
       <div className="join">
-        <button
-          className={`join-item btn btn-sm ${
-            viewType === "saved" ? "btn-primary" : "btn-outline"
-          }`}
-          onClick={() => handleToggle("saved")}
-        >
-          Saved
-        </button>
-        <button
-          className={`join-item btn btn-sm ${
-            viewType === "processed" ? "btn-primary" : "btn-outline"
-          }`}
-          onClick={() => handleToggle("processed")}
-        >
-          Processed
-        </button>
-        <button
-          className={`join-item btn btn-sm ${
-            viewType === "channels-without-uploads" ? "btn-primary" : "btn-outline"
-          }`}
-          onClick={() => handleToggle("channels-without-uploads")}
-        >
-          New Channels
-        </button>
-        <button
-          className={`join-item btn btn-sm ${
-            viewType === "channels-without-screenshots" ? "btn-primary" : "btn-outline"
-          }`}
-          onClick={() => handleToggle("channels-without-screenshots")}
-        >
-          No Screenshots
-        </button>
+        {VIEW_TYPE_CONFIG.map(({ type, label }) => (
+          <button
+            key={type}
+            className={clsx("join-item btn btn-sm", {
+              "btn-primary": viewType === type,
+              "btn-outline": viewType !== type,
+            })}
+            onClick={() => handleToggle(type)}
+          >
+            {label}
+          </button>
+        ))}
       </div>
     </div>
   );

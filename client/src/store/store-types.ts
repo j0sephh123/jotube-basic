@@ -1,4 +1,5 @@
 import { SlideImage } from "yet-another-react-lightbox";
+import { ViewType } from "@/shared/hooks/useTypedParams";
 
 export type ViewingPreviewType = { ytVideoId: string };
 
@@ -67,7 +68,7 @@ export type DashboardSlice = {
     max: number | null;
     defaultMin: number;
     defaultMax: number | null;
-    viewType?: string;
+    viewType?: ViewType;
   };
   setRequestBody: <K extends keyof DashboardSlice["requestBody"]>(
     key: K,

@@ -1,5 +1,4 @@
 import { RotateCcw } from "lucide-react";
-import { useParams } from "react-router-dom";
 import RangeFilterPopover from "../RangePicker/RangeFilterPopover";
 import DefaultsRangeFilterPopover from "../RangePicker/DefaultsRangeFilterPopover";
 import SelectSortDirection from "./SelectSortDirection";
@@ -7,15 +6,16 @@ import ViewTypeToggle from "./ViewTypeToggle";
 import { useDashboardQuery } from "@/features/Dashboard/hooks/useDashboardQuery";
 import PaginationControl from "../PaginationControl";
 import { useDashboardContext } from "../../hooks/useDashboardContext";
+import { useTypedViewType, ViewType } from "@/shared/hooks/useTypedParams";
 
 export default function DashboardHeader() {
-  const { viewType } = useParams();
+  const viewType = useTypedViewType();
   const { handleClearFilters } = useDashboardContext();
   const { data } = useDashboardQuery();
 
   const isChannelsView =
-    viewType === "channels-without-uploads" ||
-    viewType === "channels-without-screenshots";
+    viewType === ViewType.CHANNELS_WITHOUT_UPLOADS ||
+    viewType === ViewType.CHANNELS_WITHOUT_SCREENSHOTS;
 
   if (isChannelsView) {
     return (
@@ -39,7 +39,7 @@ export default function DashboardHeader() {
           <span className="text-sm whitespace-nowrap">
             {data?.total} results
           </span>
-          {viewType !== "saved" && (
+          {viewType !== ViewType.SAVED && (
             <>
               <RangeFilterPopover />
               <DefaultsRangeFilterPopover />

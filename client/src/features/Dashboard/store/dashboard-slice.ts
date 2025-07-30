@@ -1,11 +1,21 @@
-export const defaults = {
+import { ViewType } from "@/shared/hooks/useTypedParams";
+
+export const defaults: {
+  sortOrder: "asc" | "desc";
+  page: number;
+  min: number;
+  max: number | null;
+  defaultMin: number;
+  defaultMax: number | null;
+  viewType: ViewType;
+} = {
   sortOrder: "desc" as "asc" | "desc",
   page: 1,
   min: 0,
   max: null as number | null,
   defaultMin: 0,
   defaultMax: null as number | null,
-  viewType: "saved" as "saved" | "processed",
+  viewType: ViewType.SAVED,
 };
 
 export type DashboardSlice = {
