@@ -13,18 +13,16 @@ export default function ChannelsWithoutUploadsPage(): JSX.Element {
   }
 
   return (
-    <div className="h-[80vh] overflow-y-auto">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 p-2">
-        {data.map((channel) => (
-          <ChannelCard
-            key={channel.id}
-            channel={channel}
-            onRefetch={refetch}
-            showActions={true}
-            clickable={false}
-          />
-        ))}
-      </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 p-2">
+      {data.map((channel) => (
+        <ChannelCard
+          key={channel.id}
+          channel={channel}
+          onRefetch={refetch}
+          showActions={true}
+          clickable={false}
+        />
+      ))}
     </div>
   );
 }
