@@ -1,4 +1,4 @@
-import { Store, SSESlice } from "../store-types";
+import { Store, SSESlice } from "@/store/store-types";
 
 export const createSSESlice = (
   set: (fn: (state: Store) => Partial<Store>) => void
