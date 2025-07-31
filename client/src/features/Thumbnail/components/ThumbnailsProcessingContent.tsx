@@ -131,7 +131,7 @@ export default function ThumbnailsProcessingContent({
     }
   };
 
-  const handleContainerWheel = (event: React.WheelEvent) => {
+  const handleContainerWheel = (event: WheelEvent) => {
     if (isZoomModalVisible) return;
 
     event.preventDefault();
@@ -158,6 +158,18 @@ export default function ThumbnailsProcessingContent({
     };
   }, [currentIndex, thumbnailsCount, perRow, isZoomModalVisible]);
 
+  useEffect(() => {
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener("wheel", handleContainerWheel, {
+        passive: false,
+      });
+      return () => {
+        container.removeEventListener("wheel", handleContainerWheel);
+      };
+    }
+  }, [currentIndex, thumbnailsCount, isZoomModalVisible]);
+
   const pageInfo = `${currentIndex + 1} / ${thumbnailsCount}`;
 
   return (
@@ -170,7 +182,7 @@ export default function ThumbnailsProcessingContent({
       >
         <div className="w-full h-screen p-0">
           <Header pageInfo={pageInfo} />
-          <Container ref={containerRef} onWheel={handleContainerWheel}>
+          <Container ref={containerRef}>
             <div
               className="relative inline-block"
               style={{ width: `${imgWidth}px` }}
