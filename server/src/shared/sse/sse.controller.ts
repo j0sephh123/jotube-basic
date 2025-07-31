@@ -5,7 +5,6 @@ import { SseService } from './sse.service';
 @Controller('sse')
 export class SseController {
   private readonly logger = new Logger(SseController.name);
-  private keepAliveInterval: NodeJS.Timeout;
 
   constructor(private readonly sseService: SseService) {}
 
@@ -33,18 +32,20 @@ export class SseController {
       }
     }, 30000);
 
-    res.on('close', () => {
-      this.logger.log('Client connection closed');
+    const cleanup = () => {
       clearInterval(keepAliveInterval);
       this.sseService.removeClient(res);
       res.end();
+    };
+
+    res.on('close', () => {
+      this.logger.log('Client connection closed');
+      cleanup();
     });
 
     res.on('error', (error) => {
       this.logger.error('Client connection error:', error);
-      clearInterval(keepAliveInterval);
-      this.sseService.removeClient(res);
-      res.end();
+      cleanup();
     });
   }
 }

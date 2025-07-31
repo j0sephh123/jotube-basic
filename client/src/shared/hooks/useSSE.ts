@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useStore } from "@/store/store";
 import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMetadata";
 
@@ -11,14 +11,26 @@ export type SSEEventData = {
 export function useSSE() {
   const { eventSource, setEventSource, setOperation } = useStore();
   const refetchChannelMetadata = useRefetchChannelMetadata();
+  const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const isConnectingRef = useRef(false);
 
   useEffect(() => {
-    if (!eventSource && !document.body.hasAttribute("data-sse-connected")) {
+    if (
+      !eventSource &&
+      !document.body.hasAttribute("data-sse-connected") &&
+      !isConnectingRef.current
+    ) {
+      isConnectingRef.current = true;
       document.body.setAttribute("data-sse-connected", "true");
+
       const newEventSource = new EventSource(
         "http://localhost:3003/sse/updates"
       );
-      setEventSource(newEventSource);
+
+      newEventSource.onopen = () => {
+        isConnectingRef.current = false;
+        setEventSource(newEventSource);
+      };
 
       newEventSource.onmessage = (event) => {
         const data = JSON.parse(event.data) as SSEEventData;
@@ -54,27 +66,35 @@ export function useSSE() {
             break;
           case "thumbnails_finish":
             setOperation("thumbnails", null);
-            refetchChannelMetadata('');
+            refetchChannelMetadata("");
             break;
         }
       };
 
       newEventSource.onerror = (error) => {
         console.error("SSE error:", error);
+        isConnectingRef.current = false;
+
         if (newEventSource) {
           newEventSource.close();
           setEventSource(null);
           document.body.removeAttribute("data-sse-connected");
-          setTimeout(() => {
+
+          if (reconnectTimeoutRef.current) {
+            clearTimeout(reconnectTimeoutRef.current);
+          }
+
+          reconnectTimeoutRef.current = setTimeout(() => {
             if (
-              !eventSource &&
-              !document.body.hasAttribute("data-sse-connected")
+              !document.body.hasAttribute("data-sse-connected") &&
+              !isConnectingRef.current
             ) {
+              isConnectingRef.current = true;
               document.body.setAttribute("data-sse-connected", "true");
-              const newEventSource = new EventSource(
+              const reconnectEventSource = new EventSource(
                 "http://localhost:3003/sse/updates"
               );
-              setEventSource(newEventSource);
+              setEventSource(reconnectEventSource);
             }
           }, 1000);
         }
@@ -82,11 +102,18 @@ export function useSSE() {
     }
 
     return () => {
+      if (reconnectTimeoutRef.current) {
+        clearTimeout(reconnectTimeoutRef.current);
+        reconnectTimeoutRef.current = null;
+      }
+
+      isConnectingRef.current = false;
+
       if (eventSource) {
         eventSource.close();
         setEventSource(null);
         document.body.removeAttribute("data-sse-connected");
       }
     };
-  }, [eventSource, setEventSource, setOperation]);
+  }, [setEventSource, setOperation, refetchChannelMetadata]);
 }
