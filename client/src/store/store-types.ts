@@ -62,13 +62,13 @@ export type ActiveViewerSlice = {
 
 export type DashboardSlice = {
   requestBody: {
-    sortOrder: string;
+    sortOrder: "asc" | "desc";
     page: number;
     min: number;
     max: number | null;
     defaultMin: number;
     defaultMax: number | null;
-    viewType?: ViewType;
+    viewType: ViewType;
   };
   setRequestBody: <K extends keyof DashboardSlice["requestBody"]>(
     key: K,
