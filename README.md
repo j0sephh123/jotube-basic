@@ -88,10 +88,6 @@ _Demo: Adding a channel, processing videos, and extracting screenshots using JoT
 
 _Note: `artifact` field tracks video processing status (e.g., "DOWNLOADED", "THUMBNAIL_GENERATED", "SCREENSHOT_CAPTURED")_
 
-```
-
-
-
 ## Installation & Setup
 
 ### Prerequisites
@@ -104,6 +100,7 @@ _Note: `artifact` field tracks video processing status (e.g., "DOWNLOADED", "THU
 ### Environment Configuration
 
 **Server** (`server/.env`):
+
 ```
 
 DATABASE_URL="mysql://username:password@localhost:3306/database_name"
@@ -116,11 +113,12 @@ DL_SERVICE_URL="http://localhost:8081"
 ```
 
 **Download Service** (`download-service/.env`):
+
 ```
 
 YOUTUBE_DIR="/path/to/screenshots/folder"
 
-````
+```
 
 ### Installation Steps
 
@@ -131,14 +129,13 @@ YOUTUBE_DIR="/path/to/screenshots/folder"
    pnpm install
    cd server && pnpm install
    cd ../download-service && pip install -r requirements.txt
-````
+   ```
 
 2. **Configure database**:
 
    ```bash
    cd server
-   npx prisma migrate dev
-   ```
+   npx prisma db push
 
 3. **Set up Python virtual environment**:
 
