@@ -6,7 +6,6 @@ import ScreenshotsByDayDate from "./pages/ScreenshotsPageDate";
 import ScreenshotsLayout from "./features/Screenshot/components/ScreenshotsPageLayout";
 import SavedUploads from "./pages/SavedUploadsPage";
 import ChannelsPageWrapper from "./features/Channel/ChannelsPageLayout";
-import ThumbnailsPage from "./pages/ThumbnailsPage";
 import GalleryPage from "./pages/GalleryPage";
 import GalleryLayout from "./features/Gallery/components/GalleryLayout";
 import Dashboard from "@/features/Dashboard/components";
@@ -36,7 +35,6 @@ export const Router = (
           <Route path=":month" element={<ScreenshotsByMonth />} />
           <Route path=":month/:date" element={<ScreenshotsByDayDate />} />
         </Route>
-        <Route path="/thumbnails" element={<ThumbnailsPage />} />
         <Route path="*" element={<The404 />} />
       </Route>
     </Routes>

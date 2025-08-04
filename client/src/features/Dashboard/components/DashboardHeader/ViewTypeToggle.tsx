@@ -8,6 +8,7 @@ const VIEW_TYPE_CONFIG = [
   { type: ViewType.PROCESSED, label: "Processed" },
   { type: ViewType.CHANNELS_WITHOUT_UPLOADS, label: "New Channels" },
   { type: ViewType.CHANNELS_WITHOUT_SCREENSHOTS, label: "No Screenshots" },
+  { type: ViewType.THUMBNAILS, label: "Thumbnails" },
 ] as const;
 
 export default function ViewTypeToggle() {

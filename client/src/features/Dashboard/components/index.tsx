@@ -3,6 +3,7 @@ import DashboardMain from "./DashboardMain";
 import ChannelsWithoutUploads from "./ChannelsWithoutUploads";
 import ChannelsWithoutScreenshots from "./ChannelsWithoutScreenshots";
 import { useTypedViewType, ViewType } from "@/shared/hooks/useTypedParams";
+import ThumbnailsPage from "@/features/Dashboard/components/ThumbnailsPage";
 
 export default function Dashboard() {
   const viewType = useTypedViewType();
@@ -13,6 +14,10 @@ export default function Dashboard() {
 
   if (viewType === ViewType.CHANNELS_WITHOUT_SCREENSHOTS) {
     return <ChannelsWithoutScreenshots />;
+  }
+
+  if (viewType === ViewType.THUMBNAILS) {
+    return <ThumbnailsPage />;
   }
 
   return <DashboardMain />;

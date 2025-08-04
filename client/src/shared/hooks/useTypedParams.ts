@@ -5,6 +5,7 @@ export enum ViewType {
   PROCESSED = "processed",
   CHANNELS_WITHOUT_UPLOADS = "channels-without-uploads",
   CHANNELS_WITHOUT_SCREENSHOTS = "channels-without-screenshots",
+  THUMBNAILS = "thumbnails",
 }
 
 export const useTypedChannelYtId = () => {
