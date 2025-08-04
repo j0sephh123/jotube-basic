@@ -1,11 +1,11 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
 export enum ViewType {
-  SAVED = "saved",
-  PROCESSED = "processed",
-  CHANNELS_WITHOUT_UPLOADS = "channels-without-uploads",
-  CHANNELS_WITHOUT_SCREENSHOTS = "channels-without-screenshots",
-  THUMBNAILS = "thumbnails",
+  SAVED = "Saved",
+  PROCESSED = "Processed",
+  CHANNELS_WITHOUT_UPLOADS = "No uploads",
+  CHANNELS_WITHOUT_SCREENSHOTS = "No screenshots",
+  THUMBNAILS = "Thumbnails",
 }
 
 export const useTypedChannelYtId = () => {
@@ -19,5 +19,5 @@ export const useTypedViewType = () => {
   const params = useParams<{ viewType: string }>();
   const viewType = params.viewType as ViewType;
 
-  return viewType;  
+  return viewType;
 };
