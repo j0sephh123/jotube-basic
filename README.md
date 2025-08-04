@@ -9,6 +9,7 @@
 - [Database Structure](#database-structure)
 - [Architecture Overview](#architecture-overview)
 - [Installation & Setup](#installation--setup)
+- [Roadmap](#roadmap)
 
 ## Summary
 
@@ -88,6 +89,10 @@ _Demo: Adding a channel, processing videos, and extracting screenshots using JoT
 
 _Note: `artifact` field tracks video processing status (e.g., "DOWNLOADED", "THUMBNAIL_GENERATED", "SCREENSHOT_CAPTURED")_
 
+## Roadmap
+
+For detailed information about upcoming features, development progress, and planned improvements, see the [Project Roadmap](ROADMAP.md).
+
 ## Installation & Setup
 
 ### Prerequisites
@@ -123,6 +128,7 @@ YOUTUBE_DIR="/path/to/screenshots/folder"
 ### Installation Steps
 
 1. **Clone and install dependencies**:
+
    ```bash
    git clone <repository-url>
    cd jotube
@@ -136,6 +142,8 @@ YOUTUBE_DIR="/path/to/screenshots/folder"
    ```bash
    cd server
    npx prisma db push
+
+   ```
 
 3. **Set up Python virtual environment**:
 
