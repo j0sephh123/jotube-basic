@@ -2,41 +2,14 @@ import { Loader } from "lucide-react";
 import ItemList from "../../components/SavedOrProcessedCardsList";
 import ErrorMessage from "@/shared/components/static/ErrorMessage";
 import { useDashboardQuery } from "@/features/Dashboard/views/SavedAndProcessedView/useDashboardQuery";
-import useAddUploadsToQueue from "@/features/Upload/hooks/useAddUploadsToQueue";
-import { useDeleteUploads } from "@/features/Upload/hooks/useUploadsDelete";
 
 export default function SavedAndProcessedView() {
-  const downloadMutation = useAddUploadsToQueue();
-  const deleteUploadsMutation = useDeleteUploads();
-
   const {
     data,
     isLoading,
     refetch: refetchDashboardQuery,
     isError,
   } = useDashboardQuery();
-
-  const handleDownload = (id: number) => {
-    const channel = data?.channels.find((ch) => ch.id === id);
-    if (!channel?.ytId) return;
-
-    downloadMutation.mutate([
-      {
-        downloadOption: 0,
-        ytChannelId: channel.ytId,
-      },
-    ]);
-  };
-
-  const handleDelete = (id: number) => {
-    const channel = data?.channels.find((ch) => ch.id === id);
-    if (!channel?.ytId) return;
-
-    deleteUploadsMutation({
-      ytChannelId: channel.ytId,
-      ytVideoIds: [],
-    });
-  };
 
   if (isLoading) {
     return (
@@ -56,8 +29,6 @@ export default function SavedAndProcessedView() {
         <ItemList
           data={data}
           refetchDashboardQuery={refetchDashboardQuery}
-          onDownload={handleDownload}
-          onDelete={handleDelete}
         />
       </div>
     </div>

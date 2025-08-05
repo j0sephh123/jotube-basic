@@ -1,16 +1,16 @@
-import { useState, useMemo } from "react";
-import { Download, Trash2 } from "lucide-react";
-import Avatar from "@/shared/components/Avatar";
-import { useOpenDirectory } from "@/shared/components/OpenDirectoryButton/useOpenDirectory";
 import { useNavigate } from "react-router-dom";
-import { getPublicImgUrl } from "@/shared/utils/image";
 import { routes } from "@/shared/utils/routes";
-import CardMenuWrapper from "./CardMenuWrapper";
-import CardStats from "./CardStats";
+import CardContainer from "./CardContainer";
+import CardImage from "./CardImage";
+import CardContent from "./CardContent";
 import CardTitle from "./CardTitle";
-import SyncUploadsButton from "../../../features/Upload/components/SyncUploadsButton";
+import CardStats from "./CardStats";
+import CardActions from "./CardActions";
+import CardMenu from "./CardMenu";
+import CardDeleteButton from "./CardDeleteButton";
+import { useOpenDirectory } from "@/shared/components/OpenDirectoryButton/useOpenDirectory";
 
-type ItemProps = {
+type CardProps = {
   id: number;
   src: string;
   ytId: string;
@@ -22,8 +22,6 @@ type ItemProps = {
   screenshotsCount?: number;
   ytChannelId?: string;
   lastSyncedAt?: string | null;
-  onDownload?: (id: number) => void;
-  onDelete?: (id: number) => void;
   screenshots?: {
     ytVideoId: string;
     second: number;
@@ -32,10 +30,9 @@ type ItemProps = {
   showCardMenu?: boolean;
   showStats?: boolean;
   showActionButtons?: boolean;
-  onThumbnailClick?: () => void;
 };
 
-export default function Card({
+function Card({
   id,
   src,
   ytId,
@@ -45,50 +42,15 @@ export default function Card({
   defaults,
   screenshotsCount,
   ytChannelId,
-  onDownload,
-  onDelete,
   screenshots,
   lastSyncedAt,
   showSyncButton = true,
   showCardMenu = true,
   showStats = true,
   showActionButtons = true,
-  onThumbnailClick,
-}: ItemProps) {
-  const [screenshotIndex, setScreenshotIndex] = useState(0);
+}: CardProps) {
   const handleOpenExplorer = useOpenDirectory({ ytChannelId: ytId });
   const navigate = useNavigate();
-
-  const computedSrc = useMemo(() => {
-    if (
-      screenshots &&
-      screenshots.length &&
-      screenshots.length > 0 &&
-      screenshots[0]?.ytVideoId
-    ) {
-      return getPublicImgUrl(
-        ytChannelId || ytId,
-        screenshots[screenshotIndex]?.ytVideoId || "0",
-        screenshots[screenshotIndex]?.second || 0,
-        "saved_screenshots"
-      );
-    }
-
-    return src;
-  }, [screenshots, screenshotIndex, ytChannelId, ytId, src]);
-
-  const handleAvatarClick = (event: React.MouseEvent) => {
-    event.stopPropagation();
-
-    if (onThumbnailClick) {
-      onThumbnailClick();
-      return;
-    }
-
-    if (screenshots && screenshots.length > 0) {
-      setScreenshotIndex((prev) => (prev + 1) % screenshots.length);
-    }
-  };
 
   const handleChannelTitleClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -96,33 +58,17 @@ export default function Card({
     navigate(routes.savedChannel(ytId));
   };
 
-  const handleDownloadClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (onDownload) {
-      onDownload(id);
-    }
-  };
-
-  const handleDeleteClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (onDelete) {
-      onDelete(id);
-    }
-  };
-
   return (
-    <div className="flex flex-col w-full bg-gray-800 border-2 rounded-lg shadow-lg group relative border-gray-600 hover:border-gray-500">
-      <div className="relative">
-        <Avatar
-          ytId={ytId}
-          id={id}
-          src={computedSrc}
-          className={`w-full h-36 object-cover cursor-pointer`}
-          onClick={handleAvatarClick}
-        />
-      </div>
+    <CardContainer>
+      <CardImage
+        id={id}
+        ytId={ytId}
+        src={src}
+        ytChannelId={ytChannelId}
+        screenshots={screenshots}
+      />
 
-      <div className="p-3 flex flex-col gap-2">
+      <CardContent>
         <CardTitle title={title} onClick={handleChannelTitleClick} />
 
         {showStats && (
@@ -136,45 +82,30 @@ export default function Card({
         )}
 
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            {showSyncButton && ytChannelId && (
-              <SyncUploadsButton
-                lastSyncedAt={lastSyncedAt || null}
-                ytChannelId={ytChannelId}
-                id={id}
-              />
-            )}
-
-            {showActionButtons && onDownload && (
-              <button
-                onClick={handleDownloadClick}
-                className="btn btn-ghost btn-sm btn-circle hover:bg-gray-700/50 transition-colors"
-                title="Download"
-              >
-                <Download className="w-4 h-4 text-blue-400" />
-              </button>
-            )}
-
-            {showActionButtons && onDelete && (
-              <button
-                onClick={handleDeleteClick}
-                className="btn btn-ghost btn-sm btn-circle hover:bg-gray-700/50 transition-colors"
-                title="Delete"
-              >
-                <Trash2 className="w-4 h-4 text-red-400" />
-              </button>
-            )}
-          </div>
+          <CardActions
+            id={id}
+            ytChannelId={ytChannelId}
+            lastSyncedAt={lastSyncedAt}
+            showSyncButton={showSyncButton}
+            showActionButtons={showActionButtons}
+          />
 
           {showCardMenu && (
-            <CardMenuWrapper
-              id={id}
-              ytId={ytId}
-              onOpenExplorer={handleOpenExplorer}
-            />
+            <CardMenu id={id} ytId={ytId} onOpenExplorer={handleOpenExplorer} />
           )}
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </CardContainer>
   );
 }
+
+Card.Container = CardContainer;
+Card.Image = CardImage;
+Card.Content = CardContent;
+Card.Title = CardTitle;
+Card.Stats = CardStats;
+Card.Actions = CardActions;
+Card.Menu = CardMenu;
+Card.DeleteButton = CardDeleteButton;
+
+export default Card;

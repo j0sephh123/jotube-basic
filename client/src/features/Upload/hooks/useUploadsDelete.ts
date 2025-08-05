@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import nestFetcher from "@/shared/api/nestFetcher";
+import { useDashboardQuery } from "@/features/Dashboard/views/SavedAndProcessedView/useDashboardQuery";
 
 type DeleteUploadsRequest = {
   ytChannelId: string;
@@ -10,7 +11,8 @@ type DeleteUploadsResponse = {
   success: boolean;
 };
 
-export function useDeleteUploads(onSuccess?: () => void) {
+export function useDeleteUploads() {
+  const { refetch } = useDashboardQuery();
   const { mutateAsync } = useMutation<
     DeleteUploadsResponse,
     unknown,
@@ -22,7 +24,9 @@ export function useDeleteUploads(onSuccess?: () => void) {
         method: "POST",
         body,
       }),
-    onSuccess,
+    onSuccess: () => {
+      refetch();
+    },
   });
 
   return mutateAsync;

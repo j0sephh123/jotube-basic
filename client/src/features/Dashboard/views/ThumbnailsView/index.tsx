@@ -1,5 +1,4 @@
-import { useStore } from "@/store/store";
-import { useGetUploadsWithThumbnails } from "@/features/Thumbnail/hooks/useGetUploadsWithThumbnails";
+
 import { useThumbnailsView } from "@/features/Dashboard/views/ThumbnailsView/useThumbnailsView";
 import Card from "../../../../shared/components/card";
 import CardsGridWrapper from "../../components/CardsGridWrapper";
@@ -10,14 +9,7 @@ export default function ThumbnailsView() {
       thumbnailChannels: [],
     },
   } = useThumbnailsView();
-  const { setThumbnailsProcessingData } = useStore();
-  const { mutateAsync: getUploadsWithThumbnailsMutation } =
-    useGetUploadsWithThumbnails();
 
-  const handleThumbnailClick = async (channelId: number) => {
-    const thumbnails = await getUploadsWithThumbnailsMutation([channelId]);
-    setThumbnailsProcessingData(thumbnails);
-  };
 
   return (
     <div className="fixed inset-0 flex flex-col mt-32">
@@ -37,7 +29,6 @@ export default function ThumbnailsView() {
             showCardMenu={false}
             showStats={false}
             showActionButtons={false}
-            onThumbnailClick={() => handleThumbnailClick(id)}
           />
         ))}
       </CardsGridWrapper>
