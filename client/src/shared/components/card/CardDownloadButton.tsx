@@ -1,5 +1,5 @@
 import useAddUploadsToQueue from "@/features/Upload/hooks/useAddUploadsToQueue";
-import { useDashboardQuery } from "@/features/Dashboard/views/SavedAndProcessedView/useDashboardQuery";
+import { useDashboardQuery } from "@/features/Dashboard/views/useDashboardQuery";
 import { Download } from "lucide-react";
 
 type CardDownloadButtonProps = {

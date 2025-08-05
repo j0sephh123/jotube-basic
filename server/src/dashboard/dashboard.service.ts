@@ -13,6 +13,7 @@ interface ChannelWithUploads {
   ytId: string;
   src: string;
   lastSyncedAt: Date | null;
+  videoCount: number;
   uploads: Array<{
     id: number;
     ytId: string;
@@ -31,6 +32,7 @@ interface DashboardChannel {
   ytId: string;
   src: string;
   lastSyncedAt: Date | null;
+  videoCount: number;
   thumbnails: number;
   saved: number;
   defaults: number;
@@ -159,6 +161,7 @@ export class DashboardService {
         src: channel.src,
         createdAt: new Date(),
         lastSyncedAt: null,
+        videoCount: channel.videoCount || 0,
         thumbnails: channel.uploadsCount,
         saved: 0,
         defaults: 0,
@@ -199,6 +202,7 @@ export class DashboardService {
       src: channel.src,
       createdAt: channel.createdAt,
       lastSyncedAt: channel.lastSyncedAt,
+      videoCount: channel.videoCount,
       thumbnails: 0,
       saved: 0,
       defaults: 0,
@@ -208,7 +212,7 @@ export class DashboardService {
     }));
 
     return {
-      channels: mappedChannels.slice(skip, skip + PER_PAGE),
+      channels: mappedChannels,
       total: mappedChannels.length,
     };
   }
@@ -328,6 +332,7 @@ export class DashboardService {
             title: true,
             src: true,
             createdAt: true,
+            videoCount: true,
           },
         },
       },
@@ -351,6 +356,7 @@ export class DashboardService {
             ytId: video.channel.ytId,
             title: video.channel.title,
             src: video.channel.src,
+            videoCount: video.channel.videoCount,
             uploadsCount: thumbnailUploadsCount[video.channel.id] || 0,
           },
         ]),

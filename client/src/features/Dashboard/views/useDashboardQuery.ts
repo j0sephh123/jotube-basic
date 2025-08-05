@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useStore } from "@/store/store";
 import nestFetcher from "@/shared/api/nestFetcher";
 import { useParams } from "react-router-dom";
-import { DashboardChannel } from "../types";
+import { DashboardChannel } from "./types";
 import { useCallback } from "react";
 import { ViewType } from "@/shared/hooks/useTypedParams";
 

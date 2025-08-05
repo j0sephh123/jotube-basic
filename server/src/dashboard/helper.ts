@@ -6,4 +6,5 @@ export const selectFields = {
   ytId: true,
   src: true,
   lastSyncedAt: true,
+  videoCount: true,
 };

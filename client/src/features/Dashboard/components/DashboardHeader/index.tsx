@@ -3,7 +3,7 @@ import RangeFilterPopover from "../RangePicker/RangeFilterPopover";
 import DefaultsRangeFilterPopover from "../RangePicker/DefaultsRangeFilterPopover";
 import SelectSortDirection from "./SelectSortDirection";
 import ViewTypeToggle from "./ViewTypeToggle";
-import { useDashboardQuery } from "@/features/Dashboard/views/SavedAndProcessedView/useDashboardQuery";
+import { useDashboardQuery } from "@/features/Dashboard/views/useDashboardQuery";
 import PaginationControl from "../PaginationControl";
 import { useDashboardContext } from "../../hooks/useDashboardContext";
 import { useTypedViewType, ViewType } from "@/shared/hooks/useTypedParams";
