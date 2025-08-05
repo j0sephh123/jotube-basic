@@ -23,16 +23,11 @@ export function useChannelsWithoutScreenshots({
   perPage?: number;
 } = {}) {
   return useQuery<ChannelsWithoutScreenshotsResponse>({
-    queryKey: [
-      "dashboard/channels-without-screenshots",
-      sortOrder,
-      page,
-      perPage,
-    ],
+    queryKey: ["dashboard/no-screenshots", sortOrder, page, perPage],
     queryFn: () =>
       nestFetcher<ChannelsWithoutScreenshotsResponse>({
         method: "GET",
-        url: `/dashboard/channels-without-screenshots?sortOrder=${sortOrder}&page=${page}&perPage=${perPage}`,
+        url: `/dashboard/no-screenshots?sortOrder=${sortOrder}&page=${page}&perPage=${perPage}`,
       }),
   });
 }

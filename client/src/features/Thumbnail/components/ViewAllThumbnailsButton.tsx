@@ -1,5 +1,5 @@
 import { useGetUploadsWithThumbnails } from "@/features/Thumbnail/hooks/useGetUploadsWithThumbnails";
-import { useGroupedThumbnails } from "@/features/Thumbnail/hooks/useGroupedThumbnails";
+import { useThumbnailsView } from "@/features/Thumbnail/hooks/useGroupedThumbnails";
 import { useStore } from "@/store/store";
 
 export default function ViewAllThumbnailsButton() {
@@ -8,7 +8,7 @@ export default function ViewAllThumbnailsButton() {
       thumbnailChannelIds: [],
       thumbnailChannels: [],
     },
-  } = useGroupedThumbnails();
+  } = useThumbnailsView();
   const { setThumbnailsProcessingData } = useStore();
   const { mutateAsync: getUploadsWithThumbnailsMutation } =
     useGetUploadsWithThumbnails();

@@ -2,9 +2,9 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import nestFetcher from "@/shared/api/nestFetcher";
 import { useCallback } from "react";
 
-export function useGroupedThumbnails() {
+export function useThumbnailsView() {
   return useQuery({
-    queryKey: ["groupedThumbnails"],
+    queryKey: ["thumbnails-view"],
     queryFn: () =>
       nestFetcher<{
         thumbnailChannelIds: number[];
@@ -16,7 +16,7 @@ export function useGroupedThumbnails() {
           uploadsCount: number;
         }>;
       }>({
-        url: "/thumbnails-api/grouped-thumbnails",
+        url: "/thumbnails-api/thumbnails-view",
         method: "GET",
       }),
   });
@@ -26,6 +26,6 @@ export function useRefetchGroupedThumbnails() {
   const queryClient = useQueryClient();
 
   return useCallback(() => {
-    queryClient.refetchQueries({ queryKey: ["groupedThumbnails"] });
+    queryClient.refetchQueries({ queryKey: ["thumbnails-view"] });
   }, [queryClient]);
 }

@@ -1,17 +1,17 @@
 import { useStore } from "@/store/store";
 import { useGetUploadsWithThumbnails } from "@/features/Thumbnail/hooks/useGetUploadsWithThumbnails";
-import { useGroupedThumbnails } from "@/features/Thumbnail/hooks/useGroupedThumbnails";
+import { useThumbnailsView } from "@/features/Thumbnail/hooks/useGroupedThumbnails";
 import ViewAllThumbnailsButton from "@/features/Thumbnail/components/ViewAllThumbnailsButton";
 import { useMemo } from "react";
 import Card from "../../../shared/components/card";
 import CardsGridWrapper from "../components/CardsGridWrapper";
 
-export default function ThumbnailsPage() {
+export default function ThumbnailsView() {
   const {
     data: { thumbnailChannels } = {
       thumbnailChannels: [],
     },
-  } = useGroupedThumbnails();
+  } = useThumbnailsView();
   const { setThumbnailsProcessingData } = useStore();
   const { mutateAsync: getUploadsWithThumbnailsMutation } =
     useGetUploadsWithThumbnails();

@@ -8,7 +8,7 @@ type ChannelWithoutUploads = {
   createdAt: string;
   src: string;
   videoCount: number;
-}
+};
 
 export function useChannelsWithoutUploads(
   sortField: string = "createdAt",
@@ -18,7 +18,7 @@ export function useChannelsWithoutUploads(
     queryKey: ["newChannels", sortField, direction],
     queryFn: () =>
       nestFetcher<ChannelWithoutUploads[]>({
-        url: `/dashboard/channels-without-uploads?${new URLSearchParams({
+        url: `/dashboard/no-uploads?${new URLSearchParams({
           sortField,
           direction,
         })}`,

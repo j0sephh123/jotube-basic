@@ -5,6 +5,55 @@ import { PrismaService } from 'src/core/database/prisma/prisma.service';
 
 const PER_PAGE = 12;
 
+interface ChannelWithUploads {
+  id: number;
+  createdAt: Date;
+  title: string;
+  ytId: string;
+  src: string;
+  lastSyncedAt: Date | null;
+  uploads: Array<{
+    id: number;
+    ytId: string;
+    artifact: string;
+  }>;
+  screenshots: Array<{
+    ytVideoId: string;
+    second: number;
+  }>;
+}
+
+interface DashboardChannel {
+  id: number;
+  createdAt: Date;
+  title: string;
+  ytId: string;
+  src: string;
+  lastSyncedAt: Date | null;
+  thumbnails: number;
+  saved: number;
+  defaults: number;
+  uploadsWithScreenshots: number;
+  screenshotsCount: number;
+  screenshots: Array<{
+    ytVideoId: string;
+    second: number;
+  }>;
+}
+
+interface DashboardChannelWithUploads extends DashboardChannel {
+  uploads: Array<{
+    id: number;
+    ytId: string;
+    artifact: string;
+  }>;
+}
+
+interface DashboardResponse {
+  channels: DashboardChannel[];
+  total: number;
+}
+
 @Injectable()
 export class DashboardService {
   constructor(private readonly prismaService: PrismaService) {}
@@ -18,7 +67,7 @@ export class DashboardService {
     defaultMin,
     defaultMax,
     viewType,
-  }: fetchDashboardDto) {
+  }: fetchDashboardDto): Promise<DashboardResponse> {
     const skip = (page - 1) * PER_PAGE;
 
     const isProcessedView = viewType === 'processed';
@@ -30,7 +79,7 @@ export class DashboardService {
 
     const channelsWithCounts = await this.getChannelsWithCounts(channels);
 
-    let filteredChannels = channelsWithCounts;
+    let filteredChannels: DashboardChannelWithUploads[] = channelsWithCounts;
 
     if (min !== undefined && min > 0) {
       filteredChannels = filteredChannels.filter((channel) => {
@@ -88,7 +137,9 @@ export class DashboardService {
     };
   }
 
-  public async getDashboardCount(dto: fetchDashboardDto) {
+  public async getDashboardCount(
+    dto: fetchDashboardDto,
+  ): Promise<{ total: number }> {
     const isProcessedView = dto.viewType === 'processed';
 
     const channels = await this.getChannels({
@@ -98,7 +149,7 @@ export class DashboardService {
 
     const channelsWithCounts = await this.getChannelsWithCounts(channels);
 
-    let filteredChannels = channelsWithCounts;
+    let filteredChannels: DashboardChannelWithUploads[] = channelsWithCounts;
 
     if (dto.min !== undefined && dto.min > 0) {
       filteredChannels = filteredChannels.filter((channel) => {
@@ -133,7 +184,7 @@ export class DashboardService {
     return { total: filteredChannels.length };
   }
 
-  private getScreenshotsCount(ytChannelId: string) {
+  private getScreenshotsCount(ytChannelId: string): Promise<number> {
     return this.prismaService.screenshot
       .count({
         where: {
@@ -145,7 +196,7 @@ export class DashboardService {
       });
   }
 
-  private async getChannels(filter) {
+  private async getChannels(filter: any): Promise<ChannelWithUploads[]> {
     const whereClause: any = {};
 
     if (filter.artifact) {
@@ -208,7 +259,9 @@ export class DashboardService {
     return channelsWithScreenshots;
   }
 
-  private getChannelsWithCounts(channels: any[]) {
+  private getChannelsWithCounts(
+    channels: ChannelWithUploads[],
+  ): Promise<DashboardChannelWithUploads[]> {
     return Promise.all(
       channels.map(async (channel) => {
         const saved = channel.uploads.filter(

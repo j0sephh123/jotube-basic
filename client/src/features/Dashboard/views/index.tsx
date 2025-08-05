@@ -1,23 +1,23 @@
-import DashboardMain from "./DashboardMain";
-import ChannelsWithoutUploads from "./ChannelsWithoutUploads";
-import ChannelsWithoutScreenshots from "./ChannelsWithoutScreenshots";
+import SavedAndProcessedView from "./SavedAndProcessedView";
+import NoUploadsView from "./NoUploadsView";
+import NoScreenshotsView from "./NoScreenshotsView";
 import { useTypedViewType, ViewType } from "@/shared/hooks/useTypedParams";
-import ThumbnailsPage from "./ThumbnailsPage";
+import ThumbnailsView from "./ThumbnailsView";
 
 export default function Dashboard() {
   const viewType = useTypedViewType();
 
   if (viewType === ViewType.CHANNELS_WITHOUT_UPLOADS) {
-    return <ChannelsWithoutUploads />;
+    return <NoUploadsView />;
   }
 
   if (viewType === ViewType.CHANNELS_WITHOUT_SCREENSHOTS) {
-    return <ChannelsWithoutScreenshots />;
+    return <NoScreenshotsView />;
   }
 
   if (viewType === ViewType.THUMBNAILS) {
-    return <ThumbnailsPage />;
+    return <ThumbnailsView />;
   }
 
-  return <DashboardMain />;
+  return <SavedAndProcessedView />;
 }

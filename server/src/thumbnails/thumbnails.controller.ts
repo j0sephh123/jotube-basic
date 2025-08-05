@@ -10,9 +10,9 @@ export class ThumbnailsApiController {
     return this.thumbnailsApiService.getSlides(ytChannelIds);
   }
 
-  @Get('grouped-thumbnails')
+  @Get('thumbnails-view')
   groupedThumbnails() {
-    return this.thumbnailsApiService.groupedThumbnails();
+    return this.thumbnailsApiService.thumbnailsView();
   }
 
   @Post('/uploadsWithThumbnails')

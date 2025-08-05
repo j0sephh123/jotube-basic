@@ -196,7 +196,7 @@ describe('ThumbnailsApiService', () => {
 
       mockPrismaService.uploadsVideo.findMany.mockResolvedValue(mockResult);
 
-      const result = await service.groupedThumbnails();
+      const result = await service.thumbnailsView();
 
       expect(prismaService.uploadsVideo.findMany).toHaveBeenCalledWith({
         where: { artifact: { in: ['THUMBNAIL'] } },
