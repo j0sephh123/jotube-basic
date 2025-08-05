@@ -17,29 +17,18 @@ export default function DashboardHeader() {
     viewType === ViewType.CHANNELS_WITHOUT_UPLOADS ||
     viewType === ViewType.CHANNELS_WITHOUT_SCREENSHOTS;
 
-  if (isChannelsView) {
-    return (
-      <div className="p-3 border-b border-base-300">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <div className="flex flex-nowrap items-center gap-2">
-            <div className="w-24"></div>
-            <ViewTypeToggle />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="p-3 border-b border-base-300">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex flex-nowrap items-center gap-2">
-          <SelectSortDirection />
+          {!isChannelsView && <SelectSortDirection />}
           <ViewTypeToggle />
-          <span className="text-sm whitespace-nowrap">
-            {data?.total} results
-          </span>
-          {viewType !== ViewType.SAVED && (
+          {!isChannelsView && (
+            <span className="text-sm whitespace-nowrap">
+              {data?.total} results
+            </span>
+          )}
+          {!isChannelsView && viewType !== ViewType.SAVED && (
             <>
               <RangeFilterPopover />
               <DefaultsRangeFilterPopover />
@@ -55,7 +44,7 @@ export default function DashboardHeader() {
           )}
         </div>
 
-        {data && (
+        {!isChannelsView && data && (
           <div className="bg-base-100 border-t border-base-300 rounded-b-lg">
             <PaginationControl total={data.total} />
           </div>
