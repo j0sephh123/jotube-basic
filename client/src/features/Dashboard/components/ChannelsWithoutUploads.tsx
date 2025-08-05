@@ -1,11 +1,8 @@
 import { useChannelsWithoutUploads } from "@/features/Channel/hooks/useChannelsWithoutUploads";
-import ChannelCard from "@/features/Channel/NewChannel/components/ChannelCard";
+import Card from "../../../shared/components/card";
 
 export default function ChannelsWithoutUploads() {
-  const {
-    data: channelsWithoutUploads,
-    refetch: refetchChannelsWithoutUploads,
-  } = useChannelsWithoutUploads();
+  const { data: channelsWithoutUploads } = useChannelsWithoutUploads();
 
   if (!channelsWithoutUploads) {
     return (
@@ -17,16 +14,23 @@ export default function ChannelsWithoutUploads() {
 
   return (
     <div className="flex-1 flex flex-col overflow-scroll">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 p-2">
-        {channelsWithoutUploads.map((channel) => (
-          <ChannelCard
-            key={channel.id}
-            channel={channel}
-            onRefetch={refetchChannelsWithoutUploads}
-            showActions={true}
-            clickable={false}
-          />
-        ))}
+      <div className="flex-1 min-h-0 overflow-y-auto px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 p-4">
+          {channelsWithoutUploads.map((channel) => (
+            <Card
+              key={channel.id}
+              id={channel.id}
+              ytId={channel.ytId}
+              title={channel.title}
+              src={channel.src}
+              thumbnails={channel.videoCount}
+              showSyncButton={false}
+              showCardMenu={false}
+              showStats={true}
+              showActionButtons={false}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

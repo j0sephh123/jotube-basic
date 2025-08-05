@@ -1,5 +1,5 @@
-import ChannelsHeader from "@/features/Channel/ChannelsHeader";
 import { Outlet } from "react-router-dom";
+import ChannelsHeader from "./ChannelsHeader/components/ChannelsHeader";
 
 export default function ChannelsPageLayout() {
   return (
