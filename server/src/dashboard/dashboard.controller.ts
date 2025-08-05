@@ -1,13 +1,7 @@
-import {
-  Body,
-  Controller,
-  Get,
-  ParseIntPipe,
-  Post,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { DashboardService } from './dashboard.service';
 import { fetchDashboardDto } from './dtos/fetch-dashboard.dto';
+import { ViewType } from './types';
 
 interface DashboardResponse {
   channels: Array<{
@@ -46,27 +40,12 @@ export class DashboardController {
     return this.dashboardService.thumbnailsView();
   }
 
-  @Get('no-screenshots')
-  getChannelsWithoutScreenshotsCount(
-    @Query('sortOrder') sortOrder: 'asc' | 'desc' = 'desc',
-    @Query('page', new ParseIntPipe()) page: number = 1,
-    @Query('perPage', new ParseIntPipe()) perPage: number = 20,
-  ) {
-    return this.dashboardService.getChannelsWithoutScreenshots({
-      sortOrder,
-      page,
-      perPage,
-    });
-  }
-
   @Get('no-uploads')
-  getChannelsWithoutUploads(
-    @Query('sortField') sortField: 'createdAt' | 'videoCount' = 'createdAt',
-    @Query('direction') direction: 'asc' | 'desc' = 'desc',
-  ) {
-    return this.dashboardService.getChannelsWithoutUploads(
-      sortField,
-      direction,
-    );
+  getChannelsWithoutUploads(@Query('viewType') viewType: ViewType) {
+    if (viewType === ViewType.CHANNELS_WITHOUT_SCREENSHOTS) {
+      return this.dashboardService.getChannelsWithoutScreenshots();
+    }
+
+    return this.dashboardService.getChannelsWithoutUploads();
   }
 }

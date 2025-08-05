@@ -1,34 +1,27 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import nestFetcher from "@/shared/api/nestFetcher";
 import { DashboardChannel } from "../types";
+import { useTypedViewType } from "@/shared/hooks/useTypedParams";
 
-type Item = DashboardChannel & {
-  videoCount: number;
-};
+type Response = DashboardChannel[];
 
-type Response = Item[];
-
-export function useNoUploadsView(
-  sortField: string = "createdAt",
-  direction: string = "desc"
-) {
-
+export function useNoUploadsView() {
+  const viewType = useTypedViewType();
 
   return useQuery<Response>({
-    queryKey: ["newChannels", sortField, direction],
+    queryKey: ["dashboard/no-uploads", viewType],
     queryFn: () =>
       nestFetcher<Response>({
-        url: `/dashboard/no-uploads?${new URLSearchParams({
-          sortField,
-          direction,
-        })}`,
         method: "GET",
+        url: `/dashboard/no-uploads?viewType=${viewType}`,
       }),
   });
 }
 
 export function useRefetchNoUploadsView() {
   const queryClient = useQueryClient();
+  const viewType = useTypedViewType();
 
-  return () => queryClient.resetQueries({ queryKey: ["newChannels"] });
+  return () =>
+    queryClient.resetQueries({ queryKey: ["dashboard/no-uploads", viewType] });
 }

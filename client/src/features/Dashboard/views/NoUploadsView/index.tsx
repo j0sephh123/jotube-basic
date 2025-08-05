@@ -8,15 +8,15 @@ import FetchUploadsButton from "@/features/Upload/components/FetchUploadsButton"
 import DeleteChannel from "@/features/Channel/NewChannel/components/DeleteChannel";
 
 export default function NoUploadsView() {
-  const { data: channelsWithoutUploads } = useNoUploadsView();
+  const { data } = useNoUploadsView();
   const refetchNoUploadsView = useRefetchNoUploadsView();
 
   return (
     <CardsGridWrapper
-      isLoading={!channelsWithoutUploads}
-      isEmpty={!channelsWithoutUploads?.length}
+      isLoading={!data}
+      isEmpty={!data?.length}
     >
-      {channelsWithoutUploads?.map((channel) => (
+      {data?.map((channel) => (
         <Card
           id={channel.id}
           ytId={channel.ytId}

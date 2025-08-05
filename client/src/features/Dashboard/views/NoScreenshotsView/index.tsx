@@ -1,17 +1,17 @@
-import { useNoScreenshotsView } from "@/features/Dashboard/views/NoScreenshotsView/useNoScreenshotsView";
 import Card from "../../../../shared/components/card";
 import CardsGridWrapper from "../../components/CardsGridWrapper";
+import { useNoUploadsView } from "../NoUploadsView/useNoUploadsView";
 
 export default function NoScreenshotsView() {
-  const { data: channelsWithoutScreenshots } = useNoScreenshotsView();
+  const { data, isLoading } = useNoUploadsView();
 
   return (
     <CardsGridWrapper
-      isLoading={!channelsWithoutScreenshots}
-      isEmpty={!channelsWithoutScreenshots?.channels?.length}
+      isLoading={isLoading}
+      isEmpty={!data?.length}
       gridClassName="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 p-2"
     >
-      {channelsWithoutScreenshots?.channels?.map((channel) => (
+      {data?.map((channel) => (
         <Card
           key={channel.id}
           id={channel.id}

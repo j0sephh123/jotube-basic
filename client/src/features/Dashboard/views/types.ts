@@ -4,4 +4,6 @@ export type DashboardChannel = {
   title: string;
   src: string;
   createdAt: string;
+  lastSyncedAt: string;
+  videoCount: number;
 };

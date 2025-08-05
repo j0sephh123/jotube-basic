@@ -244,67 +244,39 @@ export class DashboardService {
     );
   }
 
-  public async getChannelsWithoutScreenshots({
-    sortOrder,
-    page,
-    perPage,
-  }: {
-    sortOrder: 'asc' | 'desc';
-    page: number;
-    perPage: number;
-  }) {
-    const skip = (page - 1) * perPage;
+  public async getChannelsWithoutScreenshots() {
+    const channels = await this.prismaService.channel.findMany({
+      where: {
+        fetchedUntilEnd: true,
+        uploads: { every: { status: 0 } },
+      },
+      select: {
+        id: true,
+        ytId: true,
+        createdAt: true,
+        src: true,
+        title: true,
+        lastSyncedAt: true,
+        videoCount: true,
+      },
+    });
 
-    const [data, total] = await Promise.all([
-      (async () => {
-        const result = await this.prismaService.channel.findMany({
-          where: {
-            fetchedUntilEnd: true,
-            uploads: { every: { status: 0 } },
-          },
-          orderBy: { createdAt: sortOrder },
-          select: {
-            ...selectFields,
-          },
-          skip,
-          take: perPage,
-        });
-
-        return result;
-      })(),
-      (async () => {
-        const result = await this.prismaService.channel.count({
-          where: {
-            fetchedUntilEnd: true,
-            uploads: { every: { status: 0 } },
-          },
-        });
-
-        return result;
-      })(),
-    ]);
-
-    return { channels: data, total };
+    return channels;
   }
 
-  public async getChannelsWithoutUploads(
-    sortField: 'createdAt' | 'videoCount' = 'createdAt',
-    direction: 'asc' | 'desc' = 'desc',
-  ) {
+  public async getChannelsWithoutUploads() {
     const channels = await this.prismaService.channel.findMany({
       where: {
         fetchedUntilEnd: false,
       },
-      orderBy: {
-        [sortField]: direction,
-      },
       select: {
         id: true,
-        title: true,
         ytId: true,
-        createdAt: true,
+        title: true,
         src: true,
         videoCount: true,
+        createdAt: true,
+        lastSyncedAt: true,
       },
     });
 
