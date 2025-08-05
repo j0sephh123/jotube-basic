@@ -1,11 +1,7 @@
 import useDeleteChannel from "@/features/Channel/hooks/useDeleteChannel";
-import { useRefetchNoUploadsView } from "@/features/Dashboard/views/NoUploadsOrScreenshotsView/useNoUploadsOrScreenshotsView";
+import { useRefetchNoUploadsView } from "@/features/Dashboard/views/SavedAndProcessedView/useDashboardQuery";
 
-export default function DeleteChannel({
-  id,
-}: {
-  id: number;
-}) {
+export default function DeleteChannel({ id }: { id: number }) {
   const { mutateAsync } = useDeleteChannel();
   const refetchNoUploadsView = useRefetchNoUploadsView();
 

@@ -71,6 +71,14 @@ export class DashboardService {
   }: fetchDashboardDto): Promise<DashboardResponse> {
     const skip = (page - 1) * PER_PAGE;
 
+    if (
+      viewType === ViewType.CHANNELS_WITHOUT_UPLOADS ||
+      viewType === ViewType.CHANNELS_WITHOUT_SCREENSHOTS ||
+      viewType === ViewType.THUMBNAILS
+    ) {
+      return this.handleSpecialViewTypes(viewType, skip);
+    }
+
     const isProcessedView = viewType === 'processed';
 
     const channels = await this.getChannels({
@@ -135,6 +143,73 @@ export class DashboardService {
           : rest;
       }),
       total: paginated.total,
+    };
+  }
+
+  private async handleSpecialViewTypes(
+    viewType: ViewType,
+    skip: number,
+  ): Promise<DashboardResponse> {
+    if (viewType === ViewType.THUMBNAILS) {
+      const thumbnailsData = await this.thumbnailsView();
+      const channels = thumbnailsData.thumbnailChannels.map((channel) => ({
+        id: channel.id,
+        ytId: channel.ytId,
+        title: channel.title,
+        src: channel.src,
+        createdAt: new Date(),
+        lastSyncedAt: null,
+        thumbnails: channel.uploadsCount,
+        saved: 0,
+        defaults: 0,
+        uploadsWithScreenshots: 0,
+        screenshotsCount: 0,
+        screenshots: [],
+      }));
+
+      return {
+        channels: channels.slice(skip, skip + PER_PAGE),
+        total: channels.length,
+      };
+    }
+
+    const isNoScreenshotsView =
+      viewType === ViewType.CHANNELS_WITHOUT_SCREENSHOTS;
+
+    const channels = await this.prismaService.channel.findMany({
+      where: {
+        fetchedUntilEnd: isNoScreenshotsView,
+        ...(isNoScreenshotsView ? { uploads: { every: { status: 0 } } } : {}),
+      },
+      select: {
+        id: true,
+        ytId: true,
+        title: true,
+        src: true,
+        createdAt: true,
+        lastSyncedAt: true,
+        videoCount: true,
+      },
+    });
+
+    const mappedChannels = channels.map((channel) => ({
+      id: channel.id,
+      ytId: channel.ytId,
+      title: channel.title,
+      src: channel.src,
+      createdAt: channel.createdAt,
+      lastSyncedAt: channel.lastSyncedAt,
+      thumbnails: 0,
+      saved: 0,
+      defaults: 0,
+      uploadsWithScreenshots: 0,
+      screenshotsCount: 0,
+      screenshots: [],
+    }));
+
+    return {
+      channels: mappedChannels.slice(skip, skip + PER_PAGE),
+      total: mappedChannels.length,
     };
   }
 
@@ -239,33 +314,6 @@ export class DashboardService {
         };
       }),
     );
-  }
-
-  public async getChannelsWithoutUploadsOrScreenshots(viewType: ViewType) {
-    if (viewType === ViewType.THUMBNAILS) {
-      return this.thumbnailsView();
-    }
-
-    const isNoScreenshotsView =
-      viewType === ViewType.CHANNELS_WITHOUT_SCREENSHOTS;
-
-    const channels = await this.prismaService.channel.findMany({
-      where: {
-        fetchedUntilEnd: isNoScreenshotsView,
-        ...(isNoScreenshotsView ? { uploads: { every: { status: 0 } } } : {}),
-      },
-      select: {
-        id: true,
-        ytId: true,
-        title: true,
-        src: true,
-        createdAt: true,
-        lastSyncedAt: true,
-        videoCount: true,
-      },
-    });
-
-    return channels;
   }
 
   public async thumbnailsView() {

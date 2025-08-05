@@ -1,4 +1,4 @@
-import { useRefetchNoUploadsView } from "@/features/Dashboard/views/NoUploadsOrScreenshotsView/useNoUploadsOrScreenshotsView";
+import { useRefetchNoUploadsView } from "@/features/Dashboard/views/SavedAndProcessedView/useDashboardQuery";
 import { useFetchUploads } from "@/features/Upload/hooks/useFetchUploads";
 import { Download } from "lucide-react";
 import clsx from "clsx";

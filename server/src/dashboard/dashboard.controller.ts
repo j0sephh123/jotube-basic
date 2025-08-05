@@ -1,7 +1,6 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { DashboardService } from './dashboard.service';
 import { fetchDashboardDto } from './dtos/fetch-dashboard.dto';
-import { ViewType } from './types';
 
 interface DashboardResponse {
   channels: Array<{
@@ -33,14 +32,5 @@ export class DashboardController {
     @Body() fetchDashboardDto: fetchDashboardDto,
   ): Promise<DashboardResponse> {
     return this.dashboardService.fetchDashboard(fetchDashboardDto);
-  }
-
-  @Get('no-uploads-or-screenshots')
-  getChannelsWithoutUploadsOrScreenshots(
-    @Query('viewType') viewType: ViewType,
-  ) {
-    return this.dashboardService.getChannelsWithoutUploadsOrScreenshots(
-      viewType,
-    );
   }
 }
