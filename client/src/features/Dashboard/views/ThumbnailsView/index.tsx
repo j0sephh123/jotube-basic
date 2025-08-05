@@ -24,8 +24,6 @@ export default function ThumbnailsView() {
             ytId={ytId}
             title={title}
             src={src}
-            showSyncButton={false}
-            showActionButtons={false}
           />
         ))}
       </CardsGridWrapper>

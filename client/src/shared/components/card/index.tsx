@@ -7,8 +7,6 @@ import CardTitle from "./CardTitle";
 import CardStats from "./CardStats";
 import CardMenu from "./CardMenu";
 import CardDeleteButton from "./CardDeleteButton";
-import SyncUploadsButton from "@/features/Upload/components/SyncUploadsButton";
-import CardDownloadButton from "./CardDownloadButton";
 
 type CardProps = {
   id: number;
@@ -21,10 +19,11 @@ type CardProps = {
     ytVideoId: string;
     second: number;
   }[];
-  showSyncButton?: boolean;
-  showActionButtons?: boolean;
+  syncButtonSlot?: React.ReactNode;
   cardStatsSlot?: React.ReactNode;
   cardMenuSlot?: React.ReactNode;
+  downloadButtonSlot?: React.ReactNode;
+  deleteButtonSlot?: React.ReactNode;
 };
 
 function Card({
@@ -35,10 +34,10 @@ function Card({
   cardStatsSlot,
   ytChannelId,
   screenshots,
-  lastSyncedAt,
-  showSyncButton = true,
+  syncButtonSlot,
   cardMenuSlot,
-  showActionButtons = true,
+  downloadButtonSlot,
+  deleteButtonSlot,
 }: CardProps) {
   const navigate = useNavigate();
 
@@ -63,17 +62,9 @@ function Card({
         {cardStatsSlot}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            {showSyncButton && ytChannelId && (
-              <SyncUploadsButton
-                lastSyncedAt={lastSyncedAt || null}
-                ytChannelId={ytChannelId}
-                id={id}
-              />
-            )}
-            {showActionButtons && <CardDownloadButton id={id} />}
-            {showActionButtons && ytChannelId && (
-              <CardDeleteButton ytChannelId={ytChannelId} />
-            )}
+            {syncButtonSlot}
+            {downloadButtonSlot}
+            {deleteButtonSlot}
           </div>
           {cardMenuSlot}
         </div>

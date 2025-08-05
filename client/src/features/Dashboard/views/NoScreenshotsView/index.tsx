@@ -18,8 +18,6 @@ export default function NoScreenshotsView() {
           ytId={channel.ytId}
           title={channel.title}
           src={channel.src}
-          showSyncButton={false}
-          showActionButtons={false}
         />
       ))}
     </CardsGridWrapper>

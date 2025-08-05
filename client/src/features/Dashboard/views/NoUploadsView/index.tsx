@@ -19,8 +19,6 @@ export default function NoUploadsView() {
             ytId={channel.ytId}
             title={channel.title}
             src={channel.src}
-            showSyncButton={false}
-            showActionButtons={false}
           />
           <div className="absolute top-3 right-3 flex gap-2 z-10">
             <FetchUploadsButton
