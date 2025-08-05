@@ -5,7 +5,7 @@ import { useTypedViewType } from "@/shared/hooks/useTypedParams";
 
 type Response = DashboardChannel[];
 
-export function useNoUploadsView() {
+export function useNoUploadsOrScreenshotsView() {
   const viewType = useTypedViewType();
 
   return useQuery<Response>({
@@ -13,7 +13,7 @@ export function useNoUploadsView() {
     queryFn: () =>
       nestFetcher<Response>({
         method: "GET",
-        url: `/dashboard/no-uploads?viewType=${viewType}`,
+        url: `/dashboard/no-uploads-or-screenshots?viewType=${viewType}`,
       }),
   });
 }

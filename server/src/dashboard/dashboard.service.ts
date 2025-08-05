@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { fetchDashboardDto } from './dtos/fetch-dashboard.dto';
 import { selectFields } from './helper';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
+import { ViewType } from './types';
 
 const PER_PAGE = 12;
 
@@ -137,16 +138,12 @@ export class DashboardService {
     };
   }
 
-  private getScreenshotsCount(ytChannelId: string): Promise<number> {
-    return this.prismaService.screenshot
-      .count({
-        where: {
-          ytChannelId,
-        },
-      })
-      .then((count) => {
-        return count;
-      });
+  private async getScreenshotsCount(ytChannelId: string): Promise<number> {
+    return this.prismaService.screenshot.count({
+      where: {
+        ytChannelId,
+      },
+    });
   }
 
   private async getChannels(filter: any): Promise<ChannelWithUploads[]> {
@@ -244,39 +241,23 @@ export class DashboardService {
     );
   }
 
-  public async getChannelsWithoutScreenshots() {
+  public async getChannelsWithoutUploadsOrScreenshots(viewType: ViewType) {
+    const isNoScreenshotsView =
+      viewType === ViewType.CHANNELS_WITHOUT_SCREENSHOTS;
+
     const channels = await this.prismaService.channel.findMany({
       where: {
-        fetchedUntilEnd: true,
-        uploads: { every: { status: 0 } },
-      },
-      select: {
-        id: true,
-        ytId: true,
-        createdAt: true,
-        src: true,
-        title: true,
-        lastSyncedAt: true,
-        videoCount: true,
-      },
-    });
-
-    return channels;
-  }
-
-  public async getChannelsWithoutUploads() {
-    const channels = await this.prismaService.channel.findMany({
-      where: {
-        fetchedUntilEnd: false,
+        fetchedUntilEnd: isNoScreenshotsView,
+        ...(isNoScreenshotsView ? { uploads: { every: { status: 0 } } } : {}),
       },
       select: {
         id: true,
         ytId: true,
         title: true,
         src: true,
-        videoCount: true,
         createdAt: true,
         lastSyncedAt: true,
+        videoCount: true,
       },
     });
 

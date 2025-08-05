@@ -40,12 +40,12 @@ export class DashboardController {
     return this.dashboardService.thumbnailsView();
   }
 
-  @Get('no-uploads')
-  getChannelsWithoutUploads(@Query('viewType') viewType: ViewType) {
-    if (viewType === ViewType.CHANNELS_WITHOUT_SCREENSHOTS) {
-      return this.dashboardService.getChannelsWithoutScreenshots();
-    }
-
-    return this.dashboardService.getChannelsWithoutUploads();
+  @Get('no-uploads-or-screenshots')
+  getChannelsWithoutUploadsOrScreenshots(
+    @Query('viewType') viewType: ViewType,
+  ) {
+    return this.dashboardService.getChannelsWithoutUploadsOrScreenshots(
+      viewType,
+    );
   }
 }

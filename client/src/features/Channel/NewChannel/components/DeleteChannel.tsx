@@ -1,20 +1,22 @@
 import useDeleteChannel from "@/features/Channel/hooks/useDeleteChannel";
+import { useRefetchNoUploadsView } from "@/features/Dashboard/views/NoUploadsOrScreenshotsView/useNoUploadsOrScreenshotsView";
 
 export default function DeleteChannel({
   id,
-  onSuccess,
 }: {
   id: number;
-  onSuccess: () => void;
 }) {
   const { mutateAsync } = useDeleteChannel();
+  const refetchNoUploadsView = useRefetchNoUploadsView();
 
   return (
     <button
       className="btn btn-soft btn-error btn-sm"
       onClick={() =>
         mutateAsync(id, {
-          onSuccess,
+          onSuccess: () => {
+            refetchNoUploadsView();
+          },
         })
       }
     >
