@@ -1,3 +1,4 @@
+  import { useRefetchNoUploadsView } from "@/features/Dashboard/views/NoUploadsView/useNoUploadsView";
 import { useFetchUploads } from "@/features/Upload/hooks/useFetchUploads";
 import { Download } from "lucide-react";
 
@@ -12,6 +13,7 @@ export default function FetchUploadsButton({
   videoCount,
   onSuccess,
 }: Props) {
+  const refetchNoUploadsView = useRefetchNoUploadsView();
   const {
     mutateAsync: handleFetchUploads,
     isPending,
@@ -21,6 +23,7 @@ export default function FetchUploadsButton({
       console.error("error", error);
     },
     onSuccess() {
+      refetchNoUploadsView();
       onSuccess?.();
     },
   });
@@ -32,7 +35,7 @@ export default function FetchUploadsButton({
     <button
       disabled={isFetchingThisChannel}
       onClick={() => handleFetchUploads({ ytChannelId })}
-      className="btn btn-sm btn-ghost"
+      className="btn btn-sm btn-primary"
     >
       <Download className="h-4 w-4 mr-2" />
       {isFetchingThisChannel ? "Fetching..." : `Fetch ${videoCount}`}

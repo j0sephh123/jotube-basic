@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import nestFetcher from "@/shared/api/nestFetcher";
 import { DashboardChannel } from "../types";
 
@@ -12,6 +12,8 @@ export function useNoUploadsView(
   sortField: string = "createdAt",
   direction: string = "desc"
 ) {
+
+
   return useQuery<Response>({
     queryKey: ["newChannels", sortField, direction],
     queryFn: () =>
@@ -23,4 +25,10 @@ export function useNoUploadsView(
         method: "GET",
       }),
   });
+}
+
+export function useRefetchNoUploadsView() {
+  const queryClient = useQueryClient();
+
+  return () => queryClient.resetQueries({ queryKey: ["newChannels"] });
 }
