@@ -1,6 +1,6 @@
 import { useChannelsWithoutScreenshots } from "@/features/Channel/hooks/useChannelsWithoutScreenshots";
 import Card from "../../../shared/components/card";
-import CardsGridWrapper from "./CardsGridWrapper";
+import CardsGridWrapper from "../components/CardsGridWrapper";
 
 export default function ChannelsWithoutScreenshots() {
   const { data: channelsWithoutScreenshots } = useChannelsWithoutScreenshots();

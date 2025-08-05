@@ -4,7 +4,7 @@ import { useGroupedThumbnails } from "@/features/Thumbnail/hooks/useGroupedThumb
 import ViewAllThumbnailsButton from "@/features/Thumbnail/components/ViewAllThumbnailsButton";
 import { useMemo } from "react";
 import Card from "../../../shared/components/card";
-import CardsGridWrapper from "./CardsGridWrapper";
+import CardsGridWrapper from "../components/CardsGridWrapper";
 
 export default function ThumbnailsPage() {
   const {

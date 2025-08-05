@@ -1,6 +1,6 @@
 import { useChannelsWithoutUploads } from "@/features/Channel/hooks/useChannelsWithoutUploads";
 import Card from "../../../shared/components/card";
-import CardsGridWrapper from "./CardsGridWrapper";
+import CardsGridWrapper from "../components/CardsGridWrapper";
 
 export default function ChannelsWithoutUploads() {
   const { data: channelsWithoutUploads } = useChannelsWithoutUploads();

@@ -1,9 +1,8 @@
-
 import DashboardMain from "./DashboardMain";
 import ChannelsWithoutUploads from "./ChannelsWithoutUploads";
 import ChannelsWithoutScreenshots from "./ChannelsWithoutScreenshots";
 import { useTypedViewType, ViewType } from "@/shared/hooks/useTypedParams";
-import ThumbnailsPage from "@/features/Dashboard/components/ThumbnailsPage";
+import ThumbnailsPage from "./ThumbnailsPage";
 
 export default function Dashboard() {
   const viewType = useTypedViewType();

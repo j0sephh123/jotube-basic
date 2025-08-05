@@ -3,7 +3,13 @@ import { routes } from "@/shared/utils/routes";
 import { useTypedViewType, ViewType } from "@/shared/hooks/useTypedParams";
 import clsx from "clsx";
 
-
+const viewTypeOrder = [
+  ViewType.CHANNELS_WITHOUT_UPLOADS,
+  ViewType.CHANNELS_WITHOUT_SCREENSHOTS,
+  ViewType.SAVED,
+  ViewType.THUMBNAILS,
+  ViewType.PROCESSED,
+];
 
 export default function ViewTypeToggle() {
   const navigate = useNavigate();
@@ -20,7 +26,7 @@ export default function ViewTypeToggle() {
     <div className="flex items-center gap-2">
       <span className="text-sm font-medium">View:</span>
       <div className="join">
-        {Object.values(ViewType).map((type) => (
+        {viewTypeOrder.map((type) => (
           <button
             key={type}
             className={clsx("join-item btn btn-sm", {

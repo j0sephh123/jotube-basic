@@ -8,7 +8,7 @@ import SavedUploads from "./pages/SavedUploadsPage";
 import ChannelsPageWrapper from "./features/Channel/ChannelsPageLayout";
 import GalleryPage from "./pages/GalleryPage";
 import GalleryLayout from "./features/Gallery/components/GalleryLayout";
-import Dashboard from "@/features/Dashboard/components";
+import Dashboard from "@/features/Dashboard/views";
 import DashboardWrapper from "@/features/Dashboard/components/DashboardWrapper";
 import DefaultUploadsPage from "./pages/DefaultUploadsPage";
 import GalleryVideoPage from "./features/Gallery/components/GalleryVideoPage";
