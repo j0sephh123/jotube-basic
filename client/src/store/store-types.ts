@@ -1,5 +1,6 @@
 import { SlideImage } from "yet-another-react-lightbox";
 import { ViewType } from "@/shared/hooks/useTypedParams";
+import { SortOrder } from "@/shared/types/searchParams";
 
 export type ViewingPreviewType = { ytVideoId: string };
 
@@ -62,7 +63,7 @@ export type ActiveViewerSlice = {
 
 export type DashboardSlice = {
   requestBody: {
-    sortOrder: "asc" | "desc";
+    sortOrder: SortOrder;
     page: number;
     min: number;
     max: number | null;

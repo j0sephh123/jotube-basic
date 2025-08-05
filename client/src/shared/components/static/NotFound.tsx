@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { HomeIcon, ArrowLeftIcon } from "lucide-react";
-import { routes } from "../utils/routes";
+import { routes } from "@/shared/utils/routes";
+import { ViewType } from "@/shared/hooks/useTypedParams";
 
-export default function The404() {
+export default function NotFound() {
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-base-100"
@@ -18,7 +19,7 @@ export default function The404() {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link to={routes.dashboard("saved")}>
+          <Link to={routes.dashboard(ViewType.SAVED)}>
             <button className="btn btn-primary">
               <HomeIcon className="w-4 h-4 mr-2" />
               Go to Dashboard

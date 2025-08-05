@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import nestFetcher from "@/shared/api/nestFetcher";
+import { SortOrder } from "@/shared/types/searchParams";
 
 type ChannelsWithoutScreenshotsResponse = {
   channels: {
@@ -17,7 +18,7 @@ export function useChannelsWithoutScreenshots({
   page = 1,
   perPage = 20,
 }: {
-  sortOrder?: "asc" | "desc";
+  sortOrder?: SortOrder;
   page?: number;
   perPage?: number;
 } = {}) {

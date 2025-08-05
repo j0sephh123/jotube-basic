@@ -1,7 +1,8 @@
 import { ViewType } from "@/shared/hooks/useTypedParams";
+import { SortOrder } from "@/shared/types/searchParams";
 
 export const defaults: {
-  sortOrder: "asc" | "desc";
+  sortOrder: SortOrder;
   page: number;
   min: number;
   max: number | null;
@@ -9,7 +10,7 @@ export const defaults: {
   defaultMax: number | null;
   viewType: ViewType;
 } = {
-  sortOrder: "desc" as "asc" | "desc",
+  sortOrder: "desc" as SortOrder,
   page: 1,
   min: 0,
   max: null as number | null,

@@ -1,15 +1,16 @@
 import { ArrowUp, ArrowDown } from "lucide-react";
 import { useDashboardContext } from "../../hooks/useDashboardContext";
+import { SortOrder } from "@/shared/types/searchParams";
 
 export default function SelectSortDirection(): JSX.Element {
   const { requestBody, setRequestBody } = useDashboardContext();
 
-  const icons: Record<"asc" | "desc", JSX.Element> = {
+  const icons: Record<SortOrder, JSX.Element> = {
     asc: <ArrowUp size={14} />,
     desc: <ArrowDown size={14} />,
   };
 
-  const labels: Record<"asc" | "desc", string> = {
+  const labels: Record<SortOrder, string> = {
     asc: "ASC",
     desc: "DESC",
   };
@@ -21,10 +22,8 @@ export default function SelectSortDirection(): JSX.Element {
 
   return (
     <button onClick={toggleSortOrder} className="btn">
-      {icons[requestBody.sortOrder as "asc" | "desc"]}
-      <span className="ml-2">
-        {labels[requestBody.sortOrder as "asc" | "desc"]}
-      </span>
+      {icons[requestBody.sortOrder as SortOrder]}
+      <span className="ml-2">{labels[requestBody.sortOrder as SortOrder]}</span>
     </button>
   );
 }

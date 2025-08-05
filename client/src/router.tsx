@@ -10,9 +10,9 @@ import GalleryPage from "./pages/GalleryPage";
 import GalleryLayout from "./features/Gallery/components/GalleryLayout";
 import Dashboard from "@/features/Dashboard/components";
 import DashboardWrapper from "@/features/Dashboard/components/DashboardWrapper";
-import The404 from "./shared/components/404";
 import DefaultUploadsPage from "./pages/DefaultUploadsPage";
 import GalleryVideoPage from "./features/Gallery/components/GalleryVideoPage";
+import NotFound from "./shared/components/static/NotFound";
 
 export const Router = (
   <BrowserRouter>
@@ -35,7 +35,7 @@ export const Router = (
           <Route path=":month" element={<ScreenshotsByMonth />} />
           <Route path=":month/:date" element={<ScreenshotsByDayDate />} />
         </Route>
-        <Route path="*" element={<The404 />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   </BrowserRouter>

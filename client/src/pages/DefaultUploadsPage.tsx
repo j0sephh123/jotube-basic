@@ -5,12 +5,13 @@ import { useSaveUpload } from "@/features/Upload/hooks/useSaveUpload";
 import useUploadsList from "@/features/Upload/hooks/useUploadsList";
 import { DefaultUploadCard } from "@/features/Upload/components/DefaultUploadCard";
 import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMetadata";
+import { SortOrder } from "@/shared/types/searchParams";
 
 export default function DefaultUploadsPage() {
   const ytChannelId = useTypedChannelYtId();
   const refetchChannelMetadata = useRefetchChannelMetadata();
   const [searchParams] = useSearchParams();
-  const sortOrder = (searchParams.get("sort") || "desc") as "asc" | "desc";
+  const sortOrder = (searchParams.get("sort") || "desc") as SortOrder;
   const { data, refetch } = useUploadsList(ytChannelId, sortOrder);
 
   const handleSideEffect = () => {
