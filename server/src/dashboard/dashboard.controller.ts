@@ -35,11 +35,6 @@ export class DashboardController {
     return this.dashboardService.fetchDashboard(fetchDashboardDto);
   }
 
-  @Get('thumbnails-view')
-  groupedThumbnails() {
-    return this.dashboardService.thumbnailsView();
-  }
-
   @Get('no-uploads-or-screenshots')
   getChannelsWithoutUploadsOrScreenshots(
     @Query('viewType') viewType: ViewType,

@@ -242,6 +242,10 @@ export class DashboardService {
   }
 
   public async getChannelsWithoutUploadsOrScreenshots(viewType: ViewType) {
+    if (viewType === ViewType.THUMBNAILS) {
+      return this.thumbnailsView();
+    }
+
     const isNoScreenshotsView =
       viewType === ViewType.CHANNELS_WITHOUT_SCREENSHOTS;
 
