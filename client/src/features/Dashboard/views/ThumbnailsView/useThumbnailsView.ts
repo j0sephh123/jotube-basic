@@ -1,22 +1,21 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import nestFetcher from "@/shared/api/nestFetcher";
 import { useCallback } from "react";
+import { DashboardChannel } from "../types";
+
+type Item = DashboardChannel & { uploadsCount: number };
+
+type Response = {
+  thumbnailChannelIds: number[];
+  thumbnailChannels: Item[];
+};
 
 export function useThumbnailsView() {
   return useQuery({
     queryKey: ["thumbnails-view"],
     queryFn: () =>
-      nestFetcher<{
-        thumbnailChannelIds: number[];
-        thumbnailChannels: Array<{
-          id: number;
-          ytId: string;
-          title: string;
-          src: string;
-          uploadsCount: number;
-        }>;
-      }>({
-        url: "/thumbnails-api/thumbnails-view",
+      nestFetcher<Response>({
+        url: "/dashboard/thumbnails-view",
         method: "GET",
       }),
   });

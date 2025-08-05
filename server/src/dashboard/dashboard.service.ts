@@ -137,53 +137,6 @@ export class DashboardService {
     };
   }
 
-  public async getDashboardCount(
-    dto: fetchDashboardDto,
-  ): Promise<{ total: number }> {
-    const isProcessedView = dto.viewType === 'processed';
-
-    const channels = await this.getChannels({
-      status: isProcessedView ? { in: [1, 2] } : 1,
-      ...(isProcessedView ? {} : { artifact: 'SAVED' }),
-    });
-
-    const channelsWithCounts = await this.getChannelsWithCounts(channels);
-
-    let filteredChannels: DashboardChannelWithUploads[] = channelsWithCounts;
-
-    if (dto.min !== undefined && dto.min > 0) {
-      filteredChannels = filteredChannels.filter((channel) => {
-        const value = isProcessedView
-          ? channel.screenshotsCount
-          : channel.saved;
-        return value >= dto.min;
-      });
-    }
-
-    if (dto.max !== undefined && dto.max > 0) {
-      filteredChannels = filteredChannels.filter((channel) => {
-        const value = isProcessedView
-          ? channel.screenshotsCount
-          : channel.saved;
-        return value <= dto.max;
-      });
-    }
-
-    if (dto.defaultMin !== undefined && dto.defaultMin > 0) {
-      filteredChannels = filteredChannels.filter((channel) => {
-        return channel.defaults >= dto.defaultMin;
-      });
-    }
-
-    if (dto.defaultMax !== undefined && dto.defaultMax > 0) {
-      filteredChannels = filteredChannels.filter((channel) => {
-        return channel.defaults <= dto.defaultMax;
-      });
-    }
-
-    return { total: filteredChannels.length };
-  }
-
   private getScreenshotsCount(ytChannelId: string): Promise<number> {
     return this.prismaService.screenshot
       .count({
@@ -356,5 +309,54 @@ export class DashboardService {
     });
 
     return channels;
+  }
+
+  public async thumbnailsView() {
+    const result = await this.prismaService.uploadsVideo.findMany({
+      where: { artifact: { in: ['THUMBNAIL'] } },
+      select: {
+        artifact: true,
+        channel: {
+          select: {
+            id: true,
+            ytId: true,
+            title: true,
+            src: true,
+            createdAt: true,
+          },
+        },
+      },
+    });
+
+    const thumbnailUploadsCount = result.reduce<Record<number, number>>(
+      (acc, video) => {
+        const channelId = video.channel.id;
+        acc[channelId] = (acc[channelId] || 0) + 1;
+        return acc;
+      },
+      {},
+    );
+
+    const thumbnailChannels = Array.from(
+      new Map(
+        result.map((video) => [
+          video.channel.id,
+          {
+            id: video.channel.id,
+            ytId: video.channel.ytId,
+            title: video.channel.title,
+            src: video.channel.src,
+            uploadsCount: thumbnailUploadsCount[video.channel.id] || 0,
+          },
+        ]),
+      ).values(),
+    );
+
+    return {
+      thumbnailChannels,
+      thumbnailChannelIds: thumbnailChannels.map(
+        (channel: { id: number }) => channel.id,
+      ),
+    };
   }
 }

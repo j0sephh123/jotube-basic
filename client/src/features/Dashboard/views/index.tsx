@@ -1,8 +1,8 @@
-import SavedAndProcessedView from "./SavedAndProcessedView";
-import NoUploadsView from "./NoUploadsView";
-import NoScreenshotsView from "./NoScreenshotsView";
+import SavedAndProcessedView from "./SavedAndProcessedView/index";
+import NoUploadsView from "./NoUploadsView/index";
+import NoScreenshotsView from "./NoScreenshotsView/index";
 import { useTypedViewType, ViewType } from "@/shared/hooks/useTypedParams";
-import ThumbnailsView from "./ThumbnailsView";
+import ThumbnailsView from "./ThumbnailsView/index";
 
 export default function Dashboard() {
   const viewType = useTypedViewType();

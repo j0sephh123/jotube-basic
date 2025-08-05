@@ -1,19 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import nestFetcher from "@/shared/api/nestFetcher";
 import { SortOrder } from "@/shared/types/searchParams";
+import { DashboardChannel } from "../types";
 
-type ChannelsWithoutScreenshotsResponse = {
-  channels: {
-    id: number;
-    title: string;
-    ytId: string;
-    createdAt: string;
-    src: string;
-  }[];
+type Item = DashboardChannel;
+
+type Response = {
+  channels: Item[];
   total: number;
 };
 
-export function useChannelsWithoutScreenshots({
+export function useNoScreenshotsView({
   sortOrder = "desc",
   page = 1,
   perPage = 20,
@@ -22,10 +19,10 @@ export function useChannelsWithoutScreenshots({
   page?: number;
   perPage?: number;
 } = {}) {
-  return useQuery<ChannelsWithoutScreenshotsResponse>({
+  return useQuery<Response>({
     queryKey: ["dashboard/no-screenshots", sortOrder, page, perPage],
     queryFn: () =>
-      nestFetcher<ChannelsWithoutScreenshotsResponse>({
+      nestFetcher<Response>({
         method: "GET",
         url: `/dashboard/no-screenshots?sortOrder=${sortOrder}&page=${page}&perPage=${perPage}`,
       }),

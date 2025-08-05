@@ -1,9 +1,9 @@
-import { useChannelsWithoutScreenshots } from "@/features/Channel/hooks/useChannelsWithoutScreenshots";
-import Card from "../../../shared/components/card";
-import CardsGridWrapper from "../components/CardsGridWrapper";
+import { useNoScreenshotsView } from "@/features/Dashboard/views/NoScreenshotsView/useNoScreenshotsView";
+import Card from "../../../../shared/components/card";
+import CardsGridWrapper from "../../components/CardsGridWrapper";
 
 export default function NoScreenshotsView() {
-  const { data: channelsWithoutScreenshots } = useChannelsWithoutScreenshots();
+  const { data: channelsWithoutScreenshots } = useNoScreenshotsView();
 
   return (
     <CardsGridWrapper

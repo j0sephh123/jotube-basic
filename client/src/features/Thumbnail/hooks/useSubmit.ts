@@ -1,7 +1,7 @@
 import { useStore } from "@/store/store";
 import { useCallback } from "react";
 import { useFinishProcessingUpload } from "@/features/Upload/hooks/useFinishProcessingUpload";
-import { useRefetchGroupedThumbnails } from "./useGroupedThumbnails";
+import { useRefetchGroupedThumbnails } from "../../Dashboard/views/ThumbnailsView/useThumbnailsView";
 import { useRefetchTotalScreenshots } from "@/features/Screenshot/hooks/useTotalScreenshots";
 import { useRefetchTotalThumbnails } from "./useTotalThumbnails";
 import { useRefetchThumbnailByVideoId } from "./useThumbnailByVideoId";

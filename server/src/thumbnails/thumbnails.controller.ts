@@ -10,11 +10,6 @@ export class ThumbnailsApiController {
     return this.thumbnailsApiService.getSlides(ytChannelIds);
   }
 
-  @Get('thumbnails-view')
-  groupedThumbnails() {
-    return this.thumbnailsApiService.thumbnailsView();
-  }
-
   @Post('/uploadsWithThumbnails')
   uploadsWithThumbnails(@Body() { channelIds }: { channelIds: number[] }) {
     return this.thumbnailsApiService.uploadsWithThumbnails(channelIds);

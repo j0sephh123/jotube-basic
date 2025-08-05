@@ -41,9 +41,9 @@ export class DashboardController {
     return this.dashboardService.fetchDashboard(fetchDashboardDto);
   }
 
-  @Post('count')
-  getDashboardCount(@Body() fetchDashboardDto: fetchDashboardDto) {
-    return this.dashboardService.getDashboardCount(fetchDashboardDto);
+  @Get('thumbnails-view')
+  groupedThumbnails() {
+    return this.dashboardService.thumbnailsView();
   }
 
   @Get('no-screenshots')

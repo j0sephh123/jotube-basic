@@ -1,9 +1,9 @@
-import { useChannelsWithoutUploads } from "@/features/Channel/hooks/useChannelsWithoutUploads";
-import Card from "../../../shared/components/card";
-import CardsGridWrapper from "../components/CardsGridWrapper";
+import { useNoUploadsView } from "@/features/Dashboard/views/NoUploadsView/useNoUploadsView";
+import Card from "../../../../shared/components/card";
+import CardsGridWrapper from "../../components/CardsGridWrapper";
 
 export default function NoUploadsView() {
-  const { data: channelsWithoutUploads } = useChannelsWithoutUploads();
+  const { data: channelsWithoutUploads } = useNoUploadsView();
 
   return (
     <CardsGridWrapper

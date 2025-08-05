@@ -1,7 +1,7 @@
 import { Loader } from "lucide-react";
-import ItemList from "../components/SavedOrProcessedCardsList";
+import ItemList from "../../components/SavedOrProcessedCardsList";
 import ErrorMessage from "@/shared/components/static/ErrorMessage";
-import { useDashboardQuery } from "@/features/Dashboard/hooks/useDashboardQuery";
+import { useDashboardQuery } from "@/features/Dashboard/views/SavedAndProcessedView/useDashboardQuery";
 import useAddUploadsToQueue from "@/features/Upload/hooks/useAddUploadsToQueue";
 import { useDeleteUploads } from "@/features/Upload/hooks/useUploadsDelete";
 

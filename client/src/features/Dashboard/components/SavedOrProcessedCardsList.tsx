@@ -1,5 +1,5 @@
 import Card from "../../../shared/components/card";
-import { DashboardResponseData } from "../hooks/useDashboardQuery";
+import { DashboardResponseData } from "../views/SavedAndProcessedView/useDashboardQuery";
 import CardsGridWrapper from "./CardsGridWrapper";
 
 type ItemsListProps = {

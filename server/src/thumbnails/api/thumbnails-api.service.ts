@@ -62,54 +62,6 @@ export class ThumbnailsApiService {
     }));
   }
 
-  public async thumbnailsView() {
-    const result = await this.prismaService.uploadsVideo.findMany({
-      where: { artifact: { in: ['THUMBNAIL'] } },
-      select: {
-        artifact: true,
-        channel: {
-          select: {
-            id: true,
-            ytId: true,
-            title: true,
-            src: true,
-          },
-        },
-      },
-    });
-
-    const thumbnailUploadsCount = result.reduce<Record<number, number>>(
-      (acc, video) => {
-        const channelId = video.channel.id;
-        acc[channelId] = (acc[channelId] || 0) + 1;
-        return acc;
-      },
-      {},
-    );
-
-    const thumbnailChannels = Array.from(
-      new Map(
-        result.map((video) => [
-          video.channel.id,
-          {
-            id: video.channel.id,
-            ytId: video.channel.ytId,
-            title: video.channel.title,
-            src: video.channel.src,
-            uploadsCount: thumbnailUploadsCount[video.channel.id] || 0,
-          },
-        ]),
-      ).values(),
-    );
-
-    return {
-      thumbnailChannels,
-      thumbnailChannelIds: thumbnailChannels.map(
-        (channel: { id: number }) => channel.id,
-      ),
-    };
-  }
-
   public async uploadsWithThumbnails(channelIds: number[]) {
     const resp = await this.prismaService.uploadsVideo.findMany({
       where: { channelId: { in: channelIds }, artifact: 'THUMBNAIL' },
