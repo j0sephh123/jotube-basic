@@ -1,7 +1,6 @@
 import { useState, useMemo } from "react";
 import { Download, Trash2 } from "lucide-react";
 import Avatar from "@/shared/components/Avatar";
-import useSyncUploads from "@/features/Upload/hooks/useSyncUploads";
 import { useOpenDirectory } from "@/shared/components/OpenDirectoryButton/useOpenDirectory";
 import { useNavigate } from "react-router-dom";
 import { getPublicImgUrl } from "@/shared/utils/image";
@@ -9,7 +8,7 @@ import { routes } from "@/shared/utils/routes";
 import CardMenuWrapper from "./CardMenuWrapper";
 import CardStats from "./CardStats";
 import CardTitle from "./CardTitle";
-import SyncButton from "./SyncButton";
+import SyncUploadsButton from "../../../features/Upload/components/SyncUploadsButton";
 
 type ItemProps = {
   id: number;
@@ -57,7 +56,6 @@ export default function Card({
   onThumbnailClick,
 }: ItemProps) {
   const [screenshotIndex, setScreenshotIndex] = useState(0);
-  const syncUploads = useSyncUploads(ytChannelId || ytId);
   const handleOpenExplorer = useOpenDirectory({ ytChannelId: ytId });
   const navigate = useNavigate();
 
@@ -89,19 +87,6 @@ export default function Card({
 
     if (screenshots && screenshots.length > 0) {
       setScreenshotIndex((prev) => (prev + 1) % screenshots.length);
-    }
-  };
-
-  const handleSync = async () => {
-    if (!ytChannelId) return;
-
-    try {
-      await syncUploads.mutateAsync({
-        ytChannelId,
-        channelId: id,
-      });
-    } catch (error) {
-      console.error("Failed to sync channel:", error);
     }
   };
 
@@ -153,10 +138,10 @@ export default function Card({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             {showSyncButton && ytChannelId && (
-              <SyncButton
+              <SyncUploadsButton
                 lastSyncedAt={lastSyncedAt || null}
-                syncUploadsIsPending={syncUploads.isPending}
-                onClick={handleSync}
+                ytChannelId={ytChannelId}
+                id={id}
               />
             )}
 

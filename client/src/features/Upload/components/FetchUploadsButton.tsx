@@ -1,6 +1,7 @@
-  import { useRefetchNoUploadsView } from "@/features/Dashboard/views/NoUploadsView/useNoUploadsView";
+import { useRefetchNoUploadsView } from "@/features/Dashboard/views/NoUploadsView/useNoUploadsView";
 import { useFetchUploads } from "@/features/Upload/hooks/useFetchUploads";
 import { Download } from "lucide-react";
+import clsx from "clsx";
 
 type Props = {
   ytChannelId: string;
@@ -35,7 +36,10 @@ export default function FetchUploadsButton({
     <button
       disabled={isFetchingThisChannel}
       onClick={() => handleFetchUploads({ ytChannelId })}
-      className="btn btn-sm btn-primary"
+      className={clsx(
+        "btn btn-sm",
+        isFetchingThisChannel ? "btn-disabled" : "btn-primary"
+      )}
     >
       <Download className="h-4 w-4 mr-2" />
       {isFetchingThisChannel ? "Fetching..." : `Fetch ${videoCount}`}

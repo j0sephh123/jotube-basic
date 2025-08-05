@@ -2,7 +2,6 @@ import { HomeIcon } from "lucide-react";
 import QuickSearch from "@/features/Search/Search";
 import PlayButton from "./InitCarouselButton";
 import DropdownMenu from "./DropdownMenu";
-import ThumbnailsMenu from "./ThumbnailsMenu";
 import ProcessingProgress from "./ProcessingProgress";
 import {
   getCurrentDay,
@@ -24,7 +23,6 @@ export default function Navbar(): JSX.Element {
           <Link to={routes.home()} className="btn btn-ghost text-xl">
             <HomeIcon />
           </Link>
-          <ThumbnailsMenu />
           <DropdownMenu
             title="Screenshots"
             items={[

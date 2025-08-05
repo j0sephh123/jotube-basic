@@ -31,7 +31,7 @@ type Item = DashboardChannel & {
   screenshots: Screenshot[];
 };
 
-type Response = {
+export type DashboardResponseData = {
   channels: Item[];
   total: number;
 };
@@ -45,10 +45,10 @@ export function useDashboardQuery() {
     viewType: params.viewType,
   };
 
-  return useQuery<Response>({
+  return useQuery<DashboardResponseData>({
     queryKey: ["dashboard", requestBodyWithViewType],
     queryFn: () =>
-      nestFetcher<Response>({
+      nestFetcher<DashboardResponseData>({
         method: "POST",
         url: "/dashboard",
         body: requestBodyWithViewType,
