@@ -1,11 +1,7 @@
-import CardStats from "@/shared/components/card/CardStats";
 import Card from "../../../shared/components/card";
 import { DashboardResponseData } from "../views/SavedAndProcessedView/useDashboardQuery";
 import CardsGridWrapper from "./CardsGridWrapper";
-import CardMenu from "@/shared/components/card/CardMenu";
 import SyncUploadsButton from "@/features/Upload/components/SyncUploadsButton";
-import CardDownloadButton from "@/shared/components/card/CardDownloadButton";
-import CardDeleteButton from "@/shared/components/card/CardDeleteButton";
 
 type ItemsListProps = {
   data: DashboardResponseData;
@@ -20,7 +16,7 @@ const SavedOrProcessedCardsList = ({ data }: ItemsListProps) => {
     >
       {data.channels?.map((channel) => {
         const cardStats = (
-          <CardStats
+          <Card.Stats
             ytId={channel.ytId}
             screenshotsCount={channel.screenshotsCount}
             thumbnails={channel.thumbnails || 0}
@@ -29,7 +25,7 @@ const SavedOrProcessedCardsList = ({ data }: ItemsListProps) => {
           />
         );
 
-        const cardMenu = <CardMenu id={channel.id} ytId={channel.ytId} />;
+        const cardMenu = <Card.Menu id={channel.id} ytId={channel.ytId} />;
 
         const syncButton = (
           <SyncUploadsButton
@@ -39,9 +35,9 @@ const SavedOrProcessedCardsList = ({ data }: ItemsListProps) => {
           />
         );
 
-        const downloadButton = <CardDownloadButton id={channel.id} />;
+        const downloadButton = <Card.DownloadButton id={channel.id} />;
         const deleteButton = channel.ytId ? (
-          <CardDeleteButton ytChannelId={channel.ytId} />
+          <Card.DeleteButton ytChannelId={channel.ytId} />
         ) : null;
 
         return (
@@ -55,7 +51,7 @@ const SavedOrProcessedCardsList = ({ data }: ItemsListProps) => {
             ytChannelId={channel.ytId}
             cardStatsSlot={cardStats}
             cardMenuSlot={cardMenu}
-            syncButtonSlot={syncButton}
+            actionButtonSlot={syncButton}
             downloadButtonSlot={downloadButton}
             deleteButtonSlot={deleteButton}
           />

@@ -7,6 +7,7 @@ import CardTitle from "./CardTitle";
 import CardStats from "./CardStats";
 import CardMenu from "./CardMenu";
 import CardDeleteButton from "./CardDeleteButton";
+import CardDownloadButton from "./CardDownloadButton";
 
 type CardProps = {
   id: number;
@@ -19,7 +20,7 @@ type CardProps = {
     ytVideoId: string;
     second: number;
   }[];
-  syncButtonSlot?: React.ReactNode;
+  actionButtonSlot?: React.ReactNode;
   cardStatsSlot?: React.ReactNode;
   cardMenuSlot?: React.ReactNode;
   downloadButtonSlot?: React.ReactNode;
@@ -34,7 +35,7 @@ function Card({
   cardStatsSlot,
   ytChannelId,
   screenshots,
-  syncButtonSlot,
+  actionButtonSlot,
   cardMenuSlot,
   downloadButtonSlot,
   deleteButtonSlot,
@@ -48,28 +49,27 @@ function Card({
   };
 
   return (
-    <CardContainer>
-      <CardImage
+    <Card.Container>
+      <Card.Image
         id={id}
         ytId={ytId}
         src={src}
         ytChannelId={ytChannelId}
         screenshots={screenshots}
       />
-
-      <CardContent>
-        <CardTitle title={title} onClick={handleChannelTitleClick} />
+      <Card.Content>
+        <Card.Title title={title} onClick={handleChannelTitleClick} />
         {cardStatsSlot}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            {syncButtonSlot}
+            {actionButtonSlot}
             {downloadButtonSlot}
             {deleteButtonSlot}
           </div>
           {cardMenuSlot}
         </div>
-      </CardContent>
-    </CardContainer>
+      </Card.Content>
+    </Card.Container>
   );
 }
 
@@ -80,5 +80,6 @@ Card.Title = CardTitle;
 Card.Stats = CardStats;
 Card.Menu = CardMenu;
 Card.DeleteButton = CardDeleteButton;
+Card.DownloadButton = CardDownloadButton;
 
 export default Card;

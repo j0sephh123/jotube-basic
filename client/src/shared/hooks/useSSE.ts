@@ -36,8 +36,6 @@ export function useSSE() {
         const data = JSON.parse(event.data) as SSEEventData;
         if (data.type === "keep-alive") return;
 
-        console.log(data.type);
-
         const filename = `${data.ytVideoId}.mp4`;
         switch (data.type) {
           case "download_start":
@@ -71,8 +69,7 @@ export function useSSE() {
         }
       };
 
-      newEventSource.onerror = (error) => {
-        console.error("SSE error:", error);
+      newEventSource.onerror = () => {
         isConnectingRef.current = false;
 
         if (newEventSource) {
