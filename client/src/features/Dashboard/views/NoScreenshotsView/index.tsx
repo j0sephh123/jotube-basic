@@ -19,8 +19,6 @@ export default function NoScreenshotsView() {
           title={channel.title}
           src={channel.src}
           showSyncButton={false}
-          showCardMenu={false}
-          showStats={false}
           showActionButtons={false}
         />
       ))}

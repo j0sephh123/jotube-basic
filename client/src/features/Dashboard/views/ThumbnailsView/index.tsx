@@ -17,17 +17,14 @@ export default function ThumbnailsView() {
         isEmpty={!thumbnailChannels.length}
         className="bg-base-100"
       >
-        {thumbnailChannels.map(({ id, ytId, title, src, uploadsCount }) => (
+        {thumbnailChannels.map(({ id, ytId, title, src }) => (
           <Card
             key={id}
             id={id}
             ytId={ytId}
             title={title}
             src={src}
-            thumbnails={uploadsCount}
             showSyncButton={false}
-            showCardMenu={false}
-            showStats={false}
             showActionButtons={false}
           />
         ))}

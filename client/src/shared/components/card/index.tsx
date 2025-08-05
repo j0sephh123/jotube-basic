@@ -5,21 +5,16 @@ import CardImage from "./CardImage";
 import CardContent from "./CardContent";
 import CardTitle from "./CardTitle";
 import CardStats from "./CardStats";
-import CardActions from "./CardActions";
 import CardMenu from "./CardMenu";
 import CardDeleteButton from "./CardDeleteButton";
-import { useOpenDirectory } from "@/shared/components/OpenDirectoryButton/useOpenDirectory";
+import SyncUploadsButton from "@/features/Upload/components/SyncUploadsButton";
+import CardDownloadButton from "./CardDownloadButton";
 
 type CardProps = {
   id: number;
   src: string;
   ytId: string;
   title: string;
-  saved?: number;
-  thumbnails?: number;
-  defaults?: number;
-  uploadsWithScreenshots?: number;
-  screenshotsCount?: number;
   ytChannelId?: string;
   lastSyncedAt?: string | null;
   screenshots?: {
@@ -27,9 +22,9 @@ type CardProps = {
     second: number;
   }[];
   showSyncButton?: boolean;
-  showCardMenu?: boolean;
-  showStats?: boolean;
   showActionButtons?: boolean;
+  cardStatsSlot?: React.ReactNode;
+  cardMenuSlot?: React.ReactNode;
 };
 
 function Card({
@@ -37,19 +32,14 @@ function Card({
   src,
   ytId,
   title,
-  saved,
-  thumbnails,
-  defaults,
-  screenshotsCount,
+  cardStatsSlot,
   ytChannelId,
   screenshots,
   lastSyncedAt,
   showSyncButton = true,
-  showCardMenu = true,
-  showStats = true,
+  cardMenuSlot,
   showActionButtons = true,
 }: CardProps) {
-  const handleOpenExplorer = useOpenDirectory({ ytChannelId: ytId });
   const navigate = useNavigate();
 
   const handleChannelTitleClick = (e: React.MouseEvent) => {
@@ -70,29 +60,22 @@ function Card({
 
       <CardContent>
         <CardTitle title={title} onClick={handleChannelTitleClick} />
-
-        {showStats && (
-          <CardStats
-            ytId={ytId}
-            screenshotsCount={screenshotsCount}
-            thumbnails={thumbnails || 0}
-            saved={saved}
-            defaults={defaults}
-          />
-        )}
-
+        {cardStatsSlot}
         <div className="flex items-center justify-between">
-          <CardActions
-            id={id}
-            ytChannelId={ytChannelId}
-            lastSyncedAt={lastSyncedAt}
-            showSyncButton={showSyncButton}
-            showActionButtons={showActionButtons}
-          />
-
-          {showCardMenu && (
-            <CardMenu id={id} ytId={ytId} onOpenExplorer={handleOpenExplorer} />
-          )}
+          <div className="flex items-center gap-2">
+            {showSyncButton && ytChannelId && (
+              <SyncUploadsButton
+                lastSyncedAt={lastSyncedAt || null}
+                ytChannelId={ytChannelId}
+                id={id}
+              />
+            )}
+            {showActionButtons && <CardDownloadButton id={id} />}
+            {showActionButtons && ytChannelId && (
+              <CardDeleteButton ytChannelId={ytChannelId} />
+            )}
+          </div>
+          {cardMenuSlot}
         </div>
       </CardContent>
     </CardContainer>
@@ -104,7 +87,6 @@ Card.Image = CardImage;
 Card.Content = CardContent;
 Card.Title = CardTitle;
 Card.Stats = CardStats;
-Card.Actions = CardActions;
 Card.Menu = CardMenu;
 Card.DeleteButton = CardDeleteButton;
 

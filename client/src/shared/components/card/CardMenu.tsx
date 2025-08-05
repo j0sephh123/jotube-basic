@@ -2,15 +2,16 @@ import { useState, useRef, useEffect } from "react";
 import { MoreVertical, FolderOpen } from "lucide-react";
 import CopyValue from "@/shared/components/CopyValue";
 import { useStore } from "@/store/store";
+import { useOpenDirectory } from "../OpenDirectoryButton/useOpenDirectory";
 
 type CardMenuProps = {
   id: number;
   ytId: string;
-  onOpenExplorer: () => void;
   onClose?: () => void;
 };
 
-function CardMenu({ id, ytId, onOpenExplorer, onClose }: CardMenuProps) {
+function CardMenu({ id, ytId , onClose }: CardMenuProps) {
+  const handleOpenExplorer = useOpenDirectory({ ytChannelId: ytId });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const addToIgnoreList = useStore((state) => state.addToIgnoreList);
@@ -54,7 +55,7 @@ function CardMenu({ id, ytId, onOpenExplorer, onClose }: CardMenuProps) {
 
   const handleOpenExplorerClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    onOpenExplorer();
+    handleOpenExplorer();
     setIsMenuOpen(false);
     onClose?.();
   };
