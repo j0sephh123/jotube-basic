@@ -10,7 +10,6 @@ import {
   getLastMonth,
 } from "@/shared/utils/date";
 import { Link } from "react-router-dom";
-import IgnoreListInfo from "./IgnoreListInfo";
 import VideoProcessingInfo from "./VideoProcessingInfo";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { routes } from "@/shared/utils/routes";
@@ -42,7 +41,6 @@ export default function Navbar(): JSX.Element {
           <ThemeSwitcher />
           <ProcessingProgress />
           <VideoProcessingInfo />
-          <IgnoreListInfo />
         </div>
       </div>
     </div>

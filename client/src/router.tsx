@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import TheLayout from "./shared/components/Layout";
+import Layout from "./shared/components/Layout";
 import ScreenshotsPage from "./pages/ScreenshotsPage";
 import ScreenshotsByMonth from "./pages/ScreenshotsPageMonth";
 import ScreenshotsByDayDate from "./pages/ScreenshotsPageDate";
@@ -17,7 +17,7 @@ import NotFound from "./shared/components/static/NotFound";
 export const Router = (
   <BrowserRouter>
     <Routes>
-      <Route element={<TheLayout />}>
+      <Route element={<Layout />}>
         <Route path="/" element={<Navigate to="/dashboard/saved" />} />
         <Route path="dashboard" element={<DashboardWrapper />}>
           <Route path=":viewType" element={<Dashboard />} />

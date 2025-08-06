@@ -6,7 +6,7 @@ import TheNavbar from "@/shared/components/Navbar";
 import { DialogProvider } from "./dialog/DialogProvider";
 import ThumbnailsProcessing from "@/features/Thumbnail/components";
 
-export default function TheLayout(): JSX.Element {
+export default function Layout(): JSX.Element {
   useSSE();
 
   return (

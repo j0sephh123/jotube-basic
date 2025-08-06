@@ -27,10 +27,7 @@ const BulkOperations = ({ ytChannelId, isSavedPage, isIndexPage }: Props) => {
     refetchSavedUploads();
   });
 
-  const deleteUploadsMutation = useDeleteUploads(() => {
-    refetchSavedUploads();
-    refetchChannelMetadata(ytChannelId);
-  });
+  const deleteUploadsMutation = useDeleteUploads();
 
   const handleDownloadAll = () => {
     downloadMutation.mutate([{ ytChannelId, downloadOption: 0 }]);

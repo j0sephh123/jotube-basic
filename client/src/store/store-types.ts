@@ -2,8 +2,6 @@ import { SlideImage } from "yet-another-react-lightbox";
 import { ViewType } from "@/shared/hooks/useTypedParams";
 import { SortOrder } from "@/shared/types/searchParams";
 
-export type ViewingPreviewType = { ytVideoId: string };
-
 export type SlidesData = SlideImage[];
 
 export type SlidesSlice = {
@@ -32,16 +30,6 @@ export type ThumbnailsProcessingSlice = {
   };
 };
 
-export type PreviewProcessingSlice = {
-  previewsProcessingData: {
-    type: "thumbnail" | "iframe";
-    items: ThumbnailItem[];
-  };
-  setPreviewProcessingData: (
-    arg: PreviewProcessingSlice["previewsProcessingData"]
-  ) => void;
-};
-
 export type SSESlice = {
   eventSource: EventSource | null;
   setEventSource: (eventSource: EventSource | null) => void;
@@ -54,11 +42,6 @@ export type SSESlice = {
     type: "download" | "screenshots" | "thumbnails",
     data: { progress?: string; filename: string; current?: number } | null
   ) => void;
-};
-
-export type ActiveViewerSlice = {
-  activeViewerId: "custom" | "lightbox";
-  setActiveViewerId: (id: ActiveViewerSlice["activeViewerId"]) => void;
 };
 
 export type DashboardSlice = {
@@ -75,17 +58,6 @@ export type DashboardSlice = {
     key: K,
     value: DashboardSlice["requestBody"][K]
   ) => void;
-};
-
-export type IgnoreListSlice = {
-  ignoreList: Array<{
-    ytId: string;
-    title: string;
-  }>;
-  addToIgnoreList: (ytId: string, title: string) => void;
-  removeFromIgnoreList: (ytId: string) => void;
-  isIgnored: (ytId: string) => boolean;
-  clearIgnoreList: () => void;
 };
 
 export enum RangePickerTypes {
@@ -114,5 +86,4 @@ export type Store = SlidesSlice &
   ThumbnailsProcessingSlice &
   SSESlice &
   DashboardSlice &
-  IgnoreListSlice &
   RangePickersSlice;
