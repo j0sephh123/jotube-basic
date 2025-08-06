@@ -6,19 +6,16 @@ import {
   DashboardChannelWithUploads,
   DashboardResponse,
   ViewType,
+  DashboardChannel,
 } from './types';
 import {
   getChannelsWithThumbnails,
   getMappedChannels,
   getThumbnails,
-  filterChannels,
-  getSortedChannels,
 } from './thumbnails-helper';
 import {
   getChannelsWithoutUploadsOrScreenshots,
   mapChannelsWithoutUploadsOrScreenshots,
-  filterChannelsWithoutUploadsOrScreenshots,
-  sortChannelsWithoutUploadsOrScreenshots,
 } from './channels-helper';
 
 const PER_PAGE = 12;
@@ -38,69 +35,96 @@ export class DashboardService {
   }: fetchDashboardDto): Promise<DashboardResponse> {
     const skip = (page - 1) * PER_PAGE;
 
-    if (viewType === ViewType.THUMBNAILS) {
-      const result = await getThumbnails(this.prismaService);
-      const thumbnailChannels = getChannelsWithThumbnails(result);
-      let channels = getMappedChannels(thumbnailChannels);
-      channels = filterChannels(channels, min, max, defaultMin, defaultMax);
-      const sorted = getSortedChannels(channels, sortOrder);
-
-      return {
-        channels: sorted.slice(skip, skip + PER_PAGE),
-        total: sorted.length,
-      };
-    }
-
-    if (
-      viewType === ViewType.CHANNELS_WITHOUT_UPLOADS ||
-      viewType === ViewType.CHANNELS_WITHOUT_SCREENSHOTS
-    ) {
-      const channels = await getChannelsWithoutUploadsOrScreenshots(
-        this.prismaService,
-        viewType,
-      );
-      let mappedChannels = mapChannelsWithoutUploadsOrScreenshots(channels);
-      mappedChannels = filterChannelsWithoutUploadsOrScreenshots(
-        mappedChannels,
-        defaultMin,
-        defaultMax,
-      );
-      const sorted = sortChannelsWithoutUploadsOrScreenshots(
-        mappedChannels,
-        sortOrder,
-      );
-
-      return {
-        channels: sorted.slice(skip, skip + PER_PAGE),
-        total: sorted.length,
-      };
-    }
-
-    const isProcessedView = viewType === 'processed';
-
-    const channels = await this.getChannels({
-      status: isProcessedView ? { in: [1, 2] } : 1,
-      ...(isProcessedView ? {} : { artifact: 'SAVED' }),
+    const channels = await this.getChannelsForViewType(viewType);
+    const processedChannels = await this.processChannels(channels, viewType);
+    const filteredChannels = this.filterChannels(processedChannels, {
+      min,
+      max,
+      defaultMin,
+      defaultMax,
+      viewType,
     });
+    const sortedChannels = this.sortChannels(
+      filteredChannels,
+      sortOrder,
+      viewType,
+    );
 
-    const channelsWithCounts = await this.getChannelsWithCounts(channels);
+    return {
+      channels: sortedChannels.slice(skip, skip + PER_PAGE),
+      total: sortedChannels.length,
+    };
+  }
 
-    let filteredChannels: DashboardChannelWithUploads[] = channelsWithCounts;
+  private async getChannelsForViewType(viewType: ViewType): Promise<any[]> {
+    switch (viewType) {
+      case ViewType.THUMBNAILS:
+        const result = await getThumbnails(this.prismaService);
+        const thumbnailChannels = getChannelsWithThumbnails(result);
+        return getMappedChannels(thumbnailChannels);
+
+      case ViewType.CHANNELS_WITHOUT_UPLOADS:
+      case ViewType.CHANNELS_WITHOUT_SCREENSHOTS:
+        const channels = await getChannelsWithoutUploadsOrScreenshots(
+          this.prismaService,
+          viewType,
+        );
+        return mapChannelsWithoutUploadsOrScreenshots(channels);
+
+      default:
+        const isProcessedView = viewType === ViewType.PROCESSED;
+        const filter = {
+          status: isProcessedView ? { in: [1, 2] } : 1,
+          ...(isProcessedView ? {} : { artifact: 'SAVED' }),
+        };
+        const rawChannels = await this.getChannels(filter);
+        return this.getChannelsWithCounts(rawChannels);
+    }
+  }
+
+  private async processChannels(
+    channels: any[],
+    viewType: ViewType,
+  ): Promise<DashboardChannel[]> {
+    if (viewType === ViewType.PROCESSED || viewType === ViewType.SAVED) {
+      return channels.map((channel) => {
+        const rest = { ...channel };
+        delete rest.uploads;
+        return viewType === ViewType.PROCESSED
+          ? {
+              ...rest,
+              screenshotsCount: channel.screenshotsCount,
+            }
+          : rest;
+      });
+    }
+    return channels;
+  }
+
+  private filterChannels(
+    channels: DashboardChannel[],
+    filters: {
+      min?: number;
+      max?: number;
+      defaultMin?: number;
+      defaultMax?: number;
+      viewType: ViewType;
+    },
+  ): DashboardChannel[] {
+    let filteredChannels = channels;
+
+    const { min, max, defaultMin, defaultMax, viewType } = filters;
 
     if (min !== undefined && min > 0) {
       filteredChannels = filteredChannels.filter((channel) => {
-        const value = isProcessedView
-          ? channel.screenshotsCount
-          : channel.saved;
+        const value = this.getFilterValue(channel, viewType);
         return value >= min;
       });
     }
 
     if (max !== undefined && max > 0) {
       filteredChannels = filteredChannels.filter((channel) => {
-        const value = isProcessedView
-          ? channel.screenshotsCount
-          : channel.saved;
+        const value = this.getFilterValue(channel, viewType);
         return value <= max;
       });
     }
@@ -117,30 +141,54 @@ export class DashboardService {
       });
     }
 
-    const sorted = filteredChannels.sort((a, b) => {
-      const aValue = isProcessedView ? a.screenshotsCount : a.saved;
-      const bValue = isProcessedView ? b.screenshotsCount : b.saved;
+    return filteredChannels;
+  }
+
+  private getFilterValue(
+    channel: DashboardChannel,
+    viewType: ViewType,
+  ): number {
+    switch (viewType) {
+      case ViewType.THUMBNAILS:
+        return channel.thumbnails;
+      case ViewType.PROCESSED:
+        return channel.screenshotsCount;
+      case ViewType.SAVED:
+        return channel.saved;
+      case ViewType.CHANNELS_WITHOUT_UPLOADS:
+      case ViewType.CHANNELS_WITHOUT_SCREENSHOTS:
+        return channel.createdAt.getTime();
+      default:
+        return channel.saved;
+    }
+  }
+
+  private sortChannels(
+    channels: DashboardChannel[],
+    sortOrder: string,
+    viewType: ViewType,
+  ): DashboardChannel[] {
+    return channels.sort((a, b) => {
+      const aValue = this.getSortValue(a, viewType);
+      const bValue = this.getSortValue(b, viewType);
       return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
     });
+  }
 
-    const paginated = {
-      channels: sorted.slice(skip, skip + PER_PAGE),
-      total: sorted.length,
-    };
-
-    return {
-      channels: paginated.channels.map((channel) => {
-        const rest = { ...channel };
-        delete rest.uploads;
-        return isProcessedView
-          ? {
-              ...rest,
-              screenshotsCount: channel.screenshotsCount,
-            }
-          : rest;
-      }),
-      total: paginated.total,
-    };
+  private getSortValue(channel: DashboardChannel, viewType: ViewType): number {
+    switch (viewType) {
+      case ViewType.THUMBNAILS:
+        return channel.thumbnails;
+      case ViewType.PROCESSED:
+        return channel.screenshotsCount;
+      case ViewType.SAVED:
+        return channel.saved;
+      case ViewType.CHANNELS_WITHOUT_UPLOADS:
+      case ViewType.CHANNELS_WITHOUT_SCREENSHOTS:
+        return channel.createdAt.getTime();
+      default:
+        return channel.saved;
+    }
   }
 
   private async getScreenshotsCount(ytChannelId: string): Promise<number> {
