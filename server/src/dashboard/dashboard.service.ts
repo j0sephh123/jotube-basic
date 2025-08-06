@@ -67,11 +67,10 @@ export class DashboardService {
   private async getChannelsForViewType(viewType: ViewType): Promise<any[]> {
     switch (viewType) {
       case ViewType.THUMBNAILS:
-        const result =
-          await this.thumbnailsApiService.getThumbnailsForDashboard();
-        const thumbnailChannels =
-          this.thumbnailsApiService.getChannelsWithThumbnails(result);
-        return this.thumbnailsApiService.getMappedChannels(thumbnailChannels);
+        const thumbnailChannels = await this.getChannels({
+          artifact: 'THUMBNAIL',
+        });
+        return this.getChannelsWithCounts(thumbnailChannels);
 
       case ViewType.CHANNELS_WITHOUT_UPLOADS:
       case ViewType.CHANNELS_WITHOUT_SCREENSHOTS:
@@ -168,7 +167,7 @@ export class DashboardService {
     const whereClause: any = {};
 
     if (filter.artifact) {
-      whereClause.uploads = { some: filter };
+      whereClause.uploads = { some: { artifact: filter.artifact } };
     } else if (filter.status) {
       whereClause.screenshots = {
         some: {},
