@@ -3,6 +3,7 @@ import { YoutubeService } from 'src/core/external-services/youtube-api/youtube.s
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
 import { createChannelDto } from './dtos/create-channel.dto';
 import { ArtifactType } from '@prisma/client';
+import { ViewType, DashboardChannel } from 'src/dashboard/types';
 
 @Injectable()
 export class ChannelService {
@@ -124,7 +125,88 @@ export class ChannelService {
     };
   }
 
-  // TODO this is returned even if non-existing id is passed
+  public async getChannelsWithoutUploadsOrScreenshots(viewType: ViewType) {
+    const isNoScreenshotsView =
+      viewType === ViewType.CHANNELS_WITHOUT_SCREENSHOTS;
+
+    return this.prismaService.channel.findMany({
+      where: {
+        fetchedUntilEnd: isNoScreenshotsView,
+        ...(isNoScreenshotsView ? { uploads: { every: { status: 0 } } } : {}),
+      },
+      select: {
+        id: true,
+        ytId: true,
+        title: true,
+        src: true,
+        createdAt: true,
+        lastSyncedAt: true,
+        videoCount: true,
+      },
+    });
+  }
+
+  public mapChannelsWithoutUploadsOrScreenshots(
+    channels: {
+      id: number;
+      ytId: string;
+      title: string;
+      src: string;
+      createdAt: Date;
+      lastSyncedAt: Date | null;
+      videoCount: number;
+    }[],
+  ): DashboardChannel[] {
+    return channels.map((channel) => ({
+      id: channel.id,
+      ytId: channel.ytId,
+      title: channel.title,
+      src: channel.src,
+      createdAt: channel.createdAt,
+      lastSyncedAt: channel.lastSyncedAt,
+      videoCount: channel.videoCount,
+      thumbnails: 0,
+      saved: 0,
+      defaults: 0,
+      uploadsWithScreenshots: 0,
+      screenshotsCount: 0,
+      screenshots: [],
+    }));
+  }
+
+  public filterChannelsWithoutUploadsOrScreenshots(
+    channels: DashboardChannel[],
+    defaultMin?: number,
+    defaultMax?: number,
+  ): DashboardChannel[] {
+    let filteredChannels = channels;
+
+    if (defaultMin !== undefined && defaultMin > 0) {
+      filteredChannels = filteredChannels.filter(
+        (channel) => channel.defaults >= defaultMin,
+      );
+    }
+
+    if (defaultMax !== undefined && defaultMax > 0) {
+      filteredChannels = filteredChannels.filter(
+        (channel) => channel.defaults <= defaultMax,
+      );
+    }
+
+    return filteredChannels;
+  }
+
+  public sortChannelsWithoutUploadsOrScreenshots(
+    channels: DashboardChannel[],
+    sortOrder: string,
+  ): DashboardChannel[] {
+    return channels.sort((a, b) => {
+      return sortOrder === 'asc'
+        ? a.createdAt.getTime() - b.createdAt.getTime()
+        : b.createdAt.getTime() - a.createdAt.getTime();
+    });
+  }
+
   private async ensureChannelDoesntExist(ytChannelId: string) {
     const existingChannel = await this.prismaService.channel.findUnique({
       where: {

@@ -8,21 +8,18 @@ import {
   ViewType,
   DashboardChannel,
 } from './types';
-import {
-  getChannelsWithThumbnails,
-  getMappedChannels,
-  getThumbnails,
-} from './thumbnails-helper';
-import {
-  getChannelsWithoutUploadsOrScreenshots,
-  mapChannelsWithoutUploadsOrScreenshots,
-} from './channels-helper';
+import { ThumbnailsApiService } from 'src/thumbnails/api/thumbnails-api.service';
+import { ChannelService } from 'src/channels/channel.service';
 
 const PER_PAGE = 12;
 
 @Injectable()
 export class DashboardService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly thumbnailsApiService: ThumbnailsApiService,
+    private readonly channelService: ChannelService,
+  ) {}
 
   public async fetchDashboard({
     page,
@@ -59,17 +56,21 @@ export class DashboardService {
   private async getChannelsForViewType(viewType: ViewType): Promise<any[]> {
     switch (viewType) {
       case ViewType.THUMBNAILS:
-        const result = await getThumbnails(this.prismaService);
-        const thumbnailChannels = getChannelsWithThumbnails(result);
-        return getMappedChannels(thumbnailChannels);
+        const result =
+          await this.thumbnailsApiService.getThumbnailsForDashboard();
+        const thumbnailChannels =
+          this.thumbnailsApiService.getChannelsWithThumbnails(result);
+        return this.thumbnailsApiService.getMappedChannels(thumbnailChannels);
 
       case ViewType.CHANNELS_WITHOUT_UPLOADS:
       case ViewType.CHANNELS_WITHOUT_SCREENSHOTS:
-        const channels = await getChannelsWithoutUploadsOrScreenshots(
-          this.prismaService,
-          viewType,
+        const channels =
+          await this.channelService.getChannelsWithoutUploadsOrScreenshots(
+            viewType,
+          );
+        return this.channelService.mapChannelsWithoutUploadsOrScreenshots(
+          channels,
         );
-        return mapChannelsWithoutUploadsOrScreenshots(channels);
 
       default:
         const isProcessedView = viewType === ViewType.PROCESSED;

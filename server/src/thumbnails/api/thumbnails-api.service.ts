@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
 import { ThumbnailsManagerService } from 'src/thumbnails/manager/thumbnails-manager.service';
+import { $Enums } from '@prisma/client';
 
 type Item = {
   id: number;
@@ -186,5 +187,92 @@ export class ThumbnailsApiService {
     });
 
     return this.mapToSlides(screenshots);
+  }
+
+  public async getThumbnailsForDashboard() {
+    return this.prismaService.uploadsVideo.findMany({
+      where: { artifact: { in: ['THUMBNAIL'] } },
+      select: {
+        artifact: true,
+        channel: {
+          select: {
+            id: true,
+            ytId: true,
+            title: true,
+            src: true,
+            createdAt: true,
+            videoCount: true,
+          },
+        },
+      },
+    });
+  }
+
+  public getChannelsWithThumbnails(
+    result: {
+      artifact: $Enums.ArtifactType;
+      channel: {
+        id: number;
+        ytId: string;
+        title: string;
+        src: string;
+        createdAt: Date;
+        videoCount: number;
+      };
+    }[],
+  ) {
+    const thumbnailUploadsCount = result.reduce<Record<number, number>>(
+      (acc, video) => {
+        const channelId = video.channel.id;
+        acc[channelId] = (acc[channelId] || 0) + 1;
+        return acc;
+      },
+      {},
+    );
+
+    const thumbnailChannels = Array.from(
+      new Map(
+        result.map((video) => [
+          video.channel.id,
+          {
+            id: video.channel.id,
+            ytId: video.channel.ytId,
+            title: video.channel.title,
+            src: video.channel.src,
+            videoCount: video.channel.videoCount,
+            uploadsCount: thumbnailUploadsCount[video.channel.id] || 0,
+          },
+        ]),
+      ).values(),
+    );
+
+    return thumbnailChannels;
+  }
+
+  public getMappedChannels(
+    thumbnailChannels: {
+      id: number;
+      ytId: string;
+      title: string;
+      src: string;
+      videoCount: number;
+      uploadsCount: number;
+    }[],
+  ) {
+    return thumbnailChannels.map((channel) => ({
+      id: channel.id,
+      ytId: channel.ytId,
+      title: channel.title,
+      src: channel.src,
+      createdAt: new Date(),
+      lastSyncedAt: null,
+      videoCount: channel.videoCount || 0,
+      thumbnails: channel.uploadsCount,
+      saved: 0,
+      defaults: 0,
+      uploadsWithScreenshots: 0,
+      screenshotsCount: 0,
+      screenshots: [],
+    }));
   }
 }
