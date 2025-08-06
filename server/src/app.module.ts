@@ -12,6 +12,7 @@ import { queueNames } from 'src/shared/constants';
 import { DownloadService } from './core/external-services/youtube-downloader/download.service';
 import { YouTubeDownloaderService } from './core/external-services/youtube-downloader/youtube-downloader.service';
 import { VideoProcessor } from './video-worker/video.processor';
+import { DownloadProcessor } from './video-worker/download.processor';
 import { SseModule } from './shared/sse/sse.module';
 import { PrismaService } from './core/database/prisma/prisma.service';
 import { QueueController } from './queue/queue.controller';
@@ -38,6 +39,9 @@ import { EventsGateway } from './events.gateway';
     EventEmitterModule.forRoot(),
     BullModule.registerQueue({
       name: queueNames.video,
+    }),
+    BullModule.registerQueue({
+      name: queueNames.download,
     }),
     ImagesModule,
     NestConfigModule.forRoot(),
@@ -68,6 +72,7 @@ import { EventsGateway } from './events.gateway';
     DownloadService,
     YouTubeDownloaderService,
     VideoProcessor,
+    DownloadProcessor,
     FilePathService,
     DirectoryService,
     FileOperationService,

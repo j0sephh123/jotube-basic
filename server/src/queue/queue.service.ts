@@ -10,6 +10,7 @@ import { RemoveJobsDto } from './queue.controller';
 export class QueueService {
   constructor(
     @InjectQueue(queueNames.video) private readonly videoProcessor: Queue,
+    @InjectQueue(queueNames.download) private readonly downloadProcessor: Queue,
     private readonly prismaService: PrismaService,
   ) {}
 
@@ -80,7 +81,7 @@ export class QueueService {
       return { success: true };
     }
 
-    const existingJobs = await this.videoProcessor.getJobs([
+    const existingJobs = await this.downloadProcessor.getJobs([
       'active',
       'waiting',
     ]);
@@ -89,7 +90,7 @@ export class QueueService {
       (job) => !existingYtVideoIds.includes(job.ytVideoId),
     );
 
-    await Promise.all(jobsToAdd.map((j) => this.videoProcessor.add(j)));
+    await Promise.all(jobsToAdd.map((j) => this.downloadProcessor.add(j)));
 
     return { success: true };
   }
@@ -98,7 +99,7 @@ export class QueueService {
     const results: { jobId: string; message: string }[] = [];
 
     for (const jobId of removeJobsDto.jobIds) {
-      const job = await this.videoProcessor.getJob(jobId);
+      const job = await this.downloadProcessor.getJob(jobId);
       if (!job) {
         results.push({ jobId, message: 'Job not found' });
       } else {
@@ -151,7 +152,7 @@ export class QueueService {
   }
 
   async getScreenshotsQueue() {
-    const jobs = await this.videoProcessor.getJobs(['active', 'waiting']);
+    const jobs = await this.downloadProcessor.getJobs(['active', 'waiting']);
 
     const queueData = await Promise.all(
       jobs.map(async (job) => {

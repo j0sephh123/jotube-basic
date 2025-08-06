@@ -40,6 +40,7 @@ _Unfiltered, undeveloped concepts. No promises, just possible directions._
 - __video count update__ - right now there is no way to update videoCount, it is fetched once on start and that's it
 - __refactor thumbnails viewer__
 - __refactor card__ - have a common card component
+- __navigate thumbnails__ - Right now it is not possible to process an arbitrary thumbnail, you need to go 1 by 1
 ---
 
 ## 🔍 To Groom

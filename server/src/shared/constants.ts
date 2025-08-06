@@ -2,6 +2,8 @@ export const videoExtensions = ['mp4', 'webm', 'mkv'];
 
 export const queueNames = {
   video: 'video',
+  download: 'download',
+  // not used
   captureScreenshots: 'captureScreenshots',
   generateThumbnails: 'generateThumbnails',
 };

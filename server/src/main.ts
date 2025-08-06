@@ -69,9 +69,10 @@ async function bootstrap() {
   serverAdapter.setBasePath('/admin/queues');
 
   const videoQueue = app.get(`BullQueue_${queueNames.video}`);
+  const downloadQueue = app.get(`BullQueue_${queueNames.download}`);
 
   createBullBoard({
-    queues: [new BullAdapter(videoQueue)],
+    queues: [new BullAdapter(videoQueue), new BullAdapter(downloadQueue)],
     serverAdapter,
   });
 
