@@ -1,6 +1,7 @@
 import { $Enums } from '@prisma/client';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
 
+// TODO re-write and extract to service
 export const getThumbnails = (prisma: PrismaService) => {
   return prisma.uploadsVideo.findMany({
     where: { artifact: { in: ['THUMBNAIL'] } },

@@ -13,7 +13,13 @@ import {
   getThumbnails,
   filterChannels,
   getSortedChannels,
-} from './helper';
+} from './thumbnails-helper';
+import {
+  getChannelsWithoutUploadsOrScreenshots,
+  mapChannelsWithoutUploadsOrScreenshots,
+  filterChannelsWithoutUploadsOrScreenshots,
+  sortChannelsWithoutUploadsOrScreenshots,
+} from './channels-helper';
 
 const PER_PAGE = 12;
 
@@ -49,58 +55,20 @@ export class DashboardService {
       viewType === ViewType.CHANNELS_WITHOUT_UPLOADS ||
       viewType === ViewType.CHANNELS_WITHOUT_SCREENSHOTS
     ) {
-      const isNoScreenshotsView =
-        viewType === ViewType.CHANNELS_WITHOUT_SCREENSHOTS;
-
-      const channels = await this.prismaService.channel.findMany({
-        where: {
-          fetchedUntilEnd: isNoScreenshotsView,
-          ...(isNoScreenshotsView ? { uploads: { every: { status: 0 } } } : {}),
-        },
-        select: {
-          id: true,
-          ytId: true,
-          title: true,
-          src: true,
-          createdAt: true,
-          lastSyncedAt: true,
-          videoCount: true,
-        },
-      });
-
-      let mappedChannels = channels.map((channel) => ({
-        id: channel.id,
-        ytId: channel.ytId,
-        title: channel.title,
-        src: channel.src,
-        createdAt: channel.createdAt,
-        lastSyncedAt: channel.lastSyncedAt,
-        videoCount: channel.videoCount,
-        thumbnails: 0,
-        saved: 0,
-        defaults: 0,
-        uploadsWithScreenshots: 0,
-        screenshotsCount: 0,
-        screenshots: [],
-      }));
-
-      if (defaultMin !== undefined && defaultMin > 0) {
-        mappedChannels = mappedChannels.filter(
-          (channel) => channel.defaults >= defaultMin,
-        );
-      }
-
-      if (defaultMax !== undefined && defaultMax > 0) {
-        mappedChannels = mappedChannels.filter(
-          (channel) => channel.defaults <= defaultMax,
-        );
-      }
-
-      const sorted = mappedChannels.sort((a, b) => {
-        return sortOrder === 'asc'
-          ? a.createdAt.getTime() - b.createdAt.getTime()
-          : b.createdAt.getTime() - a.createdAt.getTime();
-      });
+      const channels = await getChannelsWithoutUploadsOrScreenshots(
+        this.prismaService,
+        viewType,
+      );
+      let mappedChannels = mapChannelsWithoutUploadsOrScreenshots(channels);
+      mappedChannels = filterChannelsWithoutUploadsOrScreenshots(
+        mappedChannels,
+        defaultMin,
+        defaultMax,
+      );
+      const sorted = sortChannelsWithoutUploadsOrScreenshots(
+        mappedChannels,
+        sortOrder,
+      );
 
       return {
         channels: sorted.slice(skip, skip + PER_PAGE),
