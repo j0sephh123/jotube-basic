@@ -1,8 +1,7 @@
 import { useState, useMemo } from "react";
 import Avatar from "@/shared/components/Avatar";
 import { getPublicImgUrl } from "@/shared/utils/image";
-import { useStore } from "@/store/store";
-import { useGetUploadsWithThumbnails } from "@/features/Thumbnail/hooks/useGetUploadsWithThumbnails";
+import useViewThumbnails from "@/shared/hooks/useViewThumbnails";
 
 type CardImageProps = {
   id: number;
@@ -26,14 +25,7 @@ function CardImage({
 }: CardImageProps) {
   const [screenshotIndex, setScreenshotIndex] = useState(0);
 
-  const { setThumbnailsProcessingData } = useStore();
-  const { mutateAsync: getUploadsWithThumbnailsMutation } =
-    useGetUploadsWithThumbnails();
-
-  const handleThumbnailClick = async (channelId: number) => {
-    const thumbnails = await getUploadsWithThumbnailsMutation([channelId]);
-    setThumbnailsProcessingData(thumbnails);
-  };
+  const handleThumbnailClick = useViewThumbnails(id);
 
   const computedSrc = useMemo(() => {
     if (
@@ -56,7 +48,7 @@ function CardImage({
   const handleAvatarClick = (event: React.MouseEvent) => {
     event.stopPropagation();
 
-    handleThumbnailClick(id);
+    handleThumbnailClick();
     if (screenshots && screenshots.length > 0) {
       setScreenshotIndex((prev) => (prev + 1) % screenshots.length);
     }

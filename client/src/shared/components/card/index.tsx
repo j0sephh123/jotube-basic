@@ -1,5 +1,3 @@
-import { useNavigate } from "react-router-dom";
-import { routes } from "@/shared/utils/routes";
 import CardContainer from "./CardContainer";
 import CardImage from "./CardImage";
 import CardContent from "./CardContent";
@@ -26,6 +24,7 @@ type CardProps = {
   cardMenuSlot?: React.ReactNode;
   downloadButtonSlot?: React.ReactNode;
   deleteButtonSlot?: React.ReactNode;
+  handleChannelTitleClick: (e: React.MouseEvent) => void;
 };
 
 function Card({
@@ -40,15 +39,8 @@ function Card({
   cardMenuSlot,
   downloadButtonSlot,
   deleteButtonSlot,
+  handleChannelTitleClick,
 }: CardProps) {
-  const navigate = useNavigate();
-
-  const handleChannelTitleClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    navigate(routes.savedChannel(ytId));
-  };
-
   return (
     <Card.Container>
       <div className="relative group">

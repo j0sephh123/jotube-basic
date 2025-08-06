@@ -74,8 +74,8 @@ export class DashboardService {
       case ViewType.THUMBNAILS:
         return this.getChannels({ artifact: 'THUMBNAIL' });
 
-      case ViewType.CHANNELS_WITHOUT_UPLOADS:
-      case ViewType.CHANNELS_WITHOUT_SCREENSHOTS:
+      case ViewType.NO_UPLOADS:
+      case ViewType.NO_SCREENSHOTS:
         // ChannelService returns channels without uploads/screenshots
         return this.channelService.getChannelsWithoutUploadsOrScreenshots(
           viewType,

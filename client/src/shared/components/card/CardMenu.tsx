@@ -87,8 +87,6 @@ function CardMenu({ id, ytId, onClose }: CardMenuProps) {
               <FolderOpen className="w-4 h-4 text-gray-400" />
               <span>Open Directory</span>
             </button>
-
-            <div className="border-t border-gray-700 my-1"></div>
           </div>
         </div>
       )}

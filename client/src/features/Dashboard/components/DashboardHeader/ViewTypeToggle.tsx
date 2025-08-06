@@ -4,8 +4,8 @@ import { useTypedViewType, ViewType } from "@/shared/hooks/useTypedParams";
 import clsx from "clsx";
 
 const viewTypeOrder = [
-  ViewType.CHANNELS_WITHOUT_UPLOADS,
-  ViewType.CHANNELS_WITHOUT_SCREENSHOTS,
+  ViewType.NO_UPLOADS,
+  ViewType.NO_SCREENSHOTS,
   ViewType.SAVED,
   ViewType.THUMBNAILS,
   ViewType.PROCESSED,

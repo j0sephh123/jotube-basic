@@ -12,7 +12,7 @@ export default function CreateChannelModal({
   onClose,
   onSubmit,
 }: Props): JSX.Element {
-  if (!isVisible) return null;
+  if (!isVisible) return <></>;
 
   return (
     <Modal

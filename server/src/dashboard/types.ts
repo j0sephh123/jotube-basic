@@ -1,8 +1,8 @@
 export enum ViewType {
   SAVED = 'saved',
   PROCESSED = 'processed',
-  CHANNELS_WITHOUT_UPLOADS = 'no-uploads',
-  CHANNELS_WITHOUT_SCREENSHOTS = 'no-screenshots',
+  NO_UPLOADS = 'no-uploads',
+  NO_SCREENSHOTS = 'no-screenshots',
   THUMBNAILS = 'thumbnails',
 }
 

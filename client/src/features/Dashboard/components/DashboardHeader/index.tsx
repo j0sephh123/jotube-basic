@@ -8,6 +8,8 @@ import { useDashboardContext } from "../../hooks/useDashboardContext";
 import { useTypedViewType, ViewType } from "@/shared/hooks/useTypedParams";
 import { useDashboardQuery } from "../../useDashboardQuery";
 
+const showRangeFilterForViewTypes = [ViewType.SAVED, ViewType.PROCESSED];
+
 export default function DashboardHeader() {
   const viewType = useTypedViewType();
   const { handleClearFilters } = useDashboardContext();
@@ -22,7 +24,7 @@ export default function DashboardHeader() {
           <span className="text-sm whitespace-nowrap">
             {data?.total} results
           </span>
-          {viewType !== ViewType.SAVED && (
+          {showRangeFilterForViewTypes.includes(viewType) && (
             <>
               <RangeFilterPopover />
               <DefaultsRangeFilterPopover />
@@ -37,7 +39,6 @@ export default function DashboardHeader() {
             </>
           )}
         </div>
-
         {data && (
           <div className="bg-base-100 border-t border-base-300 rounded-b-lg">
             <PaginationControl total={data.total} />

@@ -4,6 +4,7 @@ import SyncUploadsButton from "../Upload/components/SyncUploadsButton";
 import Card from "@/shared/components/card";
 import FetchUploadsButton from "../Upload/components/FetchUploadsButton";
 import DeleteChannel from "../Channel/NewChannel/components/DeleteChannel";
+import useTitleClick from "./hooks/useTitleClick";
 
 interface DashboardCardProps {
   channel: DashboardChannel;
@@ -11,9 +12,9 @@ interface DashboardCardProps {
 }
 
 const statsTypes = [ViewType.THUMBNAILS, ViewType.PROCESSED, ViewType.SAVED];
-const fetchUploadsTypes = [ViewType.CHANNELS_WITHOUT_UPLOADS];
+const fetchUploadsTypes = [ViewType.NO_UPLOADS];
 const downloadTypes = [ViewType.THUMBNAILS, ViewType.PROCESSED, ViewType.SAVED];
-const deleteChannelTypes = [ViewType.CHANNELS_WITHOUT_UPLOADS];
+const deleteChannelTypes = [ViewType.NO_UPLOADS];
 
 export default function DashboardCard({
   channel,
@@ -22,6 +23,7 @@ export default function DashboardCard({
   const cardStats = (
     <Card.Stats
       ytId={channel.ytId}
+      id={channel.id}
       screenshotsCount={channel.screenshotsCount}
       thumbnails={channel.thumbnails}
       saved={channel.saved}
@@ -54,6 +56,24 @@ export default function DashboardCard({
     />
   );
 
+  const handleChannelTitleClick = useTitleClick(channel, viewType);
+
+  const getDeleteButtonSlot = () => {
+    if (viewType === ViewType.NO_SCREENSHOTS) {
+      return null;
+    }
+    return deleteChannelTypes.includes(viewType)
+      ? deleteChannelbutton
+      : deleteUploadsButton;
+  };
+
+  const getActionButtonSlot = () => {
+    if (viewType === ViewType.NO_SCREENSHOTS) {
+      return null;
+    }
+    return fetchUploadsTypes.includes(viewType) ? fetchUploadsButton : syncButton;
+  };
+
   return (
     <Card
       key={channel.id}
@@ -63,19 +83,14 @@ export default function DashboardCard({
       src={channel.src}
       lastSyncedAt={channel.lastSyncedAt}
       ytChannelId={channel.ytId}
+      handleChannelTitleClick={handleChannelTitleClick}
       cardStatsSlot={statsTypes.includes(viewType) ? cardStats : cardCreatedAt}
       cardMenuSlot={cardMenu}
-      actionButtonSlot={
-        fetchUploadsTypes.includes(viewType) ? fetchUploadsButton : syncButton
-      }
+      actionButtonSlot={getActionButtonSlot()}
       downloadButtonSlot={
         downloadTypes.includes(viewType) ? downloadButton : undefined
       }
-      deleteButtonSlot={
-        deleteChannelTypes.includes(viewType)
-          ? deleteChannelbutton
-          : deleteUploadsButton
-      }
+      deleteButtonSlot={getDeleteButtonSlot()}
     />
   );
 }

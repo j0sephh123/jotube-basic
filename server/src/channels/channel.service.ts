@@ -126,8 +126,7 @@ export class ChannelService {
   }
 
   public async getChannelsWithoutUploadsOrScreenshots(viewType: ViewType) {
-    const isNoScreenshotsView =
-      viewType === ViewType.CHANNELS_WITHOUT_SCREENSHOTS;
+    const isNoScreenshotsView = viewType === ViewType.NO_SCREENSHOTS;
 
     return this.prismaService.channel.findMany({
       where: {
