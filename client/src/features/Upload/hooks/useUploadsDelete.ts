@@ -11,7 +11,7 @@ type DeleteUploadsResponse = {
   success: boolean;
 };
 
-export function useDeleteUploads() {
+export function useDeleteUploads(onSuccess: () => void) {
   const { refetch } = useDashboardQuery();
   const { mutateAsync } = useMutation<
     DeleteUploadsResponse,
@@ -26,6 +26,7 @@ export function useDeleteUploads() {
       }),
     onSuccess: () => {
       refetch();
+      onSuccess();
     },
   });
 

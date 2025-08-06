@@ -15,7 +15,6 @@ _Unfiltered, undeveloped concepts. No promises, just possible directions._
 - __local videos__ - obviously now only youtube is supported, which is not what we want, so as a start we could try to integrate local videos. A clean approach would be to have Upload functionality, but still need to think about what type of resource to have in the db
 - __docker__ - think of ways to add docker
 - __shared types__ - this has been done before, but I didn't like it. Now i have a chance again to try it.
-- __golang__ - experiment with ways to add golang for processing videos
 - __queue refetch__ - right now we are refetching every 5s, which is obviously not what we want
 - __select more than 1 screenshot at a time__ - right now when we process thumbnails, we are not able to select more than one screenshot at a time and if there are 20-30s segments, this is really bad
 - __e2e tests__ - add some

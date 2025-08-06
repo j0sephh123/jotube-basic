@@ -21,7 +21,7 @@ type VideoCardProps = {
   onRemoveFromWaitingToProcess?: (uploadId: number) => void;
   actionButtonText: string;
   ytChannelId: string;
-}
+};
 
 export const Card = ({
   item,
@@ -87,16 +87,22 @@ export const Card = ({
   );
 
   return (
-    <div className="card bg-base-100 shadow-xl overflow-hidden">
+    <div className="card bg-base-100 shadow-xl overflow-hidden group">
       {img}
       <div className="card-body p-3">
         <div className="flex justify-between items-start mb-2">
-          <h2 className="text-sm font-semibold truncate">{item.title}</h2>
+          <h2 className="text-sm font-semibold truncate flex-1 min-w-0">
+            {item.title}
+          </h2>
           <div className="flex items-center gap-2 ml-2">
-            <span className="text-xs text-gray-500">
-              {timeAgo(item.publishedAt)}
-            </span>
-            <div className="dropdown dropdown-end">
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-gray-500">
+                {timeAgo(item.publishedAt)}
+              </span>
+              <span className="text-xs text-gray-400">•</span>
+              <span className="text-xs text-gray-500">12:34</span>
+            </div>
+            <div className="dropdown dropdown-end opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               <div tabIndex={0} role="button" className="btn btn-ghost btn-xs">
                 <MoreVertical className="w-4 h-4" />
               </div>

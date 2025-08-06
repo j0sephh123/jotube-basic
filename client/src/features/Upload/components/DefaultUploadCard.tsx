@@ -23,7 +23,7 @@ type VideoCardProps = {
   onSave: (ytVideoIds: string[]) => void;
   onDelete?: (ytVideoIds: string[]) => void;
   ytChannelId: string;
-}
+};
 
 export const DefaultUploadCard = ({
   item,
@@ -98,13 +98,22 @@ export const DefaultUploadCard = ({
       <div className="overflow-hidden">{img}</div>
       <div className="card-body p-3">
         <div className="flex justify-between items-start mb-2">
-          <div className="tooltip tooltip-top flex-1" data-tip={item.ytId}>
+          <div
+            className="tooltip tooltip-top flex-1 min-w-0"
+            data-tip={item.ytId}
+          >
             <h2 className="text-sm font-semibold truncate">{item.title}</h2>
           </div>
-          <div className="flex items-center gap-2 ml-2">
+        </div>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
             <span className="text-xs text-gray-500 truncate min-w-0">
               {timeAgo(item.publishedAt)}
             </span>
+            <span className="text-xs text-gray-400">•</span>
+            <span className="text-xs text-gray-500">12:34</span>
+          </div>
+          <div className="flex items-center gap-2 ml-2">
             <div className="dropdown dropdown-end flex-shrink-0">
               <div tabIndex={0} role="button" className="btn btn-ghost btn-xs">
                 <MoreVertical className="w-4 h-4" />
