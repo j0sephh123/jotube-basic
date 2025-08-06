@@ -65,7 +65,9 @@ export default function Dashboard() {
             key={channel.id}
             id={channel.id}
             ytId={channel.ytId}
-            title={channel.title}
+            title={`${channel.title} ${
+              "uploadsCount" in channel ? channel.uploadsCount : 0
+            }`}
             src={channel.src}
             deleteButtonSlot={
               !isThumbnailsView ? <DeleteChannel id={channel.id} /> : undefined
