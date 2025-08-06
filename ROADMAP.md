@@ -41,6 +41,7 @@ _Unfiltered, undeveloped concepts. No promises, just possible directions._
 - __refactor thumbnails viewer__
 - __refactor card__ - have a common card component
 - __navigate thumbnails__ - Right now it is not possible to process an arbitrary thumbnail, you need to go 1 by 1
+- __fetching uploads better UI__ - right now it is long request, which is not a good UX, but this has never been a priority
 ---
 
 ## 🔍 To Groom

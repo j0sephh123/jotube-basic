@@ -183,7 +183,11 @@ export class DashboardService {
     const uploadMap = await this.getUploadCounts(channelIds);
 
     return channels.map((c) => {
-      const { thumbnails, saved, defaults } = uploadMap.get(c.id);
+      const { thumbnails, saved, defaults } = uploadMap.get(c.id) || {
+        thumbnails: 0,
+        saved: 0,
+        defaults: 0,
+      };
       const screenshotsCount = screenshotMap.get(c.ytId) || 0;
 
       return {
