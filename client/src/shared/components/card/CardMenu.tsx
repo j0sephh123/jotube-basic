@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { MoreVertical, FolderOpen } from "lucide-react";
 import CopyValue from "@/shared/components/CopyValue";
-import { useStore } from "@/store/store";
 import { useOpenDirectory } from "../OpenDirectoryButton/useOpenDirectory";
 
 type CardMenuProps = {
@@ -10,12 +9,10 @@ type CardMenuProps = {
   onClose?: () => void;
 };
 
-function CardMenu({ id, ytId , onClose }: CardMenuProps) {
+function CardMenu({ id, ytId, onClose }: CardMenuProps) {
   const handleOpenExplorer = useOpenDirectory({ ytChannelId: ytId });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const addToIgnoreList = useStore((state) => state.addToIgnoreList);
-  const isIgnored = useStore((state) => state.isIgnored);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -32,12 +29,6 @@ function CardMenu({ id, ytId , onClose }: CardMenuProps) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isMenuOpen]);
-
-  const handleAddToIgnoreList = () => {
-    addToIgnoreList(ytId, "");
-    setIsMenuOpen(false);
-    onClose?.();
-  };
 
   const handleCopyId = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -98,27 +89,6 @@ function CardMenu({ id, ytId , onClose }: CardMenuProps) {
             </button>
 
             <div className="border-t border-gray-700 my-1"></div>
-
-            <button
-              onClick={handleAddToIgnoreList}
-              className={`flex items-center gap-2 w-full px-3 py-2 text-sm rounded transition-colors ${
-                isIgnored(ytId)
-                  ? "text-gray-500 cursor-not-allowed"
-                  : "text-gray-200 hover:bg-gray-700"
-              }`}
-              disabled={isIgnored(ytId)}
-            >
-              <span
-                className={`w-4 h-4 flex items-center justify-center ${
-                  isIgnored(ytId) ? "text-gray-500" : "text-red-400"
-                }`}
-              >
-                {isIgnored(ytId) ? "✓" : "×"}
-              </span>
-              <span>
-                {isIgnored(ytId) ? "Already ignored" : "Add to ignore list"}
-              </span>
-            </button>
           </div>
         </div>
       )}

@@ -13,6 +13,17 @@ import { ChannelService } from 'src/channels/channel.service';
 
 const PER_PAGE = 12;
 
+type ValueGetter = (channel: DashboardChannel) => number;
+
+const valueGetters: Record<ViewType, ValueGetter> = {
+  [ViewType.THUMBNAILS]: (channel) => channel.thumbnails,
+  [ViewType.PROCESSED]: (channel) => channel.screenshotsCount,
+  [ViewType.SAVED]: (channel) => channel.saved,
+  [ViewType.CHANNELS_WITHOUT_UPLOADS]: (channel) => channel.createdAt.getTime(),
+  [ViewType.CHANNELS_WITHOUT_SCREENSHOTS]: (channel) =>
+    channel.createdAt.getTime(),
+};
+
 @Injectable()
 export class DashboardService {
   constructor(
@@ -110,20 +121,18 @@ export class DashboardService {
     },
   ): DashboardChannel[] {
     let filteredChannels = channels;
-
     const { min, max, defaultMin, defaultMax, viewType } = filters;
+    const getter = valueGetters[viewType];
 
     if (min !== undefined && min > 0) {
       filteredChannels = filteredChannels.filter((channel) => {
-        const value = this.getFilterValue(channel, viewType);
-        return value >= min;
+        return getter(channel) >= min;
       });
     }
 
     if (max !== undefined && max > 0) {
       filteredChannels = filteredChannels.filter((channel) => {
-        const value = this.getFilterValue(channel, viewType);
-        return value <= max;
+        return getter(channel) <= max;
       });
     }
 
@@ -142,58 +151,16 @@ export class DashboardService {
     return filteredChannels;
   }
 
-  private getFilterValue(
-    channel: DashboardChannel,
-    viewType: ViewType,
-  ): number {
-    switch (viewType) {
-      case ViewType.THUMBNAILS:
-        return channel.thumbnails;
-      case ViewType.PROCESSED:
-        return channel.screenshotsCount;
-      case ViewType.SAVED:
-        return channel.saved;
-      case ViewType.CHANNELS_WITHOUT_UPLOADS:
-      case ViewType.CHANNELS_WITHOUT_SCREENSHOTS:
-        return channel.createdAt.getTime();
-      default:
-        return channel.saved;
-    }
-  }
-
   private sortChannels(
     channels: DashboardChannel[],
     sortOrder: string,
     viewType: ViewType,
   ): DashboardChannel[] {
+    const getter = valueGetters[viewType];
     return channels.sort((a, b) => {
-      const aValue = this.getSortValue(a, viewType);
-      const bValue = this.getSortValue(b, viewType);
+      const aValue = getter(a);
+      const bValue = getter(b);
       return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
-    });
-  }
-
-  private getSortValue(channel: DashboardChannel, viewType: ViewType): number {
-    switch (viewType) {
-      case ViewType.THUMBNAILS:
-        return channel.thumbnails;
-      case ViewType.PROCESSED:
-        return channel.screenshotsCount;
-      case ViewType.SAVED:
-        return channel.saved;
-      case ViewType.CHANNELS_WITHOUT_UPLOADS:
-      case ViewType.CHANNELS_WITHOUT_SCREENSHOTS:
-        return channel.createdAt.getTime();
-      default:
-        return channel.saved;
-    }
-  }
-
-  private async getScreenshotsCount(ytChannelId: string): Promise<number> {
-    return this.prismaService.screenshot.count({
-      where: {
-        ytChannelId,
-      },
     });
   }
 
@@ -231,35 +198,48 @@ export class DashboardService {
     return channels;
   }
 
-  private getChannelsWithCounts(
+  private async getChannelsWithCounts(
     channels: ChannelWithUploads[],
   ): Promise<DashboardChannelWithUploads[]> {
-    return Promise.all(
-      channels.map(async (channel) => {
-        const saved = channel.uploads.filter(
-          (upload) => upload.artifact === 'SAVED',
-        ).length;
-        const thumbnails = channel.uploads.filter(
-          (upload) => upload.artifact === 'THUMBNAIL',
-        ).length;
-        const defaults = channel.uploads.filter(
-          (upload) => upload.artifact === 'VIDEO',
-        ).length;
-        const uploadsWithScreenshots = channel.uploads.filter(
-          (upload) => upload.artifact === 'SCREENSHOT',
-        );
+    if (channels.length === 0) {
+      return [];
+    }
 
-        const screenshotsCount = await this.getScreenshotsCount(channel.ytId);
+    const ytChannelIds = channels.map((channel) => channel.ytId);
 
-        return {
-          ...channel,
-          thumbnails,
-          saved,
-          defaults,
-          uploadsWithScreenshots: uploadsWithScreenshots.length,
-          screenshotsCount,
-        };
-      }),
+    const screenshotCounts = await this.prismaService.screenshot.groupBy({
+      by: ['ytChannelId'],
+      _count: { ytChannelId: true },
+      where: { ytChannelId: { in: ytChannelIds } },
+    });
+
+    const screenshotCountMap = new Map(
+      screenshotCounts.map((item) => [
+        item.ytChannelId,
+        item._count.ytChannelId,
+      ]),
     );
+
+    return channels.map((channel) => {
+      const saved = channel.uploads.filter(
+        (upload) => upload.artifact === 'SAVED',
+      ).length;
+      const thumbnails = channel.uploads.filter(
+        (upload) => upload.artifact === 'THUMBNAIL',
+      ).length;
+      const defaults = channel.uploads.filter(
+        (upload) => upload.artifact === 'VIDEO',
+      ).length;
+
+      const screenshotsCount = screenshotCountMap.get(channel.ytId) || 0;
+
+      return {
+        ...channel,
+        thumbnails,
+        saved,
+        defaults,
+        screenshotsCount,
+      };
+    });
   }
 }

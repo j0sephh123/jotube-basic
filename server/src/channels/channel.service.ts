@@ -168,7 +168,6 @@ export class ChannelService {
       thumbnails: 0,
       saved: 0,
       defaults: 0,
-      uploadsWithScreenshots: 0,
       screenshotsCount: 0,
     }));
   }

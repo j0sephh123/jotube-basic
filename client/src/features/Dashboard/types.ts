@@ -9,6 +9,5 @@ export type DashboardChannel = {
   thumbnails: number;
   saved: number;
   defaults: number;
-  uploadsWithScreenshots: number;
   screenshotsCount: number;
 };

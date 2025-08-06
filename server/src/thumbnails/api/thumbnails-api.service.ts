@@ -272,7 +272,6 @@ export class ThumbnailsApiService {
       thumbnails: channel.uploadsCount,
       saved: 0,
       defaults: 0,
-      uploadsWithScreenshots: 0,
       screenshotsCount: 0,
     }));
   }
