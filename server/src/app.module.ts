@@ -31,6 +31,7 @@ import { ThumbnailsManagerModule } from './thumbnails/manager/thumbnails-manager
 import { ScreenshotsApiModule } from './screenshots/api/screenshots-api.module';
 import { ThumbnailsApiModule } from './thumbnails/api/thumbnails-api.module';
 import { OpenDirectoryController } from './file/open-directory.controller';
+import { EventsGateway } from './events.gateway';
 
 @Module({
   imports: [
@@ -71,6 +72,7 @@ import { OpenDirectoryController } from './file/open-directory.controller';
     DirectoryService,
     FileOperationService,
     ScreenshotsManagerService,
+    EventsGateway,
   ],
 })
 export class AppModule {}

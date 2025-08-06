@@ -13,6 +13,7 @@ import { YoutubeService } from 'src/core/external-services/youtube-api/youtube.s
 import { fetchUploadsDto } from 'src/uploads-video/dtos/fetch-uploads.dto';
 import { syncUploadsDto } from 'src/uploads-video/dtos/sync-uploads.dto';
 import { savedUploadsDto } from 'src/uploads-video/dtos/saved-uploads.dto';
+import { EventsGateway } from 'src/events.gateway';
 
 @Injectable()
 export class UploadsVideoService {
@@ -24,6 +25,7 @@ export class UploadsVideoService {
     private readonly fileOperationService: FileOperationService,
     private readonly youtubeService: YoutubeService,
     private prismaService: PrismaService,
+    private readonly eventsGateway: EventsGateway,
   ) {}
 
   public async uploadsList(ytChannelId: string, sortOrder: 'asc' | 'desc') {
@@ -163,6 +165,9 @@ export class UploadsVideoService {
         });
       }
 
+      // Broadcast WebSocket event for deleting all uploads
+      this.eventsGateway.broadcastDeleteUploadsEvent(ytChannelId, []);
+
       return { success: true };
     }
 
@@ -178,6 +183,9 @@ export class UploadsVideoService {
         ytVideoId,
       });
     }
+
+    // Broadcast WebSocket event for deleting specific uploads
+    this.eventsGateway.broadcastDeleteUploadsEvent(ytChannelId, ytVideoIds);
 
     return { success: true };
   }
