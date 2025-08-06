@@ -3,32 +3,26 @@ import RangeFilterPopover from "../RangePicker/RangeFilterPopover";
 import DefaultsRangeFilterPopover from "../RangePicker/DefaultsRangeFilterPopover";
 import SelectSortDirection from "./SelectSortDirection";
 import ViewTypeToggle from "./ViewTypeToggle";
-import { useDashboardQuery } from "@/features/Dashboard/views/useDashboardQuery";
 import PaginationControl from "../PaginationControl";
 import { useDashboardContext } from "../../hooks/useDashboardContext";
 import { useTypedViewType, ViewType } from "@/shared/hooks/useTypedParams";
+import { useDashboardQuery } from "../../useDashboardQuery";
 
 export default function DashboardHeader() {
   const viewType = useTypedViewType();
   const { handleClearFilters } = useDashboardContext();
   const { data } = useDashboardQuery();
 
-  const isChannelsView =
-    viewType === ViewType.CHANNELS_WITHOUT_UPLOADS ||
-    viewType === ViewType.CHANNELS_WITHOUT_SCREENSHOTS;
-
   return (
     <div className="p-3 border-b border-base-300">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex flex-nowrap items-center gap-2">
-          {!isChannelsView && <SelectSortDirection />}
+          <SelectSortDirection />
           <ViewTypeToggle />
-          {!isChannelsView && (
-            <span className="text-sm whitespace-nowrap">
-              {data?.total} results
-            </span>
-          )}
-          {!isChannelsView && viewType !== ViewType.SAVED && (
+          <span className="text-sm whitespace-nowrap">
+            {data?.total} results
+          </span>
+          {viewType !== ViewType.SAVED && (
             <>
               <RangeFilterPopover />
               <DefaultsRangeFilterPopover />
@@ -44,7 +38,7 @@ export default function DashboardHeader() {
           )}
         </div>
 
-        {!isChannelsView && data && (
+        {data && (
           <div className="bg-base-100 border-t border-base-300 rounded-b-lg">
             <PaginationControl total={data.total} />
           </div>

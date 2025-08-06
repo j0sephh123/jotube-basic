@@ -1,14 +1,14 @@
 import { Loader } from "lucide-react";
 import ErrorMessage from "@/shared/components/static/ErrorMessage";
-import { useDashboardQuery } from "@/features/Dashboard/views/useDashboardQuery";
 import NoDataAvailable from "@/shared/components/static/NoDataAvailable";
-import Card from "../../../shared/components/card";
-import CardsGridWrapper from "../components/CardsGridWrapper";
+import Card from "../../shared/components/card";
+import CardsGridWrapper from "./components/CardsGridWrapper";
 import FetchUploadsButton from "@/features/Upload/components/FetchUploadsButton";
 import DeleteChannel from "@/features/Channel/NewChannel/components/DeleteChannel";
 import { useTypedViewType, ViewType } from "@/shared/hooks/useTypedParams";
 import { DashboardChannel } from "./types";
 import SyncUploadsButton from "@/features/Upload/components/SyncUploadsButton";
+import { useDashboardQuery } from "./useDashboardQuery";
 
 type ChannelWithUploadsCount = DashboardChannel & { uploadsCount: number };
 

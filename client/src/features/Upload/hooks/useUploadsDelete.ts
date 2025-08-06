@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import nestFetcher from "@/shared/api/nestFetcher";
-import { useDashboardQuery } from "@/features/Dashboard/views/useDashboardQuery";
+import { useDashboardQuery } from "@/features/Dashboard/useDashboardQuery";
 
 type DeleteUploadsRequest = {
   ytChannelId: string;

@@ -1,10 +1,10 @@
 import { useStore } from "@/store/store";
 import { useCallback } from "react";
 import { useFinishProcessingUpload } from "@/features/Upload/hooks/useFinishProcessingUpload";
-import { useRefetchGroupedThumbnails } from "../../Dashboard/views/useDashboardQuery";
 import { useRefetchTotalScreenshots } from "@/features/Screenshot/hooks/useTotalScreenshots";
 import { useRefetchTotalThumbnails } from "./useTotalThumbnails";
 import { useRefetchThumbnailByVideoId } from "./useThumbnailByVideoId";
+import { useRefetchGroupedThumbnails } from "@/features/Dashboard/useDashboardQuery";
 
 export default function useSubmit() {
   const {

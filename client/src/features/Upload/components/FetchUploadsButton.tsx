@@ -1,7 +1,7 @@
-import { useRefetchNoUploadsView } from "@/features/Dashboard/views/useDashboardQuery";
 import { useFetchUploads } from "@/features/Upload/hooks/useFetchUploads";
 import { Download } from "lucide-react";
 import clsx from "clsx";
+import { useRefetchNoUploadsView } from "@/features/Dashboard/useDashboardQuery";
 
 type Props = {
   ytChannelId: string;

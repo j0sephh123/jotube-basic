@@ -156,21 +156,17 @@ export const useDashboardContext = () => {
 
     if (
       params.viewType &&
-      (params.viewType === ViewType.SAVED ||
-        params.viewType === ViewType.PROCESSED)
+      Object.values(ViewType).includes(params.viewType as ViewType)
     ) {
-      newRequestBody.viewType = params.viewType;
+      newRequestBody.viewType = params.viewType as ViewType;
     }
 
     useStore.setState({ requestBody: newRequestBody });
   }, [urlSearchParams]);
 
   useEffect(() => {
-    if (
-      viewType &&
-      (viewType === ViewType.SAVED || viewType === ViewType.PROCESSED)
-    ) {
-      setRequestBody("viewType", viewType);
+    if (viewType && Object.values(ViewType).includes(viewType as ViewType)) {
+      setRequestBody("viewType", viewType as ViewType);
     }
   }, [viewType, setRequestBody]);
 
