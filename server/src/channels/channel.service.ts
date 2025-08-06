@@ -200,8 +200,8 @@ export class ChannelService {
   ): DashboardChannel[] {
     return channels.sort((a, b) => {
       return sortOrder === 'asc'
-        ? a.createdAt.getTime() - b.createdAt.getTime()
-        : b.createdAt.getTime() - a.createdAt.getTime();
+        ? new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        : new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     });
   }
 

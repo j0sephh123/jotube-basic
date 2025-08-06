@@ -8,6 +8,7 @@ import CardStats from "./CardStats";
 import CardMenu from "./CardMenu";
 import CardDeleteButton from "./CardDeleteButton";
 import CardDownloadButton from "./CardDownloadButton";
+import CardCreatedAt from "./CardCreatedAt";
 
 type CardProps = {
   id: number;
@@ -50,13 +51,20 @@ function Card({
 
   return (
     <Card.Container>
-      <Card.Image
-        id={id}
-        ytId={ytId}
-        src={src}
-        ytChannelId={ytChannelId}
-        screenshots={screenshots}
-      />
+      <div className="relative group">
+        <Card.Image
+          id={id}
+          ytId={ytId}
+          src={src}
+          ytChannelId={ytChannelId}
+          screenshots={screenshots}
+        />
+        {cardMenuSlot && (
+          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+            {cardMenuSlot}
+          </div>
+        )}
+      </div>
       <Card.Content>
         <Card.Title title={title} onClick={handleChannelTitleClick} />
         {cardStatsSlot}
@@ -66,7 +74,6 @@ function Card({
             {downloadButtonSlot}
             {deleteButtonSlot}
           </div>
-          {cardMenuSlot}
         </div>
       </Card.Content>
     </Card.Container>
@@ -81,5 +88,6 @@ Card.Stats = CardStats;
 Card.Menu = CardMenu;
 Card.DeleteButton = CardDeleteButton;
 Card.DownloadButton = CardDownloadButton;
+Card.CreatedAt = CardCreatedAt;
 
 export default Card;

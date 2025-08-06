@@ -13,9 +13,10 @@ const valueGetters: Record<ViewType, ValueGetter> = {
   [ViewType.THUMBNAILS]: (channel) => channel.thumbnails,
   [ViewType.PROCESSED]: (channel) => channel.screenshotsCount,
   [ViewType.SAVED]: (channel) => channel.saved,
-  [ViewType.CHANNELS_WITHOUT_UPLOADS]: (channel) => channel.createdAt.getTime(),
+  [ViewType.CHANNELS_WITHOUT_UPLOADS]: (channel) =>
+    new Date(channel.createdAt).getTime(),
   [ViewType.CHANNELS_WITHOUT_SCREENSHOTS]: (channel) =>
-    channel.createdAt.getTime(),
+    new Date(channel.createdAt).getTime(),
 };
 
 @Injectable()

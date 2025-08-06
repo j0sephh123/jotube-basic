@@ -29,6 +29,8 @@ export default function DashboardCard({
     />
   );
 
+  const cardCreatedAt = <Card.CreatedAt createdAt={channel.createdAt} />;
+
   const cardMenu = <Card.Menu id={channel.id} ytId={channel.ytId} />;
 
   const syncButton = (
@@ -61,7 +63,7 @@ export default function DashboardCard({
       src={channel.src}
       lastSyncedAt={channel.lastSyncedAt}
       ytChannelId={channel.ytId}
-      cardStatsSlot={statsTypes.includes(viewType) ? cardStats : undefined}
+      cardStatsSlot={statsTypes.includes(viewType) ? cardStats : cardCreatedAt}
       cardMenuSlot={cardMenu}
       actionButtonSlot={
         fetchUploadsTypes.includes(viewType) ? fetchUploadsButton : syncButton
