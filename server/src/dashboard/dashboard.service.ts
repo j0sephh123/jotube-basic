@@ -9,14 +9,12 @@ const PER_PAGE = 12;
 
 type ValueGetter = (channel: DashboardChannel) => number;
 
-const valueGetters: Record<ViewType, ValueGetter> = {
-  [ViewType.THUMBNAILS]: (channel) => channel.thumbnails,
-  [ViewType.PROCESSED]: (channel) => channel.screenshotsCount,
-  [ViewType.SAVED]: (channel) => channel.saved,
-  [ViewType.CHANNELS_WITHOUT_UPLOADS]: (channel) =>
-    new Date(channel.createdAt).getTime(),
-  [ViewType.CHANNELS_WITHOUT_SCREENSHOTS]: (channel) =>
-    new Date(channel.createdAt).getTime(),
+const valueGetters: Record<string, ValueGetter> = {
+  thumbnails: (channel) => channel.thumbnails,
+  processed: (channel) => channel.screenshotsCount,
+  saved: (channel) => channel.saved,
+  'no-uploads': (channel) => new Date(channel.createdAt).getTime(),
+  'no-screenshots': (channel) => new Date(channel.createdAt).getTime(),
 };
 
 @Injectable()
@@ -214,15 +212,17 @@ export class DashboardService {
       max?: number;
       defaultMin?: number;
       defaultMax?: number;
-      viewType: ViewType;
+      viewType: ViewType | string;
     },
   ): DashboardChannel[] {
     let result = channels;
     const { min, max, defaultMin, defaultMax, viewType } = filters;
-    const getter = valueGetters[viewType];
+    const getter = valueGetters[viewType as string];
 
-    if (min && min > 0) result = result.filter((ch) => getter(ch) >= min);
-    if (max && max > 0) result = result.filter((ch) => getter(ch) <= max);
+    if (getter) {
+      if (min && min > 0) result = result.filter((ch) => getter(ch) >= min);
+      if (max && max > 0) result = result.filter((ch) => getter(ch) <= max);
+    }
     if (defaultMin && defaultMin > 0)
       result = result.filter((ch) => ch.defaults >= defaultMin);
     if (defaultMax && defaultMax > 0)
@@ -234,9 +234,17 @@ export class DashboardService {
   private sortChannels(
     channels: DashboardChannel[],
     sortOrder: string,
-    viewType: ViewType,
+    viewType: ViewType | string,
   ): DashboardChannel[] {
-    const getter = valueGetters[viewType];
+    const getter = valueGetters[viewType as string];
+    if (!getter) {
+      // Fallback to sorting by createdAt if getter doesn't exist
+      return channels.sort((a, b) => {
+        const aTime = new Date(a.createdAt).getTime();
+        const bTime = new Date(b.createdAt).getTime();
+        return sortOrder === 'asc' ? aTime - bTime : bTime - aTime;
+      });
+    }
     return channels.sort((a, b) =>
       sortOrder === 'asc' ? getter(a) - getter(b) : getter(b) - getter(a),
     );

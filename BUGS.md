@@ -1,0 +1,17 @@
+- `/dashboard/no-uploads`
+  - when creating a channel `/dashboard/no-uploads` doesn't refetch uploads
+  - should not render range filter and defaults range
+  - clicking on channel title leads to channel page, but there is nothing there, so probably better to disable that
+- `/dashboard/no-screenshots`
+  - there is no need to render sync or delete uploads yet
+  - clicking on the title should lead to default uploads (not saved)
+- `/dashboard/saved`
+  - clicking on thumbnails should open thumbnail viewer (not gallery as it does now)
+  - clicking on saved videos doesn't work
+  - clicking on default videos doesn't work
+  - delete uploads should have a tooltip and a confirm, otherwise it is not clear to the user what is it doing
+  - remove line at the end of stats
+  - remove line at the end of menu
+- `/dashboard/thumbnails`
+  - remove range and defaults filter
+
