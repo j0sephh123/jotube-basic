@@ -14,11 +14,6 @@ export interface ChannelWithUploads {
   src: string;
   lastSyncedAt: Date | null;
   videoCount: number;
-  uploads: Array<{
-    id: number;
-    ytId: string;
-    artifact: string;
-  }>;
 }
 
 export interface DashboardChannel {
