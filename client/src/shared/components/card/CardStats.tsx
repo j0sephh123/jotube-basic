@@ -6,10 +6,10 @@ import useViewThumbnails from "@/shared/hooks/useViewThumbnails";
 type CardStatsProps = {
   ytId: string;
   id: number;
-  screenshotsCount?: number;
+  screenshotsCount: number;
   thumbnails: number;
-  saved?: number;
-  defaults?: number;
+  saved: number;
+  defaults: number;
 };
 
 export default function CardStats({
@@ -24,23 +24,19 @@ export default function CardStats({
   const navigate = useNavigate();
   const handleThumbnailClick = useViewThumbnails(id);
 
-  const handleScreenshotsClick = (event: React.MouseEvent) => {
-    if (event.ctrlKey || event.metaKey) return;
+  const handleScreenshotsClick = () => {
     getScreenshots([ytId]);
   };
 
-  const handleThumbnailsClick = (event: React.MouseEvent) => {
-    if (event.ctrlKey || event.metaKey) return;
+  const handleThumbnailsClick = () => {
     handleThumbnailClick()
   };
 
-  const handleSavedClick = (event: React.MouseEvent) => {
-    if (event.ctrlKey || event.metaKey) return;
+  const handleSavedClick = () => {
     navigate(routes.savedChannel(ytId));
   };
 
-  const handleDefaultsClick = (event: React.MouseEvent) => {
-    if (event.ctrlKey || event.metaKey) return;
+  const handleDefaultsClick = () => {
     navigate(routes.channel(ytId));
   };
 
@@ -52,7 +48,7 @@ export default function CardStats({
         onClick={handleScreenshotsClick}
       >
         <span className="text-purple-400 hover:text-purple-300 transition-colors">
-          {screenshotsCount || 0}
+          {screenshotsCount}
         </span>
       </div>
       <span className="text-gray-500">|</span>
@@ -71,7 +67,7 @@ export default function CardStats({
         data-tip="Saved videos"
         onClick={handleSavedClick}
       >
-        <span className="text-blue-400">{saved || 0}</span>
+        <span className="text-blue-400">{saved}</span>
       </div>
       <span className="text-gray-500">|</span>
       <div
@@ -79,7 +75,7 @@ export default function CardStats({
         data-tip="Default videos"
         onClick={handleDefaultsClick}
       >
-        <span className="text-yellow-400">{defaults || 0}</span>
+        <span className="text-yellow-400">{defaults}</span>
       </div>
     </div>
   );
