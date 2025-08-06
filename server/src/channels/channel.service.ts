@@ -170,7 +170,6 @@ export class ChannelService {
       defaults: 0,
       uploadsWithScreenshots: 0,
       screenshotsCount: 0,
-      screenshots: [],
     }));
   }
 

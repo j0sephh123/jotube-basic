@@ -239,6 +239,7 @@ export class ThumbnailsApiService {
             ytId: video.channel.ytId,
             title: video.channel.title,
             src: video.channel.src,
+            createdAt: video.channel.createdAt,
             videoCount: video.channel.videoCount,
             uploadsCount: thumbnailUploadsCount[video.channel.id] || 0,
           },
@@ -255,6 +256,7 @@ export class ThumbnailsApiService {
       ytId: string;
       title: string;
       src: string;
+      createdAt: Date;
       videoCount: number;
       uploadsCount: number;
     }[],
@@ -264,7 +266,7 @@ export class ThumbnailsApiService {
       ytId: channel.ytId,
       title: channel.title,
       src: channel.src,
-      createdAt: new Date(),
+      createdAt: channel.createdAt,
       lastSyncedAt: null,
       videoCount: channel.videoCount || 0,
       thumbnails: channel.uploadsCount,
@@ -272,7 +274,6 @@ export class ThumbnailsApiService {
       defaults: 0,
       uploadsWithScreenshots: 0,
       screenshotsCount: 0,
-      screenshots: [],
     }));
   }
 }

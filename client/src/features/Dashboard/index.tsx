@@ -6,11 +6,8 @@ import CardsGridWrapper from "./components/CardsGridWrapper";
 import FetchUploadsButton from "@/features/Upload/components/FetchUploadsButton";
 import DeleteChannel from "@/features/Channel/NewChannel/components/DeleteChannel";
 import { useTypedViewType, ViewType } from "@/shared/hooks/useTypedParams";
-import { DashboardChannel } from "./types";
 import SyncUploadsButton from "@/features/Upload/components/SyncUploadsButton";
 import { useDashboardQuery } from "./useDashboardQuery";
-
-type ChannelWithUploadsCount = DashboardChannel & { uploadsCount: number };
 
 export default function Dashboard() {
   const { data, isLoading, isError } = useDashboardQuery();
@@ -39,42 +36,24 @@ export default function Dashboard() {
 
   if (isSpecialView) {
     const isThumbnailsView = viewType === ViewType.THUMBNAILS;
-    let channels: (DashboardChannel | ChannelWithUploadsCount)[] = [];
-    let isEmpty = !data.channels?.length;
-
-    if (data.channels) {
-      if (isThumbnailsView) {
-        channels = data.channels.map((channel) => ({
-          ...channel,
-          uploadsCount:
-            "uploadsCount" in channel
-              ? (channel as ChannelWithUploadsCount).uploadsCount
-              : channel.thumbnails || 0,
-        })) as (DashboardChannel & { uploadsCount: number })[];
-        isEmpty = !channels.length;
-      } else {
-        channels = data.channels;
-        isEmpty = !channels.length;
-      }
-    }
+    const isEmpty = !data.channels?.length;
 
     return (
       <CardsGridWrapper isLoading={!data} isEmpty={isEmpty}>
-        {channels.map((channel) => (
+        {data.channels?.map((channel) => (
           <Card
             key={channel.id}
             id={channel.id}
             ytId={channel.ytId}
             title={`${channel.title} ${
-              "uploadsCount" in channel ? channel.uploadsCount : 0
+              isThumbnailsView ? channel.thumbnails : 0
             }`}
             src={channel.src}
             deleteButtonSlot={
               !isThumbnailsView ? <DeleteChannel id={channel.id} /> : undefined
             }
             actionButtonSlot={
-              !isThumbnailsView &&
-              "videoCount" in channel && (
+              !isThumbnailsView && (
                 <FetchUploadsButton
                   ytChannelId={channel.ytId}
                   videoCount={channel.videoCount}
@@ -99,7 +78,7 @@ export default function Dashboard() {
               <Card.Stats
                 ytId={channel.ytId}
                 screenshotsCount={channel.screenshotsCount}
-                thumbnails={channel.thumbnails || 0}
+                thumbnails={channel.thumbnails}
                 saved={channel.saved}
                 defaults={channel.defaults}
               />
@@ -109,7 +88,7 @@ export default function Dashboard() {
 
             const syncButton = (
               <SyncUploadsButton
-                lastSyncedAt={channel.lastSyncedAt || null}
+                lastSyncedAt={channel.lastSyncedAt}
                 ytChannelId={channel.ytId}
                 id={channel.id}
               />

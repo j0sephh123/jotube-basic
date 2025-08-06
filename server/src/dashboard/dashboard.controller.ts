@@ -15,10 +15,6 @@ interface DashboardResponse {
     defaults: number;
     uploadsWithScreenshots: number;
     screenshotsCount: number;
-    screenshots: Array<{
-      ytVideoId: string;
-      second: number;
-    }>;
   }>;
   total: number;
 }

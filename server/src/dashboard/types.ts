@@ -19,10 +19,6 @@ export interface ChannelWithUploads {
     ytId: string;
     artifact: string;
   }>;
-  screenshots: Array<{
-    ytVideoId: string;
-    second: number;
-  }>;
 }
 
 export interface DashboardChannel {
@@ -38,10 +34,6 @@ export interface DashboardChannel {
   defaults: number;
   uploadsWithScreenshots: number;
   screenshotsCount: number;
-  screenshots: Array<{
-    ytVideoId: string;
-    second: number;
-  }>;
 }
 
 export interface DashboardChannelWithUploads extends DashboardChannel {

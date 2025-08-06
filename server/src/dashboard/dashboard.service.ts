@@ -87,19 +87,16 @@ export class DashboardService {
     channels: any[],
     viewType: ViewType,
   ): Promise<DashboardChannel[]> {
-    if (viewType === ViewType.PROCESSED || viewType === ViewType.SAVED) {
-      return channels.map((channel) => {
-        const rest = { ...channel };
-        delete rest.uploads;
-        return viewType === ViewType.PROCESSED
-          ? {
-              ...rest,
-              screenshotsCount: channel.screenshotsCount,
-            }
-          : rest;
-      });
-    }
-    return channels;
+    return channels.map((channel) => {
+      const rest = { ...channel };
+      delete rest.uploads;
+      return viewType === ViewType.PROCESSED
+        ? {
+            ...rest,
+            screenshotsCount: channel.screenshotsCount,
+          }
+        : rest;
+    });
   }
 
   private filterChannels(
@@ -228,45 +225,10 @@ export class DashboardService {
             artifact: true,
           },
         },
-        screenshots: {
-          where: {
-            isFav: true,
-          },
-          select: {
-            ytVideoId: true,
-            second: true,
-          },
-        },
       },
     });
 
-    const channelsWithScreenshots = await Promise.all(
-      channels.map(async (channel) => {
-        if (channel.screenshots.length > 0) {
-          return channel;
-        }
-
-        const firstScreenshot = await this.prismaService.screenshot.findFirst({
-          where: {
-            ytChannelId: channel.ytId,
-          },
-          select: {
-            ytVideoId: true,
-            second: true,
-          },
-          orderBy: {
-            createdAt: 'asc',
-          },
-        });
-
-        return {
-          ...channel,
-          screenshots: firstScreenshot ? [firstScreenshot] : [],
-        };
-      }),
-    );
-
-    return channelsWithScreenshots;
+    return channels;
   }
 
   private getChannelsWithCounts(
