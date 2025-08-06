@@ -292,7 +292,50 @@ export class YoutubeService {
       nextPageToken = newPageToken;
     } while (nextPageToken && !foundVideo);
 
-    return uploads;
+    if (uploads.length === 0) {
+      return uploads;
+    }
+
+    const videoIds = uploads.map((upload) => upload.ytId);
+    const batchSize = 50;
+    const filteredVideoIds: Set<string> = new Set();
+
+    for (let i = 0; i < videoIds.length; i += batchSize) {
+      const batchIds = videoIds.slice(i, i + batchSize).join(',');
+
+      const videosUrl = `${ytBaseUrl}/videos`;
+      const videosParams: Record<string, string> = {
+        part: 'contentDetails,snippet',
+        id: batchIds,
+        key: this.key(),
+        maxResults: '50',
+      };
+
+      const videosData: YouTubeApiResponse<VideoItem> = await fetcher.get(
+        videosUrl,
+        videosParams,
+      );
+
+      videosData.items.forEach((video) => {
+        const durationInSeconds = iso8601ToSeconds(
+          video.contentDetails.duration,
+        );
+
+        const isLongEnough = durationInSeconds >= 180;
+
+        if (isLongEnough) {
+          filteredVideoIds.add(video.id);
+        }
+      });
+
+      await this.delay(1000);
+    }
+
+    const filteredUploads = uploads.filter((upload) =>
+      filteredVideoIds.has(upload.ytId),
+    );
+
+    return filteredUploads;
   }
 
   async getChannelIdByVideoId(videoId: string): Promise<string> {

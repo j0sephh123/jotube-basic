@@ -1,0 +1,1 @@
+in `/dashboard/no-screenshots` display the number of default uploads
