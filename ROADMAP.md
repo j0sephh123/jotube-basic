@@ -36,6 +36,8 @@ _Unfiltered, undeveloped concepts. No promises, just possible directions._
 - __better notification system__ - right now we have a very basic toast, which is not very good honestly
 - __have a way to see favorites__ - perhaps it would be good to have a separate view only for favorite screenshots
 - __create conditional wrapper component__ - i always end up creating such one, because it is more readable
+- __have a way to transition between thumbnail sizes__ - right now it is hard coded to a specific size.
+- __thumbnails amount__ - display the amount of thumbnails
 ---
 
 ## 🔍 To Groom

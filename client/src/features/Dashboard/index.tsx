@@ -67,7 +67,9 @@ export default function Dashboard() {
             ytId={channel.ytId}
             title={channel.title}
             src={channel.src}
-            deleteButtonSlot={<DeleteChannel id={channel.id} />}
+            deleteButtonSlot={
+              !isThumbnailsView ? <DeleteChannel id={channel.id} /> : undefined
+            }
             actionButtonSlot={
               !isThumbnailsView &&
               "videoCount" in channel && (
