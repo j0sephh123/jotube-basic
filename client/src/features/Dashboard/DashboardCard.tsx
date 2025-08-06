@@ -19,8 +19,6 @@ export default function DashboardCard({
   channel,
   viewType,
 }: DashboardCardProps) {
-  console.log({ channel, viewType });
-
   const cardStats = (
     <Card.Stats
       ytId={channel.ytId}
