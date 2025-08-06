@@ -165,9 +165,6 @@ export class UploadsVideoService {
         });
       }
 
-      // Broadcast WebSocket event for deleting all uploads
-      this.eventsGateway.broadcastDeleteUploadsEvent(ytChannelId, []);
-
       return { success: true };
     }
 
@@ -183,9 +180,6 @@ export class UploadsVideoService {
         ytVideoId,
       });
     }
-
-    // Broadcast WebSocket event for deleting specific uploads
-    this.eventsGateway.broadcastDeleteUploadsEvent(ytChannelId, ytVideoIds);
 
     return { success: true };
   }

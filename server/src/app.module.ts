@@ -13,7 +13,6 @@ import { DownloadService } from './core/external-services/youtube-downloader/dow
 import { YouTubeDownloaderService } from './core/external-services/youtube-downloader/youtube-downloader.service';
 import { VideoProcessor } from './video-worker/video.processor';
 import { DownloadProcessor } from './video-worker/download.processor';
-import { SseModule } from './shared/sse/sse.module';
 import { PrismaService } from './core/database/prisma/prisma.service';
 import { QueueController } from './queue/queue.controller';
 import { UploadsVideoController } from './uploads-video/uploads-video.controller';
@@ -46,7 +45,6 @@ import { EventsGateway } from './events.gateway';
     ImagesModule,
     NestConfigModule.forRoot(),
     EventsModule,
-    SseModule,
     ThumbnailsModule,
     ScreenshotsJobModule,
     ScreenshotsManagerModule,

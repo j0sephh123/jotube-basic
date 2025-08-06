@@ -30,9 +30,7 @@ export type ThumbnailsProcessingSlice = {
   };
 };
 
-export type SSESlice = {
-  eventSource: EventSource | null;
-  setEventSource: (eventSource: EventSource | null) => void;
+export type WebSocketSlice = {
   operations: {
     download: { progress: number; filename: string } | null;
     screenshots: { current: number; filename: string } | null;
@@ -84,6 +82,6 @@ export type RangePickersSlice = {
 
 export type Store = SlidesSlice &
   ThumbnailsProcessingSlice &
-  SSESlice &
+  WebSocketSlice &
   DashboardSlice &
   RangePickersSlice;

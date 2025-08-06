@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { Store } from "./store-types";
 import { devtools } from "zustand/middleware";
-import { createSSESlice } from "./slices/sse-slice";
+import { createWebSocketSlice } from "./slices/websocket-slice";
 import { createDashboardSlice } from "../features/Dashboard/store/dashboard-slice";
 import { createSlidesSlice } from "@/features/Thumbnail/store/slides-slice";
 import { thumbnailsProcessingSlice } from "@/features/Thumbnail/store/thumbnails-processing-slice";
@@ -12,7 +12,7 @@ export const useStore = create<Store>()(
     (set, get) => ({
       ...createSlidesSlice(set),
       ...thumbnailsProcessingSlice(set),
-      ...createSSESlice(set),
+      ...createWebSocketSlice(set),
       ...createDashboardSlice(set),
       ...createRangePickersSlice(set, get),
     }),

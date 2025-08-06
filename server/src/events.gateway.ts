@@ -5,15 +5,21 @@ import {
   OnGatewayDisconnect,
   OnGatewayInit,
 } from '@nestjs/websockets';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Server, Socket } from 'socket.io';
 
-interface DeleteUploadsEvent {
-  type: 'delete-uploads';
-  ytChannelId: string;
-  ytVideoIds: string[];
-  timestamp: Date;
-  message: string;
+interface ProcessEvent {
+  type:
+    | 'download_start'
+    | 'download_progress'
+    | 'download_finish'
+    | 'screenshots_start'
+    | 'screenshots_progress'
+    | 'screenshots_finish'
+    | 'thumbnails_start'
+    | 'thumbnails_finish';
+  ytVideoId: string;
+  progress?: string;
 }
 
 @Injectable()
@@ -24,10 +30,13 @@ export class EventsGateway
   @WebSocketServer()
   server: Server;
 
+  private readonly logger = new Logger(EventsGateway.name);
   private connectedClients: Set<string> = new Set();
+  private lastSentTimes = new Map<string, number>();
+  private readonly RATE_LIMIT_MS = 2000;
 
   afterInit() {
-    console.log(
+    this.logger.log(
       'EventsGateway initialized, server:',
       this.server ? 'available' : 'not available',
     );
@@ -35,37 +44,70 @@ export class EventsGateway
 
   handleConnection(client: Socket) {
     this.connectedClients.add(client.id);
-    console.log(`Client connected: ${client.id}`);
+    this.logger.log(`Client connected: ${client.id}`);
   }
 
   handleDisconnect(client: Socket) {
     this.connectedClients.delete(client.id);
-    console.log(`Client disconnected: ${client.id}`);
+    this.logger.log(`Client disconnected: ${client.id}`);
   }
 
-  public broadcastDeleteUploadsEvent(
-    ytChannelId: string,
-    ytVideoIds: string[],
+  public sendEvent(
+    event:
+      | 'thumbnails_start'
+      | 'thumbnails_finish'
+      | 'screenshots_start'
+      | 'screenshots_progress'
+      | 'screenshots_finish'
+      | 'download_start'
+      | 'download_progress'
+      | 'download_finish',
+    ytVideoId: string,
+    progress?: string,
   ) {
-    console.log('broadcastDeleteUploadsEvent called with:', {
-      ytChannelId,
-      ytVideoIds,
-    });
-
     if (!this.server) {
-      console.error('WebSocket server is not available');
+      this.logger.error('WebSocket server is not available');
       return;
     }
 
-    const event: DeleteUploadsEvent = {
-      type: 'delete-uploads',
-      ytChannelId,
-      ytVideoIds,
-      timestamp: new Date(),
-      message: `Deleted ${ytVideoIds.length > 0 ? ytVideoIds.length : 'all'} upload(s) from channel ${ytChannelId}`,
-    };
+    const now = Date.now();
+    const lastSent = this.lastSentTimes.get(ytVideoId) || 0;
 
-    this.server.emit('deleteUploadsEvent', event);
-    console.log('WebSocket event sent:', event);
+    if (event === 'screenshots_progress' || event === 'download_progress') {
+      if (now - lastSent >= this.RATE_LIMIT_MS) {
+        const processEvent: ProcessEvent = {
+          type: event,
+          ytVideoId,
+          progress,
+        };
+
+        this.server.emit('processEvent', processEvent);
+        this.logger.debug(
+          `Sending process event to ${this.connectedClients.size} clients:`,
+          processEvent,
+        );
+        this.lastSentTimes.set(ytVideoId, now);
+      }
+    } else {
+      const processEvent: ProcessEvent = {
+        type: event,
+        ytVideoId,
+        progress,
+      };
+
+      this.server.emit('processEvent', processEvent);
+      this.logger.debug(
+        `Sending process event to ${this.connectedClients.size} clients:`,
+        processEvent,
+      );
+
+      if (event === 'screenshots_finish' || event === 'download_finish') {
+        this.lastSentTimes.delete(ytVideoId);
+      }
+    }
+  }
+
+  public getClientCount(): number {
+    return this.connectedClients.size;
   }
 }

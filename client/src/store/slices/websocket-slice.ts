@@ -1,10 +1,8 @@
-import { Store, SSESlice } from "@/store/store-types";
+import { Store, WebSocketSlice } from "@/store/store-types";
 
-export const createSSESlice = (
+export const createWebSocketSlice = (
   set: (fn: (state: Store) => Partial<Store>) => void
-): SSESlice => ({
-  eventSource: null,
-  setEventSource: (eventSource) => set(() => ({ eventSource })),
+): WebSocketSlice => ({
   operations: {
     download: null,
     screenshots: null,

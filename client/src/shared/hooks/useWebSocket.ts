@@ -1,41 +1,46 @@
 import { useEffect, useRef } from "react";
 import { useStore } from "@/store/store";
 import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMetadata";
+import { io, Socket } from "socket.io-client";
 
-export type SSEEventData = {
-  type: string;
+export type ProcessEventData = {
+  type:
+    | "download_start"
+    | "download_progress"
+    | "download_finish"
+    | "screenshots_start"
+    | "screenshots_progress"
+    | "screenshots_finish"
+    | "thumbnails_start"
+    | "thumbnails_finish";
   ytVideoId: string;
   progress?: string;
 };
 
-export function useSSE() {
-  const { eventSource, setEventSource, setOperation } = useStore();
+export function useWebSocket() {
+  const { setOperation } = useStore();
   const refetchChannelMetadata = useRefetchChannelMetadata();
+  const socketRef = useRef<Socket | null>(null);
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isConnectingRef = useRef(false);
 
   useEffect(() => {
     if (
-      !eventSource &&
-      !document.body.hasAttribute("data-sse-connected") &&
+      !socketRef.current &&
+      !document.body.hasAttribute("data-websocket-connected") &&
       !isConnectingRef.current
     ) {
       isConnectingRef.current = true;
-      document.body.setAttribute("data-sse-connected", "true");
+      document.body.setAttribute("data-websocket-connected", "true");
 
-      const newEventSource = new EventSource(
-        "http://localhost:3003/sse/updates"
-      );
+      const socket = io("http://localhost:3003");
+      socketRef.current = socket;
 
-      newEventSource.onopen = () => {
+      socket.on("connect", () => {
         isConnectingRef.current = false;
-        setEventSource(newEventSource);
-      };
+      });
 
-      newEventSource.onmessage = (event) => {
-        const data = JSON.parse(event.data) as SSEEventData;
-        if (data.type === "keep-alive") return;
-
+      socket.on("processEvent", (data: ProcessEventData) => {
         const filename = `${data.ytVideoId}.mp4`;
         switch (data.type) {
           case "download_start":
@@ -67,35 +72,33 @@ export function useSSE() {
             refetchChannelMetadata("");
             break;
         }
-      };
+      });
 
-      newEventSource.onerror = () => {
+      socket.on("disconnect", () => {
         isConnectingRef.current = false;
+        document.body.removeAttribute("data-websocket-connected");
 
-        if (newEventSource) {
-          newEventSource.close();
-          setEventSource(null);
-          document.body.removeAttribute("data-sse-connected");
-
-          if (reconnectTimeoutRef.current) {
-            clearTimeout(reconnectTimeoutRef.current);
-          }
-
-          reconnectTimeoutRef.current = setTimeout(() => {
-            if (
-              !document.body.hasAttribute("data-sse-connected") &&
-              !isConnectingRef.current
-            ) {
-              isConnectingRef.current = true;
-              document.body.setAttribute("data-sse-connected", "true");
-              const reconnectEventSource = new EventSource(
-                "http://localhost:3003/sse/updates"
-              );
-              setEventSource(reconnectEventSource);
-            }
-          }, 1000);
+        if (reconnectTimeoutRef.current) {
+          clearTimeout(reconnectTimeoutRef.current);
         }
-      };
+
+        reconnectTimeoutRef.current = setTimeout(() => {
+          if (
+            !document.body.hasAttribute("data-websocket-connected") &&
+            !isConnectingRef.current
+          ) {
+            isConnectingRef.current = true;
+            document.body.setAttribute("data-websocket-connected", "true");
+            const reconnectSocket = io("http://localhost:3003");
+            socketRef.current = reconnectSocket;
+          }
+        }, 1000);
+      });
+
+      socket.on("connect_error", () => {
+        isConnectingRef.current = false;
+        document.body.removeAttribute("data-websocket-connected");
+      });
     }
 
     return () => {
@@ -106,11 +109,11 @@ export function useSSE() {
 
       isConnectingRef.current = false;
 
-      if (eventSource) {
-        eventSource.close();
-        setEventSource(null);
-        document.body.removeAttribute("data-sse-connected");
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+        socketRef.current = null;
+        document.body.removeAttribute("data-websocket-connected");
       }
     };
-  }, [setEventSource, setOperation, refetchChannelMetadata]);
+  }, [setOperation, refetchChannelMetadata]);
 }
