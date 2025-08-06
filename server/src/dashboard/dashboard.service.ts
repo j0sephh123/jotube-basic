@@ -44,8 +44,11 @@ export class DashboardService {
     const skip = (page - 1) * PER_PAGE;
 
     const channels = await this.getChannelsForViewType(viewType);
-    const processedChannels = await this.processChannels(channels, viewType);
-    const filteredChannels = this.filterChannels(processedChannels, {
+    const transformedChannels = await this.transformChannelsForDashboard(
+      channels,
+      viewType,
+    );
+    const filteredChannels = this.filterChannels(transformedChannels, {
       min,
       max,
       defaultMin,
@@ -93,19 +96,22 @@ export class DashboardService {
     }
   }
 
-  private async processChannels(
-    channels: any[],
+  private async transformChannelsForDashboard(
+    channels: DashboardChannelWithUploads[],
     viewType: ViewType,
   ): Promise<DashboardChannel[]> {
     return channels.map((channel) => {
-      const rest = { ...channel };
-      delete rest.uploads;
-      return viewType === ViewType.PROCESSED
-        ? {
-            ...rest,
-            screenshotsCount: channel.screenshotsCount,
-          }
-        : rest;
+      const channelWithoutUploads = { ...channel };
+      delete channelWithoutUploads.uploads;
+
+      if (viewType === ViewType.PROCESSED) {
+        return {
+          ...channelWithoutUploads,
+          screenshotsCount: channel.screenshotsCount,
+        };
+      }
+
+      return channelWithoutUploads;
     });
   }
 
