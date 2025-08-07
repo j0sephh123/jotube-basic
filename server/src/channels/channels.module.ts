@@ -3,12 +3,12 @@ import { ConfigModule } from '@nestjs/config';
 import { ChannelController } from './channel.controller';
 import { ChannelService } from './channel.service';
 import { YoutubeService } from 'src/core/external-services/youtube-api/youtube.service';
-import { PrismaService } from 'src/core/database/prisma/prisma.service';
+import { DatabaseModule } from 'src/core/database/database.module';
 
 @Module({
-  imports: [ConfigModule],
+  imports: [ConfigModule, DatabaseModule],
   controllers: [ChannelController],
-  providers: [ChannelService, YoutubeService, PrismaService],
+  providers: [ChannelService, YoutubeService],
   exports: [ChannelService],
 })
 export class ChannelsModule {}

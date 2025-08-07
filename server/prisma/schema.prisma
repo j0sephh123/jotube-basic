@@ -33,6 +33,7 @@ enum ArtifactType {
   DOWNLOADED // not used, but will be used in the future
   STORYBOARD // not used, but will be used in the future
   THUMBNAIL
+  SCREENSHOT
 }
 
 model UploadsVideo {

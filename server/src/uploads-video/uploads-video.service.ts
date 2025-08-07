@@ -15,6 +15,8 @@ import { syncUploadsDto } from 'src/uploads-video/dtos/sync-uploads.dto';
 import { savedUploadsDto } from 'src/uploads-video/dtos/saved-uploads.dto';
 import { cleanShortUploadsDto } from 'src/uploads-video/dtos/clean-short-uploads.dto';
 import { ArtifactType } from '@prisma/client';
+import { createStoryboardDto } from './dtos/create-storyboard.dto';
+import { StoryboardService } from 'src/storyboard/storyboard.service';
 
 @Injectable()
 export class UploadsVideoService {
@@ -26,6 +28,7 @@ export class UploadsVideoService {
     private readonly fileOperationService: FileOperationService,
     private readonly youtubeService: YoutubeService,
     private prismaService: PrismaService,
+    private readonly storyboardService: StoryboardService,
   ) {}
 
   public async uploadsList(ytChannelId: string, sortOrder: 'asc' | 'desc') {
@@ -97,9 +100,12 @@ export class UploadsVideoService {
     ytChannelId,
     ytVideoId,
   }: FinishProcessUploadDto) {
-    const result = await this.prismaService.uploadsVideo.findFirst({
+    const result = await this.prismaService.uploadsVideo.update({
       where: {
         ytId: ytVideoId,
+      },
+      data: {
+        artifact: ArtifactType.SCREENSHOT,
       },
     });
 
@@ -466,6 +472,22 @@ export class UploadsVideoService {
 
     return {
       deletedCount: shortVideoIds.length,
+    };
+  }
+
+  async createStoryboard({ ytVideoId }: createStoryboardDto) {
+    const upload = await this.prismaService.uploadsVideo.findUnique({
+      where: { ytId: ytVideoId },
+    });
+
+    if (!upload) {
+      throw new Error('Upload not found');
+    }
+
+    const storyboard = await this.storyboardService.create(upload);
+
+    return {
+      ytVideoId,
     };
   }
 }

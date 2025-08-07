@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { EventsService } from './events.service';
-import { PrismaService } from 'src/core/database/prisma/prisma.service';
+import { DatabaseModule } from 'src/core/database/database.module';
 import { EventsGateway } from '../../events.gateway';
 
 @Module({
-  providers: [EventsService, PrismaService, EventsGateway],
+  imports: [DatabaseModule],
+  providers: [EventsService, EventsGateway],
   exports: [EventsService],
 })
 export class EventsModule {}

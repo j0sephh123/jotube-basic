@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { YouTubeDownloaderService } from './youtube-downloader.service';
-import { PrismaService } from 'src/core/database/prisma/prisma.service';
+import { DatabaseModule } from 'src/core/database/database.module';
 
 @Module({
-  providers: [YouTubeDownloaderService, PrismaService],
+  imports: [DatabaseModule],
+  providers: [YouTubeDownloaderService],
   exports: [YouTubeDownloaderService],
 })
 export class YouTubeDownloaderModule {}

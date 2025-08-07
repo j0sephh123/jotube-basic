@@ -13,13 +13,10 @@ import { DownloadService } from './core/external-services/youtube-downloader/dow
 import { YouTubeDownloaderService } from './core/external-services/youtube-downloader/youtube-downloader.service';
 import { VideoProcessor } from './video-worker/video.processor';
 import { DownloadProcessor } from './video-worker/download.processor';
-import { PrismaService } from './core/database/prisma/prisma.service';
 import { QueueController } from './queue/queue.controller';
-import { UploadsVideoController } from './uploads-video/uploads-video.controller';
 import { SearchController } from './search/search.controller';
 import { StatisticsController } from './statistics/statistics.controller';
 import { QueueService } from './queue/queue.service';
-import { UploadsVideoService } from './uploads-video/uploads-video.service';
 import { FilePathService } from './file/file-path.service';
 import { DirectoryService } from './file/directory.service';
 import { FileOperationService } from './file/file-operation.service';
@@ -32,6 +29,9 @@ import { ScreenshotsApiModule } from './screenshots/api/screenshots-api.module';
 import { ThumbnailsApiModule } from './thumbnails/api/thumbnails-api.module';
 import { OpenDirectoryController } from './file/open-directory.controller';
 import { EventsGateway } from './events.gateway';
+import { StoryboardModule } from './storyboard/storyboard.module';
+import { UploadsVideoModule } from './uploads-video/uploads-video.module';
+import { DatabaseModule } from './core/database/database.module';
 
 @Module({
   imports: [
@@ -52,19 +52,19 @@ import { EventsGateway } from './events.gateway';
     ScreenshotsApiModule,
     ThumbnailsApiModule,
     ChannelsModule,
+    StoryboardModule,
+    UploadsVideoModule,
+    DatabaseModule,
   ],
   controllers: [
     QueueController,
     OpenDirectoryController,
-    UploadsVideoController,
     SearchController,
     StatisticsController,
     DashboardController,
   ],
   providers: [
-    PrismaService,
     YoutubeService,
-    UploadsVideoService,
     DashboardService,
     QueueService,
     DownloadService,
