@@ -49,6 +49,30 @@ export class UploadsVideoService {
     return channel;
   }
 
+  public async storyboards(ytChannelId: string) {
+    const channel = await this.prismaService.channel.findUnique({
+      where: {
+        ytId: ytChannelId,
+      },
+    });
+
+    if (!channel) {
+      throw new Error('Channel not found');
+    }
+
+    const storyboards = await this.prismaService.uploadsVideo.findMany({
+      where: {
+        channelId: channel.id,
+        artifact: ArtifactType.STORYBOARD,
+      },
+      orderBy: {
+        publishedAt: 'desc',
+      },
+    });
+
+    return storyboards;
+  }
+
   async saveUpload({ uploads }: saveUploadDto) {
     const results = await Promise.all(
       uploads.map(async ({ ytVideoId }) => {

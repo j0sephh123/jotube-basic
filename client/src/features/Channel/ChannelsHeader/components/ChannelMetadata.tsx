@@ -7,73 +7,81 @@ import BulkOperations from "./BulkOperations";
 
 type Props = {
   ytChannelId: string;
-  metadata:
-    | {
-        title: string;
-        videoArtifactsCount: number;
-        savedArtifactsCount: number;
-        screenshotArtifactsCount: number;
-      }
-    | undefined;
+  title: string;
+  videoArtifactsCount: number;
+  savedArtifactsCount: number;
+  screenshotArtifactsCount: number;
+  storyboardArtifactsCount: number;
   isSavedPage: boolean;
   isIndexPage: boolean;
 };
 
 const ChannelMetadata = ({
   ytChannelId,
-  metadata,
+  title,
+  videoArtifactsCount,
+  savedArtifactsCount,
+  screenshotArtifactsCount,
+  storyboardArtifactsCount,
   isSavedPage,
   isIndexPage,
 }: Props) => {
   const location = useLocation();
 
-  const isActiveRoute = (where: "index" | "saved" | "gallery") => {
+  const isActiveRoute = (
+    where: "index" | "saved" | "gallery" | "storyboard"
+  ) => {
     const path = `/channels/${ytChannelId}${
       where === "index" ? "" : `/${where}`
     }`;
     return location.pathname === path;
   };
 
+  const links = [
+    {
+      where: "index" as const,
+      label: "Uploads",
+      count: videoArtifactsCount,
+    },
+    {
+      where: "storyboard" as const,
+      label: "Storyboard",
+      count: storyboardArtifactsCount,
+    },
+    {
+      where: "saved" as const,
+      label: "Saved",
+      count: savedArtifactsCount,
+    },
+    {
+      where: "gallery" as const,
+      label: "Gallery",
+      count: screenshotArtifactsCount,
+    },
+  ];
+
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-2">
         <ChannelLink ytId={ytChannelId} where="saved">
-          <h2 className="text-xl font-bold pr-4">{metadata?.title}</h2>
+          <h2 className="text-xl font-bold pr-4">{title}</h2>
         </ChannelLink>
         <CopyValue type="youtube" value={ytChannelId} />
         <OpenExplorerButton ytChannelId={ytChannelId} />
       </div>
       <div className="flex flex-wrap gap-2">
-        <ChannelLink ytId={ytChannelId} where="index">
-          <button
-            className={clsx("btn btn-sm", {
-              "btn-primary": isActiveRoute("index"),
-              "btn-ghost": !isActiveRoute("index"),
-            })}
-          >
-            Uploads: {metadata?.videoArtifactsCount}
-          </button>
-        </ChannelLink>
-        <ChannelLink ytId={ytChannelId} where="saved">
-          <button
-            className={clsx("btn btn-sm", {
-              "btn-primary": isActiveRoute("saved"),
-              "btn-ghost": !isActiveRoute("saved"),
-            })}
-          >
-            Saved: {metadata?.savedArtifactsCount}
-          </button>
-        </ChannelLink>
-        <ChannelLink ytId={ytChannelId} where="gallery">
-          <button
-            className={clsx("btn btn-sm", {
-              "btn-primary": isActiveRoute("gallery"),
-              "btn-ghost": !isActiveRoute("gallery"),
-            })}
-          >
-            Gallery: {metadata?.screenshotArtifactsCount}
-          </button>
-        </ChannelLink>
+        {links.map(({ where, label, count }) => (
+          <ChannelLink key={where} ytId={ytChannelId} where={where}>
+            <button
+              className={clsx("btn btn-sm", {
+                "btn-primary": isActiveRoute(where),
+                "btn-ghost": !isActiveRoute(where),
+              })}
+            >
+              {label}: {count}
+            </button>
+          </ChannelLink>
+        ))}
         <BulkOperations
           ytChannelId={ytChannelId}
           isSavedPage={isSavedPage}

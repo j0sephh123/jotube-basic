@@ -265,6 +265,7 @@ describe('ChannelService', () => {
         savedArtifacts: 30,
         thumbnailArtifacts: 40,
         screenshotArtifacts: 50,
+        storyboardArtifacts: 15,
       };
 
       mockPrismaService.channel.findUnique.mockResolvedValue(mockChannel);
@@ -274,6 +275,9 @@ describe('ChannelService', () => {
         .mockResolvedValueOnce(mockCounts.thumbnailArtifacts);
       mockPrismaService.screenshot.count.mockResolvedValue(
         mockCounts.screenshotArtifacts,
+      );
+      mockPrismaService.uploadsVideo.count.mockResolvedValueOnce(
+        mockCounts.storyboardArtifacts,
       );
 
       const result = await service.metadata(ytChannelId);
@@ -309,11 +313,19 @@ describe('ChannelService', () => {
         },
       });
 
+      expect(mockPrismaService.uploadsVideo.count).toHaveBeenCalledWith({
+        where: {
+          channelId: mockChannel.id,
+          artifact: ArtifactType.STORYBOARD,
+        },
+      });
+
       expect(result).toEqual({
         videoArtifactsCount: mockCounts.videoArtifacts,
         savedArtifactsCount: mockCounts.savedArtifacts,
         thumbnailArtifactsCount: mockCounts.thumbnailArtifacts,
         screenshotArtifactsCount: mockCounts.screenshotArtifacts,
+        storyboardArtifactsCount: mockCounts.storyboardArtifacts,
         id: mockChannel.id,
         title: mockChannel.title,
         ytId: mockChannel.ytId,
@@ -345,6 +357,7 @@ describe('ChannelService', () => {
       mockPrismaService.uploadsVideo.count
         .mockResolvedValueOnce(0)
         .mockResolvedValueOnce(0)
+        .mockResolvedValueOnce(0)
         .mockResolvedValueOnce(0);
       mockPrismaService.screenshot.count.mockResolvedValue(0);
 
@@ -355,6 +368,7 @@ describe('ChannelService', () => {
         savedArtifactsCount: 0,
         thumbnailArtifactsCount: 0,
         screenshotArtifactsCount: 0,
+        storyboardArtifactsCount: 0,
         id: mockChannel.id,
         title: mockChannel.title,
         ytId: mockChannel.ytId,
@@ -372,6 +386,7 @@ describe('ChannelService', () => {
         savedArtifacts: 15000,
         thumbnailArtifacts: 20000,
         screenshotArtifacts: 25000,
+        storyboardArtifacts: 30000,
       };
 
       mockPrismaService.channel.findUnique.mockResolvedValue(mockChannel);
@@ -382,6 +397,9 @@ describe('ChannelService', () => {
       mockPrismaService.screenshot.count.mockResolvedValue(
         mockCounts.screenshotArtifacts,
       );
+      mockPrismaService.uploadsVideo.count.mockResolvedValueOnce(
+        mockCounts.storyboardArtifacts,
+      );
 
       const result = await service.metadata(ytChannelId);
 
@@ -390,6 +408,7 @@ describe('ChannelService', () => {
         savedArtifactsCount: mockCounts.savedArtifacts,
         thumbnailArtifactsCount: mockCounts.thumbnailArtifacts,
         screenshotArtifactsCount: mockCounts.screenshotArtifacts,
+        storyboardArtifactsCount: mockCounts.storyboardArtifacts,
         id: mockChannel.id,
         title: mockChannel.title,
         ytId: mockChannel.ytId,

@@ -12,6 +12,7 @@ import Dashboard from "@/features/Dashboard";
 import DashboardWrapper from "@/features/Dashboard/components/DashboardWrapper";
 import DefaultUploadsPage from "./pages/DefaultUploadsPage";
 import GalleryVideoPage from "./features/Gallery/components/GalleryVideoPage";
+import StoryboardPage from "./pages/StoryboardPage";
 import NotFound from "./shared/components/static/NotFound";
 
 export const Router = (
@@ -25,6 +26,7 @@ export const Router = (
         <Route path="/channels/:ytChannelId" element={<ChannelsPageWrapper />}>
           <Route index element={<DefaultUploadsPage />} />
           <Route path="saved" element={<SavedUploads />} />
+          <Route path="storyboard" element={<StoryboardPage />} />
           <Route path="gallery" element={<GalleryLayout />}>
             <Route index element={<GalleryPage />} />
             <Route path=":ytVideoId" element={<GalleryVideoPage />} />

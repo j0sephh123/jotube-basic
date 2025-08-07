@@ -6,6 +6,7 @@ export enum ViewType {
   NO_UPLOADS = "no-uploads",
   NO_SCREENSHOTS = "no-screenshots",
   THUMBNAILS = "thumbnails",
+  HAS_STORYBOARDS = "has-storyboard", // not used yet
 }
 
 export const useTypedChannelYtId = () => {

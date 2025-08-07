@@ -3,13 +3,7 @@ import { Link } from "react-router-dom";
 
 type Props = PropsWithChildren<{
   ytId: string;
-  where:
-    | "index"
-    | "saved"
-    | "savedArtifacts"
-    | "gallery"
-    | "favorites"
-    | "processed-videos";
+  where: "index" | "saved" | "gallery" | "storyboard";
   className?: string;
   style?: React.CSSProperties;
   onClick?: () => void;

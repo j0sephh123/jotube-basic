@@ -72,6 +72,7 @@ export class ChannelService {
       savedArtifactsCount,
       thumbnailArtifactsCount,
       screenshotArtifactsCount,
+      storyboardArtifactsCount,
     ] = await Promise.all([
       (async () => {
         const count = await this.prismaService.uploadsVideo.count({
@@ -108,6 +109,15 @@ export class ChannelService {
         });
         return count;
       })(),
+      (async () => {
+        const count = await this.prismaService.uploadsVideo.count({
+          where: {
+            channelId: channel.id,
+            artifact: ArtifactType.STORYBOARD,
+          },
+        });
+        return count;
+      })(),
     ]);
 
     return {
@@ -115,6 +125,7 @@ export class ChannelService {
       savedArtifactsCount,
       thumbnailArtifactsCount,
       screenshotArtifactsCount,
+      storyboardArtifactsCount,
       id: channel.id,
       title: channel.title,
       ytId: channel.ytId,

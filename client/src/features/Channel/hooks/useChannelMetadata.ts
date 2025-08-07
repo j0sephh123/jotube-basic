@@ -2,11 +2,12 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import nestFetcher from "@/shared/api/nestFetcher";
 import { useCallback } from "react";
 
-type Response = {
+export type ChannelMetadataI = {
   videoArtifactsCount: number;
   savedArtifactsCount: number;
   thumbnailArtifactsCount: number;
   screenshotArtifactsCount: number;
+  storyboardArtifactsCount: number;
   id: number;
   title: string;
   ytId: string;
@@ -22,7 +23,7 @@ const queryKey = (ytChannelId: string | undefined) => [
 ];
 
 export function useChannelMetadataQuery(ytChannelId: string | undefined) {
-  return useQuery<Response>({
+  return useQuery<ChannelMetadataI>({
     enabled: !!ytChannelId,
     queryKey: queryKey(ytChannelId),
     queryFn: () =>

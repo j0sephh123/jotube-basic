@@ -54,4 +54,9 @@ export class UploadsVideoController {
   ) {
     return this.uploadsVideoService.uploadsList(ytChannelId, sortOrder);
   }
+
+  @Get('/storyboards/:ytChannelId')
+  storyboards(@Param('ytChannelId') ytChannelId: string) {
+    return this.uploadsVideoService.storyboards(ytChannelId);
+  }
 }

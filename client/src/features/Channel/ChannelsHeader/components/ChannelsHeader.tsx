@@ -17,38 +17,53 @@ const ChannelsHeader = () => {
 
   if (!metadata) return null;
 
+  const {
+    title,
+    videoArtifactsCount,
+    savedArtifactsCount,
+    screenshotArtifactsCount,
+    storyboardArtifactsCount,
+    id,
+    thumbnailArtifactsCount,
+  } = metadata;
+
   return (
     <div className="bg-base-200 rounded-lg px-6 pt-16 shadow-md">
       <div className="flex flex-col gap-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <ChannelMetadata
             ytChannelId={ytChannelId}
-            metadata={metadata}
+            title={title}
+            videoArtifactsCount={videoArtifactsCount}
+            savedArtifactsCount={savedArtifactsCount}
+            screenshotArtifactsCount={screenshotArtifactsCount}
+            storyboardArtifactsCount={storyboardArtifactsCount}
             isSavedPage={isSavedPage}
             isIndexPage={isIndexPage}
           />
           <ChannelActions
             ytChannelId={ytChannelId}
-            id={metadata.id}
-            thumbnailArtifactsCount={metadata.thumbnailArtifactsCount}
-            screenshotArtifactsCount={metadata.screenshotArtifactsCount}
+            id={id}
+            thumbnailArtifactsCount={thumbnailArtifactsCount}
+            screenshotArtifactsCount={screenshotArtifactsCount}
           />
         </div>
-
-        {!pathname.includes("/gallery") && !pathname.includes("/saved") && (
-          <ChannelControls
-            leftSlot={
-              <>
-                <SyncUploadsButton
-                  lastSyncedAt={metadata?.lastSyncedAt ?? null}
-                  ytChannelId={ytChannelId}
-                  id={metadata?.id ?? 0}
-                />
-                <CleanShortUploads ytChannelId={ytChannelId} />
-              </>
-            }
-          />
-        )}
+        {!pathname.includes("/gallery") &&
+          !pathname.includes("/saved") &&
+          !pathname.includes("/storyboard") && (
+            <ChannelControls
+              leftSlot={
+                <>
+                  <SyncUploadsButton
+                    lastSyncedAt={metadata?.lastSyncedAt ?? null}
+                    ytChannelId={ytChannelId}
+                    id={metadata?.id ?? 0}
+                  />
+                  <CleanShortUploads ytChannelId={ytChannelId} />
+                </>
+              }
+            />
+          )}
       </div>
     </div>
   );

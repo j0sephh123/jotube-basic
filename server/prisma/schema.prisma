@@ -28,9 +28,10 @@ model Channel {
 }
 
 enum ArtifactType {
-  VIDEO
+  VIDEO // default
   SAVED
-  DOWNLOADED
+  DOWNLOADED // not used, but will be used in the future
+  STORYBOARD // not used, but will be used in the future
   THUMBNAIL
 }
 
