@@ -49,7 +49,6 @@ export class QueueService {
           include: {
             uploads: {
               where: {
-                status: 1,
                 artifact: 'SAVED',
               },
             },

@@ -32,7 +32,6 @@ enum ArtifactType {
   SAVED
   DOWNLOADED
   THUMBNAIL
-  SCREENSHOT
 }
 
 model UploadsVideo {
@@ -47,12 +46,11 @@ model UploadsVideo {
   channel       Channel      @relation(fields: [channelId], references: [id], onDelete: Cascade)
   nextPageToken String?
   duration      Int?
-  status        Int          @default(0)
   artifact      ArtifactType @default(VIDEO)
 
   thumbnail Thumbnail? @relation
 
-  @@index([channelId, status])
+  @@index([channelId, artifact])
 }
 
 model Thumbnail {

@@ -21,13 +21,13 @@ const BulkOperations = ({ ytChannelId, isSavedPage, isIndexPage }: Props) => {
   const { data: channelData } = useUploadsList(ytChannelId, sortOrder);
   const refetchChannelMetadata = useRefetchChannelMetadata();
   const refetchSavedUploads = useRefetchSavedUploads(ytChannelId);
-  
+
   const saveUploadMutation = useSaveUpload(() => {
     refetchChannelMetadata(ytChannelId);
     refetchSavedUploads();
   });
 
-  const deleteUploadsMutation = useDeleteUploads();
+  const deleteUploadsMutation = useDeleteUploads(refetchSavedUploads);
 
   const handleDownloadAll = () => {
     downloadMutation.mutate([{ ytChannelId, downloadOption: 0 }]);
@@ -36,15 +36,10 @@ const BulkOperations = ({ ytChannelId, isSavedPage, isIndexPage }: Props) => {
   const handleSaveAll = () => {
     if (!channelData?.uploads) return;
 
-    const uploadsToSave = channelData.uploads
-      .filter(
-        (upload) =>
-          upload.artifact !== "SAVED" && upload.artifact !== "DOWNLOADED"
-      )
-      .map((upload) => ({
-        ytVideoId: upload.ytId,
-        ytChannelId: ytChannelId,
-      }));
+    const uploadsToSave = channelData.uploads.map((upload) => ({
+      ytVideoId: upload.ytId,
+      ytChannelId: ytChannelId,
+    }));
 
     if (uploadsToSave.length > 0) {
       saveUploadMutation({ uploads: uploadsToSave });
@@ -61,10 +56,7 @@ const BulkOperations = ({ ytChannelId, isSavedPage, isIndexPage }: Props) => {
   return (
     <div className="flex gap-2">
       {isSavedPage && (
-        <button
-          onClick={handleDownloadAll}
-          className="btn btn-primary"
-        >
+        <button onClick={handleDownloadAll} className="btn btn-primary">
           Download All
         </button>
       )}
@@ -82,4 +74,4 @@ const BulkOperations = ({ ytChannelId, isSavedPage, isIndexPage }: Props) => {
   );
 };
 
-export default BulkOperations; 
+export default BulkOperations;

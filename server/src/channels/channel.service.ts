@@ -131,7 +131,9 @@ export class ChannelService {
     return this.prismaService.channel.findMany({
       where: {
         fetchedUntilEnd: isNoScreenshotsView,
-        ...(isNoScreenshotsView ? { uploads: { every: { status: 0 } } } : {}),
+        ...(isNoScreenshotsView
+          ? { uploads: { every: { artifact: ArtifactType.VIDEO } } }
+          : {}),
       },
       select: {
         id: true,

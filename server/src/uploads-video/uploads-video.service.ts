@@ -36,7 +36,7 @@ export class UploadsVideoService {
       include: {
         uploads: {
           where: {
-            status: 0,
+            artifact: ArtifactType.VIDEO,
           },
           orderBy: {
             publishedAt: sortOrder,
@@ -54,7 +54,7 @@ export class UploadsVideoService {
       uploads.map(async ({ ytVideoId }) => {
         const upload = await this.prismaService.uploadsVideo.update({
           where: { ytId: ytVideoId },
-          data: { artifact: 'SAVED', status: 1 },
+          data: { artifact: 'SAVED' },
         });
 
         await this.prismaService.channel.findUnique({
@@ -73,15 +73,15 @@ export class UploadsVideoService {
     ytChannelId,
     ytVideoId,
   }: FinishProcessUploadDto) {
-    const result = await this.prismaService.uploadsVideo.update({
+    const result = await this.prismaService.uploadsVideo.findFirst({
       where: {
         ytId: ytVideoId,
       },
-      data: {
-        status: 2,
-        artifact: 'SCREENSHOT',
-      },
     });
+
+    if (!result) {
+      throw new Error('Upload not found');
+    }
 
     try {
       const thumbnail = await this.prismaService.thumbnail.findUnique({
@@ -147,7 +147,7 @@ export class UploadsVideoService {
         select: {
           id: true,
           uploads: {
-            where: { status: 1, artifact: { in: ['SAVED', 'DOWNLOADED'] } },
+            where: { artifact: { in: ['SAVED', 'DOWNLOADED'] } },
             select: {
               ytId: true,
               id: true,
@@ -344,7 +344,7 @@ export class UploadsVideoService {
           src: true,
           ytId: true,
           uploads: {
-            where: { status: 1, artifact: { in: ['SAVED', 'DOWNLOADED'] } },
+            where: { artifact: { in: ['SAVED', 'DOWNLOADED'] } },
             select: {
               createdAt: true,
               ytId: true,
@@ -416,7 +416,7 @@ export class UploadsVideoService {
       where: { ytId: ytChannelId },
       select: {
         uploads: {
-          where: { status: 0, artifact: ArtifactType.VIDEO },
+          where: { artifact: ArtifactType.VIDEO },
         },
       },
     });

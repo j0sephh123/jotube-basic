@@ -1,7 +1,6 @@
 import useAddUploadsToQueue from "@/features/Upload/hooks/useAddUploadsToQueue";
 import { useDeleteUploads } from "@/features/Upload/hooks/useUploadsDelete";
 import { useQueue } from "@/shared/hooks/useQueue";
-import useUploadsList from "@/features/Upload/hooks/useUploadsList";
 import { useSavedUploads } from "@/features/Upload/hooks/useSavedUploads";
 import Card from "./Card";
 
@@ -11,13 +10,12 @@ export default function SavedUploads({
   ytChannelId: string;
 }): JSX.Element {
   const { data: queue, refetch: refetchQueue } = useQueue();
-  const { data } = useUploadsList(ytChannelId, "asc");
   const handleDownloadMutation = useAddUploadsToQueue();
   const { data: savedUploads, refetch: refetchSavedUploads } =
     useSavedUploads(ytChannelId);
   const deleteUploadFromDbMutation = useDeleteUploads(refetchSavedUploads);
 
-  if (!data || !savedUploads || !savedUploads.length) {
+  if (!savedUploads || !savedUploads.length) {
     return (
       <div className="flex items-center justify-center h-screen">
         Loading...
