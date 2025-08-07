@@ -1,33 +1,23 @@
 import { RotateCcw } from "lucide-react";
 import { useStore } from "@/store/store";
 import { RangePickerTypes } from "@/store/store-types";
-import { formatLastSync } from "@/shared/utils/format";
-
-import { UseMutationResult } from "@tanstack/react-query";
+import { useSearchParams } from "react-router-dom";
 
 type Props = {
-  metadata:
-    | {
-        lastSyncedAt: string | null;
-      }
-    | undefined;
-  sortOrder: string;
-  syncUploadsMutation: UseMutationResult<
-    void,
-    unknown,
-    { ytChannelId: string; channelId: number }
-  >;
-  onToggleSortOrder: () => void;
-  onSync: () => void;
+  leftSlot: React.ReactNode;
 };
 
-const ChannelControls = ({
-  metadata,
-  sortOrder,
-  syncUploadsMutation,
-  onToggleSortOrder,
-  onSync,
-}: Props) => {
+const ChannelControls = ({ leftSlot }: Props) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const sortOrder = (searchParams.get("sort") || "desc") as "asc" | "desc";
+  const toggleSortOrder = () => {
+    setSearchParams((prev) => {
+      const newSort = prev.get("sort") === "asc" ? "desc" : "asc";
+      prev.set("sort", newSort);
+      return prev;
+    });
+  };
+
   const { updateRangePickerValues } = useStore();
 
   const handleResetRangeFilters = () => {
@@ -55,27 +45,9 @@ const ChannelControls = ({
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-4 border-t pt-4">
-      <div className="flex flex-wrap items-center gap-4">
-        <div className="flex items-center gap-2">
-          <button
-            className={`btn btn-primary btn-sm ${
-              syncUploadsMutation.isPending ? "btn-disabled" : ""
-            }`}
-            onClick={onSync}
-          >
-            Sync
-            {syncUploadsMutation.isPending && (
-              <span className="loading loading-spinner loading-xs" />
-            )}
-          </button>
-          <span className="text-sm text-gray-400">
-            {formatLastSync(metadata?.lastSyncedAt ?? null)}
-          </span>
-        </div>
-      </div>
-
+      <div className="flex flex-wrap items-center gap-4">{leftSlot}</div>
       <div className="flex items-center gap-2">
-        <button className="btn btn-outline btn-sm" onClick={onToggleSortOrder}>
+        <button className="btn btn-outline btn-sm" onClick={toggleSortOrder}>
           Sort:
           {sortOrder === "asc" ? "↑ Oldest first" : "↓ Newest first"}
         </button>
