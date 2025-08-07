@@ -220,7 +220,7 @@ export class YoutubeService {
         );
 
         videosData.items.forEach((video) => {
-          const durationInSeconds = iso8601ToSeconds(
+          const durationInSeconds = this.iso8601ToSeconds(
             video.contentDetails.duration,
           );
 
@@ -317,7 +317,7 @@ export class YoutubeService {
       );
 
       videosData.items.forEach((video) => {
-        const durationInSeconds = iso8601ToSeconds(
+        const durationInSeconds = this.iso8601ToSeconds(
           video.contentDetails.duration,
         );
 
@@ -366,13 +366,55 @@ export class YoutubeService {
       videoCount: +item.statistics.videoCount,
     };
   }
-}
 
-function iso8601ToSeconds(duration: string): number {
-  const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
-  if (!match) return 0;
-  const hours = parseInt(match[1] || '0', 10);
-  const minutes = parseInt(match[2] || '0', 10);
-  const seconds = parseInt(match[3] || '0', 10);
-  return hours * 3600 + minutes * 60 + seconds;
+  /**
+   * Fetches the ISO8601 duration for each video ID.
+   * Returns an array of { id, duration }.
+   */
+  async getVideoDurations(
+    videoIds: string[],
+  ): Promise<{ id: string; duration: number }[]> {
+    const batchSize = 50;
+    const durations: { id: string; duration: number }[] = [];
+
+    for (let i = 0; i < videoIds.length; i += batchSize) {
+      const batch = videoIds.slice(i, i + batchSize).join(',');
+      const url = `${ytBaseUrl}/videos`;
+      const params: Record<string, string> = {
+        part: 'contentDetails',
+        id: batch,
+        key: this.key(),
+        maxResults: '50',
+      };
+
+      console.log(`Fetching durations for IDs: ${batch}`);
+      const data: YouTubeApiResponse<VideoItem> = await fetcher.get(
+        url,
+        params,
+      );
+
+      data.items.forEach((video) => {
+        durations.push({
+          id: video.id,
+          duration: this.iso8601ToSeconds(video.contentDetails.duration),
+        });
+      });
+
+      // throttle to avoid quota throttling
+      if (i + batchSize < videoIds.length) {
+        await this.delay(1000);
+      }
+    }
+
+    return durations;
+  }
+
+  private iso8601ToSeconds(duration: string) {
+    const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+    if (!match) return 0;
+    const hours = parseInt(match[1] || '0', 10);
+    const minutes = parseInt(match[2] || '0', 10);
+    const seconds = parseInt(match[3] || '0', 10);
+    return hours * 3600 + minutes * 60 + seconds;
+  }
 }

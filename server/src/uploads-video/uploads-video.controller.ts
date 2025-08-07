@@ -6,6 +6,7 @@ import { deleteUploadsDto } from 'src/uploads-video/dtos/delete-uploads.dto';
 import { fetchUploadsDto } from 'src/uploads-video/dtos/fetch-uploads.dto';
 import { syncUploadsDto } from 'src/uploads-video/dtos/sync-uploads.dto';
 import { savedUploadsDto } from 'src/uploads-video/dtos/saved-uploads.dto';
+import { cleanShortUploadsDto } from './dtos/clean-short-uploads.dto';
 
 @Controller('uploads-video')
 export class UploadsVideoController {
@@ -34,6 +35,11 @@ export class UploadsVideoController {
   @Post('/sync-uploads')
   syncUploads(@Body() syncUploadsDto: syncUploadsDto) {
     return this.uploadsVideoService.syncUploads(syncUploadsDto);
+  }
+
+  @Post('/clean-short-uploads')
+  cleanShortUploads(@Body() body: cleanShortUploadsDto) {
+    return this.uploadsVideoService.cleanShortUploads(body);
   }
 
   @Post('/saved-uploads')

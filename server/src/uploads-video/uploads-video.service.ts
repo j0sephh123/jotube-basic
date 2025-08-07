@@ -13,6 +13,8 @@ import { YoutubeService } from 'src/core/external-services/youtube-api/youtube.s
 import { fetchUploadsDto } from 'src/uploads-video/dtos/fetch-uploads.dto';
 import { syncUploadsDto } from 'src/uploads-video/dtos/sync-uploads.dto';
 import { savedUploadsDto } from 'src/uploads-video/dtos/saved-uploads.dto';
+import { cleanShortUploadsDto } from 'src/uploads-video/dtos/clean-short-uploads.dto';
+import { ArtifactType } from '@prisma/client';
 
 @Injectable()
 export class UploadsVideoService {
@@ -407,5 +409,39 @@ export class UploadsVideoService {
     } catch (error) {
       console.error('Error deleting video:', error);
     }
+  }
+
+  async cleanShortUploads({ ytChannelId }: cleanShortUploadsDto) {
+    const channel = await this.prismaService.channel.findUnique({
+      where: { ytId: ytChannelId },
+      select: {
+        uploads: {
+          where: { status: 0, artifact: ArtifactType.VIDEO },
+        },
+      },
+    });
+
+    if (!channel) {
+      throw new Error('Channel not found');
+    }
+
+    const videoIds = channel.uploads.map((upload) => upload.ytId);
+    const durations = await this.youtubeService.getVideoDurations(videoIds);
+
+    const shortVideoIds = durations
+      .filter((duration) => duration.duration < 180)
+      .map((duration) => duration.id);
+
+    if (shortVideoIds.length > 0) {
+      await this.prismaService.uploadsVideo.deleteMany({
+        where: {
+          ytId: { in: shortVideoIds },
+        },
+      });
+    }
+
+    return {
+      deletedCount: shortVideoIds.length,
+    };
   }
 }
