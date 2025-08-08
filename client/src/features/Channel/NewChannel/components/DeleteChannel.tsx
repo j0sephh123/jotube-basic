@@ -26,14 +26,5 @@ export default function DeleteChannel({ id }: { id: number }) {
     });
   };
 
-  return (
-    <Button
-      color="error"
-      variant="soft"
-      size="sm"
-      onClick={handleDeleteClick}
-    >
-      Delete
-    </Button>
-  );
+  return <Button onClick={handleDeleteClick}>Delete</Button>;
 }

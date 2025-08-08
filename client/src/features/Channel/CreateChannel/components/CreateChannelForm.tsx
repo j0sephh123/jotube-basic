@@ -86,12 +86,11 @@ export default function CreateChannelForm({
         </div>
 
         <div className="flex justify-end gap-3 mt-4">
-          <Button onClick={onClose} color="info" variant="outline">
+          <Button onClick={onClose}>
             Cancel
           </Button>
           <Button
             type="submit"
-            className="btn btn-primary h-12 px-6 gap-2"
             onClick={handleSubmit}
             disabled={!isInputValid}
           >

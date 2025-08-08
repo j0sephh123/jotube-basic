@@ -22,7 +22,7 @@ export default function SelectSortDirection(): JSX.Element {
   };
 
   return (
-    <Button onClick={toggleSortOrder} color="info" variant="outline" size="sm">
+    <Button onClick={toggleSortOrder}>
       {icons[requestBody.sortOrder as SortOrder]}
       <span className="ml-2">{labels[requestBody.sortOrder as SortOrder]}</span>
     </Button>

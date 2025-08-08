@@ -6,10 +6,7 @@ type Props = {
   thumbnailArtifactsCount: number;
 };
 
-export default function ViewThumbnails({
-  id,
-  thumbnailArtifactsCount,
-}: Props) {
+export default function ViewThumbnails({ id, thumbnailArtifactsCount }: Props) {
   const { viewThumbnails } = useArtifacts();
 
   const handleViewThumbnails = () => {
@@ -17,12 +14,7 @@ export default function ViewThumbnails({
   };
 
   return (
-    <Button
-      onClick={handleViewThumbnails}
-      color="accent"
-      variant="outline"
-      size="sm"
-    >
+    <Button onClick={handleViewThumbnails}>
       Thumbnails ({thumbnailArtifactsCount})
     </Button>
   );

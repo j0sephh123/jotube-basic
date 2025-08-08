@@ -16,12 +16,7 @@ export default function ViewScreenshots({
   };
 
   return (
-    <Button
-      onClick={handleViewScreenshots}
-      color="accent"
-      variant="outline"
-      size="sm"
-    >
+    <Button onClick={handleViewScreenshots}>
       Screenshots ({screenshotArtifactsCount})
     </Button>
   );

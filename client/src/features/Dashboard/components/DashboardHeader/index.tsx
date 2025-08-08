@@ -29,13 +29,7 @@ export default function DashboardHeader() {
             <>
               <RangeFilterPopover />
               <DefaultsRangeFilterPopover />
-              <Button
-                onClick={handleClearFilters}
-                color="info"
-                variant="outline"
-                size="sm"
-                title="Reset filters"
-              >
+              <Button onClick={handleClearFilters}>
                 <RotateCcw className="w-4 h-4" />
                 Reset
               </Button>

@@ -19,7 +19,7 @@ export function CommonRangeFilterPopover({
   return (
     <PopoverPrimitive.Root open={isOpen} onOpenChange={setIsOpen}>
       <PopoverPrimitive.Trigger asChild>
-        <Button color="info" variant="outline" size="sm">
+        <Button>
           {icon}
           <span className="ml-1">{buttonLabel}</span>
         </Button>
