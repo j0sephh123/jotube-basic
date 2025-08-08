@@ -9,8 +9,9 @@ import { RemoveJobsDto } from './queue.controller';
 @Injectable()
 export class QueueService {
   constructor(
-    @InjectQueue(queueNames.video) private readonly videoProcessor: Queue,
     @InjectQueue(queueNames.download) private readonly downloadProcessor: Queue,
+    @InjectQueue(queueNames.storyboard)
+    private readonly storyboardProcessor: Queue,
     private readonly prismaService: PrismaService,
   ) {}
 
@@ -109,6 +110,31 @@ export class QueueService {
     return results;
   }
 
+  async addStoryboardJob({ ytVideoId }: { ytVideoId: string }) {
+    const existingJobs = await this.storyboardProcessor.getJobs([
+      'active',
+      'waiting',
+    ]);
+    const existingIds = existingJobs.map((job) => job.data.ytVideoId);
+
+    if (!existingIds.includes(ytVideoId)) {
+      const upload = await this.prismaService.uploadsVideo.findUnique({
+        where: { ytId: ytVideoId },
+        select: {
+          channel: {
+            select: { ytId: true },
+          },
+        },
+      });
+
+      const ytChannelId = upload?.channel?.ytId || '';
+
+      await this.storyboardProcessor.add({ ytVideoId, ytChannelId });
+    }
+
+    return { success: true };
+  }
+
   public getLabels({ items }: LabelsDto) {
     const channels = items
       .filter((item) => item.type === 'ytChannelId')
@@ -151,18 +177,53 @@ export class QueueService {
   }
 
   async getScreenshotsQueue() {
-    const jobs = await this.downloadProcessor.getJobs(['active', 'waiting']);
+    const [downloadJobs, storyboardJobs] = await Promise.all([
+      this.downloadProcessor.getJobs(['active', 'waiting']),
+      this.storyboardProcessor.getJobs(['active', 'waiting']),
+    ]);
 
-    const queueData = await Promise.all(
-      jobs.map(async (job) => {
+    const downloads = await Promise.all(
+      downloadJobs.map(async (job) => {
         const state = await job.getState();
         return {
           id: job.id,
           state,
           ...job.data,
+        } as {
+          id: string;
+          state: string;
+          ytChannelId: string;
+          ytVideoId: string;
         };
       }),
     );
+
+    const storyboards = await Promise.all(
+      storyboardJobs.map(async (job) => {
+        const state = await job.getState();
+        let ytChannelId: string | undefined = job.data.ytChannelId;
+        if (!ytChannelId) {
+          const upload = await this.prismaService.uploadsVideo.findUnique({
+            where: { ytId: job.data.ytVideoId },
+            select: { channel: { select: { ytId: true } } },
+          });
+          ytChannelId = upload?.channel?.ytId;
+        }
+        return {
+          id: job.id,
+          state,
+          ytVideoId: job.data.ytVideoId,
+          ytChannelId: ytChannelId || '',
+        } as {
+          id: string;
+          state: string;
+          ytChannelId: string;
+          ytVideoId: string;
+        };
+      }),
+    );
+
+    const queueData = [...downloads, ...storyboards];
 
     const videoIds = queueData.map((item) => item.ytVideoId);
     const channelIds = [...new Set(queueData.map((item) => item.ytChannelId))];

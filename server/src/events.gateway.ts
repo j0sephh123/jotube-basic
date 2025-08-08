@@ -7,17 +7,10 @@ import {
 } from '@nestjs/websockets';
 import { Injectable, Logger } from '@nestjs/common';
 import { Server, Socket } from 'socket.io';
+import { EventTypes } from './shared/types';
 
 interface ProcessEvent {
-  type:
-    | 'download_start'
-    | 'download_progress'
-    | 'download_finish'
-    | 'screenshots_start'
-    | 'screenshots_progress'
-    | 'screenshots_finish'
-    | 'thumbnails_start'
-    | 'thumbnails_finish';
+  type: EventTypes;
   ytVideoId: string;
   progress?: string;
 }
@@ -52,19 +45,7 @@ export class EventsGateway
     this.logger.log(`Client disconnected: ${client.id}`);
   }
 
-  public sendEvent(
-    event:
-      | 'thumbnails_start'
-      | 'thumbnails_finish'
-      | 'screenshots_start'
-      | 'screenshots_progress'
-      | 'screenshots_finish'
-      | 'download_start'
-      | 'download_progress'
-      | 'download_finish',
-    ytVideoId: string,
-    progress?: string,
-  ) {
+  public sendEvent(event: EventTypes, ytVideoId: string, progress?: string) {
     if (!this.server) {
       this.logger.error('WebSocket server is not available');
       return;

@@ -13,6 +13,7 @@ import { DownloadService } from './core/external-services/youtube-downloader/dow
 import { YouTubeDownloaderService } from './core/external-services/youtube-downloader/youtube-downloader.service';
 import { VideoProcessor } from './video-worker/video.processor';
 import { DownloadProcessor } from './video-worker/download.processor';
+import { StoryboardProcessor } from './video-worker/storyboard.processor';
 import { QueueController } from './queue/queue.controller';
 import { SearchController } from './search/search.controller';
 import { StatisticsController } from './statistics/statistics.controller';
@@ -41,6 +42,9 @@ import { DatabaseModule } from './core/database/database.module';
     }),
     BullModule.registerQueue({
       name: queueNames.download,
+    }),
+    BullModule.registerQueue({
+      name: queueNames.storyboard,
     }),
     ImagesModule,
     NestConfigModule.forRoot(),
@@ -71,6 +75,7 @@ import { DatabaseModule } from './core/database/database.module';
     YouTubeDownloaderService,
     VideoProcessor,
     DownloadProcessor,
+    StoryboardProcessor,
     FilePathService,
     DirectoryService,
     FileOperationService,

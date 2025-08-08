@@ -3,6 +3,7 @@ export const videoExtensions = ['mp4', 'webm', 'mkv'];
 export const queueNames = {
   video: 'video',
   download: 'download',
+  storyboard: 'storyboard',
   // not used
   captureScreenshots: 'captureScreenshots',
   generateThumbnails: 'generateThumbnails',

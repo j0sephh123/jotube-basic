@@ -70,9 +70,14 @@ async function bootstrap() {
 
   const videoQueue = app.get(`BullQueue_${queueNames.video}`);
   const downloadQueue = app.get(`BullQueue_${queueNames.download}`);
+  const storyboardQueue = app.get(`BullQueue_${queueNames.storyboard}`);
 
   createBullBoard({
-    queues: [new BullAdapter(videoQueue), new BullAdapter(downloadQueue)],
+    queues: [
+      new BullAdapter(videoQueue),
+      new BullAdapter(downloadQueue),
+      new BullAdapter(storyboardQueue),
+    ],
     serverAdapter,
   });
 

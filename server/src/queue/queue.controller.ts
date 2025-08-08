@@ -195,6 +195,12 @@ export class AddThumbnailJobDto {
   data: { ytVideoId: string; ytChannelId: string }[];
 }
 
+export class AddStoryboardJobDto {
+  @ApiProperty({ description: 'Storyboard job payload' })
+  @IsObject()
+  data: { ytVideoId: string };
+}
+
 @Controller('queues')
 export class QueueController {
   constructor(private readonly queueService: QueueService) {}
@@ -236,5 +242,11 @@ export class QueueController {
   @Post('/labels')
   getLabels(@Body() labelsDto: LabelsDto) {
     return this.queueService.getLabels(labelsDto);
+  }
+
+  @Post('/add-storyboard')
+  @ApiOperation({ summary: 'Add storyboard job to queue' })
+  addStoryboard(@Body() body: AddStoryboardJobDto) {
+    return this.queueService.addStoryboardJob(body.data);
   }
 }

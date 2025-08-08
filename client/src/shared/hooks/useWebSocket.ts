@@ -2,17 +2,10 @@ import { useEffect, useRef } from "react";
 import { useStore } from "@/store/store";
 import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMetadata";
 import { io, Socket } from "socket.io-client";
+import { EventTypes } from "@/shared/types/types";
 
 export type ProcessEventData = {
-  type:
-    | "download_start"
-    | "download_progress"
-    | "download_finish"
-    | "screenshots_start"
-    | "screenshots_progress"
-    | "screenshots_finish"
-    | "thumbnails_start"
-    | "thumbnails_finish";
+  type: EventTypes;
   ytVideoId: string;
   progress?: string;
 };
@@ -70,6 +63,12 @@ export function useWebSocket() {
           case "thumbnails_finish":
             setOperation("thumbnails", null);
             refetchChannelMetadata("");
+            break;
+          case "storyboard_created":
+            console.log("storyboard_created", data.ytVideoId);
+            break;
+          default:
+            console.log("Unknown event:", data.type);
             break;
         }
       });

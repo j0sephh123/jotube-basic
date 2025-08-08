@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getDistinctChannelIds } from "@/shared/utils/utils";
 import nestFetcher from "@/shared/api/nestFetcher";
 export type QueueItem = {
@@ -25,5 +25,12 @@ export function useQueue() {
   return {
     ...queue,
     queueDistinctChannelIds: getDistinctChannelIds(queue.data ?? []),
+  };
+}
+
+export function useRefetchQueue() {
+  const queryClient = useQueryClient();
+  return () => {
+    queryClient.refetchQueries({ queryKey: ["queue"] });
   };
 }

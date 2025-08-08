@@ -1,16 +1,23 @@
-import { useMutation, DefaultError } from "@tanstack/react-query";
+import {
+  useMutation,
+  DefaultError,
+  useQueryClient,
+} from "@tanstack/react-query";
 import nestFetcher from "@/shared/api/nestFetcher";
 import { useRefetchChannelUploads } from "./useUploadsList";
 import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMetadata";
+import { useRefetchQueue } from "@/shared/hooks/useQueue";
 
 type Body = {
   ytVideoId: string;
 };
-type Response = unknown
+type Response = unknown;
 
 export function useCreateStoryboard(ytChannelId: string) {
   const refetchChannelUploads = useRefetchChannelUploads(ytChannelId);
   const refetchChannelMetadata = useRefetchChannelMetadata();
+  const refetchQueue = useRefetchQueue();
+  const queryClient = useQueryClient();
 
   const { mutateAsync, isPending, variables } = useMutation<
     Response,
@@ -19,14 +26,29 @@ export function useCreateStoryboard(ytChannelId: string) {
   >({
     mutationFn: (body: Body) => {
       return nestFetcher<Response>({
-        url: "/uploads-video/create-storyboard",
+        url: "/queues/add-storyboard",
         method: "POST",
-        body,
+        body: { data: body },
       });
     },
-    onSuccess: () => {
+    onSuccess: (_data, variables) => {
+      ["asc", "desc"].forEach((sort) => {
+        queryClient.setQueryData(
+          ["useUploadsList", ytChannelId, sort],
+          (prev: any) => {
+            if (!prev || !prev.uploads) return prev;
+            return {
+              ...prev,
+              uploads: prev.uploads.filter(
+                (u: any) => u.ytId !== variables.ytVideoId
+              ),
+            };
+          }
+        );
+      });
       refetchChannelUploads();
       refetchChannelMetadata(ytChannelId);
+      refetchQueue();
     },
     onError: (error: DefaultError) => {
       console.error(error);
