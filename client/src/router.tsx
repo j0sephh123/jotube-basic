@@ -5,7 +5,7 @@ import ScreenshotsByMonth from "./pages/ScreenshotsPageMonth";
 import ScreenshotsByDayDate from "./pages/ScreenshotsPageDate";
 import ScreenshotsLayout from "./features/Screenshot/components/ScreenshotsPageLayout";
 import SavedUploads from "./pages/SavedUploadsPage";
-import ChannelsPageWrapper from "./features/Channel/ChannelsPageLayout";
+import ChannelPageLayout from "./features/Channel/ChannelPageLayout";
 import GalleryPage from "./pages/GalleryPage";
 import GalleryLayout from "./features/Gallery/components/GalleryLayout";
 import Dashboard from "@/features/Dashboard";
@@ -23,7 +23,7 @@ export const Router = (
         <Route path="dashboard" element={<DashboardWrapper />}>
           <Route path=":viewType" element={<Dashboard />} />
         </Route>
-        <Route path="/channels/:ytChannelId" element={<ChannelsPageWrapper />}>
+        <Route path="/channels/:ytChannelId" element={<ChannelPageLayout />}>
           <Route index element={<DefaultUploadsPage />} />
           <Route path="saved" element={<SavedUploads />} />
           <Route path="storyboard" element={<StoryboardPage />} />

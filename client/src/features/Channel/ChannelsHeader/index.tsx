@@ -1,13 +1,18 @@
 import { useChannelMetadataQuery } from "@/features/Channel/hooks/useChannelMetadata";
 import { useLocation } from "react-router-dom";
 import { useTypedChannelYtId } from "@/shared/hooks/useTypedParams";
-import ChannelMetadata from "./ChannelMetadata";
+import HeaderLayout from "./HeaderLayout";
 import ChannelActions from "./ChannelActions";
 import ChannelControls from "./ChannelControls";
 import SyncUploadsButton from "@/features/Upload/components/SyncUploadsButton";
 import CleanShortUploads from "@/features/Upload/components/CleanShortUploads";
+import ChannelLink from "@/shared/components/ChannelLink";
+import CopyValue from "@/shared/components/CopyValue";
+import OpenExplorerButton from "@/shared/components/OpenDirectoryButton/OpenDirectoryButton";
+import Tabs from "./Tabs";
+import BulkOperations from "./BulkOperations";
 
-const ChannelsHeader = () => {
+const ChannelHeader = () => {
   const ytChannelId = useTypedChannelYtId();
   const { pathname } = useLocation();
   const isSavedPage = pathname.includes("/saved");
@@ -17,37 +22,38 @@ const ChannelsHeader = () => {
 
   if (!metadata) return null;
 
-  const {
-    title,
-    videoArtifactsCount,
-    savedArtifactsCount,
-    screenshotArtifactsCount,
-    storyboardArtifactsCount,
-    id,
-    thumbnailArtifactsCount,
-  } = metadata;
+  const { title, screenshotArtifactsCount, id, thumbnailArtifactsCount } =
+    metadata;
 
   return (
     <div className="bg-base-200 rounded-lg px-6 pt-16 shadow-md">
       <div className="flex flex-col gap-6">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <ChannelMetadata
-            ytChannelId={ytChannelId}
-            title={title}
-            videoArtifactsCount={videoArtifactsCount}
-            savedArtifactsCount={savedArtifactsCount}
-            screenshotArtifactsCount={screenshotArtifactsCount}
-            storyboardArtifactsCount={storyboardArtifactsCount}
-            isSavedPage={isSavedPage}
-            isIndexPage={isIndexPage}
-          />
-          <ChannelActions
-            ytChannelId={ytChannelId}
-            id={id}
-            thumbnailArtifactsCount={thumbnailArtifactsCount}
-            screenshotArtifactsCount={screenshotArtifactsCount}
-          />
-        </div>
+        <HeaderLayout
+          leftTopSlot={
+            <>
+              <ChannelLink ytId={ytChannelId} where="saved">
+                <h2 className="text-xl font-bold pr-4">{title}</h2>
+              </ChannelLink>
+              <CopyValue type="youtube" value={ytChannelId} />
+              <OpenExplorerButton ytChannelId={ytChannelId} />
+            </>
+          }
+          leftBottomSlot={<Tabs ytChannelId={ytChannelId} />}
+          rightSlot={
+            <BulkOperations
+              ytChannelId={ytChannelId}
+              isSavedPage={isSavedPage}
+              isIndexPage={isIndexPage}
+            />
+          }
+        />
+        <ChannelActions
+          ytChannelId={ytChannelId}
+          id={id}
+          thumbnailArtifactsCount={thumbnailArtifactsCount}
+          screenshotArtifactsCount={screenshotArtifactsCount}
+        />
+
         {!pathname.includes("/gallery") &&
           !pathname.includes("/saved") &&
           !pathname.includes("/storyboard") && (
@@ -69,4 +75,4 @@ const ChannelsHeader = () => {
   );
 };
 
-export default ChannelsHeader;
+export default ChannelHeader;
