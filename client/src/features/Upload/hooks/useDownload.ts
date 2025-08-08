@@ -2,7 +2,7 @@
 import nestFetcher from "@/shared/api/nestFetcher";
 import { useMutation } from "@tanstack/react-query";
 
-export default function useAddUploadsToQueue(onSuccess?: () => void) {
+export default function useDownload(onSuccess?: () => void) {
   return useMutation({
     mutationFn: (
       body: {

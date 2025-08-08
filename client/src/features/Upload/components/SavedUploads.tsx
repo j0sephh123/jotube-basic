@@ -1,4 +1,4 @@
-import useAddUploadsToQueue from "@/features/Upload/hooks/useAddUploadsToQueue";
+import useDownload from "@/features/Upload/hooks/useDownload";
 import { useDeleteUploads } from "@/features/Upload/hooks/useUploadsDelete";
 import { useQueue } from "@/shared/hooks/useQueue";
 import { useSavedUploads } from "@/features/Upload/hooks/useSavedUploads";
@@ -10,7 +10,7 @@ export default function SavedUploads({
   ytChannelId: string;
 }): JSX.Element {
   const { data: queue, refetch: refetchQueue } = useQueue();
-  const handleDownloadMutation = useAddUploadsToQueue();
+  const handleDownloadMutation = useDownload();
   const { data: savedUploads, refetch: refetchSavedUploads } =
     useSavedUploads(ytChannelId);
   const deleteUploadFromDbMutation = useDeleteUploads(refetchSavedUploads);
