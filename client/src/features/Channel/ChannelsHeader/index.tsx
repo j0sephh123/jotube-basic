@@ -2,7 +2,6 @@ import { useChannelMetadataQuery } from "@/features/Channel/hooks/useChannelMeta
 import { useLocation } from "react-router-dom";
 import { useTypedChannelYtId } from "@/shared/hooks/useTypedParams";
 import HeaderLayout from "./HeaderLayout";
-import ChannelActions from "./ChannelActions";
 import ChannelControls from "./ChannelControls";
 import SyncUploadsButton from "@/features/Upload/components/SyncUploadsButton";
 import CleanShortUploads from "@/features/Upload/components/CleanShortUploads";
@@ -11,6 +10,7 @@ import CopyValue from "@/shared/components/CopyValue";
 import OpenExplorerButton from "@/shared/components/OpenDirectoryButton/OpenDirectoryButton";
 import Tabs from "./Tabs";
 import BulkOperations from "./BulkOperations";
+import useArtifacts from "@/features/Thumbnail/hooks/useThumbnails";
 
 const ChannelHeader = () => {
   const ytChannelId = useTypedChannelYtId();
@@ -19,17 +19,26 @@ const ChannelHeader = () => {
   const isIndexPage = pathname.length === 34;
 
   const { data: metadata } = useChannelMetadataQuery(ytChannelId);
+  const { viewThumbnails, getScreenshots } = useArtifacts();
 
   if (!metadata) return null;
 
   const { title, screenshotArtifactsCount, id, thumbnailArtifactsCount } =
     metadata;
 
+  const handleViewThumbnails = () => {
+    viewThumbnails([id]);
+  };
+
+  const handleViewScreenshots = () => {
+    getScreenshots([ytChannelId]);
+  };
+
   return (
     <div className="bg-base-200 rounded-lg px-6 pt-16 shadow-md">
       <div className="flex flex-col gap-6">
         <HeaderLayout
-          leftTopSlot={
+          left={
             <>
               <ChannelLink ytId={ytChannelId} where="saved">
                 <h2 className="text-xl font-bold pr-4">{title}</h2>
@@ -38,20 +47,32 @@ const ChannelHeader = () => {
               <OpenExplorerButton ytChannelId={ytChannelId} />
             </>
           }
-          leftBottomSlot={<Tabs ytChannelId={ytChannelId} />}
-          rightSlot={
-            <BulkOperations
-              ytChannelId={ytChannelId}
-              isSavedPage={isSavedPage}
-              isIndexPage={isIndexPage}
-            />
+          center={<Tabs ytChannelId={ytChannelId} />}
+          right={
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleViewThumbnails}
+                className="btn btn-sm btn-outline"
+              >
+                <span className="flex items-center gap-1">
+                  Thumbnails ({thumbnailArtifactsCount})
+                </span>
+              </button>
+              <button
+                onClick={handleViewScreenshots}
+                className="btn btn-sm btn-outline"
+              >
+                <span className="flex items-center gap-1">
+                  Screenshots ({screenshotArtifactsCount})
+                </span>
+              </button>
+              <BulkOperations
+                ytChannelId={ytChannelId}
+                isSavedPage={isSavedPage}
+                isIndexPage={isIndexPage}
+              />
+            </div>
           }
-        />
-        <ChannelActions
-          ytChannelId={ytChannelId}
-          id={id}
-          thumbnailArtifactsCount={thumbnailArtifactsCount}
-          screenshotArtifactsCount={screenshotArtifactsCount}
         />
 
         {!pathname.includes("/gallery") &&
