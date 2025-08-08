@@ -45,21 +45,24 @@ export class EventsGateway
     this.logger.log(`Client disconnected: ${client.id}`);
   }
 
-  public sendEvent(event: EventTypes, ytVideoId: string, progress?: string) {
+  public sendEvent(
+    event: EventTypes,
+    data: { ytVideoId: string; progress?: string },
+  ) {
     if (!this.server) {
       this.logger.error('WebSocket server is not available');
       return;
     }
 
     const now = Date.now();
-    const lastSent = this.lastSentTimes.get(ytVideoId) || 0;
+    const lastSent = this.lastSentTimes.get(data.ytVideoId) || 0;
 
     if (event === 'screenshots_progress' || event === 'download_progress') {
       if (now - lastSent >= this.RATE_LIMIT_MS) {
         const processEvent: ProcessEvent = {
           type: event,
-          ytVideoId,
-          progress,
+          ytVideoId: data.ytVideoId,
+          progress: data.progress,
         };
 
         this.server.emit('processEvent', processEvent);
@@ -67,13 +70,13 @@ export class EventsGateway
           `Sending process event to ${this.connectedClients.size} clients:`,
           processEvent,
         );
-        this.lastSentTimes.set(ytVideoId, now);
+        this.lastSentTimes.set(data.ytVideoId, now);
       }
     } else {
       const processEvent: ProcessEvent = {
         type: event,
-        ytVideoId,
-        progress,
+        ytVideoId: data.ytVideoId,
+        progress: data.progress,
       };
 
       this.server.emit('processEvent', processEvent);
@@ -83,7 +86,7 @@ export class EventsGateway
       );
 
       if (event === 'screenshots_finish' || event === 'download_finish') {
-        this.lastSentTimes.delete(ytVideoId);
+        this.lastSentTimes.delete(data.ytVideoId);
       }
     }
   }

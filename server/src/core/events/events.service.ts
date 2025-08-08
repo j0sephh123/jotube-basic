@@ -7,6 +7,6 @@ export class EventsService {
   constructor(private readonly eventsGateway: EventsGateway) {}
 
   async sendEvent(event: EventTypes, ytVideoId: string, progress?: string) {
-    this.eventsGateway.sendEvent(event, ytVideoId, progress);
+    this.eventsGateway.sendEvent(event, { ytVideoId, progress });
   }
 }

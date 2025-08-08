@@ -3,7 +3,8 @@ import { useStore } from "@/store/store";
 import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMetadata";
 import { io, Socket } from "socket.io-client";
 import { EventTypes } from "@/shared/types/types";
-
+import { useRefetchQueue } from "./useQueue";
+  
 export type ProcessEventData = {
   type: EventTypes;
   ytVideoId: string;
@@ -11,6 +12,7 @@ export type ProcessEventData = {
 };
 
 export function useWebSocket() {
+  const refetchQueue = useRefetchQueue();
   const { setOperation } = useStore();
   const refetchChannelMetadata = useRefetchChannelMetadata();
   const socketRef = useRef<Socket | null>(null);
@@ -66,6 +68,7 @@ export function useWebSocket() {
             break;
           case "storyboard_created":
             console.log("storyboard_created", data.ytVideoId);
+            refetchQueue();
             break;
           default:
             console.log("Unknown event:", data.type);

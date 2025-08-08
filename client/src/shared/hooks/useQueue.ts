@@ -8,7 +8,6 @@ export type QueueItem = {
   state: "active" | "waiting";
 };
 
-// Suboptimal solution, will be replaced with SSE or WS
 export function useQueue() {
   const queue = useQuery({
     refetchInterval: 5000,
