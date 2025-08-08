@@ -2,6 +2,7 @@ import { RotateCcw } from "lucide-react";
 import { useStore } from "@/store/store";
 import { RangePickerTypes } from "@/store/store-types";
 import { useSearchParams } from "react-router-dom";
+import { Button } from "@/shared/button";
 
 type Props = {
   leftSlot: React.ReactNode;
@@ -47,17 +48,19 @@ const ChannelControls = ({ leftSlot }: Props) => {
     <div className="flex flex-wrap items-center justify-between gap-4 border-t pt-4">
       <div className="flex flex-wrap items-center gap-4">{leftSlot}</div>
       <div className="flex items-center gap-2">
-        <button className="btn btn-outline btn-sm" onClick={toggleSortOrder}>
+        <Button onClick={toggleSortOrder} color="accent" variant="outline">
           Sort:
           {sortOrder === "asc" ? "↑ Oldest first" : "↓ Newest first"}
-        </button>
-        <button
-          className="btn btn-ghost btn-sm"
+        </Button>
+        <Button
+          color="neutral"
+          variant="ghost"
+          size="sm"
           onClick={handleResetRangeFilters}
           title="Reset range filters"
         >
           <RotateCcw className="w-4 h-4" />
-        </button>
+        </Button>
       </div>
     </div>
   );

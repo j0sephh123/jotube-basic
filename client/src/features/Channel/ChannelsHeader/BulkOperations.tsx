@@ -7,6 +7,7 @@ import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMe
 import { useSearchParams } from "react-router-dom";
 import { SortOrder } from "@/shared/types/searchParams";
 import { Download, Trash2 } from "lucide-react";
+import { Button } from "@/shared/button";
 
 type Props = {
   ytChannelId: string;
@@ -57,24 +58,29 @@ const BulkOperations = ({ ytChannelId, isSavedPage, isIndexPage }: Props) => {
   return (
     <div className="flex gap-2">
       {isSavedPage && (
-        <button
+        <Button
           onClick={handleDownloadAll}
-          className="btn btn-outline btn-primary"
+          leftIcon={<Download />}
+          color="accent"
+          variant="outline"
         >
-          <Download className="w-4 h-4 mr-2" />
           Download All
-        </button>
+        </Button>
       )}
       {isIndexPage && (
-        <button onClick={handleSaveAll} className="btn btn-success">
+        <Button onClick={handleSaveAll} color="success" variant="outline">
           Save All
-        </button>
+        </Button>
       )}
       {isSavedPage && (
-        <button onClick={handleRemoveAll} className="btn btn-outline btn-error">
-          <Trash2 className="w-4 h-4 mr-2" />
+        <Button
+          onClick={handleRemoveAll}
+          leftIcon={<Trash2 />}
+          color="error"
+          variant="outline"
+        >
           Remove All
-        </button>
+        </Button>
       )}
     </div>
   );

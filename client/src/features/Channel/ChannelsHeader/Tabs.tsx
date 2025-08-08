@@ -1,7 +1,7 @@
 import { useTabs } from "./useTabs";
 import { useGetIsActiveRoute } from "./useGetIsActiveRoute";
-import clsx from "clsx";
 import ChannelLink from "@/shared/components/ChannelLink";
+import Button from "@/shared/button";
 
 export default function Tabs({ ytChannelId }: { ytChannelId: string }) {
   const links = useTabs();
@@ -11,14 +11,13 @@ export default function Tabs({ ytChannelId }: { ytChannelId: string }) {
     <>
       {links.map(({ where, label, count }) => (
         <ChannelLink key={where} ytId={ytChannelId} where={where}>
-          <button
-            className={clsx("btn btn-sm", {
-              "btn-primary": isActiveRoute(where),
-              "btn-ghost": !isActiveRoute(where),
-            })}
+          <Button
+            color={isActiveRoute(where) ? "primary" : undefined}
+            variant={!isActiveRoute(where) ? "ghost" : undefined}
+            size="sm"
           >
             {label}: {count}
-          </button>
+          </Button>
         </ChannelLink>
       ))}
     </>

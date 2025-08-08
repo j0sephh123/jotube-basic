@@ -11,6 +11,7 @@ import OpenExplorerButton from "@/shared/components/OpenDirectoryButton/OpenDire
 import Tabs from "./Tabs";
 import BulkOperations from "./BulkOperations";
 import useArtifacts from "@/features/Thumbnail/hooks/useThumbnails";
+import { Button } from "@/shared/button";
 
 const ChannelHeader = () => {
   const ytChannelId = useTypedChannelYtId();
@@ -50,22 +51,22 @@ const ChannelHeader = () => {
           center={<Tabs ytChannelId={ytChannelId} />}
           right={
             <div className="flex items-center gap-2">
-              <button
+              <Button
                 onClick={handleViewThumbnails}
-                className="btn btn-sm btn-outline"
+                color="accent"
+                variant="outline"
+                size="sm"
               >
-                <span className="flex items-center gap-1">
-                  Thumbnails ({thumbnailArtifactsCount})
-                </span>
-              </button>
-              <button
+                Thumbnails ({thumbnailArtifactsCount})
+              </Button>
+              <Button
                 onClick={handleViewScreenshots}
-                className="btn btn-sm btn-outline"
+                color="accent"
+                variant="outline"
+                size="sm"
               >
-                <span className="flex items-center gap-1">
-                  Screenshots ({screenshotArtifactsCount})
-                </span>
-              </button>
+                Screenshots ({screenshotArtifactsCount})
+              </Button>
               <BulkOperations
                 ytChannelId={ytChannelId}
                 isSavedPage={isSavedPage}
