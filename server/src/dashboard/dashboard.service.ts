@@ -13,6 +13,7 @@ const valueGetters: Record<string, ValueGetter> = {
   thumbnails: (channel) => channel.thumbnails,
   processed: (channel) => channel.screenshotsCount,
   saved: (channel) => channel.saved,
+  storyboard: (channel) => channel.storyboard,
   'no-uploads': (channel) => new Date(channel.createdAt).getTime(),
   'no-screenshots': (channel) => new Date(channel.createdAt).getTime(),
 };
@@ -74,9 +75,11 @@ export class DashboardService {
       case ViewType.THUMBNAILS:
         return this.getChannels({ artifact: 'THUMBNAIL' });
 
+      case ViewType.HAS_STORYBOARDS:
+        return this.getChannels({ artifact: 'STORYBOARD' });
+
       case ViewType.NO_UPLOADS:
       case ViewType.NO_SCREENSHOTS:
-        // ChannelService returns channels without uploads/screenshots
         return this.channelService.getChannelsWithoutUploadsOrScreenshots(
           viewType,
         );
@@ -136,16 +139,28 @@ export class DashboardService {
 
     const map = new Map<
       number,
-      { thumbnails: number; saved: number; defaults: number }
+      {
+        thumbnails: number;
+        saved: number;
+        defaults: number;
+        storyboard: number;
+      }
     >();
     rows.forEach(({ channelId, artifact, _count: { artifact: count } }) => {
       if (!map.has(channelId)) {
-        map.set(channelId, { thumbnails: 0, saved: 0, defaults: 0 });
+        map.set(channelId, {
+          thumbnails: 0,
+          saved: 0,
+          defaults: 0,
+          storyboard: 0,
+        });
       }
       const bucket = map.get(channelId)!;
+
       if (artifact === 'THUMBNAIL') bucket.thumbnails = count;
       if (artifact === 'SAVED') bucket.saved = count;
       if (artifact === 'VIDEO') bucket.defaults = count;
+      if (artifact === 'STORYBOARD') bucket.storyboard = count;
     });
 
     return map;
@@ -182,10 +197,13 @@ export class DashboardService {
     const uploadMap = await this.getUploadCounts(channelIds);
 
     return channels.map((c) => {
-      const { thumbnails, saved, defaults } = uploadMap.get(c.id) || {
+      const { thumbnails, saved, defaults, storyboard } = uploadMap.get(
+        c.id,
+      ) || {
         thumbnails: 0,
         saved: 0,
         defaults: 0,
+        storyboard: 0,
       };
       const screenshotsCount = screenshotMap.get(c.ytId) || 0;
 
@@ -200,6 +218,7 @@ export class DashboardService {
         thumbnails,
         saved,
         defaults,
+        storyboard,
         screenshotsCount,
       };
     });
@@ -238,7 +257,6 @@ export class DashboardService {
   ): DashboardChannel[] {
     const getter = valueGetters[viewType as string];
     if (!getter) {
-      // Fallback to sorting by createdAt if getter doesn't exist
       return channels.sort((a, b) => {
         const aTime = new Date(a.createdAt).getTime();
         const bTime = new Date(b.createdAt).getTime();

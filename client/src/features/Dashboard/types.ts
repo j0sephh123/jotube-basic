@@ -10,4 +10,5 @@ export type DashboardChannel = {
   saved: number;
   defaults: number;
   screenshotsCount: number;
+  storyboard: number;
 };

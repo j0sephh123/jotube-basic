@@ -11,7 +11,12 @@ interface DashboardCardProps {
   viewType: ViewType;
 }
 
-const statsTypes = [ViewType.THUMBNAILS, ViewType.PROCESSED, ViewType.SAVED];
+const statsTypes = [
+  ViewType.THUMBNAILS,
+  ViewType.PROCESSED,
+  ViewType.SAVED,
+  ViewType.HAS_STORYBOARDS,
+];
 const fetchUploadsTypes = [ViewType.NO_UPLOADS];
 const downloadTypes = [ViewType.THUMBNAILS, ViewType.PROCESSED, ViewType.SAVED];
 const deleteChannelTypes = [ViewType.NO_UPLOADS];
@@ -28,6 +33,7 @@ export default function DashboardCard({
       thumbnails={channel.thumbnails}
       saved={channel.saved}
       defaults={channel.defaults}
+      storyboard={channel.storyboard}
     />
   );
 
@@ -71,7 +77,9 @@ export default function DashboardCard({
     if (viewType === ViewType.NO_SCREENSHOTS) {
       return null;
     }
-    return fetchUploadsTypes.includes(viewType) ? fetchUploadsButton : syncButton;
+    return fetchUploadsTypes.includes(viewType)
+      ? fetchUploadsButton
+      : syncButton;
   };
 
   return (

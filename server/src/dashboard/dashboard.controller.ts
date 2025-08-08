@@ -1,22 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { DashboardService } from './dashboard.service';
 import { fetchDashboardDto } from './dtos/fetch-dashboard.dto';
-
-interface DashboardResponse {
-  channels: Array<{
-    id: number;
-    createdAt: Date;
-    title: string;
-    ytId: string;
-    src: string;
-    lastSyncedAt: Date | null;
-    thumbnails: number;
-    saved: number;
-    defaults: number;
-    screenshotsCount: number;
-  }>;
-  total: number;
-}
+import { DashboardResponse } from './types';
 
 @Controller('dashboard')
 export class DashboardController {

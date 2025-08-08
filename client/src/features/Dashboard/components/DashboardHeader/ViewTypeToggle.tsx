@@ -10,6 +10,7 @@ const viewTypeOrder = [
   ViewType.SAVED,
   ViewType.THUMBNAILS,
   ViewType.PROCESSED,
+  ViewType.HAS_STORYBOARDS,
 ];
 
 export default function ViewTypeToggle() {

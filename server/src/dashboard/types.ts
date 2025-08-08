@@ -4,6 +4,7 @@ export enum ViewType {
   NO_UPLOADS = 'no-uploads',
   NO_SCREENSHOTS = 'no-screenshots',
   THUMBNAILS = 'thumbnails',
+  HAS_STORYBOARDS = 'has-storyboards',
 }
 
 export interface ChannelWithUploads {
@@ -27,6 +28,7 @@ export interface DashboardChannel {
   thumbnails: number;
   saved: number;
   defaults: number;
+  storyboard: number;
   screenshotsCount: number;
 }
 

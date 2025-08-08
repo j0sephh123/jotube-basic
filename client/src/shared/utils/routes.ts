@@ -14,4 +14,5 @@ export const routes = {
     `/channels/${ytChannelId}/screenshots/${date}`,
   thumbnails: () => `/thumbnails`,
   uploads: (ytChannelId: string) => `/channels/${ytChannelId}/uploads`,
+  storyboard: (ytChannelId: string) => `/channels/${ytChannelId}/storyboard`,
 };

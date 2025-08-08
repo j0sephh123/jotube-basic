@@ -181,6 +181,7 @@ export class ChannelService {
       saved: 0,
       defaults: 0,
       screenshotsCount: 0,
+      storyboard: 0,
     }));
   }
 

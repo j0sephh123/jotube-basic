@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { routes } from "@/shared/utils/routes";
 import { ViewType } from "@/shared/hooks/useTypedParams";
-import useViewThumbnails from "@/shared/hooks/useViewThumbnails";
 import { DashboardChannel } from "../types";
 
 export default function useTitleClick(
@@ -9,8 +8,6 @@ export default function useTitleClick(
   viewType: ViewType
 ) {
   const navigate = useNavigate();
-
-  const handleThumbnailClick = useViewThumbnails(channel.id);
 
   const handleChannelTitleClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -22,11 +19,6 @@ export default function useTitleClick(
 
     if (viewType === ViewType.NO_SCREENSHOTS) {
       navigate(routes.channel(channel.ytId));
-      return;
-    }
-
-    if (viewType === ViewType.THUMBNAILS) {
-      handleThumbnailClick();
       return;
     }
 
