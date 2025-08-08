@@ -1,6 +1,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useDashboardContext } from "../../hooks/useDashboardContext";
 import getPaginationRange from "./getPaginationRange";
+import Button from "@/shared/button";
 
 type PaginationControlProps = {
   total: number;
@@ -21,25 +22,25 @@ export default function PaginationControl({
   return (
     <div className="flex items-center justify-center">
       <div className="join">
-        <button
+        <Button 
           onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
           disabled={currentPage === 1}
           className="join-item btn btn-sm"
           aria-label="Previous page"
         >
           <ChevronLeft className="h-4 w-4" />
-        </button>
+        </Button>
 
         {paginationRange.map((item, index) =>
           item === "dots" ? (
-            <button
+            <Button
               key={`dots-${index}`}
               className="join-item btn btn-sm btn-disabled"
             >
               &hellip;
-            </button>
+            </Button>
           ) : (
-            <button
+            <Button
               key={index}
               onClick={() => onPageChange(item as number)}
               className={`join-item btn btn-sm ${
@@ -48,18 +49,18 @@ export default function PaginationControl({
               aria-current={item === currentPage ? "page" : undefined}
             >
               {item}
-            </button>
+            </Button>
           )
         )}
 
-        <button
+        <Button
           onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
           disabled={currentPage === totalPages}
           className="join-item btn btn-sm"
           aria-label="Next page"
         >
           <ChevronRight className="h-4 w-4" />
-        </button>
+        </Button>
       </div>
 
       <span className="ml-4 text-sm text-gray-400">

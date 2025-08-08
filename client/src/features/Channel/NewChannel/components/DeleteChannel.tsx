@@ -1,5 +1,6 @@
 import useDeleteChannel from "@/features/Channel/hooks/useDeleteChannel";
 import { useRefetchNoUploadsView } from "@/features/Dashboard/useDashboardQuery";
+import { Button } from "@/shared/button";
 import { useDialog } from "@/shared/hooks/useDialog";
 
 export default function DeleteChannel({ id }: { id: number }) {
@@ -26,11 +27,13 @@ export default function DeleteChannel({ id }: { id: number }) {
   };
 
   return (
-    <button
-      className="btn btn-soft btn-error btn-sm"
+    <Button
+      color="error"
+      variant="soft"
+      size="sm"
       onClick={handleDeleteClick}
     >
       Delete
-    </button>
+    </Button>
   );
 }

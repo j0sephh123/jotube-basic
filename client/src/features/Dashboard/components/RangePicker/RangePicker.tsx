@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useStore } from "@/store/store";
 import { useDashboardContext } from "../../hooks/useDashboardContext";
 import { RangePickerTypes } from "@/store/store-types";
+import Button from "@/shared/button";
 
 type RangePickerProps = {
   rangeKey: RangePickerTypes;
@@ -128,12 +129,12 @@ export default function RangePicker({ rangeKey }: RangePickerProps) {
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <span className="text-sm font-medium">Range</span>
-        <button
+        <Button
           onClick={handleReset}
           className="text-xs text-base-content/60 hover:text-base-content"
         >
           Reset
-        </button>
+        </Button>
       </div>
 
       <div className="flex flex-col gap-2">

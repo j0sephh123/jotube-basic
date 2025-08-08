@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { routes } from "@/shared/utils/routes";
 import CreateChannelModal from "./CreateChannelModal";
 import { useDashboardQuery } from "@/features/Dashboard/useDashboardQuery";
+import Button from "@/shared/button";
 
 export default function CreateChannelButton() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -52,12 +53,15 @@ export default function CreateChannelButton() {
   return (
     <>
       <ToastContainer />
-      <button
+      <Button
         onClick={() => setIsModalVisible(true)}
-        className="fixed z-50 bottom-3 right-3 btn btn-accent btn-circle"
+        className="fixed z-50 bottom-3 right-3"
+        color="accent"
+        circle
+        aria-label="Add"
       >
         <PlusIcon />
-      </button>
+      </Button>
       <CreateChannelModal
         isVisible={isModalVisible}
         onClose={handleCloseModal}

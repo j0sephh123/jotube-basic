@@ -7,6 +7,7 @@ import PaginationControl from "../PaginationControl";
 import { useDashboardContext } from "../../hooks/useDashboardContext";
 import { useTypedViewType, ViewType } from "@/shared/hooks/useTypedParams";
 import { useDashboardQuery } from "../../useDashboardQuery";
+import Button from "@/shared/button";
 
 const showRangeFilterForViewTypes = [ViewType.SAVED, ViewType.PROCESSED];
 
@@ -28,14 +29,16 @@ export default function DashboardHeader() {
             <>
               <RangeFilterPopover />
               <DefaultsRangeFilterPopover />
-              <button
+              <Button
                 onClick={handleClearFilters}
-                className="btn btn-sm btn-outline gap-2"
+                color="info"
+                variant="outline"
+                size="sm"
                 title="Reset filters"
               >
                 <RotateCcw className="w-4 h-4" />
                 Reset
-              </button>
+              </Button>
             </>
           )}
         </div>

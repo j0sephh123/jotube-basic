@@ -2,6 +2,7 @@ import { X, AlertCircle } from "lucide-react";
 import IconYoutube from "@/shared/components/icons/IconYoutube";
 import { useCreateChannelForm } from "../hooks/useCreateChannelForm";
 import { YT_VIDEO_ID_LENGTH } from "../utils/validation";
+import { Button } from "@/shared/button";
 
 type Props = {
   onClose: () => void;
@@ -58,13 +59,13 @@ export default function CreateChannelForm({
               maxLength={YT_VIDEO_ID_LENGTH}
             />
             {ytVideoId && (
-              <button
+              <Button
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
                 onClick={clearInput}
                 aria-label="Clear input"
               >
                 <X size={20} />
-              </button>
+              </Button>
             )}
           </div>
           {error ? (
@@ -85,17 +86,17 @@ export default function CreateChannelForm({
         </div>
 
         <div className="flex justify-end gap-3 mt-4">
-          <button className="btn btn-outline h-12 px-6" onClick={onClose}>
+          <Button onClick={onClose} color="info" variant="outline">
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             type="submit"
             className="btn btn-primary h-12 px-6 gap-2"
             onClick={handleSubmit}
             disabled={!isInputValid}
           >
             Create Channel
-          </button>
+          </Button>
         </div>
       </div>
     </div>

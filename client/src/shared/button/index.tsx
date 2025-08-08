@@ -58,14 +58,14 @@ export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
 export interface ButtonOptions {
   color?: ButtonColor;
   variant?: ButtonStyle;
-  size?: ButtonSize; // default 'md'
+  size?: ButtonSize;
   active?: boolean;
   disabled?: boolean;
   wide?: boolean;
   block?: boolean;
   square?: boolean;
   circle?: boolean;
-  className?: string; // extra classes to merge in
+  className?: string;
 }
 
 /** Build a Tailwind/DaisyUI-style `btn` className string from options. */
@@ -103,7 +103,7 @@ export function btnClass(opts: ButtonOptions = {}): string {
 }
 
 /* =========================================================
-   React Button (with optional left icon)
+   React Button (supports left icon and icon-only usage)
    ========================================================= */
 
 const iconSizeByBtnSize: Record<NonNullable<ButtonOptions["size"]>, string> = {
@@ -114,23 +114,21 @@ const iconSizeByBtnSize: Record<NonNullable<ButtonOptions["size"]>, string> = {
   xl: "h-7 w-7",
 };
 
-function withIcon(
-  node: React.ReactNode,
-  className: string,
-  ariaHidden = true
-): React.ReactNode {
+function withIcon(node: React.ReactNode, className: string): React.ReactNode {
   if (!node) return null;
   if (React.isValidElement(node)) {
     return React.cloneElement(node as React.ReactElement, {
       className: [className, (node.props as any).className]
         .filter(Boolean)
         .join(" "),
-      "aria-hidden": ariaHidden ? true : (node.props as any)["aria-hidden"],
       focusable: "false",
     });
   }
   return node;
 }
+
+const isSingleElement = (node: React.ReactNode): node is React.ReactElement =>
+  !!node && React.isValidElement(node) && typeof node.type !== "string";
 
 export type ButtonProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -141,11 +139,8 @@ export type ButtonProps = Omit<
     leftIcon?: React.ReactNode;
     /** Override applied to the icon wrapper (default is size-based). */
     leftIconClassName?: string;
-    /** Whether to set aria-hidden on the icon (default true). */
-    leftIconAriaHidden?: boolean;
   };
 
-/** Minimal React wrapper that merges variants with your own className. */
 export function Button({
   color,
   variant,
@@ -159,7 +154,6 @@ export function Button({
   className,
   leftIcon,
   leftIconClassName,
-  leftIconAriaHidden = true,
   children,
   ...rest
 }: ButtonProps) {
@@ -178,16 +172,37 @@ export function Button({
 
   const iconCls = leftIconClassName ?? `${iconSizeByBtnSize[size]} shrink-0`;
 
+  const hasChildren = React.Children.count(children) > 0;
+  const isIconOnly =
+    (!leftIcon && hasChildren && isSingleElement(children)) ||
+    (leftIcon && !hasChildren);
+
+  const content = isIconOnly ? (
+    leftIcon ? (
+      withIcon(leftIcon, iconCls)
+    ) : (
+      withIcon(children as React.ReactElement, iconCls)
+    )
+  ) : (
+    <>
+      {leftIcon && withIcon(leftIcon, iconCls)}
+      {children}
+    </>
+  );
+
   return (
     <button
-      className={[classes, leftIcon ? "inline-flex items-center gap-2" : ""]
+      className={[
+        classes,
+        "inline-flex items-center justify-center",
+        !isIconOnly && leftIcon ? "gap-2" : "",
+      ]
         .join(" ")
         .trim()}
       disabled={disabled}
       {...rest}
     >
-      {leftIcon && withIcon(leftIcon, iconCls, leftIconAriaHidden)}
-      {children}
+      {content}
     </button>
   );
 }

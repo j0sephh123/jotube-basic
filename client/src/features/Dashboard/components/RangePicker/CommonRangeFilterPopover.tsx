@@ -1,5 +1,6 @@
 import { PropsWithChildren, ReactNode, useState } from "react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
+import Button from "@/shared/button";
 
 type CommonRangeFilterPopoverProps = PropsWithChildren<{
   buttonLabel: string;
@@ -18,10 +19,10 @@ export function CommonRangeFilterPopover({
   return (
     <PopoverPrimitive.Root open={isOpen} onOpenChange={setIsOpen}>
       <PopoverPrimitive.Trigger asChild>
-        <button className="btn btn-sm btn-outline">
+        <Button color="info" variant="outline" size="sm">
           {icon}
           <span className="ml-1">{buttonLabel}</span>
-        </button>
+        </Button>
       </PopoverPrimitive.Trigger>
       <PopoverPrimitive.Portal>
         <PopoverPrimitive.Content

@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { routes } from "@/shared/utils/routes";
 import { useTypedViewType, ViewType } from "@/shared/hooks/useTypedParams";
 import clsx from "clsx";
+import Button from "@/shared/button";
 
 const viewTypeOrder = [
   ViewType.NO_UPLOADS,
@@ -27,16 +28,16 @@ export default function ViewTypeToggle() {
       <span className="text-sm font-medium">View:</span>
       <div className="join">
         {viewTypeOrder.map((type) => (
-          <button
+          <Button
             key={type}
-            className={clsx("join-item btn btn-sm", {
+            className={clsx("join-item", {
               "btn-primary": viewType === type,
               "btn-outline": viewType !== type,
             })}
             onClick={() => handleToggle(type)}
           >
             {type}
-          </button>
+          </Button>
         ))}
       </div>
     </div>
