@@ -66,7 +66,12 @@ export class UploadsVideoService {
     const storyboards = await this.prismaService.uploadsVideo.findMany({
       where: {
         channelId: channel.id,
-        artifact: ArtifactType.STORYBOARD,
+        storyboard: {
+          isNot: null,
+        },
+      },
+      include: {
+        storyboard: true,
       },
       orderBy: {
         publishedAt: 'desc',
@@ -83,6 +88,21 @@ export class UploadsVideoService {
           where: { ytId: ytVideoId },
           data: { artifact: 'SAVED' },
         });
+
+        const existingStoryboard =
+          await this.prismaService.storyboard.findUnique({
+            where: {
+              uploadsVideoId: upload.id,
+            },
+          });
+
+        if (existingStoryboard) {
+          await this.prismaService.storyboard.delete({
+            where: {
+              uploadsVideoId: upload.id,
+            },
+          });
+        }
 
         await this.prismaService.channel.findUnique({
           where: { id: upload.channelId },
@@ -486,8 +506,15 @@ export class UploadsVideoService {
 
     const storyboard = await this.storyboardService.create(upload);
 
+    await this.prismaService.uploadsVideo.update({
+      where: { id: upload.id },
+      data: { artifact: ArtifactType.STORYBOARD },
+    });
+
     return {
       ytVideoId,
+      upload,
+      storyboard,
     };
   }
 }

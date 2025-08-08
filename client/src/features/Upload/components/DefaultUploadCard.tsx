@@ -21,7 +21,8 @@ type VideoCardProps = {
     } | null;
   };
   onSave: (ytVideoIds: string[]) => void;
-  onDelete?: (ytVideoIds: string[]) => void;
+  onDelete: (ytVideoIds: string[]) => void;
+  onCreateStoryboard: (ytVideoId: string) => void;
   ytChannelId: string;
 };
 
@@ -30,6 +31,7 @@ export const DefaultUploadCard = ({
   onSave,
   onDelete,
   ytChannelId,
+  onCreateStoryboard,
 }: VideoCardProps) => {
   const { playingVideos, handleVideoClick, getEmbedUrl } = useVideoPlayer();
 
@@ -158,15 +160,18 @@ export const DefaultUploadCard = ({
           >
             Save
           </button>
-
-          {onDelete && (
-            <button
-              className="btn btn-soft btn-error btn-md flex-1"
-              onClick={() => onDelete([item.ytId])}
-            >
-              <TrashIcon className="w-5 h-5" />
-            </button>
-          )}
+          <button
+            className="btn btn-soft btn-warning btn-md flex-1"
+            onClick={() => onCreateStoryboard(item.ytId)}
+          >
+            Storyboard
+          </button>
+          <button
+            className="btn btn-soft btn-error btn-md flex-1"
+            onClick={() => onDelete([item.ytId])}
+          >
+            <TrashIcon className="w-5 h-5" />
+          </button>
         </div>
       </div>
     </div>

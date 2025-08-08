@@ -1,6 +1,21 @@
 import { useTypedChannelYtId } from "@/shared/hooks/useTypedParams";
 import { useQuery } from "@tanstack/react-query";
 import nestFetcher from "@/shared/api/nestFetcher";
+import { useState } from "react";
+import Modal from "@/shared/components/Modal";
+import Container from "@/features/Thumbnail/components/Container";
+import { useSaveUpload } from "@/features/Upload/hooks/useSaveUpload";
+import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMetadata";
+import { useRefetchChannelUploads } from "@/features/Upload/hooks/useUploadsList";
+import { useDeleteUploads } from "@/features/Upload/hooks/useUploadsDelete";
+
+type StoryboardData = {
+  id: number;
+  fragments: number;
+  url: string;
+  createdAt: string;
+  updatedAt: string;
+};
 
 type StoryboardArtifact = {
   id: number;
@@ -14,15 +29,66 @@ type StoryboardArtifact = {
   nextPageToken: string | null;
   duration: number | null;
   artifact: string;
+  storyboard: StoryboardData;
 };
 
 export default function StoryboardPage() {
   const ytChannelId = useTypedChannelYtId();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeStoryboard, setActiveStoryboard] =
+    useState<StoryboardArtifact | null>(null);
+  const storyboardFragments = activeStoryboard?.storyboard?.fragments ?? 0;
+  const storyboardBaseUrl = activeStoryboard?.storyboard?.url ?? "";
+  const storyboardItems = Array.from({ length: storyboardFragments }).map(
+    (_, index) => ({
+      index,
+      url: storyboardBaseUrl.replace("M$M", `M${index}`),
+    })
+  );
+
+  const refetchChannelMetadata = useRefetchChannelMetadata();
+
+  const refetchChannelUploads = useRefetchChannelUploads(ytChannelId);
+
+  const save = useSaveUpload(() => {
+    refetchChannelMetadata(ytChannelId);
+  });
+
+  const handleSideEffect = () => {
+    handleClose();
+    refetchChannelMetadata(ytChannelId);
+    refetchChannelUploads();
+    refetch();
+  };
+
+  const handleSave = () => {
+    if (!activeStoryboard) return;
+    save({
+      uploads: [{ ytVideoId: activeStoryboard.ytId, ytChannelId }],
+    }).then(handleSideEffect);
+  };
+
+  const deleteUploadFromDbMutation = useDeleteUploads(handleSideEffect);  
+
+  const handleDelete = (ytVideoIds: string[]) => {
+    deleteUploadFromDbMutation({
+      ytChannelId,
+      ytVideoIds,
+    }).then(handleSideEffect);
+  };
+
+  const handleClose = () => {
+    if (isModalOpen) {
+      setIsModalOpen(false);
+      setActiveStoryboard(null);
+    }
+  };
 
   const {
     data: storyboards,
     isLoading,
     error,
+    refetch,
   } = useQuery({
     queryKey: ["storyboards", ytChannelId],
     queryFn: () =>
@@ -90,19 +156,87 @@ export default function StoryboardPage() {
                 {String(storyboard.duration % 60).padStart(2, "0")}
               </p>
             )}
+            {storyboard.storyboard && (
+              <p className="text-sm text-gray-600 mb-2">
+                Fragments: {storyboard.storyboard.fragments}
+              </p>
+            )}
             <div className="flex gap-2">
-              <a
-                href={storyboard.src}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-sm btn-primary"
+              {storyboard.storyboard && (
+                <button
+                  type="button"
+                  className="btn btn-sm btn-primary"
+                  onClick={() => {
+                    setActiveStoryboard(storyboard);
+                    setIsModalOpen(true);
+                  }}
+                >
+                  View Storyboard
+                </button>
+              )}
+              <button
+                type="button"
+                className="btn btn-sm btn-error"
+                onClick={() => handleDelete([storyboard.ytId])}
               >
-                View Storyboard
-              </a>
+                Delete
+              </button>
             </div>
           </div>
         ))}
       </div>
+      <Modal
+        isModalVisible={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        style={{ width: "100vw", height: "100vh" }}
+      >
+        <div className="w-full h-full">
+          <div className="p-4 border-b border-base-300">
+            <h2 className="text-xl font-semibold">
+              {activeStoryboard?.title || "Storyboard"}
+            </h2>
+            {activeStoryboard?.storyboard && (
+              <p className="text-sm text-gray-500">
+                {activeStoryboard.storyboard.fragments} fragment
+                {activeStoryboard.storyboard.fragments !== 1 ? "s" : ""}
+              </p>
+            )}
+          </div>
+          <Container>
+            <div className="w-full p-4 grid grid-cols-2 gap-4">
+              {storyboardItems.map(({ index, url }) => (
+                <div
+                  key={index}
+                  className="bg-base-200 rounded shadow-sm p-2 flex flex-col items-center"
+                >
+                  <img
+                    src={url}
+                    alt={`Storyboard M${index}`}
+                    className="w-full h-auto object-contain"
+                  />
+                  <div className="mt-2 text-xs text-gray-500">M{index}</div>
+                </div>
+              ))}
+            </div>
+          </Container>
+          <div className="p-4 border-t border-base-300 flex justify-end gap-2">
+            <button
+              onClick={handleClose}
+              type="button"
+              className="btn btn-outline btn-sm"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary btn-sm"
+              onClick={handleSave}
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

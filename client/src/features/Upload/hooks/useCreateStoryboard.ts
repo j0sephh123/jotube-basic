@@ -4,13 +4,11 @@ import { useRefetchChannelUploads } from "./useUploadsList";
 import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMetadata";
 
 type Body = {
-  ytChannelId: string;
+  ytVideoId: string;
 };
-type Response = {
-  deletedCount: number;
-};
+type Response = unknown
 
-export function useCleanShortUploads(ytChannelId: string) {
+export function useCreateStoryboard(ytChannelId: string) {
   const refetchChannelUploads = useRefetchChannelUploads(ytChannelId);
   const refetchChannelMetadata = useRefetchChannelMetadata();
 
@@ -21,7 +19,7 @@ export function useCleanShortUploads(ytChannelId: string) {
   >({
     mutationFn: (body: Body) => {
       return nestFetcher<Response>({
-        url: "/uploads-video/clean-short-uploads",
+        url: "/uploads-video/create-storyboard",
         method: "POST",
         body,
       });
