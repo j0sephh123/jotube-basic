@@ -10,8 +10,8 @@ import CopyValue from "@/shared/components/CopyValue";
 import OpenExplorerButton from "@/shared/components/OpenDirectoryButton/OpenDirectoryButton";
 import Tabs from "./Tabs";
 import BulkOperations from "./BulkOperations";
-import useArtifacts from "@/features/Thumbnail/hooks/useThumbnails";
-import { Button } from "@/shared/button";
+import ViewThumbnails from "../components/ViewThumbnails";
+import ViewScreenshots from "../components/ViewScreenshots";
 
 const ChannelHeader = () => {
   const ytChannelId = useTypedChannelYtId();
@@ -20,20 +20,11 @@ const ChannelHeader = () => {
   const isIndexPage = pathname.length === 34;
 
   const { data: metadata } = useChannelMetadataQuery(ytChannelId);
-  const { viewThumbnails, getScreenshots } = useArtifacts();
 
   if (!metadata) return null;
 
   const { title, screenshotArtifactsCount, id, thumbnailArtifactsCount } =
     metadata;
-
-  const handleViewThumbnails = () => {
-    viewThumbnails([id]);
-  };
-
-  const handleViewScreenshots = () => {
-    getScreenshots([ytChannelId]);
-  };
 
   return (
     <div className="bg-base-200 rounded-lg px-6 pt-16 shadow-md">
@@ -51,22 +42,14 @@ const ChannelHeader = () => {
           center={<Tabs ytChannelId={ytChannelId} />}
           right={
             <div className="flex items-center gap-2">
-              <Button
-                onClick={handleViewThumbnails}
-                color="accent"
-                variant="outline"
-                size="sm"
-              >
-                Thumbnails ({thumbnailArtifactsCount})
-              </Button>
-              <Button
-                onClick={handleViewScreenshots}
-                color="accent"
-                variant="outline"
-                size="sm"
-              >
-                Screenshots ({screenshotArtifactsCount})
-              </Button>
+              <ViewThumbnails
+                id={id}
+                thumbnailArtifactsCount={thumbnailArtifactsCount}
+              />
+              <ViewScreenshots
+                ytChannelId={ytChannelId}
+                screenshotArtifactsCount={screenshotArtifactsCount}
+              />
               <BulkOperations
                 ytChannelId={ytChannelId}
                 isSavedPage={isSavedPage}
