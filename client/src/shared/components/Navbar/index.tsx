@@ -32,6 +32,9 @@ export default function Navbar(): JSX.Element {
               { name: "Today", link: `screenshots/${getCurrentDay()}` },
             ]}
           />
+          <Link to={routes.videos()} className="btn btn-ghost">
+            Videos
+          </Link>
           <PlayButton />
         </div>
         <div className="relative flex items-center gap-4 w-80">

@@ -3,9 +3,14 @@ import { PinoLogger } from 'nestjs-pino';
 import path from 'path';
 
 type Event = 'start' | 'done' | 'fail';
-type Ctx = Record<string, string | number | boolean | null | undefined>;
+type Primitive = string | number | boolean | null | undefined;
+type Ctx = Record<string, Primitive>;
 
 interface LogLine {
+  // machine + human timestamps
+  time: number; // Unix ms (for Promtail)
+  ts: string; // ISO-8601 (for humans/Grafana)
+
   service: string;
   event: Event;
   function: string;
@@ -29,6 +34,8 @@ function serviceNameFromFile(file: string) {
     .replace(/\.[tj]s$/, '');
 }
 
+// NOTE: stack depth 4 may vary across TS/Node versions.
+// If you see "unknown", bump or lower this index by 1.
 function getCallerFunctionName() {
   const stack = new Error().stack?.split('\n') || [];
   const match = stack[4]?.trim().match(/^at\s+([^\s(]+)/);
@@ -45,8 +52,14 @@ export class ServiceLogger {
 
     const line = (event: Event, ctx?: Ctx): LogLine => {
       const fn = getCallerFunctionName();
+      const now = Date.now();
       const hasCtx = ctx && Object.keys(ctx).length > 0;
+
       return {
+        // timestamps
+        time: now, // Unix ms
+        ts: new Date(now).toISOString(), // ISO-8601
+
         service,
         event,
         function: fn,
@@ -59,7 +72,7 @@ export class ServiceLogger {
       infoDone: (ctx?: Ctx) => this.pino.info(line('done', ctx)),
       alertFail: (err: unknown, ctx?: Ctx) =>
         this.pino.error({ ...line('fail', ctx), err: normalizeErr(err) }),
-      // optional plain info
+      // optional plain info (kept as-is)
       info: (ctx?: Ctx) => this.pino.info(line('done', ctx)),
     };
   }

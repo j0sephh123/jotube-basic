@@ -13,6 +13,7 @@ import DashboardWrapper from "@/features/Dashboard/components/DashboardWrapper";
 import DefaultUploadsPage from "./pages/DefaultUploadsPage";
 import GalleryVideoPage from "./features/Gallery/components/GalleryVideoPage";
 import StoryboardPage from "./pages/StoryboardPage";
+import VideosPage from "./pages/VideosPage";
 import NotFound from "./shared/components/static/NotFound";
 
 export const Router = (
@@ -37,6 +38,7 @@ export const Router = (
           <Route path=":month" element={<ScreenshotsByMonth />} />
           <Route path=":month/:date" element={<ScreenshotsByDayDate />} />
         </Route>
+        <Route path="/videos" element={<VideosPage />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

@@ -39,7 +39,9 @@ export class DashboardService {
     defaultMax,
     viewType,
   }: fetchDashboardDto): Promise<DashboardResponse> {
-    this.log.infoStart();
+    this.log.infoStart({
+      viewType,
+    });
     const skip = (page - 1) * PER_PAGE;
 
     const rawChannels = await this.getChannelsForViewType(viewType);

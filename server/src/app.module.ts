@@ -51,6 +51,7 @@ import { LoggingModule } from './logging/logging.module';
           req: () => undefined, // drop req object entirely
           res: () => undefined, // drop res
         },
+        timestamp: false,
         formatters: {
           // Make level human-readable
           level(label) {
