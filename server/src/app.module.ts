@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Module } from '@nestjs/common';
 import { YoutubeService } from './core/external-services/youtube-api/youtube.service';
 import { ChannelsModule } from './channels/channels.module';
@@ -33,9 +34,35 @@ import { EventsGateway } from './events.gateway';
 import { StoryboardModule } from './storyboard/storyboard.module';
 import { UploadsVideoModule } from './uploads-video/uploads-video.module';
 import { DatabaseModule } from './core/database/database.module';
+import { LoggerModule } from 'nestjs-pino';
+import pino from 'pino';
+import * as path from 'path';
+import { LoggingModule } from './logging/logging.module';
 
 @Module({
   imports: [
+    LoggerModule.forRoot({
+      pinoHttp: {
+        level: 'info',
+        autoLogging: false, // don’t auto-log every request
+        stream: pino.destination(path.join(process.cwd(), 'logs', 'app.log')),
+        // Remove unwanted keys from request logs
+        serializers: {
+          req: () => undefined, // drop req object entirely
+          res: () => undefined, // drop res
+        },
+        formatters: {
+          // Make level human-readable
+          level(label) {
+            return { level: label };
+          },
+          // Remove pid and hostname completely
+          bindings() {
+            return {};
+          },
+        },
+      },
+    }),
     EventEmitterModule.forRoot(),
     BullModule.registerQueue({
       name: queueNames.video,
@@ -46,6 +73,7 @@ import { DatabaseModule } from './core/database/database.module';
     BullModule.registerQueue({
       name: queueNames.storyboard,
     }),
+    LoggingModule,
     ImagesModule,
     NestConfigModule.forRoot(),
     EventsModule,

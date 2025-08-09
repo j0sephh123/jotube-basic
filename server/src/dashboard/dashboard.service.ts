@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { fetchDashboardDto } from './dtos/fetch-dashboard.dto';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
 import { DashboardChannel, DashboardResponse, ViewType } from './types';
-import { ThumbnailsApiService } from 'src/thumbnails/api/thumbnails-api.service';
 import { ChannelService } from 'src/channels/channel.service';
+import { ServiceLogger } from 'src/logging/service-logger';
 
 const PER_PAGE = 12;
 
@@ -20,11 +20,15 @@ const valueGetters: Record<string, ValueGetter> = {
 
 @Injectable()
 export class DashboardService {
+  private log: ReturnType<ServiceLogger['bindFromFile']>;
+
   constructor(
     private readonly prismaService: PrismaService,
-    private readonly thumbnailsApiService: ThumbnailsApiService,
     private readonly channelService: ChannelService,
-  ) {}
+    private readonly serviceLogger: ServiceLogger,
+  ) {
+    this.log = this.serviceLogger.bindFromFile(__filename);
+  }
 
   public async fetchDashboard({
     page,
@@ -35,6 +39,7 @@ export class DashboardService {
     defaultMax,
     viewType,
   }: fetchDashboardDto): Promise<DashboardResponse> {
+    this.log.infoStart();
     const skip = (page - 1) * PER_PAGE;
 
     const rawChannels = await this.getChannelsForViewType(viewType);

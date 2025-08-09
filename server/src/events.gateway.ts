@@ -3,9 +3,8 @@ import {
   WebSocketServer,
   OnGatewayConnection,
   OnGatewayDisconnect,
-  OnGatewayInit,
 } from '@nestjs/websockets';
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Server, Socket } from 'socket.io';
 import { EventTypes } from './shared/types';
 
@@ -17,32 +16,20 @@ interface ProcessEvent {
 
 @Injectable()
 @WebSocketGateway({ cors: true })
-export class EventsGateway
-  implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit
-{
+export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
 
-  private readonly logger = new Logger(EventsGateway.name);
   private connectedClients: Set<string> = new Set();
   private lastSentTimes = new Map<string, number>();
   private readonly RATE_LIMIT_MS = 2000;
 
-  afterInit() {
-    this.logger.log(
-      'EventsGateway initialized, server:',
-      this.server ? 'available' : 'not available',
-    );
-  }
-
   handleConnection(client: Socket) {
     this.connectedClients.add(client.id);
-    this.logger.log(`Client connected: ${client.id}`);
   }
 
   handleDisconnect(client: Socket) {
     this.connectedClients.delete(client.id);
-    this.logger.log(`Client disconnected: ${client.id}`);
   }
 
   public sendEvent(
@@ -50,7 +37,6 @@ export class EventsGateway
     data: { ytVideoId: string; progress?: string },
   ) {
     if (!this.server) {
-      this.logger.error('WebSocket server is not available');
       return;
     }
 
@@ -66,10 +52,6 @@ export class EventsGateway
         };
 
         this.server.emit('processEvent', processEvent);
-        this.logger.debug(
-          `Sending process event to ${this.connectedClients.size} clients:`,
-          processEvent,
-        );
         this.lastSentTimes.set(data.ytVideoId, now);
       }
     } else {
@@ -80,10 +62,6 @@ export class EventsGateway
       };
 
       this.server.emit('processEvent', processEvent);
-      this.logger.debug(
-        `Sending process event to ${this.connectedClients.size} clients:`,
-        processEvent,
-      );
 
       if (event === 'screenshots_finish' || event === 'download_finish') {
         this.lastSentTimes.delete(data.ytVideoId);
