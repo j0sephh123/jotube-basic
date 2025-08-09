@@ -1,5 +1,5 @@
 import { SlideImage } from "yet-another-react-lightbox";
-import { ViewType } from "@/shared/hooks/useTypedParams";
+import { ViewType } from "@/shared/hooks/useDashboardParams";
 import { SortOrder } from "@/shared/types/searchParams";
 
 export type SlidesData = SlideImage[];

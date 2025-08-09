@@ -1,6 +1,6 @@
 import { useChannelMetadataQuery } from "@/features/Channel/hooks/useChannelMetadata";
 import { useLocation } from "react-router-dom";
-import { useTypedChannelYtId } from "@/shared/hooks/useTypedParams";
+import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";
 import HeaderLayout from "./HeaderLayout";
 import ChannelControls from "./ChannelControls";
 import SyncUploadsButton from "@/features/Upload/components/SyncUploadsButton";

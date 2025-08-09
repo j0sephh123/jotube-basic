@@ -1,4 +1,4 @@
-import { useTypedChannelYtId } from "@/shared/hooks/useTypedParams";
+import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";
 import { useState, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 
@@ -7,7 +7,7 @@ type ScreenshotGroup = {
   startTime: number;
   endTime: number;
   timeSpan: number;
-}
+};
 
 import { useDialog } from "@/shared/hooks/useDialog";
 import {

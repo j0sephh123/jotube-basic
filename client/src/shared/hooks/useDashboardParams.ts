@@ -16,9 +16,10 @@ export const useTypedChannelYtId = () => {
   return ytChannelId;
 };
 
-export const useTypedViewType = () => {
-  const params = useParams<{ viewType: string }>();
+export const useDashboardParams = () => {
+  const params = useParams<{ type: "channels" | "videos"; viewType: ViewType }>();
+  const type = params.type as "channels" | "videos";
   const viewType = params.viewType as ViewType;
 
-  return viewType;
+  return { type, viewType };
 };

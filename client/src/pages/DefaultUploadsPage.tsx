@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import { useTypedChannelYtId } from "@/shared/hooks/useTypedParams";
+import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";
 import { useDeleteUploads } from "@/features/Upload/hooks/useUploadsDelete";
 import { useSaveUpload } from "@/features/Upload/hooks/useSaveUpload";
 import useUploadsList from "@/features/Upload/hooks/useUploadsList";

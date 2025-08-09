@@ -1,4 +1,4 @@
-import { useTypedChannelYtId } from "@/shared/hooks/useTypedParams";
+import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";
 import { useChannelMetadataQuery } from "../hooks/useChannelMetadata";
 
 export const useTabs = () => {

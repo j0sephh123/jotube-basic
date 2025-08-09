@@ -13,16 +13,17 @@ import DashboardWrapper from "@/features/Dashboard/components/DashboardWrapper";
 import DefaultUploadsPage from "./pages/DefaultUploadsPage";
 import GalleryVideoPage from "./features/Gallery/components/GalleryVideoPage";
 import StoryboardPage from "./pages/StoryboardPage";
-import VideosPage from "./pages/VideosPage";
 import NotFound from "./shared/components/static/NotFound";
 
 export const Router = (
   <BrowserRouter>
     <Routes>
       <Route element={<Layout />}>
-        <Route path="/" element={<Navigate to="/dashboard/saved" />} />
+        <Route path="/" element={<Navigate to="/dashboard/channels/saved" />} />
         <Route path="dashboard" element={<DashboardWrapper />}>
-          <Route path=":viewType" element={<Dashboard />} />
+          <Route path=":type">
+            <Route path=":viewType" element={<Dashboard />} />
+          </Route>
         </Route>
         <Route path="/channels/:ytChannelId" element={<ChannelPageLayout />}>
           <Route index element={<DefaultUploadsPage />} />
@@ -38,7 +39,7 @@ export const Router = (
           <Route path=":month" element={<ScreenshotsByMonth />} />
           <Route path=":month/:date" element={<ScreenshotsByDayDate />} />
         </Route>
-        <Route path="/videos" element={<VideosPage />} />
+
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

@@ -1,4 +1,4 @@
-import { useTypedChannelYtId } from "@/shared/hooks/useTypedParams";
+import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";
 import { useFetchChannelScreenshots } from "@/features/Screenshot/hooks/useFetchChannelScreenshots";
 import { useMemo } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
@@ -7,7 +7,7 @@ import { routes } from "@/shared/utils/routes";
 type VideoGroup = {
   ytVideoId: string;
   screenshots: { id: number }[];
-}
+};
 
 export default function GalleryLayout() {
   const ytChannelId = useTypedChannelYtId();

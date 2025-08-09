@@ -1,6 +1,6 @@
 import Button from "@/shared/button";
 import { Trash2 } from "lucide-react";
-import { useTypedChannelYtId } from "@/shared/hooks/useTypedParams";
+import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";
 import { useRefetchSavedUploads } from "../hooks/useSavedUploads";
 import { useDeleteUploads } from "../hooks/useUploadsDelete";
 

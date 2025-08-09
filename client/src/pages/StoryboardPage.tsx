@@ -1,4 +1,4 @@
-import { useTypedChannelYtId } from "@/shared/hooks/useTypedParams";
+import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";
 import { useQuery } from "@tanstack/react-query";
 import nestFetcher from "@/shared/api/nestFetcher";
 import { useState } from "react";
@@ -68,7 +68,7 @@ export default function StoryboardPage() {
     }).then(handleSideEffect);
   };
 
-  const deleteUploadFromDbMutation = useDeleteUploads(handleSideEffect);  
+  const deleteUploadFromDbMutation = useDeleteUploads(handleSideEffect);
 
   const handleDelete = (ytVideoIds: string[]) => {
     deleteUploadFromDbMutation({

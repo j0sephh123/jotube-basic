@@ -1,9 +1,9 @@
-import { ViewType } from "../hooks/useTypedParams";
+import { ViewType } from "../hooks/useDashboardParams";
 
 export const routes = {
   home: () => "/",
   config: () => "/config",
-  dashboard: (viewType: ViewType) => `/dashboard/${viewType}`,
+  dashboard: (viewType: ViewType) => `/dashboard/channels/${viewType}`,
   channel: (ytChannelId: string) => `/channels/${ytChannelId}`,
   savedChannel: (ytChannelId: string) => `/channels/${ytChannelId}/saved`,
   gallery: (ytChannelId: string) => `/channels/${ytChannelId}/gallery`,
@@ -15,5 +15,5 @@ export const routes = {
   thumbnails: () => `/thumbnails`,
   uploads: (ytChannelId: string) => `/channels/${ytChannelId}/uploads`,
   storyboard: (ytChannelId: string) => `/channels/${ytChannelId}/storyboard`,
-  videos: () => "/videos",
+  videos: () => "/dashboard/videos",
 };

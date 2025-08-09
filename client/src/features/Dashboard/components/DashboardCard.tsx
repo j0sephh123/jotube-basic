@@ -1,10 +1,10 @@
-import { DashboardChannel } from "./types";
-import { ViewType } from "@/shared/hooks/useTypedParams";
-import SyncUploadsButton from "../Upload/components/SyncUploadsButton";
+import { DashboardChannel } from "../types";
+import { ViewType } from "@/shared/hooks/useDashboardParams";
+import SyncUploadsButton from "../../Upload/components/SyncUploadsButton";
 import Card from "@/shared/components/card";
-import FetchUploadsButton from "../Upload/components/FetchUploadsButton";
-import DeleteChannel from "../Channel/NewChannel/components/DeleteChannel";
-import useTitleClick from "./hooks/useTitleClick";
+import FetchUploadsButton from "../../Upload/components/FetchUploadsButton";
+import DeleteChannel from "../../Channel/NewChannel/components/DeleteChannel";
+import useTitleClick from "../hooks/useTitleClick";
 
 interface DashboardCardProps {
   channel: DashboardChannel;

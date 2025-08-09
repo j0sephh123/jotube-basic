@@ -1,6 +1,6 @@
 import { Button } from "@/shared/button";
 import { useSaveUpload } from "../hooks/useSaveUpload";
-import { useTypedChannelYtId } from "@/shared/hooks/useTypedParams";
+import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";
 import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMetadata";
 import { useRefetchSavedUploads } from "../hooks/useSavedUploads";
 

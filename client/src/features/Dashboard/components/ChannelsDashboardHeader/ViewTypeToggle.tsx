@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { routes } from "@/shared/utils/routes";
-import { useTypedViewType, ViewType } from "@/shared/hooks/useTypedParams";
+import {
+  useDashboardParams,
+  ViewType,
+} from "@/shared/hooks/useDashboardParams";
 import clsx from "clsx";
 import Button from "@/shared/button";
 
@@ -15,7 +18,7 @@ const viewTypeOrder = [
 
 export default function ViewTypeToggle() {
   const navigate = useNavigate();
-  const viewType = useTypedViewType();
+  const { viewType } = useDashboardParams();
 
   const handleToggle = (newViewType: ViewType) => {
     navigate(routes.dashboard(newViewType), {

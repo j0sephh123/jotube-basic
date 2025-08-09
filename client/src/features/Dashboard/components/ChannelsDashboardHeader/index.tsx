@@ -5,14 +5,17 @@ import SelectSortDirection from "./SelectSortDirection";
 import ViewTypeToggle from "./ViewTypeToggle";
 import PaginationControl from "../PaginationControl";
 import { useDashboardContext } from "../../hooks/useDashboardContext";
-import { useTypedViewType, ViewType } from "@/shared/hooks/useTypedParams";
+import {
+  useDashboardParams,
+  ViewType,
+} from "@/shared/hooks/useDashboardParams";
 import { useDashboardQuery } from "../../useDashboardQuery";
 import Button from "@/shared/button";
 
 const showRangeFilterForViewTypes = [ViewType.SAVED, ViewType.PROCESSED];
 
 export default function DashboardHeader() {
-  const viewType = useTypedViewType();
+  const { viewType } = useDashboardParams();
   const { handleClearFilters } = useDashboardContext();
   const { data } = useDashboardQuery();
 

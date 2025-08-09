@@ -1,13 +1,14 @@
 import { Loader } from "lucide-react";
 import ErrorMessage from "@/shared/components/static/ErrorMessage";
 import CardsGridWrapper from "./components/CardsGridWrapper";
-import { useTypedViewType } from "@/shared/hooks/useTypedParams";
+import { useDashboardParams } from "@/shared/hooks/useDashboardParams";
 import { useDashboardQuery } from "./useDashboardQuery";
-import DashboardCard from "./DashboardCard";
+import DashboardCard from "./components/DashboardCard";
+import Videos from "./components/Videos";
 
 export default function Dashboard() {
   const { data, isLoading, isError } = useDashboardQuery();
-  const viewType = useTypedViewType();
+  const { viewType, type } = useDashboardParams();
 
   if (isLoading) {
     return (
@@ -19,6 +20,10 @@ export default function Dashboard() {
 
   if (isError || !data) {
     return <ErrorMessage message="Error fetching dashboard data" />;
+  }
+
+  if (type === "videos") {
+    return <Videos />;
   }
 
   return (
