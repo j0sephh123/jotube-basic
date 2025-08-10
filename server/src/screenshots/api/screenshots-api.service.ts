@@ -5,12 +5,14 @@ import { ScreenshotsManagerService } from 'src/screenshots/manager/screenshots-m
 @Injectable()
 export class ScreenshotsApiService {
   constructor(
-    private readonly prisma: PrismaService,
+    private readonly prismaService: PrismaService,
     private readonly screenshotsManagerService: ScreenshotsManagerService,
   ) {}
 
   async screenshots() {
-    const results = await this.prisma.$queryRaw<Record<string, number>[]>`
+    const results = await this.prismaService.$queryRaw<
+      Record<string, number>[]
+    >`
       SELECT 
         DATE_FORMAT(createdAt, '%Y-%m') as month,
         COUNT(*) as count
@@ -28,7 +30,9 @@ export class ScreenshotsApiService {
   }
 
   async screenshotsByMonth(month: string) {
-    const results = await this.prisma.$queryRaw<Record<string, number>[]>`
+    const results = await this.prismaService.$queryRaw<
+      Record<string, number>[]
+    >`
       SELECT 
         DATE_FORMAT(createdAt, '%Y-%m-%d') as date,
         COUNT(*) as count
@@ -47,7 +51,7 @@ export class ScreenshotsApiService {
   }
 
   async screenshotsByDate(date: string) {
-    const results = await this.prisma.$queryRaw<Record<string, any>[]>`
+    const results = await this.prismaService.$queryRaw<Record<string, any>[]>`
       SELECT 
         s.*,
         c.title as channelTitle,
@@ -63,14 +67,14 @@ export class ScreenshotsApiService {
   }
 
   async updateScreenshot(id: number, data: { isFav: boolean }) {
-    return this.prisma.screenshot.update({
+    return this.prismaService.screenshot.update({
       where: { id },
       data,
     });
   }
 
   async deleteScreenshot(id: number) {
-    const screenshot = await this.prisma.screenshot.findUnique({
+    const screenshot = await this.prismaService.screenshot.findUnique({
       where: { id },
     });
 
@@ -84,13 +88,13 @@ export class ScreenshotsApiService {
       screenshot.second,
     );
 
-    return this.prisma.screenshot.delete({
+    return this.prismaService.screenshot.delete({
       where: { id },
     });
   }
 
   async favoriteScreenshots() {
-    const favScreenshots = await this.prisma.screenshot.findMany({
+    const favScreenshots = await this.prismaService.screenshot.findMany({
       where: {
         isFav: true,
       },
@@ -102,7 +106,7 @@ export class ScreenshotsApiService {
   }
 
   async favoriteCount() {
-    const count = await this.prisma.screenshot.count({
+    const count = await this.prismaService.screenshot.count({
       where: {
         isFav: true,
       },
@@ -112,7 +116,7 @@ export class ScreenshotsApiService {
   }
 
   async getScreenshotsByVideo(ytVideoId: string) {
-    const screenshots = await this.prisma.screenshot.findMany({
+    const screenshots = await this.prismaService.screenshot.findMany({
       where: {
         ytVideoId,
       },
