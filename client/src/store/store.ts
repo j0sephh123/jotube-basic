@@ -1,14 +1,30 @@
+// store.ts
 import { create } from "zustand";
-import { Store } from "./store-types";
 import { devtools } from "zustand/middleware";
-import { createWebSocketSlice } from "./slices/websocket-slice";
-import { createDashboardSlice } from "../features/Dashboard/store/dashboard-slice";
-import { createSlidesSlice } from "@/features/Thumbnail/store/slides-slice";
-import { thumbnailsProcessingSlice } from "@/features/Thumbnail/store/thumbnails-processing-slice";
-import { createRangePickersSlice } from "@/features/Dashboard/store/range-picker-slice";
-import { createSidePanelSlice } from "./slices/side-panel-slice";
 
-export const useStore = create<Store>()(
+// --- slice creators ---
+import { thumbnailsProcessingSlice } from "@/features/Thumbnail/store/thumbnails-processing-slice";
+import { createWebSocketSlice } from "./slices/websocket-slice";
+import { createDashboardSlice } from "@/features/Dashboard/store/dashboard-slice";
+import {
+  createSidePanelSlice,
+  SidePanelSlice,
+} from "./slices/side-panel-slice";
+import { createRangePickersSlice } from "@/features/Dashboard/store/range-picker-slice";
+import { createSlidesSlice } from "@/features/Thumbnail/store/slides-slice";
+
+// ---- Types ----
+import type {
+  Store as StoreType,
+  SlidesSlice,
+  ThumbnailsProcessingSlice,
+  WebSocketSlice,
+  DashboardSlice,
+  RangePickersSlice,
+} from "./store-types";
+
+// ---- Store ----------------------------------------------------
+export const useStore = create<StoreType>()(
   devtools(
     (set, get) => ({
       ...createSlidesSlice(set),
@@ -18,8 +34,29 @@ export const useStore = create<Store>()(
       ...createRangePickersSlice(set, get),
       ...createSidePanelSlice(set),
     }),
-    {
-      name: "store",
-    }
+    { name: "store" }
   )
 );
+
+// ---- Slice-scoped hooks (single hook call, no equality) -------
+function makeScopedHook<Slice>() {
+  // 0 args -> whole slice; 1 arg -> selected value
+  function useScoped(): Slice;
+  function useScoped<T>(selector: (s: Slice) => T): T;
+  function useScoped<T>(selector?: (s: Slice) => T): T | Slice {
+    const sel = (selector ?? ((s: Slice) => s as unknown as T)) as (
+      s: Slice
+    ) => T;
+
+    return useStore((s) => sel(s as unknown as Slice));
+  }
+  return useScoped;
+}
+
+// Per-slice hooks
+export const useSlides = makeScopedHook<SlidesSlice>();
+export const useThumbnails = makeScopedHook<ThumbnailsProcessingSlice>();
+export const useWebSocketState = makeScopedHook<WebSocketSlice>();
+export const useDashboard = makeScopedHook<DashboardSlice>();
+export const useRangePickers = makeScopedHook<RangePickersSlice>();
+export const useSidePanel = makeScopedHook<SidePanelSlice>();
