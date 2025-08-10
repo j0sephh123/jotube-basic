@@ -6,11 +6,13 @@ import { devtools } from "zustand/middleware";
 import { thumbnailsProcessingSlice } from "@/features/Thumbnail/store/thumbnails-processing-slice";
 import { createWebSocketSlice } from "./slices/websocket-slice";
 import { createDashboardSlice } from "@/features/Dashboard/store/dashboard-slice";
+import { createVideosDashboardSlice } from "@/features/Dashboard/store/videos-dashboard-slice";
 import {
   createSidePanelSlice,
   SidePanelSlice,
 } from "./slices/side-panel-slice";
 import { createRangePickersSlice } from "@/features/Dashboard/store/range-picker-slice";
+import { createVideosRangePickersSlice } from "@/features/Dashboard/store/videos-range-picker-slice";
 import { createSlidesSlice } from "@/features/Thumbnail/store/slides-slice";
 
 // ---- Types ----
@@ -21,6 +23,8 @@ import type {
   WebSocketSlice,
   DashboardSlice,
   RangePickersSlice,
+  VideosDashboardSlice,
+  VideosRangePickersSlice,
 } from "./store-types";
 
 // ---- Store ----------------------------------------------------
@@ -31,7 +35,9 @@ export const useStore = create<StoreType>()(
       ...thumbnailsProcessingSlice(set),
       ...createWebSocketSlice(set),
       ...createDashboardSlice(set),
+      ...createVideosDashboardSlice(set),
       ...createRangePickersSlice(set, get),
+      ...createVideosRangePickersSlice(set, get),
       ...createSidePanelSlice(set),
     }),
     { name: "store" }
@@ -58,5 +64,7 @@ export const useSlides = makeScopedHook<SlidesSlice>();
 export const useThumbnails = makeScopedHook<ThumbnailsProcessingSlice>();
 export const useWebSocketState = makeScopedHook<WebSocketSlice>();
 export const useDashboard = makeScopedHook<DashboardSlice>();
+export const useVideosDashboard = makeScopedHook<VideosDashboardSlice>();
 export const useRangePickers = makeScopedHook<RangePickersSlice>();
+export const useVideosRangePickers = makeScopedHook<VideosRangePickersSlice>();
 export const useSidePanel = makeScopedHook<SidePanelSlice>();

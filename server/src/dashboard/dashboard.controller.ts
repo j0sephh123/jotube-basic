@@ -1,7 +1,8 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { DashboardService } from './dashboard.service';
 import { fetchDashboardDto } from './dtos/fetch-dashboard.dto';
-import { ChannelsDashboardResponse } from './types';
+import { fetchVideosDashboardDto } from './dtos/fetch-videos-dashboard.dto';
+import { ChannelsDashboardResponse, VideosDashboardResponse } from './types';
 
 @Controller('dashboard')
 export class DashboardController {
@@ -15,7 +16,9 @@ export class DashboardController {
   }
 
   @Post('videos')
-  async fetchVideosDashboard(): Promise<any[]> {
-    return this.dashboardService.fetchVideosDashboard();
+  async fetchVideosDashboard(
+    @Body() fetchVideosDashboardDto: fetchVideosDashboardDto,
+  ): Promise<VideosDashboardResponse> {
+    return this.dashboardService.fetchVideosDashboard(fetchVideosDashboardDto);
   }
 }

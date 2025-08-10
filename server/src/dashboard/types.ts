@@ -46,3 +46,19 @@ export interface ChannelsDashboardResponse {
   channels: DashboardChannel[];
   total: number;
 }
+
+export interface DashboardVideo {
+  id: number;
+  ytId: string;
+  title: string;
+  src: string;
+  channelId: number;
+  channelTitle: string;
+  channelYtId: string;
+  screenshotCount: number;
+}
+
+export interface VideosDashboardResponse {
+  videos: DashboardVideo[];
+  total: number;
+}

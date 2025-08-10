@@ -1,7 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { fetchDashboardDto } from './dtos/fetch-dashboard.dto';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
-import { DashboardChannel, ChannelsDashboardResponse, ViewType } from './types';
+import {
+  DashboardChannel,
+  ChannelsDashboardResponse,
+  ViewType,
+  VideosDashboardResponse,
+  DashboardVideo,
+} from './types';
 import { ChannelService } from 'src/channels/channel.service';
 import { ServiceLogger } from 'src/logging/service-logger';
 import { ArtifactType, Prisma } from '@prisma/client';
@@ -276,8 +282,19 @@ export class DashboardService {
     );
   }
 
-  public async fetchVideosDashboard(): Promise<any[]> {
-    const limit = 30;
+  public async fetchVideosDashboard(filters?: {
+    page?: number;
+    sortOrder?: 'asc' | 'desc';
+    screenshotMin?: number;
+    screenshotMax?: number;
+  }): Promise<VideosDashboardResponse> {
+    const page = filters?.page || 1;
+    const sortOrder = filters?.sortOrder || 'desc';
+    const screenshotMin = filters?.screenshotMin;
+    const screenshotMax = filters?.screenshotMax;
+    const offset = (page - 1) * PER_PAGE;
+
+    const orderDirection = sortOrder === 'asc' ? 'ASC' : 'DESC';
 
     const rows = await this.prismaService.$queryRaw<any[]>(Prisma.sql`
       SELECT
@@ -292,17 +309,45 @@ export class DashboardService {
       FROM UploadsVideo AS uv
       JOIN Channel AS c
         ON c.id = uv.channelId
-      LEFT JOIN Screenshot AS s
+      JOIN Screenshot AS s
         ON s.ytVideoId = uv.ytId
       GROUP BY
         uv.id, uv.ytId, uv.title, uv.src, c.id, c.title, c.ytId
-      ORDER BY screenshotCount DESC, uv.id DESC
-      LIMIT ${Prisma.sql`${limit}`}
+      HAVING COUNT(s.id) > 0
+      ORDER BY screenshotCount ${Prisma.raw(orderDirection)}, uv.id DESC
     `);
 
-    return rows.map((r) => ({
-      ...r,
-      screenshotCount: Number(r.screenshotCount),
-    }));
+    let filteredRows = rows;
+
+    if (screenshotMin !== undefined && screenshotMin > 0) {
+      filteredRows = filteredRows.filter(
+        (row) => Number(row.screenshotCount) >= screenshotMin,
+      );
+    }
+
+    if (screenshotMax !== undefined && screenshotMax > 0) {
+      filteredRows = filteredRows.filter(
+        (row) => Number(row.screenshotCount) <= screenshotMax,
+      );
+    }
+
+    const total = filteredRows.length;
+    const paginatedRows = filteredRows.slice(offset, offset + PER_PAGE);
+
+    return {
+      videos: paginatedRows.map(
+        (r): DashboardVideo => ({
+          id: r.id,
+          ytId: r.ytId,
+          title: r.title,
+          src: r.src,
+          channelId: r.channelId,
+          channelTitle: r.channelTitle,
+          channelYtId: r.channelYtId,
+          screenshotCount: Number(r.screenshotCount),
+        }),
+      ),
+      total,
+    };
   }
 }

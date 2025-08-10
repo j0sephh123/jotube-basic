@@ -22,5 +22,5 @@ export default function VideosDashboardContainer({
     return <ErrorMessage message="Error fetching dashboard data" />;
   }
 
-  return <>{children(data)}</>;
+  return <>{children(data.videos)}</>;
 }

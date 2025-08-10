@@ -81,9 +81,69 @@ export type RangePickersSlice = {
   getRangePicker: (key: RangePickerTypes) => RangePickerConfig | undefined;
 };
 
+export type VideosDashboardSlice = {
+  videosRequestBody: {
+    sortOrder: SortOrder;
+    page: number;
+    minScreenshots: number;
+    maxScreenshots: number | null;
+  };
+  setVideosRequestBody: <
+    K extends keyof {
+      sortOrder: SortOrder;
+      page: number;
+      minScreenshots: number;
+      maxScreenshots: number | null;
+    }
+  >(
+    key: K,
+    value: {
+      sortOrder: SortOrder;
+      page: number;
+      minScreenshots: number;
+      maxScreenshots: number | null;
+    }[K]
+  ) => void;
+};
+
+export type VideosRangePickersSlice = {
+  videosRangePickers: Record<
+    string,
+    {
+      values: ReadonlyArray<number>;
+      min: number;
+      max: number;
+      stepSize: number;
+    }
+  >;
+  setVideosRangePicker: (
+    key: string,
+    config: {
+      values: ReadonlyArray<number>;
+      min: number;
+      max: number;
+      stepSize: number;
+    }
+  ) => void;
+  updateVideosRangePickerValues: (
+    key: string,
+    values: ReadonlyArray<number>
+  ) => void;
+  getVideosRangePicker: (key: string) =>
+    | {
+        values: ReadonlyArray<number>;
+        min: number;
+        max: number;
+        stepSize: number;
+      }
+    | undefined;
+};
+
 export type Store = SlidesSlice &
   ThumbnailsProcessingSlice &
   WebSocketSlice &
   DashboardSlice &
   RangePickersSlice &
+  VideosDashboardSlice &
+  VideosRangePickersSlice &
   SidePanelSlice;

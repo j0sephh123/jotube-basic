@@ -13,7 +13,7 @@ export type DashboardChannel = {
   storyboard: number;
 };
 
-export type DashboardVideo = {
+export interface DashboardVideo {
   id: number;
   ytId: string;
   title: string;
@@ -22,4 +22,9 @@ export type DashboardVideo = {
   channelTitle: string;
   channelYtId: string;
   screenshotCount: number;
-};
+}
+
+export interface VideosDashboardResponse {
+  videos: DashboardVideo[];
+  total: number;
+}
