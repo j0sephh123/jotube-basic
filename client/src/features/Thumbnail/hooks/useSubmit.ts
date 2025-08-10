@@ -4,7 +4,7 @@ import { useFinishProcessingUpload } from "@/features/Upload/hooks/useFinishProc
 import { useRefetchTotalScreenshots } from "@/features/Screenshot/hooks/useTotalScreenshots";
 import { useRefetchTotalThumbnails } from "./useTotalThumbnails";
 import { useRefetchThumbnailByVideoId } from "./useThumbnailByVideoId";
-import { useRefetchGroupedThumbnails } from "@/features/Dashboard/useDashboardQuery";
+import { useRefetchGroupedThumbnails } from "@/features/Dashboard/useChannelsDashboardQuery";
 
 export default function useSubmit() {
   const {

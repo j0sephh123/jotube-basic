@@ -83,7 +83,7 @@ export class UploadsVideoService {
       uploads.map(async ({ ytVideoId }) => {
         const upload = await this.prismaService.uploadsVideo.update({
           where: { ytId: ytVideoId },
-          data: { artifact: 'SAVED' },
+          data: { artifact: ArtifactType.SAVED },
         });
 
         const existingStoryboard =
@@ -194,7 +194,9 @@ export class UploadsVideoService {
         select: {
           id: true,
           uploads: {
-            where: { artifact: { in: ['SAVED', 'DOWNLOADED'] } },
+            where: {
+              artifact: { in: [ArtifactType.SAVED, ArtifactType.DOWNLOADED] },
+            },
             select: {
               ytId: true,
               id: true,
@@ -391,7 +393,9 @@ export class UploadsVideoService {
           src: true,
           ytId: true,
           uploads: {
-            where: { artifact: { in: ['SAVED', 'DOWNLOADED'] } },
+            where: {
+              artifact: { in: [ArtifactType.SAVED, ArtifactType.DOWNLOADED] },
+            },
             select: {
               createdAt: true,
               ytId: true,

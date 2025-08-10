@@ -1,8 +1,8 @@
 import { Heart, Trash2, Eye, Copy, Star } from "lucide-react";
 import clsx from "clsx";
 import type { ChannelScreenshot } from "@/features/Screenshot/hooks/useFetchChannelScreenshots";
-import { useState, useEffect } from "react";
-import { createPortal } from "react-dom";
+import { useVideoModal } from "@/shared/hooks/useVideoModal";
+import VideoModal from "@/shared/components/VideoModal";
 import { formatSecondsToTime } from "@/shared/utils/format";
 
 type Props = {
@@ -18,7 +18,7 @@ type Props = {
   onImageClick: (index: number) => void;
   onAddToRanges?: (ytVideoId: string, second: number) => void;
   onRemoveSecond?: (second: number) => void;
-}
+};
 
 export default function GalleryItem({
   screenshot,
@@ -33,37 +33,14 @@ export default function GalleryItem({
   onAddToRanges,
   onRemoveSecond,
 }: Props) {
-  const [isVideoModalVisible, setIsVideoModalVisible] = useState(false);
-
-  useEffect(() => {
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && isVideoModalVisible) {
-        setIsVideoModalVisible(false);
-      }
-    };
-
-    if (isVideoModalVisible) {
-      document.addEventListener("keydown", handleEscape);
-      document.body.style.overflow = "hidden";
-    }
-
-    return () => {
-      document.removeEventListener("keydown", handleEscape);
-      document.body.style.overflow = "unset";
-    };
-  }, [isVideoModalVisible]);
-
-  const getEmbedUrl = (videoId: string, startTime: number) => {
-    return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&start=${
-      startTime - 1
-    }&showinfo=1&modestbranding=1`;
-  };
+  const { isVideoModalVisible, openVideoModal, closeVideoModal, getEmbedUrl } =
+    useVideoModal();
 
   const handleGalleryItemClick = () => {
     if (isDisabled) return;
 
     if (mode === "clip") {
-      setIsVideoModalVisible(true);
+      openVideoModal();
     } else {
       onImageClick(index);
     }
@@ -215,50 +192,13 @@ export default function GalleryItem({
         </div>
       </div>
 
-      {isVideoModalVisible &&
-        screenshot.ytVideoId &&
-        createPortal(
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-            style={{ zIndex: 99999 }}
-            onClick={() => setIsVideoModalVisible(false)}
-          >
-            <div
-              className="bg-base-100 p-6 rounded-lg w-full max-w-6xl"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="w-full aspect-video mb-4">
-                <iframe
-                  src={getEmbedUrl(screenshot.ytVideoId, screenshot.second)}
-                  title="YouTube video player"
-                  className="w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-              </div>
-              <div className="text-center mb-4">
-                <span className="text-lg font-mono bg-gray-800 px-3 py-1 rounded">
-                  {formatSecondsToTime(screenshot.second)}
-                </span>
-              </div>
-              <div className="flex justify-center">
-                <button
-                  className="btn btn-ghost"
-                  onClick={() => setIsVideoModalVisible(false)}
-                >
-                  Close
-                </button>
-              </div>
-              <button
-                className="btn btn-ghost absolute top-4 right-4"
-                onClick={() => setIsVideoModalVisible(false)}
-              >
-                ✕
-              </button>
-            </div>
-          </div>,
-          document.body
-        )}
+      <VideoModal
+        isVisible={isVideoModalVisible}
+        onClose={closeVideoModal}
+        videoId={screenshot.ytVideoId}
+        embedUrl={getEmbedUrl(screenshot.ytVideoId, screenshot.second)}
+        startTime={screenshot.second}
+      />
     </>
   );
 }

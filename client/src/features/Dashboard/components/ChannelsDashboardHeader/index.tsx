@@ -9,7 +9,7 @@ import {
   useDashboardParams,
   ViewType,
 } from "@/shared/hooks/useDashboardParams";
-import { useDashboardQuery } from "../../useDashboardQuery";
+import { useChannelsDashboardQuery } from "../../useChannelsDashboardQuery";
 import Button from "@/shared/button";
 
 const showRangeFilterForViewTypes = [ViewType.SAVED, ViewType.PROCESSED];
@@ -17,7 +17,7 @@ const showRangeFilterForViewTypes = [ViewType.SAVED, ViewType.PROCESSED];
 export default function DashboardHeader() {
   const { viewType } = useDashboardParams();
   const { handleClearFilters } = useDashboardContext();
-  const { data } = useDashboardQuery();
+  const { data } = useChannelsDashboardQuery();
 
   return (
     <div className="p-3 border-b border-base-300">

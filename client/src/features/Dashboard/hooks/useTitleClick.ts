@@ -1,15 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import { routes } from "@/shared/utils/routes";
 import { ViewType } from "@/shared/hooks/useDashboardParams";
-import { DashboardChannel } from "../types";
 
 export default function useTitleClick(
-  channel: DashboardChannel,
+  channel: {
+    ytId: string;
+    title: string;
+    src: string;
+    lastSyncedAt: string | null;
+  },
   viewType: ViewType
 ) {
   const navigate = useNavigate();
 
-  const handleChannelTitleClick = (e: React.MouseEvent) => {
+  return (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -29,6 +33,4 @@ export default function useTitleClick(
 
     navigate(routes.savedChannel(channel.ytId));
   };
-
-  return handleChannelTitleClick;
 }

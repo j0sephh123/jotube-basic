@@ -1,6 +1,7 @@
 import { SlideImage } from "yet-another-react-lightbox";
 import { ViewType } from "@/shared/hooks/useDashboardParams";
 import { SortOrder } from "@/shared/types/searchParams";
+import { SidePanelSlice } from "./slices/side-panel-slice";
 
 export type SlidesData = SlideImage[];
 
@@ -84,4 +85,5 @@ export type Store = SlidesSlice &
   ThumbnailsProcessingSlice &
   WebSocketSlice &
   DashboardSlice &
-  RangePickersSlice;
+  RangePickersSlice &
+  SidePanelSlice;

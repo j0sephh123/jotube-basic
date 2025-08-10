@@ -21,8 +21,8 @@ export const Router = (
       <Route element={<Layout />}>
         <Route path="/" element={<Navigate to="/dashboard/channels/saved" />} />
         <Route path="dashboard" element={<DashboardWrapper />}>
-          <Route path=":type">
-            <Route path=":viewType" element={<Dashboard />} />
+          <Route path=":type" element={<Dashboard />}>
+            <Route path=":viewType" />
           </Route>
         </Route>
         <Route path="/channels/:ytChannelId" element={<ChannelPageLayout />}>
@@ -39,7 +39,6 @@ export const Router = (
           <Route path=":month" element={<ScreenshotsByMonth />} />
           <Route path=":month/:date" element={<ScreenshotsByDayDate />} />
         </Route>
-
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

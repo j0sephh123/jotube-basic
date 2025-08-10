@@ -5,6 +5,7 @@ import { queueNames } from 'src/shared/constants';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
 import { LabelsDto } from 'src/queue/dtos/labels.dto';
 import { RemoveJobsDto } from './queue.controller';
+import { ArtifactType } from '@prisma/client';
 
 @Injectable()
 export class QueueService {
@@ -50,7 +51,7 @@ export class QueueService {
           include: {
             uploads: {
               where: {
-                artifact: 'SAVED',
+                artifact: ArtifactType.SAVED,
               },
             },
           },

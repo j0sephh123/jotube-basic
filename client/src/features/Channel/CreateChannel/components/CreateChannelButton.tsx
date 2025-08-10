@@ -5,14 +5,14 @@ import { useToast } from "@/shared/components/Toast";
 import { Link } from "react-router-dom";
 import { routes } from "@/shared/utils/routes";
 import CreateChannelModal from "./CreateChannelModal";
-import { useDashboardQuery } from "@/features/Dashboard/useDashboardQuery";
+import { useChannelsDashboardQuery } from "@/features/Dashboard/useChannelsDashboardQuery";
 import Button from "@/shared/button";
 
 export default function CreateChannelButton() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { mutateAsync: channelCreateMutation } = useChannelCreate();
   const { show, ToastContainer } = useToast();
-  const { refetch } = useDashboardQuery();
+  const { refetch } = useChannelsDashboardQuery();
 
   const handleChannelCreate = async ({ ytVideoId }: { ytVideoId: string }) => {
     try {

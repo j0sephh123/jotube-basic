@@ -1,4 +1,4 @@
-import { useDashboardQuery } from "@/features/Dashboard/useDashboardQuery";
+import { useChannelsDashboardQuery } from "@/features/Dashboard/useChannelsDashboardQuery";
 import useDownload from "@/features/Upload/hooks/useDownload";
 import { Download } from "lucide-react";
 
@@ -7,7 +7,7 @@ type CardDownloadButtonProps = {
 };
 
 export default function CardDownloadButton({ id }: CardDownloadButtonProps) {
-  const { data } = useDashboardQuery();
+  const { data } = useChannelsDashboardQuery();
 
   const downloadMutation = useDownload();
   const handleDownload = (id: number) => {

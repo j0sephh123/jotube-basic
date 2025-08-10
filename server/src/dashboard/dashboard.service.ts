@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { fetchDashboardDto } from './dtos/fetch-dashboard.dto';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
-import { DashboardChannel, DashboardResponse, ViewType } from './types';
+import { DashboardChannel, ChannelsDashboardResponse, ViewType } from './types';
 import { ChannelService } from 'src/channels/channel.service';
 import { ServiceLogger } from 'src/logging/service-logger';
+import { ArtifactType, Prisma } from '@prisma/client';
 
 const PER_PAGE = 12;
 
@@ -38,7 +39,7 @@ export class DashboardService {
     defaultMin,
     defaultMax,
     viewType,
-  }: fetchDashboardDto): Promise<DashboardResponse> {
+  }: fetchDashboardDto): Promise<ChannelsDashboardResponse> {
     this.log.infoStart({
       viewType,
     });
@@ -80,10 +81,10 @@ export class DashboardService {
   > {
     switch (viewType) {
       case ViewType.THUMBNAILS:
-        return this.getChannels({ artifact: 'THUMBNAIL' });
+        return this.getChannels({ artifact: ArtifactType.THUMBNAIL });
 
       case ViewType.HAS_STORYBOARDS:
-        return this.getChannels({ artifact: 'STORYBOARD' });
+        return this.getChannels({ artifact: ArtifactType.STORYBOARD });
 
       case ViewType.NO_UPLOADS:
       case ViewType.NO_SCREENSHOTS:
@@ -95,7 +96,7 @@ export class DashboardService {
         const isProcessed = viewType === ViewType.PROCESSED;
         const filter: any = isProcessed
           ? { status: { in: [1, 2] } }
-          : { artifact: 'SAVED' };
+          : { artifact: ArtifactType.SAVED };
         return this.getChannels(filter);
     }
   }
@@ -273,5 +274,35 @@ export class DashboardService {
     return channels.sort((a, b) =>
       sortOrder === 'asc' ? getter(a) - getter(b) : getter(b) - getter(a),
     );
+  }
+
+  public async fetchVideosDashboard(): Promise<any[]> {
+    const limit = 30;
+
+    const rows = await this.prismaService.$queryRaw<any[]>(Prisma.sql`
+      SELECT
+        uv.id,
+        uv.ytId,
+        uv.title,
+        uv.src,
+        c.id    AS channelId,
+        c.title AS channelTitle,
+        c.ytId  AS channelYtId,
+        COUNT(s.id) AS screenshotCount
+      FROM UploadsVideo AS uv
+      JOIN Channel AS c
+        ON c.id = uv.channelId
+      LEFT JOIN Screenshot AS s
+        ON s.ytVideoId = uv.ytId
+      GROUP BY
+        uv.id, uv.ytId, uv.title, uv.src, c.id, c.title, c.ytId
+      ORDER BY screenshotCount DESC, uv.id DESC
+      LIMIT ${Prisma.sql`${limit}`}
+    `);
+
+    return rows.map((r) => ({
+      ...r,
+      screenshotCount: Number(r.screenshotCount),
+    }));
   }
 }

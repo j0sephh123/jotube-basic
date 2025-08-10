@@ -2,8 +2,9 @@ import { useUpdateScreenshot } from "@/features/Screenshot/hooks/useUpdateScreen
 import { Heart, Trash2 } from "lucide-react";
 import { getPublicImgUrl } from "@/shared/utils/image";
 import { ScreenshotZoomModal } from "./ScreenshotZoomModal";
-import { useState, useEffect } from "react";
-import { createPortal } from "react-dom";
+import { useState } from "react";
+import { useVideoModal } from "@/shared/hooks/useVideoModal";
+import VideoModal from "@/shared/components/VideoModal";
 import ChannelLink from "../../../shared/components/ChannelLink";
 import ConfirmDialog from "@/shared/components/dialog/ConfirmDialog";
 
@@ -16,7 +17,7 @@ type ScreenshotCardProps = {
   ytChannelId: string;
   ytVideoId: string;
   onDelete: (id: number) => void;
-}
+};
 
 export default function SimpleCardWithImage({
   id,
@@ -31,7 +32,8 @@ export default function SimpleCardWithImage({
   const { mutate: updateScreenshot } = useUpdateScreenshot();
   const [isZoomModalVisible, setIsZoomModalVisible] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [isVideoModalVisible, setIsVideoModalVisible] = useState(false);
+  const { isVideoModalVisible, openVideoModal, closeVideoModal, getEmbedUrl } =
+    useVideoModal();
 
   const imageUrl = getPublicImgUrl(
     ytChannelId,
@@ -52,30 +54,6 @@ export default function SimpleCardWithImage({
     setIsDeleteDialogOpen(false);
   };
 
-  useEffect(() => {
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && isVideoModalVisible) {
-        setIsVideoModalVisible(false);
-      }
-    };
-
-    if (isVideoModalVisible) {
-      document.addEventListener("keydown", handleEscape);
-      document.body.style.overflow = "hidden";
-    }
-
-    return () => {
-      document.removeEventListener("keydown", handleEscape);
-      document.body.style.overflow = "unset";
-    };
-  }, [isVideoModalVisible]);
-
-  const getEmbedUrl = (videoId: string, startTime: number) => {
-    return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&start=${
-      startTime - 1
-    }&showinfo=1&modestbranding=1`;
-  };
-
   return (
     <>
       <div className="card bg-base-100 shadow-xl">
@@ -91,7 +69,7 @@ export default function SimpleCardWithImage({
           <div className="flex justify-between items-center">
             <div
               className="text-base text-gray-600 cursor-pointer hover:text-gray-400"
-              onClick={() => setIsVideoModalVisible(true)}
+              onClick={openVideoModal}
             >
               {second}
             </div>
@@ -143,50 +121,13 @@ export default function SimpleCardWithImage({
         variant="error"
       />
 
-      {isVideoModalVisible &&
-        ytVideoId &&
-        createPortal(
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-            style={{ zIndex: 99999 }}
-            onClick={() => setIsVideoModalVisible(false)}
-          >
-            <div
-              className="bg-base-100 p-6 rounded-lg w-full max-w-6xl"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="w-full aspect-video mb-4">
-                <iframe
-                  src={getEmbedUrl(ytVideoId, second)}
-                  title="YouTube video player"
-                  className="w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-              </div>
-              <div className="text-center mb-4">
-                <span className="text-lg font-mono bg-gray-800 px-3 py-1 rounded">
-                  {second}s
-                </span>
-              </div>
-              <div className="flex justify-center">
-                <button
-                  className="btn btn-ghost"
-                  onClick={() => setIsVideoModalVisible(false)}
-                >
-                  Close
-                </button>
-              </div>
-              <button
-                className="btn btn-ghost absolute top-4 right-4"
-                onClick={() => setIsVideoModalVisible(false)}
-              >
-                ✕
-              </button>
-            </div>
-          </div>,
-          document.body
-        )}
+      <VideoModal
+        isVisible={isVideoModalVisible}
+        onClose={closeVideoModal}
+        videoId={ytVideoId}
+        embedUrl={getEmbedUrl(ytVideoId, second)}
+        startTime={second}
+      />
     </>
   );
 }

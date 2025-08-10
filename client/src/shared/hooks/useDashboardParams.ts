@@ -9,6 +9,11 @@ export enum ViewType {
   HAS_STORYBOARDS = "has-storyboards",
 }
 
+export enum DashboardType {
+  CHANNELS = "channels",
+  VIDEOS = "videos",
+}
+
 export const useTypedChannelYtId = () => {
   const params = useParams<{ ytChannelId: string }>();
   const ytChannelId = params.ytChannelId as string;
@@ -17,8 +22,8 @@ export const useTypedChannelYtId = () => {
 };
 
 export const useDashboardParams = () => {
-  const params = useParams<{ type: "channels" | "videos"; viewType: ViewType }>();
-  const type = params.type as "channels" | "videos";
+  const params = useParams<{ type: DashboardType; viewType: ViewType }>();
+  const type = params.type as DashboardType;
   const viewType = params.viewType as ViewType;
 
   return { type, viewType };

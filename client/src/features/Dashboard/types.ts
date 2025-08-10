@@ -12,3 +12,14 @@ export type DashboardChannel = {
   screenshotsCount: number;
   storyboard: number;
 };
+
+export type DashboardVideo = {
+  id: number;
+  ytId: string;
+  title: string;
+  src: string;
+  channelId: number;
+  channelTitle: string;
+  channelYtId: string;
+  screenshotCount: number;
+};

@@ -6,6 +6,7 @@ import { createDashboardSlice } from "../features/Dashboard/store/dashboard-slic
 import { createSlidesSlice } from "@/features/Thumbnail/store/slides-slice";
 import { thumbnailsProcessingSlice } from "@/features/Thumbnail/store/thumbnails-processing-slice";
 import { createRangePickersSlice } from "@/features/Dashboard/store/range-picker-slice";
+import { createSidePanelSlice } from "./slices/side-panel-slice";
 
 export const useStore = create<Store>()(
   devtools(
@@ -15,6 +16,7 @@ export const useStore = create<Store>()(
       ...createWebSocketSlice(set),
       ...createDashboardSlice(set),
       ...createRangePickersSlice(set, get),
+      ...createSidePanelSlice(set),
     }),
     {
       name: "store",

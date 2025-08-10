@@ -6,12 +6,12 @@ import { DashboardChannel } from "./types";
 import { useCallback } from "react";
 import { ViewType } from "@/shared/hooks/useDashboardParams";
 
-export type DashboardResponseData = {
+export type ChannelsDashboardResponseData = {
   channels: DashboardChannel[];
   total: number;
 };
 
-export function useDashboardQuery() {
+export function useChannelsDashboardQuery() {
   const { requestBody } = useStore();
   const params = useParams();
 
@@ -20,12 +20,12 @@ export function useDashboardQuery() {
     viewType: params.viewType,
   };
 
-  return useQuery<DashboardResponseData>({
+  return useQuery<ChannelsDashboardResponseData>({
     queryKey: ["dashboard", requestBodyWithViewType],
     queryFn: () =>
-      nestFetcher<DashboardResponseData>({
+      nestFetcher<ChannelsDashboardResponseData>({
         method: "POST",
-        url: "/dashboard",
+        url: "/dashboard/channels",
         body: requestBodyWithViewType,
       }),
   });

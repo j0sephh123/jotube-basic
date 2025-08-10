@@ -20,11 +20,11 @@ type CardProps = {
     second: number;
   }[];
   actionButtonSlot?: React.ReactNode;
-  cardStatsSlot?: React.ReactNode;
+  secondRow?: React.ReactNode;
   cardMenuSlot?: React.ReactNode;
   downloadButtonSlot?: React.ReactNode;
   deleteButtonSlot?: React.ReactNode;
-  handleChannelTitleClick: (e: React.MouseEvent) => void;
+  handleTitleClick: (e: React.MouseEvent) => void;
 };
 
 function Card({
@@ -32,14 +32,14 @@ function Card({
   src,
   ytId,
   title,
-  cardStatsSlot,
+  secondRow,
   ytChannelId,
   screenshots,
   actionButtonSlot,
   cardMenuSlot,
   downloadButtonSlot,
   deleteButtonSlot,
-  handleChannelTitleClick,
+  handleTitleClick,
 }: CardProps) {
   return (
     <Card.Container>
@@ -58,8 +58,8 @@ function Card({
         )}
       </div>
       <Card.Content>
-        <Card.Title title={title} onClick={handleChannelTitleClick} />
-        {cardStatsSlot}
+        <Card.Title title={title} onClick={handleTitleClick} />
+        {secondRow}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             {actionButtonSlot}

@@ -1,3 +1,5 @@
+import { ArtifactType } from '@prisma/client';
+
 export enum ViewType {
   SAVED = 'saved',
   PROCESSED = 'processed',
@@ -36,11 +38,11 @@ export interface DashboardChannelWithUploads extends DashboardChannel {
   uploads: Array<{
     id: number;
     ytId: string;
-    artifact: string;
+    artifact: ArtifactType;
   }>;
 }
 
-export interface DashboardResponse {
+export interface ChannelsDashboardResponse {
   channels: DashboardChannel[];
   total: number;
 }

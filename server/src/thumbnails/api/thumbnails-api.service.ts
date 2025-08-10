@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
 import { ThumbnailsManagerService } from 'src/thumbnails/manager/thumbnails-manager.service';
-import { $Enums } from '@prisma/client';
+import { ArtifactType } from '@prisma/client';
 
 type Item = {
   id: number;
@@ -65,7 +65,10 @@ export class ThumbnailsApiService {
 
   public async uploadsWithThumbnails(channelIds: number[]) {
     const resp = await this.prismaService.uploadsVideo.findMany({
-      where: { channelId: { in: channelIds }, artifact: 'THUMBNAIL' },
+      where: {
+        channelId: { in: channelIds },
+        artifact: ArtifactType.THUMBNAIL,
+      },
       select: {
         ytId: true,
         channel: {
@@ -82,7 +85,7 @@ export class ThumbnailsApiService {
 
   public async thumbnailByUpload(ytId: string) {
     const video = await this.prismaService.uploadsVideo.findFirst({
-      where: { ytId, artifact: 'THUMBNAIL' },
+      where: { ytId, artifact: ArtifactType.THUMBNAIL },
       select: {
         ytId: true,
         channel: {
@@ -109,7 +112,7 @@ export class ThumbnailsApiService {
     filterField?: 'publishedAt' | 'totalSeconds';
   }) {
     const uploads = await this.prismaService.uploadsVideo.findMany({
-      where: { artifact: 'THUMBNAIL' },
+      where: { artifact: ArtifactType.THUMBNAIL },
       select: {
         id: true,
         ytId: true,
@@ -191,7 +194,7 @@ export class ThumbnailsApiService {
 
   public async getThumbnailsForDashboard() {
     return this.prismaService.uploadsVideo.findMany({
-      where: { artifact: { in: ['THUMBNAIL'] } },
+      where: { artifact: { in: [ArtifactType.THUMBNAIL] } },
       select: {
         artifact: true,
         channel: {
@@ -210,7 +213,7 @@ export class ThumbnailsApiService {
 
   public getChannelsWithThumbnails(
     result: {
-      artifact: $Enums.ArtifactType;
+      artifact: ArtifactType;
       channel: {
         id: number;
         ytId: string;

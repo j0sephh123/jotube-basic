@@ -6,6 +6,7 @@ import { useGlobalWebSocket } from "@/shared/hooks/useGlobalWebSocket";
 import TheNavbar from "@/shared/components/Navbar";
 import { DialogProvider } from "./dialog/DialogProvider";
 import ThumbnailsProcessing from "@/features/Thumbnail/components";
+import ScreenshotsSidePanel from "./ScreenshotsSidePanel";
 
 export default function Layout(): JSX.Element {
   useWebSocket();
@@ -20,6 +21,7 @@ export default function Layout(): JSX.Element {
       <CreateChannelButton />
       <TheCarousel />
       <ThumbnailsProcessing />
+      <ScreenshotsSidePanel />
     </DialogProvider>
   );
 }

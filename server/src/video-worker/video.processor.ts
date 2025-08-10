@@ -5,6 +5,7 @@ import { QueueElement } from './add-to-queue.dto';
 import { ScreenshotsJobService } from 'src/screenshots/jobs/screenshotsJob.service';
 import { ThumbnailsService } from 'src/thumbnails/thumbnails.service';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
+import { ArtifactType } from '@prisma/client';
 
 @Processor(queueNames.video)
 export class VideoProcessor {
@@ -33,7 +34,7 @@ export class VideoProcessor {
         ytId: job.data.ytVideoId,
       },
       data: {
-        artifact: 'THUMBNAIL',
+        artifact: ArtifactType.VIDEO,
       },
     });
 
