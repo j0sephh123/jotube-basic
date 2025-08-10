@@ -38,6 +38,7 @@ import { LoggerModule } from 'nestjs-pino';
 import pino from 'pino';
 import * as path from 'path';
 import { LoggingModule } from './logging/logging.module';
+import { ArtifactsAggregatorModule } from './artifacts-aggregator/artifacts-aggregator.module';
 
 @Module({
   imports: [
@@ -88,6 +89,7 @@ import { LoggingModule } from './logging/logging.module';
     StoryboardModule,
     UploadsVideoModule,
     DatabaseModule,
+    ArtifactsAggregatorModule,
   ],
   controllers: [
     QueueController,

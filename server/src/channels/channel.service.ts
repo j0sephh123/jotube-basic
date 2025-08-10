@@ -4,12 +4,14 @@ import { PrismaService } from 'src/core/database/prisma/prisma.service';
 import { createChannelDto } from './dtos/create-channel.dto';
 import { ArtifactType } from '@prisma/client';
 import { ViewType, DashboardChannel } from 'src/dashboard/types';
+import { ArtifactsAggregatorService } from 'src/artifacts-aggregator/artifacts-aggregator.service';
 
 @Injectable()
 export class ChannelService {
   constructor(
     private readonly youtubeService: YoutubeService,
     private readonly prismaService: PrismaService,
+    private readonly artifactsAggregatorService: ArtifactsAggregatorService,
   ) {}
 
   async delete(id: number) {
@@ -67,65 +69,13 @@ export class ChannelService {
 
     if (!channel) throw new Error('Channel not found');
 
-    const [
-      videoArtifactsCount,
-      savedArtifactsCount,
-      thumbnailArtifactsCount,
-      screenshotArtifactsCount,
-      storyboardArtifactsCount,
-    ] = await Promise.all([
-      (async () => {
-        const count = await this.prismaService.uploadsVideo.count({
-          where: {
-            channelId: channel.id,
-            artifact: ArtifactType.VIDEO,
-          },
-        });
-        return count;
-      })(),
-      (async () => {
-        const count = await this.prismaService.uploadsVideo.count({
-          where: {
-            channelId: channel.id,
-            artifact: ArtifactType.SAVED,
-          },
-        });
-        return count;
-      })(),
-      (async () => {
-        const count = await this.prismaService.uploadsVideo.count({
-          where: {
-            channelId: channel.id,
-            artifact: ArtifactType.THUMBNAIL,
-          },
-        });
-        return count;
-      })(),
-      (async () => {
-        const count = await this.prismaService.screenshot.count({
-          where: {
-            ytChannelId: channel.ytId,
-          },
-        });
-        return count;
-      })(),
-      (async () => {
-        const count = await this.prismaService.uploadsVideo.count({
-          where: {
-            channelId: channel.id,
-            artifact: ArtifactType.STORYBOARD,
-          },
-        });
-        return count;
-      })(),
-    ]);
+    const counts = await this.artifactsAggregatorService.aggregateArtifacts(
+      channel.id,
+      ytChannelId,
+    );
 
     return {
-      videoArtifactsCount,
-      savedArtifactsCount,
-      thumbnailArtifactsCount,
-      screenshotArtifactsCount,
-      storyboardArtifactsCount,
+      ...counts,
       id: channel.id,
       title: channel.title,
       ytId: channel.ytId,
