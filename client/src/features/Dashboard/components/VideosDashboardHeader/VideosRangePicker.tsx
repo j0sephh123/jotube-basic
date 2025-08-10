@@ -49,12 +49,6 @@ export default function VideosRangePicker({
             maxScreenshots: currentMax === max ? null : currentMax,
             page: 1,
           });
-        } else if (rangeKey === "defaultScreenshots") {
-          setVideosRequestBodyBatch({
-            defaultMinScreenshots: numValue,
-            defaultMaxScreenshots: currentMax === max ? null : currentMax,
-            page: 1,
-          });
         }
       }
     }
@@ -73,12 +67,6 @@ export default function VideosRangePicker({
             maxScreenshots: numValue === max ? null : numValue,
             page: 1,
           });
-        } else if (rangeKey === "defaultScreenshots") {
-          setVideosRequestBodyBatch({
-            defaultMinScreenshots: currentMin,
-            defaultMaxScreenshots: numValue === max ? null : numValue,
-            page: 1,
-          });
         }
       }
     } else if (value === "") {
@@ -88,12 +76,6 @@ export default function VideosRangePicker({
         setVideosRequestBodyBatch({
           minScreenshots: currentMin,
           maxScreenshots: null,
-          page: 1,
-        });
-      } else if (rangeKey === "defaultScreenshots") {
-        setVideosRequestBodyBatch({
-          defaultMinScreenshots: currentMin,
-          defaultMaxScreenshots: null,
           page: 1,
         });
       }
@@ -108,12 +90,6 @@ export default function VideosRangePicker({
       setVideosRequestBodyBatch({
         minScreenshots: min,
         maxScreenshots: null,
-        page: 1,
-      });
-    } else if (rangeKey === "defaultScreenshots") {
-      setVideosRequestBodyBatch({
-        defaultMinScreenshots: min,
-        defaultMaxScreenshots: null,
         page: 1,
       });
     }
