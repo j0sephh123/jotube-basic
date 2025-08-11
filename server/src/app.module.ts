@@ -39,6 +39,7 @@ import pino from 'pino';
 import * as path from 'path';
 import { LoggingModule } from './logging/logging.module';
 import { ArtifactsAggregatorModule } from './artifacts-aggregator/artifacts-aggregator.module';
+import { PlaylistModule } from './playlist/playlist.module';
 
 @Module({
   imports: [
@@ -90,6 +91,7 @@ import { ArtifactsAggregatorModule } from './artifacts-aggregator/artifacts-aggr
     UploadsVideoModule,
     DatabaseModule,
     ArtifactsAggregatorModule,
+    PlaylistModule,
   ],
   controllers: [
     QueueController,

@@ -1,0 +1,49 @@
+FRONTEND ARCHITECTURE OVERVIEW
+
+The frontend of this project is built with modern React technologies and follows a well-structured architecture:
+
+CORE TECHNOLOGIES:
+- React: Main UI library for building component-based interfaces
+- TypeScript: Provides type safety and better developer experience
+- Vite: Fast build tool and development server
+
+NAVIGATION:
+- React Router: Handles client-side routing and navigation between different pages
+- Uses nested routing structure for organized page hierarchy
+- Implements dynamic routing for features like channel pages and video galleries
+
+STATE MANAGEMENT:
+- Zustand: Lightweight state management library
+- Used for global application state like side panels, websocket connections
+- Implements slice pattern for organized state management
+- Provides simple and performant state updates
+
+DATA FETCHING:
+- React Query (TanStack Query): Handles server state management
+- Always uses nestFetcher for API calls to maintain consistency
+- Provides caching, background updates, and error handling
+- Implements optimistic updates for better user experience
+
+STYLING:
+- DaisyUI: Component library built on top of Tailwind CSS
+- Provides pre-built, accessible UI components
+- Consistent design system across the application
+- Responsive design patterns for different screen sizes
+
+PROJECT STRUCTURE:
+- Feature-based organization in src/features/
+- Shared components and utilities in src/shared/
+- Centralized store configuration in src/store/
+- Type definitions in shared/types/
+
+COMPONENT PATTERNS:
+- Functional components with hooks
+- Custom hooks for business logic
+- Compound components for complex UI patterns
+- Consistent prop interfaces and TypeScript types
+
+BUILD & DEVELOPMENT:
+- Vite for fast development and optimized builds
+- ESLint for code quality
+- Jest for testing
+- Hot module replacement for development
