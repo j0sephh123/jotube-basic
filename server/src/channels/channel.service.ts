@@ -71,7 +71,6 @@ export class ChannelService {
 
     const counts = await this.artifactsAggregatorService.aggregateArtifacts(
       channel.id,
-      ytChannelId,
     );
 
     return {

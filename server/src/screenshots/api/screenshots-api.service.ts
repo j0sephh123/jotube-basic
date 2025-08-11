@@ -132,11 +132,6 @@ export class ScreenshotsApiService {
       },
     });
 
-    console.log({
-      screenshots,
-      ytVideoId,
-    });
-
     return screenshots.map((screenshot) => ({
       ...screenshot,
       src: `http://localhost:3003/images/${screenshot.ytChannelId}/${screenshot.ytVideoId}/saved_screenshots/${screenshot.ytVideoId}-${screenshot.second}.png`,

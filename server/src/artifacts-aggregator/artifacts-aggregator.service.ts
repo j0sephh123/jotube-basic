@@ -6,7 +6,7 @@ import { PrismaService } from 'src/core/database/prisma/prisma.service';
 export class ArtifactsAggregatorService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async aggregateArtifacts(channelId: number, ytChannelId: string) {
+  async aggregateArtifacts(channelId: number) {
     const [
       videoArtifactsCount,
       savedArtifactsCount,
@@ -42,9 +42,10 @@ export class ArtifactsAggregatorService {
         return count;
       })(),
       (async () => {
-        const count = await this.prismaService.screenshot.count({
+        const count = await this.prismaService.uploadsVideo.count({
           where: {
-            ytChannelId,
+            channelId,
+            artifact: ArtifactType.SCREENSHOT,
           },
         });
         return count;
