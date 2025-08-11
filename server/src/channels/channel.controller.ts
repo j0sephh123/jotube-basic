@@ -1,6 +1,15 @@
-import { Body, Controller, Delete, Param, Post, Get } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Param,
+  Post,
+  Get,
+  Patch,
+} from '@nestjs/common';
 import { ChannelService } from './channel.service';
 import { createChannelDto } from './dtos/create-channel.dto';
+import { UpdateChannelPlaylistDto } from '../playlist/dtos/update-channel-playlist.dto';
 
 @Controller('channel')
 export class ChannelController {
@@ -19,5 +28,13 @@ export class ChannelController {
   @Get('/metadata/:ytChannelId')
   metadata(@Param('ytChannelId') ytChannelId: string) {
     return this.channelService.metadata(ytChannelId);
+  }
+
+  @Patch(':id')
+  updatePlaylist(
+    @Param('id') id: string,
+    @Body() body: UpdateChannelPlaylistDto,
+  ) {
+    return this.channelService.updatePlaylist(+id, body);
   }
 }
