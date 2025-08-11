@@ -17,6 +17,7 @@ import { FilePathService } from './file/file-path.service';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: false,
+    abortOnError: false,
   });
 
   const configService = app.get(ConfigService);
