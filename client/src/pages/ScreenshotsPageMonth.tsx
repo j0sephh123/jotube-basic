@@ -1,7 +1,7 @@
 import GridPageWrapper from "@/features/Screenshot/components/GridPageWrapper";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { useScreenshotsByMonth } from "@/features/Screenshot/hooks/useScreenshotsByMonth";
+import InfoCard from "@/shared/components/InfoCard";
 
 export default function ScreenshotsByMonth(): JSX.Element {
   const { month } = useParams();
@@ -14,14 +14,12 @@ export default function ScreenshotsByMonth(): JSX.Element {
   return (
     <GridPageWrapper>
       {Object.entries(data).map(([date, count]) => (
-        <div key={date} className="card bg-base-100 shadow-xl">
-          <div className="card-body">
-            <Link to={date} className="card-title">
-              {date.split("-")[2]}
-            </Link>
-            <p>Count: {count}</p>
-          </div>
-        </div>
+        <InfoCard
+          key={date}
+          title={date.split("-")[2]}
+          content={`Count: ${count}`}
+          titleLink={date}
+        />
       ))}
     </GridPageWrapper>
   );

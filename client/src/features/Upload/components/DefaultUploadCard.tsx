@@ -5,6 +5,7 @@ import useImageSrc from "@/shared/hooks/useImageSrc";
 import { useMemo } from "react";
 import OpenExplorerButton from "@/shared/components/OpenDirectoryButton/OpenDirectoryButton";
 import { formatSecondsToMMSS } from "@/shared/utils/format";
+import Tooltip from "@/shared/components/Tooltip";
 
 type VideoCardProps = {
   item: {
@@ -100,12 +101,13 @@ export const DefaultUploadCard = ({
       <div className="overflow-hidden">{img}</div>
       <div className="card-body p-3">
         <div className="flex justify-between items-start mb-2">
-          <div
-            className="tooltip tooltip-top flex-1 min-w-0"
-            data-tip={item.ytId}
+          <Tooltip
+            content={item.ytId}
+            position="top"
+            className="flex-1 min-w-0"
           >
             <h2 className="text-sm font-semibold truncate">{item.title}</h2>
-          </div>
+          </Tooltip>
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">

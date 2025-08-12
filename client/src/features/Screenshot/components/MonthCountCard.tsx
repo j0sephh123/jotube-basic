@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import InfoCard from "@/shared/components/InfoCard";
 
 export default function MonthCountCard({
   month,
@@ -8,13 +8,6 @@ export default function MonthCountCard({
   count: number;
 }) {
   return (
-    <div key={month} className="card bg-base-100 shadow-xl">
-      <div className="card-body">
-        <Link to={month} className="card-title">
-          {month}
-        </Link>
-        <p>Count: {count}</p>
-      </div>
-    </div>
+    <InfoCard title={month} content={`Count: ${count}`} titleLink={month} />
   );
 }

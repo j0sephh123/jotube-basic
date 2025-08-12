@@ -8,6 +8,7 @@ import { useSaveUpload } from "@/features/Upload/hooks/useSaveUpload";
 import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMetadata";
 import { useRefetchChannelUploads } from "@/features/Upload/hooks/useUploadsList";
 import { useDeleteUploads } from "@/features/Upload/hooks/useUploadsDelete";
+import InfoCard from "@/shared/components/InfoCard";
 
 type StoryboardData = {
   id: number;
@@ -144,29 +145,36 @@ export default function StoryboardPage() {
         {storyboards.map((storyboard) => (
           <div
             key={storyboard.id}
-            className="bg-base-200 rounded-lg p-4 shadow-md cursor-pointer hover:bg-base-300 transition-colors"
             onClick={() => {
               if (storyboard.storyboard) {
                 setActiveStoryboard(storyboard);
                 setIsModalOpen(true);
               }
             }}
+            className="cursor-pointer"
           >
-            <h3 className="font-semibold text-lg mb-2">{storyboard.title}</h3>
-            <p className="text-sm text-gray-600 mb-2">
-              Published: {new Date(storyboard.publishedAt).toLocaleDateString()}
-            </p>
-            {storyboard.duration && (
-              <p className="text-sm text-gray-600 mb-2">
-                Duration: {Math.floor(storyboard.duration / 60)}:
-                {String(storyboard.duration % 60).padStart(2, "0")}
-              </p>
-            )}
-            {storyboard.storyboard && (
-              <p className="text-sm text-gray-600 mb-2">
-                Fragments: {storyboard.storyboard.fragments}
-              </p>
-            )}
+            <InfoCard
+              title={storyboard.title}
+              content={
+                <div className="space-y-1">
+                  <p className="text-sm text-gray-600">
+                    Published:{" "}
+                    {new Date(storyboard.publishedAt).toLocaleDateString()}
+                  </p>
+                  {storyboard.duration && (
+                    <p className="text-sm text-gray-600">
+                      Duration: {Math.floor(storyboard.duration / 60)}:
+                      {String(storyboard.duration % 60).padStart(2, "0")}
+                    </p>
+                  )}
+                  {storyboard.storyboard && (
+                    <p className="text-sm text-gray-600">
+                      Fragments: {storyboard.storyboard.fragments}
+                    </p>
+                  )}
+                </div>
+              }
+            />
           </div>
         ))}
       </div>

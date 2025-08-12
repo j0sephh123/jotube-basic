@@ -3,6 +3,7 @@ import useArtifacts from "@/features/Thumbnail/hooks/useThumbnails";
 import { routes } from "@/shared/utils/routes";
 import useViewThumbnails from "@/shared/hooks/useViewThumbnails";
 import { Fragment } from "react";
+import Tooltip from "@/shared/components/Tooltip";
 
 type CardStatsProps = {
   ytId: string;
@@ -64,15 +65,19 @@ export default function CardStats({
     <div className="flex items-center justify-between gap-1">
       {stats.map((stat, index) => (
         <Fragment key={stat.tooltip}>
-          <div
-            className="tooltip tooltip-top tooltip-primary cursor-pointer"
-            data-tip={stat.tooltip}
-            onClick={stat.onClick}
+          <Tooltip
+            content={stat.tooltip}
+            position="top"
+            color="primary"
+            className="cursor-pointer"
           >
-            <span className={`${stat.color} transition-colors`}>
+            <span
+              className={`${stat.color} transition-colors`}
+              onClick={stat.onClick}
+            >
               {stat.value}
             </span>
-          </div>
+          </Tooltip>
           {index < stats.length - 1 && <span className="text-gray-500">|</span>}
         </Fragment>
       ))}

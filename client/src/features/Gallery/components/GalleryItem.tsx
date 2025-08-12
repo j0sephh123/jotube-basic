@@ -107,22 +107,16 @@ export default function GalleryItem({
 
           {mode === "clip" && screenshot.ytVideoId && !isDisabled && (
             <div className="absolute top-2 right-2 z-10 flex gap-1">
-              <div className="group/tooltip">
-                <button
-                  className="bg-black/70 hover:bg-black/90 text-white p-1 rounded transition-colors"
-                  onClick={async (e) => {
-                    e.stopPropagation();
-                    await navigator.clipboard.writeText(screenshot.ytVideoId);
-                  }}
-                  title={`Copy YouTube Video ID: ${screenshot.ytVideoId}`}
-                >
-                  <Copy className="w-4 h-4" />
-                </button>
-                <div className="absolute bottom-full right-0 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover/tooltip:opacity-100 transition-opacity whitespace-nowrap z-20">
-                  {screenshot.ytVideoId}
-                  <div className="absolute top-full right-2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
-                </div>
-              </div>
+              <button
+                className="bg-black/70 hover:bg-black/90 text-white p-1 rounded transition-colors"
+                onClick={async (e) => {
+                  e.stopPropagation();
+                  await navigator.clipboard.writeText(screenshot.ytVideoId);
+                }}
+                title={`Copy YouTube Video ID: ${screenshot.ytVideoId}`}
+              >
+                <Copy className="w-4 h-4" />
+              </button>
             </div>
           )}
 
