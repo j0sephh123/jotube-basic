@@ -220,6 +220,11 @@ export class YoutubeService {
         );
 
         videosData.items.forEach((video) => {
+          if (!video.contentDetails?.duration) {
+            console.warn(`Video ${video.id} has no duration, skipping`);
+            return;
+          }
+
           const durationInSeconds = this.iso8601ToSeconds(
             video.contentDetails.duration,
           );
@@ -317,6 +322,11 @@ export class YoutubeService {
       );
 
       videosData.items.forEach((video) => {
+        if (!video.contentDetails?.duration) {
+          console.warn(`Video ${video.id} has no duration, skipping`);
+          return;
+        }
+
         const durationInSeconds = this.iso8601ToSeconds(
           video.contentDetails.duration,
         );
@@ -394,6 +404,11 @@ export class YoutubeService {
       );
 
       data.items.forEach((video) => {
+        if (!video.contentDetails?.duration) {
+          console.warn(`Video ${video.id} has no duration, skipping`);
+          return;
+        }
+
         durations.push({
           id: video.id,
           duration: this.iso8601ToSeconds(video.contentDetails.duration),
@@ -409,7 +424,8 @@ export class YoutubeService {
     return durations;
   }
 
-  private iso8601ToSeconds(duration: string) {
+  private iso8601ToSeconds(duration: string | undefined | null) {
+    if (!duration || typeof duration !== 'string') return 0;
     const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
     if (!match) return 0;
     const hours = parseInt(match[1] || '0', 10);
