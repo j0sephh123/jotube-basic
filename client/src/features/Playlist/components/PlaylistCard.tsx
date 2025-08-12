@@ -11,11 +11,14 @@ export const PlaylistCard = ({ playlist }: PlaylistCardProps) => {
       <div className="card-body">
         <h2 className="card-title text-xl">{playlist.name}</h2>
         <p className="text-sm text-gray-500">
-          {playlist.channels.length} channel
-          {playlist.channels.length !== 1 ? "s" : ""}
+          {playlist.channels?.length || 0} channel
+          {(playlist.channels?.length || 0) !== 1 ? "s" : ""}
         </p>
         <p className="text-xs text-gray-400">
-          Created {new Date(playlist.createdAt).toLocaleDateString()}
+          Created{" "}
+          {playlist.createdAt
+            ? new Date(playlist.createdAt).toLocaleDateString()
+            : "Unknown date"}
         </p>
         <div className="card-actions justify-end mt-4">
           <Link
