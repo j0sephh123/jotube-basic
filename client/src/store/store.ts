@@ -11,6 +11,7 @@ import {
   createSidePanelSlice,
   SidePanelSlice,
 } from "./slices/side-panel-slice";
+import { createPlaylistSlice, PlaylistSlice } from "@/features/Playlist/store";
 import { createRangePickersSlice } from "@/features/Dashboard/store/range-picker-slice";
 import { createVideosRangePickersSlice } from "@/features/Dashboard/store/videos-range-picker-slice";
 import { createSlidesSlice } from "@/features/Thumbnail/store/slides-slice";
@@ -39,6 +40,7 @@ export const useStore = create<StoreType>()(
       ...createRangePickersSlice(set, get),
       ...createVideosRangePickersSlice(set, get),
       ...createSidePanelSlice(set),
+      ...createPlaylistSlice(set),
     }),
     { name: "store" }
   )
@@ -68,3 +70,4 @@ export const useVideosDashboard = makeScopedHook<VideosDashboardSlice>();
 export const useRangePickers = makeScopedHook<RangePickersSlice>();
 export const useVideosRangePickers = makeScopedHook<VideosRangePickersSlice>();
 export const useSidePanel = makeScopedHook<SidePanelSlice>();
+export const usePlaylist = makeScopedHook<PlaylistSlice>();

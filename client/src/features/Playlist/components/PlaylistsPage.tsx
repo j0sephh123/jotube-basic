@@ -1,11 +1,11 @@
-import { useState } from "react";
 import { useGetPlaylists, useCreatePlaylist } from "../hooks";
+import { usePlaylist } from "@/store/store";
 import { PlaylistCard } from "./PlaylistCard";
 import { CreatePlaylistModal } from "./CreatePlaylistModal";
 
 export const PlaylistsPage = () => {
   // TODO: Add page for all playlists, page for single playlist, and way to create new playlist
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const { isModalOpen, closePlaylistModal, openPlaylistModal } = usePlaylist();
   const { data: playlists, isLoading, error } = useGetPlaylists();
   const createPlaylist = useCreatePlaylist();
 
@@ -14,7 +14,7 @@ export const PlaylistsPage = () => {
       { name },
       {
         onSuccess: () => {
-          setIsCreateModalOpen(false);
+          closePlaylistModal();
         },
       }
     );
@@ -34,7 +34,7 @@ export const PlaylistsPage = () => {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Playlists</h1>
         <button
-          onClick={() => setIsCreateModalOpen(true)}
+          onClick={() => openPlaylistModal("")}
           className="btn btn-primary"
         >
           Create Playlist
@@ -56,8 +56,8 @@ export const PlaylistsPage = () => {
       )}
 
       <CreatePlaylistModal
-        isOpen={isCreateModalOpen}
-        onClose={() => setIsCreateModalOpen(false)}
+        isOpen={isModalOpen}
+        onClose={closePlaylistModal}
         onSubmit={handleCreatePlaylist}
         isLoading={createPlaylist.isPending}
       />
