@@ -1,7 +1,7 @@
-import { useGetPlaylists, useCreatePlaylist } from "../hooks";
+import { useGetPlaylists, useCreatePlaylist } from "../../hooks";
 import { usePlaylist } from "@/store/store";
-import { PlaylistCard } from "./PlaylistCard";
-import { CreatePlaylistModal } from "./CreatePlaylistModal";
+import { PlaylistCard } from "../PlaylistCard";
+import { CreatePlaylistModal } from "../CreatePlaylistModal";
 
 export const PlaylistsPage = () => {
   // TODO: Add page for all playlists, page for single playlist, and way to create new playlist
