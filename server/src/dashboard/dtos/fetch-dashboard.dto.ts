@@ -27,6 +27,6 @@ export class fetchDashboardDto {
 
   @IsOptional()
   @IsString()
-  @IsIn(['saved', 'processed', 'no-uploads', 'no-screenshots', 'thumbnails'])
+  @IsIn(['saved', 'processed', 'no-uploads', 'no-screenshots', 'thumbnails', 'has-storyboards'])
   viewType?: ViewType;
 }

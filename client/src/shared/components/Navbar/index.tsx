@@ -35,6 +35,9 @@ export default function Navbar(): JSX.Element {
           <Link to={routes.videos()} className="btn btn-ghost">
             Videos
           </Link>
+          <Link to={routes.playlists()} className="btn btn-ghost">
+            Playlists
+          </Link>
           <PlayButton />
         </div>
         <div className="relative flex items-center gap-4 w-80">
