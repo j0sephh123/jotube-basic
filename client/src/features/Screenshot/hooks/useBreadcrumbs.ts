@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { type BreadcrumbProps } from "@/features/Screenshot/components/Breadcrumb";
+import { type BreadcrumbProps } from "@/shared/components/Breadcrumb";
 
 export default function useBreadcrumbs(path: string) {
   const { month, date } = useParams();

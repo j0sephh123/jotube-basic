@@ -2,10 +2,12 @@ import { useGetPlaylists, useCreatePlaylist } from "../../hooks";
 import { usePlaylist } from "@/store/store";
 import { PlaylistCard } from "../PlaylistCard";
 import { CreatePlaylistModal } from "../CreatePlaylistModal";
+import { CreatePlaylist } from "./CreatePlaylist";
+import ErrorMessage from "@/shared/components/static/ErrorMessage";
+import Loading from "@/shared/components/static/Loading";
 
 export const PlaylistsPage = () => {
-  // TODO: Add page for all playlists, page for single playlist, and way to create new playlist
-  const { isModalOpen, closePlaylistModal, openPlaylistModal } = usePlaylist();
+  const { isModalOpen, closePlaylistModal } = usePlaylist();
   const { data: playlists, isLoading, error } = useGetPlaylists();
   const createPlaylist = useCreatePlaylist();
 
@@ -20,40 +22,26 @@ export const PlaylistsPage = () => {
     );
   };
 
-  if (isLoading)
-    return <div className="flex justify-center p-8">Loading playlists...</div>;
-  if (error)
+  if (isLoading) return <Loading />;
+  if (error) return <ErrorMessage message="Error loading playlists" />;
+  if (!playlists || playlists.length === 0)
     return (
-      <div className="flex justify-center p-8 text-error">
-        Error loading playlists
+      <div className="text-center py-12">
+        <p className="text-gray-500 text-lg">
+          No playlists yet. Create your first one!
+        </p>
       </div>
     );
 
   return (
     <div className="container mx-auto p-6 mt-16">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Playlists</h1>
-        <button
-          onClick={() => openPlaylistModal("")}
-          className="btn btn-primary"
-        >
-          Create Playlist
-        </button>
-      </div>
+      <CreatePlaylist />
 
-      {playlists && playlists.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {playlists.map((playlist) => (
-            <PlaylistCard key={playlist.id} playlist={playlist} />
-          ))}
-        </div>
-      ) : (
-        <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">
-            No playlists yet. Create your first one!
-          </p>
-        </div>
-      )}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {playlists.map((playlist) => (
+          <PlaylistCard key={playlist.id} playlist={playlist} />
+        ))}
+      </div>
 
       <CreatePlaylistModal
         isOpen={isModalOpen}
