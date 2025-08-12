@@ -82,6 +82,7 @@ export class DashboardService {
         | 'src'
         | 'lastSyncedAt'
         | 'videoCount'
+        | 'playlist'
       >
     >
   > {
@@ -120,6 +121,7 @@ export class DashboardService {
         | 'src'
         | 'lastSyncedAt'
         | 'videoCount'
+        | 'playlist'
       >
     >
   > {
@@ -140,6 +142,12 @@ export class DashboardService {
         src: true,
         lastSyncedAt: true,
         videoCount: true,
+        playlist: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
     });
   }
@@ -191,6 +199,7 @@ export class DashboardService {
         | 'src'
         | 'lastSyncedAt'
         | 'videoCount'
+        | 'playlist'
       >
     >,
   ): Promise<DashboardChannel[]> {
@@ -229,6 +238,7 @@ export class DashboardService {
         src: c.src,
         lastSyncedAt: c.lastSyncedAt,
         videoCount: c.videoCount,
+        playlist: c.playlist,
         thumbnails,
         saved,
         defaults,

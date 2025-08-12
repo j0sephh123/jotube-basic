@@ -104,6 +104,12 @@ export class ChannelService {
         createdAt: true,
         lastSyncedAt: true,
         videoCount: true,
+        playlist: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
     });
   }
@@ -117,6 +123,10 @@ export class ChannelService {
       createdAt: Date;
       lastSyncedAt: Date | null;
       videoCount: number;
+      playlist: {
+        id: number;
+        name: string;
+      } | null;
     }[],
   ): DashboardChannel[] {
     return channels.map((channel) => ({
@@ -127,6 +137,7 @@ export class ChannelService {
       createdAt: channel.createdAt,
       lastSyncedAt: channel.lastSyncedAt,
       videoCount: channel.videoCount,
+      playlist: channel.playlist,
       thumbnails: 0,
       saved: 0,
       defaults: 0,

@@ -32,6 +32,10 @@ export interface DashboardChannel {
   defaults: number;
   storyboard: number;
   screenshotsCount: number;
+  playlist: {
+    id: number;
+    name: string;
+  } | null;
 }
 
 export interface DashboardChannelWithUploads extends DashboardChannel {

@@ -11,6 +11,10 @@ export type DashboardChannel = {
   defaults: number;
   screenshotsCount: number;
   storyboard: number;
+  playlist: {
+    id: number;
+    name: string;
+  } | null;
 };
 
 export interface DashboardVideo {

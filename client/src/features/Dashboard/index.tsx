@@ -15,11 +15,6 @@ export default function Dashboard() {
     }
   }, [viewType, setRequestBody]);
 
-  console.log({
-    type,
-    viewType,
-  });
-
   if (type === DashboardType.CHANNELS) {
     return <ChannelsDashboard />;
   }
