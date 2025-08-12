@@ -13,7 +13,7 @@ import redoc from 'redoc-express';
 import { writeFileSync } from 'fs';
 import { dump } from 'js-yaml';
 import { ConfigService } from '@nestjs/config';
-import { FilePathService } from './file/file-path.service';
+
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -22,7 +22,6 @@ async function bootstrap() {
   });
 
   const configService = app.get(ConfigService);
-  const filePathService = app.get(FilePathService);
 
   const PORT = configService.get<number>('PORT', 3003);
 
@@ -88,10 +87,6 @@ async function bootstrap() {
   });
 
   app.use('/admin/queues', serverAdapter.getRouter());
-  app.use(
-    '/uploads',
-    express.static(path.join(filePathService.getBasePath(), 'Demo')),
-  );
 
   await app.listen(PORT);
   console.log(`Application is running on: http://localhost:${PORT}`);

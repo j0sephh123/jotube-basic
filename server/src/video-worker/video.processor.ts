@@ -34,7 +34,7 @@ export class VideoProcessor {
         ytId: job.data.ytVideoId,
       },
       data: {
-        artifact: ArtifactType.VIDEO,
+        artifact: ArtifactType.THUMBNAIL,
       },
     });
 

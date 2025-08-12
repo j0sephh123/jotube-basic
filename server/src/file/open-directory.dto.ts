@@ -1,4 +1,4 @@
-import { IsString } from 'class-validator';
+import { IsString, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class OpenDirectoryDto {
@@ -14,6 +14,7 @@ export class OpenDirectoryDto {
     example: 'ytVideoId',
     required: false,
   })
+  @IsOptional()
   @IsString()
   ytVideoId?: string;
 }

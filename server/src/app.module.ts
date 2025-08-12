@@ -19,9 +19,6 @@ import { QueueController } from './queue/queue.controller';
 import { SearchController } from './search/search.controller';
 import { StatisticsController } from './statistics/statistics.controller';
 import { QueueService } from './queue/queue.service';
-import { FilePathService } from './file/file-path.service';
-import { DirectoryService } from './file/directory.service';
-import { FileOperationService } from './file/file-operation.service';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { EventsModule } from './core/events/events.module';
 import { ScreenshotsManagerModule } from './screenshots/manager/screenshots-manager.module';
@@ -29,7 +26,7 @@ import { ScreenshotsManagerService } from './screenshots/manager/screenshots-man
 import { ThumbnailsManagerModule } from './thumbnails/manager/thumbnails-manager.module';
 import { ScreenshotsApiModule } from './screenshots/api/screenshots-api.module';
 import { ThumbnailsApiModule } from './thumbnails/api/thumbnails-api.module';
-import { OpenDirectoryController } from './file/open-directory.controller';
+import { FileModule } from './file/file.module';
 import { EventsGateway } from './events.gateway';
 import { StoryboardModule } from './storyboard/storyboard.module';
 import { UploadsVideoModule } from './uploads-video/uploads-video.module';
@@ -92,10 +89,10 @@ import { PlaylistModule } from './playlist/playlist.module';
     DatabaseModule,
     ArtifactsAggregatorModule,
     PlaylistModule,
+    FileModule,
   ],
   controllers: [
     QueueController,
-    OpenDirectoryController,
     SearchController,
     StatisticsController,
     DashboardController,
@@ -109,9 +106,6 @@ import { PlaylistModule } from './playlist/playlist.module';
     VideoProcessor,
     DownloadProcessor,
     StoryboardProcessor,
-    FilePathService,
-    DirectoryService,
-    FileOperationService,
     ScreenshotsManagerService,
     EventsGateway,
   ],
