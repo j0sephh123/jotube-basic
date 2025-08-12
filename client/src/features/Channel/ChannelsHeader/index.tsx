@@ -1,6 +1,9 @@
 import { useChannelMetadataQuery } from "@/features/Channel/hooks/useChannelMetadata";
 import { useLocation } from "react-router-dom";
 import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";
+import { usePlaylist } from "@/store/store";
+import { ListMusic } from "lucide-react";
+import clsx from "clsx";
 import HeaderLayout from "./HeaderLayout";
 import ChannelControls from "./ChannelControls";
 import SyncUploadsButton from "@/features/Upload/components/SyncUploadsButton";
@@ -16,6 +19,7 @@ import ViewScreenshots from "../components/ViewScreenshots";
 const ChannelHeader = () => {
   const ytChannelId = useTypedChannelYtId();
   const { pathname } = useLocation();
+  const { openPlaylistModal } = usePlaylist();
   const isSavedPage = pathname.includes("/saved");
   const isIndexPage = pathname.length === 34;
 
@@ -23,8 +27,27 @@ const ChannelHeader = () => {
 
   if (!metadata) return null;
 
-  const { title, screenshotArtifactsCount, id, thumbnailArtifactsCount } =
-    metadata;
+  const {
+    title,
+    screenshotArtifactsCount,
+    id,
+    thumbnailArtifactsCount,
+    playlist,
+  } = metadata;
+
+  const playlistButton = (
+    <button
+      onClick={() => openPlaylistModal(ytChannelId)}
+      className={clsx(
+        "btn btn-sm",
+        playlist ? "btn-primary" : "btn-ghost btn-secondary"
+      )}
+      title={playlist ? `Current: ${playlist.name}` : "Add to Playlist"}
+    >
+      <ListMusic className="w-4 h-4" />
+      {playlist && <span className="ml-1">{playlist.name}</span>}
+    </button>
+  );
 
   return (
     <div className="bg-base-200 rounded-lg px-6 pt-16 shadow-md">
@@ -50,6 +73,7 @@ const ChannelHeader = () => {
                 ytChannelId={ytChannelId}
                 screenshotArtifactsCount={screenshotArtifactsCount}
               />
+              {playlistButton}
               <BulkOperations
                 ytChannelId={ytChannelId}
                 isSavedPage={isSavedPage}

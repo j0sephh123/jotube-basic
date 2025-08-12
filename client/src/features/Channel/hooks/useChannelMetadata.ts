@@ -15,6 +15,10 @@ export type ChannelMetadataI = {
   fetchedUntilEnd: boolean;
   videoCount: number;
   lastSyncedAt: string | null;
+  playlist: {
+    id: number;
+    name: string;
+  } | null;
 };
 
 const queryKey = (ytChannelId: string | undefined) => [

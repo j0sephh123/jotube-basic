@@ -66,6 +66,21 @@ export class ChannelService {
   async metadata(ytChannelId: string) {
     const channel = await this.prismaService.channel.findUnique({
       where: { ytId: ytChannelId },
+      select: {
+        id: true,
+        title: true,
+        ytId: true,
+        src: true,
+        fetchedUntilEnd: true,
+        videoCount: true,
+        lastSyncedAt: true,
+        playlist: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
     });
 
     if (!channel) throw new Error('Channel not found');
@@ -83,6 +98,7 @@ export class ChannelService {
       fetchedUntilEnd: channel.fetchedUntilEnd,
       videoCount: channel.videoCount,
       lastSyncedAt: channel.lastSyncedAt,
+      playlist: channel.playlist,
     };
   }
 

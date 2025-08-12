@@ -6,8 +6,10 @@ import { SelectPlaylistForm } from "./SelectPlaylistForm";
 import { useChannelsDashboardQuery } from "@/features/Dashboard/useChannelsDashboardQuery";
 import { useClickOutside } from "@/shared/hooks/useClickOutside";
 import { X } from "lucide-react";
+import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMetadata";
 
 export const AddChannelToPlaylistModal = () => {
+  const refetchChannelMetadata = useRefetchChannelMetadata();
   const { refetch } = useChannelsDashboardQuery();
   const { isModalOpen, ytChannelId, closePlaylistModal, resetFormState } =
     usePlaylist();
@@ -30,6 +32,7 @@ export const AddChannelToPlaylistModal = () => {
     resetFormState();
     closePlaylistModal();
     refetch();
+    refetchChannelMetadata(ytChannelId ?? undefined);
   };
 
   if (!isModalOpen || !ytChannelId || !channel) return null;
