@@ -8,6 +8,10 @@ export default function MonthCountCard({
   count: number;
 }) {
   return (
-    <InfoCard title={month} content={`Count: ${count}`} titleLink={month} />
+    <InfoCard
+      title={month}
+      content={`Count: ${count}`}
+      titleLink={month}
+    />
   );
 }

@@ -174,6 +174,7 @@ export default function StoryboardPage() {
                   )}
                 </div>
               }
+              showTooltip
             />
           </div>
         ))}
