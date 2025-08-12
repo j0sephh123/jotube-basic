@@ -78,7 +78,7 @@ export default function CardStats({
               {stat.value}
             </span>
           </Tooltip>
-          {index < stats.length - 1 && <span className="text-gray-500">|</span>}
+          {index < stats.length - 1 && <span className="text-base-content/50">|</span>}
         </Fragment>
       ))}
     </div>

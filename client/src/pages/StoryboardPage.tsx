@@ -136,7 +136,7 @@ export default function StoryboardPage() {
     <div className="container mx-auto p-4">
       <div className="mb-6">
         <h1 className="text-3xl font-bold">Storyboards</h1>
-        <p className="text-gray-600">
+        <p className="text-base-content/70">
           {storyboards.length} storyboard{storyboards.length !== 1 ? "s" : ""}{" "}
           found
         </p>
@@ -157,18 +157,18 @@ export default function StoryboardPage() {
               title={storyboard.title}
               content={
                 <div className="space-y-1">
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-base-content/70">
                     Published:{" "}
                     {new Date(storyboard.publishedAt).toLocaleDateString()}
                   </p>
                   {storyboard.duration && (
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-base-content/70">
                       Duration: {Math.floor(storyboard.duration / 60)}:
                       {String(storyboard.duration % 60).padStart(2, "0")}
                     </p>
                   )}
                   {storyboard.storyboard && (
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-base-content/70">
                       Fragments: {storyboard.storyboard.fragments}
                     </p>
                   )}
@@ -189,7 +189,7 @@ export default function StoryboardPage() {
               {activeStoryboard?.title || "Storyboard"}
             </h2>
             {activeStoryboard?.storyboard && (
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-base-content/70">
                 {activeStoryboard.storyboard.fragments} fragment
                 {activeStoryboard.storyboard.fragments !== 1 ? "s" : ""}
               </p>
@@ -207,7 +207,7 @@ export default function StoryboardPage() {
                     alt={`Storyboard M${index}`}
                     className="w-full h-auto object-contain"
                   />
-                  <div className="mt-2 text-xs text-gray-500">M{index}</div>
+                  <div className="mt-2 text-xs text-base-content/70">M{index}</div>
                 </div>
               ))}
             </div>

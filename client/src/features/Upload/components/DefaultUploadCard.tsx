@@ -111,11 +111,11 @@ export const DefaultUploadCard = ({
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-500 truncate min-w-0">
+            <span className="text-xs text-base-content/70 truncate min-w-0">
               {timeAgo(item.publishedAt)}
             </span>
-            <span className="text-xs text-gray-400">•</span>
-            <span className="text-xs text-gray-500">12:34</span>
+            <span className="text-xs text-base-content/50">•</span>
+            <span className="text-xs text-base-content/70">12:34</span>
           </div>
           <div className="flex items-center gap-2 ml-2">
             <div className="dropdown dropdown-end flex-shrink-0">

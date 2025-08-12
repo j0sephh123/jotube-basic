@@ -13,11 +13,11 @@ export const PlaylistCard = ({ playlist }: PlaylistCardProps) => {
         title={playlist.name}
         content={
           <div className="space-y-2">
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-base-content/70">
               {playlist.channels?.length || 0} channel
               {(playlist.channels?.length || 0) !== 1 ? "s" : ""}
             </p>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-base-content/60">
               Created{" "}
               {playlist.createdAt
                 ? new Date(playlist.createdAt).toLocaleDateString()
