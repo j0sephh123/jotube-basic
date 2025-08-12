@@ -144,7 +144,13 @@ export default function StoryboardPage() {
         {storyboards.map((storyboard) => (
           <div
             key={storyboard.id}
-            className="bg-base-200 rounded-lg p-4 shadow-md"
+            className="bg-base-200 rounded-lg p-4 shadow-md cursor-pointer hover:bg-base-300 transition-colors"
+            onClick={() => {
+              if (storyboard.storyboard) {
+                setActiveStoryboard(storyboard);
+                setIsModalOpen(true);
+              }
+            }}
           >
             <h3 className="font-semibold text-lg mb-2">{storyboard.title}</h3>
             <p className="text-sm text-gray-600 mb-2">
@@ -161,27 +167,6 @@ export default function StoryboardPage() {
                 Fragments: {storyboard.storyboard.fragments}
               </p>
             )}
-            <div className="flex gap-2">
-              {storyboard.storyboard && (
-                <button
-                  type="button"
-                  className="btn btn-sm btn-primary"
-                  onClick={() => {
-                    setActiveStoryboard(storyboard);
-                    setIsModalOpen(true);
-                  }}
-                >
-                  View Storyboard
-                </button>
-              )}
-              <button
-                type="button"
-                className="btn btn-sm btn-error"
-                onClick={() => handleDelete([storyboard.ytId])}
-              >
-                Delete
-              </button>
-            </div>
           </div>
         ))}
       </div>
@@ -221,15 +206,17 @@ export default function StoryboardPage() {
           </Container>
           <div className="p-4 border-t border-base-300 flex justify-end gap-2">
             <button
-              onClick={handleClose}
+              onClick={() =>
+                activeStoryboard && handleDelete([activeStoryboard.ytId])
+              }
               type="button"
-              className="btn btn-outline btn-sm"
+              className="btn btn-error"
             >
-              Cancel
+              Delete
             </button>
             <button
               type="button"
-              className="btn btn-primary btn-sm"
+              className="btn btn-primary"
               onClick={handleSave}
             >
               Save
