@@ -223,4 +223,24 @@ export class ChannelService {
 
     return channel;
   }
+
+  async getByYtId(ytChannelId: string) {
+    const channel = await this.prismaService.channel.findUnique({
+      where: { ytId: ytChannelId },
+      select: {
+        id: true,
+        title: true,
+        ytId: true,
+        src: true,
+        videoCount: true,
+        createdAt: true,
+        updatedAt: true,
+        playlistId: true,
+      },
+    });
+
+    if (!channel) throw new Error('Channel not found');
+
+    return channel;
+  }
 }

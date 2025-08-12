@@ -1,12 +1,31 @@
 import { Link } from "react-router-dom";
+import { Trash2 } from "lucide-react";
 import { Playlist } from "../types";
+import { useDeletePlaylist } from "../hooks";
 import InfoCard from "@/shared/components/InfoCard";
+import { useDialog } from "@/shared/hooks/useDialog";
 
 interface PlaylistCardProps {
   playlist: Playlist;
 }
 
 export const PlaylistCard = ({ playlist }: PlaylistCardProps) => {
+  const deletePlaylist = useDeletePlaylist();
+  const dialogHook = useDialog();
+
+  const handleDeleteClick = () => {
+    dialogHook.confirm({
+      title: "Delete Playlist",
+      message: `Are you sure you want to delete "${playlist.name}"? This action cannot be undone.`,
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      variant: "error",
+      onYes: () => {
+        deletePlaylist.mutate(playlist.id);
+      },
+    });
+  };
+
   return (
     <div className="relative">
       <InfoCard
@@ -23,7 +42,15 @@ export const PlaylistCard = ({ playlist }: PlaylistCardProps) => {
                 ? new Date(playlist.createdAt).toLocaleDateString()
                 : "Unknown date"}
             </p>
-            <div className="flex justify-end mt-4">
+            <div className="flex justify-between items-center mt-4">
+              <button
+                onClick={handleDeleteClick}
+                className="btn btn-error btn-sm btn-circle"
+                disabled={deletePlaylist.isPending}
+                aria-label="Delete playlist"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
               <Link
                 to={`/playlists/${playlist.id}`}
                 className="btn btn-primary btn-sm"

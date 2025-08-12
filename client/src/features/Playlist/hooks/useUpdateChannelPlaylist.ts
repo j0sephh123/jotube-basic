@@ -16,7 +16,7 @@ export const useUpdateChannelPlaylist = () => {
       nestFetcher<Channel>({
         url: `/channel/${id}`,
         method: "PATCH",
-        body: JSON.stringify(data),
+        body: data,
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["playlists"] });

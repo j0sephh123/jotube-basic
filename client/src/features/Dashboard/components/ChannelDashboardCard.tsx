@@ -5,6 +5,9 @@ import FetchUploadsButton from "../../Upload/components/FetchUploadsButton";
 import DeleteChannel from "../../Channel/NewChannel/components/DeleteChannel";
 import useTitleClick from "../hooks/useTitleClick";
 import { DashboardChannel } from "../types";
+import { usePlaylist } from "@/store/store";
+import { ListMusic } from "lucide-react";
+import clsx from "clsx";
 
 const statsTypes = [
   ViewType.THUMBNAILS,
@@ -34,7 +37,10 @@ export default function ChannelDashboardCard({
   createdAt,
   videoCount,
   viewType,
+  playlist,
 }: Props) {
+  const { openPlaylistModal } = usePlaylist();
+
   const cardStats = (
     <Card.Stats
       ytId={ytId}
@@ -63,6 +69,27 @@ export default function ChannelDashboardCard({
 
   const fetchUploadsButton = (
     <FetchUploadsButton ytChannelId={ytId} videoCount={videoCount} />
+  );
+
+  const playlistButton = (
+    <button
+      onClick={() => openPlaylistModal(ytId)}
+      className={clsx(
+        "btn btn-sm",
+        playlist ? "btn-primary" : "btn-ghost btn-secondary"
+      )}
+      title={playlist ? `Current: ${playlist.name}` : "Add to Playlist"}
+    >
+      <ListMusic className="w-4 h-4" />
+      {playlist && <span className="ml-1">{playlist.name}</span>}
+    </button>
+  );
+
+  const playlistInfo = playlist && (
+    <div className="flex items-center gap-2 text-sm text-gray-600">
+      <ListMusic className="w-4 h-4" />
+      <span className="truncate">{playlist.name}</span>
+    </div>
   );
 
   const handleTitleClick = useTitleClick(
@@ -103,13 +130,20 @@ export default function ChannelDashboardCard({
       lastSyncedAt={lastSyncedAt}
       ytChannelId={ytId}
       handleTitleClick={handleTitleClick}
-      secondRow={statsTypes.includes(viewType) ? cardStats : cardCreatedAt}
+      secondRow={
+        statsTypes.includes(viewType)
+          ? cardStats
+          : playlist
+          ? playlistInfo
+          : cardCreatedAt
+      }
       cardMenuSlot={cardMenu}
       actionButtonSlot={getActionButtonSlot()}
       downloadButtonSlot={
         downloadTypes.includes(viewType) ? downloadButton : undefined
       }
       deleteButtonSlot={getDeleteButtonSlot()}
+      playlistButtonSlot={playlistButton}
     />
   );
 }

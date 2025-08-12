@@ -21,9 +21,11 @@ export class PlaylistService {
     const playlists = await this.prismaService.playlist.findMany({
       orderBy: { createdAt: 'desc' as const },
       include: {
-        _count: {
+        channels: {
           select: {
-            channels: true,
+            id: true,
+            title: true,
+            ytId: true,
           },
         },
       },

@@ -24,6 +24,7 @@ type CardProps = {
   cardMenuSlot?: React.ReactNode;
   downloadButtonSlot?: React.ReactNode;
   deleteButtonSlot?: React.ReactNode;
+  playlistButtonSlot?: React.ReactNode;
   handleTitleClick: (e: React.MouseEvent) => void;
 };
 
@@ -39,6 +40,7 @@ function Card({
   cardMenuSlot,
   downloadButtonSlot,
   deleteButtonSlot,
+  playlistButtonSlot,
   handleTitleClick,
 }: CardProps) {
   return (
@@ -65,6 +67,7 @@ function Card({
             {actionButtonSlot}
             {downloadButtonSlot}
             {deleteButtonSlot}
+            {playlistButtonSlot}
           </div>
         </div>
       </Card.Content>

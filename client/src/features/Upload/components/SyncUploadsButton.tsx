@@ -35,11 +35,11 @@ export default function SyncUploadsButton({
   return (
     <button
       onClick={handleSync}
-      className="text-xs flex items-center gap-1 hover:bg-gray-700/50 px-2 py-1 rounded transition-colors w-20 justify-center"
+      className="text-xs flex items-center gap-1 hover:bg-gray-700/50 p-1 rounded transition-colors w-12 justify-center"
     >
       <RefreshCw
         className={clsx(
-          "w-3 h-3",
+          "w-4 h-4",
           getLastSyncColor(lastSyncedAt),
           syncUploads.isPending && "animate-spin"
         )}

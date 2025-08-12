@@ -7,6 +7,7 @@ import TheNavbar from "@/shared/components/Navbar";
 import { DialogProvider } from "./dialog/DialogProvider";
 import ThumbnailsProcessing from "@/features/Thumbnail/components";
 import ScreenshotsSidePanel from "./ScreenshotsSidePanel";
+import { AddChannelToPlaylistModal } from "@/features/Playlist/components/AddChannelToPlaylistModal";
 
 export default function Layout(): JSX.Element {
   useWebSocket();
@@ -22,6 +23,7 @@ export default function Layout(): JSX.Element {
       <TheCarousel />
       <ThumbnailsProcessing />
       <ScreenshotsSidePanel />
+      <AddChannelToPlaylistModal />
     </DialogProvider>
   );
 }

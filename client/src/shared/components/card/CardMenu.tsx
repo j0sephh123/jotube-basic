@@ -1,7 +1,8 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { MoreVertical, FolderOpen } from "lucide-react";
 import CopyValue from "@/shared/components/CopyValue";
 import { useOpenDirectory } from "../OpenDirectoryButton/useOpenDirectory";
+import { useClickOutside } from "@/shared/hooks/useClickOutside";
 
 type CardMenuProps = {
   id: number;
@@ -14,21 +15,7 @@ function CardMenu({ id, ytId, onClose }: CardMenuProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setIsMenuOpen(false);
-      }
-    };
-
-    if (isMenuOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isMenuOpen]);
+  useClickOutside(menuRef, () => setIsMenuOpen(false), isMenuOpen);
 
   const handleCopyId = (e: React.MouseEvent) => {
     e.stopPropagation();

@@ -30,6 +30,11 @@ export class ChannelController {
     return this.channelService.metadata(ytChannelId);
   }
 
+  @Get('/by-yt-id/:ytChannelId')
+  getByYtId(@Param('ytChannelId') ytChannelId: string) {
+    return this.channelService.getByYtId(ytChannelId);
+  }
+
   @Patch(':id')
   updatePlaylist(
     @Param('id') id: string,
