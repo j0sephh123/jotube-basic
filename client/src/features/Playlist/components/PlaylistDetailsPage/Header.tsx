@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { Playlist } from "../../types";
-import { formatLastSync } from "@/shared/components/card/helper";
 
 export const Header = ({ playlist }: { playlist: Playlist }) => {
   return (
@@ -11,9 +10,6 @@ export const Header = ({ playlist }: { playlist: Playlist }) => {
             ← Back to Playlists
           </Link>
           <h1 className="text-2xl font-bold">{playlist.name}</h1>
-          <p>
-            Created {formatLastSync(playlist.createdAt)}
-          </p>
           <p>
             Total Channels: {playlist.channels.length}
           </p>
