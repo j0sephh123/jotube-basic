@@ -6,7 +6,6 @@ import {
   Patch,
   Post,
   Get,
-  Query,
 } from '@nestjs/common';
 import { PlaylistService } from './playlist.service';
 import { CreatePlaylistDto } from './dtos/create-playlist.dto';

@@ -6,8 +6,10 @@ import DeleteChannel from "../../Channel/NewChannel/components/DeleteChannel";
 import useTitleClick from "../hooks/useTitleClick";
 import { DashboardChannel } from "../types";
 import { usePlaylist } from "@/store/store";
-import { ListMusic } from "lucide-react";
+import { ListMusic, ExternalLink } from "lucide-react";
 import clsx from "clsx";
+import { routes } from "@/shared/utils/routes";
+import { Link } from "react-router-dom";
 
 const statsTypes = [
   ViewType.THUMBNAILS,
@@ -72,17 +74,28 @@ export default function ChannelDashboardCard({
   );
 
   const playlistButton = (
-    <button
-      onClick={() => openPlaylistModal(ytId)}
-      className={clsx(
-        "btn btn-sm",
-        playlist ? "btn-primary" : "btn-ghost btn-secondary"
+    <div className="flex items-center gap-2">
+      <button
+        onClick={() => openPlaylistModal(ytId)}
+        className={clsx(
+          "btn btn-sm",
+          playlist ? "btn-primary" : "btn-ghost btn-secondary"
+        )}
+        title={playlist ? `Current: ${playlist.name}` : "Add to Playlist"}
+      >
+        <ListMusic className="w-4 h-4" />
+        {playlist && <span className="ml-1">{playlist.name}</span>}
+      </button>
+      {playlist && (
+        <Link
+          to={routes.playlist(playlist.id)}
+          className="btn btn-sm btn-ghost"
+          title={`Go to ${playlist.name} playlist`}
+        >
+          <ExternalLink className="w-4 h-4" />
+        </Link>
       )}
-      title={playlist ? `Current: ${playlist.name}` : "Add to Playlist"}
-    >
-      <ListMusic className="w-4 h-4" />
-      {playlist && <span className="ml-1">{playlist.name}</span>}
-    </button>
+    </div>
   );
 
   const playlistInfo = playlist && (

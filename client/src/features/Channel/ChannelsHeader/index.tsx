@@ -2,8 +2,10 @@ import { useChannelMetadataQuery } from "@/features/Channel/hooks/useChannelMeta
 import { useLocation } from "react-router-dom";
 import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";
 import { usePlaylist } from "@/store/store";
-import { ListMusic } from "lucide-react";
+import { ListMusic, ExternalLink } from "lucide-react";
 import clsx from "clsx";
+import { routes } from "@/shared/utils/routes";
+import { Link } from "react-router-dom";
 import HeaderLayout from "./HeaderLayout";
 import ChannelControls from "./ChannelControls";
 import SyncUploadsButton from "@/features/Upload/components/SyncUploadsButton";
@@ -35,18 +37,33 @@ const ChannelHeader = () => {
     playlist,
   } = metadata;
 
+  console.log({
+    playlist,
+  });
+
   const playlistButton = (
-    <button
-      onClick={() => openPlaylistModal(ytChannelId)}
-      className={clsx(
-        "btn btn-sm",
-        playlist ? "btn-primary" : "btn-ghost btn-secondary"
+    <div className="flex items-center gap-2">
+      <button
+        onClick={() => openPlaylistModal(ytChannelId)}
+        className={clsx(
+          "btn btn-sm",
+          playlist ? "btn-primary" : "btn-ghost btn-secondary"
+        )}
+        title={playlist ? `Current: ${playlist.name}` : "Add to Playlist"}
+      >
+        <ListMusic className="w-4 h-4" />
+        {playlist && <span className="ml-1">{playlist.name}</span>}
+      </button>
+      {playlist && (
+        <Link
+          to={routes.playlist(playlist.id)}
+          className="btn btn-sm btn-ghost"
+          title={`Go to ${playlist.name} playlist`}
+        >
+          <ExternalLink className="w-4 h-4" />
+        </Link>
       )}
-      title={playlist ? `Current: ${playlist.name}` : "Add to Playlist"}
-    >
-      <ListMusic className="w-4 h-4" />
-      {playlist && <span className="ml-1">{playlist.name}</span>}
-    </button>
+    </div>
   );
 
   return (

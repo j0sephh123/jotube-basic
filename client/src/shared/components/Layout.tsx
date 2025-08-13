@@ -16,7 +16,7 @@ export default function Layout(): JSX.Element {
   return (
     <DialogProvider>
       <TheNavbar />
-      <div className="w-full h-[99vh] overflow-hidden">
+      <div className="w-full h-[99vh] overflow-auto">
         <Outlet />
       </div>
       <CreateChannelButton />

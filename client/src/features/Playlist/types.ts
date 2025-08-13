@@ -15,6 +15,13 @@ export interface Channel {
   createdAt: string;
   updatedAt: string;
   playlistId: number | null;
+  counts?: {
+    videoCount: number;
+    savedCount: number;
+    screenshotCount: number;
+    thumbnailCount: number;
+    storyboardCount: number;
+  };
 }
 
 export interface CreatePlaylistDto {

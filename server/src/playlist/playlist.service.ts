@@ -38,9 +38,7 @@ export class PlaylistService {
     const playlist = await this.prismaService.playlist.findUnique({
       where: { id },
       include: {
-        channels: {
-          orderBy: { createdAt: 'desc' as const },
-        },
+        channels: true,
       },
     });
 
@@ -48,7 +46,51 @@ export class PlaylistService {
       throw new Error('Playlist not found');
     }
 
-    return playlist;
+    const channelsWithCounts = await Promise.all(
+      playlist.channels.map(async (channel) => {
+        const [videoCount, savedCount, screenshotCount, thumbnailCount] =
+          await Promise.all([
+            this.prismaService.uploadsVideo.count({
+              where: {
+                channelId: channel.id,
+                artifact: 'VIDEO',
+              },
+            }),
+            this.prismaService.uploadsVideo.count({
+              where: {
+                channelId: channel.id,
+                artifact: 'SAVED',
+              },
+            }),
+            this.prismaService.screenshot.count({
+              where: {
+                ytChannelId: channel.ytId,
+              },
+            }),
+            this.prismaService.uploadsVideo.count({
+              where: {
+                channelId: channel.id,
+                artifact: 'THUMBNAIL',
+              },
+            }),
+          ]);
+
+        return {
+          ...channel,
+          counts: {
+            videoCount,
+            savedCount,
+            screenshotCount,
+            thumbnailCount,
+          },
+        };
+      }),
+    );
+
+    return {
+      ...playlist,
+      channels: channelsWithCounts,
+    };
   }
 
   async update(id: number, body: UpdatePlaylistDto) {

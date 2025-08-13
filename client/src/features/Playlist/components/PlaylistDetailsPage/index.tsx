@@ -1,19 +1,22 @@
 import { Header } from "./Header";
 import PlaylistDetailsContainer from "./PlaylistDetailsContainer";
-import { Playlist } from "../../types";
 import Table from "./Table";
-import Actions from "./RightSection";
+import RightSection from "./RightSection";
 
 export const PlaylistDetailsPage = () => {
   return (
     <PlaylistDetailsContainer>
-      {(playlist: Playlist) => (
+      {(playlist) => (
         <div className="container mx-auto p-6">
           <Header playlist={playlist} />
 
-          <div className="grid grid-cols-2 gap-6 mt-6">
-            <Table playlist={playlist} />
-            <Actions />
+          <div className="grid grid-cols-4 gap-6 mt-6">
+            <div className="col-span-3">
+              <Table playlist={playlist} />
+            </div>
+            <div className="col-span-1">
+              <RightSection playlist={playlist} />
+            </div>
           </div>
         </div>
       )}
