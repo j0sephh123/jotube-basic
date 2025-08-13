@@ -1,8 +1,7 @@
 import { useStore } from "@/store/store";
 import { useCallback } from "react";
 import { useFinishProcessingUpload } from "@/features/Upload/hooks/useFinishProcessingUpload";
-import { useRefetchTotalScreenshots } from "@/features/Screenshot/hooks/useTotalScreenshots";
-import { useRefetchTotalThumbnails } from "./useTotalThumbnails";
+import { useRefetchTotalCounts } from "@/features/Statistics/hooks/useTotalCounts";
 import { useRefetchThumbnailByVideoId } from "./useThumbnailByVideoId";
 import { useRefetchGroupedThumbnails } from "@/features/Dashboard/useChannelsDashboardQuery";
 
@@ -14,15 +13,13 @@ export default function useSubmit() {
     setSelectedImages,
   } = useStore();
   const refetchGroupedThumbnails = useRefetchGroupedThumbnails();
-  const refetchTotalScreenshots = useRefetchTotalScreenshots();
-  const refetchTotalThumbnails = useRefetchTotalThumbnails();
+  const refetchTotalCounts = useRefetchTotalCounts();
   const refetchThumbnailByVideoId = useRefetchThumbnailByVideoId(
     thumbnailsProcessingData[0]?.ytVideoId
   );
   const refetchAll = () => {
     refetchGroupedThumbnails();
-    refetchTotalScreenshots();
-    refetchTotalThumbnails();
+    refetchTotalCounts();
     refetchThumbnailByVideoId();
   };
 

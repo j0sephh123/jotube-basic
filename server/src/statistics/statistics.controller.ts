@@ -21,17 +21,22 @@ export class StatisticsController {
     });
   }
 
-  @Get('total-screenshots')
-  async getTotalScreenshots() {
-    const count = await this.prismaService.screenshot.count();
+  @Get('counts')
+  async getCounts() {
+    const [totalScreenshots, totalThumbnails, totalSaved] = await Promise.all([
+      this.prismaService.screenshot.count(),
+      this.prismaService.thumbnail.count(),
+      this.prismaService.uploadsVideo.count({
+        where: {
+          artifact: 'SAVED',
+        },
+      }),
+    ]);
 
-    return count;
-  }
-
-  @Get('total-thumbnails')
-  async getTotalThumbnails() {
-    const count = await this.prismaService.thumbnail.count();
-
-    return count;
+    return {
+      totalScreenshots,
+      totalThumbnails,
+      totalSaved,
+    };
   }
 }

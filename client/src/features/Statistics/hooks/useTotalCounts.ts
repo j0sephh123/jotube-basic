@@ -2,23 +2,29 @@ import nestFetcher from "@/shared/api/nestFetcher";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
 
-const queryKey = () => ["totalThumbnails"];
+type TotalCounts = {
+  totalScreenshots: number;
+  totalThumbnails: number;
+  totalSaved: number;
+};
 
-export function useTotalThumbnails() {
+const queryKey = () => ["totalCounts"];
+
+export function useTotalCounts() {
   return useQuery({
     queryKey: queryKey(),
     queryFn: () =>
-      nestFetcher<number>({
+      nestFetcher<TotalCounts>({
         method: "GET",
-        url: "/statistics/total-thumbnails",
+        url: "/statistics/counts",
       }),
   });
 }
 
-export function useRefetchTotalThumbnails() {
+export function useRefetchTotalCounts() {
   const queryClient = useQueryClient();
 
   return useCallback(() => {
     queryClient.refetchQueries({ queryKey: queryKey() });
   }, [queryClient]);
-} 
+}

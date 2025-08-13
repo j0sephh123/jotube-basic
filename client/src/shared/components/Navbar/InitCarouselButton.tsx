@@ -1,11 +1,12 @@
-import { useTotalScreenshots } from "@/features/Screenshot/hooks/useTotalScreenshots";
+import { useTotalCounts } from "@/features/Statistics/hooks/useTotalCounts";
 import useThumbnails from "@/features/Thumbnail/hooks/useThumbnails";
 import { Loader, PlayCircle } from "lucide-react";
 
 export default function InitCarouselButton() {
   const { getScreenshots } = useThumbnails();
   const handleAllCarousel = () => getScreenshots([]);
-  const { data: totalScreenshots, isLoading } = useTotalScreenshots();
+  const { data: totalCounts, isLoading } = useTotalCounts();
+  const totalScreenshots = totalCounts?.totalScreenshots;
 
   const screenshotCount = totalScreenshots ?? "N/A";
   const displayValue =

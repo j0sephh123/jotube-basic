@@ -13,8 +13,12 @@ import { Link } from "react-router-dom";
 import VideoProcessingInfo from "./VideoProcessingInfo";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { routes } from "@/shared/utils/routes";
+import { useTotalCounts } from "@/features/Statistics/hooks/useTotalCounts";
 
 export default function Navbar(): JSX.Element {
+  const { data: totalCounts } = useTotalCounts();
+  const savedCount = totalCounts?.totalSaved ?? 0;
+
   return (
     <div className="flex flex-col fixed w-full bg-base-100 z-50">
       <div className="navbar shadow-sm flex justify-between items-center w-full">
@@ -37,6 +41,15 @@ export default function Navbar(): JSX.Element {
           </Link>
           <Link to={routes.playlists()} className="btn btn-ghost">
             Playlists
+          </Link>
+          <Link
+            to="/dashboard/channels/saved"
+            className="btn btn-ghost relative"
+          >
+            Saved
+            <span className="absolute -top-1 -right-1 text-xs bg-zinc-600 text-white rounded-full px-1 py-0 text-[10px] leading-tight min-w-4 text-center">
+              {savedCount}
+            </span>
           </Link>
           <PlayButton />
         </div>
