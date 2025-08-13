@@ -40,6 +40,7 @@ _Unfiltered, undeveloped concepts. No promises, just possible directions._
 - __fetching uploads better UI__ - right now it is long request, which is not a good UX, but this has never been a priority
 - __create reusable composite components for texts__ like Texts.Title and Buttons.Primary
 - __Recently viewed channels__
+- have a way to view only the saved videos
 ---
 
 ## 🔍 To Groom
