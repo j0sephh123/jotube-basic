@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import nestFetcher from "@/shared/api/nestFetcher";
 
 export function useGetUploadsWithThumbnails() {
-  const { mutateAsync } = useMutation<
+  return useMutation<
     {
       ytChannelId: string;
       ytVideoId: string;
@@ -22,6 +22,4 @@ export function useGetUploadsWithThumbnails() {
         body: { channelIds },
       }),
   });
-
-  return { mutateAsync };
 }

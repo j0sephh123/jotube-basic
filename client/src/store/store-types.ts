@@ -16,6 +16,17 @@ export type ThumbnailItem = {
   ytVideoId: string;
 };
 
+export type StoryboardProcessingSlice = {
+  storyboardProcessingData: {
+    ytChannelId: string;
+    ytVideoIds: string[];
+  };
+  setStoryboardProcessingData: (
+    data: StoryboardProcessingSlice["storyboardProcessingData"]
+  ) => void;
+  clearStoryboardProcessingData: () => void;
+};
+
 export type ThumbnailsProcessingSlice = {
   thumbnailsProcessingData: ThumbnailItem[];
   setThumbnailsProcessingData: (
@@ -151,6 +162,7 @@ export type ZoomSlice = {
 
 export type Store = SlidesSlice &
   ThumbnailsProcessingSlice &
+  StoryboardProcessingSlice &
   WebSocketSlice &
   DashboardSlice &
   RangePickersSlice &

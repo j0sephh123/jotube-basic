@@ -9,6 +9,7 @@ import ThumbnailsProcessing from "@/features/Thumbnail";
 import ScreenshotsSidePanel from "./ScreenshotsSidePanel";
 import { AddChannelToPlaylistModal } from "@/features/Playlist/components/AddChannelToPlaylistModal";
 import ZoomModal from "./ZoomModal";
+import StoryboardProcessing from "@/features/Storyboard/StoryboardProcessing";
 
 export default function Layout(): JSX.Element {
   useWebSocket();
@@ -23,6 +24,7 @@ export default function Layout(): JSX.Element {
       <CreateChannelButton />
       <TheCarousel />
       <ThumbnailsProcessing />
+      <StoryboardProcessing />
       <ScreenshotsSidePanel />
       <AddChannelToPlaylistModal />
       <ZoomModal />

@@ -5,14 +5,16 @@ import { useGetUploadsWithThumbnails } from "@/features/Thumbnail/hooks/useGetUp
 export default function useThumbnails() {
   const { setThumbnailsProcessingData } = useStore();
   const fetchCarousel = useFetchCarousel();
-  const { mutateAsync } = useGetUploadsWithThumbnails();
+  const getUploadsWithThumbnails = useGetUploadsWithThumbnails();
 
   const getScreenshots = (ytChannelIds: string[]) => {
     fetchCarousel(ytChannelIds);
   };
 
   const viewThumbnails = async (channelIds: number[]) => {
-    const uploadsWithThumbnails = await mutateAsync(channelIds);
+    const uploadsWithThumbnails = await getUploadsWithThumbnails.mutateAsync(
+      channelIds
+    );
 
     setThumbnailsProcessingData(uploadsWithThumbnails);
   };

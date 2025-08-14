@@ -3,11 +3,11 @@ import { useStore } from "@/store/store";
 
 export default function useViewThumbnails(id: number) {
   const { setThumbnailsProcessingData } = useStore();
-  const { mutateAsync: getUploadsWithThumbnailsMutation } =
+  const getUploadsWithThumbnails =
     useGetUploadsWithThumbnails();
 
   return async () => {
-    const thumbnails = await getUploadsWithThumbnailsMutation([id]);
+    const thumbnails = await getUploadsWithThumbnails.mutateAsync([id]);
     setThumbnailsProcessingData(thumbnails);
   };
 }

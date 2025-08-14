@@ -15,6 +15,7 @@ import { createPlaylistSlice, PlaylistSlice } from "@/features/Playlist/store";
 import { createRangePickersSlice } from "@/features/Dashboard/store/range-picker-slice";
 import { createVideosRangePickersSlice } from "@/features/Dashboard/store/videos-range-picker-slice";
 import { createSlidesSlice } from "@/features/Thumbnail/store/slides-slice";
+import { createStoryboardProcessingSlice } from "./slices/storyboard-processing-slice";
 import { createZoomSlice } from "./slices/zoom-slice";
 
 // ---- Types ----
@@ -22,6 +23,7 @@ import type {
   Store as StoreType,
   SlidesSlice,
   ThumbnailsProcessingSlice,
+  StoryboardProcessingSlice,
   WebSocketSlice,
   DashboardSlice,
   RangePickersSlice,
@@ -36,6 +38,7 @@ export const useStore = create<StoreType>()(
     (set, get) => ({
       ...createSlidesSlice(set),
       ...thumbnailsProcessingSlice(set),
+      ...createStoryboardProcessingSlice(set),
       ...createWebSocketSlice(set),
       ...createDashboardSlice(set),
       ...createVideosDashboardSlice(set),
@@ -67,6 +70,8 @@ function makeScopedHook<Slice>() {
 // Per-slice hooks
 export const useSlides = makeScopedHook<SlidesSlice>();
 export const useThumbnailsSlice = makeScopedHook<ThumbnailsProcessingSlice>();
+export const useStoryboardProcessing =
+  makeScopedHook<StoryboardProcessingSlice>();
 export const useWebSocketState = makeScopedHook<WebSocketSlice>();
 export const useDashboard = makeScopedHook<DashboardSlice>();
 export const useVideosDashboard = makeScopedHook<VideosDashboardSlice>();
