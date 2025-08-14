@@ -18,7 +18,7 @@ import BulkOperations from "./BulkOperations";
 import ViewThumbnails from "../components/ViewThumbnails";
 import ViewScreenshots from "../components/ViewScreenshots";
 import FetchUploadsButton from "@/features/Upload/components/FetchUploadsButton";
-import ViewStoryboards from "@/shared/components/ViewStoryboards";
+import ViewStoryboards from "@/shared/components/ViewStoryboards/ViewStoryboards";
 
 const ChannelHeader = () => {
   const ytChannelId = useTypedChannelYtId();
@@ -40,7 +40,7 @@ const ChannelHeader = () => {
     playlist,
     videoCount,
     fetchedUntilEnd,
-    storyboardArtifactsCount
+    storyboardArtifactsCount,
   } = metadata;
 
   console.log({
@@ -88,7 +88,10 @@ const ChannelHeader = () => {
           center={<Tabs ytChannelId={ytChannelId} />}
           right={
             <div className="flex items-center gap-2">
-              <ViewStoryboards storyboardArtifactsCount={storyboardArtifactsCount} />
+              <ViewStoryboards
+                ytChannelId={ytChannelId}
+                storyboardArtifactsCount={storyboardArtifactsCount}
+              />
               <ViewThumbnails
                 id={id}
                 thumbnailArtifactsCount={thumbnailArtifactsCount}

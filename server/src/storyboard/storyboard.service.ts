@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UploadsVideo } from '@prisma/client';
+import { ArtifactType, UploadsVideo } from '@prisma/client';
 import { spawn } from 'child_process';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
 
@@ -115,5 +115,21 @@ export class StoryboardService {
         resolve({ success: false, error: error.message });
       });
     });
+  }
+
+  async getUploadsWithStoryboards(ytChannelId: string) {
+    const uploads = await this.prismaService.uploadsVideo.findMany({
+      where: {
+        channel: {
+          ytId: ytChannelId,
+        },
+        artifact: ArtifactType.STORYBOARD,
+      },
+      include: {
+        storyboard: true,
+      },
+    });
+
+    return uploads;
   }
 }

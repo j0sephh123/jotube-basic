@@ -1,6 +1,4 @@
 import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";
-import { useQuery } from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/nestFetcher";
 import { useState } from "react";
 import Modal from "@/shared/components/Modal";
 import Container from "@/features/Thumbnail/components/Container";
@@ -9,29 +7,11 @@ import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMe
 import { useRefetchChannelUploads } from "@/features/Upload/hooks/useUploadsList";
 import { useDeleteUploads } from "@/features/Upload/hooks/useUploadsDelete";
 import InfoCard from "@/shared/components/InfoCard";
-
-type StoryboardData = {
-  id: number;
-  fragments: number;
-  url: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-type StoryboardArtifact = {
-  id: number;
-  ytId: string;
-  title: string;
-  src: string;
-  publishedAt: string;
-  createdAt: string;
-  updatedAt: string;
-  channelId: number;
-  nextPageToken: string | null;
-  duration: number | null;
-  artifact: string;
-  storyboard: StoryboardData;
-};
+import { StoryboardArtifact } from "@/features/Storyboard/useStoryboards";
+import useStoryboards from "@/features/Storyboard/useStoryboards";
+import ErrorMessage from "@/shared/components/static/ErrorMessage";
+import Loading from "@/shared/components/static/Loading";
+import NoDataAvailable from "@/shared/components/static/NoDataAvailable";
 
 export default function StoryboardPage() {
   const ytChannelId = useTypedChannelYtId();
@@ -85,51 +65,18 @@ export default function StoryboardPage() {
     }
   };
 
-  const {
-    data: storyboards,
-    isLoading,
-    error,
-    refetch,
-  } = useQuery({
-    queryKey: ["storyboards", ytChannelId],
-    queryFn: () =>
-      nestFetcher<StoryboardArtifact[]>({
-        url: `/uploads-video/storyboards/${ytChannelId}`,
-        method: "GET",
-      }),
-    enabled: !!ytChannelId,
-  });
+  const { data: storyboards, isLoading, error, refetch } = useStoryboards();
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Loading Storyboards...</h1>
-        </div>
-      </div>
-    );
+    return <Loading />;
   }
 
   if (error) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Error Loading Storyboards</h1>
-          <p className="text-red-400">Failed to load storyboards</p>
-        </div>
-      </div>
-    );
+    return <ErrorMessage message="Error loading storyboards" />;
   }
 
   if (!storyboards || storyboards.length === 0) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">No Storyboards Found</h1>
-          <p className="text-gray-400">This channel has no storyboards yet.</p>
-        </div>
-      </div>
-    );
+    return <NoDataAvailable message="No storyboards found" />;
   }
 
   return (
@@ -208,7 +155,9 @@ export default function StoryboardPage() {
                     alt={`Storyboard M${index}`}
                     className="w-full h-auto object-contain"
                   />
-                  <div className="mt-2 text-xs text-base-content/70">M{index}</div>
+                  <div className="mt-2 text-xs text-base-content/70">
+                    M{index}
+                  </div>
                 </div>
               ))}
             </div>
