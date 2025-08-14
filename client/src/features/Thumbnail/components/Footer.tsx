@@ -5,13 +5,10 @@ import useSubmit from "../hooks/useSubmit";
 import useIsLastItem from "../hooks/useIsLastItem";
 import Button from "@/shared/button";
 import useThumbnailsCount from "../hooks/useThumbnailsCount";
+import usePaginate from "../hooks/usePaginate";
 
-type Props = {
-  onPrevious: () => void;
-  onNext: () => void;
-};
-
-export default function Footer({ onPrevious, onNext }: Props) {
+export default function Footer() {
+  const { handlePrevious, handleNext } = usePaginate();
   const thumbnailsCount = useThumbnailsCount();
   const { metadata, selectedImages, currentIndex } = useThumbnailsSlice();
   const isLastItem = useIsLastItem();
@@ -31,13 +28,13 @@ export default function Footer({ onPrevious, onNext }: Props) {
       <div className="flex items-center gap-2">
         <Button
           className="btn btn-soft btn-primary"
-          onClick={onPrevious}
+          onClick={handlePrevious}
           disabled={isPreviousDisabled}
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
           Previous
         </Button>
-        <Button className="btn btn-soft btn-primary" onClick={onNext}>
+        <Button className="btn btn-soft btn-primary" onClick={handleNext}>
           {isLastItem ? "Submit" : "Next"}
           <ArrowRight className="h-4 w-4 ml-2" />
         </Button>

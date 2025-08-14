@@ -24,6 +24,11 @@ export const thumbnailsProcessingSlice = (
         metadata: { ytChannelId: "", ytVideoId: "" },
       };
     }),
+  clearThumbnailsProcessingData: () =>
+    set(() => ({
+      thumbnailsProcessingData: [],
+      metadata: { ytChannelId: "", ytVideoId: "" },
+    })),
   selectedImages: [],
   setSelectedImages: (arg) =>
     set((state) => ({

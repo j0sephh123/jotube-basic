@@ -1,13 +1,11 @@
 import { useThumbnailsSlice, useZoom } from "@/store/store";
 import useSubmit from "./useSubmit";
 import useThumbnailsCount from "./useThumbnailsCount";
+import usePaginate from "./usePaginate";
 
-export default function useHandleKeyDown(
-  handlePrevious: () => void,
-  handleNext: () => void,
-  onClose: () => void
-) {
-  const { currentIndex } = useThumbnailsSlice();
+export default function useHandleKeyDown() {
+  const { handlePrevious, handleNext } = usePaginate();
+  const { currentIndex, clearThumbnailsProcessingData } = useThumbnailsSlice();
   const thumbnailsCount = useThumbnailsCount();
   const { isVisible: isZoomModalVisible } = useZoom();
   const handleSubmit = useSubmit();
@@ -33,7 +31,7 @@ export default function useHandleKeyDown(
         break;
       case "Escape":
         event.preventDefault();
-        onClose();
+        clearThumbnailsProcessingData();
         break;
     }
   };

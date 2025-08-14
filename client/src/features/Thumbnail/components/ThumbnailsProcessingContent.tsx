@@ -5,43 +5,27 @@ import Grid from "./Grid";
 import Header from "./Header";
 import ThumbnailImage from "./ThumbnailImage";
 import Container from "./Container";
-import { useThumbnailsSlice } from "@/store/store";
 import useResetSelection from "../hooks/useResetSelection";
 import useEvents from "../hooks/useEvents";
-import usePaginate from "../hooks/usePaginate";
 import useHandleKeyDown from "../hooks/useHandleKeyDown";
 import useHandleContainerWheel from "../hooks/useHandleContainerWheel";
+import { useThumbnailsSlice } from "@/store/store";
 
 export default function ThumbnailsProcessingContent() {
-  const { setThumbnailsProcessingData } = useThumbnailsSlice();
-
-  const handleClose = () => {
-    setThumbnailsProcessingData([]);
-  };
+  const { clearThumbnailsProcessingData } = useThumbnailsSlice();
 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useResetSelection(containerRef);
-
-  const { handlePrevious, handleNext } = usePaginate();
-
-  const handleKeyDown = useHandleKeyDown(
-    handlePrevious,
-    handleNext,
-    handleClose
-  );
-
-  const handleContainerWheel = useHandleContainerWheel(
-    handlePrevious,
-    handleNext
-  );
+  const handleKeyDown = useHandleKeyDown();
+  const handleContainerWheel = useHandleContainerWheel();
 
   useEvents(handleKeyDown, handleContainerWheel, containerRef);
+  useResetSelection(containerRef);
 
   return (
     <Modal
       isModalVisible
-      onClose={handleClose}
+      onClose={clearThumbnailsProcessingData}
       maxWidth="100vw"
       maxHeight="100vh"
     >
@@ -51,7 +35,7 @@ export default function ThumbnailsProcessingContent() {
           <ThumbnailImage />
           <Grid />
         </Container>
-        <Footer onPrevious={handlePrevious} onNext={handleNext} />
+        <Footer />
       </div>
     </Modal>
   );

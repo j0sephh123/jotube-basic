@@ -21,6 +21,7 @@ export type ThumbnailsProcessingSlice = {
   setThumbnailsProcessingData: (
     arg: ThumbnailsProcessingSlice["thumbnailsProcessingData"]
   ) => void;
+  clearThumbnailsProcessingData: () => void;
   selectedImages: number[];
   setSelectedImages: (arg: number[] | ((prev: number[]) => number[])) => void;
   toggleSelectedImage: (index: number, batch: number, perRow: number) => void;

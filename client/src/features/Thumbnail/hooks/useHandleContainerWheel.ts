@@ -1,11 +1,10 @@
 import useSubmit from "./useSubmit";
 import { useThumbnailsSlice, useZoom } from "@/store/store";
 import useThumbnailsCount from "./useThumbnailsCount";
+import usePaginate from "./usePaginate";
 
-export default function useHandleContainerWheel(
-  handlePrevious: () => void,
-  handleNext: () => void
-) {
+export default function useHandleContainerWheel() {
+  const { handlePrevious, handleNext } = usePaginate();
   const { currentIndex } = useThumbnailsSlice();
   const thumbnailsCount = useThumbnailsCount();
   const { isVisible: isZoomModalVisible } = useZoom();
