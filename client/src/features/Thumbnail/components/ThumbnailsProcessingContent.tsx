@@ -6,7 +6,6 @@ import Header from "./Header";
 import ThumbnailImage from "./ThumbnailImage";
 import Container from "./Container";
 import { useThumbnailsSlice } from "@/store/store";
-import { useGridCalculator } from "../hooks/useGridCalculator";
 import useResetSelection from "../hooks/useResetSelection";
 import useEvents from "../hooks/useEvents";
 import usePaginate from "../hooks/usePaginate";
@@ -20,12 +19,7 @@ export default function ThumbnailsProcessingContent() {
     setThumbnailsProcessingData([]);
   };
 
-  const cacheBuster = Date.now();
-
-  const imageRef = useRef<HTMLImageElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const { gridData } = useGridCalculator(imageRef);
 
   useResetSelection(containerRef);
 
@@ -54,12 +48,8 @@ export default function ThumbnailsProcessingContent() {
       <div className="w-full h-screen p-0">
         <Header />
         <Container ref={containerRef}>
-          <ThumbnailImage ref={imageRef} cacheBuster={cacheBuster} />
-          <Grid
-            key={`${gridData.rows}-${gridData.cols}`}
-            gridData={gridData}
-            cacheBuster={cacheBuster}
-          />
+          <ThumbnailImage />
+          <Grid />
         </Container>
         <Footer onPrevious={handlePrevious} onNext={handleNext} />
       </div>

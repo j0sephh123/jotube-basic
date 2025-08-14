@@ -1,17 +1,9 @@
 import { useThumbnailsSlice, useZoom } from "@/store/store";
 import ThumbnailGridCell from "./ThumbnailGridCell";
 import { generateThumbnailUrl } from "@/shared/utils/image";
-import { PER_ROW, SPACING } from "../utils/constants";
+import { COLUMNS, GRID_DATA, SPACING } from "../utils/constants";
 
-type Props = {
-  gridData: { rows: number; cols: number };
-  cacheBuster: number;
-};
-
-export default function Grid({
-  gridData,
-  cacheBuster,
-}: Props): JSX.Element {
+export default function Grid(): JSX.Element {
   const {
     currentIndex: batch,
     selectedImages,
@@ -22,11 +14,7 @@ export default function Grid({
   const { setZoom } = useZoom();
 
   const handleZoom = (index: number): void => {
-    const url = `${generateThumbnailUrl(
-      ytChannelId,
-      ytVideoId,
-      index
-    )}?v=${cacheBuster}`;
+    const url = generateThumbnailUrl(ytChannelId, ytVideoId, index);
     setZoom(true, url, () => {});
     setSelectedImages((prev) => [...prev, index]);
   };
@@ -35,22 +23,24 @@ export default function Grid({
     <div
       className="absolute inset-0 grid"
       style={{
-        gridTemplateColumns: `repeat(${gridData.cols}, 1fr)`,
-        gridTemplateRows: `repeat(${gridData.rows}, 1fr)`,
+        gridTemplateColumns: `repeat(${GRID_DATA.cols}, 1fr)`,
+        gridTemplateRows: `repeat(${GRID_DATA.rows}, 1fr)`,
         gap: `${SPACING}px`,
       }}
     >
-      {Array.from({ length: gridData.rows * gridData.cols }).map((_, index) => (
-        <ThumbnailGridCell
-          key={index}
-          index={index}
-          selectedImages={selectedImages}
-          handleSelect={(i, b, p) => toggleSelectedImage(i, b, p)}
-          handleZoom={handleZoom}
-          batch={batch}
-          perRow={PER_ROW}
-        />
-      ))}
+      {Array.from({ length: GRID_DATA.rows * GRID_DATA.cols }).map(
+        (_, index) => (
+          <ThumbnailGridCell
+            key={index}
+            index={index}
+            selectedImages={selectedImages}
+            handleSelect={(i, b, p) => toggleSelectedImage(i, b, p)}
+            handleZoom={handleZoom}
+            batch={batch}
+            perRow={COLUMNS}
+          />
+        )
+      )}
     </div>
   );
 }

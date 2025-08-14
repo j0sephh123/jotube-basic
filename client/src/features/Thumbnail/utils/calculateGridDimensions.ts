@@ -1,11 +1,14 @@
+import { COLUMNS, SPACING } from "../utils/constants";
+
 export const calculateGridDimensions = (
   imageWidth: number,
-  imageHeight: number,
-  cols: number,
-  spacing: number
+  imageHeight: number
 ): { rows: number; cols: number } => {
-  const cellWidth = Math.floor((imageWidth - (cols - 1) * spacing) / cols);
+  const cellWidth = Math.floor(
+    (imageWidth - (COLUMNS - 1) * SPACING) / COLUMNS
+  );
   const cellHeight = Math.floor(cellWidth * (9 / 16));
-  const rows = Math.ceil((imageHeight + spacing) / (cellHeight + spacing));
-  return { rows, cols };
+  const rows = Math.ceil((imageHeight + SPACING) / (cellHeight + SPACING));
+
+  return { rows, cols: COLUMNS };
 };

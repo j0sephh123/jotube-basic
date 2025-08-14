@@ -1,33 +1,33 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { calculateGridDimensions } from "../utils/calculateGridDimensions";
-import { PER_ROW, SPACING } from "../utils/constants";
+import { COLUMNS } from "../utils/constants";
 
 export const useGridCalculator = (
   imageRef: React.RefObject<HTMLImageElement>
 ) => {
   const [gridData, setGridData] = useState<{ rows: number; cols: number }>({
     rows: 0,
-    cols: PER_ROW,
+    cols: COLUMNS,
   });
+
+  console.log(gridData);
 
   const calculateGridData = (): void => {
     if (imageRef.current) {
       const imageWidth = imageRef.current.clientWidth;
-      const imageHeight = imageRef.current.clientHeight;
+      const imageHeight = 680;
       setGridData({
-        ...calculateGridDimensions(imageWidth, imageHeight, PER_ROW, SPACING),
-        cols: PER_ROW,
+        ...calculateGridDimensions(imageWidth, imageHeight),
+        cols: COLUMNS,
       });
     }
   };
 
-  useEffect(() => {
-    calculateGridData();
-    window.addEventListener("resize", calculateGridData);
-    return () => {
-      window.removeEventListener("resize", calculateGridData);
-    };
-  }, [imageRef]);
-
-  return { gridData, calculateGridData };
+  return {
+    gridData: {
+      rows: gridData.rows,
+      cols: COLUMNS,
+    },
+    calculateGridData,
+  };
 };
