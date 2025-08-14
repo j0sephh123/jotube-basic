@@ -10,7 +10,7 @@ export type StoryboardData = {
   updatedAt: string;
 };
 
-export type StoryboardArtifact = {
+export type UploadWithStoryboard = {
   id: number;
   ytId: string;
   title: string;
@@ -25,13 +25,13 @@ export type StoryboardArtifact = {
   storyboard: StoryboardData;
 };
 
-export default function useStoryboards() {
+export default function useUploadsWithStoryboard() {
   const ytChannelId = useTypedChannelYtId();
 
   return useQuery({
     queryKey: ["storyboards", ytChannelId],
     queryFn: () =>
-      nestFetcher<StoryboardArtifact[]>({
+      nestFetcher<UploadWithStoryboard[]>({
         url: `/uploads-video/storyboards/${ytChannelId}`,
         method: "GET",
       }),

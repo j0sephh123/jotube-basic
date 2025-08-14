@@ -1,19 +1,21 @@
 import { Loader } from "lucide-react";
 import ErrorMessage from "@/shared/components/static/ErrorMessage";
 import NoDataAvailable from "@/shared/components/static/NoDataAvailable";
-import { StoryboardArtifact } from "../useStoryboards";
+import { UploadWithStoryboard } from "../useUploadsWithStoryboard";
+import useUploadsWithStoryboard from "../useUploadsWithStoryboard";
+import Header from "./Header";
 
 export default function StoryboardContainer({
   children,
-  isLoading,
-  isError,
-  data,
 }: {
-  children: (data: StoryboardArtifact[]) => React.ReactNode;
-  isLoading: boolean;
-  isError: boolean;
-  data: StoryboardArtifact[] | undefined;
+  children: (data: UploadWithStoryboard[]) => React.ReactNode;
 }) {
+  const {
+    data: uploadsWithStoryboard,
+    isLoading,
+    error,
+  } = useUploadsWithStoryboard();
+
   if (isLoading) {
     return (
       <div className="flex-1 flex items-center justify-center">
@@ -22,13 +24,20 @@ export default function StoryboardContainer({
     );
   }
 
-  if (isError || !data) {
+  if (error || !uploadsWithStoryboard) {
     return <ErrorMessage message="Error loading storyboards" />;
   }
 
-  if (data.length === 0) {
+  if (uploadsWithStoryboard.length === 0) {
     return <NoDataAvailable message="No storyboards found" />;
   }
 
-  return <>{children(data)}</>;
+  return (
+    <>
+      <div className="container mx-auto p-4">
+        <Header length={uploadsWithStoryboard.length} />
+      </div>
+      {children(uploadsWithStoryboard)}
+    </>
+  );
 }

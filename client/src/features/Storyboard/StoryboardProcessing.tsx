@@ -7,5 +7,7 @@ export default function StoryboardProcessing() {
     return null;
   }
 
+  console.log(storyboardProcessingData)
+
   return <div>StoryboardProcessing</div>;
 }

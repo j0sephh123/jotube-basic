@@ -1,12 +1,15 @@
-import { StoryboardArtifact } from "../useStoryboards";
+import { UploadWithStoryboard } from "../useUploadsWithStoryboard";
 import InfoCard from "@/shared/components/InfoCard";
 
 interface StoryboardItemProps {
-  storyboard: StoryboardArtifact;
-  onStoryboardClick: (storyboard: StoryboardArtifact) => void;
+  storyboard: UploadWithStoryboard;
+  onStoryboardClick: (storyboard: UploadWithStoryboard) => void;
 }
 
-export default function StoryboardItem({ storyboard, onStoryboardClick }: StoryboardItemProps) {
+export default function StoryboardItem({
+  storyboard,
+  onStoryboardClick,
+}: StoryboardItemProps) {
   return (
     <div
       key={storyboard.id}
@@ -22,8 +25,7 @@ export default function StoryboardItem({ storyboard, onStoryboardClick }: Storyb
         content={
           <div className="space-y-1">
             <p className="text-sm text-base-content/70">
-              Published:{" "}
-              {new Date(storyboard.publishedAt).toLocaleDateString()}
+              Published: {new Date(storyboard.publishedAt).toLocaleDateString()}
             </p>
             {storyboard.duration && (
               <p className="text-sm text-base-content/70">

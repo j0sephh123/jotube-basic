@@ -1,10 +1,10 @@
-import { StoryboardArtifact } from "../useStoryboards";
+import { UploadWithStoryboard } from "../useUploadsWithStoryboard";
 import Modal from "@/shared/components/Modal";
 import Container from "@/features/Thumbnail/components/Container";
 
 interface ViewerProps {
   isModalOpen: boolean;
-  activeStoryboard: StoryboardArtifact | null;
+  activeStoryboard: UploadWithStoryboard | null;
   onClose: () => void;
   onSave: () => void;
   onDelete: (ytVideoIds: string[]) => void;
@@ -71,11 +71,7 @@ export default function Viewer({
           >
             Delete
           </button>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={onSave}
-          >
+          <button type="button" className="btn btn-primary" onClick={onSave}>
             Save
           </button>
         </div>
