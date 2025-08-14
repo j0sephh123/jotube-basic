@@ -6,8 +6,7 @@ import Grid from "./Grid";
 import Header from "./Header";
 import ThumbnailImage from "./ThumbnailImage";
 import Container from "./Container";
-import ZoomModal from "../../../shared/components/ZoomModal";
-import { useStore } from "@/store/store";
+import { useStore, useZoom } from "@/store/store";
 import { useDialog } from "@/shared/hooks/useDialog";
 import { useGridCalculator } from "../hooks/useGridCalculator";
 import useSubmit from "../hooks/useSubmit";
@@ -32,7 +31,7 @@ export default function ThumbnailsProcessingContent({
     selectedImages,
     metadata: { ytChannelId, ytVideoId },
   } = useStore();
-  const [zoomImage, setZoomImage] = useState<string | null>(null);
+  const { setZoom, url: zoomImage } = useZoom();
   const [cacheBuster] = useState<number>(Date.now());
   const imageRef = useRef<HTMLImageElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -41,7 +40,7 @@ export default function ThumbnailsProcessingContent({
     perRow,
     spacing
   );
-  const [isZoomModalVisible, setIsZoomModalVisible] = useState<boolean>(false);
+  const { isVisible: isZoomModalVisible } = useZoom();
   const handleSubmit = useSubmit();
   let confirm: (options: {
     title: string;
@@ -63,8 +62,7 @@ export default function ThumbnailsProcessingContent({
       ytVideoId,
       index
     )}?v=${cacheBuster}`;
-    setZoomImage(url);
-    setIsZoomModalVisible(true);
+    setZoom(true, url, () => {});
     setSelectedImages((prev) => [...prev, index]);
   };
 
@@ -222,15 +220,6 @@ export default function ThumbnailsProcessingContent({
           />
         </div>
       </Modal>
-
-      <ZoomModal
-        isVisible={isZoomModalVisible}
-        imageUrl={zoomImage}
-        onClose={() => {
-          setIsZoomModalVisible(false);
-          setZoomImage(null);
-        }}
-      />
     </>
   );
 }

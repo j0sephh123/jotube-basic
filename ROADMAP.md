@@ -35,7 +35,6 @@ _Unfiltered, undeveloped concepts. No promises, just possible directions._
 - __have a way to transition between thumbnail sizes__ - right now it is hard coded to a specific size.
 - __video count update__ - right now there is no way to update videoCount, it is fetched once on start and that's it
 - __refactor thumbnails viewer__
-- __refactor card__ - have a common card component
 - __navigate thumbnails__ - Right now it is not possible to process an arbitrary thumbnail, you need to go 1 by 1
 - __fetching uploads better UI__ - right now it is long request, which is not a good UX, but this has never been a priority
 - __create reusable composite components for texts__ like Texts.Title and Buttons.Primary
@@ -52,7 +51,7 @@ _Features or improvements under consideration. Need further clarification, requi
 
 ## ✅ To Do
 
-_Clearly defined tasks or features, ready for implementation._
+- storyboards should use the same component as thumbnails
 
 ---
 

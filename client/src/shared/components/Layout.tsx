@@ -8,6 +8,7 @@ import { DialogProvider } from "./dialog/DialogProvider";
 import ThumbnailsProcessing from "@/features/Thumbnail/components";
 import ScreenshotsSidePanel from "./ScreenshotsSidePanel";
 import { AddChannelToPlaylistModal } from "@/features/Playlist/components/AddChannelToPlaylistModal";
+import ZoomModal from "./ZoomModal";
 
 export default function Layout(): JSX.Element {
   useWebSocket();
@@ -24,6 +25,7 @@ export default function Layout(): JSX.Element {
       <ThumbnailsProcessing />
       <ScreenshotsSidePanel />
       <AddChannelToPlaylistModal />
+      <ZoomModal />
     </DialogProvider>
   );
 }

@@ -1,27 +1,29 @@
 import Modal from "@/shared/components/Modal";
+import { useZoom } from "@/store/store";
 
-type Props = {
-  isVisible: boolean;
-  imageUrl: string | null;
-  onClose: () => void;
-};
+export default function ZoomModal() {
+  const { closeZoom, url, isVisible } = useZoom();
 
-export default function ZoomModal({ isVisible, imageUrl, onClose }: Props) {
-  if (!imageUrl) return null;
+  // const handleClose = () => {
+  //   onClose();
+  //   setZoomImage(null);
+  // };
+
+  if (!isVisible || !url) return null;
 
   return (
     <Modal
       isModalVisible={isVisible}
-      onClose={onClose}
+      onClose={closeZoom}
       maxWidth="90vw"
       maxHeight="90vh"
     >
       <h2 className="text-xl font-bold mb-4">Zoomed Image</h2>
       <img
-        src={imageUrl}
+        src={url}
         alt="Zoomed screenshot"
         className="w-full h-full object-contain"
-        onClick={onClose}
+        onClick={closeZoom}
       />
     </Modal>
   );

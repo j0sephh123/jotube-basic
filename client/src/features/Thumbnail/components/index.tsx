@@ -1,11 +1,11 @@
-import { useStore } from "@/store/store";
+import { useThumbnails } from "@/store/store";
 import Modal from "../../../shared/components/Modal";
 import { useThumbnailByVideoId } from "@/features/Thumbnail/hooks/useThumbnailByVideoId";
 import ThumbnailsProcessingContent from "./ThumbnailsProcessingContent";
 
 export default function ThumbnailsProcessing() {
   const { thumbnailsProcessingData, setThumbnailsProcessingData, metadata } =
-    useStore();
+    useThumbnails();
 
   const handleClose = () => {
     setThumbnailsProcessingData([]);

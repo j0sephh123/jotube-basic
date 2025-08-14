@@ -15,6 +15,7 @@ import { createPlaylistSlice, PlaylistSlice } from "@/features/Playlist/store";
 import { createRangePickersSlice } from "@/features/Dashboard/store/range-picker-slice";
 import { createVideosRangePickersSlice } from "@/features/Dashboard/store/videos-range-picker-slice";
 import { createSlidesSlice } from "@/features/Thumbnail/store/slides-slice";
+import { createZoomSlice } from "./slices/zoom-slice";
 
 // ---- Types ----
 import type {
@@ -26,6 +27,7 @@ import type {
   RangePickersSlice,
   VideosDashboardSlice,
   VideosRangePickersSlice,
+  ZoomSlice,
 } from "./store-types";
 
 // ---- Store ----------------------------------------------------
@@ -41,6 +43,7 @@ export const useStore = create<StoreType>()(
       ...createVideosRangePickersSlice(set, get),
       ...createSidePanelSlice(set),
       ...createPlaylistSlice(set),
+      ...createZoomSlice(set),
     }),
     { name: "store" }
   )
@@ -71,3 +74,4 @@ export const useRangePickers = makeScopedHook<RangePickersSlice>();
 export const useVideosRangePickers = makeScopedHook<VideosRangePickersSlice>();
 export const useSidePanel = makeScopedHook<SidePanelSlice>();
 export const usePlaylist = makeScopedHook<PlaylistSlice>();
+export const useZoom = makeScopedHook<ZoomSlice>();

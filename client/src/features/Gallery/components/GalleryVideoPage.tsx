@@ -17,7 +17,7 @@ import {
 import { useDeleteChannelScreenshot } from "@/features/Screenshot/hooks/useDeleteChannelScreenshot";
 import { useUpdateChannelScreenshot } from "@/features/Screenshot/hooks/useUpdateChannelScreenshot";
 import ScreenshotItem from "./GalleryItem";
-import ZoomModal from "@/shared/components/ZoomModal";
+import { useZoom } from "@/store/store";
 
 const TEMPORAL_THRESHOLD = 3;
 
@@ -35,9 +35,7 @@ export default function GalleryVideoPage() {
   const updateScreenshot = useUpdateChannelScreenshot(ytChannelId);
   const deleteScreenshot = useDeleteChannelScreenshot(ytChannelId);
   const dialogHook = useDialog();
-
-  const [zoomImage, setZoomImage] = useState<string | null>(null);
-  const [isZoomModalVisible, setIsZoomModalVisible] = useState<boolean>(false);
+  const { setZoom } = useZoom();
 
   const videoScreenshots = useMemo(() => {
     if (!screenshots || !ytVideoId) return [];
@@ -101,8 +99,7 @@ export default function GalleryVideoPage() {
 
     const screenshot = videoScreenshots[clickedIndex];
     if (screenshot) {
-      setZoomImage(screenshot.src);
-      setIsZoomModalVisible(true);
+      setZoom(true, screenshot.src, () => {});
     }
   };
 
@@ -232,15 +229,6 @@ export default function GalleryVideoPage() {
           </div>
         ))}
       </div>
-
-      <ZoomModal
-        isVisible={isZoomModalVisible}
-        imageUrl={zoomImage}
-        onClose={() => {
-          setIsZoomModalVisible(false);
-          setZoomImage(null);
-        }}
-      />
     </div>
   );
 }

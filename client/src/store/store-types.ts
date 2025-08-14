@@ -140,6 +140,14 @@ export type VideosRangePickersSlice = {
     | undefined;
 };
 
+export type ZoomSlice = {
+  isVisible: boolean;
+  url: string;
+  onClose: () => void;
+  setZoom: (isVisible: boolean, url: string, onClose: () => void) => void;
+  closeZoom: () => void;
+};
+
 export type Store = SlidesSlice &
   ThumbnailsProcessingSlice &
   WebSocketSlice &
@@ -148,4 +156,5 @@ export type Store = SlidesSlice &
   VideosDashboardSlice &
   VideosRangePickersSlice &
   SidePanelSlice &
-  PlaylistSlice;
+  PlaylistSlice &
+  ZoomSlice;
