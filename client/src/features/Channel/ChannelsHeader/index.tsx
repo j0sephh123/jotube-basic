@@ -17,6 +17,7 @@ import Tabs from "./Tabs";
 import BulkOperations from "./BulkOperations";
 import ViewThumbnails from "../components/ViewThumbnails";
 import ViewScreenshots from "../components/ViewScreenshots";
+import FetchUploadsButton from "@/features/Upload/components/FetchUploadsButton";
 
 const ChannelHeader = () => {
   const ytChannelId = useTypedChannelYtId();
@@ -25,7 +26,8 @@ const ChannelHeader = () => {
   const isSavedPage = pathname.includes("/saved");
   const isIndexPage = pathname.length === 34;
 
-  const { data: metadata } = useChannelMetadataQuery(ytChannelId);
+  const { data: metadata, refetch: refetchMetadata } =
+    useChannelMetadataQuery(ytChannelId);
 
   if (!metadata) return null;
 
@@ -35,6 +37,8 @@ const ChannelHeader = () => {
     id,
     thumbnailArtifactsCount,
     playlist,
+    videoCount,
+    fetchedUntilEnd,
   } = metadata;
 
   console.log({
@@ -91,6 +95,13 @@ const ChannelHeader = () => {
                 screenshotArtifactsCount={screenshotArtifactsCount}
               />
               {playlistButton}
+              {!fetchedUntilEnd && (
+                <FetchUploadsButton
+                  ytChannelId={ytChannelId}
+                  videoCount={videoCount}
+                  onSuccess={refetchMetadata}
+                />
+              )}
               <BulkOperations
                 ytChannelId={ytChannelId}
                 isSavedPage={isSavedPage}
