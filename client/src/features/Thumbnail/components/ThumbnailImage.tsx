@@ -1,31 +1,27 @@
-import { forwardRef, memo } from "react";
-import { useStore } from "@/store/store";
-import { imagesBasePath } from "@/shared/utils/image";
-
-const generateMainThumbnailUrl = (
-  ytChannelId: string,
-  ytVideoId: string,
-  index: number,
-  cacheBuster?: number
-): string =>
-  `${imagesBasePath}/${ytChannelId}/${ytVideoId}/thumbnails/${index}.png${
-    cacheBuster ? `?v=${cacheBuster}` : ""
-  }`;
+import { forwardRef, memo, RefObject } from "react";
+import { useThumbnailsSlice } from "@/store/store";
+import { generateMainThumbnailUrl } from "../utils/generateMainThumbnailUrl";
+import { useGridCalculator } from "../hooks/useGridCalculator";
 
 type Props = {
-  onLoad: () => void;
   cacheBuster: number;
-  index: number;
 };
 
 const ThumbnailImage = memo(
-  forwardRef<HTMLImageElement, Props>(({ onLoad, cacheBuster, index }, ref) => {
-    const { metadata } = useStore();
+  forwardRef<HTMLImageElement, Props>(({ cacheBuster }, ref) => {
+    const { calculateGridData } = useGridCalculator(
+      ref as RefObject<HTMLImageElement>
+    );
+
+    const onLoad = () => {
+      calculateGridData();
+    };
+    const { metadata, currentIndex } = useThumbnailsSlice();
     const { ytChannelId, ytVideoId } = metadata;
     const src = generateMainThumbnailUrl(
       ytChannelId,
       ytVideoId,
-      index,
+      currentIndex,
       cacheBuster
     );
 

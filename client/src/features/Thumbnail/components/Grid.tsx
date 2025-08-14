@@ -1,22 +1,35 @@
-import { useStore } from "@/store/store";
+import { useThumbnailsSlice, useZoom } from "@/store/store";
 import ThumbnailGridCell from "./ThumbnailGridCell";
+import { generateThumbnailUrl } from "@/shared/utils/image";
+import { PER_ROW, SPACING } from "../utils/constants";
 
 type Props = {
   gridData: { rows: number; cols: number };
-  spacing: number;
-  handleZoom: (index: number) => void;
-  batch: number;
-  perRow: number;
+  cacheBuster: number;
 };
 
 export default function Grid({
   gridData,
-  spacing,
-  handleZoom,
-  batch,
-  perRow,
+  cacheBuster,
 }: Props): JSX.Element {
-  const { selectedImages, toggleSelectedImage } = useStore();
+  const {
+    currentIndex: batch,
+    selectedImages,
+    toggleSelectedImage,
+    setSelectedImages,
+    metadata: { ytChannelId, ytVideoId },
+  } = useThumbnailsSlice();
+  const { setZoom } = useZoom();
+
+  const handleZoom = (index: number): void => {
+    const url = `${generateThumbnailUrl(
+      ytChannelId,
+      ytVideoId,
+      index
+    )}?v=${cacheBuster}`;
+    setZoom(true, url, () => {});
+    setSelectedImages((prev) => [...prev, index]);
+  };
 
   return (
     <div
@@ -24,7 +37,7 @@ export default function Grid({
       style={{
         gridTemplateColumns: `repeat(${gridData.cols}, 1fr)`,
         gridTemplateRows: `repeat(${gridData.rows}, 1fr)`,
-        gap: `${spacing}px`,
+        gap: `${SPACING}px`,
       }}
     >
       {Array.from({ length: gridData.rows * gridData.cols }).map((_, index) => (
@@ -35,7 +48,7 @@ export default function Grid({
           handleSelect={(i, b, p) => toggleSelectedImage(i, b, p)}
           handleZoom={handleZoom}
           batch={batch}
-          perRow={perRow}
+          perRow={PER_ROW}
         />
       ))}
     </div>

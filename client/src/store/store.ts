@@ -66,7 +66,7 @@ function makeScopedHook<Slice>() {
 
 // Per-slice hooks
 export const useSlides = makeScopedHook<SlidesSlice>();
-export const useThumbnails = makeScopedHook<ThumbnailsProcessingSlice>();
+export const useThumbnailsSlice = makeScopedHook<ThumbnailsProcessingSlice>();
 export const useWebSocketState = makeScopedHook<WebSocketSlice>();
 export const useDashboard = makeScopedHook<DashboardSlice>();
 export const useVideosDashboard = makeScopedHook<VideosDashboardSlice>();

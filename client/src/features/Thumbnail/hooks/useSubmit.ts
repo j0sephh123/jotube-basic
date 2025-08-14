@@ -1,4 +1,4 @@
-import { useStore } from "@/store/store";
+import { useThumbnailsSlice } from "@/store/store";
 import { useCallback } from "react";
 import { useFinishProcessingUpload } from "@/features/Upload/hooks/useFinishProcessingUpload";
 import { useRefetchTotalCounts } from "@/features/Statistics/hooks/useTotalCounts";
@@ -11,7 +11,7 @@ export default function useSubmit() {
     setThumbnailsProcessingData,
     selectedImages,
     setSelectedImages,
-  } = useStore();
+  } = useThumbnailsSlice();
   const refetchGroupedThumbnails = useRefetchGroupedThumbnails();
   const refetchTotalCounts = useRefetchTotalCounts();
   const refetchThumbnailByVideoId = useRefetchThumbnailByVideoId(

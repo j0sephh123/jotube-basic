@@ -1,11 +1,11 @@
-import { useThumbnails } from "@/store/store";
-import Modal from "../../../shared/components/Modal";
+import { useThumbnailsSlice } from "@/store/store";
+import Modal from "../../shared/components/Modal";
 import { useThumbnailByVideoId } from "@/features/Thumbnail/hooks/useThumbnailByVideoId";
-import ThumbnailsProcessingContent from "./ThumbnailsProcessingContent";
+import ThumbnailsProcessingContent from "./components/ThumbnailsProcessingContent";
 
 export default function ThumbnailsProcessing() {
   const { thumbnailsProcessingData, setThumbnailsProcessingData, metadata } =
-    useThumbnails();
+    useThumbnailsSlice();
 
   const handleClose = () => {
     setThumbnailsProcessingData([]);
@@ -32,10 +32,5 @@ export default function ThumbnailsProcessing() {
     );
   }
 
-  return (
-    <ThumbnailsProcessingContent
-      onClose={handleClose}
-      thumbnailsCount={data.thumbnailsCount}
-    />
-  );
+  return <ThumbnailsProcessingContent />;
 }

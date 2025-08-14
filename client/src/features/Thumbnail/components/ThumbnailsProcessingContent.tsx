@@ -1,225 +1,68 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import Modal from "@/shared/components/Modal";
-import { generateThumbnailUrl } from "@/shared/utils/image";
 import Footer from "./Footer";
 import Grid from "./Grid";
 import Header from "./Header";
 import ThumbnailImage from "./ThumbnailImage";
 import Container from "./Container";
-import { useStore, useZoom } from "@/store/store";
-import { useDialog } from "@/shared/hooks/useDialog";
+import { useThumbnailsSlice } from "@/store/store";
 import { useGridCalculator } from "../hooks/useGridCalculator";
-import useSubmit from "../hooks/useSubmit";
+import useResetSelection from "../hooks/useResetSelection";
+import useEvents from "../hooks/useEvents";
+import usePaginate from "../hooks/usePaginate";
+import useHandleKeyDown from "../hooks/useHandleKeyDown";
+import useHandleContainerWheel from "../hooks/useHandleContainerWheel";
 
-const spacing = 10;
-const imgWidth = 1900;
-const perRow = 8;
+export default function ThumbnailsProcessingContent() {
+  const { setThumbnailsProcessingData } = useThumbnailsSlice();
 
-type Props = {
-  onClose: () => void;
-  thumbnailsCount: number;
-};
+  const handleClose = () => {
+    setThumbnailsProcessingData([]);
+  };
 
-export default function ThumbnailsProcessingContent({
-  onClose,
-  thumbnailsCount,
-}: Props) {
-  const {
-    setSelectedImages,
-    currentIndex,
-    setCurrentIndex,
-    selectedImages,
-    metadata: { ytChannelId, ytVideoId },
-  } = useStore();
-  const { setZoom, url: zoomImage } = useZoom();
-  const [cacheBuster] = useState<number>(Date.now());
+  const cacheBuster = Date.now();
+
   const imageRef = useRef<HTMLImageElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const { gridData, calculateGridData } = useGridCalculator(
-    imageRef,
-    perRow,
-    spacing
+
+  const { gridData } = useGridCalculator(imageRef);
+
+  useResetSelection(containerRef);
+
+  const { handlePrevious, handleNext } = usePaginate();
+
+  const handleKeyDown = useHandleKeyDown(
+    handlePrevious,
+    handleNext,
+    handleClose
   );
-  const { isVisible: isZoomModalVisible } = useZoom();
-  const handleSubmit = useSubmit();
-  let confirm: (options: {
-    title: string;
-    message: string;
-    confirmText: string;
-    cancelText: string;
-    onYes: () => void;
-  }) => void;
-  try {
-    const dialogHook = useDialog();
-    confirm = dialogHook.confirm;
-  } catch {
-    confirm = () => console.log("Dialog not available");
-  }
 
-  const handleZoom = (index: number): void => {
-    const url = `${generateThumbnailUrl(
-      ytChannelId,
-      ytVideoId,
-      index
-    )}?v=${cacheBuster}`;
-    setZoom(true, url, () => {});
-    setSelectedImages((prev) => [...prev, index]);
-  };
+  const handleContainerWheel = useHandleContainerWheel(
+    handlePrevious,
+    handleNext
+  );
 
-  const handleImageLoad = () => {
-    calculateGridData();
-  };
-
-  useEffect(() => {
-    setSelectedImages([]);
-    setCurrentIndex(0);
-    if (containerRef.current) {
-      containerRef.current.scrollTop = 0;
-    }
-  }, [setSelectedImages, setCurrentIndex]);
-
-  const handlePrevious = () => {
-    setCurrentIndex(currentIndex - 1);
-  };
-
-  const handleNext = () => {
-    const maxIndex = thumbnailsCount;
-    if (thumbnailsCount === 0 || currentIndex < maxIndex - 1) {
-      setCurrentIndex(currentIndex + 1);
-    } else {
-      try {
-        confirm({
-          title: "Submit Selection",
-          message:
-            "You've reached the last thumbnail. Do you want to submit your selection?",
-          confirmText: "Submit",
-          cancelText: "Cancel",
-          onYes: handleSubmit,
-        });
-      } catch (error) {
-        console.error("Error showing confirm dialog:", error);
-      }
-    }
-  };
-
-  const handleKeyDown = (event: KeyboardEvent) => {
-    if (isZoomModalVisible) return;
-
-    const maxIndex = thumbnailsCount;
-
-    switch (event.key) {
-      case "ArrowLeft":
-        event.preventDefault();
-        if (thumbnailsCount === 0 || currentIndex > 0) {
-          handlePrevious();
-        }
-        break;
-      case "ArrowRight":
-        event.preventDefault();
-        if (thumbnailsCount === 0 || currentIndex < maxIndex) {
-          handleNext();
-        } else {
-          handleSubmit();
-        }
-        break;
-      case "Escape":
-        event.preventDefault();
-        onClose();
-        break;
-    }
-  };
-
-  const handleContainerWheel = (event: WheelEvent) => {
-    if (isZoomModalVisible) return;
-
-    event.preventDefault();
-    const deltaY = event.deltaY;
-
-    if (deltaY > 0) {
-      const maxIndex = thumbnailsCount;
-      if (thumbnailsCount === 0 || currentIndex < maxIndex) {
-        handleNext();
-      } else {
-        handleSubmit();
-      }
-    } else if (deltaY < 0) {
-      if (thumbnailsCount === 0 || currentIndex > 0) {
-        handlePrevious();
-      }
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [currentIndex, thumbnailsCount, perRow, isZoomModalVisible]);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener("wheel", handleContainerWheel, {
-        passive: false,
-      });
-      return () => {
-        container.removeEventListener("wheel", handleContainerWheel);
-      };
-    }
-  }, [currentIndex, thumbnailsCount, isZoomModalVisible]);
-
-  const pageInfo = `${currentIndex + 1} / ${thumbnailsCount}`;
+  useEvents(handleKeyDown, handleContainerWheel, containerRef);
 
   return (
-    <>
-      <Modal
-        isModalVisible
-        onClose={onClose}
-        maxWidth="100vw"
-        maxHeight="100vh"
-      >
-        <div className="w-full h-screen p-0">
-          <Header pageInfo={pageInfo} />
-          <Container ref={containerRef}>
-            <div
-              className="relative inline-block"
-              style={{ width: `${imgWidth}px` }}
-            >
-              <ThumbnailImage
-                ref={imageRef}
-                onLoad={handleImageLoad}
-                cacheBuster={cacheBuster}
-                index={currentIndex}
-              />
-              {!zoomImage && gridData.rows > 0 && (
-                <Grid
-                  key={`${perRow}-${gridData.rows}-${gridData.cols}`}
-                  gridData={gridData}
-                  spacing={spacing}
-                  handleZoom={handleZoom}
-                  batch={currentIndex}
-                  perRow={perRow}
-                />
-              )}
-            </div>
-          </Container>
-          <Footer
-            isNextDisabled={false}
-            isPreviousDisabled={
-              thumbnailsCount === 0 ? false : currentIndex === 0
-            }
-            onPrevious={handlePrevious}
-            onNext={handleNext}
-            selectedImages={selectedImages}
-            pageInfo={pageInfo}
-            isLastItem={
-              thumbnailsCount === 0
-                ? false
-                : currentIndex === thumbnailsCount - 1
-            }
+    <Modal
+      isModalVisible
+      onClose={handleClose}
+      maxWidth="100vw"
+      maxHeight="100vh"
+    >
+      <div className="w-full h-screen p-0">
+        <Header />
+        <Container ref={containerRef}>
+          <ThumbnailImage ref={imageRef} cacheBuster={cacheBuster} />
+          <Grid
+            key={`${gridData.rows}-${gridData.cols}`}
+            gridData={gridData}
+            cacheBuster={cacheBuster}
           />
-        </div>
-      </Modal>
-    </>
+        </Container>
+        <Footer onPrevious={handlePrevious} onNext={handleNext} />
+      </div>
+    </Modal>
   );
 }
