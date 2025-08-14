@@ -51,6 +51,15 @@ export default function Navbar(): JSX.Element {
               {savedCount}
             </span>
           </Link>
+          <Link
+            to="/dashboard/channels/thumbnails"
+            className="btn btn-ghost relative"
+          >
+            Thumbnails
+            <span className="absolute -top-1 -right-1 text-xs bg-zinc-600 text-white rounded-full px-1 py-0 text-[10px] leading-tight min-w-4 text-center">
+              {totalCounts?.totalThumbnails ?? 0}
+            </span>
+          </Link>
           <PlayButton />
         </div>
         <div className="relative flex items-center gap-4 w-80">
