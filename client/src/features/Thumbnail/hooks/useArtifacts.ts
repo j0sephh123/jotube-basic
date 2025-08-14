@@ -2,7 +2,7 @@ import { useStore } from "@/store/store";
 import { useFetchCarousel } from "@/features/Screenshot/hooks/useFetchCarousel";
 import { useGetUploadsWithThumbnails } from "@/features/Thumbnail/hooks/useGetUploadsWithThumbnails";
 
-export default function useThumbnails() {
+export default function useArtifacts() {
   const { setThumbnailsProcessingData } = useStore();
   const fetchCarousel = useFetchCarousel();
   const getUploadsWithThumbnails = useGetUploadsWithThumbnails();

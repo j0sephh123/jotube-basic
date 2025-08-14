@@ -1,7 +1,7 @@
 import { Channel } from "../../../types";
 import TableCol from "../TableCol";
 import { ImageIcon } from "lucide-react";
-import useArtifacts from "@/features/Thumbnail/hooks/useThumbnails";
+import useArtifacts from "@/features/Thumbnail/hooks/useArtifacts";
 
 type ThumbnailCountCellProps = {
   channel: Channel;

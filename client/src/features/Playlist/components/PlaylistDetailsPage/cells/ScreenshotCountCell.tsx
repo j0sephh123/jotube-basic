@@ -1,6 +1,6 @@
 import { Channel } from "../../../types";
 import TableCol from "../TableCol";
-import useArtifacts from "@/features/Thumbnail/hooks/useThumbnails";
+import useArtifacts from "@/features/Thumbnail/hooks/useArtifacts";
 import { Camera } from "lucide-react";
 
 type ScreenshotCountCellProps = {

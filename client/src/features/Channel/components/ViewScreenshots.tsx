@@ -1,5 +1,5 @@
 import Button from "@/shared/button";
-import useArtifacts from "@/features/Thumbnail/hooks/useThumbnails";
+import useArtifacts from "@/features/Thumbnail/hooks/useArtifacts";
 
 type Props = {
   ytChannelId: string;

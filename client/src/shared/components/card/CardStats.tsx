@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import useArtifacts from "@/features/Thumbnail/hooks/useThumbnails";
+import useArtifacts from "@/features/Thumbnail/hooks/useArtifacts";
 import { routes } from "@/shared/utils/routes";
 import useViewThumbnails from "@/shared/hooks/useViewThumbnails";
 import { Fragment } from "react";
@@ -78,7 +78,9 @@ export default function CardStats({
               {stat.value}
             </span>
           </Tooltip>
-          {index < stats.length - 1 && <span className="text-base-content/50">|</span>}
+          {index < stats.length - 1 && (
+            <span className="text-base-content/50">|</span>
+          )}
         </Fragment>
       ))}
     </div>
