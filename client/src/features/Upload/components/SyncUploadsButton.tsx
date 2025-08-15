@@ -10,12 +10,14 @@ type SyncUploadsButtonProps = {
   lastSyncedAt: string | null;
   ytChannelId: string;
   id: number;
+  onSuccess?: () => void;
 };
 
 export default function SyncUploadsButton({
   lastSyncedAt,
   ytChannelId,
   id,
+  onSuccess,
 }: SyncUploadsButtonProps) {
   const syncUploads = useSyncUploads(ytChannelId);
 
@@ -27,6 +29,7 @@ export default function SyncUploadsButton({
         ytChannelId,
         channelId: id,
       });
+      onSuccess?.();
     } catch (error) {
       console.error("Failed to sync channel:", error);
     }
@@ -35,7 +38,7 @@ export default function SyncUploadsButton({
   return (
     <button
       onClick={handleSync}
-      className="text-xs flex items-center gap-1 hover:bg-gray-700/50 p-1 rounded transition-colors w-12 justify-center"
+      className="text-xs flex items-center gap-1 hover:bg-gray-700/50 p-1 rounded transition-colors w-20 justify-center"
     >
       <RefreshCw
         className={clsx(

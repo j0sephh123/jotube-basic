@@ -15,6 +15,7 @@ export interface Channel {
   createdAt: string;
   updatedAt: string;
   playlistId: number | null;
+  lastSyncedAt: string | null;
   counts?: {
     videoCount: number;
     savedCount: number;

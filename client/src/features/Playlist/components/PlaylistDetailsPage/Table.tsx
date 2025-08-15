@@ -11,6 +11,7 @@ import ThumbnailCountCell from "./cells/ThumbnailCountCell";
 import StoryboardCountCell from "./cells/StoryboardCountCell";
 import GalleryCell from "./cells/GalleryCell";
 import ActionsCell from "./cells/ActionsCell";
+import { useRefetchPlaylist } from "../../hooks/useGetPlaylist";
 
 type TableProps = {
   playlist: Playlist;
@@ -18,6 +19,7 @@ type TableProps = {
 
 export default function Table({ playlist }: TableProps) {
   const { handleRemoveFromPlaylist, isPending } = useRemoveFromPlaylist();
+  const refetchPlaylist = useRefetchPlaylist(playlist.id.toString());
   const [sortField, setSortField] = useState<
     | "title"
     | "videoCount"
@@ -88,7 +90,7 @@ export default function Table({ playlist }: TableProps) {
         <TableRow
           key={channel.id}
           cols={[
-            <TitleCell channel={channel} />,
+            <TitleCell channel={channel} refetchPlaylist={refetchPlaylist} />,
             <VideoCountCell channel={channel} />,
             <SavedCountCell channel={channel} />,
             <ScreenshotCountCell channel={channel} />,
