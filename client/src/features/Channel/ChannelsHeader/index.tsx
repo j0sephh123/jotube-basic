@@ -43,10 +43,6 @@ const ChannelHeader = () => {
     storyboardArtifactsCount,
   } = metadata;
 
-  console.log({
-    playlist,
-  });
-
   const playlistButton = (
     <div className="flex items-center gap-2">
       <button
