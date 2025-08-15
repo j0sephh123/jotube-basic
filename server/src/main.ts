@@ -7,13 +7,10 @@ import { createBullBoard } from '@bull-board/api';
 import { ExpressAdapter } from '@bull-board/express';
 import { BullAdapter } from '@bull-board/api/bullAdapter';
 import { queueNames } from 'src/shared/constants';
-import * as express from 'express';
-import * as path from 'path';
 import redoc from 'redoc-express';
 import { writeFileSync } from 'fs';
 import { dump } from 'js-yaml';
 import { ConfigService } from '@nestjs/config';
-
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
