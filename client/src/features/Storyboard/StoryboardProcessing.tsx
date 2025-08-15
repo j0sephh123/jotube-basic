@@ -5,6 +5,7 @@ import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMe
 import { useRefetchChannelUploads } from "@/features/Upload/hooks/useUploadsList";
 import { useDeleteUploads } from "@/features/Upload/hooks/useUploadsDelete";
 import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";
+import { useRef, useEffect } from "react";
 
 export default function StoryboardProcessing() {
   const {
@@ -17,10 +18,17 @@ export default function StoryboardProcessing() {
   const firstUpload = firstChannel?.uploads[0];
   const currentChannelId = useTypedChannelYtId();
 
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const refetchChannelMetadata = useRefetchChannelMetadata();
   const refetchChannelUploads = useRefetchChannelUploads(
     firstChannel?.ytChannelId || ""
   );
+
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
+  }, [firstUpload?.id]);
 
   const save = useSaveUpload(() => {
     if (firstChannel?.ytChannelId) {
@@ -120,7 +128,10 @@ export default function StoryboardProcessing() {
             </span>
           </div>
         </div>
-        <div className="flex-1 w-full p-4 overflow-y-auto">
+        <div
+          ref={scrollContainerRef}
+          className="flex-1 w-full p-4 overflow-y-auto"
+        >
           <div className="grid grid-cols-2 gap-4">
             {storyboardItems.map(({ index, url }) => (
               <div
