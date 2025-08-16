@@ -90,5 +90,6 @@ async function bootstrap() {
   console.log(`Swagger API Docs: http://localhost:${PORT}/api`);
   console.log(`Redoc API Docs: http://localhost:${PORT}/docs`);
   console.log(`Bull Board: http://localhost:${PORT}/admin/queues`);
+  console.log(`GraphQL Playground: http://localhost:${PORT}/graphql`);
 }
 bootstrap();

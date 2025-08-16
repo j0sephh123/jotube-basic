@@ -1,0 +1,8 @@
+schema: "../server/schema.gql"      # path to your backend schema
+documents: "src/api/graphql/**/*.ts"           # where your gql queries live
+generates:
+  src/generated/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"

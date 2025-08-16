@@ -37,6 +37,7 @@ import * as path from 'path';
 import { LoggingModule } from './logging/logging.module';
 import { ArtifactsAggregatorModule } from './artifacts-aggregator/artifacts-aggregator.module';
 import { PlaylistModule } from './playlist/playlist.module';
+import { AppGraphQLModule } from './graphql/graphql.module';
 
 @Module({
   imports: [
@@ -90,6 +91,7 @@ import { PlaylistModule } from './playlist/playlist.module';
     ArtifactsAggregatorModule,
     PlaylistModule,
     FileModule,
+    AppGraphQLModule,
   ],
   controllers: [
     QueueController,
