@@ -183,6 +183,7 @@ export type Query = {
   getSlides: Array<GetSlidesResponse>;
   screenshots: Array<ScreenshotsCountsResponse>;
   screenshotsByVideo: Array<VideoScreenshotResponse>;
+  statisticsCounts: StatisticsCountsResponse;
   todo: Todo;
   todos: Array<Todo>;
   uploadsWithThumbnails: Array<UploadsWithThumbnailsResponse>;
@@ -235,6 +236,13 @@ export type ScreenshotsCountsResponse = {
   __typename?: 'ScreenshotsCountsResponse';
   count: Scalars['Float']['output'];
   month: Scalars['String']['output'];
+};
+
+export type StatisticsCountsResponse = {
+  __typename?: 'StatisticsCountsResponse';
+  totalSaved: Scalars['Float']['output'];
+  totalScreenshots: Scalars['Float']['output'];
+  totalThumbnails: Scalars['Float']['output'];
 };
 
 export type Todo = {
@@ -364,6 +372,11 @@ export type GetScreenshotsByVideoQueryVariables = Exact<{
 
 
 export type GetScreenshotsByVideoQuery = { __typename?: 'Query', screenshotsByVideo: Array<{ __typename?: 'VideoScreenshotResponse', id: number, second: number, ytChannelId: string, ytVideoId: string, isFav?: boolean | null, src: string }> };
+
+export type GetStatisticsCountsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetStatisticsCountsQuery = { __typename?: 'Query', statisticsCounts: { __typename?: 'StatisticsCountsResponse', totalScreenshots: number, totalThumbnails: number, totalSaved: number } };
 
 
 export const GetTodosDocument = gql`
@@ -855,3 +868,44 @@ export type GetScreenshotsByVideoQueryHookResult = ReturnType<typeof useGetScree
 export type GetScreenshotsByVideoLazyQueryHookResult = ReturnType<typeof useGetScreenshotsByVideoLazyQuery>;
 export type GetScreenshotsByVideoSuspenseQueryHookResult = ReturnType<typeof useGetScreenshotsByVideoSuspenseQuery>;
 export type GetScreenshotsByVideoQueryResult = Apollo.QueryResult<GetScreenshotsByVideoQuery, GetScreenshotsByVideoQueryVariables>;
+export const GetStatisticsCountsDocument = gql`
+    query GetStatisticsCounts {
+  statisticsCounts {
+    totalScreenshots
+    totalThumbnails
+    totalSaved
+  }
+}
+    `;
+
+/**
+ * __useGetStatisticsCountsQuery__
+ *
+ * To run a query within a React component, call `useGetStatisticsCountsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetStatisticsCountsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetStatisticsCountsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetStatisticsCountsQuery(baseOptions?: Apollo.QueryHookOptions<GetStatisticsCountsQuery, GetStatisticsCountsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetStatisticsCountsQuery, GetStatisticsCountsQueryVariables>(GetStatisticsCountsDocument, options);
+      }
+export function useGetStatisticsCountsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetStatisticsCountsQuery, GetStatisticsCountsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetStatisticsCountsQuery, GetStatisticsCountsQueryVariables>(GetStatisticsCountsDocument, options);
+        }
+export function useGetStatisticsCountsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetStatisticsCountsQuery, GetStatisticsCountsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetStatisticsCountsQuery, GetStatisticsCountsQueryVariables>(GetStatisticsCountsDocument, options);
+        }
+export type GetStatisticsCountsQueryHookResult = ReturnType<typeof useGetStatisticsCountsQuery>;
+export type GetStatisticsCountsLazyQueryHookResult = ReturnType<typeof useGetStatisticsCountsLazyQuery>;
+export type GetStatisticsCountsSuspenseQueryHookResult = ReturnType<typeof useGetStatisticsCountsSuspenseQuery>;
+export type GetStatisticsCountsQueryResult = Apollo.QueryResult<GetStatisticsCountsQuery, GetStatisticsCountsQueryVariables>;

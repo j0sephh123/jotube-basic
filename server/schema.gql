@@ -118,6 +118,12 @@ type VideoScreenshotResponse {
   src: String!
 }
 
+type StatisticsCountsResponse {
+  totalScreenshots: Float!
+  totalThumbnails: Float!
+  totalSaved: Float!
+}
+
 type Todo {
   id: ID!
   title: String!
@@ -134,6 +140,7 @@ type Query {
   screenshotsByVideo(ytVideoId: String!): [VideoScreenshotResponse!]!
   channelForPlaylist(ytChannelId: String!): ChannelForPlaylistResponse!
   channelMetadata(ytChannelId: String!): ChannelMetadataResponse!
+  statisticsCounts: StatisticsCountsResponse!
   fetchDashboard(fetchDashboardInput: FetchDashboardInput!): ChannelsDashboardResponse!
   fetchVideosDashboard(page: Float, sortOrder: String, screenshotMin: Float, screenshotMax: Float): VideosDashboardResponse!
   todos: [Todo!]!

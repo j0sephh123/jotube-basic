@@ -155,3 +155,13 @@ export const GET_SCREENSHOTS_BY_VIDEO = gql`
     }
   }
 `;
+
+export const GET_STATISTICS_COUNTS = gql`
+  query GetStatisticsCounts {
+    statisticsCounts {
+      totalScreenshots
+      totalThumbnails
+      totalSaved
+    }
+  }
+`;
