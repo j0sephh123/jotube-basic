@@ -29,6 +29,15 @@ export const DELETE_CHANNEL = gql`
   }
 `;
 
+export const UPLOADS_WITH_THUMBNAILS = gql`
+  query UploadsWithThumbnails($input: UploadsWithThumbnailsInput!) {
+    uploadsWithThumbnails(input: $input) {
+      ytChannelId
+      ytVideoId
+    }
+  }
+`;
+
 export const GET_CHANNEL_FOR_PLAYLIST = gql`
   query GetChannelForPlaylist($ytChannelId: String!) {
     channelForPlaylist(ytChannelId: $ytChannelId) {
