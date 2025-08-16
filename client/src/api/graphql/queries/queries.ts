@@ -133,3 +133,12 @@ export const FETCH_VIDEOS_DASHBOARD = gql`
     }
   }
 `;
+
+export const GET_SCREENSHOTS = gql`
+  query GetScreenshots {
+    screenshots {
+      month
+      count
+    }
+  }
+`;
