@@ -214,3 +214,25 @@ enum ArtifactType {
 - **Redis**: Required for job queues
 - **MySQL**: Required for data persistence
 - **File System**: Significant storage requirements for videos/screenshots
+
+## GraphQL Integration
+
+### Server-Side (NestJS)
+- **Framework**: @nestjs/graphql with Apollo Driver
+- **Auto-schema**: Schema automatically generated from TypeScript decorators
+- **Resolvers**: Use @Resolver(), @Query(), @Mutation() decorators
+- **Types**: Use @ObjectType(), @InputType(), @Field() decorators
+- **Integration**: Resolvers use existing services for business logic
+
+### Client-Side (React + Apollo)
+- **Codegen**: GraphQL hooks auto-generated from queries/mutations
+- **Workflow**: 
+  1. Add GraphQL operations to `client/src/api/graphql/queries/queries.ts`
+  2. Run codegen to generate TypeScript hooks
+  3. Use auto-generated hooks in components
+- **Example**: `CREATE_CHANNEL` mutation generates `useCreateChannelMutation` hook
+
+### Migration Strategy
+- **Gradual rollout**: Add resolvers one feature at a time
+- **Service reuse**: Resolvers call existing service methods
+- **Dual endpoints**: REST and GraphQL can coexist during transition

@@ -2,6 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type CreateChannelResponse {
+  success: Boolean!
+  ytChannelId: String
+}
+
 type Todo {
   id: ID!
   title: String!
@@ -22,9 +27,14 @@ type Query {
 }
 
 type Mutation {
+  createChannel(createChannelInput: CreateChannelInput!): CreateChannelResponse!
   createTodo(createTodoInput: CreateTodoInput!): Todo!
   updateTodo(id: ID!, updateTodoInput: UpdateTodoInput!): Todo!
   removeTodo(id: ID!): Boolean!
+}
+
+input CreateChannelInput {
+  ytVideoId: String!
 }
 
 input CreateTodoInput {

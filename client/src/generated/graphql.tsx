@@ -19,6 +19,16 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
 };
 
+export type CreateChannelInput = {
+  ytVideoId: Scalars['String']['input'];
+};
+
+export type CreateChannelResponse = {
+  __typename?: 'CreateChannelResponse';
+  success: Scalars['Boolean']['output'];
+  ytChannelId?: Maybe<Scalars['String']['output']>;
+};
+
 export type CreateTodoInput = {
   description: Scalars['String']['input'];
   title: Scalars['String']['input'];
@@ -26,9 +36,15 @@ export type CreateTodoInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createChannel: CreateChannelResponse;
   createTodo: Todo;
   removeTodo: Scalars['Boolean']['output'];
   updateTodo: Todo;
+};
+
+
+export type MutationCreateChannelArgs = {
+  createChannelInput: CreateChannelInput;
 };
 
 
@@ -79,6 +95,13 @@ export type GetTodosQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetTodosQuery = { __typename?: 'Query', todos: Array<{ __typename?: 'Todo', id: string, title: string, completed: boolean }> };
 
+export type CreateChannelMutationVariables = Exact<{
+  createChannelInput: CreateChannelInput;
+}>;
+
+
+export type CreateChannelMutation = { __typename?: 'Mutation', createChannel: { __typename?: 'CreateChannelResponse', success: boolean, ytChannelId?: string | null } };
+
 
 export const GetTodosDocument = gql`
     query GetTodos {
@@ -121,3 +144,37 @@ export type GetTodosQueryHookResult = ReturnType<typeof useGetTodosQuery>;
 export type GetTodosLazyQueryHookResult = ReturnType<typeof useGetTodosLazyQuery>;
 export type GetTodosSuspenseQueryHookResult = ReturnType<typeof useGetTodosSuspenseQuery>;
 export type GetTodosQueryResult = Apollo.QueryResult<GetTodosQuery, GetTodosQueryVariables>;
+export const CreateChannelDocument = gql`
+    mutation CreateChannel($createChannelInput: CreateChannelInput!) {
+  createChannel(createChannelInput: $createChannelInput) {
+    success
+    ytChannelId
+  }
+}
+    `;
+export type CreateChannelMutationFn = Apollo.MutationFunction<CreateChannelMutation, CreateChannelMutationVariables>;
+
+/**
+ * __useCreateChannelMutation__
+ *
+ * To run a mutation, you first call `useCreateChannelMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateChannelMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createChannelMutation, { data, loading, error }] = useCreateChannelMutation({
+ *   variables: {
+ *      createChannelInput: // value for 'createChannelInput'
+ *   },
+ * });
+ */
+export function useCreateChannelMutation(baseOptions?: Apollo.MutationHookOptions<CreateChannelMutation, CreateChannelMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateChannelMutation, CreateChannelMutationVariables>(CreateChannelDocument, options);
+      }
+export type CreateChannelMutationHookResult = ReturnType<typeof useCreateChannelMutation>;
+export type CreateChannelMutationResult = Apollo.MutationResult<CreateChannelMutation>;
+export type CreateChannelMutationOptions = Apollo.BaseMutationOptions<CreateChannelMutation, CreateChannelMutationVariables>;

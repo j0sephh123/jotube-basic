@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import TheCarousel from "@/features/Screenshot/components/TheCarousel";
-import { CreateChannelButton } from "@/features/Channel/CreateChannel";
 import { useWebSocket } from "@/shared/hooks/useWebSocket";
 import { useGlobalWebSocket } from "@/shared/hooks/useGlobalWebSocket";
 import TheNavbar from "@/shared/components/Navbar";
@@ -10,24 +9,27 @@ import ScreenshotsSidePanel from "./ScreenshotsSidePanel";
 import { AddChannelToPlaylistModal } from "@/features/Playlist/components/AddChannelToPlaylistModal";
 import ZoomModal from "./ZoomModal";
 import StoryboardProcessing from "@/features/Storyboard/StoryboardProcessing";
+import CreateChannel from "@/features/Channel/CreateChannel/components/CreateChannel";
+import { ToastProvider } from "./Toast/ToastContext";
 
 export default function Layout(): JSX.Element {
   useWebSocket();
   useGlobalWebSocket();
-
   return (
-    <DialogProvider>
-      <TheNavbar />
-      <div className="w-full h-[99vh] overflow-auto">
-        <Outlet />
-      </div>
-      <CreateChannelButton />
-      <TheCarousel />
-      <ThumbnailsProcessing />
-      <StoryboardProcessing />
-      <ScreenshotsSidePanel />
-      <AddChannelToPlaylistModal />
-      <ZoomModal />
-    </DialogProvider>
+    <ToastProvider>
+      <DialogProvider>
+        <TheNavbar />
+        <div className="w-full h-[99vh] overflow-auto">
+          <Outlet />
+        </div>
+        <CreateChannel />
+        <TheCarousel />
+        <ThumbnailsProcessing />
+        <StoryboardProcessing />
+        <ScreenshotsSidePanel />
+        <AddChannelToPlaylistModal />
+        <ZoomModal />
+      </DialogProvider>
+    </ToastProvider>
   );
 }

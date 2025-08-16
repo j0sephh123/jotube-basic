@@ -1,0 +1,46 @@
+/* eslint-disable react-refresh/only-export-components */
+import { createContext, ReactNode } from "react";
+import Toast from "./Toast";
+import { useToastProvider } from "./useToastProvider";
+
+type ToastType = "success" | "error" | "info" | "warning";
+
+type ToastOptions = {
+  duration?: number;
+  type?: ToastType;
+};
+
+type ToastContextType = {
+  show: (
+    message: string | JSX.Element,
+    options?: ToastOptions
+  ) => `${string}-${string}-${string}-${string}-${string}`;
+  remove: (id: `${string}-${string}-${string}-${string}-${string}`) => void;
+};
+
+export const ToastContext = createContext<ToastContextType | undefined>(
+  undefined
+);
+
+type ToastProviderProps = {
+  children: ReactNode;
+};
+
+export function ToastProvider({ children }: ToastProviderProps) {
+  const { toasts, show, remove } = useToastProvider();
+
+  return (
+    <ToastContext.Provider value={{ show, remove }}>
+      {children}
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          message={toast.message}
+          type={toast.options.type}
+          duration={toast.options.duration}
+          onClose={() => remove(toast.id)}
+        />
+      ))}
+    </ToastContext.Provider>
+  );
+}
