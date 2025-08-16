@@ -104,6 +104,11 @@ type GetSlidesResponse {
   isFav: Boolean
 }
 
+type ScreenshotsCountsResponse {
+  month: String!
+  count: Float!
+}
+
 type Todo {
   id: ID!
   title: String!
@@ -116,6 +121,7 @@ type Todo {
 type Query {
   getSlides(input: GetSlidesInput!): [GetSlidesResponse!]!
   uploadsWithThumbnails(input: UploadsWithThumbnailsInput!): [UploadsWithThumbnailsResponse!]!
+  screenshots: [ScreenshotsCountsResponse!]!
   channelForPlaylist(ytChannelId: String!): ChannelForPlaylistResponse!
   channelMetadata(ytChannelId: String!): ChannelMetadataResponse!
   fetchDashboard(fetchDashboardInput: FetchDashboardInput!): ChannelsDashboardResponse!

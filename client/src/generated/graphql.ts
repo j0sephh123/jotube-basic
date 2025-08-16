@@ -181,6 +181,7 @@ export type Query = {
   fetchDashboard: ChannelsDashboardResponse;
   fetchVideosDashboard: VideosDashboardResponse;
   getSlides: Array<GetSlidesResponse>;
+  screenshots: Array<ScreenshotsCountsResponse>;
   todo: Todo;
   todos: Array<Todo>;
   uploadsWithThumbnails: Array<UploadsWithThumbnailsResponse>;
@@ -222,6 +223,12 @@ export type QueryTodoArgs = {
 
 export type QueryUploadsWithThumbnailsArgs = {
   input: UploadsWithThumbnailsInput;
+};
+
+export type ScreenshotsCountsResponse = {
+  __typename?: 'ScreenshotsCountsResponse';
+  count: Scalars['Float']['output'];
+  month: Scalars['String']['output'];
 };
 
 export type Todo = {
@@ -329,6 +336,11 @@ export type FetchVideosDashboardQueryVariables = Exact<{
 
 
 export type FetchVideosDashboardQuery = { __typename?: 'Query', fetchVideosDashboard: { __typename?: 'VideosDashboardResponse', total: number, videos: Array<{ __typename?: 'DashboardVideoResponse', id: number, ytId: string, title: string, src: string, channelId: number, channelTitle: string, channelYtId: string, screenshotCount: number }> } };
+
+export type GetScreenshotsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetScreenshotsQuery = { __typename?: 'Query', screenshots: Array<{ __typename?: 'ScreenshotsCountsResponse', month: string, count: number }> };
 
 
 export const GetTodosDocument = gql`
@@ -735,3 +747,43 @@ export type FetchVideosDashboardQueryHookResult = ReturnType<typeof useFetchVide
 export type FetchVideosDashboardLazyQueryHookResult = ReturnType<typeof useFetchVideosDashboardLazyQuery>;
 export type FetchVideosDashboardSuspenseQueryHookResult = ReturnType<typeof useFetchVideosDashboardSuspenseQuery>;
 export type FetchVideosDashboardQueryResult = Apollo.QueryResult<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>;
+export const GetScreenshotsDocument = gql`
+    query GetScreenshots {
+  screenshots {
+    month
+    count
+  }
+}
+    `;
+
+/**
+ * __useGetScreenshotsQuery__
+ *
+ * To run a query within a React component, call `useGetScreenshotsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetScreenshotsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetScreenshotsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetScreenshotsQuery(baseOptions?: Apollo.QueryHookOptions<GetScreenshotsQuery, GetScreenshotsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetScreenshotsQuery, GetScreenshotsQueryVariables>(GetScreenshotsDocument, options);
+      }
+export function useGetScreenshotsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetScreenshotsQuery, GetScreenshotsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetScreenshotsQuery, GetScreenshotsQueryVariables>(GetScreenshotsDocument, options);
+        }
+export function useGetScreenshotsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetScreenshotsQuery, GetScreenshotsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetScreenshotsQuery, GetScreenshotsQueryVariables>(GetScreenshotsDocument, options);
+        }
+export type GetScreenshotsQueryHookResult = ReturnType<typeof useGetScreenshotsQuery>;
+export type GetScreenshotsLazyQueryHookResult = ReturnType<typeof useGetScreenshotsLazyQuery>;
+export type GetScreenshotsSuspenseQueryHookResult = ReturnType<typeof useGetScreenshotsSuspenseQuery>;
+export type GetScreenshotsQueryResult = Apollo.QueryResult<GetScreenshotsQuery, GetScreenshotsQueryVariables>;

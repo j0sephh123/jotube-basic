@@ -1,13 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/nestFetcher";
+import { useGetScreenshotsQuery } from "../../../generated/graphql";
 
 export function useScreenshots() {
-  return useQuery<Record<string, number>>({
-    queryKey: ["screenshots"],
-    queryFn: () =>
-      nestFetcher<Record<string, number>>({
-        url: "/screenshots-api/screenshots",
-        method: "GET",
-      }),
-  });
+  const { data, loading, error } = useGetScreenshotsQuery();
+
+  const transformedData = data?.screenshots?.reduce((acc, item) => {
+    acc[item.month] = item.count;
+    return acc;
+  }, {} as Record<string, number>);
+
+  return {
+    data: transformedData,
+    isLoading: loading,
+    error,
+  };
 }
