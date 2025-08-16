@@ -1,8 +1,9 @@
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { ChannelService } from './channel.service';
 import { CreateChannelResponse } from './dtos/create-channel.response';
 import { CreateChannelInput } from './dtos/create-channel.input';
 import { DeleteChannelResponse } from './dtos/delete-channel.response';
+import { ChannelForPlaylistResponse } from './dtos/channel-by-yt-id.response';
 
 @Resolver()
 export class ChannelsResolver {
@@ -18,5 +19,12 @@ export class ChannelsResolver {
   @Mutation(() => DeleteChannelResponse)
   async deleteChannel(@Args('id') id: number): Promise<DeleteChannelResponse> {
     return this.channelService.delete(id);
+  }
+
+  @Query(() => ChannelForPlaylistResponse)
+  async channelForPlaylist(
+    @Args('ytChannelId') ytChannelId: string,
+  ): Promise<ChannelForPlaylistResponse> {
+    return this.channelService.getByYtId(ytChannelId);
   }
 }

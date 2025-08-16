@@ -1,8 +1,8 @@
 import { useGetPlaylists, useUpdateChannelPlaylist } from "../../hooks";
-import { DashboardChannel } from "@/features/Dashboard/types";
+import { ChannelForPlaylistResponse } from "@/generated/graphql";
 
 interface SelectPlaylistFormProps {
-  channel: DashboardChannel;
+  channel: ChannelForPlaylistResponse;
   selectedPlaylistId: number | null;
   setSelectedPlaylistId: (id: number | null) => void;
   onSuccess: () => void;

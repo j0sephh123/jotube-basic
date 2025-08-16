@@ -21,9 +21,7 @@ export const AddChannelToPlaylistModal = () => {
   );
 
   useEffect(() => {
-    if (channel) {
-      setSelectedPlaylistId(channel.playlist?.id || null);
-    }
+    setSelectedPlaylistId(null);
   }, [channel]);
 
   useClickOutside(modalRef, closePlaylistModal, isModalOpen);

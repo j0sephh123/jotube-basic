@@ -28,3 +28,12 @@ export const DELETE_CHANNEL = gql`
     }
   }
 `;
+
+export const GET_CHANNEL_FOR_PLAYLIST = gql`
+  query GetChannelForPlaylist($ytChannelId: String!) {
+    channelForPlaylist(ytChannelId: $ytChannelId) {
+      id
+      title
+    }
+  }
+`;

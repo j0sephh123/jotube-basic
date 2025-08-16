@@ -15,9 +15,4 @@ export class ChannelController {
   metadata(@Param('ytChannelId') ytChannelId: string) {
     return this.channelService.metadata(ytChannelId);
   }
-
-  @Get('/by-yt-id/:ytChannelId')
-  getByYtId(@Param('ytChannelId') ytChannelId: string) {
-    return this.channelService.getByYtId(ytChannelId);
-  }
 }

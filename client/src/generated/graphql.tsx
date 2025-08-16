@@ -19,6 +19,12 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
 };
 
+export type ChannelForPlaylistResponse = {
+  __typename?: 'ChannelForPlaylistResponse';
+  id: Scalars['Int']['output'];
+  title: Scalars['String']['output'];
+};
+
 /** Possible messages for channel creation responses */
 export enum ChannelMessage {
   AlreadyExists = 'ALREADY_EXISTS',
@@ -85,8 +91,14 @@ export type MutationUpdateTodoArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  channelForPlaylist: ChannelForPlaylistResponse;
   todo: Todo;
   todos: Array<Todo>;
+};
+
+
+export type QueryChannelForPlaylistArgs = {
+  ytChannelId: Scalars['String']['input'];
 };
 
 
@@ -128,6 +140,13 @@ export type DeleteChannelMutationVariables = Exact<{
 
 
 export type DeleteChannelMutation = { __typename?: 'Mutation', deleteChannel: { __typename?: 'DeleteChannelResponse', success: boolean, message: string } };
+
+export type GetChannelForPlaylistQueryVariables = Exact<{
+  ytChannelId: Scalars['String']['input'];
+}>;
+
+
+export type GetChannelForPlaylistQuery = { __typename?: 'Query', channelForPlaylist: { __typename?: 'ChannelForPlaylistResponse', id: number, title: string } };
 
 
 export const GetTodosDocument = gql`
@@ -239,3 +258,44 @@ export function useDeleteChannelMutation(baseOptions?: Apollo.MutationHookOption
 export type DeleteChannelMutationHookResult = ReturnType<typeof useDeleteChannelMutation>;
 export type DeleteChannelMutationResult = Apollo.MutationResult<DeleteChannelMutation>;
 export type DeleteChannelMutationOptions = Apollo.BaseMutationOptions<DeleteChannelMutation, DeleteChannelMutationVariables>;
+export const GetChannelForPlaylistDocument = gql`
+    query GetChannelForPlaylist($ytChannelId: String!) {
+  channelForPlaylist(ytChannelId: $ytChannelId) {
+    id
+    title
+  }
+}
+    `;
+
+/**
+ * __useGetChannelForPlaylistQuery__
+ *
+ * To run a query within a React component, call `useGetChannelForPlaylistQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetChannelForPlaylistQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetChannelForPlaylistQuery({
+ *   variables: {
+ *      ytChannelId: // value for 'ytChannelId'
+ *   },
+ * });
+ */
+export function useGetChannelForPlaylistQuery(baseOptions: Apollo.QueryHookOptions<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables> & ({ variables: GetChannelForPlaylistQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>(GetChannelForPlaylistDocument, options);
+      }
+export function useGetChannelForPlaylistLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>(GetChannelForPlaylistDocument, options);
+        }
+export function useGetChannelForPlaylistSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>(GetChannelForPlaylistDocument, options);
+        }
+export type GetChannelForPlaylistQueryHookResult = ReturnType<typeof useGetChannelForPlaylistQuery>;
+export type GetChannelForPlaylistLazyQueryHookResult = ReturnType<typeof useGetChannelForPlaylistLazyQuery>;
+export type GetChannelForPlaylistSuspenseQueryHookResult = ReturnType<typeof useGetChannelForPlaylistSuspenseQuery>;
+export type GetChannelForPlaylistQueryResult = Apollo.QueryResult<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>;

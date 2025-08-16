@@ -186,7 +186,7 @@ export const DELETE_CHANNEL = gql`
 
 ```bash
 cd client
-npm run codegen
+pnpm run codegen
 ```
 
 This generates TypeScript types in `src/generated/graphql.tsx`:
@@ -345,7 +345,7 @@ export default function CreateChannel() {
 
 ### 6. Type Safety
 
-- Always regenerate types after schema changes (`npm run codegen`)
+- Always regenerate types after schema changes (`pnpm run codegen`)
 - Use generated types from `@/generated/graphql`
 - Never edit generated files manually
 
@@ -369,7 +369,7 @@ export default function CreateChannel() {
 1. **Backend**: Create/update DTOs, resolver, and service
 2. **Backend**: Restart server to regenerate schema.gql
 3. **Frontend**: Update GraphQL queries if needed
-4. **Frontend**: Run `npm run codegen` to regenerate types
+4. **Frontend**: Run `pnpm run codegen` to regenerate types
 5. **Frontend**: Update hooks and components to use new types
 6. **Test**: Verify the complete flow works end-to-end
 

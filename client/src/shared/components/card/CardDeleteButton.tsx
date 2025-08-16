@@ -7,7 +7,7 @@ type CardDeleteButtonProps = {
 };
 
 function CardDeleteButton({ ytChannelId }: CardDeleteButtonProps) {
-  const deleteUploadsMutation = useDeleteUploads();
+  const deleteUploadsMutation = useDeleteUploads(() => {});
   const dialogHook = useDialog();
 
   const handleDeleteClick = (e: React.MouseEvent) => {
