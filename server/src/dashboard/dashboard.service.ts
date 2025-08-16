@@ -62,7 +62,7 @@ export class DashboardService {
     const sorted = this.sortChannels(filtered, sortOrder, viewType);
 
     return {
-      channels: sorted.slice(skip, skip + PER_PAGE) as any,
+      channels: sorted.slice(skip, skip + PER_PAGE),
       total: sorted.length,
     };
   }
