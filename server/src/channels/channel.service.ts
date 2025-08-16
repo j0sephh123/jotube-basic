@@ -107,7 +107,7 @@ export class ChannelService {
       src: channel.src,
       fetchedUntilEnd: channel.fetchedUntilEnd,
       videoCount: channel.videoCount,
-      lastSyncedAt: channel.lastSyncedAt,
+      lastSyncedAt: channel.lastSyncedAt?.toISOString(),
       playlist: channel.playlist,
     };
   }

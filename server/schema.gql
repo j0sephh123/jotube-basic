@@ -25,6 +25,25 @@ type ChannelForPlaylistResponse {
   title: String!
 }
 
+type PlaylistInfo {
+  id: Int!
+  name: String!
+}
+
+type ChannelMetadataResponse {
+  id: Int!
+  title: String!
+  fetchedUntilEnd: Boolean!
+  videoCount: Int!
+  lastSyncedAt: String
+  playlist: PlaylistInfo
+  videoArtifactsCount: Int!
+  savedArtifactsCount: Int!
+  thumbnailArtifactsCount: Int!
+  screenshotArtifactsCount: Int!
+  storyboardArtifactsCount: Int!
+}
+
 type Todo {
   id: ID!
   title: String!
@@ -41,6 +60,7 @@ scalar DateTime
 
 type Query {
   channelForPlaylist(ytChannelId: String!): ChannelForPlaylistResponse!
+  channelMetadata(ytChannelId: String!): ChannelMetadataResponse!
   todos: [Todo!]!
   todo(id: ID!): Todo!
 }

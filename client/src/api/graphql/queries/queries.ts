@@ -37,3 +37,24 @@ export const GET_CHANNEL_FOR_PLAYLIST = gql`
     }
   }
 `;
+
+export const GET_CHANNEL_METADATA = gql`
+  query GetChannelMetadata($ytChannelId: String!) {
+    channelMetadata(ytChannelId: $ytChannelId) {
+      id
+      title
+      fetchedUntilEnd
+      videoCount
+      lastSyncedAt
+      playlist {
+        id
+        name
+      }
+      videoArtifactsCount
+      savedArtifactsCount
+      thumbnailArtifactsCount
+      screenshotArtifactsCount
+      storyboardArtifactsCount
+    }
+  }
+`;

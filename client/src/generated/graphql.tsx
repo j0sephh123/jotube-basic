@@ -33,6 +33,21 @@ export enum ChannelMessage {
   InvalidVideoId = 'INVALID_VIDEO_ID'
 }
 
+export type ChannelMetadataResponse = {
+  __typename?: 'ChannelMetadataResponse';
+  fetchedUntilEnd: Scalars['Boolean']['output'];
+  id: Scalars['Int']['output'];
+  lastSyncedAt?: Maybe<Scalars['String']['output']>;
+  playlist?: Maybe<PlaylistInfo>;
+  savedArtifactsCount: Scalars['Int']['output'];
+  screenshotArtifactsCount: Scalars['Int']['output'];
+  storyboardArtifactsCount: Scalars['Int']['output'];
+  thumbnailArtifactsCount: Scalars['Int']['output'];
+  title: Scalars['String']['output'];
+  videoArtifactsCount: Scalars['Int']['output'];
+  videoCount: Scalars['Int']['output'];
+};
+
 export type CreateChannelInput = {
   ytVideoId: Scalars['String']['input'];
 };
@@ -89,15 +104,27 @@ export type MutationUpdateTodoArgs = {
   updateTodoInput: UpdateTodoInput;
 };
 
+export type PlaylistInfo = {
+  __typename?: 'PlaylistInfo';
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+};
+
 export type Query = {
   __typename?: 'Query';
   channelForPlaylist: ChannelForPlaylistResponse;
+  channelMetadata: ChannelMetadataResponse;
   todo: Todo;
   todos: Array<Todo>;
 };
 
 
 export type QueryChannelForPlaylistArgs = {
+  ytChannelId: Scalars['String']['input'];
+};
+
+
+export type QueryChannelMetadataArgs = {
   ytChannelId: Scalars['String']['input'];
 };
 
@@ -147,6 +174,13 @@ export type GetChannelForPlaylistQueryVariables = Exact<{
 
 
 export type GetChannelForPlaylistQuery = { __typename?: 'Query', channelForPlaylist: { __typename?: 'ChannelForPlaylistResponse', id: number, title: string } };
+
+export type GetChannelMetadataQueryVariables = Exact<{
+  ytChannelId: Scalars['String']['input'];
+}>;
+
+
+export type GetChannelMetadataQuery = { __typename?: 'Query', channelMetadata: { __typename?: 'ChannelMetadataResponse', id: number, title: string, fetchedUntilEnd: boolean, videoCount: number, lastSyncedAt?: string | null, videoArtifactsCount: number, savedArtifactsCount: number, thumbnailArtifactsCount: number, screenshotArtifactsCount: number, storyboardArtifactsCount: number, playlist?: { __typename?: 'PlaylistInfo', id: number, name: string } | null } };
 
 
 export const GetTodosDocument = gql`
@@ -299,3 +333,56 @@ export type GetChannelForPlaylistQueryHookResult = ReturnType<typeof useGetChann
 export type GetChannelForPlaylistLazyQueryHookResult = ReturnType<typeof useGetChannelForPlaylistLazyQuery>;
 export type GetChannelForPlaylistSuspenseQueryHookResult = ReturnType<typeof useGetChannelForPlaylistSuspenseQuery>;
 export type GetChannelForPlaylistQueryResult = Apollo.QueryResult<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>;
+export const GetChannelMetadataDocument = gql`
+    query GetChannelMetadata($ytChannelId: String!) {
+  channelMetadata(ytChannelId: $ytChannelId) {
+    id
+    title
+    fetchedUntilEnd
+    videoCount
+    lastSyncedAt
+    playlist {
+      id
+      name
+    }
+    videoArtifactsCount
+    savedArtifactsCount
+    thumbnailArtifactsCount
+    screenshotArtifactsCount
+    storyboardArtifactsCount
+  }
+}
+    `;
+
+/**
+ * __useGetChannelMetadataQuery__
+ *
+ * To run a query within a React component, call `useGetChannelMetadataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetChannelMetadataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetChannelMetadataQuery({
+ *   variables: {
+ *      ytChannelId: // value for 'ytChannelId'
+ *   },
+ * });
+ */
+export function useGetChannelMetadataQuery(baseOptions: Apollo.QueryHookOptions<GetChannelMetadataQuery, GetChannelMetadataQueryVariables> & ({ variables: GetChannelMetadataQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>(GetChannelMetadataDocument, options);
+      }
+export function useGetChannelMetadataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>(GetChannelMetadataDocument, options);
+        }
+export function useGetChannelMetadataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>(GetChannelMetadataDocument, options);
+        }
+export type GetChannelMetadataQueryHookResult = ReturnType<typeof useGetChannelMetadataQuery>;
+export type GetChannelMetadataLazyQueryHookResult = ReturnType<typeof useGetChannelMetadataLazyQuery>;
+export type GetChannelMetadataSuspenseQueryHookResult = ReturnType<typeof useGetChannelMetadataSuspenseQuery>;
+export type GetChannelMetadataQueryResult = Apollo.QueryResult<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>;

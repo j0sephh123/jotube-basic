@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { ChannelController } from './channel.controller';
 import { ChannelService } from './channel.service';
 import { YoutubeService } from 'src/core/external-services/youtube-api/youtube.service';
 import { DatabaseModule } from 'src/core/database/database.module';
@@ -9,7 +8,7 @@ import { ChannelsResolver } from './channels.resolver';
 
 @Module({
   imports: [ConfigModule, DatabaseModule, ArtifactsAggregatorModule],
-  controllers: [ChannelController],
+  controllers: [],
   providers: [ChannelService, YoutubeService, ChannelsResolver],
   exports: [ChannelService],
 })
