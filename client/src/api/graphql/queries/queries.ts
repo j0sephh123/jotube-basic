@@ -187,3 +187,15 @@ export const GET_THUMBNAIL_BY_VIDEO_ID = gql`
     }
   }
 `;
+
+export const GET_CHANNEL_SCREENSHOTS = gql`
+  query GetChannelScreenshots($ytChannelId: String!) {
+    channelScreenshots(ytChannelId: $ytChannelId) {
+      ytVideoId
+      id
+      second
+      src
+      isFav
+    }
+  }
+`;

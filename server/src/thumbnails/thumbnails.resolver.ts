@@ -38,4 +38,11 @@ export class ThumbnailsResolver {
       updatedAt: result.updatedAt.toISOString(),
     };
   }
+
+  @Query(() => [GetSlidesResponse])
+  async channelScreenshots(
+    @Args('ytChannelId') ytChannelId: string,
+  ): Promise<GetSlidesResponse[]> {
+    return this.thumbnailsApiService.getChannelScreenshots(ytChannelId);
+  }
 }

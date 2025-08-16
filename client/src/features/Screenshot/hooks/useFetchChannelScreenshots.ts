@@ -1,22 +1,23 @@
-import { useQuery } from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/nestFetcher";
+import { useGetChannelScreenshotsQuery } from "../../../generated/graphql";
 
 export type ChannelScreenshot = {
+  __typename?: "GetSlidesResponse";
   id: number;
   src: string;
   ytVideoId: string;
   second: number;
-  isFav: boolean;
-}
+  isFav?: boolean | null;
+};
 
 export function useFetchChannelScreenshots(ytChannelId: string) {
-  return useQuery<ChannelScreenshot[]>({
-    queryKey: ["channel-screenshots", ytChannelId],
-    queryFn: () =>
-      nestFetcher({
-        url: `/thumbnails-api/channel/${ytChannelId}/screenshots`,
-        method: "GET",
-      }),
-    enabled: !!ytChannelId,
+  const { data, loading, error } = useGetChannelScreenshotsQuery({
+    variables: { ytChannelId },
+    skip: !ytChannelId,
   });
+
+  return {
+    data: data?.channelScreenshots,
+    isLoading: loading,
+    error,
+  };
 }

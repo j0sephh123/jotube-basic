@@ -212,7 +212,7 @@ export default function GalleryVideoPage() {
                   <ScreenshotItem
                     key={screenshot.id}
                     screenshot={screenshot}
-                    isFav={screenshot.isFav}
+                    isFav={screenshot.isFav ?? undefined}
                     index={globalIndex}
                     mode={mode}
                     isDisabled={false}

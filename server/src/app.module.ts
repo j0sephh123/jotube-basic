@@ -24,7 +24,7 @@ import { ScreenshotsManagerModule } from './screenshots/manager/screenshots-mana
 import { ScreenshotsManagerService } from './screenshots/manager/screenshots-manager.service';
 import { ThumbnailsManagerModule } from './thumbnails/manager/thumbnails-manager.module';
 import { ScreenshotsApiModule } from './screenshots/api/screenshots-api.module';
-import { ThumbnailsApiModule } from './thumbnails/api/thumbnails-api.module';
+
 import { FileModule } from './file/file.module';
 import { EventsGateway } from './events.gateway';
 import { StoryboardModule } from './storyboard/storyboard.module';
@@ -83,7 +83,6 @@ import { AppGraphQLModule } from './graphql/graphql.module';
     ScreenshotsManagerModule,
     ThumbnailsManagerModule,
     ScreenshotsApiModule,
-    ThumbnailsApiModule,
     ChannelsModule,
     StoryboardModule,
     UploadsVideoModule,

@@ -159,6 +159,7 @@ type Query {
   getSlides(input: GetSlidesInput!): [GetSlidesResponse!]!
   uploadsWithThumbnails(input: UploadsWithThumbnailsInput!): [UploadsWithThumbnailsResponse!]!
   thumbnailByVideoId(ytVideoId: String!): ThumbnailByVideoIdResponse
+  channelScreenshots(ytChannelId: String!): [GetSlidesResponse!]!
   screenshots: [ScreenshotsCountsResponse!]!
   screenshotsByVideo(ytVideoId: String!): [VideoScreenshotResponse!]!
   channelForPlaylist(ytChannelId: String!): ChannelForPlaylistResponse!
