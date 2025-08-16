@@ -104,6 +104,28 @@ type GetSlidesResponse {
   isFav: Boolean
 }
 
+type ChannelResponse {
+  id: Float!
+  ytId: String!
+  title: String!
+}
+
+type UploadsVideoResponse {
+  ytId: String!
+  channel: ChannelResponse!
+}
+
+type ThumbnailByVideoIdResponse {
+  createdAt: String!
+  id: Float!
+  perRow: Float!
+  updatedAt: String!
+  uploadsVideoId: Float!
+  totalSeconds: Float!
+  uploadsVideo: UploadsVideoResponse!
+  thumbnailsCount: Float!
+}
+
 type ScreenshotsCountsResponse {
   month: String!
   count: Float!
@@ -136,6 +158,7 @@ type Todo {
 type Query {
   getSlides(input: GetSlidesInput!): [GetSlidesResponse!]!
   uploadsWithThumbnails(input: UploadsWithThumbnailsInput!): [UploadsWithThumbnailsResponse!]!
+  thumbnailByVideoId(ytVideoId: String!): ThumbnailByVideoIdResponse
   screenshots: [ScreenshotsCountsResponse!]!
   screenshotsByVideo(ytVideoId: String!): [VideoScreenshotResponse!]!
   channelForPlaylist(ytChannelId: String!): ChannelForPlaylistResponse!
