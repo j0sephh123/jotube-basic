@@ -96,6 +96,14 @@ type UploadsWithThumbnailsResponse {
   ytVideoId: String!
 }
 
+type GetSlidesResponse {
+  ytVideoId: String!
+  id: Float!
+  second: Float!
+  src: String!
+  isFav: Boolean
+}
+
 type Todo {
   id: ID!
   title: String!
@@ -106,6 +114,7 @@ type Todo {
 }
 
 type Query {
+  getSlides(input: GetSlidesInput!): [GetSlidesResponse!]!
   uploadsWithThumbnails(input: UploadsWithThumbnailsInput!): [UploadsWithThumbnailsResponse!]!
   channelForPlaylist(ytChannelId: String!): ChannelForPlaylistResponse!
   channelMetadata(ytChannelId: String!): ChannelMetadataResponse!
@@ -113,6 +122,10 @@ type Query {
   fetchVideosDashboard(page: Float, sortOrder: String, screenshotMin: Float, screenshotMax: Float): VideosDashboardResponse!
   todos: [Todo!]!
   todo(id: ID!): Todo!
+}
+
+input GetSlidesInput {
+  ytChannelIds: [String!]
 }
 
 input UploadsWithThumbnailsInput {

@@ -1,29 +1,24 @@
-import { useMutation } from "@tanstack/react-query";
+import { useLazyQuery } from "@apollo/client";
 import { useStore } from "@/store/store";
-import nestFetcher from "@/shared/api/nestFetcher";
-import { SlideImage } from "yet-another-react-lightbox";
+import { GET_SLIDES } from "@/api/graphql/queries/queries";
 
 export type FetchCarouselDataRequest = string[];
 
 export function useFetchCarousel() {
   const { setSlides } = useStore();
 
-  const { mutateAsync } = useMutation<
-    SlideImage[],
-    unknown,
-    FetchCarouselDataRequest
-  >({
-    mutationFn: (body) =>
-      nestFetcher({
-        url: "/thumbnails-api",
-        method: "POST",
-        body,
-      }),
+  const [getSlides] = useLazyQuery(GET_SLIDES, {
+    fetchPolicy: "no-cache",
   });
 
   const handleFetch = async (body: FetchCarouselDataRequest) => {
     try {
-      const data = await mutateAsync(body);
+      const result = await getSlides({
+        variables: {
+          input: { ytChannelIds: body },
+        },
+      });
+      const data = result.data?.getSlides || [];
       setSlides(data);
     } catch (error) {
       console.log(error);

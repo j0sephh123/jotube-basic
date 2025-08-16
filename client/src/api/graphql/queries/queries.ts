@@ -38,6 +38,18 @@ export const UPLOADS_WITH_THUMBNAILS = gql`
   }
 `;
 
+export const GET_SLIDES = gql`
+  query GetSlides($input: GetSlidesInput!) {
+    getSlides(input: $input) {
+      ytVideoId
+      id
+      second
+      src
+      isFav
+    }
+  }
+`;
+
 export const GET_CHANNEL_FOR_PLAYLIST = gql`
   query GetChannelForPlaylist($ytChannelId: String!) {
     channelForPlaylist(ytChannelId: $ytChannelId) {

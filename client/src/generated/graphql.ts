@@ -120,6 +120,19 @@ export type FetchDashboardInput = {
   viewType?: InputMaybe<ViewType>;
 };
 
+export type GetSlidesInput = {
+  ytChannelIds?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+export type GetSlidesResponse = {
+  __typename?: 'GetSlidesResponse';
+  id: Scalars['Float']['output'];
+  isFav?: Maybe<Scalars['Boolean']['output']>;
+  second: Scalars['Float']['output'];
+  src: Scalars['String']['output'];
+  ytVideoId: Scalars['String']['output'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createChannel: CreateChannelResponse;
@@ -167,6 +180,7 @@ export type Query = {
   channelMetadata: ChannelMetadataResponse;
   fetchDashboard: ChannelsDashboardResponse;
   fetchVideosDashboard: VideosDashboardResponse;
+  getSlides: Array<GetSlidesResponse>;
   todo: Todo;
   todos: Array<Todo>;
   uploadsWithThumbnails: Array<UploadsWithThumbnailsResponse>;
@@ -193,6 +207,11 @@ export type QueryFetchVideosDashboardArgs = {
   screenshotMax?: InputMaybe<Scalars['Float']['input']>;
   screenshotMin?: InputMaybe<Scalars['Float']['input']>;
   sortOrder?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryGetSlidesArgs = {
+  input: GetSlidesInput;
 };
 
 
@@ -272,6 +291,13 @@ export type UploadsWithThumbnailsQueryVariables = Exact<{
 
 
 export type UploadsWithThumbnailsQuery = { __typename?: 'Query', uploadsWithThumbnails: Array<{ __typename?: 'UploadsWithThumbnailsResponse', ytChannelId: string, ytVideoId: string }> };
+
+export type GetSlidesQueryVariables = Exact<{
+  input: GetSlidesInput;
+}>;
+
+
+export type GetSlidesQuery = { __typename?: 'Query', getSlides: Array<{ __typename?: 'GetSlidesResponse', ytVideoId: string, id: number, second: number, src: string, isFav?: boolean | null }> };
 
 export type GetChannelForPlaylistQueryVariables = Exact<{
   ytChannelId: Scalars['String']['input'];
@@ -455,6 +481,50 @@ export type UploadsWithThumbnailsQueryHookResult = ReturnType<typeof useUploadsW
 export type UploadsWithThumbnailsLazyQueryHookResult = ReturnType<typeof useUploadsWithThumbnailsLazyQuery>;
 export type UploadsWithThumbnailsSuspenseQueryHookResult = ReturnType<typeof useUploadsWithThumbnailsSuspenseQuery>;
 export type UploadsWithThumbnailsQueryResult = Apollo.QueryResult<UploadsWithThumbnailsQuery, UploadsWithThumbnailsQueryVariables>;
+export const GetSlidesDocument = gql`
+    query GetSlides($input: GetSlidesInput!) {
+  getSlides(input: $input) {
+    ytVideoId
+    id
+    second
+    src
+    isFav
+  }
+}
+    `;
+
+/**
+ * __useGetSlidesQuery__
+ *
+ * To run a query within a React component, call `useGetSlidesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSlidesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSlidesQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useGetSlidesQuery(baseOptions: Apollo.QueryHookOptions<GetSlidesQuery, GetSlidesQueryVariables> & ({ variables: GetSlidesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSlidesQuery, GetSlidesQueryVariables>(GetSlidesDocument, options);
+      }
+export function useGetSlidesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSlidesQuery, GetSlidesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSlidesQuery, GetSlidesQueryVariables>(GetSlidesDocument, options);
+        }
+export function useGetSlidesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetSlidesQuery, GetSlidesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetSlidesQuery, GetSlidesQueryVariables>(GetSlidesDocument, options);
+        }
+export type GetSlidesQueryHookResult = ReturnType<typeof useGetSlidesQuery>;
+export type GetSlidesLazyQueryHookResult = ReturnType<typeof useGetSlidesLazyQuery>;
+export type GetSlidesSuspenseQueryHookResult = ReturnType<typeof useGetSlidesSuspenseQuery>;
+export type GetSlidesQueryResult = Apollo.QueryResult<GetSlidesQuery, GetSlidesQueryVariables>;
 export const GetChannelForPlaylistDocument = gql`
     query GetChannelForPlaylist($ytChannelId: String!) {
   channelForPlaylist(ytChannelId: $ytChannelId) {
