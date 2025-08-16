@@ -14,9 +14,11 @@ import VideoProcessingInfo from "./VideoProcessingInfo";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { routes } from "@/shared/utils/routes";
 import { useTotalCounts } from "@/features/Statistics/hooks/useTotalCounts";
+import { useFreeSpace } from "@/features/Statistics/hooks/useFreeSpace";
 
 export default function Navbar(): JSX.Element {
   const { data: totalCounts } = useTotalCounts();
+  const { data: freeSpace } = useFreeSpace();
   const savedCount = totalCounts?.totalSaved ?? 0;
 
   return (
@@ -66,6 +68,11 @@ export default function Navbar(): JSX.Element {
           <QuickSearch />
         </div>
         <div className="flex items-center gap-4 flex-shrink-0">
+          <div className="flex items-center gap-2 text-sm text-base-content/70">
+            <span className="font-mono">
+              Free: {freeSpace?.freeSpace ?? "..."}
+            </span>
+          </div>
           <ThemeSwitcher />
           <ProcessingProgress />
           <VideoProcessingInfo />

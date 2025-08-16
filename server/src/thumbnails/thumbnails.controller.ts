@@ -5,11 +5,6 @@ import { ThumbnailsApiService } from './api/thumbnails-api.service';
 export class ThumbnailsApiController {
   constructor(private readonly thumbnailsApiService: ThumbnailsApiService) {}
 
-  @Get('thumbnail-by-upload/:ytId')
-  thumbnailByUpload(@Param('ytId') ytId: string) {
-    return this.thumbnailsApiService.thumbnailByUpload(ytId);
-  }
-
   @Post('thumbnails')
   thumbnails(
     @Body()
