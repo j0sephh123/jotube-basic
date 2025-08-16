@@ -182,6 +182,7 @@ export type Query = {
   fetchVideosDashboard: VideosDashboardResponse;
   getSlides: Array<GetSlidesResponse>;
   screenshots: Array<ScreenshotsCountsResponse>;
+  screenshotsByVideo: Array<VideoScreenshotResponse>;
   todo: Todo;
   todos: Array<Todo>;
   uploadsWithThumbnails: Array<UploadsWithThumbnailsResponse>;
@@ -213,6 +214,11 @@ export type QueryFetchVideosDashboardArgs = {
 
 export type QueryGetSlidesArgs = {
   input: GetSlidesInput;
+};
+
+
+export type QueryScreenshotsByVideoArgs = {
+  ytVideoId: Scalars['String']['input'];
 };
 
 
@@ -253,6 +259,16 @@ export type UploadsWithThumbnailsInput = {
 
 export type UploadsWithThumbnailsResponse = {
   __typename?: 'UploadsWithThumbnailsResponse';
+  ytChannelId: Scalars['String']['output'];
+  ytVideoId: Scalars['String']['output'];
+};
+
+export type VideoScreenshotResponse = {
+  __typename?: 'VideoScreenshotResponse';
+  id: Scalars['Float']['output'];
+  isFav?: Maybe<Scalars['Boolean']['output']>;
+  second: Scalars['Float']['output'];
+  src: Scalars['String']['output'];
   ytChannelId: Scalars['String']['output'];
   ytVideoId: Scalars['String']['output'];
 };
@@ -341,6 +357,13 @@ export type GetScreenshotsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetScreenshotsQuery = { __typename?: 'Query', screenshots: Array<{ __typename?: 'ScreenshotsCountsResponse', month: string, count: number }> };
+
+export type GetScreenshotsByVideoQueryVariables = Exact<{
+  ytVideoId: Scalars['String']['input'];
+}>;
+
+
+export type GetScreenshotsByVideoQuery = { __typename?: 'Query', screenshotsByVideo: Array<{ __typename?: 'VideoScreenshotResponse', id: number, second: number, ytChannelId: string, ytVideoId: string, isFav?: boolean | null, src: string }> };
 
 
 export const GetTodosDocument = gql`
@@ -787,3 +810,48 @@ export type GetScreenshotsQueryHookResult = ReturnType<typeof useGetScreenshotsQ
 export type GetScreenshotsLazyQueryHookResult = ReturnType<typeof useGetScreenshotsLazyQuery>;
 export type GetScreenshotsSuspenseQueryHookResult = ReturnType<typeof useGetScreenshotsSuspenseQuery>;
 export type GetScreenshotsQueryResult = Apollo.QueryResult<GetScreenshotsQuery, GetScreenshotsQueryVariables>;
+export const GetScreenshotsByVideoDocument = gql`
+    query GetScreenshotsByVideo($ytVideoId: String!) {
+  screenshotsByVideo(ytVideoId: $ytVideoId) {
+    id
+    second
+    ytChannelId
+    ytVideoId
+    isFav
+    src
+  }
+}
+    `;
+
+/**
+ * __useGetScreenshotsByVideoQuery__
+ *
+ * To run a query within a React component, call `useGetScreenshotsByVideoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetScreenshotsByVideoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetScreenshotsByVideoQuery({
+ *   variables: {
+ *      ytVideoId: // value for 'ytVideoId'
+ *   },
+ * });
+ */
+export function useGetScreenshotsByVideoQuery(baseOptions: Apollo.QueryHookOptions<GetScreenshotsByVideoQuery, GetScreenshotsByVideoQueryVariables> & ({ variables: GetScreenshotsByVideoQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetScreenshotsByVideoQuery, GetScreenshotsByVideoQueryVariables>(GetScreenshotsByVideoDocument, options);
+      }
+export function useGetScreenshotsByVideoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetScreenshotsByVideoQuery, GetScreenshotsByVideoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetScreenshotsByVideoQuery, GetScreenshotsByVideoQueryVariables>(GetScreenshotsByVideoDocument, options);
+        }
+export function useGetScreenshotsByVideoSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetScreenshotsByVideoQuery, GetScreenshotsByVideoQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetScreenshotsByVideoQuery, GetScreenshotsByVideoQueryVariables>(GetScreenshotsByVideoDocument, options);
+        }
+export type GetScreenshotsByVideoQueryHookResult = ReturnType<typeof useGetScreenshotsByVideoQuery>;
+export type GetScreenshotsByVideoLazyQueryHookResult = ReturnType<typeof useGetScreenshotsByVideoLazyQuery>;
+export type GetScreenshotsByVideoSuspenseQueryHookResult = ReturnType<typeof useGetScreenshotsByVideoSuspenseQuery>;
+export type GetScreenshotsByVideoQueryResult = Apollo.QueryResult<GetScreenshotsByVideoQuery, GetScreenshotsByVideoQueryVariables>;

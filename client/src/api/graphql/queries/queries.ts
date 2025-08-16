@@ -142,3 +142,16 @@ export const GET_SCREENSHOTS = gql`
     }
   }
 `;
+
+export const GET_SCREENSHOTS_BY_VIDEO = gql`
+  query GetScreenshotsByVideo($ytVideoId: String!) {
+    screenshotsByVideo(ytVideoId: $ytVideoId) {
+      id
+      second
+      ytChannelId
+      ytVideoId
+      isFav
+      src
+    }
+  }
+`;

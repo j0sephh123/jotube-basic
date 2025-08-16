@@ -1,23 +1,24 @@
-import { useQuery } from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/nestFetcher";
+import { useGetScreenshotsByVideoQuery } from "../../../generated/graphql";
 
 export type VideoScreenshot = {
+  __typename?: "VideoScreenshotResponse";
   id: number;
   second: number;
   ytChannelId: string;
   ytVideoId: string;
-  isFav: boolean;
+  isFav?: boolean | null;
   src: string;
-}
+};
 
 export function useScreenshotsByVideo(ytVideoId: string | undefined) {
-  return useQuery<VideoScreenshot[]>({
-    queryKey: ["screenshots-by-video", ytVideoId],
-    queryFn: () =>
-      nestFetcher<VideoScreenshot[]>({
-        url: `/screenshots-api/video-screenshots/${ytVideoId}`,
-        method: "GET",
-      }),
-    enabled: !!ytVideoId,
+  const { data, loading, error } = useGetScreenshotsByVideoQuery({
+    variables: { ytVideoId: ytVideoId || "" },
+    skip: !ytVideoId,
   });
+
+  return {
+    data: data?.screenshotsByVideo,
+    isLoading: loading,
+    error,
+  };
 }
