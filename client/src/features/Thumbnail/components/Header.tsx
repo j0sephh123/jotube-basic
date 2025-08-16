@@ -5,6 +5,7 @@ import useThumbnailsCount from "../hooks/useThumbnailsCount";
 export default function Header() {
   const { metadata, currentIndex } = useThumbnailsSlice();
   const thumbnailsCount = useThumbnailsCount();
+
   const current = currentIndex || 0;
   const total = thumbnailsCount || 0;
 
@@ -13,7 +14,7 @@ export default function Header() {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
           <h2 className="text-xl font-bold">
-            Processing Thumbnails {thumbnailsCount}
+            Processing Thumbnails
           </h2>
           <div className="ml-4 text-gray-300 text-sm">
             Channel: {metadata.ytChannelId}
