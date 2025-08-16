@@ -1,23 +1,9 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { ThumbnailsApiService } from './api/thumbnails-api.service';
 
 @Controller('thumbnails-api')
 export class ThumbnailsApiController {
   constructor(private readonly thumbnailsApiService: ThumbnailsApiService) {}
-
-  @Post('thumbnails')
-  thumbnails(
-    @Body()
-    {
-      order = 'desc',
-      filterField = 'publishedAt',
-    }: {
-      order?: 'asc' | 'desc';
-      filterField?: 'publishedAt' | 'totalSeconds';
-    },
-  ) {
-    return this.thumbnailsApiService.thumbnails({ order, filterField });
-  }
 
   @Get('getByYtVideoId/:ytVideoId')
   async getByYtVideoId(@Param('ytVideoId') ytVideoId: string) {

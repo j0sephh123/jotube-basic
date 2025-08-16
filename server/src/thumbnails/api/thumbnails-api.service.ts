@@ -104,45 +104,6 @@ export class ThumbnailsApiService {
     };
   }
 
-  public async thumbnails({
-    order = 'desc',
-    filterField = 'publishedAt',
-  }: {
-    order?: 'asc' | 'desc';
-    filterField?: 'publishedAt' | 'totalSeconds';
-  }) {
-    const uploads = await this.prismaService.uploadsVideo.findMany({
-      where: { artifact: ArtifactType.THUMBNAIL },
-      select: {
-        id: true,
-        ytId: true,
-        title: true,
-        publishedAt: true,
-        channel: {
-          select: {
-            id: true,
-            ytId: true,
-            title: true,
-          },
-        },
-        thumbnail: {
-          select: {
-            createdAt: true,
-            id: true,
-            perRow: true,
-            totalSeconds: true,
-          },
-        },
-      },
-      orderBy:
-        filterField === 'publishedAt'
-          ? { publishedAt: order }
-          : { thumbnail: { totalSeconds: order } },
-    });
-
-    return uploads;
-  }
-
   async getByYtVideoId(ytVideoId: string) {
     const thumbnail = await this.prismaService.thumbnail.findFirst({
       where: { uploadsVideo: { ytId: ytVideoId } },
