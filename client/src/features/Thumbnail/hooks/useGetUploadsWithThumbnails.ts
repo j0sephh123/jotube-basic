@@ -1,25 +1,23 @@
-import { useMutation } from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/nestFetcher";
+import { useUploadsWithThumbnailsLazyQuery } from "../../../generated/graphql";
 
 export function useGetUploadsWithThumbnails() {
-  return useMutation<
-    {
-      ytChannelId: string;
-      ytVideoId: string;
-    }[],
-    unknown,
-    number[]
-  >({
-    mutationFn: (channelIds: number[]) =>
-      nestFetcher<
-        {
-          ytChannelId: string;
-          ytVideoId: string;
-        }[]
-      >({
-        url: "/thumbnails-api/uploadsWithThumbnails",
-        method: "POST",
-        body: { channelIds },
-      }),
-  });
+  const [getUploadsWithThumbnails, { data, loading, error }] =
+    useUploadsWithThumbnailsLazyQuery({
+      fetchPolicy: "no-cache",
+    });
+
+  const mutateAsync = (channelIds: number[]) => {
+    return getUploadsWithThumbnails({
+      variables: {
+        input: { channelIds },
+      },
+    }).then((result) => result.data?.uploadsWithThumbnails || []);
+  };
+
+  return {
+    mutateAsync,
+    data,
+    loading,
+    error,
+  };
 }

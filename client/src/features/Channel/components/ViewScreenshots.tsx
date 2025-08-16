@@ -1,5 +1,5 @@
 import Button from "@/shared/button";
-import useArtifacts from "@/features/Thumbnail/hooks/useArtifacts";
+import useViewScreenshots from "@/features/Thumbnail/hooks/useViewScreenshots";
 
 type Props = {
   ytChannelId: string;
@@ -10,9 +10,9 @@ export default function ViewScreenshots({
   ytChannelId,
   screenshotArtifactsCount,
 }: Props) {
-  const { getScreenshots } = useArtifacts();
+  const viewScreenshots = useViewScreenshots();
   const handleViewScreenshots = () => {
-    getScreenshots([ytChannelId]);
+    viewScreenshots([ytChannelId]);
   };
 
   return (

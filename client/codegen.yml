@@ -1,7 +1,7 @@
 schema: "../server/schema.gql"      # path to your backend schema
 documents: "src/api/graphql/**/*.ts"           # where your gql queries live
 generates:
-  src/generated/graphql.tsx:
+  src/generated/graphql.ts:
     plugins:
       - "typescript"
       - "typescript-operations"

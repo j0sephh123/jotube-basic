@@ -91,6 +91,11 @@ type VideosDashboardResponse {
   total: Int!
 }
 
+type UploadsWithThumbnailsResponse {
+  ytChannelId: String!
+  ytVideoId: String!
+}
+
 type Todo {
   id: ID!
   title: String!
@@ -101,12 +106,17 @@ type Todo {
 }
 
 type Query {
+  uploadsWithThumbnails(input: UploadsWithThumbnailsInput!): [UploadsWithThumbnailsResponse!]!
   channelForPlaylist(ytChannelId: String!): ChannelForPlaylistResponse!
   channelMetadata(ytChannelId: String!): ChannelMetadataResponse!
   fetchDashboard(fetchDashboardInput: FetchDashboardInput!): ChannelsDashboardResponse!
   fetchVideosDashboard(page: Float, sortOrder: String, screenshotMin: Float, screenshotMax: Float): VideosDashboardResponse!
   todos: [Todo!]!
   todo(id: ID!): Todo!
+}
+
+input UploadsWithThumbnailsInput {
+  channelIds: [Float!]!
 }
 
 input FetchDashboardInput {

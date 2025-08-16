@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import useArtifacts from "@/features/Thumbnail/hooks/useArtifacts";
+import useViewScreenshots from "@/features/Thumbnail/hooks/useViewScreenshots";
 import { routes } from "@/shared/utils/routes";
 import useViewThumbnails from "@/shared/hooks/useViewThumbnails";
 import { Fragment } from "react";
@@ -24,7 +24,7 @@ export default function CardStats({
   defaults,
   storyboard,
 }: CardStatsProps) {
-  const { getScreenshots } = useArtifacts();
+  const viewScreenshots = useViewScreenshots();
   const navigate = useNavigate();
   const handleThumbnailClick = useViewThumbnails(id);
 
@@ -45,7 +45,7 @@ export default function CardStats({
       value: screenshotsCount,
       tooltip: "Screenshots",
       color: "text-purple-400 hover:text-purple-300",
-      onClick: () => getScreenshots([ytId]),
+      onClick: () => viewScreenshots([ytId]),
     },
     {
       value: thumbnails,

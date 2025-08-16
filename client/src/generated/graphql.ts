@@ -169,6 +169,7 @@ export type Query = {
   fetchVideosDashboard: VideosDashboardResponse;
   todo: Todo;
   todos: Array<Todo>;
+  uploadsWithThumbnails: Array<UploadsWithThumbnailsResponse>;
 };
 
 
@@ -199,6 +200,11 @@ export type QueryTodoArgs = {
   id: Scalars['ID']['input'];
 };
 
+
+export type QueryUploadsWithThumbnailsArgs = {
+  input: UploadsWithThumbnailsInput;
+};
+
 export type Todo = {
   __typename?: 'Todo';
   completed: Scalars['Boolean']['output'];
@@ -213,6 +219,16 @@ export type UpdateTodoInput = {
   completed?: InputMaybe<Scalars['Boolean']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UploadsWithThumbnailsInput = {
+  channelIds: Array<Scalars['Float']['input']>;
+};
+
+export type UploadsWithThumbnailsResponse = {
+  __typename?: 'UploadsWithThumbnailsResponse';
+  ytChannelId: Scalars['String']['output'];
+  ytVideoId: Scalars['String']['output'];
 };
 
 export type VideosDashboardResponse = {
@@ -249,6 +265,13 @@ export type DeleteChannelMutationVariables = Exact<{
 
 
 export type DeleteChannelMutation = { __typename?: 'Mutation', deleteChannel: { __typename?: 'DeleteChannelResponse', success: boolean, message: string } };
+
+export type UploadsWithThumbnailsQueryVariables = Exact<{
+  input: UploadsWithThumbnailsInput;
+}>;
+
+
+export type UploadsWithThumbnailsQuery = { __typename?: 'Query', uploadsWithThumbnails: Array<{ __typename?: 'UploadsWithThumbnailsResponse', ytChannelId: string, ytVideoId: string }> };
 
 export type GetChannelForPlaylistQueryVariables = Exact<{
   ytChannelId: Scalars['String']['input'];
@@ -391,6 +414,47 @@ export function useDeleteChannelMutation(baseOptions?: Apollo.MutationHookOption
 export type DeleteChannelMutationHookResult = ReturnType<typeof useDeleteChannelMutation>;
 export type DeleteChannelMutationResult = Apollo.MutationResult<DeleteChannelMutation>;
 export type DeleteChannelMutationOptions = Apollo.BaseMutationOptions<DeleteChannelMutation, DeleteChannelMutationVariables>;
+export const UploadsWithThumbnailsDocument = gql`
+    query UploadsWithThumbnails($input: UploadsWithThumbnailsInput!) {
+  uploadsWithThumbnails(input: $input) {
+    ytChannelId
+    ytVideoId
+  }
+}
+    `;
+
+/**
+ * __useUploadsWithThumbnailsQuery__
+ *
+ * To run a query within a React component, call `useUploadsWithThumbnailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUploadsWithThumbnailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUploadsWithThumbnailsQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUploadsWithThumbnailsQuery(baseOptions: Apollo.QueryHookOptions<UploadsWithThumbnailsQuery, UploadsWithThumbnailsQueryVariables> & ({ variables: UploadsWithThumbnailsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UploadsWithThumbnailsQuery, UploadsWithThumbnailsQueryVariables>(UploadsWithThumbnailsDocument, options);
+      }
+export function useUploadsWithThumbnailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UploadsWithThumbnailsQuery, UploadsWithThumbnailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UploadsWithThumbnailsQuery, UploadsWithThumbnailsQueryVariables>(UploadsWithThumbnailsDocument, options);
+        }
+export function useUploadsWithThumbnailsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<UploadsWithThumbnailsQuery, UploadsWithThumbnailsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<UploadsWithThumbnailsQuery, UploadsWithThumbnailsQueryVariables>(UploadsWithThumbnailsDocument, options);
+        }
+export type UploadsWithThumbnailsQueryHookResult = ReturnType<typeof useUploadsWithThumbnailsQuery>;
+export type UploadsWithThumbnailsLazyQueryHookResult = ReturnType<typeof useUploadsWithThumbnailsLazyQuery>;
+export type UploadsWithThumbnailsSuspenseQueryHookResult = ReturnType<typeof useUploadsWithThumbnailsSuspenseQuery>;
+export type UploadsWithThumbnailsQueryResult = Apollo.QueryResult<UploadsWithThumbnailsQuery, UploadsWithThumbnailsQueryVariables>;
 export const GetChannelForPlaylistDocument = gql`
     query GetChannelForPlaylist($ytChannelId: String!) {
   channelForPlaylist(ytChannelId: $ytChannelId) {

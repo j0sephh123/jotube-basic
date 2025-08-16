@@ -1,6 +1,6 @@
 import { Channel } from "../../../types";
 import TableCol from "../TableCol";
-import useArtifacts from "@/features/Thumbnail/hooks/useArtifacts";
+import useViewScreenshots from "@/features/Thumbnail/hooks/useViewScreenshots";
 import { Camera } from "lucide-react";
 
 type ScreenshotCountCellProps = {
@@ -11,10 +11,10 @@ export default function ScreenshotCountCell({
   channel,
 }: ScreenshotCountCellProps) {
   const count = channel.counts?.screenshotCount ?? 0;
-  const { getScreenshots } = useArtifacts();
+  const viewScreenshots = useViewScreenshots();
 
   const handleViewScreenshots = () => {
-    getScreenshots([channel.ytId]);
+    viewScreenshots([channel.ytId]);
   };
 
   return (

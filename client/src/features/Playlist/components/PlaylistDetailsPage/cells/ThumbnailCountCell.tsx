@@ -1,7 +1,7 @@
 import { Channel } from "../../../types";
 import TableCol from "../TableCol";
 import { ImageIcon } from "lucide-react";
-import useArtifacts from "@/features/Thumbnail/hooks/useArtifacts";
+import useViewThumbnails from "@/shared/hooks/useViewThumbnails";
 
 type ThumbnailCountCellProps = {
   channel: Channel;
@@ -12,9 +12,9 @@ export default function ThumbnailCountCell({
 }: ThumbnailCountCellProps) {
   const count = channel.counts?.thumbnailCount ?? 0;
 
-  const { viewThumbnails } = useArtifacts();
+  const viewThumbnails = useViewThumbnails(channel.id);
   const handleViewThumbnails = () => {
-    viewThumbnails([channel.id]);
+    viewThumbnails();
   };
 
   return (
