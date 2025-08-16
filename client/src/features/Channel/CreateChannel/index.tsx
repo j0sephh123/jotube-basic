@@ -31,6 +31,11 @@ export default function CreateChannel() {
     },
   });
 
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+    clearInput();
+  };
+
   const handleChannelCreate = async ({ ytVideoId }: { ytVideoId: string }) => {
     await channelCreateMutation({
       variables: {
@@ -39,14 +44,11 @@ export default function CreateChannel() {
         },
       },
     });
-    setIsModalVisible(false);
+    handleCloseModal();
   };
 
-  const handleCloseModal = () => {
-    setIsModalVisible(false);
-  };
-
-  const { ytVideoId, inputRef, handleInputChange } = useCreateChannelForm();
+  const { ytVideoId, inputRef, handleInputChange, clearInput } =
+    useCreateChannelForm(isModalVisible);
 
   return (
     <>
