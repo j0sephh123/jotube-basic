@@ -9,3 +9,8 @@ export function useTotalCounts() {
     error,
   };
 }
+
+export function useRefetchTotalCounts() {
+  const { refetch } = useGetStatisticsCountsQuery();
+  return refetch;
+}
