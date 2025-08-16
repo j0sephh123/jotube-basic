@@ -1,16 +1,15 @@
 import Modal from "@/shared/components/Modal";
-import CreateChannelForm from "./CreateChannelForm";
 
 type Props = {
   isVisible: boolean;
   onClose: () => void;
-  onSubmit: ({ ytVideoId }: { ytVideoId: string }) => void;
+  children: React.ReactNode;
 };
 
 export default function CreateChannelModal({
   isVisible,
   onClose,
-  onSubmit,
+  children,
 }: Props): JSX.Element {
   if (!isVisible) return <></>;
 
@@ -24,7 +23,7 @@ export default function CreateChannelModal({
         display: "flex",
       }}
     >
-      <CreateChannelForm onSubmit={onSubmit} onClose={onClose} />
+      {children}
     </Modal>
   );
 }

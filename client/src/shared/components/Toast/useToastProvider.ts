@@ -25,6 +25,46 @@ export function useToastProvider() {
     []
   );
 
+  const successToast = useCallback(
+    (
+      message: string | JSX.Element,
+      options: Omit<ToastOptions, "type"> = {}
+    ) => {
+      return show(message, { ...options, type: "success" });
+    },
+    [show]
+  );
+
+  const errorToast = useCallback(
+    (
+      message: string | JSX.Element,
+      options: Omit<ToastOptions, "type"> = {}
+    ) => {
+      return show(message, { ...options, type: "error" });
+    },
+    [show]
+  );
+
+  const infoToast = useCallback(
+    (
+      message: string | JSX.Element,
+      options: Omit<ToastOptions, "type"> = {}
+    ) => {
+      return show(message, { ...options, type: "info" });
+    },
+    [show]
+  );
+
+  const warningToast = useCallback(
+    (
+      message: string | JSX.Element,
+      options: Omit<ToastOptions, "type"> = {}
+    ) => {
+      return show(message, { ...options, type: "warning" });
+    },
+    [show]
+  );
+
   const remove = useCallback((id: string) => {
     setToasts((prev) => prev.filter((toast) => toast.id !== id));
   }, []);
@@ -32,6 +72,10 @@ export function useToastProvider() {
   return {
     toasts,
     show,
+    successToast,
+    errorToast,
+    infoToast,
+    warningToast,
     remove,
   };
 }

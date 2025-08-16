@@ -15,6 +15,22 @@ type ToastContextType = {
     message: string | JSX.Element,
     options?: ToastOptions
   ) => `${string}-${string}-${string}-${string}-${string}`;
+  successToast: (
+    message: string | JSX.Element,
+    options?: Omit<ToastOptions, "type">
+  ) => `${string}-${string}-${string}-${string}-${string}`;
+  errorToast: (
+    message: string | JSX.Element,
+    options?: Omit<ToastOptions, "type">
+  ) => `${string}-${string}-${string}-${string}-${string}`;
+  infoToast: (
+    message: string | JSX.Element,
+    options?: Omit<ToastOptions, "type">
+  ) => `${string}-${string}-${string}-${string}-${string}`;
+  warningToast: (
+    message: string | JSX.Element,
+    options?: Omit<ToastOptions, "type">
+  ) => `${string}-${string}-${string}-${string}-${string}`;
   remove: (id: `${string}-${string}-${string}-${string}-${string}`) => void;
 };
 
@@ -27,10 +43,27 @@ type ToastProviderProps = {
 };
 
 export function ToastProvider({ children }: ToastProviderProps) {
-  const { toasts, show, remove } = useToastProvider();
+  const {
+    toasts,
+    show,
+    successToast,
+    errorToast,
+    infoToast,
+    warningToast,
+    remove,
+  } = useToastProvider();
 
   return (
-    <ToastContext.Provider value={{ show, remove }}>
+    <ToastContext.Provider
+      value={{
+        show,
+        successToast,
+        errorToast,
+        infoToast,
+        warningToast,
+        remove,
+      }}
+    >
       {children}
       {toasts.map((toast) => (
         <Toast

@@ -3,8 +3,16 @@
 # ------------------------------------------------------
 
 type CreateChannelResponse {
-  success: Boolean!
+  message: ChannelMessage!
   ytChannelId: String
+}
+
+"""Possible messages for channel creation responses"""
+enum ChannelMessage {
+  INVALID_VIDEO_ID
+  ALREADY_EXISTS
+  CREATED_SUCCESSFULLY
+  FAILED_TO_CREATE
 }
 
 type Todo {

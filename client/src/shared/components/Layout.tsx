@@ -9,7 +9,7 @@ import ScreenshotsSidePanel from "./ScreenshotsSidePanel";
 import { AddChannelToPlaylistModal } from "@/features/Playlist/components/AddChannelToPlaylistModal";
 import ZoomModal from "./ZoomModal";
 import StoryboardProcessing from "@/features/Storyboard/StoryboardProcessing";
-import CreateChannel from "@/features/Channel/CreateChannel/components/CreateChannel";
+import CreateChannel from "@/features/Channel/CreateChannel";
 import { ToastProvider } from "./Toast/ToastContext";
 
 export default function Layout(): JSX.Element {

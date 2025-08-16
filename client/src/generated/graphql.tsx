@@ -19,13 +19,21 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
 };
 
+/** Possible messages for channel creation responses */
+export enum ChannelMessage {
+  AlreadyExists = 'ALREADY_EXISTS',
+  CreatedSuccessfully = 'CREATED_SUCCESSFULLY',
+  FailedToCreate = 'FAILED_TO_CREATE',
+  InvalidVideoId = 'INVALID_VIDEO_ID'
+}
+
 export type CreateChannelInput = {
   ytVideoId: Scalars['String']['input'];
 };
 
 export type CreateChannelResponse = {
   __typename?: 'CreateChannelResponse';
-  success: Scalars['Boolean']['output'];
+  message: ChannelMessage;
   ytChannelId?: Maybe<Scalars['String']['output']>;
 };
 
@@ -100,7 +108,7 @@ export type CreateChannelMutationVariables = Exact<{
 }>;
 
 
-export type CreateChannelMutation = { __typename?: 'Mutation', createChannel: { __typename?: 'CreateChannelResponse', success: boolean, ytChannelId?: string | null } };
+export type CreateChannelMutation = { __typename?: 'Mutation', createChannel: { __typename?: 'CreateChannelResponse', message: ChannelMessage, ytChannelId?: string | null } };
 
 
 export const GetTodosDocument = gql`
@@ -147,7 +155,7 @@ export type GetTodosQueryResult = Apollo.QueryResult<GetTodosQuery, GetTodosQuer
 export const CreateChannelDocument = gql`
     mutation CreateChannel($createChannelInput: CreateChannelInput!) {
   createChannel(createChannelInput: $createChannelInput) {
-    success
+    message
     ytChannelId
   }
 }

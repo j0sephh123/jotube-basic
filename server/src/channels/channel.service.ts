@@ -5,6 +5,7 @@ import { createChannelDto } from './dtos/create-channel.dto';
 import { ArtifactType } from '@prisma/client';
 import { ViewType, DashboardChannel } from 'src/dashboard/types';
 import { ArtifactsAggregatorService } from 'src/artifacts-aggregator/artifacts-aggregator.service';
+import { ChannelMessage } from './dtos/create-channel.response';
 
 @Injectable()
 export class ChannelService {
@@ -21,19 +22,26 @@ export class ChannelService {
       },
     });
 
-    return { success: true };
+    return { success: true, message: 'Channel deleted successfully' };
   }
 
   async create({ ytVideoId }: createChannelDto) {
-    const ytChannelId =
-      await this.youtubeService.getChannelIdByVideoId(ytVideoId);
+    let ytChannelId: string;
+    try {
+      ytChannelId = await this.youtubeService.getChannelIdByVideoId(ytVideoId);
+    } catch {
+      return {
+        ytChannelId: null,
+        message: ChannelMessage.INVALID_VIDEO_ID,
+      };
+    }
 
     try {
       await this.ensureChannelDoesntExist(ytChannelId);
     } catch {
       return {
-        success: false,
         ytChannelId,
+        message: ChannelMessage.ALREADY_EXISTS,
       };
     }
 
@@ -54,11 +62,14 @@ export class ChannelService {
       });
 
       return {
-        success: true,
         ytChannelId,
+        message: ChannelMessage.CREATED_SUCCESSFULLY,
       };
     } catch {
-      throw new Error('Failed to create channel');
+      return {
+        ytChannelId,
+        message: ChannelMessage.FAILED_TO_CREATE,
+      };
     }
   }
 
