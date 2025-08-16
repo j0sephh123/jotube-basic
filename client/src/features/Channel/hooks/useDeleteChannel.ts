@@ -1,12 +1,14 @@
-import { useMutation } from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/nestFetcher";
+import { useDeleteChannelMutation } from "@/generated/graphql";
 
 export default function useDeleteChannel() {
-  return useMutation({
-    mutationFn: (id: number) =>
-      nestFetcher({
-        method: "DELETE",
-        url: "/channel/" + id,
-      }),
-  });
+  const [deleteChannelMutation] = useDeleteChannelMutation();
+
+  return {
+    mutateAsync: (id: number, options?: { onSuccess?: () => void }) => {
+      return deleteChannelMutation({
+        variables: { id },
+        onCompleted: options?.onSuccess,
+      });
+    },
+  };
 }

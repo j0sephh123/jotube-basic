@@ -40,6 +40,7 @@ _Unfiltered, undeveloped concepts. No promises, just possible directions._
 - __create reusable composite components for texts__ like Texts.Title and Buttons.Primary
 - __Recently viewed channels__
 - have a way to view only the saved videos
+- recent search
 ---
 
 ## 🔍 To Groom

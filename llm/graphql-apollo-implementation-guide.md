@@ -79,7 +79,25 @@ export class CreateChannelResponse {
 
 **Important**: GraphQL enums must use simple string identifiers (no spaces, special chars).
 
-#### Step 3: Create GraphQL Resolver
+#### Step 3: Define Simple Response DTOs
+
+For simple operations that don't need complex enums:
+
+```typescript
+// server/src/channels/dtos/delete-channel.response.ts
+import { ObjectType, Field } from "@nestjs/graphql";
+
+@ObjectType()
+export class DeleteChannelResponse {
+  @Field()
+  success: boolean;
+
+  @Field()
+  message: string;
+}
+```
+
+#### Step 4: Create GraphQL Resolver
 
 ```typescript
 // server/src/channels/channels.resolver.ts
@@ -87,6 +105,7 @@ import { Resolver, Mutation, Args } from "@nestjs/graphql";
 import { ChannelService } from "./channel.service";
 import { CreateChannelResponse } from "./dtos/create-channel.response";
 import { CreateChannelInput } from "./dtos/create-channel.input";
+import { DeleteChannelResponse } from "./dtos/delete-channel.response";
 
 @Resolver()
 export class ChannelsResolver {
@@ -98,10 +117,15 @@ export class ChannelsResolver {
   ): Promise<CreateChannelResponse> {
     return this.channelService.create(createChannelInput);
   }
+
+  @Mutation(() => DeleteChannelResponse)
+  async deleteChannel(@Args("id") id: number): Promise<DeleteChannelResponse> {
+    return this.channelService.delete(id);
+  }
 }
 ```
 
-#### Step 4: Implement Service Logic
+#### Step 5: Implement Service Logic
 
 ```typescript
 // server/src/channels/channel.service.ts
@@ -121,6 +145,14 @@ async create({ ytVideoId }: createChannelDto) {
     };
   }
 }
+
+async delete(id: number) {
+  await this.prismaService.channel.delete({
+    where: { id },
+  });
+
+  return { success: true, message: 'Channel deleted successfully' };
+}
 ```
 
 ### 2. Frontend (React + Apollo Client)
@@ -139,6 +171,15 @@ export const CREATE_CHANNEL = gql`
     }
   }
 `;
+
+export const DELETE_CHANNEL = gql`
+  mutation DeleteChannel($id: Float!) {
+    deleteChannel(id: $id) {
+      success
+      message
+    }
+  }
+`;
 ```
 
 #### Step 2: Generate Types
@@ -153,6 +194,8 @@ This generates TypeScript types in `src/generated/graphql.tsx`:
 - `CreateChannelMutation` - mutation function type
 - `CreateChannelMutationVariables` - input variables type
 - `ChannelMessage` - enum type
+- `DeleteChannelMutation` - delete mutation function type
+- `DeleteChannelMutationVariables` - delete input variables type
 
 #### Step 3: Create Custom Hook
 
@@ -198,7 +241,35 @@ export default function useCreateChannel({
 }
 ```
 
-#### Step 4: Use in Component
+#### Step 4: Create Hook Wrapper for API Compatibility
+
+When migrating from REST to GraphQL, you can create a wrapper to maintain the existing API:
+
+```typescript
+// client/src/features/Channel/hooks/useDeleteChannel.ts
+import { useDeleteChannelMutation } from "@/generated/graphql";
+
+export default function useDeleteChannel() {
+  const [deleteChannelMutation] = useDeleteChannelMutation();
+
+  return {
+    mutateAsync: (id: number, options?: { onSuccess?: () => void }) => {
+      return deleteChannelMutation({
+        variables: { id },
+        onCompleted: options?.onSuccess,
+      });
+    },
+  };
+}
+```
+
+This pattern allows you to:
+
+- Keep the same function signature (`mutateAsync(id, options)`)
+- Map REST callbacks to GraphQL equivalents (`onSuccess` → `onCompleted`)
+- Gradually migrate components without breaking changes
+
+#### Step 5: Use in Component
 
 ```typescript
 // client/src/features/Channel/CreateChannel/index.tsx
@@ -246,7 +317,19 @@ export default function CreateChannel() {
 - Handle all possible enum values in the frontend switch statement
 - Provide meaningful callback functions for each response type
 
-### 2. Separation of Concerns
+### 2. Simple Response DTOs
+
+- For basic operations, use simple DTOs with `success` and `message` fields
+- Avoid over-engineering when complex enums aren't needed
+- Keep GraphQL schema clean and focused
+
+### 3. Hook Wrapper Pattern
+
+- When migrating from REST to GraphQL, create wrapper hooks
+- Maintain existing API signatures for smooth transitions
+- Map REST patterns to GraphQL equivalents (e.g., `onSuccess` → `onCompleted`)
+
+### 4. Separation of Concerns
 
 - **DTOs**: Define GraphQL schema structure
 - **Resolvers**: Handle GraphQL operations
@@ -254,19 +337,19 @@ export default function CreateChannel() {
 - **Hooks**: Manage Apollo Client state and callbacks
 - **Components**: Handle UI and user interactions
 
-### 3. Error Handling
+### 5. Error Handling
 
 - Backend returns structured responses with message enums
 - Frontend handles each response type with appropriate UI feedback
 - Use toast notifications for user feedback
 
-### 4. Type Safety
+### 6. Type Safety
 
 - Always regenerate types after schema changes (`npm run codegen`)
 - Use generated types from `@/generated/graphql`
 - Never edit generated files manually
 
-### 5. File Organization
+### 7. File Organization
 
 - Keep GraphQL operations in `src/api/graphql/queries.ts`
 - Create custom hooks in feature-specific `hooks/` folders
@@ -279,6 +362,7 @@ export default function CreateChannel() {
 3. **Not handling all enum cases** in the frontend switch statement
 4. **Mixing REST and GraphQL** patterns in the same feature
 5. **Not using the generated types** from the codegen
+6. **Breaking existing API contracts** when migrating from REST to GraphQL
 
 ## Development Workflow
 
@@ -288,6 +372,18 @@ export default function CreateChannel() {
 4. **Frontend**: Run `npm run codegen` to regenerate types
 5. **Frontend**: Update hooks and components to use new types
 6. **Test**: Verify the complete flow works end-to-end
+
+## REST to GraphQL Migration
+
+When migrating existing REST endpoints to GraphQL:
+
+1. **Keep existing REST endpoints** until GraphQL is fully tested
+2. **Create GraphQL DTOs** that match your service return types
+3. **Add GraphQL resolvers** alongside existing REST controllers
+4. **Create wrapper hooks** that maintain the same API signature
+5. **Update components** to use GraphQL hooks
+6. **Remove REST endpoints** only after successful migration
+7. **Test thoroughly** to ensure no breaking changes
 
 ## Toast Integration
 

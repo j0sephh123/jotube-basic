@@ -42,10 +42,17 @@ export type CreateTodoInput = {
   title: Scalars['String']['input'];
 };
 
+export type DeleteChannelResponse = {
+  __typename?: 'DeleteChannelResponse';
+  message: Scalars['String']['output'];
+  success: Scalars['Boolean']['output'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createChannel: CreateChannelResponse;
   createTodo: Todo;
+  deleteChannel: DeleteChannelResponse;
   removeTodo: Scalars['Boolean']['output'];
   updateTodo: Todo;
 };
@@ -58,6 +65,11 @@ export type MutationCreateChannelArgs = {
 
 export type MutationCreateTodoArgs = {
   createTodoInput: CreateTodoInput;
+};
+
+
+export type MutationDeleteChannelArgs = {
+  id: Scalars['Float']['input'];
 };
 
 
@@ -109,6 +121,13 @@ export type CreateChannelMutationVariables = Exact<{
 
 
 export type CreateChannelMutation = { __typename?: 'Mutation', createChannel: { __typename?: 'CreateChannelResponse', message: ChannelMessage, ytChannelId?: string | null } };
+
+export type DeleteChannelMutationVariables = Exact<{
+  id: Scalars['Float']['input'];
+}>;
+
+
+export type DeleteChannelMutation = { __typename?: 'Mutation', deleteChannel: { __typename?: 'DeleteChannelResponse', success: boolean, message: string } };
 
 
 export const GetTodosDocument = gql`
@@ -186,3 +205,37 @@ export function useCreateChannelMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateChannelMutationHookResult = ReturnType<typeof useCreateChannelMutation>;
 export type CreateChannelMutationResult = Apollo.MutationResult<CreateChannelMutation>;
 export type CreateChannelMutationOptions = Apollo.BaseMutationOptions<CreateChannelMutation, CreateChannelMutationVariables>;
+export const DeleteChannelDocument = gql`
+    mutation DeleteChannel($id: Float!) {
+  deleteChannel(id: $id) {
+    success
+    message
+  }
+}
+    `;
+export type DeleteChannelMutationFn = Apollo.MutationFunction<DeleteChannelMutation, DeleteChannelMutationVariables>;
+
+/**
+ * __useDeleteChannelMutation__
+ *
+ * To run a mutation, you first call `useDeleteChannelMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteChannelMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteChannelMutation, { data, loading, error }] = useDeleteChannelMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteChannelMutation(baseOptions?: Apollo.MutationHookOptions<DeleteChannelMutation, DeleteChannelMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteChannelMutation, DeleteChannelMutationVariables>(DeleteChannelDocument, options);
+      }
+export type DeleteChannelMutationHookResult = ReturnType<typeof useDeleteChannelMutation>;
+export type DeleteChannelMutationResult = Apollo.MutationResult<DeleteChannelMutation>;
+export type DeleteChannelMutationOptions = Apollo.BaseMutationOptions<DeleteChannelMutation, DeleteChannelMutationVariables>;

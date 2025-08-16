@@ -15,6 +15,11 @@ enum ChannelMessage {
   FAILED_TO_CREATE
 }
 
+type DeleteChannelResponse {
+  success: Boolean!
+  message: String!
+}
+
 type Todo {
   id: ID!
   title: String!
@@ -36,6 +41,7 @@ type Query {
 
 type Mutation {
   createChannel(createChannelInput: CreateChannelInput!): CreateChannelResponse!
+  deleteChannel(id: Float!): DeleteChannelResponse!
   createTodo(createTodoInput: CreateTodoInput!): Todo!
   updateTodo(id: ID!, updateTodoInput: UpdateTodoInput!): Todo!
   removeTodo(id: ID!): Boolean!
