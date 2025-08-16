@@ -48,6 +48,12 @@ export type ChannelMetadataResponse = {
   videoCount: Scalars['Int']['output'];
 };
 
+export type ChannelsDashboardResponse = {
+  __typename?: 'ChannelsDashboardResponse';
+  channels: Array<DashboardChannelResponse>;
+  total: Scalars['Int']['output'];
+};
+
 export type CreateChannelInput = {
   ytVideoId: Scalars['String']['input'];
 };
@@ -63,10 +69,55 @@ export type CreateTodoInput = {
   title: Scalars['String']['input'];
 };
 
+export type DashboardChannelResponse = {
+  __typename?: 'DashboardChannelResponse';
+  createdAt: Scalars['DateTime']['output'];
+  defaults: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  lastSyncedAt?: Maybe<Scalars['DateTime']['output']>;
+  playlist?: Maybe<DashboardPlaylistResponse>;
+  saved: Scalars['Int']['output'];
+  screenshotsCount: Scalars['Int']['output'];
+  src: Scalars['String']['output'];
+  storyboard: Scalars['Int']['output'];
+  thumbnails: Scalars['Int']['output'];
+  title: Scalars['String']['output'];
+  videoCount: Scalars['Int']['output'];
+  ytId: Scalars['String']['output'];
+};
+
+export type DashboardPlaylistResponse = {
+  __typename?: 'DashboardPlaylistResponse';
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+};
+
+export type DashboardVideoResponse = {
+  __typename?: 'DashboardVideoResponse';
+  channelId: Scalars['Int']['output'];
+  channelTitle: Scalars['String']['output'];
+  channelYtId: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  screenshotCount: Scalars['Int']['output'];
+  src: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  ytId: Scalars['String']['output'];
+};
+
 export type DeleteChannelResponse = {
   __typename?: 'DeleteChannelResponse';
   message: Scalars['String']['output'];
   success: Scalars['Boolean']['output'];
+};
+
+export type FetchDashboardInput = {
+  defaultMax?: InputMaybe<Scalars['Float']['input']>;
+  defaultMin?: InputMaybe<Scalars['Float']['input']>;
+  max?: InputMaybe<Scalars['Float']['input']>;
+  min?: InputMaybe<Scalars['Float']['input']>;
+  page: Scalars['Float']['input'];
+  sortOrder: Scalars['String']['input'];
+  viewType?: InputMaybe<ViewType>;
 };
 
 export type Mutation = {
@@ -114,6 +165,8 @@ export type Query = {
   __typename?: 'Query';
   channelForPlaylist: ChannelForPlaylistResponse;
   channelMetadata: ChannelMetadataResponse;
+  fetchDashboard: ChannelsDashboardResponse;
+  fetchVideosDashboard: VideosDashboardResponse;
   todo: Todo;
   todos: Array<Todo>;
 };
@@ -126,6 +179,19 @@ export type QueryChannelForPlaylistArgs = {
 
 export type QueryChannelMetadataArgs = {
   ytChannelId: Scalars['String']['input'];
+};
+
+
+export type QueryFetchDashboardArgs = {
+  fetchDashboardInput: FetchDashboardInput;
+};
+
+
+export type QueryFetchVideosDashboardArgs = {
+  page?: InputMaybe<Scalars['Float']['input']>;
+  screenshotMax?: InputMaybe<Scalars['Float']['input']>;
+  screenshotMin?: InputMaybe<Scalars['Float']['input']>;
+  sortOrder?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -148,6 +214,22 @@ export type UpdateTodoInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
+
+export type VideosDashboardResponse = {
+  __typename?: 'VideosDashboardResponse';
+  total: Scalars['Int']['output'];
+  videos: Array<DashboardVideoResponse>;
+};
+
+/** Available view types for dashboard filtering */
+export enum ViewType {
+  HasStoryboards = 'HAS_STORYBOARDS',
+  NoScreenshots = 'NO_SCREENSHOTS',
+  NoUploads = 'NO_UPLOADS',
+  Processed = 'PROCESSED',
+  Saved = 'SAVED',
+  Thumbnails = 'THUMBNAILS'
+}
 
 export type GetTodosQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -181,6 +263,23 @@ export type GetChannelMetadataQueryVariables = Exact<{
 
 
 export type GetChannelMetadataQuery = { __typename?: 'Query', channelMetadata: { __typename?: 'ChannelMetadataResponse', id: number, title: string, fetchedUntilEnd: boolean, videoCount: number, lastSyncedAt?: string | null, videoArtifactsCount: number, savedArtifactsCount: number, thumbnailArtifactsCount: number, screenshotArtifactsCount: number, storyboardArtifactsCount: number, playlist?: { __typename?: 'PlaylistInfo', id: number, name: string } | null } };
+
+export type FetchDashboardQueryVariables = Exact<{
+  fetchDashboardInput: FetchDashboardInput;
+}>;
+
+
+export type FetchDashboardQuery = { __typename?: 'Query', fetchDashboard: { __typename?: 'ChannelsDashboardResponse', total: number, channels: Array<{ __typename?: 'DashboardChannelResponse', id: number, createdAt: any, title: string, ytId: string, src: string, lastSyncedAt?: any | null, videoCount: number, thumbnails: number, saved: number, defaults: number, storyboard: number, screenshotsCount: number, playlist?: { __typename?: 'DashboardPlaylistResponse', id: number, name: string } | null }> } };
+
+export type FetchVideosDashboardQueryVariables = Exact<{
+  page?: InputMaybe<Scalars['Float']['input']>;
+  sortOrder?: InputMaybe<Scalars['String']['input']>;
+  screenshotMin?: InputMaybe<Scalars['Float']['input']>;
+  screenshotMax?: InputMaybe<Scalars['Float']['input']>;
+}>;
+
+
+export type FetchVideosDashboardQuery = { __typename?: 'Query', fetchVideosDashboard: { __typename?: 'VideosDashboardResponse', total: number, videos: Array<{ __typename?: 'DashboardVideoResponse', id: number, ytId: string, title: string, src: string, channelId: number, channelTitle: string, channelYtId: string, screenshotCount: number }> } };
 
 
 export const GetTodosDocument = gql`
@@ -386,3 +485,119 @@ export type GetChannelMetadataQueryHookResult = ReturnType<typeof useGetChannelM
 export type GetChannelMetadataLazyQueryHookResult = ReturnType<typeof useGetChannelMetadataLazyQuery>;
 export type GetChannelMetadataSuspenseQueryHookResult = ReturnType<typeof useGetChannelMetadataSuspenseQuery>;
 export type GetChannelMetadataQueryResult = Apollo.QueryResult<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>;
+export const FetchDashboardDocument = gql`
+    query FetchDashboard($fetchDashboardInput: FetchDashboardInput!) {
+  fetchDashboard(fetchDashboardInput: $fetchDashboardInput) {
+    channels {
+      id
+      createdAt
+      title
+      ytId
+      src
+      lastSyncedAt
+      videoCount
+      thumbnails
+      saved
+      defaults
+      storyboard
+      screenshotsCount
+      playlist {
+        id
+        name
+      }
+    }
+    total
+  }
+}
+    `;
+
+/**
+ * __useFetchDashboardQuery__
+ *
+ * To run a query within a React component, call `useFetchDashboardQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFetchDashboardQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFetchDashboardQuery({
+ *   variables: {
+ *      fetchDashboardInput: // value for 'fetchDashboardInput'
+ *   },
+ * });
+ */
+export function useFetchDashboardQuery(baseOptions: Apollo.QueryHookOptions<FetchDashboardQuery, FetchDashboardQueryVariables> & ({ variables: FetchDashboardQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FetchDashboardQuery, FetchDashboardQueryVariables>(FetchDashboardDocument, options);
+      }
+export function useFetchDashboardLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FetchDashboardQuery, FetchDashboardQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FetchDashboardQuery, FetchDashboardQueryVariables>(FetchDashboardDocument, options);
+        }
+export function useFetchDashboardSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FetchDashboardQuery, FetchDashboardQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FetchDashboardQuery, FetchDashboardQueryVariables>(FetchDashboardDocument, options);
+        }
+export type FetchDashboardQueryHookResult = ReturnType<typeof useFetchDashboardQuery>;
+export type FetchDashboardLazyQueryHookResult = ReturnType<typeof useFetchDashboardLazyQuery>;
+export type FetchDashboardSuspenseQueryHookResult = ReturnType<typeof useFetchDashboardSuspenseQuery>;
+export type FetchDashboardQueryResult = Apollo.QueryResult<FetchDashboardQuery, FetchDashboardQueryVariables>;
+export const FetchVideosDashboardDocument = gql`
+    query FetchVideosDashboard($page: Float, $sortOrder: String, $screenshotMin: Float, $screenshotMax: Float) {
+  fetchVideosDashboard(
+    page: $page
+    sortOrder: $sortOrder
+    screenshotMin: $screenshotMin
+    screenshotMax: $screenshotMax
+  ) {
+    videos {
+      id
+      ytId
+      title
+      src
+      channelId
+      channelTitle
+      channelYtId
+      screenshotCount
+    }
+    total
+  }
+}
+    `;
+
+/**
+ * __useFetchVideosDashboardQuery__
+ *
+ * To run a query within a React component, call `useFetchVideosDashboardQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFetchVideosDashboardQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFetchVideosDashboardQuery({
+ *   variables: {
+ *      page: // value for 'page'
+ *      sortOrder: // value for 'sortOrder'
+ *      screenshotMin: // value for 'screenshotMin'
+ *      screenshotMax: // value for 'screenshotMax'
+ *   },
+ * });
+ */
+export function useFetchVideosDashboardQuery(baseOptions?: Apollo.QueryHookOptions<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>(FetchVideosDashboardDocument, options);
+      }
+export function useFetchVideosDashboardLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>(FetchVideosDashboardDocument, options);
+        }
+export function useFetchVideosDashboardSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>(FetchVideosDashboardDocument, options);
+        }
+export type FetchVideosDashboardQueryHookResult = ReturnType<typeof useFetchVideosDashboardQuery>;
+export type FetchVideosDashboardLazyQueryHookResult = ReturnType<typeof useFetchVideosDashboardLazyQuery>;
+export type FetchVideosDashboardSuspenseQueryHookResult = ReturnType<typeof useFetchVideosDashboardSuspenseQuery>;
+export type FetchVideosDashboardQueryResult = Apollo.QueryResult<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>;

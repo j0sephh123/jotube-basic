@@ -1,34 +1,11 @@
-export type DashboardChannel = {
-  id: number;
-  ytId: string;
-  title: string;
-  src: string;
-  createdAt: string;
-  lastSyncedAt: string | null;
-  videoCount: number;
-  thumbnails: number;
-  saved: number;
-  defaults: number;
-  screenshotsCount: number;
-  storyboard: number;
-  playlist: {
-    id: number;
-    name: string;
-  } | null;
-};
+export type DashboardChannel =
+  import("@/generated/graphql").DashboardChannelResponse;
 
-export interface DashboardVideo {
-  id: number;
-  ytId: string;
-  title: string;
-  src: string;
-  channelId: number;
-  channelTitle: string;
-  channelYtId: string;
-  screenshotCount: number;
-}
+export type DashboardVideo =
+  import("@/generated/graphql").DashboardVideoResponse;
 
-export interface VideosDashboardResponse {
-  videos: DashboardVideo[];
-  total: number;
-}
+export type ChannelsDashboardResponse =
+  import("@/generated/graphql").ChannelsDashboardResponse;
+
+export type VideosDashboardResponse =
+  import("@/generated/graphql").VideosDashboardResponse;

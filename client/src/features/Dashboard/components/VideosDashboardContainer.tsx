@@ -1,14 +1,14 @@
 import { useVideosDashboardQuery } from "../useVideosDashboardQuery";
 import { Loader } from "lucide-react";
 import ErrorMessage from "@/shared/components/static/ErrorMessage";
-import { DashboardVideo } from "../types";
+import { DashboardVideoResponse } from "@/generated/graphql";
 
 export default function VideosDashboardContainer({
   children,
 }: {
-  children: (data: DashboardVideo[]) => React.ReactNode;
+  children: (data: DashboardVideoResponse[]) => React.ReactNode;
 }) {
-  const { data, isLoading, isError } = useVideosDashboardQuery();
+  const { data, isLoading, error } = useVideosDashboardQuery();
 
   if (isLoading) {
     return (
@@ -18,7 +18,7 @@ export default function VideosDashboardContainer({
     );
   }
 
-  if (isError || !data) {
+  if (error || !data || !data.videos) {
     return <ErrorMessage message="Error fetching dashboard data" />;
   }
 

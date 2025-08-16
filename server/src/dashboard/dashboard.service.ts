@@ -1,13 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { fetchDashboardDto } from './dtos/fetch-dashboard.dto';
+import { FetchDashboardInput } from './dtos/fetch-dashboard.input';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
+import { DashboardChannel, ViewType, DashboardVideo } from './types';
 import {
-  DashboardChannel,
   ChannelsDashboardResponse,
-  ViewType,
   VideosDashboardResponse,
-  DashboardVideo,
-} from './types';
+} from './dtos/dashboard.response';
 import { ChannelService } from 'src/channels/channel.service';
 import { ServiceLogger } from 'src/logging/service-logger';
 import { ArtifactType, Prisma } from '@prisma/client';
@@ -45,7 +43,7 @@ export class DashboardService {
     defaultMin,
     defaultMax,
     viewType,
-  }: fetchDashboardDto): Promise<ChannelsDashboardResponse> {
+  }: FetchDashboardInput): Promise<ChannelsDashboardResponse> {
     this.log.infoStart({
       viewType,
     });
@@ -64,7 +62,7 @@ export class DashboardService {
     const sorted = this.sortChannels(filtered, sortOrder, viewType);
 
     return {
-      channels: sorted.slice(skip, skip + PER_PAGE),
+      channels: sorted.slice(skip, skip + PER_PAGE) as any,
       total: sorted.length,
     };
   }
@@ -356,7 +354,7 @@ export class DashboardService {
           channelYtId: r.channelYtId,
           screenshotCount: Number(r.screenshotCount),
         }),
-      ),
+      ) as any,
       total,
     };
   }

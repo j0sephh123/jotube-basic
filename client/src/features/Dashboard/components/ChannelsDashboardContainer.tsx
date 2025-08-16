@@ -1,14 +1,14 @@
 import { useChannelsDashboardQuery } from "../useChannelsDashboardQuery";
 import { Loader } from "lucide-react";
 import ErrorMessage from "@/shared/components/static/ErrorMessage";
-import { DashboardChannel } from "../types";
+import { DashboardChannelResponse } from "@/generated/graphql";
 
 export default function ChannelsDashboardContainer({
   children,
 }: {
-  children: (data: DashboardChannel[]) => React.ReactNode;
+  children: (data: DashboardChannelResponse[]) => React.ReactNode;
 }) {
-  const { data, isLoading, isError } = useChannelsDashboardQuery();
+  const { data, isLoading, error } = useChannelsDashboardQuery();
 
   if (isLoading) {
     return (
@@ -18,7 +18,7 @@ export default function ChannelsDashboardContainer({
     );
   }
 
-  if (isError || !data) {
+  if (error || !data || !data.channels) {
     return <ErrorMessage message="Error fetching dashboard data" />;
   }
 

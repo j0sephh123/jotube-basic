@@ -6,8 +6,7 @@ import { ImagesModule } from './images/images.module';
 import { ConfigModule as NestConfigModule } from '@nestjs/config';
 import { ScreenshotsJobModule } from './screenshots/jobs/screenshotsJob.module';
 import { BullModule } from '@nestjs/bull';
-import { DashboardController } from './dashboard/dashboard.controller';
-import { DashboardService } from './dashboard/dashboard.service';
+import { DashboardModule } from './dashboard/dashboard.module';
 import { ThumbnailsModule } from './thumbnails/thumbnails.module';
 import { queueNames } from 'src/shared/constants';
 import { DownloadService } from './core/external-services/youtube-downloader/download.service';
@@ -91,17 +90,16 @@ import { AppGraphQLModule } from './graphql/graphql.module';
     ArtifactsAggregatorModule,
     PlaylistModule,
     FileModule,
+    DashboardModule,
     AppGraphQLModule,
   ],
   controllers: [
     QueueController,
     SearchController,
     StatisticsController,
-    DashboardController,
   ],
   providers: [
     YoutubeService,
-    DashboardService,
     QueueService,
     DownloadService,
     YouTubeDownloaderService,

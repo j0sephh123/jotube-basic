@@ -4,7 +4,7 @@ import Card from "@/shared/components/card";
 import FetchUploadsButton from "../../Upload/components/FetchUploadsButton";
 import DeleteChannel from "../../Channel/NewChannel/components/DeleteChannel";
 import useTitleClick from "../hooks/useTitleClick";
-import { DashboardChannel } from "../types";
+import { DashboardChannelResponse } from "@/generated/graphql";
 import { usePlaylist } from "@/store/store";
 import { ListMusic, ExternalLink } from "lucide-react";
 import clsx from "clsx";
@@ -21,7 +21,7 @@ const fetchUploadsTypes = [ViewType.NO_UPLOADS];
 const downloadTypes = [ViewType.THUMBNAILS, ViewType.PROCESSED, ViewType.SAVED];
 const deleteChannelTypes = [ViewType.NO_UPLOADS];
 
-type Props = DashboardChannel & {
+type Props = DashboardChannelResponse & {
   viewType: ViewType;
 };
 

@@ -1,0 +1,2 @@
+- server: in server dir run `pnpm run start:debug`
+- client: in client dir run `pnpm run dev`

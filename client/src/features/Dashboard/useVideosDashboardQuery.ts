@@ -1,21 +1,20 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useVideosDashboard } from "@/store/store";
-import nestFetcher from "@/shared/api/nestFetcher";
-import { VideosDashboardResponse } from "./types";
 import { useCallback } from "react";
+import { useFetchVideosDashboard } from "./hooks";
 
 export function useVideosDashboardQuery() {
   const { videosRequestBody: requestBody } = useVideosDashboard();
 
-  return useQuery<VideosDashboardResponse>({
-    queryKey: ["dashboard", "videos", requestBody],
-    queryFn: () =>
-      nestFetcher<VideosDashboardResponse>({
-        method: "POST",
-        url: "/dashboard/videos",
-        body: requestBody,
-      }),
-  });
+  const { data, loading, error, refetch } =
+    useFetchVideosDashboard(requestBody);
+
+  return {
+    data: data?.fetchVideosDashboard,
+    isLoading: loading,
+    error,
+    refetch,
+  };
 }
 
 export function useRefetchVideosDashboard() {

@@ -44,6 +44,53 @@ type ChannelMetadataResponse {
   storyboardArtifactsCount: Int!
 }
 
+type DashboardPlaylistResponse {
+  id: Int!
+  name: String!
+}
+
+type DashboardChannelResponse {
+  id: Int!
+  createdAt: DateTime!
+  title: String!
+  ytId: String!
+  src: String!
+  lastSyncedAt: DateTime
+  videoCount: Int!
+  thumbnails: Int!
+  saved: Int!
+  defaults: Int!
+  storyboard: Int!
+  screenshotsCount: Int!
+  playlist: DashboardPlaylistResponse
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type ChannelsDashboardResponse {
+  channels: [DashboardChannelResponse!]!
+  total: Int!
+}
+
+type DashboardVideoResponse {
+  id: Int!
+  ytId: String!
+  title: String!
+  src: String!
+  channelId: Int!
+  channelTitle: String!
+  channelYtId: String!
+  screenshotCount: Int!
+}
+
+type VideosDashboardResponse {
+  videos: [DashboardVideoResponse!]!
+  total: Int!
+}
+
 type Todo {
   id: ID!
   title: String!
@@ -53,16 +100,33 @@ type Todo {
   updatedAt: DateTime!
 }
 
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
 type Query {
   channelForPlaylist(ytChannelId: String!): ChannelForPlaylistResponse!
   channelMetadata(ytChannelId: String!): ChannelMetadataResponse!
+  fetchDashboard(fetchDashboardInput: FetchDashboardInput!): ChannelsDashboardResponse!
+  fetchVideosDashboard(page: Float, sortOrder: String, screenshotMin: Float, screenshotMax: Float): VideosDashboardResponse!
   todos: [Todo!]!
   todo(id: ID!): Todo!
+}
+
+input FetchDashboardInput {
+  page: Float!
+  sortOrder: String!
+  min: Float
+  max: Float
+  defaultMin: Float
+  defaultMax: Float
+  viewType: ViewType
+}
+
+"""Available view types for dashboard filtering"""
+enum ViewType {
+  SAVED
+  PROCESSED
+  NO_UPLOADS
+  NO_SCREENSHOTS
+  THUMBNAILS
+  HAS_STORYBOARDS
 }
 
 type Mutation {
