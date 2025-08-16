@@ -5,11 +5,6 @@ import { ScreenshotsApiService } from './screenshots-api.service';
 export class ScreenshotsApiController {
   constructor(private readonly screenshotsApiService: ScreenshotsApiService) {}
 
-  @Get('screenshots')
-  screenshots() {
-    return this.screenshotsApiService.screenshots();
-  }
-
   @Get('video-screenshots/:ytVideoId')
   getScreenshotsByVideo(@Param('ytVideoId') ytVideoId: string) {
     console.log({
