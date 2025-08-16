@@ -6,10 +6,12 @@ import {
   Patch,
   Post,
   Get,
+  Put,
 } from '@nestjs/common';
 import { PlaylistService } from './playlist.service';
 import { CreatePlaylistDto } from './dtos/create-playlist.dto';
 import { UpdatePlaylistDto } from './dtos/update-playlist.dto';
+import { UpdateChannelPlaylistDto } from './dtos/update-channel-playlist.dto';
 
 @Controller('playlists')
 export class PlaylistController {
@@ -38,5 +40,13 @@ export class PlaylistController {
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.playlistService.delete(+id);
+  }
+
+  @Put('channel/:id')
+  updateChannelPlaylist(
+    @Param('id') id: string,
+    @Body() body: UpdateChannelPlaylistDto,
+  ) {
+    return this.playlistService.updateChannelPlaylist(+id, body);
   }
 }

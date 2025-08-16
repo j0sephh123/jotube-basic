@@ -5,7 +5,6 @@ import { createChannelDto } from './dtos/create-channel.dto';
 import { ArtifactType } from '@prisma/client';
 import { ViewType, DashboardChannel } from 'src/dashboard/types';
 import { ArtifactsAggregatorService } from 'src/artifacts-aggregator/artifacts-aggregator.service';
-import { UpdateChannelPlaylistDto } from '../playlist/dtos/update-channel-playlist.dto';
 
 @Injectable()
 export class ChannelService {
@@ -227,17 +226,6 @@ export class ChannelService {
     }
 
     return fetchStartVideoId;
-  }
-
-  async updatePlaylist(id: number, body: UpdateChannelPlaylistDto) {
-    const channel = await this.prismaService.channel.update({
-      where: { id },
-      data: {
-        playlistId: body.playlistId,
-      },
-    });
-
-    return channel;
   }
 
   async getByYtId(ytChannelId: string) {

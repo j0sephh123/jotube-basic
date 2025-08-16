@@ -14,8 +14,8 @@ export const useUpdateChannelPlaylist = () => {
       data: UpdateChannelPlaylistDto;
     }) =>
       nestFetcher<Channel>({
-        url: `/channel/${id}`,
-        method: "PATCH",
+        url: `/playlists/channel/${id}`,
+        method: "PUT",
         body: data,
       }),
     onSuccess: () => {

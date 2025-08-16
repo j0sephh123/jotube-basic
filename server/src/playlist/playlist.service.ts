@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
 import { CreatePlaylistDto } from './dtos/create-playlist.dto';
 import { UpdatePlaylistDto } from './dtos/update-playlist.dto';
+import { UpdateChannelPlaylistDto } from './dtos/update-channel-playlist.dto';
 
 @Injectable()
 export class PlaylistService {
@@ -116,5 +117,16 @@ export class PlaylistService {
     ]);
 
     return { success: true };
+  }
+
+  async updateChannelPlaylist(id: number, body: UpdateChannelPlaylistDto) {
+    const channel = await this.prismaService.channel.update({
+      where: { id },
+      data: {
+        playlistId: body.playlistId,
+      },
+    });
+
+    return channel;
   }
 }
