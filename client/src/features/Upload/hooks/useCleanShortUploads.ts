@@ -1,43 +1,39 @@
-import { useMutation, DefaultError } from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/nestFetcher";
+import { useCleanShortUploadsMutation } from "@/generated/graphql";
 import { useRefetchChannelUploads } from "./useUploadsList";
 import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMetadata";
-
-type Body = {
-  ytChannelId: string;
-};
-type Response = {
-  deletedCount: number;
-};
+import { useState } from "react";
 
 export function useCleanShortUploads(ytChannelId: string) {
+  const [currentVariables, setCurrentVariables] = useState<{
+    ytChannelId: string;
+  } | null>(null);
   const refetchChannelUploads = useRefetchChannelUploads(ytChannelId);
   const refetchChannelMetadata = useRefetchChannelMetadata();
 
-  const { mutateAsync, isPending, variables } = useMutation<
-    Response,
-    DefaultError,
-    Body
-  >({
-    mutationFn: (body: Body) => {
-      return nestFetcher<Response>({
-        url: "/uploads-video/clean-short-uploads",
-        method: "POST",
-        body,
-      });
-    },
-    onSuccess: () => {
-      refetchChannelUploads();
-      refetchChannelMetadata(ytChannelId);
-    },
-    onError: (error: DefaultError) => {
-      console.error(error);
-    },
-  });
+  const [cleanShortUploadsMutation, { loading }] = useCleanShortUploadsMutation(
+    {
+      onCompleted: () => {
+        refetchChannelUploads();
+        refetchChannelMetadata(ytChannelId);
+      },
+      onError: (error) => {
+        console.error(error);
+      },
+    }
+  );
+
+  const mutateAsync = (body: { ytChannelId: string }) => {
+    setCurrentVariables(body);
+    return cleanShortUploadsMutation({
+      variables: {
+        cleanShortUploadsInput: body,
+      },
+    });
+  };
 
   return {
     mutateAsync,
-    isPending,
-    variables,
+    isPending: loading,
+    variables: currentVariables,
   };
 }

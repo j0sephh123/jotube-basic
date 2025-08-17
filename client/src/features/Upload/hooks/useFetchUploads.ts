@@ -1,5 +1,5 @@
-import { useMutation, DefaultError } from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/nestFetcher";
+import { useFetchUploadsMutation } from "@/generated/graphql";
+import { useState } from "react";
 
 type UseFetchUploadsProps = {
   onSuccess: () => void;
@@ -7,24 +7,31 @@ type UseFetchUploadsProps = {
 };
 
 export function useFetchUploads({ onError, onSuccess }: UseFetchUploadsProps) {
-  const { mutateAsync, isPending, variables } = useMutation<
-    unknown,
-    DefaultError,
-    { ytChannelId: string }
-  >({
-    mutationFn: (body: { ytChannelId: string }) =>
-      nestFetcher<unknown>({
-        url: "/uploads-video/fetch-uploads",
-        method: "POST",
-        body,
-      }),
-    onSuccess,
-    onError: (error: DefaultError) => onError({ message: error.message }),
+  const [currentVariables, setCurrentVariables] = useState<{
+    ytChannelId: string;
+  } | null>(null);
+
+  const [fetchUploadsMutation, { loading }] = useFetchUploadsMutation({
+    onCompleted: () => {
+      onSuccess();
+    },
+    onError: (error) => {
+      onError({ message: error.message });
+    },
   });
+
+  const mutateAsync = (body: { ytChannelId: string }) => {
+    setCurrentVariables(body);
+    return fetchUploadsMutation({
+      variables: {
+        fetchUploadsInput: body,
+      },
+    });
+  };
 
   return {
     mutateAsync,
-    isPending,
-    variables,
+    isPending: loading,
+    variables: currentVariables,
   };
 }

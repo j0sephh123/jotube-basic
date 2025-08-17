@@ -1,34 +1,6 @@
-import { useQuery } from "@apollo/client";
-import { UPLOADS_LIST } from "@/api/graphql/queries/queries";
+import { useUploadsListQuery, SortOrder } from "@/generated/graphql";
 import { useCallback, useMemo } from "react";
-import { SortOrder } from "@/shared/types/searchParams";
 import { useQueue } from "@/shared/hooks/useQueue";
-
-type ChannelUploadsResponse = {
-  id: number;
-  createdAt: string;
-  updatedAt: string;
-  title: string;
-  ytId: string;
-  src: string;
-  videoCount: number;
-  fetchStartVideoId: string;
-  fetchedUntilEnd: boolean;
-  lastSyncedAt: string | null;
-  uploads: {
-    artifact: string;
-    channelId: number;
-    createdAt: string;
-    duration?: number;
-    id: number;
-    nextPageToken: string | null;
-    publishedAt: string;
-    src: string;
-    title: string;
-    updatedAt: string;
-    ytId: string;
-  }[];
-};
 
 export default function useUploadsList(
   ytChannelId: string,
@@ -36,9 +8,7 @@ export default function useUploadsList(
 ) {
   const queue = useQueue();
 
-  const query = useQuery<{
-    uploadsList: ChannelUploadsResponse;
-  }>(UPLOADS_LIST, {
+  const query = useUploadsListQuery({
     variables: {
       uploadsListInput: {
         ytChannelId,
@@ -56,7 +26,7 @@ export default function useUploadsList(
     return {
       ...original,
       uploads: original.uploads.filter((u) => !queuedIds.has(u.ytId)),
-    } as ChannelUploadsResponse;
+    };
   }, [query.data?.uploadsList, queue.data]);
 
   return {

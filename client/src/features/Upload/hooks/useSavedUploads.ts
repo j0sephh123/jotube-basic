@@ -1,44 +1,8 @@
-import { useQuery } from "@apollo/client";
-import { SAVED_UPLOADS } from "@/api/graphql/queries/queries";
+import { useSavedUploadsQuery } from "@/generated/graphql";
 import { useCallback } from "react";
 
-type Upload = {
-  createdAt: string;
-  ytId: string;
-  id: number;
-  duration: number | null;
-  publishedAt: string;
-  src: string;
-  title: string;
-  artifact:
-    | "VIDEO"
-    | "PREVIEW"
-    | "SAVED"
-    | "DOWNLOADED"
-    | "THUMBNAIL"
-    | "SCREENSHOT";
-};
-
-type Channel = {
-  id: number;
-  title: string;
-  src: string;
-  ytId: string;
-  uploads: Upload[];
-  totalUploads: number;
-};
-
-type YouTubeChannelResponse = {
-  ytChannelId: string;
-  channel: Channel | null;
-  uploads: Upload[];
-  totalUploads: number;
-};
-
 export function useSavedUploads(ytChannelId: string) {
-  const { data, loading, error, refetch } = useQuery<{
-    savedUploads: YouTubeChannelResponse[];
-  }>(SAVED_UPLOADS, {
+  const { data, loading, error, refetch } = useSavedUploadsQuery({
     variables: {
       savedUploadsInput: {
         ytChannelIds: [ytChannelId],
