@@ -1,21 +1,23 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useClickOutside } from "@/shared/hooks/useClickOutside";
+import { BookImage } from "lucide-react";
+import {
+  getCurrentDay,
+  getCurrentMonth,
+  getLastDay,
+  getLastMonth,
+} from "@/shared/utils/date";
 
-type DropdownItem = {
-  name: string;
-  link: string;
-};
+const items = [
+  { name: "This year", link: "screenshots" },
+  { name: "This month", link: `screenshots/${getCurrentMonth()}` },
+  { name: "Last month", link: `screenshots/${getLastMonth()}` },
+  { name: "Yesterday", link: `screenshots/${getLastDay()}` },
+  { name: "Today", link: `screenshots/${getCurrentDay()}` },
+];
 
-type DropdownMenuProps = {
-  title: string;
-  items: DropdownItem[];
-};
-
-export default function DropdownMenu({
-  title,
-  items,
-}: DropdownMenuProps): JSX.Element {
+export default function Screenshots() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -31,7 +33,7 @@ export default function DropdownMenu({
         className="btn btn-ghost flex items-center relative z-10"
         onClick={toggleDropdown}
       >
-        {title}
+        <BookImage />
         <svg
           className={`ml-1 w-4 h-4 transition-transform ${
             isOpen ? "rotate-180" : ""
