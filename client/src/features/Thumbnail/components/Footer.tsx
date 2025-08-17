@@ -1,9 +1,9 @@
 import { useThumbnailsSlice } from "@/store/store";
-import OpenExplorerButton from "../../../shared/components/OpenDirectoryButton/OpenDirectoryButton";
+import OpenExplorerButton from "@/shared/ui/OpenDirectoryButton/OpenDirectoryButton";
 import { ArrowLeft, ArrowRight, Save } from "lucide-react";
 import useSubmit from "../hooks/useSubmit";
 import useIsLastItem from "../hooks/useIsLastItem";
-import Button from "@/shared/components/button";
+import Button from "@/shared/ui/button";
 import useThumbnailsCount from "../hooks/useThumbnailsCount";
 import usePaginate from "../hooks/usePaginate";
 

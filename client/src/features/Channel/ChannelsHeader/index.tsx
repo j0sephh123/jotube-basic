@@ -10,15 +10,15 @@ import HeaderLayout from "./HeaderLayout";
 import ChannelControls from "./ChannelControls";
 import SyncUploadsButton from "@/features/Upload/components/SyncUploadsButton";
 import CleanShortUploads from "@/features/Upload/components/CleanShortUploads";
-import ChannelLink from "@/shared/components/ChannelLink";
-import CopyValue from "@/shared/components/CopyValue";
-import OpenExplorerButton from "@/shared/components/OpenDirectoryButton/OpenDirectoryButton";
+import ChannelLink from "@/shared/ui/ChannelLink";
+import CopyValue from "@/shared/ui/CopyValue";
+import OpenExplorerButton from "@/shared/ui/OpenDirectoryButton/OpenDirectoryButton";
 import Tabs from "./Tabs";
 import BulkOperations from "./BulkOperations";
 import ViewThumbnails from "../components/ViewThumbnails";
 import ViewScreenshots from "../components/ViewScreenshots";
 import FetchUploadsButton from "@/features/Upload/components/FetchUploadsButton";
-import ViewStoryboards from "@/shared/components/ViewStoryboards/ViewStoryboards";
+import ViewStoryboards from "@/shared/ui/ViewStoryboards/ViewStoryboards";
 
 const ChannelHeader = () => {
   const ytChannelId = useTypedChannelYtId();

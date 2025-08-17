@@ -2,7 +2,7 @@ import { Heart, Trash2, Eye, Copy, Star } from "lucide-react";
 import clsx from "clsx";
 import type { ChannelScreenshot } from "@/features/Screenshot/hooks/useFetchChannelScreenshots";
 import { useVideoModal } from "@/shared/hooks/useVideoModal";
-import VideoModal from "@/shared/components/VideoModal";
+import VideoModal from "@/shared/ui/VideoModal";
 import { formatSecondsToTime } from "@/shared/utils/format";
 
 type Props = {

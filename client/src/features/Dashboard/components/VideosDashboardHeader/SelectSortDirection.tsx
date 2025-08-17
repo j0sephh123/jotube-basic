@@ -1,7 +1,7 @@
 import { ArrowUp, ArrowDown } from "lucide-react";
 import { useVideosDashboardContext } from "../../hooks/useVideosDashboardContext";
 import { SortOrder } from "@/shared/types/searchParams";
-import Button from "@/shared/components/button";
+import Button from "@/shared/ui/button";
 
 export default function SelectSortDirection(): JSX.Element {
   const { videosRequestBody, setVideosRequestBody } =

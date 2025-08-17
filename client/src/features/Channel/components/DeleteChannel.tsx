@@ -1,6 +1,6 @@
 import useDeleteChannel from "@/features/Channel/hooks/useDeleteChannel";
 import { useRefetchNoUploadsView } from "@/features/Dashboard/useChannelsDashboardQuery";
-import { Button } from "@/shared/components/button";
+import { Button } from "@/shared/ui/button";
 import { useDialog } from "@/shared/hooks/useDialog";
 
 export default function DeleteChannel({ id }: { id: number }) {

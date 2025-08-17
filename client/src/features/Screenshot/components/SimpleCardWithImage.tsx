@@ -4,9 +4,9 @@ import { getPublicImgUrl } from "@/shared/utils/image";
 import { ScreenshotZoomModal } from "./ScreenshotZoomModal";
 import { useState } from "react";
 import { useVideoModal } from "@/shared/hooks/useVideoModal";
-import VideoModal from "@/shared/components/VideoModal";
-import ChannelLink from "../../../shared/components/ChannelLink";
-import ConfirmDialog from "@/shared/components/dialog/ConfirmDialog";
+import VideoModal from "@/shared/ui/VideoModal";
+import ChannelLink from "@/shared/ui/ChannelLink";
+import ConfirmDialog from "@/shared/ui/dialog/ConfirmDialog";
 
 type ScreenshotCardProps = {
   id: number;

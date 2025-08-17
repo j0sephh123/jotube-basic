@@ -1,7 +1,7 @@
 import { useTabs } from "./useTabs";
 import { useGetIsActiveRoute } from "./useGetIsActiveRoute";
-import ChannelLink from "@/shared/components/ChannelLink";
-import Button from "@/shared/components/button";
+import ChannelLink from "@/shared/ui/ChannelLink";
+import Button from "@/shared/ui/button";
 
 export default function Tabs({ ytChannelId }: { ytChannelId: string }) {
   const links = useTabs();

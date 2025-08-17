@@ -8,9 +8,9 @@ import ThemeSwitcher from "./ThemeSwitcher";
 import { routes } from "@/shared/utils/routes";
 import { useTotalCounts } from "@/features/Statistics/hooks/useTotalCounts";
 import { useFreeSpace } from "@/features/Statistics/hooks/useFreeSpace";
-import IconButton from "@/shared/components/icons/IconButton";
+import IconButton from "@/shared/ui/icons/IconButton";
 import { ViewType } from "@/shared/hooks/useDashboardParams";
-import Text from "@/shared/components/Text";
+import Text from "@/shared/ui/Text";
 
 export default function Navbar() {
   const { data: totalCounts } = useTotalCounts();

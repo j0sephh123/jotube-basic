@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useVideosDashboardContext } from "../../hooks/useVideosDashboardContext";
 import getPaginationRange from "../PaginationControl/getPaginationRange";
-import Button from "@/shared/components/button";
+import Button from "@/shared/ui/button";
 
 type VideosPaginationControlProps = {
   total: number;

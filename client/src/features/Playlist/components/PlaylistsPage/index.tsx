@@ -3,8 +3,8 @@ import { usePlaylist } from "@/store/store";
 import { PlaylistCard } from "../PlaylistCard";
 import { CreatePlaylistModal } from "../CreatePlaylistModal";
 import { CreatePlaylist } from "./CreatePlaylist";
-import ErrorMessage from "@/shared/components/static/ErrorMessage";
-import Loading from "@/shared/components/static/Loading";
+import ErrorMessage from "@/shared/ui/static/ErrorMessage";
+import Loading from "@/shared/ui/static/Loading";
 
 export const PlaylistsPage = () => {
   const { isModalOpen, closePlaylistModal } = usePlaylist();

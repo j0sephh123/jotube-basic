@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import Modal from "@/shared/components/Modal";
+import Modal from "@/shared/ui/Modal";
 import Footer from "./Footer";
 import Grid from "./Grid";
 import Header from "./Header";

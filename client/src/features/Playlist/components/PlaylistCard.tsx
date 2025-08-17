@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Trash2 } from "lucide-react";
 import { PlaylistResponse } from "@/generated/graphql";
 import { useDeletePlaylist } from "../hooks";
-import InfoCard from "@/shared/components/InfoCard";
+import InfoCard from "@/shared/ui/InfoCard";
 import { useDialog } from "@/shared/hooks/useDialog";
 
 interface PlaylistCardProps {

@@ -1,4 +1,4 @@
-import Card from "@/shared/components/card";
+import Card from "@/shared/ui/card";
 import VideosDashboardContainer from "./VideosDashboardContainer";
 import { useNavigate } from "react-router-dom";
 import { routes } from "@/shared/utils/routes";

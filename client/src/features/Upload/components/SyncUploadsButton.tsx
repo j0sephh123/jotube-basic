@@ -2,7 +2,7 @@ import { RefreshCw } from "lucide-react";
 import {
   formatLastSync,
   getLastSyncColor,
-} from "@/shared/components/card/helper";
+} from "@/shared/ui/card/helper";
 import clsx from "clsx";
 import useSyncUploads from "../hooks/useSyncUploads";
 

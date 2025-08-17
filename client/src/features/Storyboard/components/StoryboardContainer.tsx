@@ -1,6 +1,6 @@
 import { Loader } from "lucide-react";
-import ErrorMessage from "@/shared/components/static/ErrorMessage";
-import NoDataAvailable from "@/shared/components/static/NoDataAvailable";
+import ErrorMessage from "@/shared/ui/static/ErrorMessage";
+import NoDataAvailable from "@/shared/ui/static/NoDataAvailable";
 import { UploadWithStoryboard } from "../useUploadsWithStoryboard";
 import useUploadsWithStoryboard from "../useUploadsWithStoryboard";
 import Header from "./Header";

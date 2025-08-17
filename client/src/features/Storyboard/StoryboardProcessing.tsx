@@ -1,4 +1,4 @@
-import Modal from "@/shared/components/Modal";
+import Modal from "@/shared/ui/Modal";
 import { useStoryboardProcessing } from "@/store/store";
 import { useSaveUpload } from "@/features/Upload/hooks/useSaveUpload";
 import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMetadata";

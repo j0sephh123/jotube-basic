@@ -1,6 +1,6 @@
 import { ViewType } from "@/shared/hooks/useDashboardParams";
 import SyncUploadsButton from "../../Upload/components/SyncUploadsButton";
-import Card from "@/shared/components/card";
+import Card from "@/shared/ui/card";
 import FetchUploadsButton from "../../Upload/components/FetchUploadsButton";
 import DeleteChannel from "../../Channel/components/DeleteChannel";
 import useTitleClick from "../hooks/useTitleClick";

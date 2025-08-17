@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { MoreVertical, FolderOpen } from "lucide-react";
-import CopyValue from "@/shared/components/CopyValue";
+import CopyValue from "@/shared/ui/CopyValue";
 import { useOpenDirectory } from "../OpenDirectoryButton/useOpenDirectory";
 import { useClickOutside } from "@/shared/hooks/useClickOutside";
 

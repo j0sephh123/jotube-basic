@@ -1,4 +1,4 @@
-import { Button } from "@/shared/components/button";
+import { Button } from "@/shared/ui/button";
 import { Download } from "lucide-react";
 import useDownload from "../hooks/useDownload";
 import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";

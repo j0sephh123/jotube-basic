@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import Avatar from "@/shared/components/Avatar";
+import Avatar from "@/shared/ui/Avatar";
 import { getPublicImgUrl } from "@/shared/utils/image";
 import useViewThumbnails from "@/shared/hooks/useViewThumbnails";
 

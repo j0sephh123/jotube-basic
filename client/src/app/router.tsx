@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Layout from "@/shared/components/Layout";
+import Layout from "@/shared/ui/Layout";
 import ScreenshotsPage from "@/pages/ScreenshotsPage";
 import ScreenshotsByMonth from "@/pages/ScreenshotsPageMonth";
 import ScreenshotsByDayDate from "@/pages/ScreenshotsPageDate";
@@ -14,7 +14,7 @@ import DefaultUploadsPage from "@/pages/DefaultUploadsPage";
 import GalleryVideoPage from "@/features/Gallery/components/GalleryVideoPage";
 import StoryboardPage from "@/pages/StoryboardPage";
 import { PlaylistsPage, PlaylistDetailsPage } from "@/features/Playlist";
-import NotFound from "@/shared/components/static/NotFound";
+import NotFound from "@/shared/ui/static/NotFound";
 
 export default function Router() {
   return (

@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { Search } from "lucide-react";
-import Modal from "@/shared/components/Modal";
+import Modal from "@/shared/ui/Modal";
 import { Link } from "react-router-dom";
 import { useQuickSearch, SearchResult } from "@/features/Search/useSearch";
-import ChannelLink from "@/shared/components/ChannelLink";
+import ChannelLink from "@/shared/ui/ChannelLink";
 import { routes } from "@/shared/utils/routes";
 
 const highlightText = (text: string, query: string) => {

@@ -10,7 +10,7 @@ import {
   ViewType,
 } from "@/shared/hooks/useDashboardParams";
 import { useChannelsDashboardQuery } from "../../useChannelsDashboardQuery";
-import Button from "@/shared/components/button";
+import Button from "@/shared/ui/button";
 
 const showRangeFilterForViewTypes = [ViewType.SAVED, ViewType.PROCESSED];
 

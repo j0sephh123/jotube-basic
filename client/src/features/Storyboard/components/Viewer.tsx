@@ -1,5 +1,5 @@
 import { UploadWithStoryboard } from "../useUploadsWithStoryboard";
-import Modal from "@/shared/components/Modal";
+import Modal from "@/shared/ui/Modal";
 import Container from "@/features/Thumbnail/components/Container";
 
 interface ViewerProps {

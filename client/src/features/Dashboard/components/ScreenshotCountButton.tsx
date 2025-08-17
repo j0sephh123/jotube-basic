@@ -1,4 +1,4 @@
-import Button from "@/shared/components/button";
+import Button from "@/shared/ui/button";
 import { useStore } from "@/store/store";
 
 type ScreenshotCountButtonProps = {

@@ -3,9 +3,9 @@ import { timeAgo } from "@/shared/utils/date";
 import { useVideoPlayer } from "../../Upload/hooks/useVideoPlayer";
 import useImageSrc from "@/shared/hooks/useImageSrc";
 import { useMemo } from "react";
-import OpenExplorerButton from "@/shared/components/OpenDirectoryButton/OpenDirectoryButton";
+import OpenExplorerButton from "@/shared/ui/OpenDirectoryButton/OpenDirectoryButton";
 import { formatSecondsToMMSS } from "@/shared/utils/format";
-import Tooltip from "@/shared/components/Tooltip";
+import Tooltip from "@/shared/ui/Tooltip";
 
 type VideoCardProps = {
   item: {

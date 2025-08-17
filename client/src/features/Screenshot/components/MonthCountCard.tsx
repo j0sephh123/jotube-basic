@@ -1,4 +1,4 @@
-import InfoCard from "@/shared/components/InfoCard";
+import InfoCard from "@/shared/ui/InfoCard";
 
 export default function MonthCountCard({
   month,

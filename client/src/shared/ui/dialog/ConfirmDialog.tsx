@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import Modal from "@/shared/components/Modal";
+import Modal from "@/shared/ui/Modal";
 
 type ConfirmDialogProps = {
   isOpen: boolean;

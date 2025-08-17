@@ -1,4 +1,4 @@
-import Button from "@/shared/components/button";
+import Button from "@/shared/ui/button";
 import { PlusIcon } from "lucide-react";
 
 export default function CreateChannelTrigger({

@@ -1,4 +1,3 @@
-import { useSidePanel } from "@/store/store";
 import {
   useScreenshotsByVideo,
   VideoScreenshot,
@@ -10,6 +9,7 @@ import { Play, Clock } from "lucide-react";
 import { useState } from "react";
 import SidePanelHeader from "@/shared/ui/SidePanel/SidePanelHeader";
 import SidePanelWrapper from "@/shared/ui/SidePanel/SidePanelWrapper";
+import { useSidePanel } from "@/store/store";
 
 type ScreenshotGroup = {
   screenshots: VideoScreenshot[];

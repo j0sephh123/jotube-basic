@@ -1,4 +1,4 @@
-import Button from "@/shared/components/button";
+import Button from "@/shared/ui/button";
 import useViewScreenshots from "@/features/Thumbnail/hooks/useViewScreenshots";
 
 type Props = {

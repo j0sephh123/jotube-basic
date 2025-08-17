@@ -1,5 +1,5 @@
 import { CopyIcon } from "lucide-react";
-import IconYoutube from "@/shared/components/icons/IconYoutube";
+import IconYoutube from "@/shared/ui/icons/IconYoutube";
 import clsx from "clsx";
 
 type Type = "youtube" | "id";

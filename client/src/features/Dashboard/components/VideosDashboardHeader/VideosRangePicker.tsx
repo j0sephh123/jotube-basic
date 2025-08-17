@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useStore } from "@/store/store";
 import { useVideosDashboardContext } from "../../hooks/useVideosDashboardContext";
-import Button from "@/shared/components/button";
+import Button from "@/shared/ui/button";
 
 type VideosRangePickerProps = {
   rangeKey: string;
