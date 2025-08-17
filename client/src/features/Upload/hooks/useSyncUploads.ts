@@ -1,5 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/nestFetcher";
+import { useSyncUploadsMutation } from "@/generated/graphql";
 import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMetadata";
 import { useRefetchChannelUploads } from "./useUploadsList";
 
@@ -12,16 +11,21 @@ export default function useSyncUploads(ytChannelId: string) {
   const refetchChannelMetadata = useRefetchChannelMetadata();
   const refetchChannelUploads = useRefetchChannelUploads(ytChannelId);
 
-  return useMutation<void, unknown, SyncUploadsRequest>({
-    mutationFn: (body: SyncUploadsRequest) =>
-      nestFetcher<void>({
-        url: "/uploads-video/sync-uploads",
-        method: "POST",
-        body,
-      }),
-    onSuccess: () => {
+  const [syncUploadsMutation, { loading }] = useSyncUploadsMutation({
+    onCompleted: () => {
       refetchChannelMetadata(ytChannelId);
       refetchChannelUploads();
     },
   });
+
+  return {
+    mutateAsync: (body: SyncUploadsRequest) => {
+      return syncUploadsMutation({
+        variables: {
+          syncUploadsInput: body,
+        },
+      });
+    },
+    isPending: loading,
+  };
 }

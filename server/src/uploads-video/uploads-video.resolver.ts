@@ -6,6 +6,8 @@ import { SaveUploadResponse } from './dtos/save-upload.response';
 import { SaveUploadInput } from './dtos/save-upload.input';
 import { FetchUploadsResponse } from './dtos/fetch-uploads.response';
 import { FetchUploadsInput } from './dtos/fetch-uploads.input';
+import { SyncUploadsResponse } from './dtos/sync-uploads.response';
+import { SyncUploadsInput } from './dtos/sync-uploads.input';
 
 @Resolver()
 export class UploadsVideoResolver {
@@ -42,6 +44,19 @@ export class UploadsVideoResolver {
           error instanceof Error ? error.message : 'Failed to fetch uploads',
         uploadIds: [],
       };
+    }
+  }
+
+  @Mutation(() => SyncUploadsResponse)
+  async syncUploads(
+    @Args('syncUploadsInput') syncUploadsInput: SyncUploadsInput,
+  ): Promise<SyncUploadsResponse> {
+    try {
+      const result =
+        await this.uploadsVideoService.syncUploads(syncUploadsInput);
+      return result;
+    } catch {
+      return { count: 0 };
     }
   }
 

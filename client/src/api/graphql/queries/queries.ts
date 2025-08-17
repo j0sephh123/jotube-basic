@@ -74,6 +74,14 @@ export const UPLOADS_WITH_STORYBOARDS = gql`
   }
 `;
 
+export const SYNC_UPLOADS = gql`
+  mutation SyncUploads($syncUploadsInput: SyncUploadsInput!) {
+    syncUploads(syncUploadsInput: $syncUploadsInput) {
+      count
+    }
+  }
+`;
+
 export const UPLOADS_WITH_THUMBNAILS = gql`
   query UploadsWithThumbnails($input: UploadsWithThumbnailsInput!) {
     uploadsWithThumbnails(input: $input) {

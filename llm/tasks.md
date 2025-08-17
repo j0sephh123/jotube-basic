@@ -1,4 +1,3 @@
-@Post('/sync-uploads')
 @Post('/clean-short-uploads')
 @Post('/saved-uploads')
 @Get('/uploads-list/:ytChannelId')

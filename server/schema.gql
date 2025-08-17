@@ -185,6 +185,10 @@ type FetchUploadsResponse {
   uploadIds: [String!]
 }
 
+type SyncUploadsResponse {
+  count: Int!
+}
+
 type StatisticsCountsResponse {
   totalScreenshots: Float!
   totalThumbnails: Float!
@@ -254,6 +258,7 @@ type Mutation {
   deleteChannel(id: Float!): DeleteChannelResponse!
   saveUpload(saveUploadInput: SaveUploadInput!): SaveUploadResponse!
   fetchUploads(fetchUploadsInput: FetchUploadsInput!): FetchUploadsResponse!
+  syncUploads(syncUploadsInput: SyncUploadsInput!): SyncUploadsResponse!
   deleteUploads(ytChannelId: String!, ytVideoIds: [String!]!): DeleteUploadsResponse!
   finishProcessingUpload(ytChannelId: String!, ytVideoId: String!, savedSeconds: [Float!]!): FinishProcessUploadResponse!
   createTodo(createTodoInput: CreateTodoInput!): Todo!
@@ -276,6 +281,11 @@ input SaveUploadItemInput {
 
 input FetchUploadsInput {
   ytChannelId: String!
+}
+
+input SyncUploadsInput {
+  ytChannelId: String!
+  channelId: Int!
 }
 
 input CreateTodoInput {

@@ -173,6 +173,7 @@ export type Mutation = {
   finishProcessingUpload: FinishProcessUploadResponse;
   removeTodo: Scalars['Boolean']['output'];
   saveUpload: SaveUploadResponse;
+  syncUploads: SyncUploadsResponse;
   updateTodo: Todo;
 };
 
@@ -217,6 +218,11 @@ export type MutationRemoveTodoArgs = {
 
 export type MutationSaveUploadArgs = {
   saveUploadInput: SaveUploadInput;
+};
+
+
+export type MutationSyncUploadsArgs = {
+  syncUploadsInput: SyncUploadsInput;
 };
 
 
@@ -349,6 +355,16 @@ export type StoryboardQueryInput = {
   ytChannelId: Scalars['String']['input'];
 };
 
+export type SyncUploadsInput = {
+  channelId: Scalars['Int']['input'];
+  ytChannelId: Scalars['String']['input'];
+};
+
+export type SyncUploadsResponse = {
+  __typename?: 'SyncUploadsResponse';
+  count: Scalars['Int']['output'];
+};
+
 export type ThumbnailByVideoIdResponse = {
   __typename?: 'ThumbnailByVideoIdResponse';
   createdAt: Scalars['String']['output'];
@@ -474,6 +490,13 @@ export type UploadsWithStoryboardsQueryVariables = Exact<{
 
 
 export type UploadsWithStoryboardsQuery = { __typename?: 'Query', uploadsWithStoryboards: Array<{ __typename?: 'UploadWithStoryboardResponse', id: number, ytId: string, title: string, src: string, publishedAt: string, createdAt: string, updatedAt: string, channelId: number, nextPageToken?: string | null, duration?: number | null, artifact: string, storyboard: { __typename?: 'StoryboardFragmentResponse', id: number, uploadsVideoId: number, fragments: number, url: string, createdAt: string, updatedAt: string } }> };
+
+export type SyncUploadsMutationVariables = Exact<{
+  syncUploadsInput: SyncUploadsInput;
+}>;
+
+
+export type SyncUploadsMutation = { __typename?: 'Mutation', syncUploads: { __typename?: 'SyncUploadsResponse', count: number } };
 
 export type UploadsWithThumbnailsQueryVariables = Exact<{
   input: UploadsWithThumbnailsInput;
@@ -805,6 +828,39 @@ export type UploadsWithStoryboardsQueryHookResult = ReturnType<typeof useUploads
 export type UploadsWithStoryboardsLazyQueryHookResult = ReturnType<typeof useUploadsWithStoryboardsLazyQuery>;
 export type UploadsWithStoryboardsSuspenseQueryHookResult = ReturnType<typeof useUploadsWithStoryboardsSuspenseQuery>;
 export type UploadsWithStoryboardsQueryResult = Apollo.QueryResult<UploadsWithStoryboardsQuery, UploadsWithStoryboardsQueryVariables>;
+export const SyncUploadsDocument = gql`
+    mutation SyncUploads($syncUploadsInput: SyncUploadsInput!) {
+  syncUploads(syncUploadsInput: $syncUploadsInput) {
+    count
+  }
+}
+    `;
+export type SyncUploadsMutationFn = Apollo.MutationFunction<SyncUploadsMutation, SyncUploadsMutationVariables>;
+
+/**
+ * __useSyncUploadsMutation__
+ *
+ * To run a mutation, you first call `useSyncUploadsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSyncUploadsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [syncUploadsMutation, { data, loading, error }] = useSyncUploadsMutation({
+ *   variables: {
+ *      syncUploadsInput: // value for 'syncUploadsInput'
+ *   },
+ * });
+ */
+export function useSyncUploadsMutation(baseOptions?: Apollo.MutationHookOptions<SyncUploadsMutation, SyncUploadsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SyncUploadsMutation, SyncUploadsMutationVariables>(SyncUploadsDocument, options);
+      }
+export type SyncUploadsMutationHookResult = ReturnType<typeof useSyncUploadsMutation>;
+export type SyncUploadsMutationResult = Apollo.MutationResult<SyncUploadsMutation>;
+export type SyncUploadsMutationOptions = Apollo.BaseMutationOptions<SyncUploadsMutation, SyncUploadsMutationVariables>;
 export const UploadsWithThumbnailsDocument = gql`
     query UploadsWithThumbnails($input: UploadsWithThumbnailsInput!) {
   uploadsWithThumbnails(input: $input) {
