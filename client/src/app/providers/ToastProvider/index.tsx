@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, ReactNode } from "react";
+import React, { createContext, ReactNode } from "react";
 import Toast from "./Toast";
 import { useToastProvider } from "./useToastProvider";
 

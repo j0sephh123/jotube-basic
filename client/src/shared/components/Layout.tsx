@@ -10,7 +10,7 @@ import { AddChannelToPlaylistModal } from "@/features/Playlist/components/AddCha
 import ZoomModal from "./ZoomModal";
 import StoryboardProcessing from "@/features/Storyboard/StoryboardProcessing";
 import CreateChannel from "@/features/Channel/CreateChannel";
-import { ToastProvider } from "./Toast/ToastContext";
+import { ToastProvider } from "../../app/providers/ToastProvider";
 
 export default function Layout(): JSX.Element {
   useWebSocket();
