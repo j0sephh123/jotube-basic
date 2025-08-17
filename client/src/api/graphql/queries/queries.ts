@@ -29,6 +29,15 @@ export const DELETE_CHANNEL = gql`
   }
 `;
 
+export const SAVE_UPLOAD = gql`
+  mutation SaveUpload($saveUploadInput: SaveUploadInput!) {
+    saveUpload(saveUploadInput: $saveUploadInput) {
+      success
+      message
+    }
+  }
+`;
+
 export const UPLOADS_WITH_THUMBNAILS = gql`
   query UploadsWithThumbnails($input: UploadsWithThumbnailsInput!) {
     uploadsWithThumbnails(input: $input) {
@@ -209,8 +218,16 @@ export const DELETE_UPLOADS = gql`
 `;
 
 export const FINISH_PROCESSING_UPLOAD = gql`
-  mutation FinishProcessingUpload($ytChannelId: String!, $ytVideoId: String!, $savedSeconds: [Float!]!) {
-    finishProcessingUpload(ytChannelId: $ytChannelId, ytVideoId: $ytVideoId, savedSeconds: $savedSeconds) {
+  mutation FinishProcessingUpload(
+    $ytChannelId: String!
+    $ytVideoId: String!
+    $savedSeconds: [Float!]!
+  ) {
+    finishProcessingUpload(
+      ytChannelId: $ytChannelId
+      ytVideoId: $ytVideoId
+      savedSeconds: $savedSeconds
+    ) {
       id
       ytId
       artifact

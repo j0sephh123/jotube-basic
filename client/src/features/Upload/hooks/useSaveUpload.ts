@@ -1,5 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/nestFetcher";
+import { useSaveUploadMutation } from "@/generated/graphql";
 
 export type SaveUploadItem = {
   ytVideoId: string;
@@ -11,17 +10,17 @@ export type SaveUploadRequest = {
 };
 
 export function useSaveUpload(onSuccess: () => void) {
-  const { mutateAsync } = useMutation<unknown, unknown, SaveUploadRequest>({
-    mutationFn: (body: SaveUploadRequest) =>
-      nestFetcher({
-        url: "/uploads-video/save-upload",
-        method: "POST",
-        body,
-      }),
-    onSuccess: () => {
+  const [saveUploadMutation] = useSaveUploadMutation({
+    onCompleted: () => {
       onSuccess();
     },
   });
 
-  return mutateAsync;
+  return (body: SaveUploadRequest) => {
+    return saveUploadMutation({
+      variables: {
+        saveUploadInput: body,
+      },
+    });
+  };
 }

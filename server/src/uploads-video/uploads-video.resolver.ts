@@ -2,10 +2,24 @@ import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { UploadsVideoService } from './uploads-video.service';
 import { DeleteUploadsResponse } from './dtos/delete-uploads.response';
 import { FinishProcessUploadResponse } from './dtos/finish-process-upload.response';
+import { SaveUploadResponse } from './dtos/save-upload.response';
+import { SaveUploadInput } from './dtos/save-upload.input';
 
 @Resolver()
 export class UploadsVideoResolver {
   constructor(private readonly uploadsVideoService: UploadsVideoService) {}
+
+  @Mutation(() => SaveUploadResponse)
+  async saveUpload(
+    @Args('saveUploadInput') saveUploadInput: SaveUploadInput,
+  ): Promise<SaveUploadResponse> {
+    try {
+      await this.uploadsVideoService.saveUpload(saveUploadInput);
+      return { success: true, message: 'Uploads saved successfully' };
+    } catch (error) {
+      return { success: false, message: 'Failed to save uploads' };
+    }
+  }
 
   @Mutation(() => DeleteUploadsResponse)
   async deleteUploads(

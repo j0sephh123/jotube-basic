@@ -160,6 +160,7 @@ export type Mutation = {
   deleteUploads: DeleteUploadsResponse;
   finishProcessingUpload: FinishProcessUploadResponse;
   removeTodo: Scalars['Boolean']['output'];
+  saveUpload: SaveUploadResponse;
   updateTodo: Todo;
 };
 
@@ -194,6 +195,11 @@ export type MutationFinishProcessingUploadArgs = {
 
 export type MutationRemoveTodoArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type MutationSaveUploadArgs = {
+  saveUploadInput: SaveUploadInput;
 };
 
 
@@ -276,6 +282,21 @@ export type QueryTodoArgs = {
 
 export type QueryUploadsWithThumbnailsArgs = {
   input: UploadsWithThumbnailsInput;
+};
+
+export type SaveUploadInput = {
+  uploads: Array<SaveUploadItemInput>;
+};
+
+export type SaveUploadItemInput = {
+  ytChannelId: Scalars['String']['input'];
+  ytVideoId: Scalars['String']['input'];
+};
+
+export type SaveUploadResponse = {
+  __typename?: 'SaveUploadResponse';
+  message: Scalars['String']['output'];
+  success: Scalars['Boolean']['output'];
 };
 
 export type ScreenshotsCountsResponse = {
@@ -379,6 +400,13 @@ export type DeleteChannelMutationVariables = Exact<{
 
 
 export type DeleteChannelMutation = { __typename?: 'Mutation', deleteChannel: { __typename?: 'DeleteChannelResponse', success: boolean, message: string } };
+
+export type SaveUploadMutationVariables = Exact<{
+  saveUploadInput: SaveUploadInput;
+}>;
+
+
+export type SaveUploadMutation = { __typename?: 'Mutation', saveUpload: { __typename?: 'SaveUploadResponse', success: boolean, message: string } };
 
 export type UploadsWithThumbnailsQueryVariables = Exact<{
   input: UploadsWithThumbnailsInput;
@@ -583,6 +611,40 @@ export function useDeleteChannelMutation(baseOptions?: Apollo.MutationHookOption
 export type DeleteChannelMutationHookResult = ReturnType<typeof useDeleteChannelMutation>;
 export type DeleteChannelMutationResult = Apollo.MutationResult<DeleteChannelMutation>;
 export type DeleteChannelMutationOptions = Apollo.BaseMutationOptions<DeleteChannelMutation, DeleteChannelMutationVariables>;
+export const SaveUploadDocument = gql`
+    mutation SaveUpload($saveUploadInput: SaveUploadInput!) {
+  saveUpload(saveUploadInput: $saveUploadInput) {
+    success
+    message
+  }
+}
+    `;
+export type SaveUploadMutationFn = Apollo.MutationFunction<SaveUploadMutation, SaveUploadMutationVariables>;
+
+/**
+ * __useSaveUploadMutation__
+ *
+ * To run a mutation, you first call `useSaveUploadMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveUploadMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveUploadMutation, { data, loading, error }] = useSaveUploadMutation({
+ *   variables: {
+ *      saveUploadInput: // value for 'saveUploadInput'
+ *   },
+ * });
+ */
+export function useSaveUploadMutation(baseOptions?: Apollo.MutationHookOptions<SaveUploadMutation, SaveUploadMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveUploadMutation, SaveUploadMutationVariables>(SaveUploadDocument, options);
+      }
+export type SaveUploadMutationHookResult = ReturnType<typeof useSaveUploadMutation>;
+export type SaveUploadMutationResult = Apollo.MutationResult<SaveUploadMutation>;
+export type SaveUploadMutationOptions = Apollo.BaseMutationOptions<SaveUploadMutation, SaveUploadMutationVariables>;
 export const UploadsWithThumbnailsDocument = gql`
     query UploadsWithThumbnails($input: UploadsWithThumbnailsInput!) {
   uploadsWithThumbnails(input: $input) {

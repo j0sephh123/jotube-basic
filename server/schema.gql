@@ -150,6 +150,11 @@ type FinishProcessUploadResponse {
   artifact: String!
 }
 
+type SaveUploadResponse {
+  success: Boolean!
+  message: String!
+}
+
 type StatisticsCountsResponse {
   totalScreenshots: Float!
   totalThumbnails: Float!
@@ -212,6 +217,7 @@ enum ViewType {
 type Mutation {
   createChannel(createChannelInput: CreateChannelInput!): CreateChannelResponse!
   deleteChannel(id: Float!): DeleteChannelResponse!
+  saveUpload(saveUploadInput: SaveUploadInput!): SaveUploadResponse!
   deleteUploads(ytChannelId: String!, ytVideoIds: [String!]!): DeleteUploadsResponse!
   finishProcessingUpload(ytChannelId: String!, ytVideoId: String!, savedSeconds: [Float!]!): FinishProcessUploadResponse!
   createTodo(createTodoInput: CreateTodoInput!): Todo!
@@ -221,6 +227,15 @@ type Mutation {
 
 input CreateChannelInput {
   ytVideoId: String!
+}
+
+input SaveUploadInput {
+  uploads: [SaveUploadItemInput!]!
+}
+
+input SaveUploadItemInput {
+  ytVideoId: String!
+  ytChannelId: String!
 }
 
 input CreateTodoInput {
