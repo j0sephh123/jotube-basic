@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/nestFetcher";
+import { useLazyQuery } from "@apollo/client";
+import { SEARCH_VIDEOS, SEARCH_CHANNELS } from "@/api/graphql/queries/queries";
 
 type SearchRequest = {
   search: string;
@@ -9,28 +10,34 @@ type SearchVideoResult = {
   title: string;
   ytId: string;
   src: string;
-  channel: {
-    ytId: string;
-  };
-  type: "ytVideoId";
+  channelYtId: string;
+  type: string;
 };
 
 type SearchChannelResult = {
   title: string;
   ytId: string;
   src: string;
-  type: "ytChannelId" | "channelTitle";
+  type: string;
 };
 
 export type SearchResult = SearchVideoResult | SearchChannelResult;
 
 export function useQuickSearch() {
+  const [searchVideos] = useLazyQuery(SEARCH_VIDEOS);
+  const [searchChannels] = useLazyQuery(SEARCH_CHANNELS);
+
   return useMutation<SearchResult[], unknown, SearchRequest>({
-    mutationFn: (body: SearchRequest) =>
-      nestFetcher({
-        url: "/search",
-        method: "POST",
-        body,
-      }),
+    mutationFn: async (body: SearchRequest) => {
+      const [videosResult, channelsResult] = await Promise.all([
+        searchVideos({ variables: { searchInput: body } }),
+        searchChannels({ variables: { searchInput: body } }),
+      ]);
+
+      const videos = videosResult.data?.searchVideos || [];
+      const channels = channelsResult.data?.searchChannels || [];
+
+      return [...videos, ...channels];
+    },
   });
 }

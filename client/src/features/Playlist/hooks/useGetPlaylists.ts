@@ -1,14 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/nestFetcher"; 
-import { Playlist } from "../types";
+import { useQuery } from "@apollo/client";
+import { GET_PLAYLISTS } from "@/api/graphql/queries/queries";
+import { GetPlaylistsQuery } from "@/generated/graphql";
 
 export const useGetPlaylists = () => {
-  return useQuery({
-    queryKey: ["playlists"],
-    queryFn: () =>
-      nestFetcher<Playlist[]>({
-        url: "/playlists",
-        method: "GET",
-      }),
-  });
+  const query = useQuery<GetPlaylistsQuery>(GET_PLAYLISTS);
+
+  return {
+    ...query,
+    data: query.data?.playlists,
+  };
 };

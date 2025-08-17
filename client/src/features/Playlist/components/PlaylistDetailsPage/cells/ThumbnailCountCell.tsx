@@ -1,26 +1,25 @@
-import { Channel } from "../../../types";
-import TableCol from "../TableCol";
 import { ImageIcon } from "lucide-react";
 import useViewThumbnails from "@/shared/hooks/useViewThumbnails";
+import { PlaylistChannelWithCountsResponse } from "@/generated/graphql";
+import TableCol from "../TableCol";
 
 type ThumbnailCountCellProps = {
-  channel: Channel;
+  channel: PlaylistChannelWithCountsResponse;
 };
 
 export default function ThumbnailCountCell({
   channel,
 }: ThumbnailCountCellProps) {
-  const count = channel.counts?.thumbnailCount ?? 0;
-
   const viewThumbnails = useViewThumbnails(channel.id);
+
   const handleViewThumbnails = () => {
     viewThumbnails();
   };
 
   return (
-    <TableCol className="text-center w-[80px]">
+    <TableCol className="text-center">
       <div className="flex flex-col items-center gap-2">
-        <span className="font-medium text-lg">{count}</span>
+        <span className="font-medium text-lg">{channel.thumbnailCount}</span>
         <button
           onClick={handleViewThumbnails}
           className="p-1 hover:bg-base-200 rounded transition-colors"

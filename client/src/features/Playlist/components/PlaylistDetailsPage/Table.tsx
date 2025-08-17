@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { Playlist } from "../../types";
+import { PlaylistDetailsResponse } from "@/generated/graphql";
 import { useRemoveFromPlaylist } from "./useRemoveFromPlaylist";
 import TableRow from "./TableRow";
 import TableHeader from "./TableHeader";
@@ -8,25 +8,19 @@ import VideoCountCell from "./cells/VideoCountCell";
 import SavedCountCell from "./cells/SavedCountCell";
 import ScreenshotCountCell from "./cells/ScreenshotCountCell";
 import ThumbnailCountCell from "./cells/ThumbnailCountCell";
-import StoryboardCountCell from "./cells/StoryboardCountCell";
 import GalleryCell from "./cells/GalleryCell";
 import ActionsCell from "./cells/ActionsCell";
 import { useRefetchPlaylist } from "../../hooks/useGetPlaylist";
 
 type TableProps = {
-  playlist: Playlist;
+  playlist: PlaylistDetailsResponse;
 };
 
 export default function Table({ playlist }: TableProps) {
   const { handleRemoveFromPlaylist, isPending } = useRemoveFromPlaylist();
-  const refetchPlaylist = useRefetchPlaylist(playlist.id.toString());
+  const refetchPlaylist = useRefetchPlaylist();
   const [sortField, setSortField] = useState<
-    | "title"
-    | "videoCount"
-    | "savedCount"
-    | "screenshotCount"
-    | "thumbnailCount"
-    | "storyboardCount"
+    "title" | "videoCount" | "savedCount" | "screenshotCount" | "thumbnailCount"
   >("title");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
@@ -41,24 +35,20 @@ export default function Table({ playlist }: TableProps) {
           bValue = b.title.toLowerCase();
           break;
         case "videoCount":
-          aValue = a.counts?.videoCount || 0;
-          bValue = b.counts?.videoCount || 0;
+          aValue = a.videoCount || 0;
+          bValue = b.videoCount || 0;
           break;
         case "savedCount":
-          aValue = a.counts?.savedCount || 0;
-          bValue = b.counts?.savedCount || 0;
+          aValue = a.savedCount || 0;
+          bValue = b.savedCount || 0;
           break;
         case "screenshotCount":
-          aValue = a.counts?.screenshotCount || 0;
-          bValue = b.counts?.screenshotCount || 0;
+          aValue = a.screenshotCount || 0;
+          bValue = b.screenshotCount || 0;
           break;
         case "thumbnailCount":
-          aValue = a.counts?.thumbnailCount || 0;
-          bValue = b.counts?.thumbnailCount || 0;
-          break;
-        case "storyboardCount":
-          aValue = a.counts?.storyboardCount || 0;
-          bValue = b.counts?.storyboardCount || 0;
+          aValue = a.thumbnailCount || 0;
+          bValue = b.thumbnailCount || 0;
           break;
         default:
           aValue = a.title.toLowerCase();
@@ -95,7 +85,6 @@ export default function Table({ playlist }: TableProps) {
             <SavedCountCell channel={channel} />,
             <ScreenshotCountCell channel={channel} />,
             <ThumbnailCountCell channel={channel} />,
-            <StoryboardCountCell channel={channel} />,
             <GalleryCell channel={channel} />,
             <ActionsCell
               channel={channel}

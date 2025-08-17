@@ -1,20 +1,15 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/nestFetcher";
-import { UpdatePlaylistDto, Playlist } from "../types";
+import { useMutation } from "@apollo/client";
+import { UPDATE_PLAYLIST } from "@/api/graphql/queries/queries";
 
 export const useUpdatePlaylist = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: ({ id, data }: { id: number; data: UpdatePlaylistDto }) =>
-      nestFetcher<Playlist>({
-        url: `/playlists/${id}`,
-        method: "PATCH",
-        body: JSON.stringify(data),
-      }),
-    onSuccess: (_, { id }) => {
-      queryClient.invalidateQueries({ queryKey: ["playlist", id] });
-      queryClient.invalidateQueries({ queryKey: ["playlists"] });
-    },
+  const [mutate, result] = useMutation(UPDATE_PLAYLIST, {
+    refetchQueries: ["GetPlaylists"],
   });
+
+  return {
+    mutate,
+    isPending: result.loading,
+    data: result.data,
+    error: result.error,
+  };
 };

@@ -71,6 +71,17 @@ type CreateChannelResponse {
   ytChannelId: String
 }
 
+input CreatePlaylistInput {
+  name: String!
+}
+
+type CreatePlaylistResponse {
+  createdAt: String!
+  id: Int!
+  name: String!
+  updatedAt: String!
+}
+
 input CreateTodoInput {
   description: String!
   title: String!
@@ -115,6 +126,10 @@ scalar DateTime
 
 type DeleteChannelResponse {
   message: String!
+  success: Boolean!
+}
+
+type DeletePlaylistResponse {
   success: Boolean!
 }
 
@@ -163,20 +178,57 @@ type GetSlidesResponse {
 type Mutation {
   cleanShortUploads(cleanShortUploadsInput: CleanShortUploadsInput!): CleanShortUploadsResponse!
   createChannel(createChannelInput: CreateChannelInput!): CreateChannelResponse!
+  createPlaylist(createPlaylistInput: CreatePlaylistInput!): CreatePlaylistResponse!
   createTodo(createTodoInput: CreateTodoInput!): Todo!
   deleteChannel(id: Float!): DeleteChannelResponse!
+  deletePlaylist(id: Int!): DeletePlaylistResponse!
   deleteUploads(ytChannelId: String!, ytVideoIds: [String!]!): DeleteUploadsResponse!
   fetchUploads(fetchUploadsInput: FetchUploadsInput!): FetchUploadsResponse!
   finishProcessingUpload(savedSeconds: [Float!]!, ytChannelId: String!, ytVideoId: String!): FinishProcessUploadResponse!
   removeTodo(id: ID!): Boolean!
   saveUpload(saveUploadInput: SaveUploadInput!): SaveUploadResponse!
   syncUploads(syncUploadsInput: SyncUploadsInput!): SyncUploadsResponse!
+  updateChannelPlaylist(updateChannelPlaylistInput: UpdateChannelPlaylistInput!): UpdateChannelPlaylistResponse!
+  updatePlaylist(id: Int!, updatePlaylistInput: UpdatePlaylistInput!): UpdatePlaylistResponse!
   updateTodo(id: ID!, updateTodoInput: UpdateTodoInput!): Todo!
+}
+
+type PlaylistChannelResponse {
+  id: Int!
+  title: String!
+  ytId: String!
+}
+
+type PlaylistChannelWithCountsResponse {
+  id: Int!
+  savedCount: Int!
+  screenshotCount: Int!
+  src: String!
+  thumbnailCount: Int!
+  title: String!
+  videoCount: Int!
+  ytId: String!
+}
+
+type PlaylistDetailsResponse {
+  channels: [PlaylistChannelWithCountsResponse!]!
+  createdAt: String!
+  id: Int!
+  name: String!
+  updatedAt: String!
 }
 
 type PlaylistInfo {
   id: Int!
   name: String!
+}
+
+type PlaylistResponse {
+  channels: [PlaylistChannelResponse!]!
+  createdAt: String!
+  id: Int!
+  name: String!
+  updatedAt: String!
 }
 
 type Query {
@@ -186,9 +238,13 @@ type Query {
   fetchDashboard(fetchDashboardInput: FetchDashboardInput!): ChannelsDashboardResponse!
   fetchVideosDashboard(page: Float, screenshotMax: Float, screenshotMin: Float, sortOrder: String): VideosDashboardResponse!
   getSlides(input: GetSlidesInput!): [GetSlidesResponse!]!
+  playlistDetails(id: Int!): PlaylistDetailsResponse
+  playlists: [PlaylistResponse!]!
   savedUploads(savedUploadsInput: SavedUploadsInput!): [SavedUploadsResponse!]!
   screenshots: [ScreenshotsCountsResponse!]!
   screenshotsByVideo(ytVideoId: String!): [VideoScreenshotResponse!]!
+  searchChannels(searchInput: SearchInput!): [SearchChannelResult!]!
+  searchVideos(searchInput: SearchInput!): [SearchVideoResult!]!
   statisticsCounts: StatisticsCountsResponse!
   storyboards(ytChannelId: String!): [UploadsVideoStoryboardResponse!]!
   thumbnailByVideoId(ytVideoId: String!): ThumbnailByVideoIdResponse
@@ -227,6 +283,25 @@ type SavedUploadsResponse {
 type ScreenshotsCountsResponse {
   count: Float!
   month: String!
+}
+
+type SearchChannelResult {
+  src: String!
+  title: String!
+  type: String!
+  ytId: String!
+}
+
+input SearchInput {
+  search: String!
+}
+
+type SearchVideoResult {
+  channelYtId: String!
+  src: String!
+  title: String!
+  type: String!
+  ytId: String!
 }
 
 """Sort order for uploads list"""
@@ -290,6 +365,31 @@ type Todo {
   id: ID!
   title: String!
   updatedAt: DateTime!
+}
+
+input UpdateChannelPlaylistInput {
+  channelId: Int!
+  playlistId: Int
+}
+
+type UpdateChannelPlaylistResponse {
+  id: Int!
+  playlistId: Int
+  src: String!
+  title: String!
+  videoCount: Int!
+  ytId: String!
+}
+
+input UpdatePlaylistInput {
+  name: String
+}
+
+type UpdatePlaylistResponse {
+  createdAt: String!
+  id: Int!
+  name: String!
+  updatedAt: String!
 }
 
 input UpdateTodoInput {

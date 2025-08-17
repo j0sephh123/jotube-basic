@@ -95,6 +95,18 @@ export type CreateChannelResponse = {
   ytChannelId?: Maybe<Scalars['String']['output']>;
 };
 
+export type CreatePlaylistInput = {
+  name: Scalars['String']['input'];
+};
+
+export type CreatePlaylistResponse = {
+  __typename?: 'CreatePlaylistResponse';
+  createdAt: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  updatedAt: Scalars['String']['output'];
+};
+
 export type CreateTodoInput = {
   description: Scalars['String']['input'];
   title: Scalars['String']['input'];
@@ -138,6 +150,11 @@ export type DashboardVideoResponse = {
 export type DeleteChannelResponse = {
   __typename?: 'DeleteChannelResponse';
   message: Scalars['String']['output'];
+  success: Scalars['Boolean']['output'];
+};
+
+export type DeletePlaylistResponse = {
+  __typename?: 'DeletePlaylistResponse';
   success: Scalars['Boolean']['output'];
 };
 
@@ -191,14 +208,18 @@ export type Mutation = {
   __typename?: 'Mutation';
   cleanShortUploads: CleanShortUploadsResponse;
   createChannel: CreateChannelResponse;
+  createPlaylist: CreatePlaylistResponse;
   createTodo: Todo;
   deleteChannel: DeleteChannelResponse;
+  deletePlaylist: DeletePlaylistResponse;
   deleteUploads: DeleteUploadsResponse;
   fetchUploads: FetchUploadsResponse;
   finishProcessingUpload: FinishProcessUploadResponse;
   removeTodo: Scalars['Boolean']['output'];
   saveUpload: SaveUploadResponse;
   syncUploads: SyncUploadsResponse;
+  updateChannelPlaylist: UpdateChannelPlaylistResponse;
+  updatePlaylist: UpdatePlaylistResponse;
   updateTodo: Todo;
 };
 
@@ -213,6 +234,11 @@ export type MutationCreateChannelArgs = {
 };
 
 
+export type MutationCreatePlaylistArgs = {
+  createPlaylistInput: CreatePlaylistInput;
+};
+
+
 export type MutationCreateTodoArgs = {
   createTodoInput: CreateTodoInput;
 };
@@ -220,6 +246,11 @@ export type MutationCreateTodoArgs = {
 
 export type MutationDeleteChannelArgs = {
   id: Scalars['Float']['input'];
+};
+
+
+export type MutationDeletePlaylistArgs = {
+  id: Scalars['Int']['input'];
 };
 
 
@@ -256,15 +287,63 @@ export type MutationSyncUploadsArgs = {
 };
 
 
+export type MutationUpdateChannelPlaylistArgs = {
+  updateChannelPlaylistInput: UpdateChannelPlaylistInput;
+};
+
+
+export type MutationUpdatePlaylistArgs = {
+  id: Scalars['Int']['input'];
+  updatePlaylistInput: UpdatePlaylistInput;
+};
+
+
 export type MutationUpdateTodoArgs = {
   id: Scalars['ID']['input'];
   updateTodoInput: UpdateTodoInput;
+};
+
+export type PlaylistChannelResponse = {
+  __typename?: 'PlaylistChannelResponse';
+  id: Scalars['Int']['output'];
+  title: Scalars['String']['output'];
+  ytId: Scalars['String']['output'];
+};
+
+export type PlaylistChannelWithCountsResponse = {
+  __typename?: 'PlaylistChannelWithCountsResponse';
+  id: Scalars['Int']['output'];
+  savedCount: Scalars['Int']['output'];
+  screenshotCount: Scalars['Int']['output'];
+  src: Scalars['String']['output'];
+  thumbnailCount: Scalars['Int']['output'];
+  title: Scalars['String']['output'];
+  videoCount: Scalars['Int']['output'];
+  ytId: Scalars['String']['output'];
+};
+
+export type PlaylistDetailsResponse = {
+  __typename?: 'PlaylistDetailsResponse';
+  channels: Array<PlaylistChannelWithCountsResponse>;
+  createdAt: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  updatedAt: Scalars['String']['output'];
 };
 
 export type PlaylistInfo = {
   __typename?: 'PlaylistInfo';
   id: Scalars['Int']['output'];
   name: Scalars['String']['output'];
+};
+
+export type PlaylistResponse = {
+  __typename?: 'PlaylistResponse';
+  channels: Array<PlaylistChannelResponse>;
+  createdAt: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  updatedAt: Scalars['String']['output'];
 };
 
 export type Query = {
@@ -275,9 +354,13 @@ export type Query = {
   fetchDashboard: ChannelsDashboardResponse;
   fetchVideosDashboard: VideosDashboardResponse;
   getSlides: Array<GetSlidesResponse>;
+  playlistDetails?: Maybe<PlaylistDetailsResponse>;
+  playlists: Array<PlaylistResponse>;
   savedUploads: Array<SavedUploadsResponse>;
   screenshots: Array<ScreenshotsCountsResponse>;
   screenshotsByVideo: Array<VideoScreenshotResponse>;
+  searchChannels: Array<SearchChannelResult>;
+  searchVideos: Array<SearchVideoResult>;
   statisticsCounts: StatisticsCountsResponse;
   storyboards: Array<UploadsVideoStoryboardResponse>;
   thumbnailByVideoId?: Maybe<ThumbnailByVideoIdResponse>;
@@ -322,6 +405,11 @@ export type QueryGetSlidesArgs = {
 };
 
 
+export type QueryPlaylistDetailsArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
 export type QuerySavedUploadsArgs = {
   savedUploadsInput: SavedUploadsInput;
 };
@@ -329,6 +417,16 @@ export type QuerySavedUploadsArgs = {
 
 export type QueryScreenshotsByVideoArgs = {
   ytVideoId: Scalars['String']['input'];
+};
+
+
+export type QuerySearchChannelsArgs = {
+  searchInput: SearchInput;
+};
+
+
+export type QuerySearchVideosArgs = {
+  searchInput: SearchInput;
 };
 
 
@@ -392,6 +490,27 @@ export type ScreenshotsCountsResponse = {
   __typename?: 'ScreenshotsCountsResponse';
   count: Scalars['Float']['output'];
   month: Scalars['String']['output'];
+};
+
+export type SearchChannelResult = {
+  __typename?: 'SearchChannelResult';
+  src: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  type: Scalars['String']['output'];
+  ytId: Scalars['String']['output'];
+};
+
+export type SearchInput = {
+  search: Scalars['String']['input'];
+};
+
+export type SearchVideoResult = {
+  __typename?: 'SearchVideoResult';
+  channelYtId: Scalars['String']['output'];
+  src: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  type: Scalars['String']['output'];
+  ytId: Scalars['String']['output'];
 };
 
 /** Sort order for uploads list */
@@ -461,6 +580,33 @@ export type Todo = {
   id: Scalars['ID']['output'];
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+};
+
+export type UpdateChannelPlaylistInput = {
+  channelId: Scalars['Int']['input'];
+  playlistId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type UpdateChannelPlaylistResponse = {
+  __typename?: 'UpdateChannelPlaylistResponse';
+  id: Scalars['Int']['output'];
+  playlistId?: Maybe<Scalars['Int']['output']>;
+  src: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  videoCount: Scalars['Int']['output'];
+  ytId: Scalars['String']['output'];
+};
+
+export type UpdatePlaylistInput = {
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdatePlaylistResponse = {
+  __typename?: 'UpdatePlaylistResponse';
+  createdAt: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  updatedAt: Scalars['String']['output'];
 };
 
 export type UpdateTodoInput = {
@@ -659,6 +805,61 @@ export type StoryboardsQueryVariables = Exact<{
 
 
 export type StoryboardsQuery = { __typename?: 'Query', storyboards: Array<{ __typename?: 'UploadsVideoStoryboardResponse', id: number, ytId: string, title: string, src: string, publishedAt: string, createdAt: string, updatedAt: string, channelId: number, nextPageToken?: string | null, duration?: number | null, artifact: string, storyboard: { __typename?: 'StoryboardDataResponse', id: number, uploadsVideoId: number, fragments: number, url: string, createdAt: string, updatedAt: string } }> };
+
+export type SearchVideosQueryVariables = Exact<{
+  searchInput: SearchInput;
+}>;
+
+
+export type SearchVideosQuery = { __typename?: 'Query', searchVideos: Array<{ __typename?: 'SearchVideoResult', title: string, ytId: string, src: string, channelYtId: string, type: string }> };
+
+export type SearchChannelsQueryVariables = Exact<{
+  searchInput: SearchInput;
+}>;
+
+
+export type SearchChannelsQuery = { __typename?: 'Query', searchChannels: Array<{ __typename?: 'SearchChannelResult', title: string, ytId: string, src: string, type: string }> };
+
+export type CreatePlaylistMutationVariables = Exact<{
+  createPlaylistInput: CreatePlaylistInput;
+}>;
+
+
+export type CreatePlaylistMutation = { __typename?: 'Mutation', createPlaylist: { __typename?: 'CreatePlaylistResponse', id: number, name: string, createdAt: string, updatedAt: string } };
+
+export type GetPlaylistsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPlaylistsQuery = { __typename?: 'Query', playlists: Array<{ __typename?: 'PlaylistResponse', id: number, name: string, createdAt: string, updatedAt: string, channels: Array<{ __typename?: 'PlaylistChannelResponse', id: number, title: string, ytId: string }> }> };
+
+export type GetPlaylistDetailsQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type GetPlaylistDetailsQuery = { __typename?: 'Query', playlistDetails?: { __typename?: 'PlaylistDetailsResponse', id: number, name: string, createdAt: string, updatedAt: string, channels: Array<{ __typename?: 'PlaylistChannelWithCountsResponse', id: number, title: string, ytId: string, src: string, videoCount: number, savedCount: number, screenshotCount: number, thumbnailCount: number }> } | null };
+
+export type UpdatePlaylistMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+  updatePlaylistInput: UpdatePlaylistInput;
+}>;
+
+
+export type UpdatePlaylistMutation = { __typename?: 'Mutation', updatePlaylist: { __typename?: 'UpdatePlaylistResponse', id: number, name: string, createdAt: string, updatedAt: string } };
+
+export type DeletePlaylistMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type DeletePlaylistMutation = { __typename?: 'Mutation', deletePlaylist: { __typename?: 'DeletePlaylistResponse', success: boolean } };
+
+export type UpdateChannelPlaylistMutationVariables = Exact<{
+  updateChannelPlaylistInput: UpdateChannelPlaylistInput;
+}>;
+
+
+export type UpdateChannelPlaylistMutation = { __typename?: 'Mutation', updateChannelPlaylist: { __typename?: 'UpdateChannelPlaylistResponse', id: number, title: string, ytId: string, src: string, videoCount: number, playlistId?: number | null } };
 
 export type UploadsWithThumbnailsQueryVariables = Exact<{
   input: UploadsWithThumbnailsInput;
@@ -1244,6 +1445,337 @@ export type StoryboardsQueryHookResult = ReturnType<typeof useStoryboardsQuery>;
 export type StoryboardsLazyQueryHookResult = ReturnType<typeof useStoryboardsLazyQuery>;
 export type StoryboardsSuspenseQueryHookResult = ReturnType<typeof useStoryboardsSuspenseQuery>;
 export type StoryboardsQueryResult = Apollo.QueryResult<StoryboardsQuery, StoryboardsQueryVariables>;
+export const SearchVideosDocument = gql`
+    query SearchVideos($searchInput: SearchInput!) {
+  searchVideos(searchInput: $searchInput) {
+    title
+    ytId
+    src
+    channelYtId
+    type
+  }
+}
+    `;
+
+/**
+ * __useSearchVideosQuery__
+ *
+ * To run a query within a React component, call `useSearchVideosQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchVideosQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchVideosQuery({
+ *   variables: {
+ *      searchInput: // value for 'searchInput'
+ *   },
+ * });
+ */
+export function useSearchVideosQuery(baseOptions: Apollo.QueryHookOptions<SearchVideosQuery, SearchVideosQueryVariables> & ({ variables: SearchVideosQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchVideosQuery, SearchVideosQueryVariables>(SearchVideosDocument, options);
+      }
+export function useSearchVideosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchVideosQuery, SearchVideosQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchVideosQuery, SearchVideosQueryVariables>(SearchVideosDocument, options);
+        }
+export function useSearchVideosSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<SearchVideosQuery, SearchVideosQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SearchVideosQuery, SearchVideosQueryVariables>(SearchVideosDocument, options);
+        }
+export type SearchVideosQueryHookResult = ReturnType<typeof useSearchVideosQuery>;
+export type SearchVideosLazyQueryHookResult = ReturnType<typeof useSearchVideosLazyQuery>;
+export type SearchVideosSuspenseQueryHookResult = ReturnType<typeof useSearchVideosSuspenseQuery>;
+export type SearchVideosQueryResult = Apollo.QueryResult<SearchVideosQuery, SearchVideosQueryVariables>;
+export const SearchChannelsDocument = gql`
+    query SearchChannels($searchInput: SearchInput!) {
+  searchChannels(searchInput: $searchInput) {
+    title
+    ytId
+    src
+    type
+  }
+}
+    `;
+
+/**
+ * __useSearchChannelsQuery__
+ *
+ * To run a query within a React component, call `useSearchChannelsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchChannelsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchChannelsQuery({
+ *   variables: {
+ *      searchInput: // value for 'searchInput'
+ *   },
+ * });
+ */
+export function useSearchChannelsQuery(baseOptions: Apollo.QueryHookOptions<SearchChannelsQuery, SearchChannelsQueryVariables> & ({ variables: SearchChannelsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchChannelsQuery, SearchChannelsQueryVariables>(SearchChannelsDocument, options);
+      }
+export function useSearchChannelsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchChannelsQuery, SearchChannelsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchChannelsQuery, SearchChannelsQueryVariables>(SearchChannelsDocument, options);
+        }
+export function useSearchChannelsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<SearchChannelsQuery, SearchChannelsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SearchChannelsQuery, SearchChannelsQueryVariables>(SearchChannelsDocument, options);
+        }
+export type SearchChannelsQueryHookResult = ReturnType<typeof useSearchChannelsQuery>;
+export type SearchChannelsLazyQueryHookResult = ReturnType<typeof useSearchChannelsLazyQuery>;
+export type SearchChannelsSuspenseQueryHookResult = ReturnType<typeof useSearchChannelsSuspenseQuery>;
+export type SearchChannelsQueryResult = Apollo.QueryResult<SearchChannelsQuery, SearchChannelsQueryVariables>;
+export const CreatePlaylistDocument = gql`
+    mutation CreatePlaylist($createPlaylistInput: CreatePlaylistInput!) {
+  createPlaylist(createPlaylistInput: $createPlaylistInput) {
+    id
+    name
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export type CreatePlaylistMutationFn = Apollo.MutationFunction<CreatePlaylistMutation, CreatePlaylistMutationVariables>;
+
+/**
+ * __useCreatePlaylistMutation__
+ *
+ * To run a mutation, you first call `useCreatePlaylistMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePlaylistMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPlaylistMutation, { data, loading, error }] = useCreatePlaylistMutation({
+ *   variables: {
+ *      createPlaylistInput: // value for 'createPlaylistInput'
+ *   },
+ * });
+ */
+export function useCreatePlaylistMutation(baseOptions?: Apollo.MutationHookOptions<CreatePlaylistMutation, CreatePlaylistMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreatePlaylistMutation, CreatePlaylistMutationVariables>(CreatePlaylistDocument, options);
+      }
+export type CreatePlaylistMutationHookResult = ReturnType<typeof useCreatePlaylistMutation>;
+export type CreatePlaylistMutationResult = Apollo.MutationResult<CreatePlaylistMutation>;
+export type CreatePlaylistMutationOptions = Apollo.BaseMutationOptions<CreatePlaylistMutation, CreatePlaylistMutationVariables>;
+export const GetPlaylistsDocument = gql`
+    query GetPlaylists {
+  playlists {
+    id
+    name
+    createdAt
+    updatedAt
+    channels {
+      id
+      title
+      ytId
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetPlaylistsQuery__
+ *
+ * To run a query within a React component, call `useGetPlaylistsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPlaylistsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPlaylistsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPlaylistsQuery(baseOptions?: Apollo.QueryHookOptions<GetPlaylistsQuery, GetPlaylistsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPlaylistsQuery, GetPlaylistsQueryVariables>(GetPlaylistsDocument, options);
+      }
+export function useGetPlaylistsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlaylistsQuery, GetPlaylistsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPlaylistsQuery, GetPlaylistsQueryVariables>(GetPlaylistsDocument, options);
+        }
+export function useGetPlaylistsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetPlaylistsQuery, GetPlaylistsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetPlaylistsQuery, GetPlaylistsQueryVariables>(GetPlaylistsDocument, options);
+        }
+export type GetPlaylistsQueryHookResult = ReturnType<typeof useGetPlaylistsQuery>;
+export type GetPlaylistsLazyQueryHookResult = ReturnType<typeof useGetPlaylistsLazyQuery>;
+export type GetPlaylistsSuspenseQueryHookResult = ReturnType<typeof useGetPlaylistsSuspenseQuery>;
+export type GetPlaylistsQueryResult = Apollo.QueryResult<GetPlaylistsQuery, GetPlaylistsQueryVariables>;
+export const GetPlaylistDetailsDocument = gql`
+    query GetPlaylistDetails($id: Int!) {
+  playlistDetails(id: $id) {
+    id
+    name
+    createdAt
+    updatedAt
+    channels {
+      id
+      title
+      ytId
+      src
+      videoCount
+      savedCount
+      screenshotCount
+      thumbnailCount
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetPlaylistDetailsQuery__
+ *
+ * To run a query within a React component, call `useGetPlaylistDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPlaylistDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPlaylistDetailsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetPlaylistDetailsQuery(baseOptions: Apollo.QueryHookOptions<GetPlaylistDetailsQuery, GetPlaylistDetailsQueryVariables> & ({ variables: GetPlaylistDetailsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPlaylistDetailsQuery, GetPlaylistDetailsQueryVariables>(GetPlaylistDetailsDocument, options);
+      }
+export function useGetPlaylistDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlaylistDetailsQuery, GetPlaylistDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPlaylistDetailsQuery, GetPlaylistDetailsQueryVariables>(GetPlaylistDetailsDocument, options);
+        }
+export function useGetPlaylistDetailsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetPlaylistDetailsQuery, GetPlaylistDetailsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetPlaylistDetailsQuery, GetPlaylistDetailsQueryVariables>(GetPlaylistDetailsDocument, options);
+        }
+export type GetPlaylistDetailsQueryHookResult = ReturnType<typeof useGetPlaylistDetailsQuery>;
+export type GetPlaylistDetailsLazyQueryHookResult = ReturnType<typeof useGetPlaylistDetailsLazyQuery>;
+export type GetPlaylistDetailsSuspenseQueryHookResult = ReturnType<typeof useGetPlaylistDetailsSuspenseQuery>;
+export type GetPlaylistDetailsQueryResult = Apollo.QueryResult<GetPlaylistDetailsQuery, GetPlaylistDetailsQueryVariables>;
+export const UpdatePlaylistDocument = gql`
+    mutation UpdatePlaylist($id: Int!, $updatePlaylistInput: UpdatePlaylistInput!) {
+  updatePlaylist(id: $id, updatePlaylistInput: $updatePlaylistInput) {
+    id
+    name
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export type UpdatePlaylistMutationFn = Apollo.MutationFunction<UpdatePlaylistMutation, UpdatePlaylistMutationVariables>;
+
+/**
+ * __useUpdatePlaylistMutation__
+ *
+ * To run a mutation, you first call `useUpdatePlaylistMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePlaylistMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePlaylistMutation, { data, loading, error }] = useUpdatePlaylistMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      updatePlaylistInput: // value for 'updatePlaylistInput'
+ *   },
+ * });
+ */
+export function useUpdatePlaylistMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePlaylistMutation, UpdatePlaylistMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePlaylistMutation, UpdatePlaylistMutationVariables>(UpdatePlaylistDocument, options);
+      }
+export type UpdatePlaylistMutationHookResult = ReturnType<typeof useUpdatePlaylistMutation>;
+export type UpdatePlaylistMutationResult = Apollo.MutationResult<UpdatePlaylistMutation>;
+export type UpdatePlaylistMutationOptions = Apollo.BaseMutationOptions<UpdatePlaylistMutation, UpdatePlaylistMutationVariables>;
+export const DeletePlaylistDocument = gql`
+    mutation DeletePlaylist($id: Int!) {
+  deletePlaylist(id: $id) {
+    success
+  }
+}
+    `;
+export type DeletePlaylistMutationFn = Apollo.MutationFunction<DeletePlaylistMutation, DeletePlaylistMutationVariables>;
+
+/**
+ * __useDeletePlaylistMutation__
+ *
+ * To run a mutation, you first call `useDeletePlaylistMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeletePlaylistMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deletePlaylistMutation, { data, loading, error }] = useDeletePlaylistMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeletePlaylistMutation(baseOptions?: Apollo.MutationHookOptions<DeletePlaylistMutation, DeletePlaylistMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeletePlaylistMutation, DeletePlaylistMutationVariables>(DeletePlaylistDocument, options);
+      }
+export type DeletePlaylistMutationHookResult = ReturnType<typeof useDeletePlaylistMutation>;
+export type DeletePlaylistMutationResult = Apollo.MutationResult<DeletePlaylistMutation>;
+export type DeletePlaylistMutationOptions = Apollo.BaseMutationOptions<DeletePlaylistMutation, DeletePlaylistMutationVariables>;
+export const UpdateChannelPlaylistDocument = gql`
+    mutation UpdateChannelPlaylist($updateChannelPlaylistInput: UpdateChannelPlaylistInput!) {
+  updateChannelPlaylist(updateChannelPlaylistInput: $updateChannelPlaylistInput) {
+    id
+    title
+    ytId
+    src
+    videoCount
+    playlistId
+  }
+}
+    `;
+export type UpdateChannelPlaylistMutationFn = Apollo.MutationFunction<UpdateChannelPlaylistMutation, UpdateChannelPlaylistMutationVariables>;
+
+/**
+ * __useUpdateChannelPlaylistMutation__
+ *
+ * To run a mutation, you first call `useUpdateChannelPlaylistMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateChannelPlaylistMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateChannelPlaylistMutation, { data, loading, error }] = useUpdateChannelPlaylistMutation({
+ *   variables: {
+ *      updateChannelPlaylistInput: // value for 'updateChannelPlaylistInput'
+ *   },
+ * });
+ */
+export function useUpdateChannelPlaylistMutation(baseOptions?: Apollo.MutationHookOptions<UpdateChannelPlaylistMutation, UpdateChannelPlaylistMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateChannelPlaylistMutation, UpdateChannelPlaylistMutationVariables>(UpdateChannelPlaylistDocument, options);
+      }
+export type UpdateChannelPlaylistMutationHookResult = ReturnType<typeof useUpdateChannelPlaylistMutation>;
+export type UpdateChannelPlaylistMutationResult = Apollo.MutationResult<UpdateChannelPlaylistMutation>;
+export type UpdateChannelPlaylistMutationOptions = Apollo.BaseMutationOptions<UpdateChannelPlaylistMutation, UpdateChannelPlaylistMutationVariables>;
 export const UploadsWithThumbnailsDocument = gql`
     query UploadsWithThumbnails($input: UploadsWithThumbnailsInput!) {
   uploadsWithThumbnails(input: $input) {

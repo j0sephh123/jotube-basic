@@ -119,9 +119,9 @@ export class PlaylistService {
     return { success: true };
   }
 
-  async updateChannelPlaylist(id: number, body: UpdateChannelPlaylistDto) {
+  async updateChannelPlaylist(body: UpdateChannelPlaylistDto) {
     const channel = await this.prismaService.channel.update({
-      where: { id },
+      where: { id: body.channelId },
       data: {
         playlistId: body.playlistId,
       },

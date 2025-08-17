@@ -1,19 +1,15 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CreatePlaylistDto, Playlist } from "../types";
-import nestFetcher from "@/shared/api/nestFetcher";
+import { useMutation } from "@apollo/client";
+import { CREATE_PLAYLIST } from "@/api/graphql/queries/queries";
 
 export const useCreatePlaylist = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: (data: CreatePlaylistDto) =>
-      nestFetcher<Playlist>({
-        url: "/playlists",
-        method: "POST",
-        body: data,
-      }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["playlists"] });
-    },
+  const [mutate, result] = useMutation(CREATE_PLAYLIST, {
+    refetchQueries: ["GetPlaylists"],
   });
+
+  return {
+    mutate,
+    isPending: result.loading,
+    data: result.data,
+    error: result.error,
+  };
 };

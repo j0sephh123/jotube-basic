@@ -1,20 +1,29 @@
+import { PlaylistDetailsResponse } from "@/generated/graphql";
+import { routes } from "@/shared/utils/routes";
+import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Playlist } from "../../types";
 
-export const Header = ({ playlist }: { playlist: Playlist }) => {
+type HeaderProps = {
+  playlist: PlaylistDetailsResponse;
+};
+
+export default function Header({ playlist }: HeaderProps) {
   return (
-    <>
-      <div className="mt-12">
-        <div className="flex gap-2 items-center justify-between">
-          <Link to="/playlists" className="btn btn-ghost btn-sm mb-4">
-            ← Back to Playlists
-          </Link>
+    <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center gap-4">
+        <Link
+          to={routes.playlists()}
+          className="btn btn-ghost btn-sm btn-circle"
+        >
+          <ArrowLeft className="w-5 h-5" />
+        </Link>
+        <div>
           <h1 className="text-2xl font-bold">{playlist.name}</h1>
-          <p>
-            Total Channels: {playlist.channels.length}
+          <p className="text-base-content/60">
+            {playlist.channels.length} channels
           </p>
         </div>
       </div>
-    </>
+    </div>
   );
-};
+}

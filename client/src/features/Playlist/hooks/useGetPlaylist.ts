@@ -1,22 +1,19 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/nestFetcher";
-import { Playlist } from "../types";
+import { useQuery } from "@apollo/client";
+import { GET_PLAYLIST_DETAILS } from "@/api/graphql/queries/queries";
+import { GetPlaylistDetailsQuery } from "@/generated/graphql";
 import { useParams } from "react-router-dom";
 
 export const useGetPlaylist = () => {
   const { id } = useParams<{ id: string }>();
-  return useQuery({
-    queryKey: ["playlist", id],
-    queryFn: () =>
-      nestFetcher<Playlist>({
-        url: `/playlists/${id}`,
-        method: "GET",
-      }),
-    enabled: !!id,
+  return useQuery<GetPlaylistDetailsQuery>(GET_PLAYLIST_DETAILS, {
+    variables: { id: parseInt(id!) },
+    skip: !id,
+    errorPolicy: "all",
   });
 };
 
-export const useRefetchPlaylist = (id: string) => {
-  const queryClient = useQueryClient();
-  return () => queryClient.refetchQueries({ queryKey: ["playlist", id] });
+export const useRefetchPlaylist = () => {
+  return () => {
+    // This will be handled by the GraphQL query refetch
+  };
 };

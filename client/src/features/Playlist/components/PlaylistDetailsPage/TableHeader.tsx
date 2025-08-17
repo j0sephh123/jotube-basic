@@ -5,8 +5,7 @@ type TableHeaderProps = {
     | "videoCount"
     | "savedCount"
     | "screenshotCount"
-    | "thumbnailCount"
-    | "storyboardCount";
+    | "thumbnailCount";
   sortDirection?: "asc" | "desc";
   onSort?: (
     field:
@@ -15,7 +14,6 @@ type TableHeaderProps = {
       | "savedCount"
       | "screenshotCount"
       | "thumbnailCount"
-      | "storyboardCount"
   ) => void;
 };
 
@@ -36,8 +34,7 @@ export default function TableHeader({
       | "videoCount"
       | "savedCount"
       | "screenshotCount"
-      | "thumbnailCount"
-      | "storyboardCount";
+      | "thumbnailCount";
     children: React.ReactNode;
     className?: string;
     style?: React.CSSProperties;
@@ -108,13 +105,6 @@ export default function TableHeader({
                   style={{ width: "80px" }}
                 >
                   Thumbs
-                </SortableHeader>
-                <SortableHeader
-                  field="storyboardCount"
-                  className="w-[80px] text-center text-xs"
-                  style={{ width: "80px" }}
-                >
-                  Storyboards
                 </SortableHeader>
                 <th
                   className="w-[80px] text-center text-xs"

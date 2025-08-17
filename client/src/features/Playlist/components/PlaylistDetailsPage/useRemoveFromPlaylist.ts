@@ -15,8 +15,12 @@ export const useRemoveFromPlaylist = () => {
       variant: "warning",
       onYes: () => {
         updateChannelPlaylist.mutate({
-          id: channelId,
-          data: { playlistId: null },
+          variables: {
+            updateChannelPlaylistInput: {
+              channelId: channelId,
+              playlistId: null,
+            },
+          },
         });
       },
     });

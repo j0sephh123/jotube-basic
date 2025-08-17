@@ -182,6 +182,116 @@ export const STORYBOARDS = gql`
   }
 `;
 
+export const SEARCH_VIDEOS = gql`
+  query SearchVideos($searchInput: SearchInput!) {
+    searchVideos(searchInput: $searchInput) {
+      title
+      ytId
+      src
+      channelYtId
+      type
+    }
+  }
+`;
+
+export const SEARCH_CHANNELS = gql`
+  query SearchChannels($searchInput: SearchInput!) {
+    searchChannels(searchInput: $searchInput) {
+      title
+      ytId
+      src
+      type
+    }
+  }
+`;
+
+export const CREATE_PLAYLIST = gql`
+  mutation CreatePlaylist($createPlaylistInput: CreatePlaylistInput!) {
+    createPlaylist(createPlaylistInput: $createPlaylistInput) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const GET_PLAYLISTS = gql`
+  query GetPlaylists {
+    playlists {
+      id
+      name
+      createdAt
+      updatedAt
+      channels {
+        id
+        title
+        ytId
+      }
+    }
+  }
+`;
+
+export const GET_PLAYLIST_DETAILS = gql`
+  query GetPlaylistDetails($id: Int!) {
+    playlistDetails(id: $id) {
+      id
+      name
+      createdAt
+      updatedAt
+      channels {
+        id
+        title
+        ytId
+        src
+        videoCount
+        savedCount
+        screenshotCount
+        thumbnailCount
+      }
+    }
+  }
+`;
+
+export const UPDATE_PLAYLIST = gql`
+  mutation UpdatePlaylist(
+    $id: Int!
+    $updatePlaylistInput: UpdatePlaylistInput!
+  ) {
+    updatePlaylist(id: $id, updatePlaylistInput: $updatePlaylistInput) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const DELETE_PLAYLIST = gql`
+  mutation DeletePlaylist($id: Int!) {
+    deletePlaylist(id: $id) {
+      success
+    }
+  }
+`;
+
+export const UPDATE_CHANNEL_PLAYLIST = gql`
+  mutation UpdateChannelPlaylist(
+    $updateChannelPlaylistInput: UpdateChannelPlaylistInput!
+  ) {
+    updateChannelPlaylist(
+      updateChannelPlaylistInput: $updateChannelPlaylistInput
+    ) {
+      id
+      title
+      ytId
+      src
+      videoCount
+      playlistId
+    }
+  }
+`;
+
 export const UPLOADS_WITH_THUMBNAILS = gql`
   query UploadsWithThumbnails($input: UploadsWithThumbnailsInput!) {
     uploadsWithThumbnails(input: $input) {

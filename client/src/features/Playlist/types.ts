@@ -12,17 +12,9 @@ export interface Channel {
   ytId: string;
   src: string;
   videoCount: number;
-  createdAt: string;
-  updatedAt: string;
-  playlistId: number | null;
-  lastSyncedAt: string | null;
-  counts?: {
-    videoCount: number;
-    savedCount: number;
-    screenshotCount: number;
-    thumbnailCount: number;
-    storyboardCount: number;
-  };
+  savedCount: number;
+  screenshotCount: number;
+  thumbnailCount: number;
 }
 
 export interface CreatePlaylistDto {

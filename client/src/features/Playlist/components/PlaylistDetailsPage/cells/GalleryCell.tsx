@@ -1,18 +1,18 @@
-import { Channel } from "../../../types";
-import TableCol from "../TableCol";
 import { ImageIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { routes } from "@/shared/utils/routes";
+import { PlaylistChannelWithCountsResponse } from "@/generated/graphql";
+import TableCol from "../TableCol";
 
 type GalleryCellProps = {
-  channel: Channel;
+  channel: PlaylistChannelWithCountsResponse;
 };
 
 export default function GalleryCell({ channel }: GalleryCellProps) {
   const navigate = useNavigate();
 
   return (
-    <TableCol className="text-center w-[80px]">
+    <TableCol className="text-center">
       <button
         onClick={() => navigate(routes.gallery(channel.ytId))}
         className="flex items-center gap-2 mx-auto hover:text-primary transition-colors"

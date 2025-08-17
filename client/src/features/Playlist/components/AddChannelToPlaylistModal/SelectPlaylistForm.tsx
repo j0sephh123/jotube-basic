@@ -14,23 +14,23 @@ export const SelectPlaylistForm = ({
   setSelectedPlaylistId,
   onSuccess,
 }: SelectPlaylistFormProps) => {
-  const { data: playlists, isLoading: playlistsLoading } = useGetPlaylists();
+  const { data: playlists, loading: playlistsLoading } = useGetPlaylists();
   const updateChannelPlaylist = useUpdateChannelPlaylist();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (channel) {
-      updateChannelPlaylist.mutate(
-        {
-          id: channel.id,
-          data: { playlistId: selectedPlaylistId },
-        },
-        {
-          onSuccess: () => {
-            onSuccess();
+      updateChannelPlaylist.mutate({
+        variables: {
+          updateChannelPlaylistInput: {
+            channelId: channel.id,
+            playlistId: selectedPlaylistId, // This can be null to remove playlist
           },
-        }
-      );
+        },
+        onCompleted: () => {
+          onSuccess();
+        },
+      });
     }
   };
 

@@ -2,17 +2,20 @@ import { Link } from "react-router-dom";
 import Tooltip from "@/shared/components/Tooltip";
 import CopyValue from "@/shared/components/CopyValue";
 import Avatar from "@/shared/components/Avatar";
-import { Channel } from "../../../types";
+import { PlaylistChannelWithCountsResponse } from "@/generated/graphql";
 import TableCol from "../TableCol";
 import { routes } from "@/shared/utils/routes";
 import SyncUploadsButton from "@/features/Upload/components/SyncUploadsButton";
 
 type TitleCellProps = {
-  channel: Channel;
+  channel: PlaylistChannelWithCountsResponse;
   refetchPlaylist: () => void;
 };
 
-export default function TitleCell({ channel, refetchPlaylist }: TitleCellProps) {
+export default function TitleCell({
+  channel,
+  refetchPlaylist,
+}: TitleCellProps) {
   return (
     <TableCol className="max-w-[200px]">
       <div className="flex items-center gap-3">
@@ -34,7 +37,6 @@ export default function TitleCell({ channel, refetchPlaylist }: TitleCellProps) 
               <CopyValue type="id" value={channel.ytId} />
             </Tooltip>
             <SyncUploadsButton
-              lastSyncedAt={channel.lastSyncedAt}
               ytChannelId={channel.ytId}
               id={channel.id}
               onSuccess={refetchPlaylist}

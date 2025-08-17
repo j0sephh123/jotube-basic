@@ -1,4 +1,4 @@
-import { Header } from "./Header";
+import Header from "./Header";
 import PlaylistDetailsContainer from "./PlaylistDetailsContainer";
 import Table from "./Table";
 import RightSection from "./RightSection";

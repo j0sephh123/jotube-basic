@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { TodosResolver, TodosService } from '.';
+import { SearchModule } from '../search/search.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { TodosResolver, TodosService } from '.';
       introspection: true,
       sortSchema: true,
     }),
+    SearchModule,
   ],
   providers: [TodosResolver, TodosService],
 })

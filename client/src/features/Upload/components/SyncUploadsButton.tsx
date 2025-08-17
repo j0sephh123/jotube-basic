@@ -7,7 +7,7 @@ import clsx from "clsx";
 import useSyncUploads from "../hooks/useSyncUploads";
 
 type SyncUploadsButtonProps = {
-  lastSyncedAt: string | null;
+  lastSyncedAt?: string | null;
   ytChannelId: string;
   id: number;
   onSuccess?: () => void;
@@ -20,6 +20,7 @@ export default function SyncUploadsButton({
   onSuccess,
 }: SyncUploadsButtonProps) {
   const syncUploads = useSyncUploads(ytChannelId);
+  const lastSync = lastSyncedAt || null;
 
   const handleSync = async () => {
     if (!ytChannelId) return;
@@ -43,12 +44,12 @@ export default function SyncUploadsButton({
       <RefreshCw
         className={clsx(
           "w-4 h-4",
-          getLastSyncColor(lastSyncedAt),
+          getLastSyncColor(lastSync),
           syncUploads.isPending && "animate-spin"
         )}
       />
-      <span className={clsx(getLastSyncColor(lastSyncedAt), "font-medium")}>
-        {formatLastSync(lastSyncedAt)}
+      <span className={clsx(getLastSyncColor(lastSync), "font-medium")}>
+        {formatLastSync(lastSync)}
       </span>
     </button>
   );

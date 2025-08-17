@@ -1,16 +1,15 @@
-import { Channel } from "../../../types";
-import TableCol from "../TableCol";
-import useViewScreenshots from "@/features/Thumbnail/hooks/useViewScreenshots";
 import { Camera } from "lucide-react";
+import useViewScreenshots from "@/features/Thumbnail/hooks/useViewScreenshots";
+import { PlaylistChannelWithCountsResponse } from "@/generated/graphql";
+import TableCol from "../TableCol";
 
 type ScreenshotCountCellProps = {
-  channel: Channel;
+  channel: PlaylistChannelWithCountsResponse;
 };
 
 export default function ScreenshotCountCell({
   channel,
 }: ScreenshotCountCellProps) {
-  const count = channel.counts?.screenshotCount ?? 0;
   const viewScreenshots = useViewScreenshots();
 
   const handleViewScreenshots = () => {
@@ -18,9 +17,9 @@ export default function ScreenshotCountCell({
   };
 
   return (
-    <TableCol className="text-center w-[80px]">
+    <TableCol className="text-center">
       <div className="flex flex-col items-center gap-2">
-        <span className="font-medium text-lg">{count}</span>
+        <span className="font-medium text-lg">{channel.screenshotCount}</span>
         <button
           onClick={handleViewScreenshots}
           className="p-1 hover:bg-base-200 rounded transition-colors"

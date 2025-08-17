@@ -1,29 +1,28 @@
 import { Trash2 } from "lucide-react";
-import { Channel } from "../../../types";
+import { PlaylistChannelWithCountsResponse } from "@/generated/graphql";
+import TableCol from "../TableCol";
 
 type ActionsCellProps = {
+  channel: PlaylistChannelWithCountsResponse;
   onRemove: (channelId: number) => void;
   isRemoving: boolean;
-  channel: Channel;
 };
 
 export default function ActionsCell({
+  channel,
   onRemove,
   isRemoving,
-  channel,
 }: ActionsCellProps) {
   return (
-    <td>
-      <div className="flex gap-2">
-        <button
-          onClick={() => onRemove(channel.id)}
-          className="btn btn-error btn-xs"
-          disabled={isRemoving}
-        >
-          <Trash2 className="w-4 h-4" />
-          Remove
-        </button>
-      </div>
-    </td>
+    <TableCol className="text-center">
+      <button
+        onClick={() => onRemove(channel.id)}
+        disabled={isRemoving}
+        className="btn btn-sm btn-error btn-outline"
+        title="Remove from playlist"
+      >
+        <Trash2 className="w-4 h-4" />
+      </button>
+    </TableCol>
   );
 }

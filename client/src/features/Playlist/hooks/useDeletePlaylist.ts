@@ -1,17 +1,15 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/nestFetcher";
+import { useMutation } from "@apollo/client";
+import { DELETE_PLAYLIST } from "@/api/graphql/queries/queries";
 
 export const useDeletePlaylist = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: (id: number) =>
-      nestFetcher({
-        url: `/playlists/${id}`,
-        method: "DELETE",
-      }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["playlists"] });
-    },
+  const [mutate, result] = useMutation(DELETE_PLAYLIST, {
+    refetchQueries: ["GetPlaylists"],
   });
+
+  return {
+    mutate,
+    isPending: result.loading,
+    data: result.data,
+    error: result.error,
+  };
 };

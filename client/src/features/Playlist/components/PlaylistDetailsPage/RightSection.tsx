@@ -1,19 +1,17 @@
-import { Playlist } from "../../types";
+import { PlaylistDetailsResponse } from "@/generated/graphql";
 
 type RightSectionProps = {
-  playlist: Playlist;
+  playlist: PlaylistDetailsResponse;
 };
 
 export default function RightSection({ playlist }: RightSectionProps) {
   const totalCounts = playlist.channels.reduce(
     (acc, channel) => {
-      const counts = channel.counts;
       return {
-        videoCount: acc.videoCount + (counts?.videoCount || 0),
-        savedCount: acc.savedCount + (counts?.savedCount || 0),
-        screenshotCount: acc.screenshotCount + (counts?.screenshotCount || 0),
-        thumbnailCount: acc.thumbnailCount + (counts?.thumbnailCount || 0),
-        storyboardCount: acc.storyboardCount + (counts?.storyboardCount || 0),
+        videoCount: acc.videoCount + channel.videoCount,
+        savedCount: acc.savedCount + channel.savedCount,
+        screenshotCount: acc.screenshotCount + channel.screenshotCount,
+        thumbnailCount: acc.thumbnailCount + channel.thumbnailCount,
       };
     },
     {
@@ -21,7 +19,6 @@ export default function RightSection({ playlist }: RightSectionProps) {
       savedCount: 0,
       screenshotCount: 0,
       thumbnailCount: 0,
-      storyboardCount: 0,
     }
   );
 
@@ -56,13 +53,6 @@ export default function RightSection({ playlist }: RightSectionProps) {
             <div className="stat-title text-info">Thumbnails</div>
             <div className="stat-value text-info text-2xl">
               {totalCounts.thumbnailCount.toLocaleString()}
-            </div>
-          </div>
-
-          <div className="stat bg-secondary/10 rounded-lg p-4">
-            <div className="stat-title text-secondary">Storyboards</div>
-            <div className="stat-value text-secondary text-2xl">
-              {totalCounts.storyboardCount.toLocaleString()}
             </div>
           </div>
         </div>

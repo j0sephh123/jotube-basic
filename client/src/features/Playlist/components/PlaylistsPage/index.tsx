@@ -8,21 +8,21 @@ import Loading from "@/shared/components/static/Loading";
 
 export const PlaylistsPage = () => {
   const { isModalOpen, closePlaylistModal } = usePlaylist();
-  const { data: playlists, isLoading, error } = useGetPlaylists();
+  const { data: playlists, loading, error } = useGetPlaylists();
   const createPlaylist = useCreatePlaylist();
 
   const handleCreatePlaylist = (name: string) => {
-    createPlaylist.mutate(
-      { name },
-      {
-        onSuccess: () => {
-          closePlaylistModal();
-        },
-      }
-    );
+    createPlaylist.mutate({
+      variables: {
+        createPlaylistInput: { name },
+      },
+      onCompleted: () => {
+        closePlaylistModal();
+      },
+    });
   };
 
-  if (isLoading) return <Loading />;
+  if (loading) return <Loading />;
   if (error) return <ErrorMessage message="Error loading playlists" />;
   if (!playlists || playlists.length === 0)
     return (
