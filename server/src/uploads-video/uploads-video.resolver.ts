@@ -14,10 +14,33 @@ import { SavedUploadsResponse } from './dtos/saved-uploads.response';
 import { SavedUploadsInput } from './dtos/saved-uploads.input';
 import { ChannelUploadsResponse } from './dtos/uploads-list.response';
 import { UploadsListInput } from './dtos/uploads-list.input';
+import { UploadsVideoStoryboardResponse } from './dtos/storyboards.response';
 
 @Resolver()
 export class UploadsVideoResolver {
   constructor(private readonly uploadsVideoService: UploadsVideoService) {}
+
+  @Query(() => [UploadsVideoStoryboardResponse])
+  async storyboards(
+    @Args('ytChannelId') ytChannelId: string,
+  ): Promise<UploadsVideoStoryboardResponse[]> {
+    try {
+      const results = await this.uploadsVideoService.storyboards(ytChannelId);
+
+      return results.map((result) => ({
+        ...result,
+        createdAt: result.createdAt.toISOString(),
+        updatedAt: result.updatedAt.toISOString(),
+        storyboard: {
+          ...result.storyboard,
+          createdAt: result.storyboard.createdAt.toISOString(),
+          updatedAt: result.storyboard.updatedAt.toISOString(),
+        },
+      }));
+    } catch {
+      return [];
+    }
+  }
 
   @Query(() => ChannelUploadsResponse, { nullable: true })
   async uploadsList(

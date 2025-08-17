@@ -156,6 +156,31 @@ export const UPLOADS_LIST = gql`
   }
 `;
 
+export const STORYBOARDS = gql`
+  query Storyboards($ytChannelId: String!) {
+    storyboards(ytChannelId: $ytChannelId) {
+      id
+      ytId
+      title
+      src
+      publishedAt
+      createdAt
+      updatedAt
+      channelId
+      nextPageToken
+      duration
+      artifact
+      storyboard {
+        id
+        fragments
+        url
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
 export const UPLOADS_WITH_THUMBNAILS = gql`
   query UploadsWithThumbnails($input: UploadsWithThumbnailsInput!) {
     uploadsWithThumbnails(input: $input) {

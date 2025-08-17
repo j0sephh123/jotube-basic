@@ -1,5 +1,3 @@
-@Get('/storyboards/:ytChannelId')
-
 search
 @Controller('playlists')
 @Post()

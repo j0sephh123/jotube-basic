@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/nestFetcher";
+import { useQuery } from "@apollo/client";
+import { STORYBOARDS } from "@/api/graphql/queries/queries";
 import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";
 
 export type StoryboardData = {
@@ -28,12 +28,17 @@ export type UploadWithStoryboard = {
 export default function useUploadsWithStoryboard() {
   const ytChannelId = useTypedChannelYtId();
 
-  return useQuery({
-    queryKey: ["storyboards", ytChannelId],
-    queryFn: () =>
-      nestFetcher<UploadWithStoryboard[]>({
-        url: `/uploads-video/storyboards/${ytChannelId}`,
-        method: "GET",
-      }),
+  const { data, loading, error, refetch } = useQuery<{
+    storyboards: UploadWithStoryboard[];
+  }>(STORYBOARDS, {
+    variables: { ytChannelId },
+    skip: !ytChannelId,
   });
+
+  return {
+    data: data?.storyboards,
+    isLoading: loading,
+    error,
+    refetch,
+  };
 }

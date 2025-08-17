@@ -190,6 +190,7 @@ type Query {
   screenshots: [ScreenshotsCountsResponse!]!
   screenshotsByVideo(ytVideoId: String!): [VideoScreenshotResponse!]!
   statisticsCounts: StatisticsCountsResponse!
+  storyboards(ytChannelId: String!): [UploadsVideoStoryboardResponse!]!
   thumbnailByVideoId(ytVideoId: String!): ThumbnailByVideoIdResponse
   todo(id: ID!): Todo!
   todos: [Todo!]!
@@ -238,6 +239,14 @@ type StatisticsCountsResponse {
   totalSaved: Float!
   totalScreenshots: Float!
   totalThumbnails: Float!
+}
+
+type StoryboardDataResponse {
+  createdAt: String!
+  fragments: Int!
+  id: Int!
+  updatedAt: String!
+  url: String!
 }
 
 type StoryboardFragmentResponse {
@@ -344,6 +353,21 @@ type UploadsListUploadResponse {
 
 type UploadsVideoResponse {
   channel: ChannelResponse!
+  ytId: String!
+}
+
+type UploadsVideoStoryboardResponse {
+  artifact: String!
+  channelId: Int!
+  createdAt: String!
+  duration: Int
+  id: Int!
+  nextPageToken: String
+  publishedAt: String!
+  src: String!
+  storyboard: StoryboardDataResponse!
+  title: String!
+  updatedAt: String!
   ytId: String!
 }
 

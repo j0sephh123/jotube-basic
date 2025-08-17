@@ -279,6 +279,7 @@ export type Query = {
   screenshots: Array<ScreenshotsCountsResponse>;
   screenshotsByVideo: Array<VideoScreenshotResponse>;
   statisticsCounts: StatisticsCountsResponse;
+  storyboards: Array<UploadsVideoStoryboardResponse>;
   thumbnailByVideoId?: Maybe<ThumbnailByVideoIdResponse>;
   todo: Todo;
   todos: Array<Todo>;
@@ -328,6 +329,11 @@ export type QuerySavedUploadsArgs = {
 
 export type QueryScreenshotsByVideoArgs = {
   ytVideoId: Scalars['String']['input'];
+};
+
+
+export type QueryStoryboardsArgs = {
+  ytChannelId: Scalars['String']['input'];
 };
 
 
@@ -399,6 +405,15 @@ export type StatisticsCountsResponse = {
   totalSaved: Scalars['Float']['output'];
   totalScreenshots: Scalars['Float']['output'];
   totalThumbnails: Scalars['Float']['output'];
+};
+
+export type StoryboardDataResponse = {
+  __typename?: 'StoryboardDataResponse';
+  createdAt: Scalars['String']['output'];
+  fragments: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  updatedAt: Scalars['String']['output'];
+  url: Scalars['String']['output'];
 };
 
 export type StoryboardFragmentResponse = {
@@ -517,6 +532,22 @@ export type UploadsVideoResponse = {
   ytId: Scalars['String']['output'];
 };
 
+export type UploadsVideoStoryboardResponse = {
+  __typename?: 'UploadsVideoStoryboardResponse';
+  artifact: Scalars['String']['output'];
+  channelId: Scalars['Int']['output'];
+  createdAt: Scalars['String']['output'];
+  duration?: Maybe<Scalars['Int']['output']>;
+  id: Scalars['Int']['output'];
+  nextPageToken?: Maybe<Scalars['String']['output']>;
+  publishedAt: Scalars['String']['output'];
+  src: Scalars['String']['output'];
+  storyboard: StoryboardDataResponse;
+  title: Scalars['String']['output'];
+  updatedAt: Scalars['String']['output'];
+  ytId: Scalars['String']['output'];
+};
+
 export type UploadsWithThumbnailsInput = {
   channelIds: Array<Scalars['Float']['input']>;
 };
@@ -620,6 +651,13 @@ export type UploadsListQueryVariables = Exact<{
 
 
 export type UploadsListQuery = { __typename?: 'Query', uploadsList?: { __typename?: 'ChannelUploadsResponse', id: number, createdAt: string, updatedAt: string, title: string, ytId: string, src: string, videoCount: number, fetchStartVideoId: string, fetchedUntilEnd: boolean, lastSyncedAt?: string | null, uploads: Array<{ __typename?: 'UploadsListUploadResponse', artifact: string, channelId: number, createdAt: string, duration?: number | null, id: number, nextPageToken?: string | null, publishedAt: string, src: string, title: string, updatedAt: string, ytId: string }> } | null };
+
+export type StoryboardsQueryVariables = Exact<{
+  ytChannelId: Scalars['String']['input'];
+}>;
+
+
+export type StoryboardsQuery = { __typename?: 'Query', storyboards: Array<{ __typename?: 'UploadsVideoStoryboardResponse', id: number, ytId: string, title: string, src: string, publishedAt: string, createdAt: string, updatedAt: string, channelId: number, nextPageToken?: string | null, duration?: number | null, artifact: string, storyboard: { __typename?: 'StoryboardDataResponse', id: number, fragments: number, url: string, createdAt: string, updatedAt: string } }> };
 
 export type UploadsWithThumbnailsQueryVariables = Exact<{
   input: UploadsWithThumbnailsInput;
@@ -1147,6 +1185,63 @@ export type UploadsListQueryHookResult = ReturnType<typeof useUploadsListQuery>;
 export type UploadsListLazyQueryHookResult = ReturnType<typeof useUploadsListLazyQuery>;
 export type UploadsListSuspenseQueryHookResult = ReturnType<typeof useUploadsListSuspenseQuery>;
 export type UploadsListQueryResult = Apollo.QueryResult<UploadsListQuery, UploadsListQueryVariables>;
+export const StoryboardsDocument = gql`
+    query Storyboards($ytChannelId: String!) {
+  storyboards(ytChannelId: $ytChannelId) {
+    id
+    ytId
+    title
+    src
+    publishedAt
+    createdAt
+    updatedAt
+    channelId
+    nextPageToken
+    duration
+    artifact
+    storyboard {
+      id
+      fragments
+      url
+      createdAt
+      updatedAt
+    }
+  }
+}
+    `;
+
+/**
+ * __useStoryboardsQuery__
+ *
+ * To run a query within a React component, call `useStoryboardsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useStoryboardsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useStoryboardsQuery({
+ *   variables: {
+ *      ytChannelId: // value for 'ytChannelId'
+ *   },
+ * });
+ */
+export function useStoryboardsQuery(baseOptions: Apollo.QueryHookOptions<StoryboardsQuery, StoryboardsQueryVariables> & ({ variables: StoryboardsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<StoryboardsQuery, StoryboardsQueryVariables>(StoryboardsDocument, options);
+      }
+export function useStoryboardsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<StoryboardsQuery, StoryboardsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<StoryboardsQuery, StoryboardsQueryVariables>(StoryboardsDocument, options);
+        }
+export function useStoryboardsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<StoryboardsQuery, StoryboardsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<StoryboardsQuery, StoryboardsQueryVariables>(StoryboardsDocument, options);
+        }
+export type StoryboardsQueryHookResult = ReturnType<typeof useStoryboardsQuery>;
+export type StoryboardsLazyQueryHookResult = ReturnType<typeof useStoryboardsLazyQuery>;
+export type StoryboardsSuspenseQueryHookResult = ReturnType<typeof useStoryboardsSuspenseQuery>;
+export type StoryboardsQueryResult = Apollo.QueryResult<StoryboardsQuery, StoryboardsQueryVariables>;
 export const UploadsWithThumbnailsDocument = gql`
     query UploadsWithThumbnails($input: UploadsWithThumbnailsInput!) {
   uploadsWithThumbnails(input: $input) {
