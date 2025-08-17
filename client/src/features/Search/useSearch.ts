@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useLazyQuery } from "@apollo/client";
-import { SEARCH_VIDEOS, SEARCH_CHANNELS } from "@/api/graphql/queries/queries";
+import { SEARCH_VIDEOS, SEARCH_CHANNELS } from "@/shared/api/graphql/queries";
 
 type SearchRequest = {
   search: string;

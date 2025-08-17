@@ -206,6 +206,13 @@ export const CREATE_PLAYLIST = gql`
   }
 `;
 
+export const CHANNEL_FRAGMENT = gql`
+  fragment ChannelFragment on PlaylistChannelResponse {
+    id
+    ytId
+  }
+`;
+
 export const GET_PLAYLISTS = gql`
   query GetPlaylists {
     playlists {
@@ -214,12 +221,12 @@ export const GET_PLAYLISTS = gql`
       createdAt
       updatedAt
       channels {
-        id
+        ...ChannelFragment
         title
-        ytId
       }
     }
   }
+  ${CHANNEL_FRAGMENT}
 `;
 
 export const GET_PLAYLIST_DETAILS = gql`

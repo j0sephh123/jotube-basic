@@ -1,5 +1,5 @@
-schema: "../server/schema.gql"      # path to your backend schema
-documents: "src/api/graphql/**/*.ts"           # where your gql queries live
+schema: "../server/schema.gql"
+documents: "src/shared/api/graphql/**/*.ts"
 generates:
   src/generated/graphql.ts:
     plugins:

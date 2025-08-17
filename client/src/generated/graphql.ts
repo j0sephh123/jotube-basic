@@ -775,10 +775,12 @@ export type CreatePlaylistMutationVariables = Exact<{
 
 export type CreatePlaylistMutation = { __typename?: 'Mutation', createPlaylist: { __typename?: 'CreatePlaylistResponse', id: number, name: string, createdAt: string, updatedAt: string } };
 
+export type ChannelFragmentFragment = { __typename?: 'PlaylistChannelResponse', id: number, ytId: string };
+
 export type GetPlaylistsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPlaylistsQuery = { __typename?: 'Query', playlists: Array<{ __typename?: 'PlaylistResponse', id: number, name: string, createdAt: string, updatedAt: string, channels: Array<{ __typename?: 'PlaylistChannelResponse', id: number, title: string, ytId: string }> }> };
+export type GetPlaylistsQuery = { __typename?: 'Query', playlists: Array<{ __typename?: 'PlaylistResponse', id: number, name: string, createdAt: string, updatedAt: string, channels: Array<{ __typename?: 'PlaylistChannelResponse', title: string, id: number, ytId: string }> }> };
 
 export type GetPlaylistDetailsQueryVariables = Exact<{
   id: Scalars['Int']['input'];
@@ -902,7 +904,12 @@ export type FinishProcessingUploadMutationVariables = Exact<{
 
 export type FinishProcessingUploadMutation = { __typename?: 'Mutation', finishProcessingUpload: { __typename?: 'FinishProcessUploadResponse', id: number, ytId: string, artifact: string } };
 
-
+export const ChannelFragmentFragmentDoc = gql`
+    fragment ChannelFragment on PlaylistChannelResponse {
+  id
+  ytId
+}
+    `;
 export const CreateChannelDocument = gql`
     mutation CreateChannel($createChannelInput: CreateChannelInput!) {
   createChannel(createChannelInput: $createChannelInput) {
@@ -1483,13 +1490,12 @@ export const GetPlaylistsDocument = gql`
     createdAt
     updatedAt
     channels {
-      id
+      ...ChannelFragment
       title
-      ytId
     }
   }
 }
-    `;
+    ${ChannelFragmentFragmentDoc}`;
 
 /**
  * __useGetPlaylistsQuery__

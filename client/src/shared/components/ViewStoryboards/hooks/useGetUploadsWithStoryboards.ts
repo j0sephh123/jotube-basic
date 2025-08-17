@@ -1,5 +1,5 @@
 import { useLazyQuery } from "@apollo/client";
-import { UPLOADS_WITH_STORYBOARDS } from "@/api/graphql/queries/queries";
+import { UPLOADS_WITH_STORYBOARDS } from "@/shared/api/graphql/queries";
 
 type UploadsWithStoryboardsResponse = {
   id: number;

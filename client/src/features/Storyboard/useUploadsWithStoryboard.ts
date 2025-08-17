@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { STORYBOARDS } from "@/api/graphql/queries/queries";
+import { STORYBOARDS } from "@/shared/api/graphql/queries";
 import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";
 
 export type StoryboardData = {
