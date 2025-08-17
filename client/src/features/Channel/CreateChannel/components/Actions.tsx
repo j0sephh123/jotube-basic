@@ -1,4 +1,4 @@
-import Button from "@/shared/button";
+import Button from "@/shared/components/button";
 
 export default function Actions({
   onClose,

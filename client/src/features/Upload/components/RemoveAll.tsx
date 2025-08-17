@@ -1,4 +1,4 @@
-import Button from "@/shared/button";
+import Button from "@/shared/components/button";
 import { Trash2 } from "lucide-react";
 import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";
 import { useRefetchSavedUploads } from "../hooks/useSavedUploads";

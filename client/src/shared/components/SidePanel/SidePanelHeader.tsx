@@ -1,4 +1,4 @@
-import Button from "@/shared/button";
+import Button from "@/shared/components/button";
 import { useSidePanel } from "@/store/store";
 import { X } from "lucide-react";
 

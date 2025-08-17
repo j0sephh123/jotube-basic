@@ -1,4 +1,4 @@
-import Button from "@/shared/button";
+import Button from "@/shared/components/button";
 import useUploadsWithStoryboard from "@/features/Storyboard/useUploadsWithStoryboard";
 import { useStoryboardProcessing } from "@/store/store";
 

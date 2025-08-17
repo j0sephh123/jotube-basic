@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useDashboardContext } from "../../hooks/useDashboardContext";
 import getPaginationRange from "./getPaginationRange";
-import Button from "@/shared/button";
+import Button from "@/shared/components/button";
 
 type PaginationControlProps = {
   total: number;
@@ -22,7 +22,7 @@ export default function PaginationControl({
   return (
     <div className="flex items-center justify-center">
       <div className="join">
-        <Button 
+        <Button
           onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
           disabled={currentPage === 1}
           className="join-item btn btn-sm"

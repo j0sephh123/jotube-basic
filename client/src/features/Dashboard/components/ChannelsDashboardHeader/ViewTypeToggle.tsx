@@ -5,7 +5,7 @@ import {
   ViewType,
 } from "@/shared/hooks/useDashboardParams";
 import clsx from "clsx";
-import Button from "@/shared/button";
+import Button from "@/shared/components/button";
 
 const viewTypeOrder = [
   ViewType.NO_UPLOADS,

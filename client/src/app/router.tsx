@@ -1,20 +1,20 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Layout from "./shared/components/Layout";
-import ScreenshotsPage from "./pages/ScreenshotsPage";
-import ScreenshotsByMonth from "./pages/ScreenshotsPageMonth";
-import ScreenshotsByDayDate from "./pages/ScreenshotsPageDate";
-import ScreenshotsLayout from "./features/Screenshot/components/ScreenshotsPageLayout";
-import SavedUploads from "./pages/SavedUploadsPage";
-import ChannelPageLayout from "./features/Channel/ChannelPageLayout";
-import GalleryPage from "./pages/GalleryPage";
-import GalleryLayout from "./features/Gallery/components/GalleryLayout";
+import Layout from "@/shared/components/Layout";
+import ScreenshotsPage from "@/pages/ScreenshotsPage";
+import ScreenshotsByMonth from "@/pages/ScreenshotsPageMonth";
+import ScreenshotsByDayDate from "@/pages/ScreenshotsPageDate";
+import ScreenshotsLayout from "@/features/Screenshot/components/ScreenshotsPageLayout";
+import SavedUploads from "@/pages/SavedUploadsPage";
+import ChannelPageLayout from "@/features/Channel/ChannelPageLayout";
+import GalleryPage from "@/pages/GalleryPage";
+import GalleryLayout from "@/features/Gallery/components/GalleryLayout";
 import Dashboard from "@/features/Dashboard";
 import DashboardWrapper from "@/features/Dashboard/components/DashboardWrapper";
-import DefaultUploadsPage from "./pages/DefaultUploadsPage";
-import GalleryVideoPage from "./features/Gallery/components/GalleryVideoPage";
-import StoryboardPage from "./pages/StoryboardPage";
+import DefaultUploadsPage from "@/pages/DefaultUploadsPage";
+import GalleryVideoPage from "@/features/Gallery/components/GalleryVideoPage";
+import StoryboardPage from "@/pages/StoryboardPage";
 import { PlaylistsPage, PlaylistDetailsPage } from "@/features/Playlist";
-import NotFound from "./shared/components/static/NotFound";
+import NotFound from "@/shared/components/static/NotFound";
 
 export default function Router() {
   return (

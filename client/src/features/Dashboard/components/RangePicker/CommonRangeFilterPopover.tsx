@@ -1,6 +1,6 @@
 import { PropsWithChildren, ReactNode, useState } from "react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
-import Button from "@/shared/button";
+import Button from "@/shared/components/button";
 
 type CommonRangeFilterPopoverProps = PropsWithChildren<{
   buttonLabel: string;

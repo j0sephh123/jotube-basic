@@ -5,7 +5,7 @@ import SelectSortDirection from "./SelectSortDirection";
 import VideosPaginationControl from "./VideosPaginationControl";
 import { useVideosDashboardContext } from "../../hooks/useVideosDashboardContext";
 import { useVideosDashboardQuery } from "../../useVideosDashboardQuery";
-import Button from "@/shared/button";
+import Button from "@/shared/components/button";
 
 export default function VideosDashboardHeader() {
   const { handleClearFilters } = useVideosDashboardContext();

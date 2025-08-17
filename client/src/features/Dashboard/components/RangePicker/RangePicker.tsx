@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useStore } from "@/store/store";
 import { useDashboardContext } from "../../hooks/useDashboardContext";
 import { RangePickerTypes } from "@/store/store-types";
-import Button from "@/shared/button";
+import Button from "@/shared/components/button";
 
 type RangePickerProps = {
   rangeKey: RangePickerTypes;
