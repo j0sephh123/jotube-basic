@@ -8,6 +8,8 @@ import { FetchUploadsResponse } from './dtos/fetch-uploads.response';
 import { FetchUploadsInput } from './dtos/fetch-uploads.input';
 import { SyncUploadsResponse } from './dtos/sync-uploads.response';
 import { SyncUploadsInput } from './dtos/sync-uploads.input';
+import { CleanShortUploadsResponse } from './dtos/clean-short-uploads.response';
+import { CleanShortUploadsInput } from './dtos/clean-short-uploads.input';
 
 @Resolver()
 export class UploadsVideoResolver {
@@ -30,8 +32,7 @@ export class UploadsVideoResolver {
     @Args('fetchUploadsInput') fetchUploadsInput: FetchUploadsInput,
   ): Promise<FetchUploadsResponse> {
     try {
-      const result =
-        await this.uploadsVideoService.fetchUploads(fetchUploadsInput);
+      const result = await this.uploadsVideoService.fetchUploads(fetchUploadsInput);
       return {
         success: true,
         message: `Successfully fetched ${result.count} uploads`,
@@ -52,11 +53,22 @@ export class UploadsVideoResolver {
     @Args('syncUploadsInput') syncUploadsInput: SyncUploadsInput,
   ): Promise<SyncUploadsResponse> {
     try {
-      const result =
-        await this.uploadsVideoService.syncUploads(syncUploadsInput);
+      const result = await this.uploadsVideoService.syncUploads(syncUploadsInput);
       return result;
-    } catch {
+    } catch (error) {
       return { count: 0 };
+    }
+  }
+
+  @Mutation(() => CleanShortUploadsResponse)
+  async cleanShortUploads(
+    @Args('cleanShortUploadsInput') cleanShortUploadsInput: CleanShortUploadsInput,
+  ): Promise<CleanShortUploadsResponse> {
+    try {
+      const result = await this.uploadsVideoService.cleanShortUploads(cleanShortUploadsInput);
+      return result;
+    } catch (error) {
+      return { deletedCount: 0 };
     }
   }
 

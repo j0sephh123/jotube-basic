@@ -82,6 +82,14 @@ export const SYNC_UPLOADS = gql`
   }
 `;
 
+export const CLEAN_SHORT_UPLOADS = gql`
+  mutation CleanShortUploads($cleanShortUploadsInput: CleanShortUploadsInput!) {
+    cleanShortUploads(cleanShortUploadsInput: $cleanShortUploadsInput) {
+      deletedCount
+    }
+  }
+`;
+
 export const UPLOADS_WITH_THUMBNAILS = gql`
   query UploadsWithThumbnails($input: UploadsWithThumbnailsInput!) {
     uploadsWithThumbnails(input: $input) {

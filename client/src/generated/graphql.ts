@@ -61,6 +61,15 @@ export type ChannelsDashboardResponse = {
   total: Scalars['Int']['output'];
 };
 
+export type CleanShortUploadsInput = {
+  ytChannelId: Scalars['String']['input'];
+};
+
+export type CleanShortUploadsResponse = {
+  __typename?: 'CleanShortUploadsResponse';
+  deletedCount: Scalars['Int']['output'];
+};
+
 export type CreateChannelInput = {
   ytVideoId: Scalars['String']['input'];
 };
@@ -165,6 +174,7 @@ export type GetSlidesResponse = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  cleanShortUploads: CleanShortUploadsResponse;
   createChannel: CreateChannelResponse;
   createTodo: Todo;
   deleteChannel: DeleteChannelResponse;
@@ -175,6 +185,11 @@ export type Mutation = {
   saveUpload: SaveUploadResponse;
   syncUploads: SyncUploadsResponse;
   updateTodo: Todo;
+};
+
+
+export type MutationCleanShortUploadsArgs = {
+  cleanShortUploadsInput: CleanShortUploadsInput;
 };
 
 
@@ -497,6 +512,13 @@ export type SyncUploadsMutationVariables = Exact<{
 
 
 export type SyncUploadsMutation = { __typename?: 'Mutation', syncUploads: { __typename?: 'SyncUploadsResponse', count: number } };
+
+export type CleanShortUploadsMutationVariables = Exact<{
+  cleanShortUploadsInput: CleanShortUploadsInput;
+}>;
+
+
+export type CleanShortUploadsMutation = { __typename?: 'Mutation', cleanShortUploads: { __typename?: 'CleanShortUploadsResponse', deletedCount: number } };
 
 export type UploadsWithThumbnailsQueryVariables = Exact<{
   input: UploadsWithThumbnailsInput;
@@ -861,6 +883,39 @@ export function useSyncUploadsMutation(baseOptions?: Apollo.MutationHookOptions<
 export type SyncUploadsMutationHookResult = ReturnType<typeof useSyncUploadsMutation>;
 export type SyncUploadsMutationResult = Apollo.MutationResult<SyncUploadsMutation>;
 export type SyncUploadsMutationOptions = Apollo.BaseMutationOptions<SyncUploadsMutation, SyncUploadsMutationVariables>;
+export const CleanShortUploadsDocument = gql`
+    mutation CleanShortUploads($cleanShortUploadsInput: CleanShortUploadsInput!) {
+  cleanShortUploads(cleanShortUploadsInput: $cleanShortUploadsInput) {
+    deletedCount
+  }
+}
+    `;
+export type CleanShortUploadsMutationFn = Apollo.MutationFunction<CleanShortUploadsMutation, CleanShortUploadsMutationVariables>;
+
+/**
+ * __useCleanShortUploadsMutation__
+ *
+ * To run a mutation, you first call `useCleanShortUploadsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCleanShortUploadsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [cleanShortUploadsMutation, { data, loading, error }] = useCleanShortUploadsMutation({
+ *   variables: {
+ *      cleanShortUploadsInput: // value for 'cleanShortUploadsInput'
+ *   },
+ * });
+ */
+export function useCleanShortUploadsMutation(baseOptions?: Apollo.MutationHookOptions<CleanShortUploadsMutation, CleanShortUploadsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CleanShortUploadsMutation, CleanShortUploadsMutationVariables>(CleanShortUploadsDocument, options);
+      }
+export type CleanShortUploadsMutationHookResult = ReturnType<typeof useCleanShortUploadsMutation>;
+export type CleanShortUploadsMutationResult = Apollo.MutationResult<CleanShortUploadsMutation>;
+export type CleanShortUploadsMutationOptions = Apollo.BaseMutationOptions<CleanShortUploadsMutation, CleanShortUploadsMutationVariables>;
 export const UploadsWithThumbnailsDocument = gql`
     query UploadsWithThumbnails($input: UploadsWithThumbnailsInput!) {
   uploadsWithThumbnails(input: $input) {
