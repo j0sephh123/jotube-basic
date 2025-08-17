@@ -140,6 +140,30 @@ type VideoScreenshotResponse {
   src: String!
 }
 
+type StoryboardFragmentResponse {
+  id: Int!
+  uploadsVideoId: Int!
+  fragments: Int!
+  url: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type UploadWithStoryboardResponse {
+  id: Int!
+  ytId: String!
+  title: String!
+  src: String!
+  publishedAt: String!
+  createdAt: String!
+  updatedAt: String!
+  channelId: Int!
+  nextPageToken: String
+  duration: Int
+  artifact: String!
+  storyboard: StoryboardFragmentResponse!
+}
+
 type DeleteUploadsResponse {
   success: Boolean!
 }
@@ -185,6 +209,7 @@ type Query {
   screenshotsByVideo(ytVideoId: String!): [VideoScreenshotResponse!]!
   channelForPlaylist(ytChannelId: String!): ChannelForPlaylistResponse!
   channelMetadata(ytChannelId: String!): ChannelMetadataResponse!
+  uploadsWithStoryboards(input: StoryboardQueryInput!): [UploadWithStoryboardResponse!]!
   statisticsCounts: StatisticsCountsResponse!
   fetchDashboard(fetchDashboardInput: FetchDashboardInput!): ChannelsDashboardResponse!
   fetchVideosDashboard(page: Float, sortOrder: String, screenshotMin: Float, screenshotMax: Float): VideosDashboardResponse!
@@ -198,6 +223,10 @@ input GetSlidesInput {
 
 input UploadsWithThumbnailsInput {
   channelIds: [Float!]!
+}
+
+input StoryboardQueryInput {
+  ytChannelId: String!
 }
 
 input FetchDashboardInput {

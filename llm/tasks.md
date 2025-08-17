@@ -3,7 +3,7 @@
 @Post('/saved-uploads')
 @Get('/uploads-list/:ytChannelId')
 @Get('/storyboards/:ytChannelId')
-@Get('uploadsWithStoryboards')
+
 search
 @Controller('playlists')
   @Post()

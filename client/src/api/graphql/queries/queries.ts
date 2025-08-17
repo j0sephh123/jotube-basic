@@ -48,6 +48,32 @@ export const FETCH_UPLOADS = gql`
   }
 `;
 
+export const UPLOADS_WITH_STORYBOARDS = gql`
+  query UploadsWithStoryboards($input: StoryboardQueryInput!) {
+    uploadsWithStoryboards(input: $input) {
+      id
+      ytId
+      title
+      src
+      publishedAt
+      createdAt
+      updatedAt
+      channelId
+      nextPageToken
+      duration
+      artifact
+      storyboard {
+        id
+        uploadsVideoId
+        fragments
+        url
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
 export const UPLOADS_WITH_THUMBNAILS = gql`
   query UploadsWithThumbnails($input: UploadsWithThumbnailsInput!) {
     uploadsWithThumbnails(input: $input) {

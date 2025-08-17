@@ -1,0 +1,29 @@
+import { Resolver, Query, Args } from '@nestjs/graphql';
+import { StoryboardService } from './storyboard.service';
+import { UploadWithStoryboardResponse } from './dtos/upload-with-storyboard.response';
+import { StoryboardQueryInput } from './dtos/storyboard-query.input';
+
+@Resolver()
+export class StoryboardResolver {
+  constructor(private readonly storyboardService: StoryboardService) {}
+
+  @Query(() => [UploadWithStoryboardResponse])
+  async uploadsWithStoryboards(
+    @Args('input') input: StoryboardQueryInput,
+  ): Promise<UploadWithStoryboardResponse[]> {
+    const uploads = await this.storyboardService.getUploadsWithStoryboards(
+      input.ytChannelId,
+    );
+
+    return uploads.map((upload) => ({
+      ...upload,
+      createdAt: upload.createdAt.toISOString(),
+      updatedAt: upload.updatedAt.toISOString(),
+      storyboard: {
+        ...upload.storyboard,
+        createdAt: upload.storyboard.createdAt.toISOString(),
+        updatedAt: upload.storyboard.updatedAt.toISOString(),
+      },
+    }));
+  }
+}

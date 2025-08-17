@@ -1,5 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/nestFetcher";
+import { useLazyQuery } from "@apollo/client";
+import { UPLOADS_WITH_STORYBOARDS } from "@/api/graphql/queries/queries";
 
 type UploadsWithStoryboardsResponse = {
   id: number;
@@ -24,11 +24,18 @@ type UploadsWithStoryboardsResponse = {
 }[];
 
 export function useGetUploadsWithStoryboards() {
-  return useMutation<UploadsWithStoryboardsResponse, unknown, string>({
-    mutationFn: (ytChannelId: string) =>
-      nestFetcher<UploadsWithStoryboardsResponse>({
-        url: `/storyboard/uploadsWithStoryboards?ytChannelId=${ytChannelId}`,
-        method: "GET",
-      }),
-  });
+  const [getUploadsWithStoryboards, { loading, error, data }] = useLazyQuery<{
+    uploadsWithStoryboards: UploadsWithStoryboardsResponse;
+  }>(UPLOADS_WITH_STORYBOARDS);
+
+  return {
+    mutateAsync: (ytChannelId: string) => {
+      return getUploadsWithStoryboards({
+        variables: { input: { ytChannelId } },
+      });
+    },
+    isPending: loading,
+    data: data?.uploadsWithStoryboards,
+    error,
+  };
 }
