@@ -4,7 +4,7 @@ import { Video, Loader, X } from "lucide-react";
 import { useRemoveFromQueue } from "@/features/Upload/hooks/useRemoveFromQueue";
 import { useQueue } from "@/shared/hooks/useQueue";
 import { getWaitingJobIds, groupByChannel } from "@/shared/utils/queue-utils";
-import ChannelLink from "../ChannelLink";
+import ChannelLink from "@/shared/components/ChannelLink";
 
 export default function VideoProcessingInfo() {
   const { data: queueData = [], refetch: refetchQueue, isLoading } = useQueue();

@@ -38,6 +38,8 @@ export const ToastContext = createContext<ToastContextType | undefined>(
   undefined
 );
 
+export type { ToastContextType };
+
 type ToastProviderProps = {
   children: ReactNode;
 };

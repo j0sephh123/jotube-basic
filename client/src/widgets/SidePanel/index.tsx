@@ -8,8 +8,8 @@ import VideoModal from "@/shared/components/VideoModal";
 import { formatSecondsToTime } from "@/shared/utils/format";
 import { Play, Clock } from "lucide-react";
 import { useState } from "react";
-import SidePanelWrapper from "../SidePanel/SidePanelWrapper";
-import SidePanelHeader from "../SidePanel/SidePanelHeader";
+import SidePanelHeader from "@/shared/components/SidePanel/SidePanelHeader";
+import SidePanelWrapper from "@/shared/components/SidePanel/SidePanelWrapper";
 
 type ScreenshotGroup = {
   screenshots: VideoScreenshot[];
@@ -20,7 +20,7 @@ type ScreenshotGroup = {
 
 const TEMPORAL_THRESHOLD = 3;
 
-export default function ScreenshotsSidePanel() {
+export default function SidePanel() {
   const isOpen = useSidePanel((s) => s.isOpen);
   const videoId = useSidePanel((s) => s.videoId);
   const { isVideoModalVisible, openVideoModal, closeVideoModal, getEmbedUrl } =

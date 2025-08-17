@@ -8,28 +8,25 @@ import { AddChannelToPlaylistModal } from "@/features/Playlist/components/AddCha
 import ZoomModal from "./ZoomModal";
 import StoryboardProcessing from "@/features/Storyboard/StoryboardProcessing";
 import CreateChannel from "@/features/Channel/CreateChannel";
-import { ToastProvider } from "../../app/providers/ToastProvider";
-import ScreenshotsSidePanel from "@/widgets/ScreenshotsSidePanel";
+import SidePanel from "@/widgets/SidePanel";
 import Navbar from "@/widgets/Navbar";
 
 export default function Layout(): JSX.Element {
   useWebSocket();
   useGlobalWebSocket();
   return (
-    <ToastProvider>
-      <DialogProvider>
-        <Navbar />
-        <div className="w-full h-[99vh] overflow-auto">
-          <Outlet />
-        </div>
-        <CreateChannel />
-        <TheCarousel />
-        <ThumbnailsProcessing />
-        <StoryboardProcessing />
-        <ScreenshotsSidePanel />
-        <AddChannelToPlaylistModal />
-        <ZoomModal />
-      </DialogProvider>
-    </ToastProvider>
+    <DialogProvider>
+      <Navbar />
+      <div className="w-full h-[99vh] overflow-auto">
+        <Outlet />
+      </div>
+      <CreateChannel />
+      <TheCarousel />
+      <ThumbnailsProcessing />
+      <StoryboardProcessing />
+      <SidePanel />
+      <AddChannelToPlaylistModal />
+      <ZoomModal />
+    </DialogProvider>
   );
 }
