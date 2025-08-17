@@ -1,4 +1,4 @@
-import { YT_VIDEO_ID_LENGTH } from "../utils/validation";
+import { YT_VIDEO_ID_LENGTH } from "../lib/validation";
 
 export default function Label() {
   return (

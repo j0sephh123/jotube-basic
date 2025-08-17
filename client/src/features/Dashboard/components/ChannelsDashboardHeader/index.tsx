@@ -1,9 +1,9 @@
 import { RotateCcw } from "lucide-react";
-import RangeFilterPopover from "../RangePicker/RangeFilterPopover";
-import DefaultsRangeFilterPopover from "../RangePicker/DefaultsRangeFilterPopover";
+import RangeFilterPopover from "../../widgets/RangePicker/RangeFilterPopover";
+import DefaultsRangeFilterPopover from "../../widgets/RangePicker/DefaultsRangeFilterPopover";
 import SelectSortDirection from "./SelectSortDirection";
 import ViewTypeToggle from "./ViewTypeToggle";
-import PaginationControl from "../PaginationControl";
+import PaginationControl from "../../widgets/PaginationControl";
 import { useDashboardContext } from "../../hooks/useDashboardContext";
 import {
   useDashboardParams,

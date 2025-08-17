@@ -3,12 +3,12 @@ import {
   useToastContext,
   ViewExistingChannel,
 } from "@/app/providers/ToastProvider";
-import CreateChannelModal from "./components/CreateChannelModal";
+import CreateChannelModal from "./ui/CreateChannelModal";
 import { useChannelsDashboardQuery } from "@/features/Dashboard/useChannelsDashboardQuery";
 import useCreateChannel from "@/features/Channel/hooks/useCreateChannel";
-import CreateChannelTrigger from "./components/CreateChannelTrigger";
-import CreateChannelForm from "./components/CreateChannelForm";
-import Actions from "./components/Actions";
+import CreateChannelTrigger from "./ui/CreateChannelTrigger";
+import CreateChannelForm from "./ui/CreateChannelForm";
+import Actions from "./ui/Actions";
 import { useCreateChannelForm } from "./hooks/useCreateChannelForm";
 
 export default function CreateChannel() {

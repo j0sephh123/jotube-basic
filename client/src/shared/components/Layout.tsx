@@ -6,9 +6,9 @@ import ThumbnailsProcessing from "@/features/Thumbnail";
 import { AddChannelToPlaylistModal } from "@/features/Playlist/components/AddChannelToPlaylistModal";
 import ZoomModal from "@/shared/ui/ZoomModal";
 import StoryboardProcessing from "@/features/Storyboard/StoryboardProcessing";
-import CreateChannel from "@/features/Channel/CreateChannel";
+import CreateChannel from "@/features/CreateChannel";
 import SidePanel from "@/widgets/SidePanel";
-import Navbar from "@/widgets/Navbar"; 
+import Navbar from "@/widgets/Navbar";
 import { DialogProvider } from "../ui/dialog/DialogProvider";
 
 export default function Layout(): JSX.Element {
