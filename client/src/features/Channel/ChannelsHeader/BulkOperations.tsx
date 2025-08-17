@@ -14,7 +14,7 @@ type Props = {
 
 const BulkOperations = ({ ytChannelId, isSavedPage, isIndexPage }: Props) => {
   const [searchParams] = useSearchParams();
-  const sortOrder = (searchParams.get("sort") || "desc") as SortOrder;
+  const sortOrder = (searchParams.get("sort") || "DESC") as SortOrder;
   const { data: channelData } = useUploadsList(ytChannelId, sortOrder);
 
   const uploadsToSave = useMemo(

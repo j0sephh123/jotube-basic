@@ -15,6 +15,7 @@ import { syncUploadsDto } from 'src/uploads-video/dtos/sync-uploads.dto';
 import { savedUploadsDto } from 'src/uploads-video/dtos/saved-uploads.dto';
 import { cleanShortUploadsDto } from 'src/uploads-video/dtos/clean-short-uploads.dto';
 import { ArtifactType } from '@prisma/client';
+import { SortOrder } from './dtos/uploads-list.input';
 
 @Injectable()
 export class UploadsVideoService {
@@ -28,7 +29,7 @@ export class UploadsVideoService {
     private prismaService: PrismaService,
   ) {}
 
-  public async uploadsList(ytChannelId: string, sortOrder: 'asc' | 'desc') {
+  public async uploadsList(ytChannelId: string, sortOrder: SortOrder) {
     const channel = await this.prismaService.channel.findUnique({
       where: {
         ytId: ytChannelId,
@@ -39,7 +40,7 @@ export class UploadsVideoService {
             artifact: ArtifactType.VIDEO,
           },
           orderBy: {
-            publishedAt: sortOrder,
+            publishedAt: sortOrder === SortOrder.ASC ? 'asc' : 'desc',
           },
           take: 50,
         },

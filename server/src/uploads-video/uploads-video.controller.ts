@@ -5,6 +5,7 @@ import { fetchUploadsDto } from 'src/uploads-video/dtos/fetch-uploads.dto';
 import { syncUploadsDto } from 'src/uploads-video/dtos/sync-uploads.dto';
 import { savedUploadsDto } from 'src/uploads-video/dtos/saved-uploads.dto';
 import { cleanShortUploadsDto } from './dtos/clean-short-uploads.dto';
+import { SortOrder } from './dtos/uploads-list.input';
 
 @Controller('uploads-video')
 export class UploadsVideoController {
@@ -38,7 +39,7 @@ export class UploadsVideoController {
   @Get('/uploads-list/:ytChannelId')
   uploadsList(
     @Param('ytChannelId') ytChannelId: string,
-    @Query('sortOrder') sortOrder: 'asc' | 'desc',
+    @Query('sortOrder') sortOrder: SortOrder,
   ) {
     return this.uploadsVideoService.uploadsList(ytChannelId, sortOrder);
   }

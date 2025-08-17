@@ -55,6 +55,21 @@ export type ChannelResponse = {
   ytId: Scalars['String']['output'];
 };
 
+export type ChannelUploadsResponse = {
+  __typename?: 'ChannelUploadsResponse';
+  createdAt: Scalars['String']['output'];
+  fetchStartVideoId: Scalars['String']['output'];
+  fetchedUntilEnd: Scalars['Boolean']['output'];
+  id: Scalars['Int']['output'];
+  lastSyncedAt?: Maybe<Scalars['String']['output']>;
+  src: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  updatedAt: Scalars['String']['output'];
+  uploads: Array<UploadsListUploadResponse>;
+  videoCount: Scalars['Int']['output'];
+  ytId: Scalars['String']['output'];
+};
+
 export type ChannelsDashboardResponse = {
   __typename?: 'ChannelsDashboardResponse';
   channels: Array<DashboardChannelResponse>;
@@ -267,6 +282,7 @@ export type Query = {
   thumbnailByVideoId?: Maybe<ThumbnailByVideoIdResponse>;
   todo: Todo;
   todos: Array<Todo>;
+  uploadsList?: Maybe<ChannelUploadsResponse>;
   uploadsWithStoryboards: Array<UploadWithStoryboardResponse>;
   uploadsWithThumbnails: Array<UploadsWithThumbnailsResponse>;
 };
@@ -325,6 +341,11 @@ export type QueryTodoArgs = {
 };
 
 
+export type QueryUploadsListArgs = {
+  uploadsListInput: UploadsListInput;
+};
+
+
 export type QueryUploadsWithStoryboardsArgs = {
   input: StoryboardQueryInput;
 };
@@ -366,6 +387,12 @@ export type ScreenshotsCountsResponse = {
   count: Scalars['Float']['output'];
   month: Scalars['String']['output'];
 };
+
+/** Sort order for uploads list */
+export enum SortOrder {
+  Asc = 'ASC',
+  Desc = 'DESC'
+}
 
 export type StatisticsCountsResponse = {
   __typename?: 'StatisticsCountsResponse';
@@ -461,6 +488,26 @@ export type UploadsChannelResponse = {
   title: Scalars['String']['output'];
   totalUploads: Scalars['Int']['output'];
   uploads: Array<UploadResponse>;
+  ytId: Scalars['String']['output'];
+};
+
+export type UploadsListInput = {
+  sortOrder: SortOrder;
+  ytChannelId: Scalars['String']['input'];
+};
+
+export type UploadsListUploadResponse = {
+  __typename?: 'UploadsListUploadResponse';
+  artifact: Scalars['String']['output'];
+  channelId: Scalars['Int']['output'];
+  createdAt: Scalars['String']['output'];
+  duration?: Maybe<Scalars['Int']['output']>;
+  id: Scalars['Int']['output'];
+  nextPageToken?: Maybe<Scalars['String']['output']>;
+  publishedAt: Scalars['String']['output'];
+  src: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  updatedAt: Scalars['String']['output'];
   ytId: Scalars['String']['output'];
 };
 
@@ -566,6 +613,13 @@ export type SavedUploadsQueryVariables = Exact<{
 
 
 export type SavedUploadsQuery = { __typename?: 'Query', savedUploads: Array<{ __typename?: 'SavedUploadsResponse', ytChannelId: string, totalUploads: number, channel?: { __typename?: 'UploadsChannelResponse', id: number, title: string, src: string, ytId: string, totalUploads: number, uploads: Array<{ __typename?: 'UploadResponse', createdAt: string, ytId: string, id: number, duration?: number | null, publishedAt: string, src: string, title: string, artifact: string }> } | null, uploads: Array<{ __typename?: 'UploadResponse', createdAt: string, ytId: string, id: number, duration?: number | null, publishedAt: string, src: string, title: string, artifact: string }> }> };
+
+export type UploadsListQueryVariables = Exact<{
+  uploadsListInput: UploadsListInput;
+}>;
+
+
+export type UploadsListQuery = { __typename?: 'Query', uploadsList?: { __typename?: 'ChannelUploadsResponse', id: number, createdAt: string, updatedAt: string, title: string, ytId: string, src: string, videoCount: number, fetchStartVideoId: string, fetchedUntilEnd: boolean, lastSyncedAt?: string | null, uploads: Array<{ __typename?: 'UploadsListUploadResponse', artifact: string, channelId: number, createdAt: string, duration?: number | null, id: number, nextPageToken?: string | null, publishedAt: string, src: string, title: string, updatedAt: string, ytId: string }> } | null };
 
 export type UploadsWithThumbnailsQueryVariables = Exact<{
   input: UploadsWithThumbnailsInput;
@@ -1031,6 +1085,68 @@ export type SavedUploadsQueryHookResult = ReturnType<typeof useSavedUploadsQuery
 export type SavedUploadsLazyQueryHookResult = ReturnType<typeof useSavedUploadsLazyQuery>;
 export type SavedUploadsSuspenseQueryHookResult = ReturnType<typeof useSavedUploadsSuspenseQuery>;
 export type SavedUploadsQueryResult = Apollo.QueryResult<SavedUploadsQuery, SavedUploadsQueryVariables>;
+export const UploadsListDocument = gql`
+    query UploadsList($uploadsListInput: UploadsListInput!) {
+  uploadsList(uploadsListInput: $uploadsListInput) {
+    id
+    createdAt
+    updatedAt
+    title
+    ytId
+    src
+    videoCount
+    fetchStartVideoId
+    fetchedUntilEnd
+    lastSyncedAt
+    uploads {
+      artifact
+      channelId
+      createdAt
+      duration
+      id
+      nextPageToken
+      publishedAt
+      src
+      title
+      updatedAt
+      ytId
+    }
+  }
+}
+    `;
+
+/**
+ * __useUploadsListQuery__
+ *
+ * To run a query within a React component, call `useUploadsListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUploadsListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUploadsListQuery({
+ *   variables: {
+ *      uploadsListInput: // value for 'uploadsListInput'
+ *   },
+ * });
+ */
+export function useUploadsListQuery(baseOptions: Apollo.QueryHookOptions<UploadsListQuery, UploadsListQueryVariables> & ({ variables: UploadsListQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UploadsListQuery, UploadsListQueryVariables>(UploadsListDocument, options);
+      }
+export function useUploadsListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UploadsListQuery, UploadsListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UploadsListQuery, UploadsListQueryVariables>(UploadsListDocument, options);
+        }
+export function useUploadsListSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<UploadsListQuery, UploadsListQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<UploadsListQuery, UploadsListQueryVariables>(UploadsListDocument, options);
+        }
+export type UploadsListQueryHookResult = ReturnType<typeof useUploadsListQuery>;
+export type UploadsListLazyQueryHookResult = ReturnType<typeof useUploadsListLazyQuery>;
+export type UploadsListSuspenseQueryHookResult = ReturnType<typeof useUploadsListSuspenseQuery>;
+export type UploadsListQueryResult = Apollo.QueryResult<UploadsListQuery, UploadsListQueryVariables>;
 export const UploadsWithThumbnailsDocument = gql`
     query UploadsWithThumbnails($input: UploadsWithThumbnailsInput!) {
   uploadsWithThumbnails(input: $input) {

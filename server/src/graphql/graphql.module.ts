@@ -10,6 +10,7 @@ import { TodosResolver, TodosService } from '.';
       autoSchemaFile: 'schema.gql',
       playground: true,
       introspection: true,
+      sortSchema: true,
     }),
   ],
   providers: [TodosResolver, TodosService],

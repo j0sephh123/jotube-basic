@@ -2,46 +2,94 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type CreateChannelResponse {
-  message: ChannelMessage!
-  ytChannelId: String
-}
-
-"""Possible messages for channel creation responses"""
-enum ChannelMessage {
-  INVALID_VIDEO_ID
-  ALREADY_EXISTS
-  CREATED_SUCCESSFULLY
-  FAILED_TO_CREATE
-}
-
-type DeleteChannelResponse {
-  success: Boolean!
-  message: String!
-}
-
 type ChannelForPlaylistResponse {
   id: Int!
   title: String!
 }
 
-type PlaylistInfo {
-  id: Int!
-  name: String!
+"""Possible messages for channel creation responses"""
+enum ChannelMessage {
+  ALREADY_EXISTS
+  CREATED_SUCCESSFULLY
+  FAILED_TO_CREATE
+  INVALID_VIDEO_ID
 }
 
 type ChannelMetadataResponse {
-  id: Int!
-  title: String!
   fetchedUntilEnd: Boolean!
-  videoCount: Int!
+  id: Int!
   lastSyncedAt: String
   playlist: PlaylistInfo
-  videoArtifactsCount: Int!
   savedArtifactsCount: Int!
-  thumbnailArtifactsCount: Int!
   screenshotArtifactsCount: Int!
   storyboardArtifactsCount: Int!
+  thumbnailArtifactsCount: Int!
+  title: String!
+  videoArtifactsCount: Int!
+  videoCount: Int!
+}
+
+type ChannelResponse {
+  id: Float!
+  title: String!
+  ytId: String!
+}
+
+type ChannelUploadsResponse {
+  createdAt: String!
+  fetchStartVideoId: String!
+  fetchedUntilEnd: Boolean!
+  id: Int!
+  lastSyncedAt: String
+  src: String!
+  title: String!
+  updatedAt: String!
+  uploads: [UploadsListUploadResponse!]!
+  videoCount: Int!
+  ytId: String!
+}
+
+type ChannelsDashboardResponse {
+  channels: [DashboardChannelResponse!]!
+  total: Int!
+}
+
+input CleanShortUploadsInput {
+  ytChannelId: String!
+}
+
+type CleanShortUploadsResponse {
+  deletedCount: Int!
+}
+
+input CreateChannelInput {
+  ytVideoId: String!
+}
+
+type CreateChannelResponse {
+  message: ChannelMessage!
+  ytChannelId: String
+}
+
+input CreateTodoInput {
+  description: String!
+  title: String!
+}
+
+type DashboardChannelResponse {
+  createdAt: DateTime!
+  defaults: Int!
+  id: Int!
+  lastSyncedAt: DateTime
+  playlist: DashboardPlaylistResponse
+  saved: Int!
+  screenshotsCount: Int!
+  src: String!
+  storyboard: Int!
+  thumbnails: Int!
+  title: String!
+  videoCount: Int!
+  ytId: String!
 }
 
 type DashboardPlaylistResponse {
@@ -49,20 +97,15 @@ type DashboardPlaylistResponse {
   name: String!
 }
 
-type DashboardChannelResponse {
+type DashboardVideoResponse {
+  channelId: Int!
+  channelTitle: String!
+  channelYtId: String!
   id: Int!
-  createdAt: DateTime!
+  screenshotCount: Int!
+  src: String!
   title: String!
   ytId: String!
-  src: String!
-  lastSyncedAt: DateTime
-  videoCount: Int!
-  thumbnails: Int!
-  saved: Int!
-  defaults: Int!
-  storyboard: Int!
-  screenshotsCount: Int!
-  playlist: DashboardPlaylistResponse
 }
 
 """
@@ -70,241 +113,89 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type ChannelsDashboardResponse {
-  channels: [DashboardChannelResponse!]!
-  total: Int!
-}
-
-type DashboardVideoResponse {
-  id: Int!
-  ytId: String!
-  title: String!
-  src: String!
-  channelId: Int!
-  channelTitle: String!
-  channelYtId: String!
-  screenshotCount: Int!
-}
-
-type VideosDashboardResponse {
-  videos: [DashboardVideoResponse!]!
-  total: Int!
-}
-
-type UploadsWithThumbnailsResponse {
-  ytChannelId: String!
-  ytVideoId: String!
-}
-
-type GetSlidesResponse {
-  ytVideoId: String!
-  id: Float!
-  second: Float!
-  src: String!
-  isFav: Boolean
-}
-
-type ChannelResponse {
-  id: Float!
-  ytId: String!
-  title: String!
-}
-
-type UploadsVideoResponse {
-  ytId: String!
-  channel: ChannelResponse!
-}
-
-type ThumbnailByVideoIdResponse {
-  createdAt: String!
-  id: Float!
-  perRow: Float!
-  updatedAt: String!
-  uploadsVideoId: Float!
-  totalSeconds: Float!
-  uploadsVideo: UploadsVideoResponse!
-  thumbnailsCount: Float!
-}
-
-type ScreenshotsCountsResponse {
-  month: String!
-  count: Float!
-}
-
-type VideoScreenshotResponse {
-  id: Float!
-  second: Float!
-  ytChannelId: String!
-  ytVideoId: String!
-  isFav: Boolean
-  src: String!
-}
-
-type StoryboardFragmentResponse {
-  id: Int!
-  uploadsVideoId: Int!
-  fragments: Int!
-  url: String!
-  createdAt: String!
-  updatedAt: String!
-}
-
-type UploadWithStoryboardResponse {
-  id: Int!
-  ytId: String!
-  title: String!
-  src: String!
-  publishedAt: String!
-  createdAt: String!
-  updatedAt: String!
-  channelId: Int!
-  nextPageToken: String
-  duration: Int
-  artifact: String!
-  storyboard: StoryboardFragmentResponse!
+type DeleteChannelResponse {
+  message: String!
+  success: Boolean!
 }
 
 type DeleteUploadsResponse {
   success: Boolean!
 }
 
-type FinishProcessUploadResponse {
-  id: Float!
-  ytId: String!
-  artifact: String!
+input FetchDashboardInput {
+  defaultMax: Float
+  defaultMin: Float
+  max: Float
+  min: Float
+  page: Float!
+  sortOrder: String!
+  viewType: ViewType
 }
 
-type SaveUploadResponse {
-  success: Boolean!
-  message: String!
+input FetchUploadsInput {
+  ytChannelId: String!
 }
 
 type FetchUploadsResponse {
-  success: Boolean!
   message: String!
+  success: Boolean!
   uploadIds: [String!]
 }
 
-type SyncUploadsResponse {
-  count: Int!
-}
-
-type CleanShortUploadsResponse {
-  deletedCount: Int!
-}
-
-type UploadResponse {
-  createdAt: String!
-  ytId: String!
-  id: Int!
-  duration: Int
-  publishedAt: String!
-  src: String!
-  title: String!
+type FinishProcessUploadResponse {
   artifact: String!
-}
-
-type UploadsChannelResponse {
-  id: Int!
-  title: String!
-  src: String!
+  id: Float!
   ytId: String!
-  uploads: [UploadResponse!]!
-  totalUploads: Int!
-}
-
-type SavedUploadsResponse {
-  ytChannelId: String!
-  channel: UploadsChannelResponse
-  uploads: [UploadResponse!]!
-  totalUploads: Int!
-}
-
-type StatisticsCountsResponse {
-  totalScreenshots: Float!
-  totalThumbnails: Float!
-  totalSaved: Float!
-}
-
-type Todo {
-  id: ID!
-  title: String!
-  description: String!
-  completed: Boolean!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-type Query {
-  getSlides(input: GetSlidesInput!): [GetSlidesResponse!]!
-  uploadsWithThumbnails(input: UploadsWithThumbnailsInput!): [UploadsWithThumbnailsResponse!]!
-  thumbnailByVideoId(ytVideoId: String!): ThumbnailByVideoIdResponse
-  channelScreenshots(ytChannelId: String!): [GetSlidesResponse!]!
-  screenshots: [ScreenshotsCountsResponse!]!
-  screenshotsByVideo(ytVideoId: String!): [VideoScreenshotResponse!]!
-  channelForPlaylist(ytChannelId: String!): ChannelForPlaylistResponse!
-  channelMetadata(ytChannelId: String!): ChannelMetadataResponse!
-  uploadsWithStoryboards(input: StoryboardQueryInput!): [UploadWithStoryboardResponse!]!
-  savedUploads(savedUploadsInput: SavedUploadsInput!): [SavedUploadsResponse!]!
-  statisticsCounts: StatisticsCountsResponse!
-  fetchDashboard(fetchDashboardInput: FetchDashboardInput!): ChannelsDashboardResponse!
-  fetchVideosDashboard(page: Float, sortOrder: String, screenshotMin: Float, screenshotMax: Float): VideosDashboardResponse!
-  todos: [Todo!]!
-  todo(id: ID!): Todo!
 }
 
 input GetSlidesInput {
   ytChannelIds: [String!]
 }
 
-input UploadsWithThumbnailsInput {
-  channelIds: [Float!]!
-}
-
-input StoryboardQueryInput {
-  ytChannelId: String!
-}
-
-input SavedUploadsInput {
-  ytChannelIds: [String!]!
-}
-
-input FetchDashboardInput {
-  page: Float!
-  sortOrder: String!
-  min: Float
-  max: Float
-  defaultMin: Float
-  defaultMax: Float
-  viewType: ViewType
-}
-
-"""Available view types for dashboard filtering"""
-enum ViewType {
-  SAVED
-  PROCESSED
-  NO_UPLOADS
-  NO_SCREENSHOTS
-  THUMBNAILS
-  HAS_STORYBOARDS
+type GetSlidesResponse {
+  id: Float!
+  isFav: Boolean
+  second: Float!
+  src: String!
+  ytVideoId: String!
 }
 
 type Mutation {
-  createChannel(createChannelInput: CreateChannelInput!): CreateChannelResponse!
-  deleteChannel(id: Float!): DeleteChannelResponse!
-  saveUpload(saveUploadInput: SaveUploadInput!): SaveUploadResponse!
-  fetchUploads(fetchUploadsInput: FetchUploadsInput!): FetchUploadsResponse!
-  syncUploads(syncUploadsInput: SyncUploadsInput!): SyncUploadsResponse!
   cleanShortUploads(cleanShortUploadsInput: CleanShortUploadsInput!): CleanShortUploadsResponse!
-  deleteUploads(ytChannelId: String!, ytVideoIds: [String!]!): DeleteUploadsResponse!
-  finishProcessingUpload(ytChannelId: String!, ytVideoId: String!, savedSeconds: [Float!]!): FinishProcessUploadResponse!
+  createChannel(createChannelInput: CreateChannelInput!): CreateChannelResponse!
   createTodo(createTodoInput: CreateTodoInput!): Todo!
-  updateTodo(id: ID!, updateTodoInput: UpdateTodoInput!): Todo!
+  deleteChannel(id: Float!): DeleteChannelResponse!
+  deleteUploads(ytChannelId: String!, ytVideoIds: [String!]!): DeleteUploadsResponse!
+  fetchUploads(fetchUploadsInput: FetchUploadsInput!): FetchUploadsResponse!
+  finishProcessingUpload(savedSeconds: [Float!]!, ytChannelId: String!, ytVideoId: String!): FinishProcessUploadResponse!
   removeTodo(id: ID!): Boolean!
+  saveUpload(saveUploadInput: SaveUploadInput!): SaveUploadResponse!
+  syncUploads(syncUploadsInput: SyncUploadsInput!): SyncUploadsResponse!
+  updateTodo(id: ID!, updateTodoInput: UpdateTodoInput!): Todo!
 }
 
-input CreateChannelInput {
-  ytVideoId: String!
+type PlaylistInfo {
+  id: Int!
+  name: String!
+}
+
+type Query {
+  channelForPlaylist(ytChannelId: String!): ChannelForPlaylistResponse!
+  channelMetadata(ytChannelId: String!): ChannelMetadataResponse!
+  channelScreenshots(ytChannelId: String!): [GetSlidesResponse!]!
+  fetchDashboard(fetchDashboardInput: FetchDashboardInput!): ChannelsDashboardResponse!
+  fetchVideosDashboard(page: Float, screenshotMax: Float, screenshotMin: Float, sortOrder: String): VideosDashboardResponse!
+  getSlides(input: GetSlidesInput!): [GetSlidesResponse!]!
+  savedUploads(savedUploadsInput: SavedUploadsInput!): [SavedUploadsResponse!]!
+  screenshots: [ScreenshotsCountsResponse!]!
+  screenshotsByVideo(ytVideoId: String!): [VideoScreenshotResponse!]!
+  statisticsCounts: StatisticsCountsResponse!
+  thumbnailByVideoId(ytVideoId: String!): ThumbnailByVideoIdResponse
+  todo(id: ID!): Todo!
+  todos: [Todo!]!
+  uploadsList(uploadsListInput: UploadsListInput!): ChannelUploadsResponse
+  uploadsWithStoryboards(input: StoryboardQueryInput!): [UploadWithStoryboardResponse!]!
+  uploadsWithThumbnails(input: UploadsWithThumbnailsInput!): [UploadsWithThumbnailsResponse!]!
 }
 
 input SaveUploadInput {
@@ -312,30 +203,179 @@ input SaveUploadInput {
 }
 
 input SaveUploadItemInput {
+  ytChannelId: String!
   ytVideoId: String!
+}
+
+type SaveUploadResponse {
+  message: String!
+  success: Boolean!
+}
+
+input SavedUploadsInput {
+  ytChannelIds: [String!]!
+}
+
+type SavedUploadsResponse {
+  channel: UploadsChannelResponse
+  totalUploads: Int!
+  uploads: [UploadResponse!]!
   ytChannelId: String!
 }
 
-input FetchUploadsInput {
+type ScreenshotsCountsResponse {
+  count: Float!
+  month: String!
+}
+
+"""Sort order for uploads list"""
+enum SortOrder {
+  ASC
+  DESC
+}
+
+type StatisticsCountsResponse {
+  totalSaved: Float!
+  totalScreenshots: Float!
+  totalThumbnails: Float!
+}
+
+type StoryboardFragmentResponse {
+  createdAt: String!
+  fragments: Int!
+  id: Int!
+  updatedAt: String!
+  uploadsVideoId: Int!
+  url: String!
+}
+
+input StoryboardQueryInput {
   ytChannelId: String!
 }
 
 input SyncUploadsInput {
-  ytChannelId: String!
   channelId: Int!
-}
-
-input CleanShortUploadsInput {
   ytChannelId: String!
 }
 
-input CreateTodoInput {
-  title: String!
+type SyncUploadsResponse {
+  count: Int!
+}
+
+type ThumbnailByVideoIdResponse {
+  createdAt: String!
+  id: Float!
+  perRow: Float!
+  thumbnailsCount: Float!
+  totalSeconds: Float!
+  updatedAt: String!
+  uploadsVideo: UploadsVideoResponse!
+  uploadsVideoId: Float!
+}
+
+type Todo {
+  completed: Boolean!
+  createdAt: DateTime!
   description: String!
+  id: ID!
+  title: String!
+  updatedAt: DateTime!
 }
 
 input UpdateTodoInput {
-  title: String
-  description: String
   completed: Boolean
+  description: String
+  title: String
+}
+
+type UploadResponse {
+  artifact: String!
+  createdAt: String!
+  duration: Int
+  id: Int!
+  publishedAt: String!
+  src: String!
+  title: String!
+  ytId: String!
+}
+
+type UploadWithStoryboardResponse {
+  artifact: String!
+  channelId: Int!
+  createdAt: String!
+  duration: Int
+  id: Int!
+  nextPageToken: String
+  publishedAt: String!
+  src: String!
+  storyboard: StoryboardFragmentResponse!
+  title: String!
+  updatedAt: String!
+  ytId: String!
+}
+
+type UploadsChannelResponse {
+  id: Int!
+  src: String!
+  title: String!
+  totalUploads: Int!
+  uploads: [UploadResponse!]!
+  ytId: String!
+}
+
+input UploadsListInput {
+  sortOrder: SortOrder!
+  ytChannelId: String!
+}
+
+type UploadsListUploadResponse {
+  artifact: String!
+  channelId: Int!
+  createdAt: String!
+  duration: Int
+  id: Int!
+  nextPageToken: String
+  publishedAt: String!
+  src: String!
+  title: String!
+  updatedAt: String!
+  ytId: String!
+}
+
+type UploadsVideoResponse {
+  channel: ChannelResponse!
+  ytId: String!
+}
+
+input UploadsWithThumbnailsInput {
+  channelIds: [Float!]!
+}
+
+type UploadsWithThumbnailsResponse {
+  ytChannelId: String!
+  ytVideoId: String!
+}
+
+type VideoScreenshotResponse {
+  id: Float!
+  isFav: Boolean
+  second: Float!
+  src: String!
+  ytChannelId: String!
+  ytVideoId: String!
+}
+
+type VideosDashboardResponse {
+  total: Int!
+  videos: [DashboardVideoResponse!]!
+}
+
+"""Available view types for dashboard filtering"""
+enum ViewType {
+  HAS_STORYBOARDS
+  NO_SCREENSHOTS
+  NO_UPLOADS
+  PROCESSED
+  SAVED
+  THUMBNAILS
 }

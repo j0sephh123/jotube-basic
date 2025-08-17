@@ -1,4 +1,3 @@
-@Get('/uploads-list/:ytChannelId')
 @Get('/storyboards/:ytChannelId')
 
 search

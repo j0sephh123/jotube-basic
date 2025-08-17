@@ -12,10 +12,42 @@ import { CleanShortUploadsResponse } from './dtos/clean-short-uploads.response';
 import { CleanShortUploadsInput } from './dtos/clean-short-uploads.input';
 import { SavedUploadsResponse } from './dtos/saved-uploads.response';
 import { SavedUploadsInput } from './dtos/saved-uploads.input';
+import { ChannelUploadsResponse } from './dtos/uploads-list.response';
+import { UploadsListInput } from './dtos/uploads-list.input';
 
 @Resolver()
 export class UploadsVideoResolver {
   constructor(private readonly uploadsVideoService: UploadsVideoService) {}
+
+  @Query(() => ChannelUploadsResponse, { nullable: true })
+  async uploadsList(
+    @Args('uploadsListInput') uploadsListInput: UploadsListInput,
+  ): Promise<ChannelUploadsResponse | null> {
+    try {
+      const result = await this.uploadsVideoService.uploadsList(
+        uploadsListInput.ytChannelId,
+        uploadsListInput.sortOrder,
+      );
+
+      if (!result) {
+        return null;
+      }
+
+      return {
+        ...result,
+        createdAt: result.createdAt.toISOString(),
+        updatedAt: result.updatedAt.toISOString(),
+        lastSyncedAt: result.lastSyncedAt?.toISOString() || null,
+        uploads: result.uploads.map((upload) => ({
+          ...upload,
+          createdAt: upload.createdAt.toISOString(),
+          updatedAt: upload.updatedAt.toISOString(),
+        })),
+      };
+    } catch {
+      return null;
+    }
+  }
 
   @Query(() => [SavedUploadsResponse])
   async savedUploads(

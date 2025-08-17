@@ -126,6 +126,36 @@ export const SAVED_UPLOADS = gql`
   }
 `;
 
+export const UPLOADS_LIST = gql`
+  query UploadsList($uploadsListInput: UploadsListInput!) {
+    uploadsList(uploadsListInput: $uploadsListInput) {
+      id
+      createdAt
+      updatedAt
+      title
+      ytId
+      src
+      videoCount
+      fetchStartVideoId
+      fetchedUntilEnd
+      lastSyncedAt
+      uploads {
+        artifact
+        channelId
+        createdAt
+        duration
+        id
+        nextPageToken
+        publishedAt
+        src
+        title
+        updatedAt
+        ytId
+      }
+    }
+  }
+`;
+
 export const UPLOADS_WITH_THUMBNAILS = gql`
   query UploadsWithThumbnails($input: UploadsWithThumbnailsInput!) {
     uploadsWithThumbnails(input: $input) {

@@ -10,10 +10,10 @@ type Props = {
 
 const ChannelControls = ({ leftSlot }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const sortOrder = (searchParams.get("sort") || "desc") as "asc" | "desc";
-  const toggleSortOrder = () => {
+  const sortOrder = (searchParams.get("sort") || "DESC") as "ASC" | "DESC";
+  const toggleSort = () => {
     setSearchParams((prev) => {
-      const newSort = prev.get("sort") === "asc" ? "desc" : "asc";
+      const newSort = prev.get("sort") === "ASC" ? "DESC" : "ASC";
       prev.set("sort", newSort);
       return prev;
     });
@@ -48,9 +48,9 @@ const ChannelControls = ({ leftSlot }: Props) => {
     <div className="flex flex-wrap items-center justify-between gap-4 border-t pt-4">
       <div className="flex flex-wrap items-center gap-4">{leftSlot}</div>
       <div className="flex items-center gap-2">
-        <Button onClick={toggleSortOrder}>
+        <Button onClick={toggleSort}>
           Sort:
-          {sortOrder === "asc" ? "↑ Oldest first" : "↓ Newest first"}
+          {sortOrder === "ASC" ? "↑ Oldest first" : "↓ Newest first"}
         </Button>
         <Button
           color="neutral"

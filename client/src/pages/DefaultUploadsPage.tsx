@@ -13,8 +13,11 @@ export default function DefaultUploadsPage() {
   const ytChannelId = useTypedChannelYtId();
   const refetchChannelMetadata = useRefetchChannelMetadata();
   const [searchParams] = useSearchParams();
-  const sortOrder = (searchParams.get("sort") || "desc") as SortOrder;
-  const { data, refetch } = useUploadsList(ytChannelId, sortOrder);
+  const sortOrder = (searchParams.get("sort") || "DESC") as SortOrder;
+  const { data, isLoading, error, refetch } = useUploadsList(
+    ytChannelId,
+    sortOrder
+  );
 
   const handleSideEffect = () => {
     refetch();
@@ -44,10 +47,27 @@ export default function DefaultUploadsPage() {
     });
   };
 
-  if (!data) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
         Loading...
+      </div>
+    );
+  }
+
+  if (error) {
+    console.error("GraphQL Error:", error);
+    return (
+      <div className="flex items-center justify-center h-screen">
+        Error loading uploads: {error.message}
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        No data available
       </div>
     );
   }
