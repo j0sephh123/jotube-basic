@@ -15,7 +15,6 @@ import GalleryVideoPage from "./features/Gallery/components/GalleryVideoPage";
 import StoryboardPage from "./pages/StoryboardPage";
 import { PlaylistsPage, PlaylistDetailsPage } from "@/features/Playlist";
 import NotFound from "./shared/components/static/NotFound";
-import { TodosFetcher } from "./shared/components/TodosFetcher";
 
 export default function Router() {
   return (
@@ -47,7 +46,6 @@ export default function Router() {
           </Route>
           <Route path="/playlists" element={<PlaylistsPage />} />
           <Route path="/playlists/:id" element={<PlaylistDetailsPage />} />
-          <Route path="/todos" element={<TodosFetcher />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { TodosResolver, TodosService } from '.';
 import { SearchModule } from '../search/search.module';
 
 @Module({
@@ -15,6 +14,6 @@ import { SearchModule } from '../search/search.module';
     }),
     SearchModule,
   ],
-  providers: [TodosResolver, TodosService],
+  providers: [],
 })
 export class AppGraphQLModule {}

@@ -107,11 +107,6 @@ export type CreatePlaylistResponse = {
   updatedAt: Scalars['String']['output'];
 };
 
-export type CreateTodoInput = {
-  description: Scalars['String']['input'];
-  title: Scalars['String']['input'];
-};
-
 export type DashboardChannelResponse = {
   __typename?: 'DashboardChannelResponse';
   createdAt: Scalars['DateTime']['output'];
@@ -209,18 +204,15 @@ export type Mutation = {
   cleanShortUploads: CleanShortUploadsResponse;
   createChannel: CreateChannelResponse;
   createPlaylist: CreatePlaylistResponse;
-  createTodo: Todo;
   deleteChannel: DeleteChannelResponse;
   deletePlaylist: DeletePlaylistResponse;
   deleteUploads: DeleteUploadsResponse;
   fetchUploads: FetchUploadsResponse;
   finishProcessingUpload: FinishProcessUploadResponse;
-  removeTodo: Scalars['Boolean']['output'];
   saveUpload: SaveUploadResponse;
   syncUploads: SyncUploadsResponse;
   updateChannelPlaylist: UpdateChannelPlaylistResponse;
   updatePlaylist: UpdatePlaylistResponse;
-  updateTodo: Todo;
 };
 
 
@@ -236,11 +228,6 @@ export type MutationCreateChannelArgs = {
 
 export type MutationCreatePlaylistArgs = {
   createPlaylistInput: CreatePlaylistInput;
-};
-
-
-export type MutationCreateTodoArgs = {
-  createTodoInput: CreateTodoInput;
 };
 
 
@@ -272,11 +259,6 @@ export type MutationFinishProcessingUploadArgs = {
 };
 
 
-export type MutationRemoveTodoArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
 export type MutationSaveUploadArgs = {
   saveUploadInput: SaveUploadInput;
 };
@@ -295,12 +277,6 @@ export type MutationUpdateChannelPlaylistArgs = {
 export type MutationUpdatePlaylistArgs = {
   id: Scalars['Int']['input'];
   updatePlaylistInput: UpdatePlaylistInput;
-};
-
-
-export type MutationUpdateTodoArgs = {
-  id: Scalars['ID']['input'];
-  updateTodoInput: UpdateTodoInput;
 };
 
 export type PlaylistChannelResponse = {
@@ -364,8 +340,6 @@ export type Query = {
   statisticsCounts: StatisticsCountsResponse;
   storyboards: Array<UploadsVideoStoryboardResponse>;
   thumbnailByVideoId?: Maybe<ThumbnailByVideoIdResponse>;
-  todo: Todo;
-  todos: Array<Todo>;
   uploadsList?: Maybe<ChannelUploadsResponse>;
   uploadsWithStoryboards: Array<UploadWithStoryboardResponse>;
   uploadsWithThumbnails: Array<UploadsWithThumbnailsResponse>;
@@ -437,11 +411,6 @@ export type QueryStoryboardsArgs = {
 
 export type QueryThumbnailByVideoIdArgs = {
   ytVideoId: Scalars['String']['input'];
-};
-
-
-export type QueryTodoArgs = {
-  id: Scalars['ID']['input'];
 };
 
 
@@ -572,16 +541,6 @@ export type ThumbnailByVideoIdResponse = {
   uploadsVideoId: Scalars['Float']['output'];
 };
 
-export type Todo = {
-  __typename?: 'Todo';
-  completed: Scalars['Boolean']['output'];
-  createdAt: Scalars['DateTime']['output'];
-  description: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  title: Scalars['String']['output'];
-  updatedAt: Scalars['DateTime']['output'];
-};
-
 export type UpdateChannelPlaylistInput = {
   channelId: Scalars['Int']['input'];
   playlistId?: InputMaybe<Scalars['Int']['input']>;
@@ -607,12 +566,6 @@ export type UpdatePlaylistResponse = {
   id: Scalars['Int']['output'];
   name: Scalars['String']['output'];
   updatedAt: Scalars['String']['output'];
-};
-
-export type UpdateTodoInput = {
-  completed?: InputMaybe<Scalars['Boolean']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
-  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UploadResponse = {
@@ -730,11 +683,6 @@ export enum ViewType {
   Saved = 'SAVED',
   Thumbnails = 'THUMBNAILS'
 }
-
-export type GetTodosQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetTodosQuery = { __typename?: 'Query', todos: Array<{ __typename?: 'Todo', id: string, title: string, completed: boolean }> };
 
 export type CreateChannelMutationVariables = Exact<{
   createChannelInput: CreateChannelInput;
@@ -955,47 +903,6 @@ export type FinishProcessingUploadMutationVariables = Exact<{
 export type FinishProcessingUploadMutation = { __typename?: 'Mutation', finishProcessingUpload: { __typename?: 'FinishProcessUploadResponse', id: number, ytId: string, artifact: string } };
 
 
-export const GetTodosDocument = gql`
-    query GetTodos {
-  todos {
-    id
-    title
-    completed
-  }
-}
-    `;
-
-/**
- * __useGetTodosQuery__
- *
- * To run a query within a React component, call `useGetTodosQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetTodosQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetTodosQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetTodosQuery(baseOptions?: Apollo.QueryHookOptions<GetTodosQuery, GetTodosQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetTodosQuery, GetTodosQueryVariables>(GetTodosDocument, options);
-      }
-export function useGetTodosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTodosQuery, GetTodosQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetTodosQuery, GetTodosQueryVariables>(GetTodosDocument, options);
-        }
-export function useGetTodosSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetTodosQuery, GetTodosQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetTodosQuery, GetTodosQueryVariables>(GetTodosDocument, options);
-        }
-export type GetTodosQueryHookResult = ReturnType<typeof useGetTodosQuery>;
-export type GetTodosLazyQueryHookResult = ReturnType<typeof useGetTodosLazyQuery>;
-export type GetTodosSuspenseQueryHookResult = ReturnType<typeof useGetTodosSuspenseQuery>;
-export type GetTodosQueryResult = Apollo.QueryResult<GetTodosQuery, GetTodosQueryVariables>;
 export const CreateChannelDocument = gql`
     mutation CreateChannel($createChannelInput: CreateChannelInput!) {
   createChannel(createChannelInput: $createChannelInput) {

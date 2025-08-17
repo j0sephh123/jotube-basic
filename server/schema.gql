@@ -82,11 +82,6 @@ type CreatePlaylistResponse {
   updatedAt: String!
 }
 
-input CreateTodoInput {
-  description: String!
-  title: String!
-}
-
 type DashboardChannelResponse {
   createdAt: DateTime!
   defaults: Int!
@@ -179,18 +174,15 @@ type Mutation {
   cleanShortUploads(cleanShortUploadsInput: CleanShortUploadsInput!): CleanShortUploadsResponse!
   createChannel(createChannelInput: CreateChannelInput!): CreateChannelResponse!
   createPlaylist(createPlaylistInput: CreatePlaylistInput!): CreatePlaylistResponse!
-  createTodo(createTodoInput: CreateTodoInput!): Todo!
   deleteChannel(id: Float!): DeleteChannelResponse!
   deletePlaylist(id: Int!): DeletePlaylistResponse!
   deleteUploads(ytChannelId: String!, ytVideoIds: [String!]!): DeleteUploadsResponse!
   fetchUploads(fetchUploadsInput: FetchUploadsInput!): FetchUploadsResponse!
   finishProcessingUpload(savedSeconds: [Float!]!, ytChannelId: String!, ytVideoId: String!): FinishProcessUploadResponse!
-  removeTodo(id: ID!): Boolean!
   saveUpload(saveUploadInput: SaveUploadInput!): SaveUploadResponse!
   syncUploads(syncUploadsInput: SyncUploadsInput!): SyncUploadsResponse!
   updateChannelPlaylist(updateChannelPlaylistInput: UpdateChannelPlaylistInput!): UpdateChannelPlaylistResponse!
   updatePlaylist(id: Int!, updatePlaylistInput: UpdatePlaylistInput!): UpdatePlaylistResponse!
-  updateTodo(id: ID!, updateTodoInput: UpdateTodoInput!): Todo!
 }
 
 type PlaylistChannelResponse {
@@ -248,8 +240,6 @@ type Query {
   statisticsCounts: StatisticsCountsResponse!
   storyboards(ytChannelId: String!): [UploadsVideoStoryboardResponse!]!
   thumbnailByVideoId(ytVideoId: String!): ThumbnailByVideoIdResponse
-  todo(id: ID!): Todo!
-  todos: [Todo!]!
   uploadsList(uploadsListInput: UploadsListInput!): ChannelUploadsResponse
   uploadsWithStoryboards(input: StoryboardQueryInput!): [UploadWithStoryboardResponse!]!
   uploadsWithThumbnails(input: UploadsWithThumbnailsInput!): [UploadsWithThumbnailsResponse!]!
@@ -358,15 +348,6 @@ type ThumbnailByVideoIdResponse {
   uploadsVideoId: Float!
 }
 
-type Todo {
-  completed: Boolean!
-  createdAt: DateTime!
-  description: String!
-  id: ID!
-  title: String!
-  updatedAt: DateTime!
-}
-
 input UpdateChannelPlaylistInput {
   channelId: Int!
   playlistId: Int
@@ -390,12 +371,6 @@ type UpdatePlaylistResponse {
   id: Int!
   name: String!
   updatedAt: String!
-}
-
-input UpdateTodoInput {
-  completed: Boolean
-  description: String
-  title: String
 }
 
 type UploadResponse {
