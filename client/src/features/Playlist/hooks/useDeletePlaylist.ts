@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { DELETE_PLAYLIST } from "@/shared/api/graphql/queries";
+import { DELETE_PLAYLIST } from "@/shared/api/graphql/playlistQueries";
 
 export const useDeletePlaylist = () => {
   const [mutate, result] = useMutation(DELETE_PLAYLIST, {

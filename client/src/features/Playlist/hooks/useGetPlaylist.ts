@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { GET_PLAYLIST_DETAILS } from "@/shared/api/graphql/queries";
+import { GET_PLAYLIST_DETAILS } from "@/shared/api/graphql/playlistQueries";
 import { GetPlaylistDetailsQuery } from "@/generated/graphql";
 import { useParams } from "react-router-dom";
 
