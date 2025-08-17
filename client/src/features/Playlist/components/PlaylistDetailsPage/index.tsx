@@ -1,6 +1,6 @@
+import PlaylistTable from "@/entities/Playlist/ui/PlaylistTable";
 import Header from "./Header";
 import PlaylistDetailsContainer from "./PlaylistDetailsContainer";
-import Table from "./Table";
 import RightSection from "./RightSection";
 
 export const PlaylistDetailsPage = () => {
@@ -12,7 +12,7 @@ export const PlaylistDetailsPage = () => {
 
           <div className="grid grid-cols-4 gap-6 mt-6">
             <div className="col-span-3">
-              <Table playlist={playlist} />
+              <PlaylistTable playlist={playlist} />
             </div>
             <div className="col-span-1">
               <RightSection playlist={playlist} />

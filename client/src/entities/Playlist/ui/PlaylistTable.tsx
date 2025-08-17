@@ -1,22 +1,22 @@
 import { useState, useMemo } from "react";
 import { PlaylistDetailsResponse } from "@/generated/graphql";
-import { useRemoveFromPlaylist } from "./useRemoveFromPlaylist";
-import TableRow from "./TableRow";
-import TableHeader from "./TableHeader";
-import TitleCell from "./cells/TitleCell";
-import VideoCountCell from "./cells/VideoCountCell";
-import SavedCountCell from "./cells/SavedCountCell";
-import ScreenshotCountCell from "./cells/ScreenshotCountCell";
-import ThumbnailCountCell from "./cells/ThumbnailCountCell";
-import GalleryCell from "./cells/GalleryCell";
-import ActionsCell from "./cells/ActionsCell";
-import { useRefetchPlaylist } from "../../hooks/useGetPlaylist";
+import ActionsCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/ActionsCell";
+import GalleryCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/GalleryCell";
+import SavedCountCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/SavedCountCell";
+import ScreenshotCountCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/ScreenshotCountCell";
+import ThumbnailCountCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/ThumbnailCountCell";
+import TitleCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/TitleCell";
+import VideoCountCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/VideoCountCell";
+import TableHeader from "@/entities/Playlist/ui/PlaylistTableHeader";
+import TableRow from "@/entities/Playlist/ui/PlaylistTableRow";
+import { useRemoveFromPlaylist } from "@/features/Playlist/components/PlaylistDetailsPage/useRemoveFromPlaylist";
+import { useRefetchPlaylist } from "@/features/Playlist/hooks/useGetPlaylist";
 
 type TableProps = {
   playlist: PlaylistDetailsResponse;
 };
 
-export default function Table({ playlist }: TableProps) {
+export default function PlaylistTable({ playlist }: TableProps) {
   const { handleRemoveFromPlaylist, isPending } = useRemoveFromPlaylist();
   const refetchPlaylist = useRefetchPlaylist();
   const [sortField, setSortField] = useState<

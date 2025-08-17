@@ -2,7 +2,7 @@ import { ViewType } from "@/shared/hooks/useDashboardParams";
 import SyncUploadsButton from "../../Upload/components/SyncUploadsButton";
 import Card from "@/shared/ui/card";
 import FetchUploadsButton from "../../Upload/components/FetchUploadsButton";
-import DeleteChannel from "../../Channel/components/DeleteChannel";
+import DeleteChannel from "../../../entities/Channel/ui/DeleteChannel";
 import useTitleClick from "../hooks/useTitleClick";
 import { DashboardChannelResponse } from "@/generated/graphql";
 import { usePlaylist } from "@/store/store";

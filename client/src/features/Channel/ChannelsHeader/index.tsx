@@ -15,8 +15,8 @@ import CopyValue from "@/shared/ui/CopyValue";
 import OpenExplorerButton from "@/shared/ui/OpenDirectoryButton/OpenDirectoryButton";
 import Tabs from "./Tabs";
 import BulkOperations from "./BulkOperations";
-import ViewThumbnails from "../components/ViewThumbnails";
-import ViewScreenshots from "../components/ViewScreenshots";
+import ViewThumbnails from "../../../entities/Channel/ui/ViewThumbnails";
+import ViewScreenshots from "../../../entities/Channel/ui/ViewScreenshots";
 import FetchUploadsButton from "@/features/Upload/components/FetchUploadsButton";
 import ViewStoryboards from "@/shared/ui/ViewStoryboards/ViewStoryboards";
 

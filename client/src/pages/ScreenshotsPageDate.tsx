@@ -1,5 +1,5 @@
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import SimpleCardWithImage from "@/features/Screenshot/components/SimpleCardWithImage";
+import SimpleCardWithImage from "@/entities/Screenshot/ui/SimpleCardWithImage";
 import { useScreenshotsByDate } from "@/features/Screenshot/hooks/useScreenshotsByDate";
 import { useDeleteScreenshot } from "@/features/Screenshot/hooks/useDeleteScreenshot";
 import { useState, useEffect, useRef } from "react";
@@ -14,14 +14,14 @@ type Screenshot = {
   isFav: boolean;
   ytChannelId: string;
   ytVideoId: string;
-}
+};
 
 type GroupedScreenshots = {
   [channelId: string]: {
     channelTitle: string;
     screenshots: Screenshot[];
   };
-}
+};
 
 const formatDisplayDate = (dateString: string) => {
   const dateObj = new Date(dateString);

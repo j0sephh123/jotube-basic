@@ -1,6 +1,6 @@
 import { useGetPlaylists, useCreatePlaylist } from "../../hooks";
 import { usePlaylist } from "@/store/store";
-import { PlaylistCard } from "../PlaylistCard";
+import { PlaylistCard } from "../../../../entities/Playlist/ui/PlaylistCard";
 import { CreatePlaylistModal } from "../CreatePlaylistModal";
 import { CreatePlaylist } from "./CreatePlaylist";
 import ErrorMessage from "@/shared/ui/static/ErrorMessage";

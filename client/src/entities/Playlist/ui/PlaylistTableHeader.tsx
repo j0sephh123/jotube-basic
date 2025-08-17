@@ -17,7 +17,7 @@ type TableHeaderProps = {
   ) => void;
 };
 
-export default function TableHeader({
+export default function PlaylistTableHeader({
   children,
   sortField,
   sortDirection,

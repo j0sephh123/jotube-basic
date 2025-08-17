@@ -1,7 +1,7 @@
 import { useUpdateScreenshot } from "@/features/Screenshot/hooks/useUpdateScreenshot";
 import { Heart, Trash2 } from "lucide-react";
 import { getPublicImgUrl } from "@/shared/utils/image";
-import { ScreenshotZoomModal } from "./ScreenshotZoomModal";
+import { ScreenshotZoomModal } from "../../../features/Screenshot/components/ScreenshotZoomModal";
 import { useState } from "react";
 import { useVideoModal } from "@/shared/hooks/useVideoModal";
 import VideoModal from "@/shared/ui/VideoModal";
