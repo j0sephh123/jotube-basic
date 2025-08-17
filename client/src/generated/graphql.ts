@@ -132,6 +132,17 @@ export type FetchDashboardInput = {
   viewType?: InputMaybe<ViewType>;
 };
 
+export type FetchUploadsInput = {
+  ytChannelId: Scalars['String']['input'];
+};
+
+export type FetchUploadsResponse = {
+  __typename?: 'FetchUploadsResponse';
+  message: Scalars['String']['output'];
+  success: Scalars['Boolean']['output'];
+  uploadIds?: Maybe<Array<Scalars['String']['output']>>;
+};
+
 export type FinishProcessUploadResponse = {
   __typename?: 'FinishProcessUploadResponse';
   artifact: Scalars['String']['output'];
@@ -158,6 +169,7 @@ export type Mutation = {
   createTodo: Todo;
   deleteChannel: DeleteChannelResponse;
   deleteUploads: DeleteUploadsResponse;
+  fetchUploads: FetchUploadsResponse;
   finishProcessingUpload: FinishProcessUploadResponse;
   removeTodo: Scalars['Boolean']['output'];
   saveUpload: SaveUploadResponse;
@@ -183,6 +195,11 @@ export type MutationDeleteChannelArgs = {
 export type MutationDeleteUploadsArgs = {
   ytChannelId: Scalars['String']['input'];
   ytVideoIds: Array<Scalars['String']['input']>;
+};
+
+
+export type MutationFetchUploadsArgs = {
+  fetchUploadsInput: FetchUploadsInput;
 };
 
 
@@ -407,6 +424,13 @@ export type SaveUploadMutationVariables = Exact<{
 
 
 export type SaveUploadMutation = { __typename?: 'Mutation', saveUpload: { __typename?: 'SaveUploadResponse', success: boolean, message: string } };
+
+export type FetchUploadsMutationVariables = Exact<{
+  fetchUploadsInput: FetchUploadsInput;
+}>;
+
+
+export type FetchUploadsMutation = { __typename?: 'Mutation', fetchUploads: { __typename?: 'FetchUploadsResponse', success: boolean, message: string, uploadIds?: Array<string> | null } };
 
 export type UploadsWithThumbnailsQueryVariables = Exact<{
   input: UploadsWithThumbnailsInput;
@@ -645,6 +669,41 @@ export function useSaveUploadMutation(baseOptions?: Apollo.MutationHookOptions<S
 export type SaveUploadMutationHookResult = ReturnType<typeof useSaveUploadMutation>;
 export type SaveUploadMutationResult = Apollo.MutationResult<SaveUploadMutation>;
 export type SaveUploadMutationOptions = Apollo.BaseMutationOptions<SaveUploadMutation, SaveUploadMutationVariables>;
+export const FetchUploadsDocument = gql`
+    mutation FetchUploads($fetchUploadsInput: FetchUploadsInput!) {
+  fetchUploads(fetchUploadsInput: $fetchUploadsInput) {
+    success
+    message
+    uploadIds
+  }
+}
+    `;
+export type FetchUploadsMutationFn = Apollo.MutationFunction<FetchUploadsMutation, FetchUploadsMutationVariables>;
+
+/**
+ * __useFetchUploadsMutation__
+ *
+ * To run a mutation, you first call `useFetchUploadsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useFetchUploadsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [fetchUploadsMutation, { data, loading, error }] = useFetchUploadsMutation({
+ *   variables: {
+ *      fetchUploadsInput: // value for 'fetchUploadsInput'
+ *   },
+ * });
+ */
+export function useFetchUploadsMutation(baseOptions?: Apollo.MutationHookOptions<FetchUploadsMutation, FetchUploadsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<FetchUploadsMutation, FetchUploadsMutationVariables>(FetchUploadsDocument, options);
+      }
+export type FetchUploadsMutationHookResult = ReturnType<typeof useFetchUploadsMutation>;
+export type FetchUploadsMutationResult = Apollo.MutationResult<FetchUploadsMutation>;
+export type FetchUploadsMutationOptions = Apollo.BaseMutationOptions<FetchUploadsMutation, FetchUploadsMutationVariables>;
 export const UploadsWithThumbnailsDocument = gql`
     query UploadsWithThumbnails($input: UploadsWithThumbnailsInput!) {
   uploadsWithThumbnails(input: $input) {

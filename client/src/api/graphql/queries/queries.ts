@@ -38,6 +38,16 @@ export const SAVE_UPLOAD = gql`
   }
 `;
 
+export const FETCH_UPLOADS = gql`
+  mutation FetchUploads($fetchUploadsInput: FetchUploadsInput!) {
+    fetchUploads(fetchUploadsInput: $fetchUploadsInput) {
+      success
+      message
+      uploadIds
+    }
+  }
+`;
+
 export const UPLOADS_WITH_THUMBNAILS = gql`
   query UploadsWithThumbnails($input: UploadsWithThumbnailsInput!) {
     uploadsWithThumbnails(input: $input) {

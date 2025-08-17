@@ -1,4 +1,3 @@
-@Post('/fetch-uploads')
 @Post('/sync-uploads')
 @Post('/clean-short-uploads')
 @Post('/saved-uploads')
