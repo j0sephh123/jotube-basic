@@ -4,6 +4,7 @@ import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMe
 import { io, Socket } from "socket.io-client";
 import { EventTypes } from "@/shared/types/types";
 import { useRefetchQueue } from "./useQueue";
+import { API_BASE_URL } from "../utils/globals";
   
 export type ProcessEventData = {
   type: EventTypes;
@@ -28,7 +29,7 @@ export function useWebSocket() {
       isConnectingRef.current = true;
       document.body.setAttribute("data-websocket-connected", "true");
 
-      const socket = io("http://localhost:3003");
+      const socket = io(API_BASE_URL);
       socketRef.current = socket;
 
       socket.on("connect", () => {
@@ -91,7 +92,7 @@ export function useWebSocket() {
           ) {
             isConnectingRef.current = true;
             document.body.setAttribute("data-websocket-connected", "true");
-            const reconnectSocket = io("http://localhost:3003");
+            const reconnectSocket = io(API_BASE_URL);
             socketRef.current = reconnectSocket;
           }
         }, 1000);

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
+import { API_BASE_URL } from "../utils/globals";
 
 interface DeleteUploadsEvent {
   type: "delete-uploads";
@@ -14,7 +15,7 @@ export function useGlobalWebSocket() {
 
   useEffect(() => {
     console.log("Initializing global WebSocket connection...");
-    socketRef.current = io("http://localhost:3003");
+    socketRef.current = io(API_BASE_URL);
 
     socketRef.current.on("connect", () => {
       console.log("Global WebSocket connected to server");
