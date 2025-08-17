@@ -140,6 +140,16 @@ type VideoScreenshotResponse {
   src: String!
 }
 
+type DeleteUploadsResponse {
+  success: Boolean!
+}
+
+type FinishProcessUploadResponse {
+  id: Float!
+  ytId: String!
+  artifact: String!
+}
+
 type StatisticsCountsResponse {
   totalScreenshots: Float!
   totalThumbnails: Float!
@@ -202,6 +212,8 @@ enum ViewType {
 type Mutation {
   createChannel(createChannelInput: CreateChannelInput!): CreateChannelResponse!
   deleteChannel(id: Float!): DeleteChannelResponse!
+  deleteUploads(ytChannelId: String!, ytVideoIds: [String!]!): DeleteUploadsResponse!
+  finishProcessingUpload(ytChannelId: String!, ytVideoId: String!, savedSeconds: [Float!]!): FinishProcessUploadResponse!
   createTodo(createTodoInput: CreateTodoInput!): Todo!
   updateTodo(id: ID!, updateTodoInput: UpdateTodoInput!): Todo!
   removeTodo(id: ID!): Boolean!

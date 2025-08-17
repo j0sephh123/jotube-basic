@@ -199,3 +199,21 @@ export const GET_CHANNEL_SCREENSHOTS = gql`
     }
   }
 `;
+
+export const DELETE_UPLOADS = gql`
+  mutation DeleteUploads($ytChannelId: String!, $ytVideoIds: [String!]!) {
+    deleteUploads(ytChannelId: $ytChannelId, ytVideoIds: $ytVideoIds) {
+      success
+    }
+  }
+`;
+
+export const FINISH_PROCESSING_UPLOAD = gql`
+  mutation FinishProcessingUpload($ytChannelId: String!, $ytVideoId: String!, $savedSeconds: [Float!]!) {
+    finishProcessingUpload(ytChannelId: $ytChannelId, ytVideoId: $ytVideoId, savedSeconds: $savedSeconds) {
+      id
+      ytId
+      artifact
+    }
+  }
+`;

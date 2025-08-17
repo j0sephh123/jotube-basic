@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { UploadsVideoController } from './uploads-video.controller';
 import { UploadsVideoService } from './uploads-video.service';
+import { UploadsVideoResolver } from './uploads-video.resolver';
 import { StoryboardModule } from '../storyboard/storyboard.module';
 import { DatabaseModule } from '../core/database/database.module';
 import { DirectoryService } from '../file/directory.service';
@@ -26,6 +27,7 @@ import { YoutubeService } from '../core/external-services/youtube-api/youtube.se
     FilePathService,
     FileOperationService,
     YoutubeService,
+    UploadsVideoResolver,
   ],
   exports: [UploadsVideoService],
 })

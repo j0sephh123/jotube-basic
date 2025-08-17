@@ -117,6 +117,11 @@ export type DeleteChannelResponse = {
   success: Scalars['Boolean']['output'];
 };
 
+export type DeleteUploadsResponse = {
+  __typename?: 'DeleteUploadsResponse';
+  success: Scalars['Boolean']['output'];
+};
+
 export type FetchDashboardInput = {
   defaultMax?: InputMaybe<Scalars['Float']['input']>;
   defaultMin?: InputMaybe<Scalars['Float']['input']>;
@@ -125,6 +130,13 @@ export type FetchDashboardInput = {
   page: Scalars['Float']['input'];
   sortOrder: Scalars['String']['input'];
   viewType?: InputMaybe<ViewType>;
+};
+
+export type FinishProcessUploadResponse = {
+  __typename?: 'FinishProcessUploadResponse';
+  artifact: Scalars['String']['output'];
+  id: Scalars['Float']['output'];
+  ytId: Scalars['String']['output'];
 };
 
 export type GetSlidesInput = {
@@ -145,6 +157,8 @@ export type Mutation = {
   createChannel: CreateChannelResponse;
   createTodo: Todo;
   deleteChannel: DeleteChannelResponse;
+  deleteUploads: DeleteUploadsResponse;
+  finishProcessingUpload: FinishProcessUploadResponse;
   removeTodo: Scalars['Boolean']['output'];
   updateTodo: Todo;
 };
@@ -162,6 +176,19 @@ export type MutationCreateTodoArgs = {
 
 export type MutationDeleteChannelArgs = {
   id: Scalars['Float']['input'];
+};
+
+
+export type MutationDeleteUploadsArgs = {
+  ytChannelId: Scalars['String']['input'];
+  ytVideoIds: Array<Scalars['String']['input']>;
+};
+
+
+export type MutationFinishProcessingUploadArgs = {
+  savedSeconds: Array<Scalars['Float']['input']>;
+  ytChannelId: Scalars['String']['input'];
+  ytVideoId: Scalars['String']['input'];
 };
 
 
@@ -428,6 +455,23 @@ export type GetChannelScreenshotsQueryVariables = Exact<{
 
 
 export type GetChannelScreenshotsQuery = { __typename?: 'Query', channelScreenshots: Array<{ __typename?: 'GetSlidesResponse', ytVideoId: string, id: number, second: number, src: string, isFav?: boolean | null }> };
+
+export type DeleteUploadsMutationVariables = Exact<{
+  ytChannelId: Scalars['String']['input'];
+  ytVideoIds: Array<Scalars['String']['input']> | Scalars['String']['input'];
+}>;
+
+
+export type DeleteUploadsMutation = { __typename?: 'Mutation', deleteUploads: { __typename?: 'DeleteUploadsResponse', success: boolean } };
+
+export type FinishProcessingUploadMutationVariables = Exact<{
+  ytChannelId: Scalars['String']['input'];
+  ytVideoId: Scalars['String']['input'];
+  savedSeconds: Array<Scalars['Float']['input']> | Scalars['Float']['input'];
+}>;
+
+
+export type FinishProcessingUploadMutation = { __typename?: 'Mutation', finishProcessingUpload: { __typename?: 'FinishProcessUploadResponse', id: number, ytId: string, artifact: string } };
 
 
 export const GetTodosDocument = gql`
@@ -1058,3 +1102,78 @@ export type GetChannelScreenshotsQueryHookResult = ReturnType<typeof useGetChann
 export type GetChannelScreenshotsLazyQueryHookResult = ReturnType<typeof useGetChannelScreenshotsLazyQuery>;
 export type GetChannelScreenshotsSuspenseQueryHookResult = ReturnType<typeof useGetChannelScreenshotsSuspenseQuery>;
 export type GetChannelScreenshotsQueryResult = Apollo.QueryResult<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>;
+export const DeleteUploadsDocument = gql`
+    mutation DeleteUploads($ytChannelId: String!, $ytVideoIds: [String!]!) {
+  deleteUploads(ytChannelId: $ytChannelId, ytVideoIds: $ytVideoIds) {
+    success
+  }
+}
+    `;
+export type DeleteUploadsMutationFn = Apollo.MutationFunction<DeleteUploadsMutation, DeleteUploadsMutationVariables>;
+
+/**
+ * __useDeleteUploadsMutation__
+ *
+ * To run a mutation, you first call `useDeleteUploadsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteUploadsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteUploadsMutation, { data, loading, error }] = useDeleteUploadsMutation({
+ *   variables: {
+ *      ytChannelId: // value for 'ytChannelId'
+ *      ytVideoIds: // value for 'ytVideoIds'
+ *   },
+ * });
+ */
+export function useDeleteUploadsMutation(baseOptions?: Apollo.MutationHookOptions<DeleteUploadsMutation, DeleteUploadsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteUploadsMutation, DeleteUploadsMutationVariables>(DeleteUploadsDocument, options);
+      }
+export type DeleteUploadsMutationHookResult = ReturnType<typeof useDeleteUploadsMutation>;
+export type DeleteUploadsMutationResult = Apollo.MutationResult<DeleteUploadsMutation>;
+export type DeleteUploadsMutationOptions = Apollo.BaseMutationOptions<DeleteUploadsMutation, DeleteUploadsMutationVariables>;
+export const FinishProcessingUploadDocument = gql`
+    mutation FinishProcessingUpload($ytChannelId: String!, $ytVideoId: String!, $savedSeconds: [Float!]!) {
+  finishProcessingUpload(
+    ytChannelId: $ytChannelId
+    ytVideoId: $ytVideoId
+    savedSeconds: $savedSeconds
+  ) {
+    id
+    ytId
+    artifact
+  }
+}
+    `;
+export type FinishProcessingUploadMutationFn = Apollo.MutationFunction<FinishProcessingUploadMutation, FinishProcessingUploadMutationVariables>;
+
+/**
+ * __useFinishProcessingUploadMutation__
+ *
+ * To run a mutation, you first call `useFinishProcessingUploadMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useFinishProcessingUploadMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [finishProcessingUploadMutation, { data, loading, error }] = useFinishProcessingUploadMutation({
+ *   variables: {
+ *      ytChannelId: // value for 'ytChannelId'
+ *      ytVideoId: // value for 'ytVideoId'
+ *      savedSeconds: // value for 'savedSeconds'
+ *   },
+ * });
+ */
+export function useFinishProcessingUploadMutation(baseOptions?: Apollo.MutationHookOptions<FinishProcessingUploadMutation, FinishProcessingUploadMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<FinishProcessingUploadMutation, FinishProcessingUploadMutationVariables>(FinishProcessingUploadDocument, options);
+      }
+export type FinishProcessingUploadMutationHookResult = ReturnType<typeof useFinishProcessingUploadMutation>;
+export type FinishProcessingUploadMutationResult = Apollo.MutationResult<FinishProcessingUploadMutation>;
+export type FinishProcessingUploadMutationOptions = Apollo.BaseMutationOptions<FinishProcessingUploadMutation, FinishProcessingUploadMutationVariables>;

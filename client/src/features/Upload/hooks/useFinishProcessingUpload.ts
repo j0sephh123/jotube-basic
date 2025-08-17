@@ -1,16 +1,13 @@
-import { useMutation } from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/nestFetcher";
+import { useFinishProcessingUploadMutation } from "../../../generated/graphql";
 
 export function useFinishProcessingUpload(onSuccess?: () => void) {
-  const { mutateAsync } = useMutation<unknown, unknown, object>({
-    mutationFn: (body: object): Promise<unknown> =>
-      nestFetcher({
-        url: "/uploads-video/finish-processing-upload",
-        method: "POST",
-        body,
-      }),
-    onSuccess: onSuccess ? onSuccess : undefined,
+  const [finishProcessingUploadMutation] = useFinishProcessingUploadMutation({
+    onCompleted: onSuccess,
   });
 
-  return mutateAsync;
+  return (variables: {
+    ytChannelId: string;
+    ytVideoId: string;
+    savedSeconds: number[];
+  }) => finishProcessingUploadMutation({ variables });
 }

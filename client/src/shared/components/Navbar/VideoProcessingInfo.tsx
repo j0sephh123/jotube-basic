@@ -131,7 +131,7 @@ export default function VideoProcessingInfo() {
                           <span className="badge badge-sm badge-outline">
                             {activeCount} active / {waitingCount} waiting
                           </span>
-                          {waitingCount > 0 && (
+                          {/* {waitingCount > 0 && ( */}
                             <button
                               onClick={() => handleCancelChannel(channelId)}
                               className="btn btn-error btn-xs p-0 h-6 w-6 min-h-0 flex items-center justify-center"
@@ -139,7 +139,7 @@ export default function VideoProcessingInfo() {
                             >
                               <X size={12} />
                             </button>
-                          )}
+                          {/* )} */}
                         </div>
                       </div>
                     </div>
