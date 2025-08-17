@@ -193,6 +193,33 @@ type CleanShortUploadsResponse {
   deletedCount: Int!
 }
 
+type UploadResponse {
+  createdAt: String!
+  ytId: String!
+  id: Int!
+  duration: Int
+  publishedAt: String!
+  src: String!
+  title: String!
+  artifact: String!
+}
+
+type UploadsChannelResponse {
+  id: Int!
+  title: String!
+  src: String!
+  ytId: String!
+  uploads: [UploadResponse!]!
+  totalUploads: Int!
+}
+
+type SavedUploadsResponse {
+  ytChannelId: String!
+  channel: UploadsChannelResponse
+  uploads: [UploadResponse!]!
+  totalUploads: Int!
+}
+
 type StatisticsCountsResponse {
   totalScreenshots: Float!
   totalThumbnails: Float!
@@ -218,6 +245,7 @@ type Query {
   channelForPlaylist(ytChannelId: String!): ChannelForPlaylistResponse!
   channelMetadata(ytChannelId: String!): ChannelMetadataResponse!
   uploadsWithStoryboards(input: StoryboardQueryInput!): [UploadWithStoryboardResponse!]!
+  savedUploads(savedUploadsInput: SavedUploadsInput!): [SavedUploadsResponse!]!
   statisticsCounts: StatisticsCountsResponse!
   fetchDashboard(fetchDashboardInput: FetchDashboardInput!): ChannelsDashboardResponse!
   fetchVideosDashboard(page: Float, sortOrder: String, screenshotMin: Float, screenshotMax: Float): VideosDashboardResponse!
@@ -235,6 +263,10 @@ input UploadsWithThumbnailsInput {
 
 input StoryboardQueryInput {
   ytChannelId: String!
+}
+
+input SavedUploadsInput {
+  ytChannelIds: [String!]!
 }
 
 input FetchDashboardInput {

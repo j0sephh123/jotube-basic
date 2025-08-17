@@ -43,8 +43,8 @@ export default function SavedUploads({
         <div
           className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 p-2"}
         >
-          {savedUploads[0]?.channel.uploads
-            .filter((upload) => {
+          {savedUploads[0]?.channel?.uploads
+            ?.filter((upload) => {
               const isDownloading = queue?.some(
                 (item) => item.ytVideoId === upload.ytId
               );

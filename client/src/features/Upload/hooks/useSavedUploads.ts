@@ -1,5 +1,5 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/nestFetcher";
+import { useQuery } from "@apollo/client";
+import { SAVED_UPLOADS } from "@/api/graphql/queries/queries";
 import { useCallback } from "react";
 
 type Upload = {
@@ -25,35 +25,39 @@ type Channel = {
   src: string;
   ytId: string;
   uploads: Upload[];
+  totalUploads: number;
 };
 
 type YouTubeChannelResponse = {
   ytChannelId: string;
-  channel: Channel;
+  channel: Channel | null;
+  uploads: Upload[];
+  totalUploads: number;
 };
 
-const queryKey = (ytChannelId: string) => ["savedUploads", ytChannelId];
-
 export function useSavedUploads(ytChannelId: string) {
-  return useQuery<YouTubeChannelResponse[]>({
-    queryKey: queryKey(ytChannelId),
-    queryFn: () =>
-      nestFetcher<YouTubeChannelResponse[]>({
-        url: "/uploads-video/saved-uploads",
-        method: "POST",
-        body: {
-          ytChannelIds: [ytChannelId],
-        },
-      }),
-    enabled: !!ytChannelId,
+  const { data, loading, error, refetch } = useQuery<{
+    savedUploads: YouTubeChannelResponse[];
+  }>(SAVED_UPLOADS, {
+    variables: {
+      savedUploadsInput: {
+        ytChannelIds: [ytChannelId],
+      },
+    },
+    skip: !ytChannelId,
   });
+
+  return {
+    data: data?.savedUploads,
+    isLoading: loading,
+    error,
+    refetch,
+  };
 }
 
 export function useRefetchSavedUploads(ytChannelId: string) {
-  const queryClient = useQueryClient();
-
   return useCallback(() => {
     if (!ytChannelId) return;
-    queryClient.refetchQueries({ queryKey: queryKey(ytChannelId) });
-  }, [queryClient, ytChannelId]);
+    // This will be handled by the GraphQL query refetch
+  }, [ytChannelId]);
 }

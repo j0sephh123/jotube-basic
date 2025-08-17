@@ -22,6 +22,27 @@ export class StoryboardFragmentResponse {
 }
 
 @ObjectType()
+export class StoryboardChannelResponse {
+  @Field(() => Int)
+  id: number;
+
+  @Field()
+  title: string;
+
+  @Field()
+  src: string;
+
+  @Field()
+  ytId: string;
+
+  @Field(() => [StoryboardFragmentResponse])
+  uploads: StoryboardFragmentResponse[];
+
+  @Field(() => Int)
+  totalUploads: number;
+}
+
+@ObjectType()
 export class UploadWithStoryboardResponse {
   @Field(() => Int)
   id: number;

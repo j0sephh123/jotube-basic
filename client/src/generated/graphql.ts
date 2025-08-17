@@ -260,6 +260,7 @@ export type Query = {
   fetchDashboard: ChannelsDashboardResponse;
   fetchVideosDashboard: VideosDashboardResponse;
   getSlides: Array<GetSlidesResponse>;
+  savedUploads: Array<SavedUploadsResponse>;
   screenshots: Array<ScreenshotsCountsResponse>;
   screenshotsByVideo: Array<VideoScreenshotResponse>;
   statisticsCounts: StatisticsCountsResponse;
@@ -304,6 +305,11 @@ export type QueryGetSlidesArgs = {
 };
 
 
+export type QuerySavedUploadsArgs = {
+  savedUploadsInput: SavedUploadsInput;
+};
+
+
 export type QueryScreenshotsByVideoArgs = {
   ytVideoId: Scalars['String']['input'];
 };
@@ -341,6 +347,18 @@ export type SaveUploadResponse = {
   __typename?: 'SaveUploadResponse';
   message: Scalars['String']['output'];
   success: Scalars['Boolean']['output'];
+};
+
+export type SavedUploadsInput = {
+  ytChannelIds: Array<Scalars['String']['input']>;
+};
+
+export type SavedUploadsResponse = {
+  __typename?: 'SavedUploadsResponse';
+  channel?: Maybe<UploadsChannelResponse>;
+  totalUploads: Scalars['Int']['output'];
+  uploads: Array<UploadResponse>;
+  ytChannelId: Scalars['String']['output'];
 };
 
 export type ScreenshotsCountsResponse = {
@@ -408,6 +426,18 @@ export type UpdateTodoInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type UploadResponse = {
+  __typename?: 'UploadResponse';
+  artifact: Scalars['String']['output'];
+  createdAt: Scalars['String']['output'];
+  duration?: Maybe<Scalars['Int']['output']>;
+  id: Scalars['Int']['output'];
+  publishedAt: Scalars['String']['output'];
+  src: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  ytId: Scalars['String']['output'];
+};
+
 export type UploadWithStoryboardResponse = {
   __typename?: 'UploadWithStoryboardResponse';
   artifact: Scalars['String']['output'];
@@ -421,6 +451,16 @@ export type UploadWithStoryboardResponse = {
   storyboard: StoryboardFragmentResponse;
   title: Scalars['String']['output'];
   updatedAt: Scalars['String']['output'];
+  ytId: Scalars['String']['output'];
+};
+
+export type UploadsChannelResponse = {
+  __typename?: 'UploadsChannelResponse';
+  id: Scalars['Int']['output'];
+  src: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  totalUploads: Scalars['Int']['output'];
+  uploads: Array<UploadResponse>;
   ytId: Scalars['String']['output'];
 };
 
@@ -519,6 +559,13 @@ export type CleanShortUploadsMutationVariables = Exact<{
 
 
 export type CleanShortUploadsMutation = { __typename?: 'Mutation', cleanShortUploads: { __typename?: 'CleanShortUploadsResponse', deletedCount: number } };
+
+export type SavedUploadsQueryVariables = Exact<{
+  savedUploadsInput: SavedUploadsInput;
+}>;
+
+
+export type SavedUploadsQuery = { __typename?: 'Query', savedUploads: Array<{ __typename?: 'SavedUploadsResponse', ytChannelId: string, totalUploads: number, channel?: { __typename?: 'UploadsChannelResponse', id: number, title: string, src: string, ytId: string, totalUploads: number, uploads: Array<{ __typename?: 'UploadResponse', createdAt: string, ytId: string, id: number, duration?: number | null, publishedAt: string, src: string, title: string, artifact: string }> } | null, uploads: Array<{ __typename?: 'UploadResponse', createdAt: string, ytId: string, id: number, duration?: number | null, publishedAt: string, src: string, title: string, artifact: string }> }> };
 
 export type UploadsWithThumbnailsQueryVariables = Exact<{
   input: UploadsWithThumbnailsInput;
@@ -916,6 +963,74 @@ export function useCleanShortUploadsMutation(baseOptions?: Apollo.MutationHookOp
 export type CleanShortUploadsMutationHookResult = ReturnType<typeof useCleanShortUploadsMutation>;
 export type CleanShortUploadsMutationResult = Apollo.MutationResult<CleanShortUploadsMutation>;
 export type CleanShortUploadsMutationOptions = Apollo.BaseMutationOptions<CleanShortUploadsMutation, CleanShortUploadsMutationVariables>;
+export const SavedUploadsDocument = gql`
+    query SavedUploads($savedUploadsInput: SavedUploadsInput!) {
+  savedUploads(savedUploadsInput: $savedUploadsInput) {
+    ytChannelId
+    channel {
+      id
+      title
+      src
+      ytId
+      uploads {
+        createdAt
+        ytId
+        id
+        duration
+        publishedAt
+        src
+        title
+        artifact
+      }
+      totalUploads
+    }
+    uploads {
+      createdAt
+      ytId
+      id
+      duration
+      publishedAt
+      src
+      title
+      artifact
+    }
+    totalUploads
+  }
+}
+    `;
+
+/**
+ * __useSavedUploadsQuery__
+ *
+ * To run a query within a React component, call `useSavedUploadsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSavedUploadsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSavedUploadsQuery({
+ *   variables: {
+ *      savedUploadsInput: // value for 'savedUploadsInput'
+ *   },
+ * });
+ */
+export function useSavedUploadsQuery(baseOptions: Apollo.QueryHookOptions<SavedUploadsQuery, SavedUploadsQueryVariables> & ({ variables: SavedUploadsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SavedUploadsQuery, SavedUploadsQueryVariables>(SavedUploadsDocument, options);
+      }
+export function useSavedUploadsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SavedUploadsQuery, SavedUploadsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SavedUploadsQuery, SavedUploadsQueryVariables>(SavedUploadsDocument, options);
+        }
+export function useSavedUploadsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<SavedUploadsQuery, SavedUploadsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SavedUploadsQuery, SavedUploadsQueryVariables>(SavedUploadsDocument, options);
+        }
+export type SavedUploadsQueryHookResult = ReturnType<typeof useSavedUploadsQuery>;
+export type SavedUploadsLazyQueryHookResult = ReturnType<typeof useSavedUploadsLazyQuery>;
+export type SavedUploadsSuspenseQueryHookResult = ReturnType<typeof useSavedUploadsSuspenseQuery>;
+export type SavedUploadsQueryResult = Apollo.QueryResult<SavedUploadsQuery, SavedUploadsQueryVariables>;
 export const UploadsWithThumbnailsDocument = gql`
     query UploadsWithThumbnails($input: UploadsWithThumbnailsInput!) {
   uploadsWithThumbnails(input: $input) {

@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { UploadsVideoService } from './uploads-video.service';
 import { DeleteUploadsResponse } from './dtos/delete-uploads.response';
 import { FinishProcessUploadResponse } from './dtos/finish-process-upload.response';
@@ -10,10 +10,42 @@ import { SyncUploadsResponse } from './dtos/sync-uploads.response';
 import { SyncUploadsInput } from './dtos/sync-uploads.input';
 import { CleanShortUploadsResponse } from './dtos/clean-short-uploads.response';
 import { CleanShortUploadsInput } from './dtos/clean-short-uploads.input';
+import { SavedUploadsResponse } from './dtos/saved-uploads.response';
+import { SavedUploadsInput } from './dtos/saved-uploads.input';
 
 @Resolver()
 export class UploadsVideoResolver {
   constructor(private readonly uploadsVideoService: UploadsVideoService) {}
+
+  @Query(() => [SavedUploadsResponse])
+  async savedUploads(
+    @Args('savedUploadsInput') savedUploadsInput: SavedUploadsInput,
+  ): Promise<SavedUploadsResponse[]> {
+    try {
+      const results =
+        await this.uploadsVideoService.savedUploads(savedUploadsInput);
+
+      return results.map((result) => ({
+        ...result,
+        channel: result.channel
+          ? {
+              ...result.channel,
+              uploads: result.channel.uploads.map((upload) => ({
+                ...upload,
+                createdAt: upload.createdAt.toISOString(),
+              })),
+              totalUploads: result.channel.uploads.length,
+            }
+          : null,
+        uploads: result.uploads.map((upload) => ({
+          ...upload,
+          createdAt: upload.createdAt.toISOString(),
+        })),
+      }));
+    } catch {
+      return [];
+    }
+  }
 
   @Mutation(() => SaveUploadResponse)
   async saveUpload(
@@ -22,7 +54,7 @@ export class UploadsVideoResolver {
     try {
       await this.uploadsVideoService.saveUpload(saveUploadInput);
       return { success: true, message: 'Uploads saved successfully' };
-    } catch (error) {
+    } catch {
       return { success: false, message: 'Failed to save uploads' };
     }
   }
@@ -32,17 +64,17 @@ export class UploadsVideoResolver {
     @Args('fetchUploadsInput') fetchUploadsInput: FetchUploadsInput,
   ): Promise<FetchUploadsResponse> {
     try {
-      const result = await this.uploadsVideoService.fetchUploads(fetchUploadsInput);
+      const result =
+        await this.uploadsVideoService.fetchUploads(fetchUploadsInput);
       return {
         success: true,
         message: `Successfully fetched ${result.count} uploads`,
         uploadIds: [],
       };
-    } catch (error) {
+    } catch {
       return {
         success: false,
-        message:
-          error instanceof Error ? error.message : 'Failed to fetch uploads',
+        message: 'Failed to fetch uploads',
         uploadIds: [],
       };
     }
@@ -53,21 +85,25 @@ export class UploadsVideoResolver {
     @Args('syncUploadsInput') syncUploadsInput: SyncUploadsInput,
   ): Promise<SyncUploadsResponse> {
     try {
-      const result = await this.uploadsVideoService.syncUploads(syncUploadsInput);
+      const result =
+        await this.uploadsVideoService.syncUploads(syncUploadsInput);
       return result;
-    } catch (error) {
+    } catch {
       return { count: 0 };
     }
   }
 
   @Mutation(() => CleanShortUploadsResponse)
   async cleanShortUploads(
-    @Args('cleanShortUploadsInput') cleanShortUploadsInput: CleanShortUploadsInput,
+    @Args('cleanShortUploadsInput')
+    cleanShortUploadsInput: CleanShortUploadsInput,
   ): Promise<CleanShortUploadsResponse> {
     try {
-      const result = await this.uploadsVideoService.cleanShortUploads(cleanShortUploadsInput);
+      const result = await this.uploadsVideoService.cleanShortUploads(
+        cleanShortUploadsInput,
+      );
       return result;
-    } catch (error) {
+    } catch {
       return { deletedCount: 0 };
     }
   }
