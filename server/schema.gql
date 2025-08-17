@@ -246,6 +246,7 @@ type StoryboardDataResponse {
   fragments: Int!
   id: Int!
   updatedAt: String!
+  uploadsVideoId: Int!
   url: String!
 }
 

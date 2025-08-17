@@ -172,6 +172,7 @@ export const STORYBOARDS = gql`
       artifact
       storyboard {
         id
+        uploadsVideoId
         fragments
         url
         createdAt

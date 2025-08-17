@@ -4,6 +4,7 @@ import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";
 
 export type StoryboardData = {
   id: number;
+  uploadsVideoId: number;
   fragments: number;
   url: string;
   createdAt: string;

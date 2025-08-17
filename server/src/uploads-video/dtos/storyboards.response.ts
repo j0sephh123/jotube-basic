@@ -6,6 +6,9 @@ export class StoryboardDataResponse {
   id: number;
 
   @Field(() => Int)
+  uploadsVideoId: number;
+
+  @Field(() => Int)
   fragments: number;
 
   @Field()

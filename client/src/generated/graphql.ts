@@ -413,6 +413,7 @@ export type StoryboardDataResponse = {
   fragments: Scalars['Int']['output'];
   id: Scalars['Int']['output'];
   updatedAt: Scalars['String']['output'];
+  uploadsVideoId: Scalars['Int']['output'];
   url: Scalars['String']['output'];
 };
 
@@ -657,7 +658,7 @@ export type StoryboardsQueryVariables = Exact<{
 }>;
 
 
-export type StoryboardsQuery = { __typename?: 'Query', storyboards: Array<{ __typename?: 'UploadsVideoStoryboardResponse', id: number, ytId: string, title: string, src: string, publishedAt: string, createdAt: string, updatedAt: string, channelId: number, nextPageToken?: string | null, duration?: number | null, artifact: string, storyboard: { __typename?: 'StoryboardDataResponse', id: number, fragments: number, url: string, createdAt: string, updatedAt: string } }> };
+export type StoryboardsQuery = { __typename?: 'Query', storyboards: Array<{ __typename?: 'UploadsVideoStoryboardResponse', id: number, ytId: string, title: string, src: string, publishedAt: string, createdAt: string, updatedAt: string, channelId: number, nextPageToken?: string | null, duration?: number | null, artifact: string, storyboard: { __typename?: 'StoryboardDataResponse', id: number, uploadsVideoId: number, fragments: number, url: string, createdAt: string, updatedAt: string } }> };
 
 export type UploadsWithThumbnailsQueryVariables = Exact<{
   input: UploadsWithThumbnailsInput;
@@ -1201,6 +1202,7 @@ export const StoryboardsDocument = gql`
     artifact
     storyboard {
       id
+      uploadsVideoId
       fragments
       url
       createdAt
