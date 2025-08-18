@@ -3,20 +3,20 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
 // --- slice creators ---
-import { thumbnailsProcessingSlice } from "@/features/Thumbnail/store/thumbnails-processing-slice";
-import { createWebSocketSlice } from "./slices/websocket-slice";
-import { createDashboardSlice } from "@/widgets/Dashboard/model/dashboard-slice";
-import { createVideosDashboardSlice } from "@/widgets/Dashboard/model/videos-dashboard-slice";
+import { thumbnailsProcessingSlice } from "@features/Thumbnail/store/thumbnails-processing-slice";
+import { createWebSocketSlice } from "@store/slices/websocket-slice";
+import { createDashboardSlice } from "@widgets/Dashboard/model/dashboard-slice";
+import { createVideosDashboardSlice } from "@widgets/Dashboard/model/videos-dashboard-slice";
 import {
   createSidePanelSlice,
   SidePanelSlice,
-} from "./slices/side-panel-slice";
-import { createPlaylistSlice, PlaylistSlice } from "@/features/Playlist/store";
-import { createRangePickersSlice } from "@/widgets/Dashboard/model/range-picker-slice";
-import { createVideosRangePickersSlice } from "@/widgets/Dashboard/model/videos-range-picker-slice";
-import { createSlidesSlice } from "@/features/Thumbnail/store/slides-slice";
-import { createStoryboardProcessingSlice } from "./slices/storyboard-processing-slice";
-import { createZoomSlice } from "./slices/zoom-slice";
+} from "@store/slices/side-panel-slice";
+import { createPlaylistSlice, PlaylistSlice } from "@features/Playlist/store";
+import { createRangePickersSlice } from "@widgets/Dashboard/model/range-picker-slice";
+import { createVideosRangePickersSlice } from "@widgets/Dashboard/model/videos-range-picker-slice";
+import { createSlidesSlice } from "@features/Thumbnail/store/slides-slice";
+import { createStoryboardProcessingSlice } from "@store/slices/storyboard-processing-slice";
+import { createZoomSlice } from "@store/slices/zoom-slice";
 
 // ---- Types ----
 import type {
@@ -30,7 +30,7 @@ import type {
   VideosDashboardSlice,
   VideosRangePickersSlice,
   ZoomSlice,
-} from "./store-types";
+} from "@store/store-types";
 
 // ---- Store ----------------------------------------------------
 export const useStore = create<StoreType>()(

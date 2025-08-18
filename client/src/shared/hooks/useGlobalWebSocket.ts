@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
-import { API_BASE_URL } from "../utils/globals";
+import { API_BASE_URL } from "@shared/utils/globals";
 
 interface DeleteUploadsEvent {
   type: "delete-uploads";

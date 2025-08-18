@@ -1,4 +1,4 @@
-import { useFetchCarousel } from "@/features/Screenshot/hooks/useFetchCarousel";
+import { useFetchCarousel } from "@features/Screenshot/hooks/useFetchCarousel";
 
 export default function useViewScreenshots() {
   const fetchCarousel = useFetchCarousel();

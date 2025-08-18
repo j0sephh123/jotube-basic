@@ -1,10 +1,7 @@
 import { RefreshCw } from "lucide-react";
-import {
-  formatLastSync,
-  getLastSyncColor,
-} from "@/shared/ui/card/helper";
+import { formatLastSync, getLastSyncColor } from "@shared/ui/card/helper";
 import clsx from "clsx";
-import useSyncUploads from "../hooks/useSyncUploads";
+import useSyncUploads from "@features/Upload/hooks/useSyncUploads";
 
 type SyncUploadsButtonProps = {
   lastSyncedAt?: string | null;

@@ -1,14 +1,14 @@
-import { ViewType } from "@/shared/hooks/useDashboardParams";
-import SyncUploadsButton from "../../Upload/components/SyncUploadsButton";
-import Card from "@/shared/ui/card";
-import FetchUploadsButton from "../../Upload/components/FetchUploadsButton";
-import DeleteChannel from "../../../entities/Channel/ui/DeleteChannel";
-import useTitleClick from "@/widgets/Dashboard/lib/useTitleClick";
+import { ViewType } from "@shared/hooks/useDashboardParams";
+import SyncUploadsButton from "@features/Upload/components/SyncUploadsButton";
+import Card from "@shared/ui/card";
+import FetchUploadsButton from "@features/Upload/components/FetchUploadsButton";
+import DeleteChannel from "@entities/Channel/ui/DeleteChannel";
+import useTitleClick from "@widgets/Dashboard/lib/useTitleClick";
 import { DashboardChannelResponse } from "@/generated/graphql";
-import { usePlaylist } from "@/store/store";
+import { usePlaylist } from "@store/store";
 import { ListMusic, ExternalLink } from "lucide-react";
 import clsx from "clsx";
-import { routes } from "@/shared/utils/routes";
+import { routes } from "@shared/utils/routes";
 import { Link } from "react-router-dom";
 
 const statsTypes = [

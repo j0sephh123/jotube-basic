@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { calculateGridDimensions } from "../utils/calculateGridDimensions";
-import { COLUMNS } from "../utils/constants";
+import { calculateGridDimensions } from "@features/Thumbnail/utils/calculateGridDimensions";
+import { COLUMNS } from "@features/Thumbnail/utils/constants";
 
 export const useGridCalculator = (
   imageRef: React.RefObject<HTMLImageElement>

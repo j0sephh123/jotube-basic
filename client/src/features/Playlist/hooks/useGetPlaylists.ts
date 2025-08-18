@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { GET_PLAYLISTS } from "@/entities/Playlist/api/playlist.gql";
+import { GET_PLAYLISTS } from "@entities/Playlist/api/playlist.gql";
 import { GetPlaylistsQuery } from "@/generated/graphql";
 
 export const useGetPlaylists = () => {

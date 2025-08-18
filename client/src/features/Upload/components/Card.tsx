@@ -1,10 +1,10 @@
-import { timeAgo } from "@/shared/utils/date";
+import { timeAgo } from "@shared/utils/date";
 import { TrashIcon, MoreVertical } from "lucide-react";
-import useImageSrc from "@/shared/hooks/useImageSrc";
+import useImageSrc from "@shared/hooks/useImageSrc";
 import { useMemo } from "react";
-import CopyValue from "@/shared/ui/CopyValue";
-import OpenExplorerButton from "@/shared/ui/OpenDirectoryButton/OpenDirectoryButton";
-import { useVideoPlayer } from "@/features/Upload/hooks/useVideoPlayer";
+import CopyValue from "@shared/ui/CopyValue";
+import OpenExplorerButton from "@shared/ui/OpenDirectoryButton/OpenDirectoryButton";
+import { useVideoPlayer } from "@features/Upload/hooks/useVideoPlayer";
 
 type VideoCardProps = {
   item: {

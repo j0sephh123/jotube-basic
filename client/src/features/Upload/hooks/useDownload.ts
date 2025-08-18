@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import nestFetcher from "@/shared/api/nestFetcher";
+import nestFetcher from "@shared/api/nestFetcher";
 import { useMutation } from "@tanstack/react-query";
 
 export default function useDownload(onSuccess?: () => void) {

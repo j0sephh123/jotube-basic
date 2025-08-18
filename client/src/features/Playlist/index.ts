@@ -1,2 +1,2 @@
-export * from "./hooks";
-export * from "./components";
+export * from "@features/Playlist/hooks";
+export * from "@features/Playlist/components";

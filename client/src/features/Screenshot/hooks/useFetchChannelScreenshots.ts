@@ -1,4 +1,4 @@
-import { useGetChannelScreenshotsQuery } from "../../../generated/graphql";
+import { useGetChannelScreenshotsQuery } from "@/generated/graphql";
 
 export type ChannelScreenshot = {
   __typename?: "GetSlidesResponse";

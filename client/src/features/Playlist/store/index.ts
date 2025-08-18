@@ -1,1 +1,1 @@
-export { createPlaylistSlice, type PlaylistSlice } from "./playlist-slice";
+export { createPlaylistSlice, type PlaylistSlice } from "@features/Playlist/store/playlist-slice";

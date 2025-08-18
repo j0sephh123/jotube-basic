@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/nestFetcher";
+import nestFetcher from "@shared/api/nestFetcher";
 
 export function useRemoveFromQueue() {
   const { mutateAsync } = useMutation<void, unknown, string[]>({

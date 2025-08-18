@@ -1,4 +1,4 @@
-import { useGetScreenshotsQuery } from "../../../generated/graphql";
+import { useGetScreenshotsQuery } from "@/generated/graphql";
 
 export function useScreenshots() {
   const { data, loading, error } = useGetScreenshotsQuery();

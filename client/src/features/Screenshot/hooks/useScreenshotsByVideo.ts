@@ -1,4 +1,4 @@
-import { useGetScreenshotsByVideoQuery } from "../../../generated/graphql";
+import { useGetScreenshotsByVideoQuery } from "@/generated/graphql";
 
 export type VideoScreenshot = {
   __typename?: "VideoScreenshotResponse";

@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
-import { useStore } from "@/store/store";
-import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMetadata";
+import { useStore } from "@store/store";
+import { useRefetchChannelMetadata } from "@features/Channel/hooks/useChannelMetadata";
 import { io, Socket } from "socket.io-client";
-import { EventTypes } from "@/shared/types/types";
-import { useRefetchQueue } from "./useQueue";
-import { API_BASE_URL } from "../utils/globals";
+import { EventTypes } from "@shared/types/types";
+import { useRefetchQueue } from "@shared/hooks/useQueue";
+import { API_BASE_URL } from "@shared/utils/globals";
   
 export type ProcessEventData = {
   type: EventTypes;

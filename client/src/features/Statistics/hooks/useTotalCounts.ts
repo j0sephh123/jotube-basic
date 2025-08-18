@@ -1,4 +1,4 @@
-import { useGetStatisticsCountsQuery } from "../../../generated/graphql";
+import { useGetStatisticsCountsQuery } from "@/generated/graphql";
 
 export function useTotalCounts() {
   const { data, loading, error } = useGetStatisticsCountsQuery();

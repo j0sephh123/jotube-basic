@@ -1,6 +1,6 @@
-export { useCreatePlaylist } from "./useCreatePlaylist";
-export { useGetPlaylists } from "./useGetPlaylists";
-export { useGetPlaylist } from "./useGetPlaylist";
-export { useUpdatePlaylist } from "./useUpdatePlaylist";
-export { useDeletePlaylist } from "./useDeletePlaylist";
-export { useUpdateChannelPlaylist } from "./useUpdateChannelPlaylist";
+export { useCreatePlaylist } from "@features/Playlist/hooks/useCreatePlaylist"; 
+export { useGetPlaylists } from "@features/Playlist/hooks/useGetPlaylists";
+export { useGetPlaylist } from "@features/Playlist/hooks/useGetPlaylist";
+export { useUpdatePlaylist } from "@features/Playlist/hooks/useUpdatePlaylist";
+export { useDeletePlaylist } from "@features/Playlist/hooks/useDeletePlaylist";
+export { useUpdateChannelPlaylist } from "@features/Playlist/hooks/useUpdateChannelPlaylist";

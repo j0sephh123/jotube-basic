@@ -1,4 +1,4 @@
-import { Store, WebSocketSlice } from "@/store/store-types";
+import { Store, WebSocketSlice } from "@store/store-types";
 
 export const createWebSocketSlice = (
   set: (fn: (state: Store) => Partial<Store>) => void

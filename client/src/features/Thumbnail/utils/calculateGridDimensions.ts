@@ -1,4 +1,4 @@
-import { COLUMNS, SPACING } from "../utils/constants";
+import { COLUMNS, SPACING } from "@features/Thumbnail/utils/constants";
 
 export const calculateGridDimensions = (
   imageWidth: number,

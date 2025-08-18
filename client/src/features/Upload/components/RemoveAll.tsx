@@ -1,8 +1,8 @@
-import Button from "@/shared/ui/button";
+import Button from "@shared/ui/button";
 import { Trash2 } from "lucide-react";
-import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";
-import { useRefetchSavedUploads } from "../hooks/useSavedUploads";
-import { useDeleteUploads } from "../hooks/useUploadsDelete";
+import { useTypedChannelYtId } from "@shared/hooks/useDashboardParams";
+import { useRefetchSavedUploads } from "@features/Upload/hooks/useSavedUploads";
+import { useDeleteUploads } from "@features/Upload/hooks/useUploadsDelete";
 
 export default function RemoveAll() {
   const ytChannelId = useTypedChannelYtId();

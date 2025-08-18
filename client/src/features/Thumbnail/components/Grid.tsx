@@ -1,7 +1,7 @@
-import { useThumbnailsSlice, useZoom } from "@/store/store";
-import ThumbnailGridCell from "./ThumbnailGridCell";
-import { generateThumbnailUrl } from "@/shared/utils/image";
-import { COLUMNS, GRID_DATA, SPACING } from "../utils/constants";
+import { useThumbnailsSlice, useZoom } from "@store/store";
+import ThumbnailGridCell from "@features/Thumbnail/components/ThumbnailGridCell";
+import { generateThumbnailUrl } from "@shared/utils/image";
+import { COLUMNS, GRID_DATA, SPACING } from "@features/Thumbnail/utils/constants";
 
 export default function Grid(): JSX.Element {
   const {

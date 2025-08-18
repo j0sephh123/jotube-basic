@@ -4,10 +4,10 @@ import {
   DefaultError,
   useQueryClient,
 } from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/nestFetcher";
-import { useRefetchChannelUploads } from "./useUploadsList";
-import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMetadata";
-import { useRefetchQueue } from "@/shared/hooks/useQueue";
+import nestFetcher from "@shared/api/nestFetcher";
+import { useRefetchChannelUploads } from "@features/Upload/hooks/useUploadsList";
+import { useRefetchChannelMetadata } from "@features/Channel/hooks/useChannelMetadata";
+import { useRefetchQueue } from "@shared/hooks/useQueue";
 
 type Body = {
   ytVideoId: string;

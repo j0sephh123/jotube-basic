@@ -1,7 +1,7 @@
-import { useThumbnailsSlice } from "@/store/store";
-import useThumbnailsCount from "./useThumbnailsCount";
-import { useDialog } from "@/shared/hooks/useDialog";
-import useSubmit from "./useSubmit";
+import { useThumbnailsSlice } from "@store/store";
+import useThumbnailsCount from "@features/Thumbnail/hooks/useThumbnailsCount";
+import { useDialog } from "@shared/hooks/useDialog";
+import useSubmit from "@features/Thumbnail/hooks/useSubmit";
 
 export default function usePaginate() {
   const { currentIndex, setCurrentIndex } = useThumbnailsSlice();
