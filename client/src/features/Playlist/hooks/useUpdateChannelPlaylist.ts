@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { UPDATE_CHANNEL_PLAYLIST } from "@/shared/api/graphql/playlistQueries";
+import { UPDATE_CHANNEL_PLAYLIST } from "@/entities/Playlist/api/playlist.gql";
 
 export const useUpdateChannelPlaylist = () => {
   const [mutate, result] = useMutation(UPDATE_CHANNEL_PLAYLIST, {
