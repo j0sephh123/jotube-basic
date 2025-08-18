@@ -8,17 +8,17 @@ export default function SelectSortDirection(): JSX.Element {
     useVideosDashboardContext();
 
   const icons: Record<SortOrder, JSX.Element> = {
-    asc: <ArrowUp size={14} />,
-    desc: <ArrowDown size={14} />,
+    ASC: <ArrowUp size={14} />,
+    DESC: <ArrowDown size={14} />,
   };
 
   const labels: Record<SortOrder, string> = {
-    asc: "ASC",
-    desc: "DESC",
+    ASC: "ASC",
+    DESC: "DESC",
   };
 
   const toggleSortOrder = () => {
-    const newSortOrder = videosRequestBody.sortOrder === "asc" ? "desc" : "asc";
+    const newSortOrder = videosRequestBody.sortOrder === "ASC" ? "DESC" : "ASC";
     setVideosRequestBody("sortOrder", newSortOrder);
   };
 

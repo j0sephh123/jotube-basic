@@ -114,7 +114,7 @@ export const useDashboardContext = () => {
 
     if (
       params.sortOrder &&
-      (params.sortOrder === "asc" || params.sortOrder === "desc")
+      (params.sortOrder === "ASC" || params.sortOrder === "DESC")
     ) {
       newRequestBody.sortOrder = params.sortOrder;
     }

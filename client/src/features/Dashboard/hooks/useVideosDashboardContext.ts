@@ -1,38 +1,28 @@
 import { useEffect, useCallback } from "react";
-import { useSearchParams, useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useStore } from "@/store/store";
 import { videosDefaults } from "../store/videos-dashboard-slice";
-import { ViewType } from "@/shared/hooks/useDashboardParams";
 
 type VideosRequestBody =
   | "sortOrder"
   | "page"
   | "minScreenshots"
-  | "maxScreenshots"
-  | "defaultMinScreenshots"
-  | "defaultMaxScreenshots"
-  | "viewType";
+  | "maxScreenshots";
 
 const URL_PARAMS: readonly VideosRequestBody[] = [
   "sortOrder",
   "page",
   "minScreenshots",
   "maxScreenshots",
-  "defaultMinScreenshots",
-  "defaultMaxScreenshots",
-  "viewType",
 ];
 
 const NULLABLE_PARAMS: readonly VideosRequestBody[] = [
   "minScreenshots",
   "maxScreenshots",
-  "defaultMinScreenshots",
-  "defaultMaxScreenshots",
 ];
 
 export const useVideosDashboardContext = () => {
   const [urlSearchParams, setURLSearchParams] = useSearchParams();
-  const { viewType } = useParams();
   const { videosRequestBody, setVideosRequestBody } = useStore();
 
   const setVideosRequestBodyWithUrl = useCallback(
@@ -114,7 +104,7 @@ export const useVideosDashboardContext = () => {
 
     if (
       params.sortOrder &&
-      (params.sortOrder === "asc" || params.sortOrder === "desc")
+      (params.sortOrder === "ASC" || params.sortOrder === "DESC")
     ) {
       newRequestBody.sortOrder = params.sortOrder;
     }
@@ -140,35 +130,8 @@ export const useVideosDashboardContext = () => {
       }
     }
 
-    if (params.defaultMinScreenshots) {
-      const defaultMinValue = parseInt(params.defaultMinScreenshots, 10);
-      if (!isNaN(defaultMinValue) && defaultMinValue >= 0) {
-        newRequestBody.defaultMinScreenshots = defaultMinValue;
-      }
-    }
-
-    if (params.defaultMaxScreenshots) {
-      const defaultMaxValue = parseInt(params.defaultMaxScreenshots, 10);
-      if (!isNaN(defaultMaxValue) && defaultMaxValue > 0) {
-        newRequestBody.defaultMaxScreenshots = defaultMaxValue;
-      }
-    }
-
-    if (
-      params.viewType &&
-      Object.values(ViewType).includes(params.viewType as ViewType)
-    ) {
-      newRequestBody.viewType = params.viewType as ViewType;
-    }
-
     useStore.setState({ videosRequestBody: newRequestBody });
   }, [urlSearchParams]);
-
-  useEffect(() => {
-    if (viewType && Object.values(ViewType).includes(viewType as ViewType)) {
-      setVideosRequestBody("viewType", viewType as ViewType);
-    }
-  }, [viewType, setVideosRequestBody]);
 
   const handleClearFilters = useCallback(() => {
     const newParams = new URLSearchParams(urlSearchParams);
@@ -182,15 +145,12 @@ export const useVideosDashboardContext = () => {
     setVideosRequestBodyBatch({
       minScreenshots: undefined,
       maxScreenshots: undefined,
-      defaultMinScreenshots: undefined,
-      defaultMaxScreenshots: undefined,
       page: 1,
     });
   }, [urlSearchParams, setURLSearchParams, setVideosRequestBodyBatch]);
 
   return {
     videosRequestBody,
-    viewType,
     setVideosRequestBody: setVideosRequestBodyWithUrl,
     setVideosRequestBodyBatch,
     handleClearFilters,

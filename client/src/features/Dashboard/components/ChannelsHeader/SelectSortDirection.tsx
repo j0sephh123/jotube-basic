@@ -7,17 +7,17 @@ export default function SelectSortDirection(): JSX.Element {
   const { requestBody, setRequestBody } = useDashboardContext();
 
   const icons: Record<SortOrder, JSX.Element> = {
-    asc: <ArrowUp size={14} />,
-    desc: <ArrowDown size={14} />,
+    ASC: <ArrowUp size={14} />,
+    DESC: <ArrowDown size={14} />,
   };
 
   const labels: Record<SortOrder, string> = {
-    asc: "ASC",
-    desc: "DESC",
+    ASC: "ASC",
+    DESC: "DESC",
   };
 
   const toggleSortOrder = () => {
-    const newSortOrder = requestBody.sortOrder === "asc" ? "desc" : "asc";
+    const newSortOrder = requestBody.sortOrder === "ASC" ? "DESC" : "ASC";
     setRequestBody("sortOrder", newSortOrder);
   };
 
