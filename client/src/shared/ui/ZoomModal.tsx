@@ -1,5 +1,5 @@
-import Modal from "@/shared/ui/Modal";
-import { useZoom } from "@/store/store";
+import Modal from "@shared/ui/Modal";
+import { useZoom } from "@store/store";
 
 export default function ZoomModal() {
   const { closeZoom, url, isVisible } = useZoom();

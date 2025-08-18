@@ -1,6 +1,6 @@
-import { ToastProvider } from "./ToastProvider";
-import GQLProvider from "./GQLProvider";
-import RestProvider from "./RestProvider";
+import { ToastProvider } from "@app/providers/ToastProvider";
+import GQLProvider from "@app/providers/GQLProvider";
+import RestProvider from "@app/providers/RestProvider";
 
 export default function AppProvider({ children }: { children: React.ReactNode }) {
   return (

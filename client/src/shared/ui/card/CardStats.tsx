@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import useViewScreenshots from "@/features/Thumbnail/hooks/useViewScreenshots";
-import { routes } from "@/shared/utils/routes";
-import useViewThumbnails from "@/shared/hooks/useViewThumbnails";
+import useViewScreenshots from "@features/Thumbnail/hooks/useViewScreenshots";
+import { routes } from "@shared/utils/routes";
+import useViewThumbnails from "@shared/hooks/useViewThumbnails";
 import { Fragment } from "react";
-import Tooltip from "@/shared/ui/Tooltip";
+import Tooltip from "@shared/ui/Tooltip";
 
 type CardStatsProps = {
   ytId: string;

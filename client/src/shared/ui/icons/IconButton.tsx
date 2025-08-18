@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Tooltip, { TooltipProps } from "../Tooltip";
+import Tooltip, { TooltipProps } from "@shared/ui/Tooltip";
 
 type Props = {
   icon: React.ReactNode;

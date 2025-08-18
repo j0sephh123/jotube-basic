@@ -1,5 +1,5 @@
-import Button from "@/shared/ui/button";
-import { useSidePanel } from "@/store/store";
+import Button from "@shared/ui/button";
+import { useSidePanel } from "@store/store";
 import { X } from "lucide-react";
 
 type Props = {

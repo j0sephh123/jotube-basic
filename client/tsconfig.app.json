@@ -22,7 +22,14 @@
 
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@app/*": ["./src/app/*"],
+      "@entities/*": ["./src/entities/*"],
+      "@features/*": ["./src/features/*"],
+      "@widgets/*": ["./src/widgets/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@store/*": ["./src/store/*"]
     },
     "noUncheckedIndexedAccess": true,
   },

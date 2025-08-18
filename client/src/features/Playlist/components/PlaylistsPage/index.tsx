@@ -1,10 +1,10 @@
-import { useGetPlaylists, useCreatePlaylist } from "../../hooks";
-import { usePlaylist } from "@/store/store";
-import { PlaylistCard } from "../../../../entities/Playlist/ui/PlaylistCard";
-import { CreatePlaylistModal } from "../CreatePlaylistModal";
-import { CreatePlaylist } from "./CreatePlaylist";
-import ErrorMessage from "@/shared/ui/static/ErrorMessage";
-import Loading from "@/shared/ui/static/Loading";
+import { useGetPlaylists, useCreatePlaylist } from "@features/Playlist/hooks";
+import { usePlaylist } from "@store/store";
+import { PlaylistCard } from "@entities/Playlist/ui/PlaylistCard";
+import { CreatePlaylist } from "@features/Playlist/components/PlaylistsPage/CreatePlaylist";
+import ErrorMessage from "@shared/ui/static/ErrorMessage";
+import Loading from "@shared/ui/static/Loading";
+import { CreatePlaylistModal } from "@features/Playlist/components/CreatePlaylistModal";
 
 export const PlaylistsPage = () => {
   const { isModalOpen, closePlaylistModal } = usePlaylist();

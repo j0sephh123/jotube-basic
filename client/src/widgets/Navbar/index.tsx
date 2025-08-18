@@ -1,16 +1,16 @@
 import { Grid2X2, HomeIcon, ListMusic, Save, SquarePlay } from "lucide-react";
-import QuickSearch from "@/features/Search/Search";
-import InitCarouselButton from "./InitCarouselButton";
-import Screenshots from "./Screenshots";
-import ProcessingProgress from "./ProcessingProgress";
-import VideoProcessingInfo from "./VideoProcessingInfo";
-import ThemeSwitcher from "./ThemeSwitcher";
-import { routes } from "@/shared/utils/routes";
-import { useTotalCounts } from "@/features/Statistics/hooks/useTotalCounts";
-import { useFreeSpace } from "@/features/Statistics/hooks/useFreeSpace";
-import IconButton from "@/shared/ui/icons/IconButton";
-import { ViewType } from "@/shared/hooks/useDashboardParams";
-import Text from "@/shared/ui/Text";
+import QuickSearch from "@features/Search/Search";
+import InitCarouselButton from "@widgets/Navbar/InitCarouselButton";
+import Screenshots from "@widgets/Navbar/Screenshots";
+import ProcessingProgress from "@widgets/Navbar/ProcessingProgress";
+import VideoProcessingInfo from "@widgets/Navbar/VideoProcessingInfo";
+import ThemeSwitcher from "@widgets/Navbar/ThemeSwitcher";
+import { routes } from "@shared/utils/routes";
+import { useTotalCounts } from "@features/Statistics/hooks/useTotalCounts";
+import { useFreeSpace } from "@features/Statistics/hooks/useFreeSpace";
+import IconButton from "@shared/ui/icons/IconButton";
+import { ViewType } from "@shared/hooks/useDashboardParams";
+import Text from "@shared/ui/Text";
 
 export default function Navbar() {
   const { data: totalCounts } = useTotalCounts();

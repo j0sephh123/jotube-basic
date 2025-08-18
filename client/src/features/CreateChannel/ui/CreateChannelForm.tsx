@@ -1,5 +1,5 @@
-import Title from "./Title";
-import Label from "./Label";
+import Title from "@features/CreateChannel/ui/Title";
+import Label from "@features/CreateChannel/ui/Label";
 
 type Props = {
   actions: React.ReactNode;

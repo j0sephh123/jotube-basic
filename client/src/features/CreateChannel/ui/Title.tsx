@@ -1,4 +1,4 @@
-import IconYoutube from "@/shared/ui/icons/IconYoutube";
+import IconYoutube from "@shared/ui/icons/IconYoutube";
 
 export default function Title() {
   return (

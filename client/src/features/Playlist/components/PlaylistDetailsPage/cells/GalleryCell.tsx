@@ -1,8 +1,8 @@
 import { ImageIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { routes } from "@/shared/utils/routes";
+import { routes } from "@shared/utils/routes";
 import { PlaylistChannelWithCountsResponse } from "@/generated/graphql";
-import TableCol from "../TableCol";
+import TableCol from "@features/Playlist/components/PlaylistDetailsPage/TableCol";
 
 type GalleryCellProps = {
   channel: PlaylistChannelWithCountsResponse;

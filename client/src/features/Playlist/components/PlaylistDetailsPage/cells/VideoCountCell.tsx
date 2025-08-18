@@ -1,8 +1,8 @@
 import { Play } from "lucide-react";
 import { Link } from "react-router-dom";
-import { routes } from "@/shared/utils/routes";
+import { routes } from "@shared/utils/routes";
 import { PlaylistChannelWithCountsResponse } from "@/generated/graphql";
-import TableCol from "../TableCol";
+import TableCol from "@features/Playlist/components/PlaylistDetailsPage/TableCol";
 
 type VideoCountCellProps = {
   channel: PlaylistChannelWithCountsResponse;

@@ -2,14 +2,14 @@ import { useState } from "react";
 import {
   useToastContext,
   ViewExistingChannel,
-} from "@/app/providers/ToastProvider";
-import CreateChannelModal from "./ui/CreateChannelModal";
-import { useChannelsDashboardQuery } from "@/widgets/Dashboard/api/useChannelsDashboardQuery";
-import useCreateChannel from "@/features/Channel/hooks/useCreateChannel";
-import CreateChannelTrigger from "./ui/CreateChannelTrigger";
-import CreateChannelForm from "./ui/CreateChannelForm";
-import Actions from "./ui/Actions";
-import { useCreateChannelForm } from "./hooks/useCreateChannelForm";
+} from "@app/providers/ToastProvider";
+import CreateChannelModal from "@features/CreateChannel/ui/CreateChannelModal";
+import { useChannelsDashboardQuery } from "@widgets/Dashboard/api/useChannelsDashboardQuery";
+import useCreateChannel from "@features/Channel/hooks/useCreateChannel";
+import CreateChannelTrigger from "@features/CreateChannel/ui/CreateChannelTrigger";
+import CreateChannelForm from "@features/CreateChannel/ui/CreateChannelForm";
+import Actions from "@features/CreateChannel/ui/Actions";
+import { useCreateChannelForm } from "@features/CreateChannel/hooks/useCreateChannelForm";
 
 export default function CreateChannel() {
   const [isModalVisible, setIsModalVisible] = useState(false);

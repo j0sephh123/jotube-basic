@@ -1,5 +1,5 @@
 import { createPortal } from "react-dom";
-import { formatSecondsToTime } from "@/shared/utils/format";
+import { formatSecondsToTime } from "@shared/utils/format";
 
 type VideoModalProps = {
   isVisible: boolean;

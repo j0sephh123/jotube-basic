@@ -1,5 +1,5 @@
-import { useDialog } from "@/shared/hooks/useDialog";
-import { useUpdateChannelPlaylist } from "../../hooks";
+import { useDialog } from "@shared/hooks/useDialog";
+import { useUpdateChannelPlaylist } from "@features/Playlist/hooks";
 
 export const useRemoveFromPlaylist = () => {
   const dialogHook = useDialog();

@@ -1,5 +1,5 @@
 import { ReactNode, useState, useEffect } from "react";
-import Modal from "@/shared/ui/Modal";
+import Modal from "@shared/ui/Modal";
 
 type InputDialogProps = {
   isOpen: boolean;

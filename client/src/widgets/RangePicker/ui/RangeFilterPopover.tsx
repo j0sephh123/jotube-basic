@@ -1,7 +1,7 @@
 import { SlidersHorizontal } from "lucide-react";
-import { RangeFilterBase } from "./RangeFilter";
-import { CommonRangeFilterPopover } from "@/features/Dashboard/widgets/RangePicker/CommonRangeFilterPopover";
-import { RangePickerTypes } from "@/store/store-types";
+import { RangeFilterBase } from "@widgets/RangePicker/ui/RangeFilter";
+import { CommonRangeFilterPopover } from "@features/Dashboard/widgets/RangePicker/CommonRangeFilterPopover";
+import { RangePickerTypes } from "@store/store-types";
 
 export default function RangeFilterPopover() {
   return (

@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react";
-import { usePlaylist } from "@/store/store";
-import { useGetChannel } from "../../../Channel/hooks/useGetChannel";
-import Title from "./Title";
-import { SelectPlaylistForm } from "./SelectPlaylistForm";
-import { useChannelsDashboardQuery } from "@/widgets/Dashboard/api/useChannelsDashboardQuery";
-import { useClickOutside } from "@/shared/hooks/useClickOutside";
+import { usePlaylist } from "@store/store";
+import { useGetChannel } from "@features/Channel/hooks/useGetChannel";
+import Title from "@features/Playlist/components/AddChannelToPlaylistModal/Title";
+import { SelectPlaylistForm } from "@features/Playlist/components/AddChannelToPlaylistModal/SelectPlaylistForm";
+import { useChannelsDashboardQuery } from "@widgets/Dashboard/api/useChannelsDashboardQuery";
+import { useClickOutside } from "@shared/hooks/useClickOutside";
 import { X } from "lucide-react";
-import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMetadata";
+import { useRefetchChannelMetadata } from "@features/Channel/hooks/useChannelMetadata";
 
 export const AddChannelToPlaylistModal = () => {
   const refetchChannelMetadata = useRefetchChannelMetadata();

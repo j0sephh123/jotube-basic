@@ -1,6 +1,6 @@
-import { UploadWithStoryboard } from "../useUploadsWithStoryboard";
-import Modal from "@/shared/ui/Modal";
-import Container from "@/features/Thumbnail/components/Container";
+import { UploadWithStoryboard } from "@features/Storyboard/useUploadsWithStoryboard";
+import Modal from "@shared/ui/Modal";
+import Container from "@features/Thumbnail/components/Container";
 
 interface ViewerProps {
   isModalOpen: boolean;

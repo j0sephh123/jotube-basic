@@ -1,4 +1,4 @@
-import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";
+import { useTypedChannelYtId } from "@shared/hooks/useDashboardParams";
 import { useState, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 
@@ -9,15 +9,15 @@ type ScreenshotGroup = {
   timeSpan: number;
 };
 
-import { useDialog } from "@/shared/hooks/useDialog";
+import { useDialog } from "@shared/hooks/useDialog";
 import {
   ChannelScreenshot,
   useFetchChannelScreenshots,
-} from "@/features/Screenshot/hooks/useFetchChannelScreenshots";
-import { useDeleteChannelScreenshot } from "@/features/Screenshot/hooks/useDeleteChannelScreenshot";
-import { useUpdateChannelScreenshot } from "@/features/Screenshot/hooks/useUpdateChannelScreenshot";
-import ScreenshotItem from "./GalleryItem";
-import { useZoom } from "@/store/store";
+} from "@features/Screenshot/hooks/useFetchChannelScreenshots";
+import { useDeleteChannelScreenshot } from "@features/Screenshot/hooks/useDeleteChannelScreenshot";
+import { useUpdateChannelScreenshot } from "@features/Screenshot/hooks/useUpdateChannelScreenshot";
+import ScreenshotItem from "@features/Gallery/components/GalleryItem";
+import { useZoom } from "@store/store";
 
 const TEMPORAL_THRESHOLD = 3;
 

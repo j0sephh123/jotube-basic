@@ -1,6 +1,6 @@
 import { Trash2 } from "lucide-react";
-import { useDeleteUploads } from "@/features/Upload/hooks/useUploadsDelete";
-import { useDialog } from "@/shared/hooks/useDialog";
+import { useDeleteUploads } from "@features/Upload/hooks/useUploadsDelete";
+import { useDialog } from "@shared/hooks/useDialog";
 
 type CardDeleteButtonProps = {
   ytChannelId: string;

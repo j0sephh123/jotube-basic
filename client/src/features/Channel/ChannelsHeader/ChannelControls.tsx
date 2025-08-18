@@ -1,8 +1,8 @@
 import { RotateCcw } from "lucide-react";
-import { useStore } from "@/store/store";
-import { RangePickerTypes } from "@/store/store-types";
+import { useStore } from "@store/store";
+import { RangePickerTypes } from "@store/store-types";
 import { useSearchParams } from "react-router-dom";
-import { Button } from "@/shared/ui/button";
+import { Button } from "@shared/ui/button";
 
 type Props = {
   leftSlot: React.ReactNode;

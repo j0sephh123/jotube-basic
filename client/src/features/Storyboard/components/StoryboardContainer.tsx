@@ -1,9 +1,9 @@
 import { Loader } from "lucide-react";
-import ErrorMessage from "@/shared/ui/static/ErrorMessage";
-import NoDataAvailable from "@/shared/ui/static/NoDataAvailable";
-import { UploadWithStoryboard } from "../useUploadsWithStoryboard";
-import useUploadsWithStoryboard from "../useUploadsWithStoryboard";
-import Header from "./Header";
+import ErrorMessage from "@shared/ui/static/ErrorMessage";
+import NoDataAvailable from "@shared/ui/static/NoDataAvailable";
+import { UploadWithStoryboard } from "@features/Storyboard/useUploadsWithStoryboard";
+import useUploadsWithStoryboard from "@features/Storyboard/useUploadsWithStoryboard";
+import Header from "@features/Storyboard/components/Header";
 
 export default function StoryboardContainer({
   children,

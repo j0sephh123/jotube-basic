@@ -1,4 +1,4 @@
-import { YT_VIDEO_ID_LENGTH } from "../lib/validation";
+import { YT_VIDEO_ID_LENGTH } from "@features/CreateChannel/lib/validation";
 
 export default function Label() {
   return (

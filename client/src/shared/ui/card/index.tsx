@@ -1,12 +1,12 @@
-import CardContainer from "./CardContainer";
-import CardImage from "./CardImage";
-import CardContent from "./CardContent";
-import CardTitle from "./CardTitle";
-import CardStats from "./CardStats";
-import CardMenu from "./CardMenu";
-import CardDeleteButton from "./CardDeleteButton";
-import CardDownloadButton from "./CardDownloadButton";
-import CardCreatedAt from "./CardCreatedAt";
+import CardContainer from "@shared/ui/card/CardContainer";
+import CardImage from "@shared/ui/card/CardImage";
+import CardContent from "@shared/ui/card/CardContent";
+import CardTitle from "@shared/ui/card/CardTitle";
+import CardStats from "@shared/ui/card/CardStats";
+import CardMenu from "@shared/ui/card/CardMenu";
+import CardDeleteButton from "@shared/ui/card/CardDeleteButton";
+import CardDownloadButton from "@shared/ui/card/CardDownloadButton";
+import CardCreatedAt from "@shared/ui/card/CardCreatedAt";
 
 type CardProps = {
   id: number;

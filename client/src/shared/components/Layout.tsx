@@ -1,15 +1,15 @@
 import { Outlet } from "react-router-dom";
-import TheCarousel from "@/features/Screenshot/components/TheCarousel";
-import { useWebSocket } from "@/shared/hooks/useWebSocket";
-import { useGlobalWebSocket } from "@/shared/hooks/useGlobalWebSocket";
-import ThumbnailsProcessing from "@/features/Thumbnail";
-import { AddChannelToPlaylistModal } from "@/features/Playlist/components/AddChannelToPlaylistModal";
-import ZoomModal from "@/shared/ui/ZoomModal";
-import StoryboardProcessing from "@/features/Storyboard/StoryboardProcessing";
-import CreateChannel from "@/features/CreateChannel";
-import SidePanel from "@/widgets/SidePanel";
-import Navbar from "@/widgets/Navbar";
-import { DialogProvider } from "../ui/dialog/DialogProvider";
+import TheCarousel from "@features/Screenshot/components/TheCarousel";
+import { useWebSocket } from "@shared/hooks/useWebSocket";
+import { useGlobalWebSocket } from "@shared/hooks/useGlobalWebSocket";
+import ThumbnailsProcessing from "@features/Thumbnail";
+import { AddChannelToPlaylistModal } from "@features/Playlist/components/AddChannelToPlaylistModal";
+import ZoomModal from "@shared/ui/ZoomModal";
+import StoryboardProcessing from "@features/Storyboard/StoryboardProcessing";
+import CreateChannel from "@features/CreateChannel";
+import SidePanel from "@widgets/SidePanel";
+import Navbar from "@widgets/Navbar";
+import { DialogProvider } from "@shared/ui/dialog/DialogProvider";
 
 export default function Layout(): JSX.Element {
   useWebSocket();

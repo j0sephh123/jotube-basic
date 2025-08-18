@@ -1,5 +1,5 @@
-import { useGetPlaylists, useUpdateChannelPlaylist } from "../../hooks";
 import { ChannelForPlaylistResponse } from "@/generated/graphql";
+import { useGetPlaylists, useUpdateChannelPlaylist } from "@features/Playlist/hooks";
 
 interface SelectPlaylistFormProps {
   channel: ChannelForPlaylistResponse;
