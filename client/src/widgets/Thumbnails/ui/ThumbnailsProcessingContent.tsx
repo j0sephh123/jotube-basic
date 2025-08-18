@@ -1,10 +1,10 @@
 import { useRef } from "react";
 import Modal from "@shared/ui/Modal";
-import Footer from "@features/Thumbnail/components/Footer";
-import Grid from "@features/Thumbnail/components/Grid";
-import Header from "@features/Thumbnail/components/Header";
-import ThumbnailImage from "@features/Thumbnail/components/ThumbnailImage";
-import Container from "@features/Thumbnail/components/Container";
+import Footer from "@widgets/Thumbnails/ui/Footer";
+import Grid from "@widgets/Thumbnails/ui/Grid";
+import Header from "@widgets/Thumbnails/ui/Header";
+import ThumbnailImage from "@widgets/Thumbnails/ui/ThumbnailImage";
+import Container from "@widgets/Thumbnails/ui/Container";
 import useResetSelection from "@features/Thumbnail/hooks/useResetSelection";
 import useEvents from "@features/Thumbnail/hooks/useEvents";
 import useHandleKeyDown from "@features/Thumbnail/hooks/useHandleKeyDown";

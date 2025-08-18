@@ -1,6 +1,6 @@
 import { useThumbnailsSlice } from "@store/store";
 import { useThumbnailByVideoId } from "@features/Thumbnail/hooks/useThumbnailByVideoId";
-import ThumbnailsProcessingContent from "@features/Thumbnail/components/ThumbnailsProcessingContent";
+import ThumbnailsProcessingContent from "@widgets/Thumbnails/ui/ThumbnailsProcessingContent";
 
 export default function ThumbnailsProcessing() {
   const { thumbnailsProcessingData, metadata } = useThumbnailsSlice();

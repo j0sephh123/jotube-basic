@@ -3,7 +3,7 @@ import TheCarousel from "@features/Screenshot/components/TheCarousel";
 import { useWebSocket } from "@shared/hooks/useWebSocket";
 import { useGlobalWebSocket } from "@shared/hooks/useGlobalWebSocket";
 import { DialogProvider } from "@shared/ui/dialog/DialogProvider";
-import ThumbnailsProcessing from "@/features/Thumbnail";
+import ThumbnailsProcessing from "@/widgets/Thumbnails/ui";
 import { AddChannelToPlaylistModal } from "@features/Playlist/components/AddChannelToPlaylistModal";
 import ZoomModal from "@shared/ui/ZoomModal";
 import StoryboardProcessing from "@features/Storyboard/StoryboardProcessing";

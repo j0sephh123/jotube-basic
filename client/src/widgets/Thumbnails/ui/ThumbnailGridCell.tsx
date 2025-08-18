@@ -1,4 +1,4 @@
-import { HoverableDiv } from "@features/Thumbnail/components/HoverableDiv";
+import { HoverableDiv } from "@widgets/Thumbnails/ui/HoverableDiv";
 
 type Props = {
   index: number;

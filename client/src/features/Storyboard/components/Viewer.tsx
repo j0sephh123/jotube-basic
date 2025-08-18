@@ -1,6 +1,6 @@
 import { UploadWithStoryboard } from "@features/Storyboard/useUploadsWithStoryboard";
 import Modal from "@shared/ui/Modal";
-import Container from "@features/Thumbnail/components/Container";
+import Container from "@widgets/Thumbnails/ui/Container";
 
 interface ViewerProps {
   isModalOpen: boolean;
