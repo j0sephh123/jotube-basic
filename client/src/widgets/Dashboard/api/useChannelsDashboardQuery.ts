@@ -7,7 +7,7 @@ import { useFetchDashboard } from "@widgets/Dashboard/lib";
 import { ViewType as GraphQLViewType } from "@/shared/api/generated/graphql";
 
 export type ChannelsDashboardResponseData =
-  import("@/generated/graphql").ChannelsDashboardResponse;
+  import("@/shared/api/generated/graphql").ChannelsDashboardResponse;
 
 const mapViewTypeToGraphQL = (
   viewType: string | undefined

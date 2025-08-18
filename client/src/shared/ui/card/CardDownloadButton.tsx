@@ -11,7 +11,9 @@ export default function CardDownloadButton({ id }: CardDownloadButtonProps) {
 
   const downloadMutation = useDownload();
   const handleDownload = (id: number) => {
-    const channel = data?.channels.find((ch) => ch.id === id);
+    const channel = data?.channels.find(
+      (ch: { id: number; ytId: string }) => ch.id === id
+    );
     if (!channel?.ytId) return;
 
     downloadMutation.mutate([

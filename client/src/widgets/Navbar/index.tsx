@@ -2,7 +2,6 @@ import { Grid2X2, HomeIcon, ListMusic, Save, SquarePlay } from "lucide-react";
 import QuickSearch from "@features/Search/Search";
 import InitCarouselButton from "@widgets/Navbar/InitCarouselButton";
 import Screenshots from "@widgets/Navbar/Screenshots";
-import ProcessingProgress from "@widgets/Navbar/ProcessingProgress";
 import VideoProcessingInfo from "@widgets/Navbar/VideoProcessingInfo";
 import ThemeSwitcher from "@widgets/Navbar/ThemeSwitcher";
 import { routes } from "@/shared/routes";
@@ -62,7 +61,6 @@ export default function Navbar() {
           <QuickSearch />
           <Text text={`Free: ${freeSpace?.freeSpace ?? "..."}`} />
           <ThemeSwitcher />
-          <ProcessingProgress />
           <VideoProcessingInfo />
         </div>
       </div>

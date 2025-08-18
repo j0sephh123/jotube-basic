@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useRef, useEffect } from "react";
 import { Search } from "lucide-react";
 import Modal from "@/shared/ui/Modal";
@@ -102,7 +103,10 @@ export default function QuickSearch() {
                     >
                       {item.type === "ytVideoId" ? (
                         <Link
-                          to={routes.galleryVideo(item.channel.ytId, item.ytId)}
+                          to={routes.galleryVideo(
+                            (item as any).channel.ytId,
+                            item.ytId
+                          )}
                           className="block p-4 hover:bg-base-200 transition-colors"
                           onClick={() => setIsModalOpen(false)}
                         >
@@ -119,7 +123,8 @@ export default function QuickSearch() {
                                 {highlightText(item.title, query)}
                               </div>
                               <div className="text-xs text-base-content/60">
-                                Video • {item.channel.ytId}
+                                Video •{" "}
+                                {(item as any).channel.ytId}
                               </div>
                             </div>
                           </div>

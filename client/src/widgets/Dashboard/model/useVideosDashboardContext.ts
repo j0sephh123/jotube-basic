@@ -2,6 +2,7 @@ import { useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useStore } from "@/store/store";
 import { videosDefaults } from "@/widgets/Dashboard/model/videos-dashboard-slice";
+import { SortOrder } from "@/shared/api/generated/graphql";
 
 type VideosRequestBody =
   | "sortOrder"
@@ -106,7 +107,7 @@ export const useVideosDashboardContext = () => {
       params.sortOrder &&
       (params.sortOrder === "ASC" || params.sortOrder === "DESC")
     ) {
-      newRequestBody.sortOrder = params.sortOrder;
+      newRequestBody.sortOrder = params.sortOrder as SortOrder;
     }
 
     if (params.page) {

@@ -3,17 +3,13 @@ import * as fs from 'fs';
 import * as path from 'path';
 import sharp from 'sharp';
 import { FilePathService } from 'src/file/file-path.service';
-import { EventsService } from 'src/core/events/events.service';
 
 @Injectable()
 export class ThumbnailsService {
   private readonly SPACING = 10;
   private readonly THUMBNAIL_WIDTH = 1900;
 
-  constructor(
-    private readonly filePathService: FilePathService,
-    private readonly eventsService: EventsService,
-  ) {}
+  constructor(private readonly filePathService: FilePathService) {}
 
   async generateThumbnails({
     ytChannelId,
@@ -28,7 +24,7 @@ export class ThumbnailsService {
     const screenshotsDir = `${basePath}/${ytChannelId}/${ytVideoId}/all_screenshots`;
     const thumbnailsDir = `${basePath}/${ytChannelId}/${ytVideoId}/thumbnails`;
 
-    this.eventsService.sendEvent('thumbnails_start', ytVideoId);
+    console.log('thumbnails_start', ytVideoId);
 
     try {
       const files = this.getSortedFiles(screenshotsDir);
@@ -79,7 +75,7 @@ export class ThumbnailsService {
         generatedFiles.push(thumbnailPath);
       }
 
-      this.eventsService.sendEvent('thumbnails_finish', ytVideoId);
+      console.log('thumbnails_finish', ytVideoId);
 
       return {
         success: true,

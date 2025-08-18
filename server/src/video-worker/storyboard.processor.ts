@@ -4,7 +4,6 @@ import { queueNames } from 'src/shared/constants';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
 import { StoryboardService } from 'src/storyboard/storyboard.service';
 import { ArtifactType } from '@prisma/client';
-import { EventsService } from 'src/core/events/events.service';
 
 type StoryboardJobData = {
   ytVideoId: string;
@@ -15,7 +14,6 @@ export class StoryboardProcessor {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly storyboardService: StoryboardService,
-    private readonly eventsService: EventsService,
   ) {}
 
   @Process()
@@ -35,11 +33,7 @@ export class StoryboardProcessor {
       data: { artifact: ArtifactType.STORYBOARD },
     });
 
-    this.eventsService.sendEvent(
-      'storyboard_created',
-      job.data.ytVideoId,
-      'Storyboard created',
-    );
+    console.log('storyboard_created', job.data.ytVideoId);
 
     return;
   }

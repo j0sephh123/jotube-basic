@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as path from 'path';
 import { spawn } from 'child_process';
-import { EventsService } from 'src/core/events/events.service';
 import { ScreenshotsManagerService } from 'src/screenshots/manager/screenshots-manager.service';
 
 export type CaptureScreenshotsData = {
@@ -12,7 +11,6 @@ export type CaptureScreenshotsData = {
 @Injectable()
 export class ScreenshotsJobService {
   constructor(
-    private readonly eventsService: EventsService,
     private readonly screenshotsManagerService: ScreenshotsManagerService,
   ) {}
 
@@ -20,7 +18,7 @@ export class ScreenshotsJobService {
     const { screenshotsPath, videoPath } =
       this.screenshotsManagerService.getPaths(ytChannelId, ytVideoId);
 
-    this.eventsService.sendEvent('screenshots_start', ytVideoId);
+    console.log('screenshots_start', ytVideoId);
 
     let currentScreenshot = 0;
 
@@ -40,17 +38,13 @@ export class ScreenshotsJobService {
 
       ffmpeg.stderr.on('data', () => {
         currentScreenshot++;
-        this.eventsService.sendEvent(
-          'screenshots_progress',
-          ytVideoId,
-          currentScreenshot.toString(),
-        );
+        console.log('screenshots_progress', ytVideoId, currentScreenshot);
       });
 
       ffmpeg.on('close', (code) => {
         if (code === 0) {
           console.log('Screenshots captured successfully for the whole video.');
-          this.eventsService.sendEvent('screenshots_finish', ytVideoId);
+          console.log('screenshots_finish', ytVideoId);
           resolve();
         } else {
           reject(new Error(`FFmpeg exited with code ${code}`));

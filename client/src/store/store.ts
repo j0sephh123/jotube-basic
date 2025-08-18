@@ -4,7 +4,6 @@ import { devtools } from "zustand/middleware";
 
 // --- slice creators ---
 import { thumbnailsProcessingSlice } from "@widgets/Thumbnails/model/thumbnails-processing-slice";
-import { createWebSocketSlice } from "@store/slices/websocket-slice";
 import { createDashboardSlice } from "@widgets/Dashboard/model/dashboard-slice";
 import { createVideosDashboardSlice } from "@widgets/Dashboard/model/videos-dashboard-slice";
 import {
@@ -24,7 +23,6 @@ import type {
   SlidesSlice,
   ThumbnailsProcessingSlice,
   StoryboardProcessingSlice,
-  WebSocketSlice,
   DashboardSlice,
   RangePickersSlice,
   VideosDashboardSlice,
@@ -39,7 +37,6 @@ export const useStore = create<StoreType>()(
       ...createSlidesSlice(set),
       ...thumbnailsProcessingSlice(set),
       ...createStoryboardProcessingSlice(set),
-      ...createWebSocketSlice(set),
       ...createDashboardSlice(set),
       ...createVideosDashboardSlice(set),
       ...createRangePickersSlice(set, get),
@@ -72,7 +69,6 @@ export const useSlides = makeScopedHook<SlidesSlice>();
 export const useThumbnailsSlice = makeScopedHook<ThumbnailsProcessingSlice>();
 export const useStoryboardProcessing =
   makeScopedHook<StoryboardProcessingSlice>();
-export const useWebSocketState = makeScopedHook<WebSocketSlice>();
 export const useDashboard = makeScopedHook<DashboardSlice>();
 export const useVideosDashboard = makeScopedHook<VideosDashboardSlice>();
 export const useRangePickers = makeScopedHook<RangePickersSlice>();

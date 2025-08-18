@@ -18,7 +18,10 @@ export default function SelectSortDirection(): JSX.Element {
   };
 
   const toggleSortOrder = () => {
-    const newSortOrder = videosRequestBody.sortOrder === "ASC" ? "DESC" : "ASC";
+    const newSortOrder =
+      videosRequestBody.sortOrder === SortOrder.Asc
+        ? SortOrder.Desc
+        : SortOrder.Asc;
     setVideosRequestBody("sortOrder", newSortOrder);
   };
 

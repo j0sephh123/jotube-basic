@@ -64,18 +64,6 @@ export type ThumbnailsProcessingSlice = {
   };
 };
 
-export type WebSocketSlice = {
-  operations: {
-    download: { progress: number; filename: string } | null;
-    screenshots: { current: number; filename: string } | null;
-    thumbnails: { filename: string } | null;
-  };
-  setOperation: (
-    type: "download" | "screenshots" | "thumbnails",
-    data: { progress?: string; filename: string; current?: number } | null
-  ) => void;
-};
-
 export type DashboardSlice = {
   requestBody: {
     sortOrder: SortOrder;
@@ -183,7 +171,6 @@ export type ZoomSlice = {
 export type Store = SlidesSlice &
   ThumbnailsProcessingSlice &
   StoryboardProcessingSlice &
-  WebSocketSlice &
   DashboardSlice &
   RangePickersSlice &
   VideosDashboardSlice &

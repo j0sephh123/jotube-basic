@@ -19,14 +19,11 @@ import { SearchController } from './search/search.controller';
 import { StatisticsController } from './statistics/statistics.controller';
 import { QueueService } from './queue/queue.service';
 import { EventEmitterModule } from '@nestjs/event-emitter';
-import { EventsModule } from './core/events/events.module';
 import { ScreenshotsManagerModule } from './screenshots/manager/screenshots-manager.module';
 import { ScreenshotsManagerService } from './screenshots/manager/screenshots-manager.service';
 import { ThumbnailsManagerModule } from './thumbnails/manager/thumbnails-manager.module';
 import { ScreenshotsApiModule } from './screenshots/api/screenshots-api.module';
-
 import { FileModule } from './file/file.module';
-import { EventsGateway } from './events.gateway';
 import { StoryboardModule } from './storyboard/storyboard.module';
 import { UploadsVideoModule } from './uploads-video/uploads-video.module';
 import { DatabaseModule } from './core/database/database.module';
@@ -77,7 +74,6 @@ import { AppGraphQLModule } from './graphql/graphql.module';
     LoggingModule,
     ImagesModule,
     NestConfigModule.forRoot(),
-    EventsModule,
     ThumbnailsModule,
     ScreenshotsJobModule,
     ScreenshotsManagerModule,
@@ -104,7 +100,6 @@ import { AppGraphQLModule } from './graphql/graphql.module';
     DownloadProcessor,
     StoryboardProcessor,
     ScreenshotsManagerService,
-    EventsGateway,
   ],
 })
 export class AppModule {}
