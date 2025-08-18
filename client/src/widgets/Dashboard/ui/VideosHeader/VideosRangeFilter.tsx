@@ -2,7 +2,7 @@ import { useMemo, useEffect } from "react";
 import { useVideosDashboardContext } from "@widgets/Dashboard/model/useVideosDashboardContext";
 import { useStore } from "@store/store";
 import { VideosDashboardSlice } from "@store/store-types";
-import VideosRangePicker from "@features/Dashboard/components/VideosHeader/VideosRangePicker";
+import VideosRangePicker from "./VideosRangePicker";
 
 type VideosRequestBodyKey = keyof VideosDashboardSlice["videosRequestBody"];
 

@@ -3,7 +3,7 @@ import { useDeleteUploads } from "@/features/Upload/hooks/useUploadsDelete";
 import { useSaveUpload } from "@/features/Upload/hooks/useSaveUpload";
 import useUploadsList from "@/features/Upload/hooks/useUploadsList";
 import { DefaultUploadCard } from "@/features/Upload/components/DefaultUploadCard";
-import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMetadata";
+import { useRefetchChannelMetadata } from "@/entities/Channel/model/useChannelMetadata";
 import { PropsWithChildren } from "react";
 import { useCreateStoryboard } from "@/features/Upload/hooks/useCreateStoryboard";
 import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";

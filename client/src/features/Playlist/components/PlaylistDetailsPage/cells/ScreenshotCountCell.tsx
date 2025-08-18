@@ -1,7 +1,7 @@
 import { Camera } from "lucide-react";
 import useViewScreenshots from "@widgets/Thumbnails/lib/useViewScreenshots";
 import { PlaylistChannelWithCountsResponse } from "@/generated/graphql";
-import TableCol from "@features/Playlist/components/PlaylistDetailsPage/TableCol";
+import TableCol from "@/widgets/PlaylistDetails/ui/TableCol";
 
 type ScreenshotCountCellProps = {
   channel: PlaylistChannelWithCountsResponse;

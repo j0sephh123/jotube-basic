@@ -1,7 +1,7 @@
 import PlaylistTable from "@entities/Playlist/ui/PlaylistTable";
-import Header from "@features/Playlist/components/PlaylistDetailsPage/Header";
-import PlaylistDetailsContainer from "@features/Playlist/components/PlaylistDetailsPage/PlaylistDetailsContainer";
-import RightSection from "@features/Playlist/components/PlaylistDetailsPage/RightSection";
+import Header from "@widgets/PlaylistDetails/ui/Header";
+import PlaylistDetailsContainer from "@widgets/PlaylistDetails/ui/PlaylistDetailsContainer";
+import RightSection from "@widgets/PlaylistDetails/ui/RightSection";
 
 export const PlaylistDetailsPage = () => {
   return (

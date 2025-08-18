@@ -3,9 +3,9 @@ import Tooltip from "@shared/ui/Tooltip";
 import CopyValue from "@shared/ui/CopyValue";
 import Avatar from "@shared/ui/Avatar";
 import { PlaylistChannelWithCountsResponse } from "@/generated/graphql";
-import TableCol from "@features/Playlist/components/PlaylistDetailsPage/TableCol";
 import { routes } from "@shared/utils/routes";
 import SyncUploadsButton from "@features/Upload/components/SyncUploadsButton";
+import TableCol from "@/widgets/PlaylistDetails/ui/TableCol";
 
 type TitleCellProps = {
   channel: PlaylistChannelWithCountsResponse;

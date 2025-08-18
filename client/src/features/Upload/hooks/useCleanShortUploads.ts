@@ -1,6 +1,6 @@
 import { useCleanShortUploadsMutation } from "@/generated/graphql";
 import { useRefetchChannelUploads } from "@features/Upload/hooks/useUploadsList";
-import { useRefetchChannelMetadata } from "@features/Channel/hooks/useChannelMetadata";
+import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
 import { useState } from "react";
 
 export function useCleanShortUploads(ytChannelId: string) {

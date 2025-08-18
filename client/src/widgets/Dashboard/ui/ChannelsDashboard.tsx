@@ -1,5 +1,5 @@
 import { useDashboardParams } from "@/shared/hooks/useDashboardParams";
-import ChannelDashboardCard from "@/features/Dashboard/components/ChannelDashboardCard";
+import ChannelDashboardCard from "@/widgets/Dashboard/ui/ChannelDashboardCard";
 import ChannelsDashboardContainer from "@/widgets/Dashboard/ui/ChannelsDashboardContainer";
 
 export default function ChannelsDashboard() {

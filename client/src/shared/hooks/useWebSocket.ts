@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useStore } from "@store/store";
-import { useRefetchChannelMetadata } from "@features/Channel/hooks/useChannelMetadata";
+import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
 import { io, Socket } from "socket.io-client";
 import { EventTypes } from "@shared/types/types";
 import { useRefetchQueue } from "@shared/hooks/useQueue";

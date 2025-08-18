@@ -112,7 +112,7 @@ export default function VideosRangePicker({
           step={stepSize}
           value={minValue}
           onChange={(e) => handleMinChange(e.target.value)}
-          className="input input-bordered input-sm w-20"
+          className="input input-sm input-bordered w-20"
           placeholder={min.toString()}
         />
         <span className="text-sm">to</span>
@@ -123,13 +123,17 @@ export default function VideosRangePicker({
           step={stepSize}
           value={maxValue}
           onChange={(e) => handleMaxChange(e.target.value)}
-          className="input input-bordered input-sm w-20"
-          placeholder={formatValue(max)}
+          className="input input-sm input-bordered w-20"
+          placeholder={max.toString()}
         />
+        <Button onClick={handleReset} size="sm" variant="ghost">
+          Reset
+        </Button>
       </div>
-      <Button onClick={handleReset} size="sm" variant="outline">
-        Reset
-      </Button>
+      <div className="text-xs text-gray-500">
+        Current range: {formatValue(parseInt(minValue, 10) || min)} -{" "}
+        {maxValue ? formatValue(parseInt(maxValue, 10)) : `${max}+`}
+      </div>
     </div>
   );
 }

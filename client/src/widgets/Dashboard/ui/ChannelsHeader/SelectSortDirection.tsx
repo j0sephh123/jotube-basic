@@ -17,7 +17,8 @@ export default function SelectSortDirection(): JSX.Element {
   };
 
   const toggleSortOrder = () => {
-    const newSortOrder = requestBody.sortOrder === SortOrder.Asc ? SortOrder.Desc : SortOrder.Asc;
+    const newSortOrder =
+      requestBody.sortOrder === SortOrder.Asc ? SortOrder.Desc : SortOrder.Asc;
     setRequestBody("sortOrder", newSortOrder);
   };
 

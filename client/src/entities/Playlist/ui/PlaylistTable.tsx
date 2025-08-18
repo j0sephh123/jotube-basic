@@ -5,12 +5,12 @@ import GalleryCell from "@/features/Playlist/components/PlaylistDetailsPage/cell
 import SavedCountCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/SavedCountCell";
 import ScreenshotCountCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/ScreenshotCountCell";
 import ThumbnailCountCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/ThumbnailCountCell";
-import TitleCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/TitleCell";
 import VideoCountCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/VideoCountCell";
 import TableHeader from "@/entities/Playlist/ui/PlaylistTableHeader";
 import TableRow from "@/entities/Playlist/ui/PlaylistTableRow";
 import { useRemoveFromPlaylist } from "@/features/Playlist/components/PlaylistDetailsPage/useRemoveFromPlaylist";
 import { useRefetchPlaylist } from "@/features/Playlist/hooks/useGetPlaylist";
+import TitleCell from "./cells/TitleCell";
 
 type TableProps = {
   playlist: PlaylistDetailsResponse;
@@ -63,7 +63,9 @@ export default function PlaylistTable({ playlist }: TableProps) {
 
   const handleSort = (field: typeof sortField) => {
     if (sortField === field) {
-      setSortDirection(sortDirection === SortOrder.Asc ? SortOrder.Desc : SortOrder.Asc);
+      setSortDirection(
+        sortDirection === SortOrder.Asc ? SortOrder.Desc : SortOrder.Asc
+      );
     } else {
       setSortField(field);
       setSortDirection(SortOrder.Asc);

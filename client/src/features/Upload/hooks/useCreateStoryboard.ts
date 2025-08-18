@@ -6,7 +6,7 @@ import {
 } from "@tanstack/react-query";
 import nestFetcher from "@shared/api/nestFetcher";
 import { useRefetchChannelUploads } from "@features/Upload/hooks/useUploadsList";
-import { useRefetchChannelMetadata } from "@features/Channel/hooks/useChannelMetadata";
+import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
 import { useRefetchQueue } from "@shared/hooks/useQueue";
 
 type Body = {

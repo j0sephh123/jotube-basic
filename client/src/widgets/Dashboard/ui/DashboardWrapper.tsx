@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import ChannelsHeader from "@/features/Dashboard/components/ChannelsHeader";
-import VideosHeader from "@/features/Dashboard/components/VideosHeader";
+import ChannelsHeader from "@/widgets/Dashboard/ui/ChannelsHeader";
+import VideosHeader from "@/widgets/Dashboard/ui/VideosHeader";
 import {
   DashboardType,
   useDashboardParams,

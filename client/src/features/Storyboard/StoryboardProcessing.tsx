@@ -1,7 +1,7 @@
 import Modal from "@/shared/ui/Modal";
 import { useStoryboardProcessing } from "@/store/store";
 import { useSaveUpload } from "@/features/Upload/hooks/useSaveUpload";
-import { useRefetchChannelMetadata } from "@/features/Channel/hooks/useChannelMetadata";
+import { useRefetchChannelMetadata } from "@/entities/Channel/model/useChannelMetadata";
 import { useRefetchChannelUploads } from "@/features/Upload/hooks/useUploadsList";
 import { useDeleteUploads } from "@/features/Upload/hooks/useUploadsDelete";
 import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";

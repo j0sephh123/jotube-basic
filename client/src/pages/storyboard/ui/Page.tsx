@@ -1,5 +1,5 @@
 import StoryboardChannel from "@/features/Storyboard/StoryboardChannel";
 
-export default function StoryboardPage() {
+export default function Page() {
   return <StoryboardChannel />;
 }

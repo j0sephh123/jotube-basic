@@ -1,5 +1,5 @@
 import { useSyncUploadsMutation } from "@/generated/graphql";
-import { useRefetchChannelMetadata } from "@features/Channel/hooks/useChannelMetadata";
+import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
 import { useRefetchChannelUploads } from "@features/Upload/hooks/useUploadsList";
 
 export type SyncUploadsRequest = {
