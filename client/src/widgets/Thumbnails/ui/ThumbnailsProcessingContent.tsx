@@ -5,11 +5,11 @@ import Grid from "@widgets/Thumbnails/ui/Grid";
 import Header from "@widgets/Thumbnails/ui/Header";
 import ThumbnailImage from "@widgets/Thumbnails/ui/ThumbnailImage";
 import Container from "@widgets/Thumbnails/ui/Container";
-import useResetSelection from "@features/Thumbnail/hooks/useResetSelection";
-import useEvents from "@features/Thumbnail/hooks/useEvents";
-import useHandleKeyDown from "@features/Thumbnail/hooks/useHandleKeyDown";
-import useHandleContainerWheel from "@features/Thumbnail/hooks/useHandleContainerWheel";
+import useResetSelection from "@widgets/Thumbnails/lib/useResetSelection";
+import useHandleKeyDown from "@widgets/Thumbnails/lib/useHandleKeyDown";
+import useHandleContainerWheel from "@widgets/Thumbnails/lib/useHandleContainerWheel";
 import { useThumbnailsSlice } from "@store/store";
+import useEvents from "@widgets/Thumbnails/lib/useEvents";
 
 export default function ThumbnailsProcessingContent() {
   const { clearThumbnailsProcessingData } = useThumbnailsSlice();

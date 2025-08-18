@@ -1,3 +1,5 @@
+import { SortOrder } from "@/generated/graphql";
+
 type TableHeaderProps = {
   children: React.ReactNode;
   sortField?:
@@ -6,7 +8,7 @@ type TableHeaderProps = {
     | "savedCount"
     | "screenshotCount"
     | "thumbnailCount";
-  sortDirection?: "asc" | "desc";
+  sortDirection?: SortOrder;
   onSort?: (
     field:
       | "title"
@@ -40,7 +42,7 @@ export default function PlaylistTableHeader({
     style?: React.CSSProperties;
   }) => {
     const isSorted = sortField === field;
-    const isAsc = sortDirection === "asc";
+    const isAsc = sortDirection === SortOrder.Asc;
 
     return (
       <th

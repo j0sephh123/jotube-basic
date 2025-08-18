@@ -1,18 +1,18 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "@/shared/ui/Layout";
-import ScreenshotsPage from "@/pages/ScreenshotsPage";
-import ScreenshotsByMonth from "@/pages/ScreenshotsPageMonth";
-import ScreenshotsByDayDate from "@/pages/ScreenshotsPageDate";
+import ScreenshotsPage from "@/pages/screenshots/ui/ScreenshotsPage";
+import ScreenshotsByMonth from "@/pages/screenshots-month/ui/Page";
+import ScreenshotsByDayDate from "@/pages/screenshots-date/ui/Page";
 import ScreenshotsLayout from "@/features/Screenshot/components/ScreenshotsPageLayout";
-import SavedUploads from "@/pages/SavedUploadsPage";
+import SavedUploads from "@/pages/saved-uploads/ui/Page";
 import ChannelPageLayout from "@/features/Channel/ChannelPageLayout";
-import GalleryPage from "@/pages/GalleryPage";
+import GalleryPage from "@/pages/gallery/ui/Page";
 import GalleryLayout from "@/features/Gallery/components/GalleryLayout";
 import Dashboard from "@/features/Dashboard";
 import DashboardWrapper from "@/widgets/Dashboard/ui/DashboardWrapper";
-import DefaultUploadsPage from "@/pages/DefaultUploadsPage";
-import GalleryVideoPage from "@/features/Gallery/components/GalleryVideoPage";
-import StoryboardPage from "@/pages/StoryboardPage";
+import DefaultUploadsPage from "@/pages/uploads/ui/Page";
+import GalleryVideoPage from "@/pages/gallery-video/ui/Page";
+import StoryboardPage from "@/pages/storyboard/ui/StoryboardPage";
 import { PlaylistsPage, PlaylistDetailsPage } from "@/features/Playlist";
 import NotFound from "@/shared/ui/static/NotFound";
 

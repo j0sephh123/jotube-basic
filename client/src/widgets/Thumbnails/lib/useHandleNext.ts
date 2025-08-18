@@ -1,7 +1,7 @@
-import useThumbnailsCount from "@features/Thumbnail/hooks/useThumbnailsCount";
+import useThumbnailsCount from "@widgets/Thumbnails/lib/useThumbnailsCount";
 import { useThumbnailsSlice } from "@store/store";
 import { useDialog } from "@shared/hooks/useDialog";
-import useSubmit from "@features/Thumbnail/hooks/useSubmit";
+import useSubmit from "@widgets/Thumbnails/lib/useSubmit";
 
 export default function useHandleNext() {
   const thumbnailsCount = useThumbnailsCount();

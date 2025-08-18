@@ -1,7 +1,7 @@
-import { useTotalCounts } from "@/features/Statistics/hooks/useTotalCounts";
-import useViewScreenshots from "@/features/Thumbnail/hooks/useViewScreenshots";
+import { useTotalCounts } from "@features/Statistics/hooks/useTotalCounts";
+import useViewScreenshots from "@widgets/Thumbnails/lib/useViewScreenshots";
 import { Loader, PlayCircle } from "lucide-react";
-import IconButton from "@/shared/ui/icons/IconButton";
+import IconButton from "@shared/ui/icons/IconButton";
 
 export default function InitCarouselButton() {
   const viewScreenshots = useViewScreenshots();

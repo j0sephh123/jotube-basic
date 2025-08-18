@@ -1,11 +1,11 @@
 import { useThumbnailsSlice } from "@store/store";
 import OpenExplorerButton from "@shared/ui/OpenDirectoryButton/OpenDirectoryButton";
 import { ArrowLeft, ArrowRight, Save } from "lucide-react";
-import useSubmit from "@features/Thumbnail/hooks/useSubmit";
-import useIsLastItem from "@features/Thumbnail/hooks/useIsLastItem";
+import useSubmit from "@widgets/Thumbnails/lib/useSubmit";
+import useIsLastItem from "@widgets/Thumbnails/lib/useIsLastItem";
 import Button from "@shared/ui/button";
-import useThumbnailsCount from "@features/Thumbnail/hooks/useThumbnailsCount";
-import usePaginate from "@features/Thumbnail/hooks/usePaginate";
+import useThumbnailsCount from "@widgets/Thumbnails/lib/useThumbnailsCount";
+import usePaginate from "@widgets/Thumbnails/lib/usePaginate";
 
 export default function Footer() {
   const { handlePrevious, handleNext } = usePaginate();

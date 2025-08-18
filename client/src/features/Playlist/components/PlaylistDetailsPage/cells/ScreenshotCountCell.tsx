@@ -1,5 +1,5 @@
 import { Camera } from "lucide-react";
-import useViewScreenshots from "@features/Thumbnail/hooks/useViewScreenshots";
+import useViewScreenshots from "@widgets/Thumbnails/lib/useViewScreenshots";
 import { PlaylistChannelWithCountsResponse } from "@/generated/graphql";
 import TableCol from "@features/Playlist/components/PlaylistDetailsPage/TableCol";
 

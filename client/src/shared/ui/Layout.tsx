@@ -8,7 +8,7 @@ import { AddChannelToPlaylistModal } from "@features/Playlist/components/AddChan
 import ZoomModal from "@shared/ui/ZoomModal";
 import StoryboardProcessing from "@features/Storyboard/StoryboardProcessing";
 import CreateChannel from "@features/CreateChannel";
-import SidePanel from "@widgets/SidePanel";
+import SidePanel from "@widgets/SidePanel/ui/SidePanel";
 import Navbar from "@widgets/Navbar";
 
 export default function Layout(): JSX.Element {

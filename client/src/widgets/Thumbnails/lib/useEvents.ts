@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useThumbnailsSlice, useZoom } from "@store/store";
-import useThumbnailsCount from "@features/Thumbnail/hooks/useThumbnailsCount";
+import useThumbnailsCount from "@widgets/Thumbnails/lib/useThumbnailsCount";
 
 export default function useEvents(
   handleKeyDown: (event: KeyboardEvent) => void,

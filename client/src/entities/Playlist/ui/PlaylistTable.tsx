@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { PlaylistDetailsResponse } from "@/generated/graphql";
+import { PlaylistDetailsResponse, SortOrder } from "@/generated/graphql";
 import ActionsCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/ActionsCell";
 import GalleryCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/GalleryCell";
 import SavedCountCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/SavedCountCell";
@@ -22,7 +22,7 @@ export default function PlaylistTable({ playlist }: TableProps) {
   const [sortField, setSortField] = useState<
     "title" | "videoCount" | "savedCount" | "screenshotCount" | "thumbnailCount"
   >("title");
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  const [sortDirection, setSortDirection] = useState<SortOrder>(SortOrder.Asc);
 
   const sortedChannels = useMemo(() => {
     return [...playlist.channels].sort((a, b) => {
@@ -55,18 +55,18 @@ export default function PlaylistTable({ playlist }: TableProps) {
           bValue = b.title.toLowerCase();
       }
 
-      if (aValue < bValue) return sortDirection === "asc" ? -1 : 1;
-      if (aValue > bValue) return sortDirection === "asc" ? 1 : -1;
+      if (aValue < bValue) return sortDirection === SortOrder.Asc ? -1 : 1;
+      if (aValue > bValue) return sortDirection === SortOrder.Asc ? 1 : -1;
       return 0;
     });
   }, [playlist.channels, sortField, sortDirection]);
 
   const handleSort = (field: typeof sortField) => {
     if (sortField === field) {
-      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+      setSortDirection(sortDirection === SortOrder.Asc ? SortOrder.Desc : SortOrder.Asc);
     } else {
       setSortField(field);
-      setSortDirection("asc");
+      setSortDirection(SortOrder.Asc);
     }
   };
 

@@ -5,7 +5,7 @@ import {
   COLUMNS,
   GRID_DATA,
   SPACING,
-} from "@features/Thumbnail/utils/constants";
+} from "@widgets/Thumbnails/utils/constants";
 
 export default function Grid(): JSX.Element {
   const {

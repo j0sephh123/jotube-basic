@@ -3,6 +3,7 @@ import { useSearchParams, useParams } from "react-router-dom";
 import { useStore } from "@/store/store";
 import { defaults } from "@/widgets/Dashboard/model/dashboard-slice";
 import { ViewType } from "@/shared/hooks/useDashboardParams";
+import { SortOrder } from "@/generated/graphql";
 
 type RequestBody =
   | "sortOrder"
@@ -114,9 +115,9 @@ export const useDashboardContext = () => {
 
     if (
       params.sortOrder &&
-      (params.sortOrder === "ASC" || params.sortOrder === "DESC")
+      (params.sortOrder === "asc" || params.sortOrder === "desc")
     ) {
-      newRequestBody.sortOrder = params.sortOrder;
+      newRequestBody.sortOrder = params.sortOrder as SortOrder;
     }
 
     if (params.page) {

@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { IMG_WIDTH } from "@features/Thumbnail/utils/constants";
+import { IMG_WIDTH } from "@widgets/Thumbnails/utils/constants";
 
 const Container = forwardRef<HTMLDivElement, { children: React.ReactNode }>(
   ({ children }, ref) => (

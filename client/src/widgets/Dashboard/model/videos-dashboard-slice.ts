@@ -1,4 +1,4 @@
-import { SortOrder } from "@/shared/types/searchParams";
+import { SortOrder } from "@/generated/graphql";
 
 export const videosDefaults: {
   sortOrder: SortOrder;

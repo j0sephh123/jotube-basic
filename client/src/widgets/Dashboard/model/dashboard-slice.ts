@@ -1,5 +1,5 @@
+import { SortOrder } from "@/generated/graphql";
 import { ViewType } from "@/shared/hooks/useDashboardParams";
-import { SortOrder } from "@/shared/types/searchParams";
 
 export const defaults: {
   sortOrder: SortOrder;
@@ -10,7 +10,7 @@ export const defaults: {
   defaultMax: number | null;
   viewType: ViewType;
 } = {
-  sortOrder: "desc" as SortOrder,
+  sortOrder: "DESC" as SortOrder,
   page: 1,
   min: 0,
   max: null as number | null,
