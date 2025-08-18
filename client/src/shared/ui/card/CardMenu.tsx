@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { MoreVertical, FolderOpen } from "lucide-react";
 import CopyValue from "@shared/ui/CopyValue";
 import { useOpenDirectory } from "@shared/ui/OpenDirectoryButton/useOpenDirectory";
-import { useClickOutside } from "@shared/hooks/useClickOutside";
+import { useClickOutside } from "@shared/lib/useClickOutside";
 
 type CardMenuProps = {
   id: number;

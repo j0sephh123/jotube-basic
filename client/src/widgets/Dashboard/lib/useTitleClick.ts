@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { routes } from "@/shared/utils/routes";
-import { ViewType } from "@/shared/hooks/useDashboardParams";
+import { routes } from "@/shared/routes";
+import { ViewType } from "./useDashboardParams";
 
 export default function useTitleClick(
   channel: {

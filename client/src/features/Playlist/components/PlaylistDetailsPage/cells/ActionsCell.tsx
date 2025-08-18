@@ -1,5 +1,5 @@
 import { Trash2 } from "lucide-react";
-import { PlaylistChannelWithCountsResponse } from "@/generated/graphql";
+import { PlaylistChannelWithCountsResponse } from "@/shared/api/generated/graphql";
 import TableCol from "@/widgets/PlaylistDetails/ui/TableCol";
 
 type ActionsCellProps = {

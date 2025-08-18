@@ -1,4 +1,4 @@
-import { useDeleteUploadsMutation } from "@/generated/graphql";
+import { useDeleteUploadsMutation } from "@/shared/api/generated/graphql";
 import { useChannelsDashboardQuery } from "@widgets/Dashboard/api/useChannelsDashboardQuery";
 
 export function useDeleteUploads(onSuccess: () => void) {

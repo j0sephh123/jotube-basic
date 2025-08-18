@@ -1,4 +1,4 @@
-import { useTypedChannelYtId } from "@shared/hooks/useDashboardParams";
+import { useTypedChannelYtId } from "@widgets/Dashboard/lib/useDashboardParams";
 import { useChannelMetadataQuery } from "@entities/Channel/model/useChannelMetadata";
 
 export const useTabs = () => {

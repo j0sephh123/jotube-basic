@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { PlaylistDetailsResponse, SortOrder } from "@/generated/graphql";
+import { PlaylistDetailsResponse, SortOrder } from "@/shared/api/generated/graphql";
 import ActionsCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/ActionsCell";
 import GalleryCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/GalleryCell";
 import SavedCountCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/SavedCountCell";

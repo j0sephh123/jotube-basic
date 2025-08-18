@@ -1,4 +1,4 @@
-import { useUploadsListQuery, SortOrder } from "@/generated/graphql";
+import { useUploadsListQuery, SortOrder } from "@/shared/api/generated/graphql";
 import { useCallback, useMemo } from "react";
 import { useQueue } from "@shared/hooks/useQueue";
 

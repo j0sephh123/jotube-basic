@@ -1,4 +1,4 @@
-import { useFetchUploadsMutation } from "@/generated/graphql";
+import { useFetchUploadsMutation } from "@/shared/api/generated/graphql";
 import { useState } from "react";
 
 type UseFetchUploadsProps = {

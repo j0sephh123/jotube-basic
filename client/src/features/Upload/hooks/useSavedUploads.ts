@@ -1,4 +1,4 @@
-import { useSavedUploadsQuery } from "@/generated/graphql";
+import { useSavedUploadsQuery } from "@/shared/api/generated/graphql";
 import { useCallback } from "react";
 
 export function useSavedUploads(ytChannelId: string) {

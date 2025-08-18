@@ -1,7 +1,7 @@
 import Card from "@/shared/ui/card";
 import VideosDashboardContainer from "@/widgets/Dashboard/ui/VideosDashboardContainer";
 import { useNavigate } from "react-router-dom";
-import { routes } from "@/shared/utils/routes";
+import { routes } from "@/shared/routes";
 import VideoChannelInfo from "@/widgets/Dashboard/ui/VideoChannelInfo";
 import ScreenshotCountButton from "@/widgets/Dashboard/ui/ScreenshotCountButton";
 

@@ -1,4 +1,4 @@
-import { useCreateChannelMutation, ChannelMessage } from "@/generated/graphql";
+import { useCreateChannelMutation, ChannelMessage } from "@/shared/api/generated/graphql";
 
 type Props = {
   onCreated: (message: string) => void;

@@ -4,7 +4,7 @@ import { useGetChannel } from "@entities/Channel/model/useGetChannel";
 import Title from "@features/Playlist/components/AddChannelToPlaylistModal/Title";
 import { SelectPlaylistForm } from "@features/Playlist/components/AddChannelToPlaylistModal/SelectPlaylistForm";
 import { useChannelsDashboardQuery } from "@widgets/Dashboard/api/useChannelsDashboardQuery";
-import { useClickOutside } from "@shared/hooks/useClickOutside";
+import { useClickOutside } from "@shared/lib/useClickOutside";
 import { X } from "lucide-react";
 import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
 

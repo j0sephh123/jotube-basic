@@ -2,8 +2,8 @@ import { useEffect, useCallback } from "react";
 import { useSearchParams, useParams } from "react-router-dom";
 import { useStore } from "@/store/store";
 import { defaults } from "@/widgets/Dashboard/model/dashboard-slice";
-import { ViewType } from "@/shared/hooks/useDashboardParams";
-import { SortOrder } from "@/generated/graphql";
+import { ViewType } from "@widgets/Dashboard/lib/useDashboardParams";
+import { SortOrder } from "@/shared/api/generated/graphql";
 
 type RequestBody =
   | "sortOrder"

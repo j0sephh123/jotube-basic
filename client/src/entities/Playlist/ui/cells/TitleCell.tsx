@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import Tooltip from "@shared/ui/Tooltip";
 import CopyValue from "@shared/ui/CopyValue";
 import Avatar from "@shared/ui/Avatar";
-import { PlaylistChannelWithCountsResponse } from "@/generated/graphql";
-import { routes } from "@shared/utils/routes";
+import { PlaylistChannelWithCountsResponse } from "@/shared/api/generated/graphql";
+import { routes } from "@/shared/routes";
 import SyncUploadsButton from "@features/Upload/components/SyncUploadsButton";
 import TableCol from "@/widgets/PlaylistDetails/ui/TableCol";
 

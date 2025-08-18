@@ -5,7 +5,10 @@ import SelectSortDirection from "./SelectSortDirection";
 import ViewTypeToggle from "@/widgets/Dashboard/ui/ViewTypeToggle";
 import PaginationControl from "@widgets/PaginationControl/ui/PaginationControl";
 import { useDashboardContext } from "@widgets/Dashboard/model/useDashboardContext";
-import { useDashboardParams, ViewType } from "@shared/hooks/useDashboardParams";
+import {
+  useDashboardParams,
+  ViewType,
+} from "@widgets/Dashboard/lib/useDashboardParams";
 import Button from "@shared/ui/button";
 import { useChannelsDashboardQuery } from "@widgets/Dashboard/api/useChannelsDashboardQuery";
 

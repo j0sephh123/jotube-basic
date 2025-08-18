@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import nestFetcher from "@shared/api/nestFetcher";
+import nestFetcher from "@/shared/api/rest/nestFetcher";
 
 export type OpenDirectoryRequest = {
   ytChannelId: string;

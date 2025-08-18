@@ -1,6 +1,6 @@
 import { Button } from "@shared/ui/button";
 import { useSaveUpload } from "@features/Upload/hooks/useSaveUpload";
-import { useTypedChannelYtId } from "@shared/hooks/useDashboardParams";
+import { useTypedChannelYtId } from "@widgets/Dashboard/lib/useDashboardParams";
 import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
 import { useRefetchSavedUploads } from "@features/Upload/hooks/useSavedUploads";
 

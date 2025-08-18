@@ -1,6 +1,6 @@
 import useUploadsList from "@features/Upload/hooks/useUploadsList";
 import { useSearchParams } from "react-router-dom";
-import { SortOrder } from "@/generated/graphql";
+import { SortOrder } from "@/shared/api/generated/graphql";
 import DownloadAll from "@features/Upload/components/DownloadAll";
 import SaveAll from "@features/Upload/components/SaveAll";
 import { useMemo } from "react";

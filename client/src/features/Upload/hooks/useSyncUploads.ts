@@ -1,4 +1,4 @@
-import { useSyncUploadsMutation } from "@/generated/graphql";
+import { useSyncUploadsMutation } from "@/shared/api/generated/graphql";
 import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
 import { useRefetchChannelUploads } from "@features/Upload/hooks/useUploadsList";
 

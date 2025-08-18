@@ -4,7 +4,7 @@ import Modal from "@/shared/ui/Modal";
 import { Link } from "react-router-dom";
 import { useQuickSearch, SearchResult } from "@/features/Search/useSearch";
 import ChannelLink from "@/shared/ui/ChannelLink";
-import { routes } from "@/shared/utils/routes";
+import { routes } from "@/shared/routes";
 
 const highlightText = (text: string, query: string) => {
   if (!query.trim()) return text;

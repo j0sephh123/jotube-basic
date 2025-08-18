@@ -4,7 +4,7 @@ import {
   DefaultError,
   useQueryClient,
 } from "@tanstack/react-query";
-import nestFetcher from "@shared/api/nestFetcher";
+import nestFetcher from "@/shared/api/rest/nestFetcher";
 import { useRefetchChannelUploads } from "@features/Upload/hooks/useUploadsList";
 import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
 import { useRefetchQueue } from "@shared/hooks/useQueue";

@@ -1,4 +1,4 @@
-import useImageSrc from "@shared/hooks/useImageSrc";
+import useImageSrc from "@shared/lib/useImageSrc";
 
 type Props = {
   ytId: string;

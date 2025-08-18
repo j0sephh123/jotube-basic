@@ -1,4 +1,4 @@
-import { useGetChannelForPlaylistQuery } from "@/generated/graphql";
+import { useGetChannelForPlaylistQuery } from "@/shared/api/generated/graphql";
 
 export type ChannelForPlaylistI = {
   id: number;

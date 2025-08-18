@@ -1,7 +1,7 @@
 import { ArrowUp, ArrowDown } from "lucide-react";
 import { useDashboardContext } from "@widgets/Dashboard/model/useDashboardContext";
 import Button from "@shared/ui/button";
-import { SortOrder } from "@/generated/graphql";
+import { SortOrder } from "@/shared/api/generated/graphql";
 
 export default function SelectSortDirection(): JSX.Element {
   const { requestBody, setRequestBody } = useDashboardContext();

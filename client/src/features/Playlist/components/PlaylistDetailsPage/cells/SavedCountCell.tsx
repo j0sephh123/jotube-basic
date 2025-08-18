@@ -1,7 +1,7 @@
 import { Save } from "lucide-react";
 import { Link } from "react-router-dom";
-import { routes } from "@shared/utils/routes";
-import { PlaylistChannelWithCountsResponse } from "@/generated/graphql";
+import { routes } from "@/shared/routes";
+import { PlaylistChannelWithCountsResponse } from "@/shared/api/generated/graphql";
 import TableCol from "@/widgets/PlaylistDetails/ui/TableCol";
 
 type SavedCountCellProps = {

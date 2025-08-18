@@ -1,4 +1,4 @@
-import { useSaveUploadMutation } from "@/generated/graphql";
+import { useSaveUploadMutation } from "@/shared/api/generated/graphql";
 
 export type SaveUploadItem = {
   ytVideoId: string;

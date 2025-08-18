@@ -1,7 +1,7 @@
 import {
   useFetchVideosDashboardQuery,
   FetchVideosDashboardQueryVariables,
-} from "@/generated/graphql";
+} from "@/shared/api/generated/graphql";
 
 export default function useFetchVideosDashboard(
   variables?: FetchVideosDashboardQueryVariables

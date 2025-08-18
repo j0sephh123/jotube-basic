@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { routes } from "@/shared/utils/routes";
+import { routes } from "@/shared/routes";
 
 type VideoChannelInfoProps = {
   channelTitle: string;

@@ -1,6 +1,6 @@
 import { timeAgo } from "@shared/utils/date";
 import { TrashIcon, MoreVertical } from "lucide-react";
-import useImageSrc from "@shared/hooks/useImageSrc";
+import useImageSrc from "@shared/lib/useImageSrc";
 import { useMemo } from "react";
 import CopyValue from "@shared/ui/CopyValue";
 import OpenExplorerButton from "@shared/ui/OpenDirectoryButton/OpenDirectoryButton";

@@ -6,8 +6,8 @@ import { DefaultUploadCard } from "@/features/Upload/components/DefaultUploadCar
 import { useRefetchChannelMetadata } from "@/entities/Channel/model/useChannelMetadata";
 import { PropsWithChildren } from "react";
 import { useCreateStoryboard } from "@/features/Upload/hooks/useCreateStoryboard";
-import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";
-import { SortOrder } from "@/generated/graphql";
+import { useTypedChannelYtId } from "@widgets/Dashboard/lib/useDashboardParams";
+import { SortOrder } from "@/shared/api/generated/graphql";
 
 export default function DefaultUploadsPage() {
   const ytChannelId = useTypedChannelYtId();

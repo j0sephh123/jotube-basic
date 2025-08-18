@@ -5,11 +5,11 @@ import Screenshots from "@widgets/Navbar/Screenshots";
 import ProcessingProgress from "@widgets/Navbar/ProcessingProgress";
 import VideoProcessingInfo from "@widgets/Navbar/VideoProcessingInfo";
 import ThemeSwitcher from "@widgets/Navbar/ThemeSwitcher";
-import { routes } from "@shared/utils/routes";
+import { routes } from "@/shared/routes";
 import { useTotalCounts } from "@features/Statistics/hooks/useTotalCounts";
 import { useFreeSpace } from "@features/Statistics/hooks/useFreeSpace";
 import IconButton from "@shared/ui/icons/IconButton";
-import { ViewType } from "@shared/hooks/useDashboardParams";
+import { ViewType } from "@widgets/Dashboard/lib/useDashboardParams";
 import Text from "@shared/ui/Text";
 
 export default function Navbar() {

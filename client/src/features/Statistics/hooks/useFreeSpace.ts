@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/nestFetcher";
+import nestFetcher from "@/shared/api/rest/nestFetcher";
 
 type FreeSpaceResponse = {
   freeSpace: string;

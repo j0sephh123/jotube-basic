@@ -1,6 +1,6 @@
 import { persistQueryClient } from "@tanstack/react-query-persist-client";
 import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
-import { createQueryClient } from "@/shared/api/queryClient";
+import { createQueryClient } from "@/app/providers/api/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 

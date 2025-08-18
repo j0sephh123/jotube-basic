@@ -4,7 +4,7 @@ import { useScreenshotsByDate } from "@/features/Screenshot/hooks/useScreenshots
 import { useDeleteScreenshot } from "@/features/Screenshot/hooks/useDeleteScreenshot";
 import { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { routes } from "@/shared/utils/routes";
+import { routes } from "@/shared/routes";
 
 type Screenshot = {
   id: number;

@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { useClickOutside } from "@/shared/hooks/useClickOutside";
+import { useClickOutside } from "@/shared/lib/useClickOutside";
 import { BookImage } from "lucide-react";
 import {
   getCurrentDay,

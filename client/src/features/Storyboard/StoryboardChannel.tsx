@@ -1,4 +1,4 @@
-import { useTypedChannelYtId } from "@/shared/hooks/useDashboardParams";
+import { useTypedChannelYtId } from "@widgets/Dashboard/lib/useDashboardParams";
 import { useState } from "react";
 import { useSaveUpload } from "@/features/Upload/hooks/useSaveUpload";
 import { useRefetchChannelMetadata } from "@/entities/Channel/model/useChannelMetadata";

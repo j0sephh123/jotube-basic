@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { routes } from "@/shared/utils/routes";
+import { routes } from "@/shared/routes";
 import {
   useDashboardParams,
   ViewType,
-} from "@/shared/hooks/useDashboardParams";
+} from "@widgets/Dashboard/lib/useDashboardParams";
 import clsx from "clsx";
 import Button from "@/shared/ui/button";
 
