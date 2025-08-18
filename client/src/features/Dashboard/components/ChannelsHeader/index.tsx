@@ -2,7 +2,7 @@ import { RotateCcw } from "lucide-react";
 import RangeFilterPopover from "@widgets/RangePicker/ui/RangeFilterPopover";
 import DefaultsRangeFilterPopover from "@features/Dashboard/widgets/RangePicker/DefaultsRangeFilterPopover";
 import SelectSortDirection from "@features/Dashboard/components/ChannelsHeader/SelectSortDirection";
-import ViewTypeToggle from "@features/Dashboard/components/ChannelsHeader/ViewTypeToggle";
+import ViewTypeToggle from "@/widgets/Dashboard/ui/ViewTypeToggle";
 import PaginationControl from "@widgets/PaginationControl/ui/PaginationControl";
 import { useDashboardContext } from "@widgets/Dashboard/model/useDashboardContext";
 import {
