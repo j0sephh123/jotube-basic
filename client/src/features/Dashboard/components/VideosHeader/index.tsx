@@ -3,8 +3,8 @@ import VideosRangeFilterPopover from "./VideosRangeFilterPopover";
 
 import SelectSortDirection from "./SelectSortDirection";
 import VideosPaginationControl from "./VideosPaginationControl";
-import { useVideosDashboardContext } from "../../hooks/useVideosDashboardContext";
-import { useVideosDashboardQuery } from "../../useVideosDashboardQuery";
+import { useVideosDashboardContext } from "@/widgets/Dashboard/model/useVideosDashboardContext";
+import { useVideosDashboardQuery } from "@/widgets/Dashboard/api/useVideosDashboardQuery";
 import Button from "@/shared/ui/button";
 
 export default function VideosHeader() {

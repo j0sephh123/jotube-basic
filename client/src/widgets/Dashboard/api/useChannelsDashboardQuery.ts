@@ -3,7 +3,7 @@ import { useStore } from "@/store/store";
 import { useParams } from "react-router-dom";
 import { useCallback } from "react";
 import { ViewType } from "@/shared/hooks/useDashboardParams";
-import { useFetchDashboard } from "./hooks";
+import { useFetchDashboard } from "../lib";
 import { ViewType as GraphQLViewType } from "@/generated/graphql";
 
 export type ChannelsDashboardResponseData =

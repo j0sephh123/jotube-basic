@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useStore } from "@/store/store";
-import { videosDefaults } from "../store/videos-dashboard-slice";
+import { videosDefaults } from "@/widgets/Dashboard/model/videos-dashboard-slice";
 
 type VideosRequestBody =
   | "sortOrder"

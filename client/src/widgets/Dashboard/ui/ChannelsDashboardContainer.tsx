@@ -1,4 +1,4 @@
-import { useChannelsDashboardQuery } from "@/features/Dashboard/useChannelsDashboardQuery";
+import { useChannelsDashboardQuery } from "@/widgets/Dashboard/api/useChannelsDashboardQuery";
 import { Loader } from "lucide-react";
 import ErrorMessage from "@/shared/ui/static/ErrorMessage";
 import { DashboardChannelResponse } from "@/generated/graphql";

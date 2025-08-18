@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from "react";
 import { useSearchParams, useParams } from "react-router-dom";
 import { useStore } from "@/store/store";
-import { defaults } from "../store/dashboard-slice";
+import { defaults } from "@/widgets/Dashboard/model/dashboard-slice";
 import { ViewType } from "@/shared/hooks/useDashboardParams";
 
 type RequestBody =

@@ -1,16 +1,16 @@
 import { RotateCcw } from "lucide-react";
-import RangeFilterPopover from "../../widgets/RangePicker/RangeFilterPopover";
-import DefaultsRangeFilterPopover from "../../widgets/RangePicker/DefaultsRangeFilterPopover";
+import RangeFilterPopover from "@/widgets/RangePicker/ui/RangeFilterPopover";
+import DefaultsRangeFilterPopover from "@/features/Dashboard/widgets/RangePicker/DefaultsRangeFilterPopover";
 import SelectSortDirection from "./SelectSortDirection";
 import ViewTypeToggle from "./ViewTypeToggle";
-import PaginationControl from "../../widgets/PaginationControl";
-import { useDashboardContext } from "../../hooks/useDashboardContext";
+import PaginationControl from "@/widgets/PaginationControl/ui/PaginationControl";
+import { useDashboardContext } from "@/widgets/Dashboard/model/useDashboardContext";
 import {
   useDashboardParams,
   ViewType,
 } from "@/shared/hooks/useDashboardParams";
-import { useChannelsDashboardQuery } from "../../useChannelsDashboardQuery";
 import Button from "@/shared/ui/button";
+import { useChannelsDashboardQuery } from "@/widgets/Dashboard/api/useChannelsDashboardQuery";
 
 const showRangeFilterForViewTypes = [ViewType.SAVED, ViewType.PROCESSED];
 

@@ -3,7 +3,7 @@ import SyncUploadsButton from "../../Upload/components/SyncUploadsButton";
 import Card from "@/shared/ui/card";
 import FetchUploadsButton from "../../Upload/components/FetchUploadsButton";
 import DeleteChannel from "../../../entities/Channel/ui/DeleteChannel";
-import useTitleClick from "../hooks/useTitleClick";
+import useTitleClick from "@/widgets/Dashboard/lib/useTitleClick";
 import { DashboardChannelResponse } from "@/generated/graphql";
 import { usePlaylist } from "@/store/store";
 import { ListMusic, ExternalLink } from "lucide-react";

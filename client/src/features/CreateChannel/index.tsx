@@ -4,7 +4,7 @@ import {
   ViewExistingChannel,
 } from "@/app/providers/ToastProvider";
 import CreateChannelModal from "./ui/CreateChannelModal";
-import { useChannelsDashboardQuery } from "@/features/Dashboard/useChannelsDashboardQuery";
+import { useChannelsDashboardQuery } from "@/widgets/Dashboard/api/useChannelsDashboardQuery";
 import useCreateChannel from "@/features/Channel/hooks/useCreateChannel";
 import CreateChannelTrigger from "./ui/CreateChannelTrigger";
 import CreateChannelForm from "./ui/CreateChannelForm";

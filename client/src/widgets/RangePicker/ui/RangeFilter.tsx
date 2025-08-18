@@ -1,5 +1,5 @@
 import { useMemo, useEffect } from "react";
-import { useDashboardContext } from "../../hooks/useDashboardContext";
+import { useDashboardContext } from "@/widgets/Dashboard/model/useDashboardContext";
 import { useStore } from "@/store/store";
 import { RangePickerTypes, DashboardSlice } from "@/store/store-types";
 import RangePicker from "./RangePicker";

@@ -1,4 +1,4 @@
-import { useVideosDashboardQuery } from "@/features/Dashboard/useVideosDashboardQuery";
+import { useVideosDashboardQuery } from "@/widgets/Dashboard/api/useVideosDashboardQuery";
 import { Loader } from "lucide-react";
 import ErrorMessage from "@/shared/ui/static/ErrorMessage";
 import { DashboardVideoResponse } from "@/generated/graphql";
