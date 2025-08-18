@@ -1,7 +1,7 @@
 import { useDashboardParams } from "@/shared/hooks/useDashboardParams";
-import VideosDashboard from "./components/VideosDashboard";
+import VideosDashboard from "@/widgets/Dashboard/ui/VideosDashboard";
 import { DashboardType } from "@/shared/hooks/useDashboardParams";
-import ChannelsDashboard from "./components/ChannelsDashboard";
+import ChannelsDashboard from "@/widgets/Dashboard/ui/ChannelsDashboard";
 import { useStore } from "@/store/store";
 import { useEffect } from "react";
 

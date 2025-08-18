@@ -7,7 +7,7 @@ import { useVideosDashboardContext } from "../../hooks/useVideosDashboardContext
 import { useVideosDashboardQuery } from "../../useVideosDashboardQuery";
 import Button from "@/shared/ui/button";
 
-export default function VideosDashboardHeader() {
+export default function VideosHeader() {
   const { handleClearFilters } = useVideosDashboardContext();
   const { data } = useVideosDashboardQuery();
 

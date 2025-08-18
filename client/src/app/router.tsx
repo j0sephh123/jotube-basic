@@ -9,7 +9,7 @@ import ChannelPageLayout from "@/features/Channel/ChannelPageLayout";
 import GalleryPage from "@/pages/GalleryPage";
 import GalleryLayout from "@/features/Gallery/components/GalleryLayout";
 import Dashboard from "@/features/Dashboard";
-import DashboardWrapper from "@/features/Dashboard/components/DashboardWrapper";
+import DashboardWrapper from "@/widgets/Dashboard/ui/DashboardWrapper";
 import DefaultUploadsPage from "@/pages/DefaultUploadsPage";
 import GalleryVideoPage from "@/features/Gallery/components/GalleryVideoPage";
 import StoryboardPage from "@/pages/StoryboardPage";

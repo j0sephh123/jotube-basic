@@ -14,7 +14,7 @@ import Button from "@/shared/ui/button";
 
 const showRangeFilterForViewTypes = [ViewType.SAVED, ViewType.PROCESSED];
 
-export default function DashboardHeader() {
+export default function ChannelsHeader() {
   const { viewType } = useDashboardParams();
   const { handleClearFilters } = useDashboardContext();
   const { data } = useChannelsDashboardQuery();

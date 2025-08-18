@@ -1,37 +1,20 @@
 set -euxo pipefail
 
-# 1) ensure targets
-mkdir -p src/entities/Channel/api \
-         src/entities/Playlist/api \
-         src/entities/Screenshot/api \
-         src/widgets/Dashboard/api \
-         src/widgets/Thumbnails/api \
-         src/features/Search/api \
-         src/features/Statistics/api \
-         src/features/Storyboard/api \
-         src/features/Upload/api \
-         src/shared/api
+mkdir -p src/widgets/Dashboard/{model,lib,api}
 
-# 2) moves (10)
-git mv src/shared/api/graphql/channelQueries.ts      src/entities/Channel/api/channel.gql.ts
-git mv src/shared/api/graphql/playlistQueries.ts     src/entities/Playlist/api/playlist.gql.ts
-git mv src/shared/api/graphql/screenshotQueries.ts   src/entities/Screenshot/api/screenshot.gql.ts
-git mv src/shared/api/graphql/dashboardQueries.ts    src/widgets/Dashboard/api/dashboard.gql.ts
-git mv src/shared/api/graphql/searchQueries.ts       src/features/Search/api/search.gql.ts
-git mv src/shared/api/graphql/statisticsQueries.ts   src/features/Statistics/api/statistics.gql.ts
-git mv src/shared/api/graphql/storyboardQueries.ts   src/features/Storyboard/api/storyboard.gql.ts
-git mv src/shared/api/graphql/thumbnailQueries.ts    src/widgets/Thumbnails/api/thumbnail.gql.ts
-git mv src/shared/api/graphql/uploadQueries.ts       src/features/Upload/api/upload.gql.ts
-git mv src/shared/api/graphql/index.ts               src/shared/api/index.ts
+git mv src/features/Dashboard/hooks/useDashboardContext.ts      src/widgets/Dashboard/model/useDashboardContext.ts
+git mv src/features/Dashboard/hooks/useVideosDashboardContext.ts src/widgets/Dashboard/model/useVideosDashboardContext.ts
+git mv src/features/Dashboard/hooks/useDashboard.ts             src/widgets/Dashboard/lib/useDashboard.ts
+git mv src/features/Dashboard/hooks/useFetchDashboard.ts        src/widgets/Dashboard/lib/useFetchDashboard.ts
+git mv src/features/Dashboard/hooks/useFetchVideosDashboard.ts  src/widgets/Dashboard/lib/useFetchVideosDashboard.ts
+git mv src/features/Dashboard/hooks/useTitleClick.ts            src/widgets/Dashboard/lib/useTitleClick.ts
+git mv src/features/Dashboard/hooks/index.ts                    src/widgets/Dashboard/lib/index.ts
+git mv src/features/Dashboard/types.ts                          src/widgets/Dashboard/types.ts
+git mv src/features/Dashboard/useChannelsDashboardQuery.ts      src/widgets/Dashboard/api/useChannelsDashboardQuery.ts
+git mv src/features/Dashboard/useVideosDashboardQuery.ts        src/widgets/Dashboard/api/useVideosDashboardQuery.ts
 
-# 3) import rewrites (examples; broaden if you had more granular paths)
 find src -type f -name "*.*ts*" -exec sed -i \
-  -e 's|@/shared/api/graphql/channelQueries|@/entities/Channel/api/channel.gql|g' \
-  -e 's|@/shared/api/graphql/playlistQueries|@/entities/Playlist/api/playlist.gql|g' \
-  -e 's|@/shared/api/graphql/screenshotQueries|@/entities/Screenshot/api/screenshot.gql|g' \
-  -e 's|@/shared/api/graphql/dashboardQueries|@/widgets/Dashboard/api/dashboard.gql|g' \
-  -e 's|@/shared/api/graphql/searchQueries|@/features/Search/api/search.gql|g' \
-  -e 's|@/shared/api/graphql/statisticsQueries|@/features/Statistics/api/statistics.gql|g' \
-  -e 's|@/shared/api/graphql/storyboardQueries|@/features/Storyboard/api/storyboard.gql|g' \
-  -e 's|@/shared/api/graphql/thumbnailQueries|@/widgets/Thumbnails/api/thumbnail.gql|g' \
-  -e 's|@/shared/api/graphql/uploadQueries|@/features/Upload/api/upload.gql|g' {} +
+  -e 's|@/features/Dashboard/hooks/|@/widgets/Dashboard/lib/|g' \
+  -e 's|@/features/Dashboard/types|@/widgets/Dashboard/types|g' \
+  -e 's|@/features/Dashboard/useChannelsDashboardQuery|@/widgets/Dashboard/api/useChannelsDashboardQuery|g' \
+  -e 's|@/features/Dashboard/useVideosDashboardQuery|@/widgets/Dashboard/api/useVideosDashboardQuery|g' {} +

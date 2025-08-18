@@ -1,15 +1,15 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import ChannelsDashboardHeader from "@/features/Dashboard/components/ChannelsDashboardHeader";
-import VideosDashboardHeader from "./VideosDashboardHeader";
+import ChannelsHeader from "@/features/Dashboard/components/ChannelsHeader";
+import VideosHeader from "@/features/Dashboard/components/VideosHeader";
 import {
   DashboardType,
   useDashboardParams,
 } from "@/shared/hooks/useDashboardParams";
 
 const header: Record<DashboardType, React.ComponentType> = {
-  channels: ChannelsDashboardHeader,
-  videos: VideosDashboardHeader,
+  channels: ChannelsHeader,
+  videos: VideosHeader,
 };
 
 export default function DashboardWrapper() {
