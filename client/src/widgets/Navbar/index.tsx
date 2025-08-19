@@ -1,4 +1,11 @@
-import { Grid2X2, HomeIcon, ListMusic, Save, SquarePlay } from "lucide-react";
+import {
+  Grid2X2,
+  HomeIcon,
+  ListMusic,
+  Save,
+  SquarePlay,
+  Image,
+} from "lucide-react";
 import QuickSearch from "@/widgets/Search/ui/Search";
 import InitCarouselButton from "@/widgets/Navbar/ui/InitCarouselButton";
 import Screenshots from "@/widgets/Navbar/ui/Screenshots";
@@ -52,6 +59,14 @@ export default function Navbar() {
             to={routes.dashboard(ViewType.THUMBNAILS)}
             tooltip={{
               content: "Thumbnails",
+              position: "bottom",
+            }}
+          />
+          <IconButton
+            icon={<Image />}
+            to={routes.imageNavigator()}
+            tooltip={{
+              content: "Image Navigator",
               position: "bottom",
             }}
           />

@@ -18,4 +18,5 @@ export const routes = {
   videos: () => "/dashboard/videos",
   playlists: () => "/playlists",
   playlist: (id: number) => `/playlists/${id}`,
+  imageNavigator: () => "/image-navigator",
 };

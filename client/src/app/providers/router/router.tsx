@@ -13,6 +13,7 @@ import DashboardWrapper from "@/widgets/Dashboard/ui/DashboardWrapper";
 import DefaultUploadsPage from "@/pages/uploads/ui/Page";
 import GalleryVideoPage from "@/pages/gallery-video/ui/Page";
 import StoryboardPage from "@/pages/storyboard/ui/Page";
+import ImageNavigatorPage from "@/pages/image-navigator/ui/Page";
 import { PlaylistsPage, PlaylistDetailsPage } from "@/features/Playlist";
 import NotFound from "@/shared/ui/static/NotFound";
 
@@ -46,6 +47,7 @@ export default function Router() {
           </Route>
           <Route path="/playlists" element={<PlaylistsPage />} />
           <Route path="/playlists/:id" element={<PlaylistDetailsPage />} />
+          <Route path="/image-navigator" element={<ImageNavigatorPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
