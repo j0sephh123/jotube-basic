@@ -35,6 +35,7 @@ import { ArtifactsAggregatorModule } from './artifacts-aggregator/artifacts-aggr
 import { PlaylistModule } from './playlist/playlist.module';
 import { StatisticsModule } from './statistics/statistics.module';
 import { AppGraphQLModule } from './graphql/graphql.module';
+import { ImageNavigatorModule } from './image-navigator/image-navigator.module';
 
 @Module({
   imports: [
@@ -89,6 +90,7 @@ import { AppGraphQLModule } from './graphql/graphql.module';
     FileModule,
     DashboardModule,
     AppGraphQLModule,
+    ImageNavigatorModule,
   ],
   controllers: [QueueController, SearchController, StatisticsController],
   providers: [
