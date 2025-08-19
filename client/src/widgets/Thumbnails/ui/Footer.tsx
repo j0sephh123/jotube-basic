@@ -1,4 +1,4 @@
-import { useThumbnailsSlice } from "@store/store";
+import { useThumbnailsSlice } from "@/app/providers/store/store";
 import OpenExplorerButton from "@shared/ui/OpenDirectoryButton/OpenDirectoryButton";
 import { ArrowLeft, ArrowRight, Save } from "lucide-react";
 import useSubmit from "@widgets/Thumbnails/lib/useSubmit";

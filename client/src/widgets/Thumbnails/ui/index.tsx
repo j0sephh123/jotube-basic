@@ -1,4 +1,4 @@
-import { useThumbnailsSlice } from "@store/store";
+import { useThumbnailsSlice } from "@/app/providers/store/store";
 import { useThumbnailByVideoId } from "@widgets/Thumbnails/lib/useThumbnailByVideoId";
 import ThumbnailsProcessingContent from "@widgets/Thumbnails/ui/ThumbnailsProcessingContent";
 

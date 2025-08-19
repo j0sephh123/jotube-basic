@@ -1,4 +1,4 @@
-import { useStore } from "@store/store";
+import { useStore } from "@/app/providers/store/store";
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
 import Counter from "yet-another-react-lightbox/plugins/counter";

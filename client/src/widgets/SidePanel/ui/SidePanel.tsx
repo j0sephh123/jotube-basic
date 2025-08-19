@@ -9,7 +9,7 @@ import { Play, Clock } from "lucide-react";
 import { useState } from "react";
 import SidePanelHeader from "@/shared/ui/SidePanel/SidePanelHeader";
 import SidePanelWrapper from "@/shared/ui/SidePanel/SidePanelWrapper";
-import { useSidePanel } from "@/store/store";
+import { useSidePanel } from "@/app/providers/store/store";
 
 type ScreenshotGroup = {
   screenshots: VideoScreenshot[];

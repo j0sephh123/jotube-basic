@@ -17,7 +17,7 @@ import {
 import { useDeleteChannelScreenshot } from "@features/Screenshot/hooks/useDeleteChannelScreenshot";
 import { useUpdateChannelScreenshot } from "@features/Screenshot/hooks/useUpdateChannelScreenshot";
 import ScreenshotItem from "@features/Gallery/components/GalleryItem";
-import { useZoom } from "@store/store";
+import { useZoom } from "@/app/providers/store/store";
 
 const TEMPORAL_THRESHOLD = 3;
 

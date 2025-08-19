@@ -1,5 +1,5 @@
 import useThumbnailsCount from "@widgets/Thumbnails/lib/useThumbnailsCount";
-import { useThumbnailsSlice } from "@store/store";
+import { useThumbnailsSlice } from "@/app/providers/store/store";
 import { useDialog } from "@shared/hooks/useDialog";
 import useSubmit from "@widgets/Thumbnails/lib/useSubmit";
 

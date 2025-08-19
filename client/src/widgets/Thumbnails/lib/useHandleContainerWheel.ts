@@ -1,5 +1,5 @@
 import useSubmit from "@widgets/Thumbnails/lib/useSubmit";
-import { useThumbnailsSlice, useZoom } from "@store/store";
+import { useThumbnailsSlice, useZoom } from "@/app/providers/store/store";
 import useThumbnailsCount from "@widgets/Thumbnails/lib/useThumbnailsCount";
 import usePaginate from "@widgets/Thumbnails/lib/usePaginate";
 

@@ -1,5 +1,5 @@
 import { useLazyQuery } from "@apollo/client";
-import { useStore } from "@/store/store";
+import { useStore } from "@/app/providers/store/store";
 import { GET_SLIDES } from "@/entities/Screenshot/api/screenshot.gql";
 
 export type FetchCarouselDataRequest = string[];

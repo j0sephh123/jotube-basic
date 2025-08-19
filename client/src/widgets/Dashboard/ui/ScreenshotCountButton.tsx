@@ -1,5 +1,5 @@
 import Button from "@/shared/ui/button";
-import { useStore } from "@/store/store";
+import { useStore } from "@/app/providers/store/store";
 
 type ScreenshotCountButtonProps = {
   screenshotCount: number;

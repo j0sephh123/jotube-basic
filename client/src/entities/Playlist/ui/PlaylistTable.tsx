@@ -10,7 +10,7 @@ import TableHeader from "@/entities/Playlist/ui/PlaylistTableHeader";
 import TableRow from "@/entities/Playlist/ui/PlaylistTableRow";
 import { useRemoveFromPlaylist } from "@/features/Playlist/components/PlaylistDetailsPage/useRemoveFromPlaylist";
 import { useRefetchPlaylist } from "@/features/Playlist/hooks/useGetPlaylist";
-import TitleCell from "./cells/TitleCell";
+import TitleCell from "./TitleCell";
 
 type TableProps = {
   playlist: PlaylistDetailsResponse;

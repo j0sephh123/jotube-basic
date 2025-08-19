@@ -4,7 +4,7 @@ import {
 } from "@widgets/Dashboard/lib/useDashboardParams";
 import VideosDashboard from "@/widgets/Dashboard/ui/VideosDashboard";
 import ChannelsDashboard from "@/widgets/Dashboard/ui/ChannelsDashboard";
-import { useStore } from "@/store/store";
+import { useStore } from "@/app/providers/store/store";
 import { useEffect } from "react";
 
 export default function Dashboard() {

@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useStore } from "@/store/store";
+import { useStore } from "@/app/providers/store/store";
 import { videosDefaults } from "@/widgets/Dashboard/model/videos-dashboard-slice";
 import { SortOrder } from "@/shared/api/generated/graphql";
 

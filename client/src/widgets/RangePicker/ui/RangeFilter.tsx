@@ -1,7 +1,10 @@
 import { useMemo, useEffect } from "react";
 import { useDashboardContext } from "@widgets/Dashboard/model/useDashboardContext";
-import { useStore } from "@store/store";
-import { RangePickerTypes, DashboardSlice } from "@store/store-types";
+import { useStore } from "@/app/providers/store/store";
+import {
+  RangePickerTypes,
+  DashboardSlice,
+} from "@/app/providers/store/store-types";
 import RangePicker from "@widgets/RangePicker/ui/RangePicker";
 
 type RequestBodyKey = keyof DashboardSlice["requestBody"];

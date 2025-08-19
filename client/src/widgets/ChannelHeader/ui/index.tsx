@@ -1,7 +1,7 @@
 import { useChannelMetadataQuery } from "@/entities/Channel/model/useChannelMetadata";
 import { useLocation } from "react-router-dom";
 import { useTypedChannelYtId } from "@widgets/Dashboard/lib/useDashboardParams";
-import { usePlaylist } from "@store/store";
+import { usePlaylist } from "@/app/providers/store/store";
 import { ListMusic, ExternalLink } from "lucide-react";
 import clsx from "clsx";
 import { routes } from "@/shared/routes";
@@ -18,7 +18,7 @@ import BulkOperations from "./BulkOperations";
 import ViewThumbnails from "@entities/Channel/ui/ViewThumbnails";
 import ViewScreenshots from "@entities/Channel/ui/ViewScreenshots";
 import FetchUploadsButton from "@features/Upload/components/FetchUploadsButton";
-import ViewStoryboards from "@shared/ui/ViewStoryboards/ViewStoryboards";
+import ViewStoryboards from "@/widgets/Storyboard/ui/ViewStoryboards/ViewStoryboards";
 
 const ChannelHeader = () => {
   const ytChannelId = useTypedChannelYtId();

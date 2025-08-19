@@ -5,7 +5,7 @@ import FetchUploadsButton from "@features/Upload/components/FetchUploadsButton";
 import DeleteChannel from "@entities/Channel/ui/DeleteChannel";
 import useTitleClick from "@widgets/Dashboard/lib/useTitleClick";
 import { DashboardChannelResponse } from "@/shared/api/generated/graphql";
-import { usePlaylist } from "@store/store";
+import { usePlaylist } from "@/app/providers/store/store";
 import { ListMusic, ExternalLink } from "lucide-react";
 import clsx from "clsx";
 import { routes } from "@/shared/routes";

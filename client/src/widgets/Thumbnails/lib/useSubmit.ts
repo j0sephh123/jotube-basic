@@ -1,4 +1,4 @@
-import { useThumbnailsSlice } from "@store/store";
+import { useThumbnailsSlice } from "@/app/providers/store/store";
 import { useCallback } from "react";
 import { useFinishProcessingUpload } from "@features/Upload/hooks/useFinishProcessingUpload";
 import { useRefetchTotalCounts } from "@features/Statistics/hooks/useTotalCounts";

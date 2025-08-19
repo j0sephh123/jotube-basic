@@ -9,13 +9,13 @@ import { createVideosDashboardSlice } from "@widgets/Dashboard/model/videos-dash
 import {
   createSidePanelSlice,
   SidePanelSlice,
-} from "@store/slices/side-panel-slice";
+} from "@/widgets/SidePanel/model/side-panel-slice";
 import { createPlaylistSlice, PlaylistSlice } from "@features/Playlist/store";
 import { createRangePickersSlice } from "@widgets/Dashboard/model/range-picker-slice";
 import { createVideosRangePickersSlice } from "@widgets/Dashboard/model/videos-range-picker-slice";
 import { createSlidesSlice } from "@widgets/Thumbnails/model/slides-slice";
-import { createStoryboardProcessingSlice } from "@store/slices/storyboard-processing-slice";
-import { createZoomSlice } from "@store/slices/zoom-slice";
+import { createStoryboardProcessingSlice } from "@/features/Storyboard/model/storyboard-processing-slice";
+import { createZoomSlice } from "@/shared/model/zoom-slice";
 
 // ---- Types ----
 import type {
@@ -28,7 +28,7 @@ import type {
   VideosDashboardSlice,
   VideosRangePickersSlice,
   ZoomSlice,
-} from "@store/store-types";
+} from "@/app/providers/store/store-types";
 
 // ---- Store ----------------------------------------------------
 export const useStore = create<StoreType>()(

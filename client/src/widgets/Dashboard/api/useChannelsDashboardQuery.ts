@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useStore } from "@/store/store";
+import { useStore } from "@/app/providers/store/store";
 import { useParams } from "react-router-dom";
 import { useCallback } from "react";
 import { ViewType } from "@widgets/Dashboard/lib/useDashboardParams";

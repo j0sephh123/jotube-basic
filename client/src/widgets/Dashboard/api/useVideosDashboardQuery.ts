@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useVideosDashboard } from "@/store/store";
+import { useVideosDashboard } from "@/app/providers/store/store";
 import { useCallback } from "react";
 import { useFetchVideosDashboard } from "@widgets/Dashboard/lib";
 

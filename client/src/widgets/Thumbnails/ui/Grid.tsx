@@ -1,4 +1,4 @@
-import { useThumbnailsSlice, useZoom } from "@store/store";
+import { useThumbnailsSlice, useZoom } from "@/app/providers/store/store";
 import ThumbnailGridCell from "@widgets/Thumbnails/ui/ThumbnailGridCell";
 import { generateThumbnailUrl } from "@shared/utils/image";
 import {

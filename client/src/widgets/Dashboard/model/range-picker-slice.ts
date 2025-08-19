@@ -1,4 +1,4 @@
-import { RangePickerTypes } from "@/store/store-types";
+import { RangePickerTypes } from "@/app/providers/store/store-types";
 
 export type RangePickerConfig = {
   values: ReadonlyArray<number>;

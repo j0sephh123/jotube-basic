@@ -1,4 +1,7 @@
-import { Store, StoryboardProcessingSlice } from "@store/store-types";
+import {
+  Store,
+  StoryboardProcessingSlice,
+} from "@/app/providers/store/store-types";
 
 export const createStoryboardProcessingSlice = (
   set: (fn: (state: Store) => Partial<Store>) => void

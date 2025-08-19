@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useStore } from "@/store/store";
+import { useStore } from "@/app/providers/store/store";
 import { useVideosDashboardContext } from "@/widgets/Dashboard/model/useVideosDashboardContext";
 import Button from "@/shared/ui/button";
 

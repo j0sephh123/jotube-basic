@@ -1,4 +1,4 @@
-import { ZoomSlice } from "@store/store-types";
+import { ZoomSlice } from "@/app/providers/store/store-types";
 
 export const createZoomSlice = (
   set: (fn: (state: ZoomSlice) => ZoomSlice) => void

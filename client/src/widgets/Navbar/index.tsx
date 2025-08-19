@@ -1,9 +1,9 @@
 import { Grid2X2, HomeIcon, ListMusic, Save, SquarePlay } from "lucide-react";
-import QuickSearch from "@features/Search/Search";
-import InitCarouselButton from "@widgets/Navbar/InitCarouselButton";
-import Screenshots from "@widgets/Navbar/Screenshots";
-import VideoProcessingInfo from "@widgets/Navbar/VideoProcessingInfo";
-import ThemeSwitcher from "@widgets/Navbar/ThemeSwitcher";
+import QuickSearch from "@/widgets/Search/ui/Search";
+import InitCarouselButton from "@/widgets/Navbar/ui/InitCarouselButton";
+import Screenshots from "@/widgets/Navbar/ui/Screenshots";
+import VideoProcessingInfo from "@/widgets/Navbar/ui/VideoProcessingInfo";
+import ThemeSwitcher from "@/widgets/Navbar/ui/ThemeSwitcher";
 import { routes } from "@/shared/routes";
 import { useTotalCounts } from "@features/Statistics/hooks/useTotalCounts";
 import { useFreeSpace } from "@features/Statistics/hooks/useFreeSpace";

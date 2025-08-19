@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { usePlaylist } from "@store/store";
+import { usePlaylist } from "@/app/providers/store/store";
 import { useGetChannel } from "@entities/Channel/model/useGetChannel";
 import { useChannelsDashboardQuery } from "@widgets/Dashboard/api/useChannelsDashboardQuery";
 import { useClickOutside } from "@shared/lib/useClickOutside";
