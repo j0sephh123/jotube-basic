@@ -1,41 +1,73 @@
-import { useState } from "react";
 import VideoIdInput from "./VideoIdInput";
 import SubmitButton from "./SubmitButton";
 import Wrapper from "./Wrapper";
-import useSubmit from "../hooks/useSubmit";
+import useSubmitMutation from "../hooks/useSubmitMutation";
 import FormWrapper from "./FormWrapper";
 import ScreenshotItem from "./ScreenshotItem";
 import ArrowButton from "./ArrowButton";
 import Header from "./Header";
 import { getPublicImgUrl } from "@/shared/utils/image";
-import { ImageNavigatorResponse } from "../types";
+import { useNavigatorState } from "../hooks/reducer/useNavigatorState";
 import ScreenshotControlWrapper from "./ScreenshotControlWrapper";
 
 export default function ImageNavigatorPage() {
-  const [ytVideoId, setYtVideoId] = useState("");
-  const [result, setResult] = useState<ImageNavigatorResponse | null>(null);
-  const submitMutation = useSubmit();
+  const {
+    ytVideoId,
+    result,
+    currentChannelId,
+    currentVideoId,
+    currentSecondIndex,
+    setYtVideoId,
+    setResultAndPosition,
+    incrementSecond,
+    decrementSecond,
+  } = useNavigatorState();
+  const submitMutation = useSubmitMutation();
+
+  const hasMorePreviousSeconds = currentSecondIndex > 0;
+  const hasMoreNextSeconds =
+    currentSecondIndex < (result?.screenshots.length ?? 0) - 1;
 
   const handleSubmit = () => {
-    console.log("Submit");
     submitMutation
       .mutateAsync({
         type: "video",
         ytVideoId: ytVideoId,
       })
       .then((result) => {
-        console.log(result);
-        setResult(result);
+        setResultAndPosition(
+          result,
+          result.metadata.ytChannelId,
+          result.metadata.ytVideoId,
+          0
+        );
+      })
+      .catch((error) => {
+        console.error("Mutation error:", error);
       });
   };
 
   const handlePrevious = () => {
-    console.log("Previous screenshot");
+    if (!hasMorePreviousSeconds) {
+      return;
+    }
+    decrementSecond();
   };
 
   const handleNext = () => {
-    console.log("Next screenshot");
+    if (!hasMoreNextSeconds) {
+      return;
+    }
+    incrementSecond();
   };
+
+  console.log({
+    ytVideoId,
+    result,
+    currentChannelId,
+    currentVideoId,
+    currentSecondIndex,
+  });
 
   return (
     <Wrapper>
@@ -44,28 +76,40 @@ export default function ImageNavigatorPage() {
         <SubmitButton onClick={handleSubmit} />
       </FormWrapper>
 
-      {result && result.screenshots.length > 0 && (
-        <ScreenshotControlWrapper>
-          <Header
-            channelTitle={result.metadata.channelTitle}
-            videoTitle={result.metadata.videoTitle}
-            second={result.screenshots[0]!}
-            total={result.screenshots.length}
-          />
-          <div className="relative">
-            <ScreenshotItem
-              src={getPublicImgUrl(
-                result.metadata.ytChannelId,
-                result.metadata.ytVideoId,
-                result.screenshots[0]!,
-                "saved_screenshots"
-              )}
+      {result &&
+        result.screenshots.length > 0 &&
+        currentChannelId &&
+        currentVideoId && (
+          <ScreenshotControlWrapper>
+            <Header
+              channelTitle={result.metadata.channelTitle}
+              videoTitle={result.metadata.videoTitle}
+              second={result.screenshots[currentSecondIndex]!}
+              index={currentSecondIndex}
+              total={result.screenshots.length}
             />
-            <ArrowButton direction="left" onClick={handlePrevious} />
-            <ArrowButton direction="right" onClick={handleNext} />
-          </div>
-        </ScreenshotControlWrapper>
-      )}
+            <div className="relative">
+              <ScreenshotItem
+                src={getPublicImgUrl(
+                  currentChannelId,
+                  currentVideoId,
+                  result.screenshots[currentSecondIndex]!,
+                  "saved_screenshots"
+                )}
+              />
+              <ArrowButton
+                direction="left"
+                onClick={handlePrevious}
+                disabled={currentSecondIndex === 0}
+              />
+              <ArrowButton
+                direction="right"
+                onClick={handleNext}
+                disabled={currentSecondIndex === result.screenshots.length - 1}
+              />
+            </div>
+          </ScreenshotControlWrapper>
+        )}
     </Wrapper>
   );
 }

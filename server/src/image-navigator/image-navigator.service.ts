@@ -18,7 +18,7 @@ export class ImageNavigatorService {
         return this.getAllScreenshots();
       case ImageNavigatorType.VIDEO:
         if (!request.ytVideoId) {
-          throw new BadRequestException('ytVideoId is required for video type');
+          return this.getScreenshotsByRandomVideo();
         }
         return this.getScreenshotsByVideo(request.ytVideoId);
       case ImageNavigatorType.CHANNEL:
@@ -101,6 +101,32 @@ export class ImageNavigatorService {
         videoTitle,
       },
     };
+  }
+
+  private async getScreenshotsByRandomVideo(): Promise<ImageNavigatorResponseDto> {
+    const screenshots = await this.prismaService.$queryRaw<
+      Record<string, any>[]
+    >`
+      SELECT 
+        s.id,
+        s.second,
+        s.ytChannelId,
+        s.ytVideoId,
+        c.title as channelTitle,
+        v.title as videoTitle
+      FROM Screenshot s
+      JOIN Channel c ON s.ytChannelId = c.ytId
+      JOIN UploadsVideo v ON s.ytVideoId = v.ytId
+      ORDER BY RAND()
+      LIMIT 1
+    `;
+
+    if (screenshots.length === 0) {
+      throw new BadRequestException('No screenshots found');
+    }
+
+    const randomVideoId = screenshots[0].ytVideoId;
+    return this.getScreenshotsByVideo(randomVideoId);
   }
 
   private async getScreenshotsByChannel(

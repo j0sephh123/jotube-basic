@@ -3,6 +3,7 @@ interface HeaderProps {
   videoTitle: string;
   second: number;
   total: number;
+  index: number;
 }
 
 export default function Header({
@@ -10,6 +11,7 @@ export default function Header({
   videoTitle,
   second,
   total,
+  index,
 }: HeaderProps) {
   return (
     <div className="bg-base-100 p-2 rounded-t-lg border-b mb-2">
@@ -17,7 +19,9 @@ export default function Header({
         <span className="text-sm font-medium truncate">{channelTitle}</span>
         <span className="text-primary font-mono">{second}s</span>
         <span className="text-gray-600 truncate">{videoTitle}</span>
-        <span className="text-xs text-gray-500 ml-auto">1/{total}</span>
+        <span className="text-xs text-gray-500 ml-auto">
+          {index + 1}/{total}
+        </span>
       </div>
     </div>
   );
