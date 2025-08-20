@@ -25,24 +25,41 @@ export function useNavigatorState() {
     result: ImageNavigatorResponse,
     channelId: string,
     videoId: string,
+    channelIndex: number,
+    videoIndex: number,
     secondIndex: number
   ) =>
     dispatch({
       type: "SET_RESULT_AND_POSITION",
-      payload: { result, channelId, videoId, secondIndex },
+      payload: {
+        result,
+        channelId,
+        videoId,
+        channelIndex,
+        videoIndex,
+        secondIndex,
+      },
     });
 
   const reset = () => dispatch({ type: "RESET" });
 
   const incrementSecond = () => dispatch({ type: "INCREMENT_SECOND" });
   const decrementSecond = () => dispatch({ type: "DECREMENT_SECOND" });
+  const incrementVideo = () => dispatch({ type: "INCREMENT_VIDEO" });
+  const decrementVideo = () => dispatch({ type: "DECREMENT_VIDEO" });
+  const addSeenChannel = (channelId: string) =>
+    dispatch({ type: "ADD_SEEN_CHANNEL", payload: channelId });
+  const clearSeenChannels = () => dispatch({ type: "CLEAR_SEEN_CHANNELS" });
 
   const {
     ytVideoId,
     result,
     currentChannelId,
     currentVideoId,
+    currentChannelIndex,
+    currentVideoIndex,
     currentSecondIndex,
+    seenChannels,
   } = state;
 
   return {
@@ -50,7 +67,10 @@ export function useNavigatorState() {
     result,
     currentChannelId,
     currentVideoId,
+    currentChannelIndex,
+    currentVideoIndex,
     currentSecondIndex,
+    seenChannels,
     setYtVideoId,
     setResult,
     setCurrentPosition,
@@ -58,5 +78,9 @@ export function useNavigatorState() {
     reset,
     incrementSecond,
     decrementSecond,
+    incrementVideo,
+    decrementVideo,
+    addSeenChannel,
+    clearSeenChannels,
   };
 }

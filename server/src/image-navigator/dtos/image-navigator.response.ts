@@ -1,9 +1,15 @@
-export class ImageNavigatorResponseDto {
+export class VideoMetadataDto {
+  title: string;
+  ytVideoId: string;
   screenshots: number[];
-  metadata: {
-    ytVideoId: string;
-    ytChannelId: string;
-    channelTitle: string;
-    videoTitle: string;
-  };
+}
+
+export class ChannelMetadataDto {
+  ytChannelId: string;
+  channelTitle: string;
+  videos: VideoMetadataDto[];
+}
+
+export class ImageNavigatorResponseDto {
+  channels: ChannelMetadataDto[];
 }

@@ -34,72 +34,62 @@ export class ImageNavigatorService {
   }
 
   private async getAllScreenshots(): Promise<ImageNavigatorResponseDto> {
-    const screenshots = await this.prismaService.$queryRaw<
-      Record<string, any>[]
-    >`
-      SELECT 
-        s.id,
-        s.second,
-        s.ytChannelId,
-        s.ytVideoId,
-        c.title as channelTitle,
-        v.title as videoTitle
-      FROM Screenshot s
-      JOIN Channel c ON s.ytChannelId = c.ytId
-      JOIN UploadsVideo v ON s.ytVideoId = v.ytId
-      ORDER BY s.createdAt DESC
-      LIMIT 100
+    const channels = await this.prismaService.$queryRaw<Record<string, any>[]>`
+      SELECT DISTINCT
+        c.ytId as ytChannelId,
+        c.title as channelTitle
+      FROM Channel c
+      JOIN Screenshot s ON c.ytId = s.ytChannelId
+      ORDER BY c.title ASC
+      LIMIT 10
     `;
 
-    const formattedScreenshots = screenshots.map(this.formatScreenshot);
+    const result = await Promise.all(
+      channels.map(async (channel) => {
+        const videos = await this.getVideosForChannel(channel.ytChannelId);
+        return {
+          ytChannelId: channel.ytChannelId,
+          channelTitle: channel.channelTitle,
+          videos,
+        };
+      }),
+    );
 
     return {
-      screenshots: formattedScreenshots,
-      metadata: {
-        ytVideoId: '',
-        ytChannelId: '',
-        channelTitle: '',
-        videoTitle: '',
-      },
+      channels: result,
     };
   }
 
   private async getScreenshotsByVideo(
     ytVideoId: string,
   ): Promise<ImageNavigatorResponseDto> {
-    const screenshots = await this.prismaService.$queryRaw<
-      Record<string, any>[]
-    >`
+    const videoData = await this.prismaService.$queryRaw<Record<string, any>[]>`
       SELECT 
-        s.id,
-        s.second,
         s.ytChannelId,
-        s.ytVideoId,
-        c.title as channelTitle,
-        v.title as videoTitle
+        c.title as channelTitle
       FROM Screenshot s
       JOIN Channel c ON s.ytChannelId = c.ytId
-      JOIN UploadsVideo v ON s.ytVideoId = v.ytId
       WHERE s.ytVideoId = ${ytVideoId}
-      ORDER BY s.second ASC
+      LIMIT 1
     `;
 
-    const formattedScreenshots = screenshots.map(this.formatScreenshot);
+    if (videoData.length === 0) {
+      throw new BadRequestException('Video not found');
+    }
 
-    // Extract metadata from raw data
-    const firstScreenshot = screenshots[0];
-    const ytChannelId = firstScreenshot ? firstScreenshot.ytChannelId : '';
-    const channelTitle = firstScreenshot ? firstScreenshot.channelTitle : '';
-    const videoTitle = firstScreenshot ? firstScreenshot.videoTitle : '';
+    const ytChannelId = videoData[0].ytChannelId;
+    const channelTitle = videoData[0].channelTitle;
+
+    const videos = await this.getVideosForChannel(ytChannelId);
 
     return {
-      screenshots: formattedScreenshots,
-      metadata: {
-        ytVideoId,
-        ytChannelId,
-        channelTitle,
-        videoTitle,
-      },
+      channels: [
+        {
+          ytChannelId,
+          channelTitle,
+          videos,
+        },
+      ],
     };
   }
 
@@ -132,34 +122,63 @@ export class ImageNavigatorService {
   private async getScreenshotsByChannel(
     ytChannelId: string,
   ): Promise<ImageNavigatorResponseDto> {
-    const screenshots = await this.prismaService.$queryRaw<
+    const channelData = await this.prismaService.$queryRaw<
       Record<string, any>[]
     >`
-      SELECT 
-        s.id,
-        s.second,
-        s.ytChannelId,
-        s.ytVideoId,
-        c.title as channelTitle,
-        v.title as videoTitle
-      FROM Screenshot s
-      JOIN Channel c ON s.ytChannelId = c.ytId
-      JOIN UploadsVideo v ON s.ytVideoId = v.ytId
-      WHERE s.ytChannelId = ${ytChannelId}
-      ORDER BY s.createdAt DESC
+      SELECT c.title as channelTitle
+      FROM Channel c
+      WHERE c.ytId = ${ytChannelId}
+      LIMIT 1
     `;
 
-    const formattedScreenshots = screenshots.map(this.formatScreenshot);
+    if (channelData.length === 0) {
+      throw new BadRequestException('Channel not found');
+    }
+
+    const videos = await this.getVideosForChannel(ytChannelId);
 
     return {
-      screenshots: formattedScreenshots,
-      metadata: {
-        ytChannelId,
-        ytVideoId: '',
-        channelTitle: '',
-        videoTitle: '',
-      },
+      channels: [
+        {
+          ytChannelId,
+          channelTitle: channelData[0].channelTitle,
+          videos,
+        },
+      ],
     };
+  }
+
+  private async getVideosForChannel(ytChannelId: string): Promise<any[]> {
+    const videos = await this.prismaService.$queryRaw<Record<string, any>[]>`
+      SELECT DISTINCT
+        v.ytId as ytVideoId,
+        v.title as title
+      FROM UploadsVideo v
+      JOIN Screenshot s ON v.ytId = s.ytVideoId
+      WHERE s.ytChannelId = ${ytChannelId}
+      ORDER BY v.title ASC
+    `;
+
+    const result = await Promise.all(
+      videos.map(async (video) => {
+        const screenshots = await this.prismaService.$queryRaw<
+          Record<string, any>[]
+        >`
+          SELECT s.second
+          FROM Screenshot s
+          WHERE s.ytVideoId = ${video.ytVideoId}
+          ORDER BY s.second ASC
+        `;
+
+        return {
+          title: video.title,
+          ytVideoId: video.ytVideoId,
+          screenshots: screenshots.map((s) => s.second),
+        };
+      }),
+    );
+
+    return result;
   }
 
   private formatScreenshot(rawScreenshot: Record<string, any>): number {

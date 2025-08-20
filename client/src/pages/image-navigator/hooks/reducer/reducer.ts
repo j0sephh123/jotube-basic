@@ -5,7 +5,10 @@ export interface ImageNavigatorState {
   result: ImageNavigatorResponse | null;
   currentChannelId: string | null;
   currentVideoId: string | null;
+  currentChannelIndex: number;
+  currentVideoIndex: number;
   currentSecondIndex: number;
+  seenChannels: string[];
 }
 
 export type ImageNavigatorAction =
@@ -21,19 +24,28 @@ export type ImageNavigatorAction =
         result: ImageNavigatorResponse;
         channelId: string;
         videoId: string;
+        channelIndex: number;
+        videoIndex: number;
         secondIndex: number;
       };
     }
   | { type: "RESET" }
   | { type: "INCREMENT_SECOND" }
-  | { type: "DECREMENT_SECOND" };
+  | { type: "DECREMENT_SECOND" }
+  | { type: "INCREMENT_VIDEO" }
+  | { type: "DECREMENT_VIDEO" }
+  | { type: "ADD_SEEN_CHANNEL"; payload: string }
+  | { type: "CLEAR_SEEN_CHANNELS" };
 
 export const initialState: ImageNavigatorState = {
   ytVideoId: "",
   result: null,
   currentChannelId: null,
   currentVideoId: null,
+  currentChannelIndex: 0,
+  currentVideoIndex: 0,
   currentSecondIndex: 0,
+  seenChannels: [],
 };
 
 export function imageNavigatorReducer(
@@ -58,6 +70,8 @@ export function imageNavigatorReducer(
         result: action.payload.result,
         currentChannelId: action.payload.channelId,
         currentVideoId: action.payload.videoId,
+        currentChannelIndex: action.payload.channelIndex,
+        currentVideoIndex: action.payload.videoIndex,
         currentSecondIndex: action.payload.secondIndex,
       };
     case "RESET":
@@ -66,6 +80,25 @@ export function imageNavigatorReducer(
       return { ...state, currentSecondIndex: state.currentSecondIndex + 1 };
     case "DECREMENT_SECOND":
       return { ...state, currentSecondIndex: state.currentSecondIndex - 1 };
+    case "INCREMENT_VIDEO":
+      return {
+        ...state,
+        currentVideoIndex: state.currentVideoIndex + 1,
+        currentSecondIndex: 0,
+      };
+    case "DECREMENT_VIDEO":
+      return {
+        ...state,
+        currentVideoIndex: Math.max(0, state.currentVideoIndex - 1),
+        currentSecondIndex: 0,
+      };
+    case "ADD_SEEN_CHANNEL":
+      return {
+        ...state,
+        seenChannels: [...state.seenChannels, action.payload],
+      };
+    case "CLEAR_SEEN_CHANNELS":
+      return { ...state, seenChannels: [] };
     default:
       return state;
   }
