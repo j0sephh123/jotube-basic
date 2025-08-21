@@ -1,4 +1,4 @@
-import { IsEnum, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsOptional, IsString, IsArray } from 'class-validator';
 
 export enum ImageNavigatorType {
   ALL = 'all',
@@ -17,4 +17,9 @@ export class ImageNavigatorRequestDto {
   @IsOptional()
   @IsString()
   ytChannelId?: string;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  skipChannels?: string[];
 }

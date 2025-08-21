@@ -18,9 +18,12 @@ export class ImageNavigatorService {
         return this.getAllScreenshots();
       case ImageNavigatorType.VIDEO:
         if (!request.ytVideoId) {
-          return this.getScreenshotsByRandomVideo();
+          return this.getScreenshotsByRandomVideo(request.skipChannels);
         }
-        return this.getScreenshotsByVideo(request.ytVideoId);
+        return this.getScreenshotsByVideo(
+          request.ytVideoId,
+          request.skipChannels,
+        );
       case ImageNavigatorType.CHANNEL:
         if (!request.ytChannelId) {
           throw new BadRequestException(
@@ -62,19 +65,39 @@ export class ImageNavigatorService {
 
   private async getScreenshotsByVideo(
     ytVideoId: string,
+    skipChannels?: string[],
   ): Promise<ImageNavigatorResponseDto> {
-    const videoData = await this.prismaService.$queryRaw<Record<string, any>[]>`
-      SELECT 
-        s.ytChannelId,
-        c.title as channelTitle
-      FROM Screenshot s
-      JOIN Channel c ON s.ytChannelId = c.ytId
-      WHERE s.ytVideoId = ${ytVideoId}
-      LIMIT 1
-    `;
+    let videoData: Record<string, any>[];
+
+    if (skipChannels && skipChannels.length > 0) {
+      const placeholders = skipChannels.map(() => '?').join(',');
+      const query = `
+        SELECT 
+          s.ytChannelId,
+          c.title as channelTitle
+        FROM Screenshot s
+        JOIN Channel c ON s.ytChannelId = c.ytId
+        WHERE s.ytVideoId = ?
+        AND s.ytChannelId NOT IN (${placeholders})
+        LIMIT 1
+      `;
+      videoData = await this.prismaService.$queryRawUnsafe<
+        Record<string, any>[]
+      >(query, ytVideoId, ...skipChannels);
+    } else {
+      videoData = await this.prismaService.$queryRaw<Record<string, any>[]>`
+        SELECT 
+          s.ytChannelId,
+          c.title as channelTitle
+        FROM Screenshot s
+        JOIN Channel c ON s.ytChannelId = c.ytId
+        WHERE s.ytVideoId = ${ytVideoId}
+        LIMIT 1
+      `;
+    }
 
     if (videoData.length === 0) {
-      throw new BadRequestException('Video not found');
+      throw new BadRequestException('Video not found or all channels skipped');
     }
 
     const ytChannelId = videoData[0].ytChannelId;
@@ -93,30 +116,54 @@ export class ImageNavigatorService {
     };
   }
 
-  private async getScreenshotsByRandomVideo(): Promise<ImageNavigatorResponseDto> {
-    const screenshots = await this.prismaService.$queryRaw<
-      Record<string, any>[]
-    >`
-      SELECT 
-        s.id,
-        s.second,
-        s.ytChannelId,
-        s.ytVideoId,
-        c.title as channelTitle,
-        v.title as videoTitle
-      FROM Screenshot s
-      JOIN Channel c ON s.ytChannelId = c.ytId
-      JOIN UploadsVideo v ON s.ytVideoId = v.ytId
-      ORDER BY RAND()
-      LIMIT 1
-    `;
+  private async getScreenshotsByRandomVideo(
+    skipChannels?: string[],
+  ): Promise<ImageNavigatorResponseDto> {
+    let screenshots: Record<string, any>[];
+
+    if (skipChannels && skipChannels.length > 0) {
+      const placeholders = skipChannels.map(() => '?').join(',');
+      const query = `
+        SELECT 
+          s.id,
+          s.second,
+          s.ytChannelId,
+          s.ytVideoId,
+          c.title as channelTitle,
+          v.title as videoTitle
+        FROM Screenshot s
+        JOIN Channel c ON s.ytChannelId = c.ytId
+        JOIN UploadsVideo v ON s.ytVideoId = v.ytId
+        WHERE s.ytChannelId NOT IN (${placeholders})
+        ORDER BY RAND()
+        LIMIT 1
+      `;
+      screenshots = await this.prismaService.$queryRawUnsafe<
+        Record<string, any>[]
+      >(query, ...skipChannels);
+    } else {
+      screenshots = await this.prismaService.$queryRaw<Record<string, any>[]>`
+        SELECT 
+          s.id,
+          s.second,
+          s.ytChannelId,
+          s.ytVideoId,
+          c.title as channelTitle,
+          v.title as videoTitle
+        FROM Screenshot s
+        JOIN Channel c ON s.ytChannelId = c.ytId
+        JOIN UploadsVideo v ON s.ytVideoId = v.ytId
+        ORDER BY RAND()
+        LIMIT 1
+      `;
+    }
 
     if (screenshots.length === 0) {
       throw new BadRequestException('No screenshots found');
     }
 
     const randomVideoId = screenshots[0].ytVideoId;
-    return this.getScreenshotsByVideo(randomVideoId);
+    return this.getScreenshotsByVideo(randomVideoId, skipChannels);
   }
 
   private async getScreenshotsByChannel(
