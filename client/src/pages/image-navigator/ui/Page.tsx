@@ -1,14 +1,14 @@
-import VideoIdInput from "./VideoIdInput";
-import SubmitButton from "./SubmitButton";
-import Wrapper from "./Wrapper";
+import VideoIdInput from "./primitive/VideoIdInput";
+import Wrapper from "./primitive/Wrapper";
 import useSubmitMutation from "../hooks/useSubmitMutation";
-import FormWrapper from "./FormWrapper";
-import ScreenshotItem from "./ScreenshotItem";
-import ArrowButton from "./ArrowButton";
-import Header from "./Header";
+import FormWrapper from "./primitive/FormWrapper";
+import ScreenshotItem from "./primitive/ScreenshotItem";
+import ArrowButton from "./primitive/ArrowButton";
+import Header from "./primitive/Header";
 import { getPublicImgUrl } from "@/shared/utils/image";
 import { useNavigatorState } from "../hooks/reducer/useNavigatorState";
-import ScreenshotControlWrapper from "./ScreenshotControlWrapper";
+import ScreenshotControlWrapper from "./primitive/ScreenshotControlWrapper";
+import Button from "@/shared/ui/button";
 
 export default function ImageNavigatorPage() {
   const {
@@ -257,7 +257,7 @@ export default function ImageNavigatorPage() {
     <Wrapper>
       <FormWrapper>
         <VideoIdInput value={ytVideoId} onChange={setYtVideoId} />
-        <SubmitButton onClick={handleSubmit} />
+        <Button onClick={handleSubmit}>Fetch Screenshots</Button>
       </FormWrapper>
 
       {result &&
