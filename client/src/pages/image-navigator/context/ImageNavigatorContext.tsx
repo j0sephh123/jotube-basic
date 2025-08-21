@@ -1,8 +1,48 @@
-import { useReducer } from "react";
-import { imageNavigatorReducer, initialState } from "./reducer";
-import { ImageNavigatorResponse } from "../../types";
+import React, { createContext, useContext, useReducer, ReactNode } from "react";
+import {
+  imageNavigatorReducer,
+  initialState,
+  ImageNavigatorState,
+} from "../hooks/reducer/reducer";
+import { ImageNavigatorResponse } from "../types";
 
-export function useNavigatorState() {
+interface ImageNavigatorContextType {
+  state: ImageNavigatorState;
+  setYtVideoId: (videoId: string) => void;
+  setResult: (result: ImageNavigatorResponse | null) => void;
+  setCurrentPosition: (
+    channelId: string,
+    videoId: string,
+    secondIndex: number
+  ) => void;
+  setResultAndPosition: (
+    result: ImageNavigatorResponse,
+    channelId: string,
+    videoId: string,
+    channelIndex: number,
+    videoIndex: number,
+    secondIndex: number
+  ) => void;
+  reset: () => void;
+  incrementSecond: () => void;
+  decrementSecond: () => void;
+  incrementVideo: () => void;
+  decrementVideo: () => void;
+  addSeenChannel: (channelId: string) => void;
+  clearSeenChannels: () => void;
+}
+
+const ImageNavigatorContext = createContext<
+  ImageNavigatorContextType | undefined
+>(undefined);
+
+interface ImageNavigatorProviderProps {
+  children: ReactNode;
+}
+
+export function ImageNavigatorProvider({
+  children,
+}: ImageNavigatorProviderProps) {
   const [state, dispatch] = useReducer(imageNavigatorReducer, initialState);
 
   const setYtVideoId = (videoId: string) =>
@@ -51,26 +91,8 @@ export function useNavigatorState() {
     dispatch({ type: "ADD_SEEN_CHANNEL", payload: channelId });
   const clearSeenChannels = () => dispatch({ type: "CLEAR_SEEN_CHANNELS" });
 
-  const {
-    ytVideoId,
-    result,
-    currentChannelId,
-    currentVideoId,
-    currentChannelIndex,
-    currentVideoIndex,
-    currentSecondIndex,
-    seenChannels,
-  } = state;
-
-  return {
-    ytVideoId,
-    result,
-    currentChannelId,
-    currentVideoId,
-    currentChannelIndex,
-    currentVideoIndex,
-    currentSecondIndex,
-    seenChannels,
+  const value: ImageNavigatorContextType = {
+    state,
     setYtVideoId,
     setResult,
     setCurrentPosition,
@@ -83,4 +105,20 @@ export function useNavigatorState() {
     addSeenChannel,
     clearSeenChannels,
   };
+
+  return (
+    <ImageNavigatorContext.Provider value={value}>
+      {children}
+    </ImageNavigatorContext.Provider>
+  );
+}
+
+export function useImageNavigator() {
+  const context = useContext(ImageNavigatorContext);
+  if (context === undefined) {
+    throw new Error(
+      "useImageNavigator must be used within an ImageNavigatorProvider"
+    );
+  }
+  return context;
 }

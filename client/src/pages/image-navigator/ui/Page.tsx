@@ -1,16 +1,15 @@
-import VideoIdInput from "./primitive/VideoIdInput";
 import Wrapper from "./primitive/Wrapper";
 import useSubmitMutation from "../hooks/useSubmitMutation";
-import FormWrapper from "./primitive/FormWrapper";
 import ScreenshotItem from "./primitive/ScreenshotItem";
 import ArrowButton from "./primitive/ArrowButton";
 import Header from "./primitive/Header";
 import { getPublicImgUrl } from "@/shared/utils/image";
-import { useNavigatorState } from "../hooks/reducer/useNavigatorState";
+import { useNavigatorState } from "../hooks/useNavigatorState";
 import ScreenshotControlWrapper from "./primitive/ScreenshotControlWrapper";
-import Button from "@/shared/ui/button";
+import { ImageNavigatorProvider } from "../context/ImageNavigatorContext";
+import { useEffect } from "react";
 
-export default function ImageNavigatorPage() {
+function ImageNavigatorPageContent() {
   const {
     ytVideoId,
     result,
@@ -20,7 +19,6 @@ export default function ImageNavigatorPage() {
     currentVideoIndex,
     currentSecondIndex,
     seenChannels,
-    setYtVideoId,
     setResultAndPosition,
     incrementSecond,
     decrementSecond,
@@ -35,55 +33,51 @@ export default function ImageNavigatorPage() {
   const hasMoreNextSeconds =
     currentSecondIndex < (currentVideo?.screenshots?.length ?? 0) - 1;
 
-  const handleSubmit = () => {
-    clearSeenChannels();
-    submitMutation
-      .mutateAsync({
-        type: "video",
-        ytVideoId: ytVideoId,
-      })
-      .then((result) => {
-        if (
-          result &&
-          result.channels.length > 0 &&
-          result.channels[0] &&
-          result.channels[0].videos.length > 0
-        ) {
-          let targetChannelIndex = 0;
-          let targetVideoIndex = 0;
-          let targetChannel = result.channels[0];
-          let targetVideo = targetChannel.videos[0];
+  const totalChannelScreenshots =
+    currentChannel?.videos.reduce(
+      (total, video) => total + (video.screenshots?.length || 0),
+      0
+    ) || 0;
 
-          for (let i = 0; i < result.channels.length; i++) {
-            const channel = result.channels[i];
-            if (channel) {
-              const videoIndex = channel.videos.findIndex(
-                (v) => v.ytVideoId === ytVideoId
+  const viewedScreenshots = currentChannel
+    ? currentChannel.videos
+        .slice(0, currentVideoIndex)
+        .reduce((total, video) => total + (video.screenshots?.length || 0), 0) +
+      (currentSecondIndex + 1)
+    : 0;
+
+  useEffect(() => {
+    if (!result) {
+      clearSeenChannels();
+      submitMutation
+        .mutateAsync({
+          type: "video",
+        })
+        .then((result) => {
+          if (
+            result &&
+            result.channels.length > 0 &&
+            result.channels[0] &&
+            result.channels[0].videos.length > 0
+          ) {
+            const targetChannel = result.channels[0];
+            const targetVideo = targetChannel.videos[0];
+
+            if (targetVideo) {
+              addSeenChannel(targetChannel.ytChannelId);
+              setResultAndPosition(
+                result,
+                targetChannel.ytChannelId,
+                targetVideo.ytVideoId,
+                0,
+                0,
+                0
               );
-              if (videoIndex !== -1) {
-                targetChannelIndex = i;
-                targetVideoIndex = videoIndex;
-                targetChannel = channel;
-                targetVideo = channel.videos[videoIndex];
-                break;
-              }
             }
           }
-
-          if (targetChannel && targetVideo) {
-            addSeenChannel(targetChannel.ytChannelId);
-            setResultAndPosition(
-              result,
-              targetChannel.ytChannelId,
-              targetVideo.ytVideoId,
-              targetChannelIndex,
-              targetVideoIndex,
-              0
-            );
-          }
-        }
-      });
-  };
+        });
+    }
+  }, []);
 
   const handlePrevious = () => {
     if (
@@ -255,11 +249,6 @@ export default function ImageNavigatorPage() {
 
   return (
     <Wrapper>
-      <FormWrapper>
-        <VideoIdInput value={ytVideoId} onChange={setYtVideoId} />
-        <Button onClick={handleSubmit}>Fetch Screenshots</Button>
-      </FormWrapper>
-
       {result &&
         result.channels.length > 0 &&
         currentChannel &&
@@ -277,6 +266,9 @@ export default function ImageNavigatorPage() {
               total={currentVideo.screenshots.length}
               videoIndex={currentVideoIndex}
               totalVideos={currentChannel.videos.length}
+              totalChannelScreenshots={totalChannelScreenshots}
+              viewedScreenshots={viewedScreenshots}
+              channelId={currentChannel.ytChannelId}
             />
             <div className="relative">
               <ScreenshotItem
@@ -353,5 +345,13 @@ export default function ImageNavigatorPage() {
           </ScreenshotControlWrapper>
         )}
     </Wrapper>
+  );
+}
+
+export default function ImageNavigatorPage() {
+  return (
+    <ImageNavigatorProvider>
+      <ImageNavigatorPageContent />
+    </ImageNavigatorProvider>
   );
 }
