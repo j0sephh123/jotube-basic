@@ -1,2 +1,6 @@
 export { useGetChannel } from "./model/useGetChannel";
-export { useRefetchChannelMetadata } from "./model/useChannelMetadata";
+export {
+  useRefetchChannelMetadata,
+  useChannelMetadataQuery,
+} from "./model/useChannelMetadata";
+export { ViewThumbnails, ViewScreenshots } from "./ui";

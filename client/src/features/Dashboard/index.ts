@@ -18,3 +18,4 @@ export { useSidePanel } from "./hooks/useSidePanel";
 export type { RequestBody } from "./model/useDashboardContext";
 export { useChannelsDashboardQuery } from "./api/useChannelsDashboardQuery";
 export { useVideosDashboardQuery } from "./api/useVideosDashboardQuery";
+export { default as useTitleClick } from "./lib/useTitleClick";

@@ -1,6 +1,8 @@
-import { useDashboardParams } from "@/features/Dashboard/lib/useDashboardParams";
-import ChannelDashboardCard from "@/widgets/Dashboard/ui/ChannelDashboardCard";
-import ChannelsDashboardContainer from "@/widgets/Dashboard/ui/ChannelsDashboardContainer";
+import { useDashboardParams } from "@features/Dashboard";
+import {
+  ChannelDashboardCard,
+  ChannelsDashboardContainer,
+} from "@widgets/Dashboard";
 
 export default function ChannelsDashboard() {
   const { viewType } = useDashboardParams();

@@ -1,4 +1,4 @@
-import { usePlaylist } from "@/app/providers/store/store";
+import { usePlaylist } from "@app/providers/store/store";
 
 export const CreatePlaylist = () => {
   const { openPlaylistModal } = usePlaylist();

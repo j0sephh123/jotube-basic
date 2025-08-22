@@ -1,14 +1,12 @@
-import { ViewType } from "@/features/Dashboard/lib/useDashboardParams";
-import SyncUploadsButton from "@features/Upload/components/SyncUploadsButton";
+import { ViewType, useTitleClick } from "@features/Dashboard";
+import { SyncUploadsButton, FetchUploadsButton } from "@features/Upload";
 import Card from "@shared/ui/card";
-import FetchUploadsButton from "@features/Upload/components/FetchUploadsButton";
-import DeleteChannel from "@entities/Channel/ui/DeleteChannel";
-import useTitleClick from "@/features/Dashboard/lib/useTitleClick";
-import type { DashboardChannelResponse } from "@/shared/api/generated/graphql";
-import { usePlaylist } from "@/app/providers/store/store";
+import { DeleteChannel } from "@entities/Channel/ui";
+import type { DashboardChannelResponse } from "@shared/api";
+import { usePlaylist } from "@app/providers/store/store";
 import { ListMusic, ExternalLink } from "lucide-react";
 import clsx from "clsx";
-import { routes } from "@/shared/routes";
+import { routes } from "@shared/routes";
 import { Link } from "react-router-dom";
 
 const statsTypes = [

@@ -10,3 +10,6 @@ export { useSavedUploads } from "./hooks/useSavedUploads";
 export { useFinishProcessingUpload } from "./hooks/useFinishProcessingUpload";
 export { useSyncUploads } from "./hooks/useSyncUploads";
 export { useVideoPlayer } from "./hooks/useVideoPlayer";
+export { default as SyncUploadsButton } from "./components/SyncUploadsButton";
+export { default as CleanShortUploads } from "./components/CleanShortUploads";
+export { default as FetchUploadsButton } from "./components/FetchUploadsButton";

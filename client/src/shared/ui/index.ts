@@ -9,4 +9,6 @@ export { default as IconButton } from "./icons/IconButton";
 export { default as Text } from "./Text";
 export { DialogProvider } from "./dialog/DialogProvider";
 export { default as ZoomModal } from "./ZoomModal";
+export { default as CopyValue } from "./CopyValue";
+export { default as OpenDirectoryButton } from "./OpenDirectoryButton/OpenDirectoryButton";
 export * from "./static";

@@ -1,24 +1,23 @@
-import { useChannelMetadataQuery } from "@/entities/Channel/model/useChannelMetadata";
+import { useChannelMetadataQuery } from "@entities/Channel";
 import { useLocation } from "react-router-dom";
-import { useTypedChannelYtId } from "@/features/Dashboard/lib/useDashboardParams";
-import { usePlaylist } from "@/app/providers/store/store";
+import { useTypedChannelYtId } from "@features/Dashboard";
+import { usePlaylist } from "@app/providers/store/store";
 import { ListMusic, ExternalLink } from "lucide-react";
 import clsx from "clsx";
-import { routes } from "@/shared/routes";
+import { routes } from "@shared/routes";
 import { Link } from "react-router-dom";
 import HeaderLayout from "./HeaderLayout";
 import ChannelControls from "./ChannelControls";
-import SyncUploadsButton from "@features/Upload/components/SyncUploadsButton";
-import CleanShortUploads from "@features/Upload/components/CleanShortUploads";
-import ChannelLink from "@shared/ui/ChannelLink";
-import CopyValue from "@shared/ui/CopyValue";
-import OpenExplorerButton from "@shared/ui/OpenDirectoryButton/OpenDirectoryButton";
+import {
+  SyncUploadsButton,
+  CleanShortUploads,
+  FetchUploadsButton,
+} from "@features/Upload";
+import { ChannelLink, CopyValue, OpenDirectoryButton } from "@shared/ui";
 import Tabs from "./Tabs";
 import BulkOperations from "./BulkOperations";
-import ViewThumbnails from "@entities/Channel/ui/ViewThumbnails";
-import ViewScreenshots from "@entities/Channel/ui/ViewScreenshots";
-import FetchUploadsButton from "@features/Upload/components/FetchUploadsButton";
-import ViewStoryboards from "@/widgets/Storyboard/ui/ViewStoryboards/ViewStoryboards";
+import { ViewThumbnails, ViewScreenshots } from "@entities/Channel";
+import { ViewStoryboards } from "@widgets/Storyboard";
 
 const ChannelHeader = () => {
   const ytChannelId = useTypedChannelYtId();
@@ -78,7 +77,7 @@ const ChannelHeader = () => {
                 <h2 className="text-xl font-bold pr-4">{title}</h2>
               </ChannelLink>
               <CopyValue type="youtube" value={ytChannelId} />
-              <OpenExplorerButton ytChannelId={ytChannelId} />
+              <OpenDirectoryButton ytChannelId={ytChannelId} />
             </>
           }
           center={<Tabs ytChannelId={ytChannelId} />}
