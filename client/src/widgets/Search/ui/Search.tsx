@@ -1,11 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useRef, useEffect } from "react";
 import { Search } from "lucide-react";
-import Modal from "@/shared/ui/Modal";
+import { Modal } from "@shared/ui";
 import { Link } from "react-router-dom";
-import { useQuickSearch, SearchResult } from "@/features/Search/useSearch";
-import ChannelLink from "@/shared/ui/ChannelLink";
-import { routes } from "@/shared/routes";
+import { useQuickSearch, type SearchResult } from "@features/Search";
+import type { SearchVideoResult } from "@features/Search";
+import { ChannelLink } from "@shared/ui";
+import { routes } from "@shared/routes";
 
 const highlightText = (text: string, query: string) => {
   if (!query.trim()) return text;
@@ -104,7 +104,7 @@ export default function QuickSearch() {
                       {item.type === "ytVideoId" ? (
                         <Link
                           to={routes.galleryVideo(
-                            (item as any).channel.ytId,
+                            (item as SearchVideoResult).channelYtId,
                             item.ytId
                           )}
                           className="block p-4 hover:bg-base-200 transition-colors"
@@ -124,7 +124,7 @@ export default function QuickSearch() {
                               </div>
                               <div className="text-xs text-base-content/60">
                                 Video •{" "}
-                                {(item as any).channel.ytId}
+                                {(item as SearchVideoResult).channelYtId}
                               </div>
                             </div>
                           </div>

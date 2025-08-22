@@ -6,20 +6,22 @@ export type SidePanelSlice = {
   closeSidePanel: () => void;
 };
 
-export const createSidePanelSlice = (set: any): SidePanelSlice => ({
+export const createSidePanelSlice = (
+  set: (fn: (state: Record<string, unknown>) => Record<string, unknown>) => void
+): SidePanelSlice => ({
   isOpen: false,
   videoId: null,
   channelId: null,
   openSidePanel: (videoId: string, channelId: string) =>
-    set({
+    set(() => ({
       isOpen: true,
       videoId,
       channelId,
-    }),
+    })),
   closeSidePanel: () =>
-    set({
+    set(() => ({
       isOpen: false,
       videoId: null,
       channelId: null,
-    }),
+    })),
 });
