@@ -1,5 +1,5 @@
 import { ImageIcon } from "lucide-react";
-import useViewThumbnails from "@shared/hooks/useViewThumbnails";
+import useViewThumbnails from "@features/Thumbnails/hooks/useViewThumbnails";
 import { PlaylistChannelWithCountsResponse } from "@/shared/api/generated/graphql";
 import TableCol from "@/widgets/PlaylistDetails/ui/TableCol";
 

@@ -1,5 +1,5 @@
 import Button from "@/shared/ui/button";
-import useViewThumbnails from "@/shared/hooks/useViewThumbnails";
+import useViewThumbnails from "@features/Thumbnails/hooks/useViewThumbnails";
 
 type Props = {
   id: number;

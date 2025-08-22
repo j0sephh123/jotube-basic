@@ -5,7 +5,6 @@ import { useStore } from "./store-root";
 import type {
   SlidesSlice,
   ThumbnailsProcessingSlice,
-  StoryboardProcessingSlice,
   DashboardSlice,
   VideosDashboardSlice,
   RangePickersSlice,
@@ -27,8 +26,6 @@ function makeScopedHook<Slice>() {
 
 export const useSlides = makeScopedHook<SlidesSlice>();
 export const useThumbnailsSlice = makeScopedHook<ThumbnailsProcessingSlice>();
-export const useStoryboardProcessing =
-  makeScopedHook<StoryboardProcessingSlice>();
 export const useDashboard = makeScopedHook<DashboardSlice>();
 export const useVideosDashboard = makeScopedHook<VideosDashboardSlice>();
 export const useRangePickers = makeScopedHook<RangePickersSlice>();
