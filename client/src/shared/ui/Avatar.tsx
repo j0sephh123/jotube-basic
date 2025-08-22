@@ -1,4 +1,4 @@
-import useImageSrc from "@shared/lib/useImageSrc";
+import { useImageSrc } from "@shared/lib";
 
 type Props = {
   ytId: string;

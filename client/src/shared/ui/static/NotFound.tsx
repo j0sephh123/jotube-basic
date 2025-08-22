@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { HomeIcon, ArrowLeftIcon } from "lucide-react";
 import { routes } from "@shared/routes";
-import { ViewType } from "@features/Dashboard";
 
 export default function NotFound() {
   return (
@@ -19,7 +18,7 @@ export default function NotFound() {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link to={routes.dashboard(ViewType.SAVED)}>
+          <Link to={routes.dashboard("saved")}>
             <button className="btn btn-primary">
               <HomeIcon className="w-4 h-4 mr-2" />
               Go to Dashboard

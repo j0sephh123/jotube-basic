@@ -1,11 +1,10 @@
 import type { ReactNode } from "react";
-import ConfirmDialog from "@shared/ui/dialog/ConfirmDialog";
-import InputDialog from "@shared/ui/dialog/InputDialog";
-import { DialogContext, useDialogState } from "@shared/hooks/useDialog";
+import { ConfirmDialog, InputDialog } from "@shared/ui";
+import { DialogContext, useDialogState } from "@shared/hooks";
 
 type DialogProviderProps = {
   children: ReactNode;
-}
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const DialogRenderer = ({ dialogState }: { dialogState: any }) => {

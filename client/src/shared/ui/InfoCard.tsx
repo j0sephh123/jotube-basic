@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import ConditionalWrapper from "@shared/ui/ConditionalWrapper";
-import Tooltip from "@shared/ui/Tooltip";
+import { ConditionalWrapper, Tooltip } from "@shared/ui";
 
 type InfoCardProps = {
   title: ReactNode;

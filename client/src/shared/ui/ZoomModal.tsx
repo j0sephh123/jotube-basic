@@ -1,4 +1,4 @@
-import Modal from "@shared/ui/Modal";
+import { Modal } from "@shared/ui";
 import { useZoom } from "@/app/providers/store/store";
 
 export default function ZoomModal() {

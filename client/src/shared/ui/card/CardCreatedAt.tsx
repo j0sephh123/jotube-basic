@@ -1,4 +1,4 @@
-import { timeAgo } from "@shared/utils/date";
+import { timeAgo } from "@shared/utils";
 
 type CardCreatedAtProps = {
   createdAt: string;

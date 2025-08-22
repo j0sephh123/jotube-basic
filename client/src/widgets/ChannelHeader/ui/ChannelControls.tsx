@@ -1,16 +1,15 @@
 import { RotateCcw } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import { Button } from "@shared/ui";
-import { useChannelControls } from "@widgets/ChannelHeader";
 
 type Props = {
   leftSlot: React.ReactNode;
+  onResetRangeFilters: () => void;
 };
 
-const ChannelControls = ({ leftSlot }: Props) => {
+const ChannelControls = ({ leftSlot, onResetRangeFilters }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const sortOrder = (searchParams.get("sort") || "DESC") as "ASC" | "DESC";
-  const { handleResetRangeFilters } = useChannelControls();
 
   const toggleSort = () => {
     setSearchParams((prev) => {
@@ -32,7 +31,7 @@ const ChannelControls = ({ leftSlot }: Props) => {
           color="neutral"
           variant="ghost"
           size="sm"
-          onClick={handleResetRangeFilters}
+          onClick={onResetRangeFilters}
           title="Reset range filters"
         >
           <RotateCcw className="w-4 h-4" />

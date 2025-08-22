@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import Modal from "@shared/ui/Modal";
+import { Modal } from "@shared/ui";
 
 type ConfirmDialogProps = {
   isOpen: boolean;
@@ -12,7 +12,7 @@ type ConfirmDialogProps = {
   onCancel: () => void;
   variant?: "info" | "success" | "warning" | "error";
   children?: ReactNode;
-}
+};
 
 const ConfirmDialog = ({
   isOpen,

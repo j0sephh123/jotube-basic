@@ -1,12 +1,12 @@
-import CardContainer from "@shared/ui/card/CardContainer";
-import CardImage from "@shared/ui/card/CardImage";
-import CardContent from "@shared/ui/card/CardContent";
-import CardTitle from "@shared/ui/card/CardTitle";
-import CardStats from "@shared/ui/card/CardStats";
-import CardMenu from "@shared/ui/card/CardMenu";
-import CardDeleteButton from "@shared/ui/card/CardDeleteButton";
-import CardDownloadButton from "@shared/ui/card/CardDownloadButton";
-import CardCreatedAt from "@shared/ui/card/CardCreatedAt";
+import CardContainer from "./CardContainer";
+import CardImage from "./CardImage";
+import CardContent from "./CardContent";
+import CardTitle from "./CardTitle";
+import CardStats from "./CardStats";
+import CardMenu from "./CardMenu";
+import CardDeleteButton from "./CardDeleteButton";
+import CardDownloadButton from "./CardDownloadButton";
+import CardCreatedAt from "./CardCreatedAt";
 
 type CardProps = {
   id: number;
@@ -26,6 +26,7 @@ type CardProps = {
   deleteButtonSlot?: React.ReactNode;
   playlistButtonSlot?: React.ReactNode;
   handleTitleClick: (e: React.MouseEvent) => void;
+  onThumbnailClick: () => void;
 };
 
 function Card({
@@ -42,6 +43,7 @@ function Card({
   deleteButtonSlot,
   playlistButtonSlot,
   handleTitleClick,
+  onThumbnailClick,
 }: CardProps) {
   return (
     <Card.Container>
@@ -52,6 +54,7 @@ function Card({
           src={src}
           ytChannelId={ytChannelId}
           screenshots={screenshots}
+          onThumbnailClick={onThumbnailClick}
         />
         {cardMenuSlot && (
           <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">

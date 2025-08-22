@@ -1,9 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import useViewScreenshots from "@/features/Thumbnails/lib/useViewScreenshots";
-import { routes } from "@/shared/routes";
-import useViewThumbnails from "@features/Thumbnails/hooks/useViewThumbnails";
 import { Fragment } from "react";
-import Tooltip from "@shared/ui/Tooltip";
+import { Tooltip } from "@shared/ui";
 
 type CardStatsProps = {
   ytId: string;
@@ -13,51 +9,52 @@ type CardStatsProps = {
   saved: number;
   defaults: number;
   storyboard: number;
+  onNavigate: (route: string) => void;
+  onViewScreenshots: (ytIds: string[]) => void;
+  onViewThumbnails: () => void;
 };
 
 export default function CardStats({
   ytId,
-  id,
   screenshotsCount,
   thumbnails,
   saved,
   defaults,
   storyboard,
+  onNavigate,
+  onViewScreenshots,
+  onViewThumbnails,
 }: CardStatsProps) {
-  const viewScreenshots = useViewScreenshots();
-  const navigate = useNavigate();
-  const handleThumbnailClick = useViewThumbnails(id);
-
   const stats = [
     {
       value: defaults,
       tooltip: "Default videos",
       color: "text-yellow-400",
-      onClick: () => navigate(routes.channel(ytId)),
+      onClick: () => onNavigate(`/channel/${ytId}`),
     },
     {
       value: saved,
       tooltip: "Saved videos",
       color: "text-blue-400",
-      onClick: () => navigate(routes.savedChannel(ytId)),
+      onClick: () => onNavigate(`/saved/${ytId}`),
     },
     {
       value: screenshotsCount,
       tooltip: "Screenshots",
       color: "text-purple-400 hover:text-purple-300",
-      onClick: () => viewScreenshots([ytId]),
+      onClick: () => onViewScreenshots([ytId]),
     },
     {
       value: thumbnails,
       tooltip: "Thumbnails",
       color: "text-green-400 hover:text-green-300",
-      onClick: () => handleThumbnailClick(),
+      onClick: () => onViewThumbnails(),
     },
     {
       value: storyboard,
       tooltip: "Storyboard",
       color: "text-red-400 hover:text-red-300",
-      onClick: () => navigate(routes.storyboard(ytId)),
+      onClick: () => onNavigate(`/storyboard/${ytId}`),
     },
   ];
 

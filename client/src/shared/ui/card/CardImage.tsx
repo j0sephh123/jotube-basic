@@ -1,7 +1,6 @@
 import { useState, useMemo } from "react";
-import Avatar from "@shared/ui/Avatar";
-import { getPublicImgUrl } from "@shared/utils/image";
-import useViewThumbnails from "@features/Thumbnails/hooks/useViewThumbnails";
+import { Avatar } from "@shared/ui";
+import { getPublicImgUrl } from "@shared/utils";
 
 type CardImageProps = {
   id: number;
@@ -13,6 +12,7 @@ type CardImageProps = {
     second: number;
   }[];
   className?: string;
+  onThumbnailClick: () => void;
 };
 
 function CardImage({
@@ -22,10 +22,9 @@ function CardImage({
   ytChannelId,
   screenshots,
   className = "",
+  onThumbnailClick,
 }: CardImageProps) {
   const [screenshotIndex, setScreenshotIndex] = useState(0);
-
-  const handleThumbnailClick = useViewThumbnails(id);
 
   const computedSrc = useMemo(() => {
     if (
@@ -48,7 +47,7 @@ function CardImage({
   const handleAvatarClick = (event: React.MouseEvent) => {
     event.stopPropagation();
 
-    handleThumbnailClick();
+    onThumbnailClick();
     if (screenshots && screenshots.length > 0) {
       setScreenshotIndex((prev) => (prev + 1) % screenshots.length);
     }

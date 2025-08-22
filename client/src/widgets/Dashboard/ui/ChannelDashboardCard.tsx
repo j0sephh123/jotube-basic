@@ -3,7 +3,7 @@ import { SyncUploadsButton, FetchUploadsButton } from "@features/Upload";
 import { Card } from "@shared/ui";
 import { DeleteChannel } from "@entities/Channel";
 import type { DashboardChannelResponse } from "@shared/api";
-import { usePlaylist } from "@app/providers/store/store";
+
 import { ListMusic, ExternalLink } from "lucide-react";
 import clsx from "clsx";
 import { routes } from "@shared/routes";
@@ -21,6 +21,7 @@ const deleteChannelTypes = [ViewType.NO_UPLOADS];
 
 type Props = DashboardChannelResponse & {
   viewType: ViewType;
+  openPlaylistModal: (ytId: string) => void;
 };
 
 export default function ChannelDashboardCard({
@@ -38,9 +39,8 @@ export default function ChannelDashboardCard({
   videoCount,
   viewType,
   playlist,
+  openPlaylistModal,
 }: Props) {
-  const { openPlaylistModal } = usePlaylist();
-
   const cardStats = (
     <Card.Stats
       ytId={ytId}

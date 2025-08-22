@@ -1,7 +1,6 @@
 import { useChannelMetadataQuery } from "@entities/Channel";
 import { useLocation } from "react-router-dom";
 import { useTypedChannelYtId } from "@features/Dashboard";
-import { usePlaylist } from "@app/providers/store/store";
 import { ListMusic, ExternalLink } from "lucide-react";
 import clsx from "clsx";
 import { routes } from "@shared/routes";
@@ -19,10 +18,14 @@ import BulkOperations from "./BulkOperations";
 import { ViewThumbnails, ViewScreenshots } from "@entities/Channel";
 import { ViewStoryboards } from "@widgets/Storyboard";
 
-const ChannelHeader = () => {
+type Props = {
+  openPlaylistModal: (ytId: string) => void;
+  onResetRangeFilters: () => void;
+};
+
+const ChannelHeader = ({ openPlaylistModal, onResetRangeFilters }: Props) => {
   const ytChannelId = useTypedChannelYtId();
   const { pathname } = useLocation();
-  const { openPlaylistModal } = usePlaylist();
   const isSavedPage = pathname.includes("/saved");
   const isIndexPage = pathname.length === 34;
 
@@ -126,6 +129,7 @@ const ChannelHeader = () => {
                   <CleanShortUploads ytChannelId={ytChannelId} />
                 </>
               }
+              onResetRangeFilters={onResetRangeFilters}
             />
           )}
       </div>
