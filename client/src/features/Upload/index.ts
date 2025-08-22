@@ -13,3 +13,6 @@ export { useVideoPlayer } from "./hooks/useVideoPlayer";
 export { default as SyncUploadsButton } from "./components/SyncUploadsButton";
 export { default as CleanShortUploads } from "./components/CleanShortUploads";
 export { default as FetchUploadsButton } from "./components/FetchUploadsButton";
+export { default as DownloadAll } from "./components/DownloadAll";
+export { default as SaveAll } from "./components/SaveAll";
+export { default as RemoveAll } from "./components/RemoveAll";

@@ -1,6 +1,6 @@
-import type { ReactNode} from "react";
+import type { ReactNode } from "react";
 import { useState, useEffect } from "react";
-import Modal from "@shared/ui/Modal";
+import { Modal } from "@shared/ui";
 
 type InputDialogProps = {
   isOpen: boolean;
@@ -17,7 +17,7 @@ type InputDialogProps = {
   children?: ReactNode;
   errorMessage?: string;
   isLoading?: boolean;
-}
+};
 
 const InputDialog = ({
   isOpen,

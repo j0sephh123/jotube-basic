@@ -1,10 +1,12 @@
-import useUploadsList from "@features/Upload/hooks/useUploadsList";
+import {
+  useUploadsList,
+  DownloadAll,
+  SaveAll,
+  RemoveAll,
+} from "@features/Upload";
 import { useSearchParams } from "react-router-dom";
-import { SortOrder } from "@/shared/api/generated/graphql";
-import DownloadAll from "@features/Upload/components/DownloadAll";
-import SaveAll from "@features/Upload/components/SaveAll";
+import { SortOrder } from "@shared/api";
 import { useMemo } from "react";
-import RemoveAll from "@features/Upload/components/RemoveAll";
 
 type Props = {
   ytChannelId: string;

@@ -3,6 +3,7 @@ export * from "./card";
 export { default as Modal } from "./Modal";
 export { default as ChannelLink } from "./ChannelLink";
 export { default as VideoModal } from "./VideoModal";
+export { default as Tooltip } from "./Tooltip";
 export { default as SidePanelHeader } from "./SidePanelHeader";
 export { default as SidePanelWrapper } from "./SidePanelWrapper";
 export { default as IconButton } from "./icons/IconButton";

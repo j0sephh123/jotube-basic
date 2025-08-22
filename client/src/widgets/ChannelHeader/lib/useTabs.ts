@@ -1,5 +1,5 @@
-import { useTypedChannelYtId } from "@/features/Dashboard/lib/useDashboardParams";
-import { useChannelMetadataQuery } from "@entities/Channel/model/useChannelMetadata";
+import { useTypedChannelYtId } from "@features/Dashboard";
+import { useChannelMetadataQuery } from "@entities/Channel";
 
 export const useTabs = () => {
   const ytChannelId = useTypedChannelYtId();

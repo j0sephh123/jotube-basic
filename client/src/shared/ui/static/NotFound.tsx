@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { HomeIcon, ArrowLeftIcon } from "lucide-react";
-import { routes } from "@/shared/routes";
-import { ViewType } from "@/features/Dashboard/lib/useDashboardParams";
+import { routes } from "@shared/routes";
+import { ViewType } from "@features/Dashboard";
 
 export default function NotFound() {
   return (
