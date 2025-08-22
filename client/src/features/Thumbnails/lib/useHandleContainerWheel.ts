@@ -1,7 +1,5 @@
-import { useThumbnailsSlice, useZoom } from "@/app/providers/store/store";
-import useThumbnailsCount from "@/features/Thumbnails/lib/useThumbnailsCount";
-import usePaginate from "@/features/Thumbnails/lib/usePaginate";
-import useSubmit from "@/features/Thumbnails/lib/useSubmit";
+import { useThumbnailsSlice, useZoom } from "@features/Thumbnails";
+import { useThumbnailsCount, usePaginate, useSubmit } from "@features/Thumbnails";
 
 export default function useHandleContainerWheel() {
   const { handlePrevious, handleNext } = usePaginate();

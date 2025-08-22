@@ -1,4 +1,4 @@
-import { useThumbnailsSlice } from "@/app/providers/store/store";
+import { useThumbnailsSlice } from "@features/Thumbnails";
 import { useEffect } from "react";
 
 export default function useResetSelection(

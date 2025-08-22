@@ -1,5 +1,8 @@
 export { useRemoveFromQueue } from "./hooks/useRemoveFromQueue";
-export { useUploadsList } from "./hooks/useUploadsList";
+export {
+  useUploadsList,
+  useRefetchChannelUploads,
+} from "./hooks/useUploadsList";
 export { useUploadsDelete } from "./hooks/useUploadsDelete";
 export { useSaveUpload } from "./hooks/useSaveUpload";
 export { useCreateStoryboard } from "./hooks/useCreateStoryboard";

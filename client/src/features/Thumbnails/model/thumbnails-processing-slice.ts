@@ -1,7 +1,4 @@
-import type {
-  Store,
-  ThumbnailsProcessingSlice,
-} from "@/app/providers/store/store-types";
+import type { Store, ThumbnailsProcessingSlice } from "../types";
 
 export const thumbnailsProcessingSlice = (
   set: (fn: (state: Store) => Partial<Store>) => void

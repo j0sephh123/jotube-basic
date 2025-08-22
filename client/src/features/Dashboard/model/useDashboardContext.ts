@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from "react";
 import { useSearchParams, useParams } from "react-router-dom";
-import { useStore } from "@/app/providers/store/store";
+  import { useStore } from "@/app/providers/store/store";
 import { defaults } from "@/features/Dashboard/model/dashboard-slice";
 import { ViewType } from "@/features/Dashboard/lib/useDashboardParams";
 import type { SortOrder } from "@shared/api";

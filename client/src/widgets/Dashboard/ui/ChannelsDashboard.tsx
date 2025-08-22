@@ -9,9 +9,14 @@ export default function ChannelsDashboard() {
 
   return (
     <ChannelsDashboardContainer>
-      {(channels) =>
+      {(channels, refetch) =>
         channels.map((c) => (
-          <ChannelDashboardCard {...c} key={c.id} viewType={viewType} />
+          <ChannelDashboardCard
+            {...c}
+            key={c.id}
+            viewType={viewType}
+            onChannelDelete={refetch}
+          />
         ))
       }
     </ChannelsDashboardContainer>

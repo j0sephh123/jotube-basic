@@ -10,3 +10,7 @@ export { useFetchChannelScreenshots } from "./hooks/useFetchChannelScreenshots";
 export { useDeleteChannelScreenshot } from "./hooks/useDeleteChannelScreenshot";
 export { useUpdateChannelScreenshot } from "./hooks/useUpdateChannelScreenshot";
 export { useZoom } from "./hooks/useZoom";
+export { useSlides } from "./hooks/useSlides";
+export { default as useBreadcrumbs } from "./hooks/useBreadcrumbs"; 
+export type { ChannelScreenshot } from "./hooks/useFetchChannelScreenshots";
+  

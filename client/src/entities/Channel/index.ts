@@ -3,4 +3,6 @@ export {
   useRefetchChannelMetadata,
   useChannelMetadataQuery,
 } from "./model/useChannelMetadata";
-export { ViewThumbnails, ViewScreenshots, DeleteChannel } from "./ui";
+export { default as useDeleteChannel } from "./api/useDeleteChannel";
+export { useChannelForPlaylist } from "./api/useChannelForPlaylist.gql";
+export { DeleteChannel } from "./ui";

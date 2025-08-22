@@ -1,15 +1,14 @@
-import { useTypedChannelYtId } from "@/features/Dashboard/lib/useDashboardParams";
 import { useState } from "react";
-import { useSaveUpload } from "@/features/Upload/hooks/useSaveUpload";
-import { useRefetchChannelMetadata } from "@/entities/Channel/model/useChannelMetadata";
-import { useRefetchChannelUploads } from "@/features/Upload/hooks/useUploadsList";
-import { useDeleteUploads } from "@/features/Upload/hooks/useUploadsDelete";
-import type { UploadWithStoryboard } from "@/features/Storyboard/model/useUploadsWithStoryboard";
+import { useTypedChannelYtId } from "@features/Dashboard";
+import { useSaveUpload } from "@features/Upload";
+import { useRefetchChannelMetadata } from "@entities/Channel";
+import { useUploadsDelete } from "@features/Upload";
+import type { UploadWithStoryboard } from "@features/Storyboard";
 import {
   StoryboardContainer,
   StoryboardItem,
   Viewer,
-} from "@/features/Storyboard/components";
+} from "@features/Storyboard";
 
 export default function StoryboardChannel() {
   const ytChannelId = useTypedChannelYtId();
@@ -19,8 +18,6 @@ export default function StoryboardChannel() {
 
   const refetchChannelMetadata = useRefetchChannelMetadata();
 
-  const refetchChannelUploads = useRefetchChannelUploads(ytChannelId);
-
   const save = useSaveUpload(() => {
     refetchChannelMetadata(ytChannelId);
   });
@@ -28,7 +25,6 @@ export default function StoryboardChannel() {
   const handleSideEffect = () => {
     handleClose();
     refetchChannelMetadata(ytChannelId);
-    refetchChannelUploads();
   };
 
   const handleSave = () => {
@@ -38,7 +34,7 @@ export default function StoryboardChannel() {
     }).then(handleSideEffect);
   };
 
-  const deleteUploadFromDbMutation = useDeleteUploads(handleSideEffect);
+  const deleteUploadFromDbMutation = useUploadsDelete(handleSideEffect);
 
   const handleDelete = (ytVideoIds: string[]) => {
     deleteUploadFromDbMutation({

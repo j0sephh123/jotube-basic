@@ -1,11 +1,15 @@
-import useDeleteChannel from "@/features/Channel/hooks/useDeleteChannel";
-import { useRefetchNoUploadsView } from "@/features/Dashboard/api/useChannelsDashboardQuery";
-import { Button } from "@/shared/ui/button";
-import { useDialog } from "@/shared/hooks/useDialog";
+import { Button } from "@shared/ui";
+import { useDialog } from "@shared/hooks";
+import { useDeleteChannel } from "@entities/Channel";
 
-export default function DeleteChannel({ id }: { id: number }) {
+export default function DeleteChannel({
+  id,
+  onSuccess,
+}: {
+  id: number;
+  onSuccess?: () => void;
+}) {
   const { mutateAsync } = useDeleteChannel();
-  const refetchNoUploadsView = useRefetchNoUploadsView();
   const dialogHook = useDialog();
 
   const handleDeleteClick = () => {
@@ -19,7 +23,7 @@ export default function DeleteChannel({ id }: { id: number }) {
       onYes: () => {
         mutateAsync(id, {
           onSuccess: () => {
-            refetchNoUploadsView();
+            onSuccess?.();
           },
         });
       },

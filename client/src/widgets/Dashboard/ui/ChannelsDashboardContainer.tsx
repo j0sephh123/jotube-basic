@@ -6,9 +6,12 @@ import type { DashboardChannelResponse } from "@shared/api";
 export default function ChannelsDashboardContainer({
   children,
 }: {
-  children: (data: DashboardChannelResponse[]) => React.ReactNode;
+  children: (
+    data: DashboardChannelResponse[],
+    refetch: () => void
+  ) => React.ReactNode;
 }) {
-  const { data, isLoading, error } = useChannelsDashboardQuery();
+  const { data, isLoading, error, refetch } = useChannelsDashboardQuery();
 
   if (isLoading) {
     return (
@@ -22,5 +25,5 @@ export default function ChannelsDashboardContainer({
     return <ErrorMessage message="Error fetching dashboard data" />;
   }
 
-  return <>{children(data.channels)}</>;
+  return <>{children(data.channels, refetch)}</>;
 }

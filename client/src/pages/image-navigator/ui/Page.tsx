@@ -9,6 +9,7 @@ import { useSubmitMutation, useNavigatorState } from "../hooks";
 import { getPublicImgUrl } from "@shared/utils";
 import { ImageNavigatorProvider } from "../context";
 import { useEffect } from "react";
+import type { ImageNavigatorResponse } from "../types";
 
 function ImageNavigatorPageContent() {
   const {
@@ -54,7 +55,7 @@ function ImageNavigatorPageContent() {
         .mutateAsync({
           type: "video",
         })
-        .then((result) => {
+        .then((result: ImageNavigatorResponse) => {
           if (
             result &&
             result.channels.length > 0 &&
@@ -78,7 +79,7 @@ function ImageNavigatorPageContent() {
           }
         });
     }
-  }, []);
+  }, [addSeenChannel, clearSeenChannels, result, setResultAndPosition, submitMutation]);
 
   const handlePrevious = () => {
     if (
@@ -156,7 +157,7 @@ function ImageNavigatorPageContent() {
             ytVideoId: ytVideoId,
             skipChannels: skipChannels,
           })
-          .then((newResult) => {
+          .then((newResult: ImageNavigatorResponse) => {
             if (newResult && newResult.channels.length > 0) {
               const newChannel = newResult.channels[0];
               if (newChannel && newChannel.videos.length > 0) {

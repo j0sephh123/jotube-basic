@@ -1,5 +1,5 @@
 import { RefreshCw } from "lucide-react";
-import { formatLastSync, getLastSyncColor } from "@shared/ui/card";
+import { formatLastSync, getLastSyncColor } from "@shared/ui";
 import clsx from "clsx";
 import { useSyncUploads } from "@features/Upload";
 

@@ -1,8 +1,8 @@
-import { useTypedChannelYtId } from "@/features/Dashboard/lib/useDashboardParams";
-import { useFetchChannelScreenshots } from "@features/Screenshot/hooks/useFetchChannelScreenshots";
 import { useMemo } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { routes } from "@/shared/routes";
+import { useTypedChannelYtId } from "@features/Dashboard";
+import { useFetchChannelScreenshots } from "@features/Screenshot";
+import { routes } from "@shared/routes";
 
 type VideoGroup = {
   ytVideoId: string;

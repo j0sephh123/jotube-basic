@@ -1,21 +1,19 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "@app/Layout";
-import ScreenshotsPage from "@/pages/screenshots/ui/Page";
-import ScreenshotsByMonth from "@/pages/screenshots-month/ui/Page";
-import ScreenshotsByDayDate from "@/pages/screenshots-date/ui/Page";
-import ScreenshotsLayout from "@/features/Screenshot/components/ScreenshotsPageLayout";
-import SavedUploads from "@/pages/saved-uploads/ui/Page";
-import ChannelPageLayout from "@/widgets/ChannelPageLayout/ui/ChannelPageLayout";
-import GalleryPage from "@/pages/gallery/ui/Page";
-import GalleryLayout from "@/features/Gallery/components/GalleryLayout";
-import Dashboard from "@/features/Dashboard";
-import DashboardWrapper from "@/widgets/Dashboard/ui/DashboardWrapper";
-import DefaultUploadsPage from "@/pages/uploads/ui/Page";
-import GalleryVideoPage from "@/pages/gallery-video/ui/Page";
-import StoryboardPage from "@/pages/storyboard/ui/Page";
-import ImageNavigatorPage from "@/pages/image-navigator/ui/Page";
-import { PlaylistsPage, PlaylistDetailsPage } from "@/features/Playlist";
-import NotFound from "@/shared/ui/static/NotFound";
+import { ScreenshotsPage } from "@pages/screenshots";
+import { ScreenshotsByMonthPage } from "@pages/screenshots-month";
+import { ScreenshotsByDatePage } from "@pages/screenshots-date";
+import { SavedUploadsPage } from "@pages/saved-uploads";
+import { ChannelPageLayout } from "@widgets/ChannelPageLayout";
+import { GalleryPage } from "@pages/gallery";
+import Dashboard from "@features/Dashboard";
+import { DashboardWrapper } from "@widgets/Dashboard";
+import { UploadsPage } from "@pages/uploads";
+import { GalleryVideoPage } from "@pages/gallery-video";
+import { StoryboardPage } from "@pages/storyboard";
+import { ImageNavigatorPage } from "@pages/image-navigator";
+import { PlaylistsPage, PlaylistDetailsPage } from "@features/Playlist";
+import { NotFound } from "@shared/ui";
 
 export default function Router() {
   return (
@@ -32,18 +30,18 @@ export default function Router() {
             </Route>
           </Route>
           <Route path="/channels/:ytChannelId" element={<ChannelPageLayout />}>
-            <Route index element={<DefaultUploadsPage />} />
-            <Route path="saved" element={<SavedUploads />} />
+            <Route index element={<UploadsPage />} />
+            <Route path="saved" element={<SavedUploadsPage />} />
             <Route path="storyboard" element={<StoryboardPage />} />
-            <Route path="gallery" element={<GalleryLayout />}>
+            <Route path="gallery" element={<GalleryPage />}>
               <Route index element={<GalleryPage />} />
               <Route path=":ytVideoId" element={<GalleryVideoPage />} />
             </Route>
           </Route>
-          <Route path="/screenshots" element={<ScreenshotsLayout />}>
+          <Route path="/screenshots" element={<ScreenshotsPage />}>
             <Route index element={<ScreenshotsPage />} />
-            <Route path=":month" element={<ScreenshotsByMonth />} />
-            <Route path=":month/:date" element={<ScreenshotsByDayDate />} />
+            <Route path=":month" element={<ScreenshotsByMonthPage />} />
+            <Route path=":month/:date" element={<ScreenshotsByDatePage />} />
           </Route>
           <Route path="/playlists" element={<PlaylistsPage />} />
           <Route path="/playlists/:id" element={<PlaylistDetailsPage />} />

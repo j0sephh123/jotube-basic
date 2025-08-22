@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import Breadcrumb from "@shared/ui/Breadcrumb";
-import useBreadcrumbs from "@features/Screenshot/hooks/useBreadcrumbs";
+import { Breadcrumb } from "@shared/ui";
+import { useBreadcrumbs } from "@features/Screenshot";
 
 export default function ScreenshotsLayout(): JSX.Element {
   const items = useBreadcrumbs("screenshots");

@@ -15,7 +15,8 @@ import {
 import { ChannelLink, CopyValue, OpenDirectoryButton } from "@shared/ui";
 import Tabs from "./Tabs";
 import BulkOperations from "./BulkOperations";
-import { ViewThumbnails, ViewScreenshots } from "@entities/Channel";
+import ViewThumbnails from "./ViewThumbnails";
+import { ViewScreenshots } from "@features/Thumbnails";
 import { ViewStoryboards } from "@widgets/Storyboard";
 
 type Props = {

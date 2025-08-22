@@ -1,4 +1,4 @@
-import { imagesBasePath } from "@shared/utils/image";
+import { imagesBasePath } from "@shared/utils";
 
 export const generateMainThumbnailUrl = (
   ytChannelId: string,

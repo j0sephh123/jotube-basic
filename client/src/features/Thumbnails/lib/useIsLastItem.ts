@@ -1,5 +1,5 @@
-import { useThumbnailsSlice } from "@/app/providers/store/store";
-import { useThumbnailByVideoId } from "@/features/Thumbnails/lib/useThumbnailByVideoId";
+import { useThumbnailsSlice } from "@features/Thumbnails";
+import { useThumbnailByVideoId } from "@features/Thumbnails";
 
 export default function useIsLastItem() {
   const { metadata, currentIndex } = useThumbnailsSlice();

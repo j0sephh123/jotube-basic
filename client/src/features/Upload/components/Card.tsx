@@ -1,10 +1,10 @@
-import { timeAgo } from "@shared/utils/date";
+import { timeAgo } from "@shared/utils";
 import { TrashIcon, MoreVertical } from "lucide-react";
-import useImageSrc from "@shared/lib/useImageSrc";
+import { useImageSrc } from "@shared/lib";
 import { useMemo } from "react";
-import CopyValue from "@shared/ui/CopyValue";
-import OpenExplorerButton from "@shared/ui/OpenDirectoryButton/OpenDirectoryButton";
-import { useVideoPlayer } from "@features/Upload/hooks/useVideoPlayer";
+import { CopyValue } from "@shared/ui";
+import { OpenDirectoryButton } from "@shared/ui";
+import { useVideoPlayer } from "@features/Upload";
 
 type VideoCardProps = {
   item: {
@@ -111,7 +111,7 @@ export const Card = ({
                 className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
               >
                 <li>
-                  <OpenExplorerButton
+                  <OpenDirectoryButton
                     ytChannelId={ytChannelId}
                     ytVideoId={item.ytId}
                   />

@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import type { ReactNode } from "react";
 import React, { createContext, useContext, useReducer } from "react";
 import type { ImageNavigatorState } from "../hooks";

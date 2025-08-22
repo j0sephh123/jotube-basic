@@ -1,9 +1,9 @@
-import { useThumbnailsSlice } from "@/app/providers/store/store";
+import { useThumbnailsSlice } from "@features/Thumbnails";
 import { useCallback } from "react";
-import { useFinishProcessingUpload } from "@features/Upload/hooks/useFinishProcessingUpload";
-import { useRefetchTotalCounts } from "@features/Statistics/hooks/useTotalCounts";
-import { useRefetchThumbnailByVideoId } from "@/features/Thumbnails/lib/useThumbnailByVideoId";
-import { useRefetchGroupedThumbnails } from "@/features/Dashboard/api/useChannelsDashboardQuery";
+import { useFinishProcessingUpload } from "@features/Upload";
+import { useRefetchTotalCounts } from "@features/Statistics"; 
+import { useRefetchThumbnailByVideoId } from "@features/Thumbnails";
+import { useRefetchGroupedThumbnails } from "@features/Dashboard";
 
 export default function useSubmit() {
   const {

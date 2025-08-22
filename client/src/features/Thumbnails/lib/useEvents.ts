@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useThumbnailsSlice, useZoom } from "@/app/providers/store/store";
+import { useThumbnailsSlice, useZoom } from "@features/Thumbnails";
 import useThumbnailsCount from "./useThumbnailsCount";
 
 export default function useEvents(

@@ -1,9 +1,11 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useStore } from "@app/providers/store/store";
 import { useParams } from "react-router-dom";
 import { useCallback } from "react";
-import { ViewType } from "@features/Dashboard";
-import { useFetchDashboard } from "@features/Dashboard";
+import {
+  ViewType,
+  useDashboardStore,
+  useFetchDashboard,
+} from "@features/Dashboard";
 import { ViewType as GraphQLViewType } from "@shared/api";
 
 export type ChannelsDashboardResponseData =
@@ -33,7 +35,7 @@ const mapViewTypeToGraphQL = (
 };
 
 export function useChannelsDashboardQuery() {
-  const { requestBody } = useStore();
+  const { requestBody } = useDashboardStore();
   const params = useParams();
 
   const requestBodyWithViewType = {
@@ -56,7 +58,7 @@ export function useChannelsDashboardQuery() {
 // TODO remove
 export function useRefetchNoUploadsView() {
   const queryClient = useQueryClient();
-  const { requestBody } = useStore();
+  const { requestBody } = useDashboardStore();
   const params = useParams();
 
   return useCallback(() => {
@@ -73,7 +75,7 @@ export function useRefetchNoUploadsView() {
 // TODO remove
 export function useRefetchGroupedThumbnails() {
   const queryClient = useQueryClient();
-  const { requestBody } = useStore();
+  const { requestBody } = useDashboardStore();
 
   return useCallback(() => {
     const requestBodyWithViewType = {

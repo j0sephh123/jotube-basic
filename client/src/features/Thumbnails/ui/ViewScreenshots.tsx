@@ -1,5 +1,5 @@
-import Button from "@/shared/ui/button";
-import useViewScreenshots from "@/features/Thumbnails/lib/useViewScreenshots";
+import { Button } from "@shared/ui";
+import { useViewScreenshots } from "@features/Thumbnails";
 
 type Props = {
   ytChannelId: string;

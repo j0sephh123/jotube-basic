@@ -1,23 +1,26 @@
 import { Link } from "react-router-dom";
-import Tooltip from "@shared/ui/Tooltip";
-import CopyValue from "@shared/ui/CopyValue";
-import Avatar from "@shared/ui/Avatar";
-import type { PlaylistChannelWithCountsResponse } from "@/shared/api/generated/graphql";
-import { routes } from "@/shared/routes";
-import SyncUploadsButton from "@features/Upload/components/SyncUploadsButton";
-import TableCol from "@/widgets/PlaylistDetails/ui/TableCol";
+import { Tooltip, CopyValue, Avatar } from "@shared/ui";
+import type { PlaylistChannelWithCountsResponse } from "@shared/api";
+import { routes } from "@shared/routes";
+import PlaylistTableCol from "./PlaylistTableCol";
 
 type TitleCellProps = {
   channel: PlaylistChannelWithCountsResponse;
   refetchPlaylist: () => void;
+  SyncUploadsButton: React.ComponentType<{
+    ytChannelId: string;
+    id: number;
+    onSuccess: () => void;
+  }>;
 };
 
 export default function TitleCell({
   channel,
   refetchPlaylist,
+  SyncUploadsButton,
 }: TitleCellProps) {
   return (
-    <TableCol className="max-w-[200px]">
+    <PlaylistTableCol className="max-w-[200px]">
       <div className="flex items-center gap-3">
         <Avatar
           ytId={channel.ytId}
@@ -44,6 +47,6 @@ export default function TitleCell({
           </div>
         </div>
       </div>
-    </TableCol>
+    </PlaylistTableCol>
   );
 }

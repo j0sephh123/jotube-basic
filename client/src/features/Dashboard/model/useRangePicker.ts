@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useStore } from "@/app/providers/store/store";
+import { useStore } from "@app/providers/store/store";
 import { useDashboardContext } from "./useDashboardContext";
 
 export enum RangePickerTypes {

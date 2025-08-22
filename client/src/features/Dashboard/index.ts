@@ -16,8 +16,10 @@ export {
 export { useVideosRangePickers } from "./hooks/useVideosRangePickers";
 export { useVideosDashboard } from "./hooks/useVideosDashboard";
 export { useSidePanel } from "./hooks/useSidePanel";
-export type { RequestBody } from "./model/useDashboardContext";
+export { useDashboardStore } from "./hooks/useDashboardStore";
+export { useRangePickersStore } from "./hooks/useRangePickersStore";
 export { useChannelsDashboardQuery } from "./api/useChannelsDashboardQuery";
 export { useVideosDashboardQuery } from "./api/useVideosDashboardQuery";
 export { default as useTitleClick } from "./lib/useTitleClick";
 export { default as useFetchDashboard } from "./lib/useFetchDashboard";
+export { useRefetchGroupedThumbnails } from "./api/useChannelsDashboardQuery";

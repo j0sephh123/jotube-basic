@@ -1,6 +1,8 @@
-import { useThumbnailsSlice } from "@/app/providers/store/store";
-import SmoothProgressBar from "@/features/Thumbnails/ui/SmoothProgressBar";
-import useThumbnailsCount from "@/features/Thumbnails/lib/useThumbnailsCount";
+import {
+  useThumbnailsSlice,
+  SmoothProgressBar,
+  useThumbnailsCount,
+} from "@features/Thumbnails";
 
 export default function Header() {
   const { metadata, currentIndex } = useThumbnailsSlice();
@@ -13,9 +15,7 @@ export default function Header() {
     <div className="flex flex-col gap-4 p-4 bg-gray-800">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <h2 className="text-xl font-bold">
-            Processing Thumbnails
-          </h2>
+          <h2 className="text-xl font-bold">Processing Thumbnails</h2>
           <div className="ml-4 text-gray-300 text-sm">
             Channel: {metadata.ytChannelId}
           </div>

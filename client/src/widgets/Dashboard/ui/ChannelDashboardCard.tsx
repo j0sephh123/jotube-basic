@@ -22,6 +22,7 @@ const deleteChannelTypes = [ViewType.NO_UPLOADS];
 type Props = DashboardChannelResponse & {
   viewType: ViewType;
   openPlaylistModal: (ytId: string) => void;
+  onChannelDelete?: () => void;
 };
 
 export default function ChannelDashboardCard({
@@ -40,6 +41,7 @@ export default function ChannelDashboardCard({
   viewType,
   playlist,
   openPlaylistModal,
+  onChannelDelete,
 }: Props) {
   const cardStats = (
     <Card.Stats
@@ -65,7 +67,9 @@ export default function ChannelDashboardCard({
 
   const deleteUploadsButton = <Card.DeleteButton ytChannelId={ytId} />;
 
-  const deleteChannelbutton = <DeleteChannel id={id} />;
+  const deleteChannelbutton = (
+    <DeleteChannel id={id} onSuccess={onChannelDelete} />
+  );
 
   const fetchUploadsButton = (
     <FetchUploadsButton ytChannelId={ytId} videoCount={videoCount} />

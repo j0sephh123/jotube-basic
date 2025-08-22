@@ -1,15 +1,17 @@
 import { useRef } from "react";
-import Modal from "@shared/ui/Modal";
-import Footer from "@/features/Thumbnails/ui/Footer";
-import Grid from "@/features/Thumbnails/ui/Grid";
-import Header from "@/features/Thumbnails/ui/Header";
-import ThumbnailImage from "@/features/Thumbnails/ui/ThumbnailImage";
-import Container from "@/features/Thumbnails/ui/Container";
-import useResetSelection from "@/features/Thumbnails/lib/useResetSelection";
-import useHandleKeyDown from "@/features/Thumbnails/lib/useHandleKeyDown";
-import useHandleContainerWheel from "@/features/Thumbnails/lib/useHandleContainerWheel";
-import { useThumbnailsSlice } from "@/app/providers/store/store";
-import useEvents from "@/features/Thumbnails/lib/useEvents";
+import { Modal } from "@shared/ui";
+import {
+  Footer,
+  Grid,
+  Header,
+  ThumbnailImage,
+  Container,
+  useResetSelection,
+  useHandleKeyDown,
+  useHandleContainerWheel,
+  useThumbnailsSlice,
+  useEvents,
+} from "@features/Thumbnails";
 
 export default function ThumbnailsProcessingContent() {
   const { clearThumbnailsProcessingData } = useThumbnailsSlice();

@@ -1,10 +1,9 @@
-import Modal from "@/shared/ui/Modal";
 import { useStoryboardProcessing } from "@shared/hooks";
-import { useSaveUpload } from "@/features/Upload/hooks/useSaveUpload";
-import { useRefetchChannelMetadata } from "@/entities/Channel/model/useChannelMetadata";
-import { useRefetchChannelUploads } from "@/features/Upload/hooks/useUploadsList";
-import { useDeleteUploads } from "@/features/Upload/hooks/useUploadsDelete";
-import { useTypedChannelYtId } from "@/features/Dashboard/lib/useDashboardParams";
+import { useSaveUpload } from "@features/Upload";
+import { useRefetchChannelMetadata } from "@entities/Channel";
+import { useUploadsDelete } from "@features/Upload";
+import { useTypedChannelYtId } from "@features/Dashboard";
+import { Modal } from "@shared/ui";
 import { useRef, useEffect } from "react";
 
 export default function StoryboardProcessing() {
@@ -20,10 +19,6 @@ export default function StoryboardProcessing() {
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const refetchChannelMetadata = useRefetchChannelMetadata();
-  const refetchChannelUploads = useRefetchChannelUploads(
-    firstChannel?.ytChannelId || ""
-  );
-
   useEffect(() => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTop = 0;
@@ -68,7 +63,6 @@ export default function StoryboardProcessing() {
 
     if (firstChannel?.ytChannelId) {
       refetchChannelMetadata(firstChannel.ytChannelId);
-      refetchChannelUploads();
     }
   };
 
@@ -81,7 +75,7 @@ export default function StoryboardProcessing() {
     }).then(handleSideEffect);
   };
 
-  const deleteUploadFromDbMutation = useDeleteUploads(handleSideEffect);
+  const deleteUploadFromDbMutation = useUploadsDelete(handleSideEffect);
 
   const handleDelete = () => {
     if (!firstUpload || !firstChannel?.ytChannelId) return;

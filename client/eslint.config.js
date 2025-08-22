@@ -10,7 +10,15 @@ import boundaries from "eslint-plugin-boundaries";
 import unusedImports from "eslint-plugin-unused-imports";
 
 export default tseslint.config(
-  { ignores: ["dist", "build", "coverage", "node_modules"] },
+  {
+    ignores: [
+      "dist",
+      "build",
+      "coverage",
+      "node_modules",
+      "src/shared/api/generated/graphql.ts",
+    ],
+  },
 
   // Main rules for src/*
   {
@@ -102,6 +110,11 @@ export default tseslint.config(
             "@shared/api/generated/**",
             "src/shared/api/rest/**",
             "@shared/api/rest/**",
+            // store types for features
+            "@app/providers/store/store-types",
+            // yet-another-react-lightbox plugin imports
+            "yet-another-react-lightbox/plugins/**",
+            "yet-another-react-lightbox/styles.css",
           ],
         },
       ],

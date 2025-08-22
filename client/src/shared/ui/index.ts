@@ -1,5 +1,5 @@
 export * from "./button";
-export * from "./card";
+export { default as Card } from "./card";
 export { default as Modal } from "./Modal";
 export { default as ChannelLink } from "./ChannelLink";
 export { default as VideoModal } from "./VideoModal";
@@ -17,7 +17,10 @@ export { default as InputDialog } from "./dialog/InputDialog";
 export { default as ZoomModal } from "./ZoomModal";
 export { default as CopyValue } from "./CopyValue";
 export { default as InfoCard } from "./InfoCard";
+export { default as TableCol } from "./TableCol";
 export { default as OpenDirectoryButton } from "./OpenDirectoryButton/OpenDirectoryButton";
 export { useOpenDirectory } from "./OpenDirectoryButton/useOpenDirectory";
 export { useClickOutside } from "../lib/useClickOutside";
+export { default as Breadcrumb } from "./Breadcrumb";
+export { default as Lightbox } from "./Lightbox";
 export * from "./static";

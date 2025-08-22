@@ -1,6 +1,6 @@
 import { Trash2 } from "lucide-react";
-import type { PlaylistChannelWithCountsResponse } from "@/shared/api/generated/graphql";
-import TableCol from "@/widgets/PlaylistDetails/ui/TableCol";
+import type { PlaylistChannelWithCountsResponse } from "@shared/api";
+import { TableCol } from "@shared/ui";
 
 type ActionsCellProps = {
   channel: PlaylistChannelWithCountsResponse;

@@ -1,8 +1,8 @@
-import { Button } from "@shared/ui/button";
-import { useSaveUpload } from "@features/Upload/hooks/useSaveUpload";
-import { useTypedChannelYtId } from "@/features/Dashboard/lib/useDashboardParams";
-import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
-import { useRefetchSavedUploads } from "@features/Upload/hooks/useSavedUploads";
+import { Button } from "@shared/ui";
+import { useSaveUpload } from "@features/Upload";
+import { useTypedChannelYtId } from "@features/Dashboard";
+import { useRefetchChannelMetadata } from "@entities/Channel";
+import { useRefetchSavedUploads } from "@features/Upload";
 
 type Props = {
   uploadsToSave: {

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-internal-modules */
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Router, AppProvider } from "@app/providers";

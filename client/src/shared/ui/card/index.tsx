@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import CardContainer from "./CardContainer";
 import CardImage from "./CardImage";
 import CardContent from "./CardContent";

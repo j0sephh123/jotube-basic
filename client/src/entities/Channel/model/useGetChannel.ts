@@ -1,4 +1,4 @@
-import { useChannelForPlaylist } from "@entities/Channel/api/useChannelForPlaylist.gql";
+import { useChannelForPlaylist } from "@entities/Channel";
 
 export const useGetChannel = (ytChannelId: string | null) => {
   return useChannelForPlaylist(ytChannelId || undefined);

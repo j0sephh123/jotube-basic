@@ -1,28 +1,58 @@
 import { useState, useMemo } from "react";
 import type {
-  PlaylistDetailsResponse} from "@/shared/api/generated/graphql";
-import {
-  SortOrder,
-} from "@/shared/api/generated/graphql";
-import ActionsCell from "@/features/Playlist/ui/PlaylistDetailsPage/cells/ActionsCell";
-import GalleryCell from "@/features/Playlist/ui/PlaylistDetailsPage/cells/GalleryCell";
-import SavedCountCell from "@/features/Playlist/ui/PlaylistDetailsPage/cells/SavedCountCell";
-import ScreenshotCountCell from "@/features/Playlist/ui/PlaylistDetailsPage/cells/ScreenshotCountCell";
-import ThumbnailCountCell from "@/features/Playlist/ui/PlaylistDetailsPage/cells/ThumbnailCountCell";
-import VideoCountCell from "@/features/Playlist/ui/PlaylistDetailsPage/cells/VideoCountCell";
-import TableHeader from "@/entities/Playlist/ui/PlaylistTableHeader";
-import TableRow from "@/entities/Playlist/ui/PlaylistTableRow";
-import { useRemoveFromPlaylist } from "@/features/Playlist/ui/PlaylistDetailsPage/useRemoveFromPlaylist";
-import { useRefetchPlaylist } from "@/features/Playlist/hooks/useGetPlaylist";
+  PlaylistDetailsResponse,
+  PlaylistChannelWithCountsResponse,
+} from "@shared/api";
+import { SortOrder } from "@shared/api";
+import PlaylistTableHeader from "./PlaylistTableHeader";
+import PlaylistTableRow from "./PlaylistTableRow";
 import TitleCell from "./TitleCell";
 
 type TableProps = {
   playlist: PlaylistDetailsResponse;
+  onRemoveFromPlaylist: (channelId: number) => void;
+  isRemoving: boolean;
+  refetchPlaylist: () => void;
+  ActionsCell: React.ComponentType<{
+    channel: PlaylistChannelWithCountsResponse;
+    onRemove: (channelId: number) => void;
+    isRemoving: boolean;
+  }>;
+  GalleryCell: React.ComponentType<{
+    channel: PlaylistChannelWithCountsResponse;
+  }>;
+  SavedCountCell: React.ComponentType<{
+    channel: PlaylistChannelWithCountsResponse;
+  }>;
+  ScreenshotCountCell: React.ComponentType<{
+    channel: PlaylistChannelWithCountsResponse;
+  }>;
+  ThumbnailCountCell: React.ComponentType<{
+    channel: PlaylistChannelWithCountsResponse;
+  }>;
+  VideoCountCell: React.ComponentType<{
+    channel: PlaylistChannelWithCountsResponse;
+  }>;
+  SyncUploadsButton: React.ComponentType<{
+    ytChannelId: string;
+    id: number;
+    onSuccess: () => void;
+  }>;
 };
 
-export default function PlaylistTable({ playlist }: TableProps) {
-  const { handleRemoveFromPlaylist, isPending } = useRemoveFromPlaylist();
-  const refetchPlaylist = useRefetchPlaylist();
+export default function PlaylistTable({
+  playlist,
+  onRemoveFromPlaylist,
+  isRemoving,
+  refetchPlaylist,
+  ActionsCell,
+  GalleryCell,
+  SavedCountCell,
+  ScreenshotCountCell,
+  ThumbnailCountCell,
+  VideoCountCell,
+  SyncUploadsButton,
+}: TableProps) {
   const [sortField, setSortField] = useState<
     "title" | "videoCount" | "savedCount" | "screenshotCount" | "thumbnailCount"
   >("title");
@@ -77,16 +107,20 @@ export default function PlaylistTable({ playlist }: TableProps) {
   };
 
   return (
-    <TableHeader
+    <PlaylistTableHeader
       sortField={sortField}
       sortDirection={sortDirection}
       onSort={handleSort}
     >
       {sortedChannels.map((channel) => (
-        <TableRow
+        <PlaylistTableRow
           key={channel.id}
           cols={[
-            <TitleCell channel={channel} refetchPlaylist={refetchPlaylist} />,
+            <TitleCell
+              channel={channel}
+              refetchPlaylist={refetchPlaylist}
+              SyncUploadsButton={SyncUploadsButton}
+            />,
             <VideoCountCell channel={channel} />,
             <SavedCountCell channel={channel} />,
             <ScreenshotCountCell channel={channel} />,
@@ -94,12 +128,12 @@ export default function PlaylistTable({ playlist }: TableProps) {
             <GalleryCell channel={channel} />,
             <ActionsCell
               channel={channel}
-              onRemove={handleRemoveFromPlaylist}
-              isRemoving={isPending}
+              onRemove={onRemoveFromPlaylist}
+              isRemoving={isRemoving}
             />,
           ]}
         />
       ))}
-    </TableHeader>
+    </PlaylistTableHeader>
   );
 }

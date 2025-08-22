@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
-import { STORYBOARDS } from "@/features/Storyboard/api/storyboard.gql";
-import { useTypedChannelYtId } from "@/features/Dashboard/lib/useDashboardParams";
+import { STORYBOARDS } from "@features/Storyboard";
+import { useTypedChannelYtId } from "@features/Dashboard";
 
 export type StoryboardData = {
   id: number;

@@ -1,11 +1,9 @@
 import { TrashIcon, MoreVertical } from "lucide-react";
-import { timeAgo } from "@shared/utils/date";
-import { useVideoPlayer } from "@features/Upload/hooks/useVideoPlayer";
-import useImageSrc from "@shared/lib/useImageSrc";
+import { timeAgo, formatSecondsToMMSS } from "@shared/utils";
+import { useVideoPlayer } from "@features/Upload";
+import { useImageSrc } from "@shared/lib";
 import { useMemo } from "react";
-import OpenExplorerButton from "@shared/ui/OpenDirectoryButton/OpenDirectoryButton";
-import { formatSecondsToMMSS } from "@shared/utils/format";
-import Tooltip from "@shared/ui/Tooltip";
+import { OpenDirectoryButton, Tooltip } from "@shared/ui";
 
 type VideoCardProps = {
   item: {
@@ -127,7 +125,7 @@ export const DefaultUploadCard = ({
                 className="dropdown-content z-[9999] menu p-2 shadow bg-base-100 rounded-box w-52"
               >
                 <li>
-                  <OpenExplorerButton
+                  <OpenDirectoryButton
                     ytChannelId={ytChannelId}
                     ytVideoId={item.ytId}
                   />

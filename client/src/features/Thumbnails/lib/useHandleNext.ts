@@ -1,7 +1,6 @@
-import { useThumbnailsSlice } from "@/app/providers/store/store";
-import { useDialog } from "@shared/hooks/useDialog";
-import useSubmit from "@/features/Thumbnails/lib/useSubmit";
-import useThumbnailsCount from "@/features/Thumbnails/lib/useThumbnailsCount";
+import { useThumbnailsSlice } from "@features/Thumbnails";
+import { useDialog } from "@shared/hooks";
+import { useSubmit, useThumbnailsCount } from "@features/Thumbnails";
 
 export default function useHandleNext() {
   const thumbnailsCount = useThumbnailsCount();

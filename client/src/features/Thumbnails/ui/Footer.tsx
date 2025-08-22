@@ -1,11 +1,13 @@
-import { useThumbnailsSlice } from "@/app/providers/store/store";
-import OpenExplorerButton from "@shared/ui/OpenDirectoryButton/OpenDirectoryButton";
+import {
+  useThumbnailsSlice,
+  useSubmit,
+  useIsLastItem,
+  useThumbnailsCount,
+  usePaginate,
+} from "@features/Thumbnails";
+import { OpenDirectoryButton } from "@shared/ui";
 import { ArrowLeft, ArrowRight, Save } from "lucide-react";
-import useSubmit from "@/features/Thumbnails/lib/useSubmit";
-import useIsLastItem from "@/features/Thumbnails/lib/useIsLastItem";
-import Button from "@shared/ui/button";
-import useThumbnailsCount from "@/features/Thumbnails/lib/useThumbnailsCount";
-import usePaginate from "@/features/Thumbnails/lib/usePaginate";
+import { Button } from "@shared/ui";
 
 export default function Footer() {
   const { handlePrevious, handleNext } = usePaginate();
@@ -20,7 +22,7 @@ export default function Footer() {
     <div className="fixed bottom-0 left-0 right-0 bg-gray-800 p-4 flex items-center justify-between">
       <div className="font-bold flex items-center gap-4">
         <div>Selected: {selectedImages.length}</div>
-        <OpenExplorerButton
+        <OpenDirectoryButton
           ytChannelId={metadata.ytChannelId}
           ytVideoId={metadata.ytVideoId}
         />

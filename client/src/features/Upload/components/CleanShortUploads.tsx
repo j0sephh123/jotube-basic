@@ -1,6 +1,6 @@
 import { Scissors } from "lucide-react";
 import clsx from "clsx";
-import { useCleanShortUploads } from "@features/Upload/hooks/useCleanShortUploads";
+import { useCleanShortUploads } from "@features/Upload";
 
 type CleanShortUploadsProps = {
   ytChannelId: string;
