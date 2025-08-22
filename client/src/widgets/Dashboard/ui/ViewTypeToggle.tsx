@@ -1,11 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { routes } from "@/shared/routes";
-import {
-  useDashboardParams,
-  ViewType,
-} from "@/features/Dashboard/lib/useDashboardParams";
+import { routes } from "@shared/routes";
+import { useDashboardParams, ViewType } from "@features/Dashboard";
 import clsx from "clsx";
-import Button from "@/shared/ui/button";
+import { Button } from "@shared/ui";
 
 const viewTypeOrder = [
   ViewType.NO_UPLOADS,

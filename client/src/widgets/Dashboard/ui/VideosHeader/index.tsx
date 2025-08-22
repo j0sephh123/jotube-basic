@@ -2,9 +2,11 @@ import { RotateCcw } from "lucide-react";
 import VideosRangeFilterPopover from "./VideosRangeFilterPopover";
 import SelectSortDirection from "./SelectSortDirection";
 import VideosPaginationControl from "./VideosPaginationControl";
-import { useVideosDashboardContext } from "@/features/Dashboard/model/useVideosDashboardContext";
-import { useVideosDashboardQuery } from "@/features/Dashboard/api/useVideosDashboardQuery";
-import Button from "@shared/ui/button";
+import {
+  useVideosDashboardContext,
+  useVideosDashboardQuery,
+} from "@features/Dashboard";
+import { Button } from "@shared/ui";
 
 export default function VideosHeader() {
   const { handleClearFilters } = useVideosDashboardContext();

@@ -1,13 +1,13 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { useClickOutside } from "@/shared/lib/useClickOutside";
+import { useClickOutside } from "@shared/lib";
 import { BookImage } from "lucide-react";
 import {
   getCurrentDay,
   getCurrentMonth,
   getLastDay,
   getLastMonth,
-} from "@/shared/utils/date";
+} from "@shared/utils";
 
 const items = [
   { name: "This year", link: "screenshots" },

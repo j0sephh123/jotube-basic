@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { Video, Loader, X } from "lucide-react";
-import { useRemoveFromQueue } from "@/features/Upload/hooks/useRemoveFromQueue";
-import { useQueue } from "@/shared/hooks/useQueue";
-import { getWaitingJobIds, groupByChannel } from "@/shared/utils/queue-utils";
-import ChannelLink from "@/shared/ui/ChannelLink";
+import { useRemoveFromQueue } from "@features/Upload";
+import { useQueue } from "@shared/hooks";
+import { getWaitingJobIds, groupByChannel } from "@shared/utils";
+import { ChannelLink } from "@shared/ui";
 
 export default function VideoProcessingInfo() {
   const { data: queueData = [], refetch: refetchQueue, isLoading } = useQueue();
@@ -132,13 +132,13 @@ export default function VideoProcessingInfo() {
                             {activeCount} active / {waitingCount} waiting
                           </span>
                           {/* {waitingCount > 0 && ( */}
-                            <button
-                              onClick={() => handleCancelChannel(channelId)}
-                              className="btn btn-error btn-xs p-0 h-6 w-6 min-h-0 flex items-center justify-center"
-                              title="Cancel all waiting jobs for this channel"
-                            >
-                              <X size={12} />
-                            </button>
+                          <button
+                            onClick={() => handleCancelChannel(channelId)}
+                            className="btn btn-error btn-xs p-0 h-6 w-6 min-h-0 flex items-center justify-center"
+                            title="Cancel all waiting jobs for this channel"
+                          >
+                            <X size={12} />
+                          </button>
                           {/* )} */}
                         </div>
                       </div>

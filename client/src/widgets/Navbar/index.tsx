@@ -6,17 +6,17 @@ import {
   SquarePlay,
   Image,
 } from "lucide-react";
-import QuickSearch from "@/widgets/Search/ui/Search";
-import InitCarouselButton from "@/widgets/Navbar/ui/InitCarouselButton";
-import Screenshots from "@/widgets/Navbar/ui/Screenshots";
-import VideoProcessingInfo from "@/widgets/Navbar/ui/VideoProcessingInfo";
-import ThemeSwitcher from "@/widgets/Navbar/ui/ThemeSwitcher";
-import { routes } from "@/shared/routes";
-import { useTotalCounts } from "@features/Statistics/hooks/useTotalCounts";
-import { useFreeSpace } from "@features/Statistics/hooks/useFreeSpace";
-import IconButton from "@shared/ui/icons/IconButton";
-import { ViewType } from "@/features/Dashboard/lib/useDashboardParams";
-import Text from "@shared/ui/Text";
+import QuickSearch from "@widgets/Search";
+import {
+  InitCarouselButton,
+  Screenshots,
+  VideoProcessingInfo,
+  ThemeSwitcher,
+} from "@widgets/Navbar";
+import { routes } from "@shared/routes";
+import { useTotalCounts, useFreeSpace } from "@features/Statistics";
+import { IconButton, Text } from "@shared/ui";
+import { ViewType } from "@features/Dashboard";
 
 export default function Navbar() {
   const { data: totalCounts } = useTotalCounts();

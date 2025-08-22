@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Layout from "@/widgets/Layout/ui/Layout";
+import Layout from "@app/Layout";
 import ScreenshotsPage from "@/pages/screenshots/ui/Page";
 import ScreenshotsByMonth from "@/pages/screenshots-month/ui/Page";
 import ScreenshotsByDayDate from "@/pages/screenshots-date/ui/Page";

@@ -4,7 +4,7 @@ import { DialogProvider, ZoomModal } from "@shared/ui";
 import { ThumbnailsProcessing } from "@features/Thumbnails";
 import { StoryboardProcessing } from "@features/Storyboard";
 import CreateChannel from "@features/CreateChannel";
-import { SidePanel } from "@app/widgets/SidePanel";
+import { SidePanel } from "@app";
 import Navbar from "@widgets/Navbar";
 import { AddChannelToPlaylistModal } from "@widgets/PlaylistAddChannel";
 

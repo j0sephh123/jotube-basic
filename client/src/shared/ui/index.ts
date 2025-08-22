@@ -4,4 +4,8 @@ export { default as ChannelLink } from "./ChannelLink";
 export { default as VideoModal } from "./VideoModal";
 export { default as SidePanelHeader } from "./SidePanelHeader";
 export { default as SidePanelWrapper } from "./SidePanelWrapper";
+export { default as IconButton } from "./icons/IconButton";
+export { default as Text } from "./Text";
+export { DialogProvider } from "./dialog/DialogProvider";
+export { default as ZoomModal } from "./ZoomModal";
 export * from "./static";
