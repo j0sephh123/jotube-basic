@@ -2,8 +2,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useStore } from "@/app/providers/store/store";
 import { useParams } from "react-router-dom";
 import { useCallback } from "react";
-import { ViewType } from "@widgets/Dashboard/lib/useDashboardParams";
-import { useFetchDashboard } from "@widgets/Dashboard/lib";
+import { ViewType } from "@/features/Dashboard/lib/useDashboardParams";
+import { useFetchDashboard } from "@/features/Dashboard/lib";
 import { ViewType as GraphQLViewType } from "@/shared/api/generated/graphql";
 
 export type ChannelsDashboardResponseData =

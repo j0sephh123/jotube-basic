@@ -1,7 +1,7 @@
 import { Button } from "@shared/ui/button";
 import { Download } from "lucide-react";
 import useDownload from "@features/Upload/hooks/useDownload";
-import { useTypedChannelYtId } from "@widgets/Dashboard/lib/useDashboardParams";
+import { useTypedChannelYtId } from "@/features/Dashboard/lib/useDashboardParams";
 
 export default function DownloadAll() {
   const ytChannelId = useTypedChannelYtId();

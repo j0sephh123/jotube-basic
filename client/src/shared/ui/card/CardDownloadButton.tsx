@@ -1,4 +1,4 @@
-import { useChannelsDashboardQuery } from "@widgets/Dashboard/api/useChannelsDashboardQuery";
+import { useChannelsDashboardQuery } from "@/features/Dashboard/api/useChannelsDashboardQuery";
 import useDownload from "@features/Upload/hooks/useDownload";
 import { Download } from "lucide-react";
 

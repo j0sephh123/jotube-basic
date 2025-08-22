@@ -2,8 +2,8 @@ import { RotateCcw } from "lucide-react";
 import VideosRangeFilterPopover from "./VideosRangeFilterPopover";
 import SelectSortDirection from "./SelectSortDirection";
 import VideosPaginationControl from "./VideosPaginationControl";
-import { useVideosDashboardContext } from "@widgets/Dashboard/model/useVideosDashboardContext";
-import { useVideosDashboardQuery } from "@widgets/Dashboard/api/useVideosDashboardQuery";
+import { useVideosDashboardContext } from "@/features/Dashboard/model/useVideosDashboardContext";
+import { useVideosDashboardQuery } from "@/features/Dashboard/api/useVideosDashboardQuery";
 import Button from "@shared/ui/button";
 
 export default function VideosHeader() {

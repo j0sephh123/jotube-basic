@@ -1,4 +1,4 @@
-import { useDashboardParams } from "@widgets/Dashboard/lib/useDashboardParams";
+import { useDashboardParams } from "@/features/Dashboard/lib/useDashboardParams";
 import ChannelDashboardCard from "@/widgets/Dashboard/ui/ChannelDashboardCard";
 import ChannelsDashboardContainer from "@/widgets/Dashboard/ui/ChannelsDashboardContainer";
 

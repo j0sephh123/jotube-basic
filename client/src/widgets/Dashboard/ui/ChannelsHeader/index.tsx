@@ -4,13 +4,13 @@ import DefaultsRangeFilterPopover from "@/widgets/RangePicker/ui/DefaultsRangeFi
 import SelectSortDirection from "./SelectSortDirection";
 import ViewTypeToggle from "@/widgets/Dashboard/ui/ViewTypeToggle";
 import PaginationControl from "@widgets/PaginationControl/ui/PaginationControl";
-import { useDashboardContext } from "@widgets/Dashboard/model/useDashboardContext";
+import { useDashboardContext } from "@/features/Dashboard/model/useDashboardContext";
 import {
   useDashboardParams,
   ViewType,
-} from "@widgets/Dashboard/lib/useDashboardParams";
+} from "@/features/Dashboard/lib/useDashboardParams";
 import Button from "@shared/ui/button";
-import { useChannelsDashboardQuery } from "@widgets/Dashboard/api/useChannelsDashboardQuery";
+import { useChannelsDashboardQuery } from "@/features/Dashboard/api/useChannelsDashboardQuery";
 
 const showRangeFilterForViewTypes = [ViewType.SAVED, ViewType.PROCESSED];
 

@@ -5,7 +5,7 @@ import VideosHeader from "@/widgets/Dashboard/ui/VideosHeader";
 import {
   DashboardType,
   useDashboardParams,
-} from "@widgets/Dashboard/lib/useDashboardParams";
+} from "@/features/Dashboard/lib/useDashboardParams";
 
 const header: Record<DashboardType, React.ComponentType> = {
   channels: ChannelsHeader,

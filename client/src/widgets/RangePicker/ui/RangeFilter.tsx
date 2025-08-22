@@ -1,5 +1,5 @@
 import { useMemo, useEffect } from "react";
-import { useDashboardContext } from "@widgets/Dashboard/model/useDashboardContext";
+import { useDashboardContext } from "@/features/Dashboard/model/useDashboardContext";
 import { useStore } from "@/app/providers/store/store";
 import {
   RangePickerTypes,

@@ -1,4 +1,4 @@
-import { useTypedChannelYtId } from "@widgets/Dashboard/lib/useDashboardParams";
+import { useTypedChannelYtId } from "@/features/Dashboard/lib/useDashboardParams";
 import { useFetchChannelScreenshots } from "@features/Screenshot/hooks/useFetchChannelScreenshots";
 import { useMemo } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";

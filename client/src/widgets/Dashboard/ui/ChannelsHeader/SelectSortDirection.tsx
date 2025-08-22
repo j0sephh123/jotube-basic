@@ -1,5 +1,5 @@
 import { ArrowUp, ArrowDown } from "lucide-react";
-import { useDashboardContext } from "@widgets/Dashboard/model/useDashboardContext";
+import { useDashboardContext } from "@/features/Dashboard/model/useDashboardContext";
 import Button from "@shared/ui/button";
 import { SortOrder } from "@/shared/api/generated/graphql";
 

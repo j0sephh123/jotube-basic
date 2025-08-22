@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { useFinishProcessingUpload } from "@features/Upload/hooks/useFinishProcessingUpload";
 import { useRefetchTotalCounts } from "@features/Statistics/hooks/useTotalCounts";
 import { useRefetchThumbnailByVideoId } from "@/features/Thumbnails/lib/useThumbnailByVideoId";
-import { useRefetchGroupedThumbnails } from "@widgets/Dashboard/api/useChannelsDashboardQuery";
+import { useRefetchGroupedThumbnails } from "@/features/Dashboard/api/useChannelsDashboardQuery";
 
 export default function useSubmit() {
   const {

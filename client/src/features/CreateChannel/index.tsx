@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useToastContext } from "@app/providers/toast";
 import CreateChannelModal from "@features/CreateChannel/ui/CreateChannelModal";
-import { useChannelsDashboardQuery } from "@widgets/Dashboard/api/useChannelsDashboardQuery";
+import { useChannelsDashboardQuery } from "@/features/Dashboard/api/useChannelsDashboardQuery";
 import useCreateChannel from "@features/Channel/hooks/useCreateChannel";
 import CreateChannelTrigger from "@features/CreateChannel/ui/CreateChannelTrigger";
 import CreateChannelForm from "@features/CreateChannel/ui/CreateChannelForm";

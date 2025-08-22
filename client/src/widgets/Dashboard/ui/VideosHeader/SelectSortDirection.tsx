@@ -1,5 +1,5 @@
 import { ArrowUp, ArrowDown } from "lucide-react";
-import { useVideosDashboardContext } from "@/widgets/Dashboard/model/useVideosDashboardContext";
+import { useVideosDashboardContext } from "@/features/Dashboard/model/useVideosDashboardContext";
 import Button from "@/shared/ui/button";
 import { SortOrder } from "@/shared/api/generated/graphql";
 

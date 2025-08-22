@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { STORYBOARDS } from "@/features/Storyboard/api/storyboard.gql";
-import { useTypedChannelYtId } from "@widgets/Dashboard/lib/useDashboardParams";
+import { useTypedChannelYtId } from "@/features/Dashboard/lib/useDashboardParams";
 
 export type StoryboardData = {
   id: number;
@@ -26,7 +26,7 @@ export type UploadWithStoryboard = {
   storyboard: StoryboardData;
 };
 
-export default function useUploadsWithStoryboard() {
+export function useUploadsWithStoryboard() {
   const ytChannelId = useTypedChannelYtId();
 
   const { data, loading, error, refetch } = useQuery<{

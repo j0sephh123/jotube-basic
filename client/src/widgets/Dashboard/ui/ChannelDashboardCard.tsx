@@ -1,9 +1,9 @@
-import { ViewType } from "@widgets/Dashboard/lib/useDashboardParams";
+import { ViewType } from "@/features/Dashboard/lib/useDashboardParams";
 import SyncUploadsButton from "@features/Upload/components/SyncUploadsButton";
 import Card from "@shared/ui/card";
 import FetchUploadsButton from "@features/Upload/components/FetchUploadsButton";
 import DeleteChannel from "@entities/Channel/ui/DeleteChannel";
-import useTitleClick from "@widgets/Dashboard/lib/useTitleClick";
+import useTitleClick from "@/features/Dashboard/lib/useTitleClick";
 import { DashboardChannelResponse } from "@/shared/api/generated/graphql";
 import { usePlaylist } from "@/app/providers/store/store";
 import { ListMusic, ExternalLink } from "lucide-react";

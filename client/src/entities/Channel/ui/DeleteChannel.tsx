@@ -1,5 +1,5 @@
 import useDeleteChannel from "@/features/Channel/hooks/useDeleteChannel";
-import { useRefetchNoUploadsView } from "@/widgets/Dashboard/api/useChannelsDashboardQuery";
+import { useRefetchNoUploadsView } from "@/features/Dashboard/api/useChannelsDashboardQuery";
 import { Button } from "@/shared/ui/button";
 import { useDialog } from "@/shared/hooks/useDialog";
 

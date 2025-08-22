@@ -1,5 +1,5 @@
 import { SlideImage } from "yet-another-react-lightbox";
-import { ViewType } from "@widgets/Dashboard/lib/useDashboardParams";
+import { ViewType } from "@/features/Dashboard/lib/useDashboardParams";
 import { SidePanelSlice } from "@/widgets/SidePanel/model/side-panel-slice";
 import { PlaylistSlice } from "@features/Playlist/store";
 import { SortOrder } from "@/shared/api/generated/graphql";

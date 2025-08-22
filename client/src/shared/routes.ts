@@ -1,4 +1,4 @@
-import { ViewType } from "@widgets/Dashboard/lib/useDashboardParams";
+import { ViewType } from "@/features/Dashboard/lib/useDashboardParams";
 
 export const routes = {
   home: () => "/",

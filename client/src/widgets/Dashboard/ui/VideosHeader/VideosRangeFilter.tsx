@@ -1,5 +1,5 @@
 import { useMemo, useEffect } from "react";
-import { useVideosDashboardContext } from "@widgets/Dashboard/model/useVideosDashboardContext";
+import { useVideosDashboardContext } from "@/features/Dashboard/model/useVideosDashboardContext";
 import { useStore } from "@/app/providers/store/store";
 import { VideosDashboardSlice } from "@/app/providers/store/store-types";
 import VideosRangePicker from "./VideosRangePicker";

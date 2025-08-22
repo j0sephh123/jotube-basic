@@ -1,8 +1,8 @@
 import { useEffect, useCallback } from "react";
 import { useSearchParams, useParams } from "react-router-dom";
 import { useStore } from "@/app/providers/store/store";
-import { defaults } from "@/widgets/Dashboard/model/dashboard-slice";
-import { ViewType } from "@widgets/Dashboard/lib/useDashboardParams";
+import { defaults } from "@/features/Dashboard/model/dashboard-slice";
+import { ViewType } from "@/features/Dashboard/lib/useDashboardParams";
 import { SortOrder } from "@/shared/api/generated/graphql";
 
 type RequestBody =

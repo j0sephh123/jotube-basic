@@ -1,7 +1,7 @@
 import {
   useDashboardParams,
   DashboardType,
-} from "@widgets/Dashboard/lib/useDashboardParams";
+} from "@/features/Dashboard/lib/useDashboardParams";
 import VideosDashboard from "@/widgets/Dashboard/ui/VideosDashboard";
 import ChannelsDashboard from "@/widgets/Dashboard/ui/ChannelsDashboard";
 import { useStore } from "@/app/providers/store/store";

@@ -1,7 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useVideosDashboard } from "@/app/providers/store/store";
 import { useCallback } from "react";
-import { useFetchVideosDashboard } from "@widgets/Dashboard/lib";
+import { useFetchVideosDashboard } from "@/features/Dashboard/lib";
 
 export function useVideosDashboardQuery() {
   const { videosRequestBody: requestBody } = useVideosDashboard();

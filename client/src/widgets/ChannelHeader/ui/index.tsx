@@ -1,6 +1,6 @@
 import { useChannelMetadataQuery } from "@/entities/Channel/model/useChannelMetadata";
 import { useLocation } from "react-router-dom";
-import { useTypedChannelYtId } from "@widgets/Dashboard/lib/useDashboardParams";
+import { useTypedChannelYtId } from "@/features/Dashboard/lib/useDashboardParams";
 import { usePlaylist } from "@/app/providers/store/store";
 import { ListMusic, ExternalLink } from "lucide-react";
 import clsx from "clsx";

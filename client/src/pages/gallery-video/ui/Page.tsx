@@ -1,4 +1,4 @@
-import { useTypedChannelYtId } from "@widgets/Dashboard/lib/useDashboardParams";
+import { useTypedChannelYtId } from "@/features/Dashboard/lib/useDashboardParams";
 import { useState, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 

@@ -3,7 +3,7 @@ import { routes } from "@/shared/routes";
 import {
   useDashboardParams,
   ViewType,
-} from "@widgets/Dashboard/lib/useDashboardParams";
+} from "@/features/Dashboard/lib/useDashboardParams";
 import clsx from "clsx";
 import Button from "@/shared/ui/button";
 

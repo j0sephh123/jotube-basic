@@ -1,4 +1,7 @@
-import { useFetchDashboard, useFetchVideosDashboard } from "@widgets/Dashboard/lib";
+import {
+  useFetchDashboard,
+  useFetchVideosDashboard,
+} from "@/features/Dashboard/lib";
 
 export default function useDashboard() {
   const fetchDashboardHook = useFetchDashboard({

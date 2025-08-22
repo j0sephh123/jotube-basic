@@ -1,5 +1,5 @@
 import { SortOrder } from "@/shared/api/generated/graphql";
-import { ViewType } from "@widgets/Dashboard/lib/useDashboardParams";
+import { ViewType } from "@/features/Dashboard/lib/useDashboardParams";
 
 export const defaults: {
   sortOrder: SortOrder;

@@ -15,7 +15,7 @@ import { routes } from "@/shared/routes";
 import { useTotalCounts } from "@features/Statistics/hooks/useTotalCounts";
 import { useFreeSpace } from "@features/Statistics/hooks/useFreeSpace";
 import IconButton from "@shared/ui/icons/IconButton";
-import { ViewType } from "@widgets/Dashboard/lib/useDashboardParams";
+import { ViewType } from "@/features/Dashboard/lib/useDashboardParams";
 import Text from "@shared/ui/Text";
 
 export default function Navbar() {

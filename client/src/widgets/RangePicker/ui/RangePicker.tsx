@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useStore } from "@/app/providers/store/store";
-import { useDashboardContext } from "@/widgets/Dashboard/model/useDashboardContext";
+import { useDashboardContext } from "@/features/Dashboard/model/useDashboardContext";
 import { RangePickerTypes } from "@/app/providers/store/store-types";
 import Button from "@/shared/ui/button";
 
