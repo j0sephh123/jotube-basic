@@ -1,6 +1,6 @@
 import { SlidersHorizontal } from "lucide-react";
 import VideosRangeFilter from "./VideosRangeFilter";
-import { CommonRangeFilterPopover } from "@/widgets/RangePicker/ui/CommonRangeFilterPopover";
+import { CommonRangeFilterPopover } from "@features/Dashboard";
 
 export default function VideosRangeFilterPopover() {
   return (

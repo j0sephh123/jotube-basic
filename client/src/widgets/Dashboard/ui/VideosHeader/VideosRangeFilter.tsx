@@ -1,10 +1,15 @@
 import { useMemo, useEffect } from "react";
-import { useVideosDashboardContext } from "@/features/Dashboard/model/useVideosDashboardContext";
-import { useStore } from "@/app/providers/store/store";
-import type { VideosDashboardSlice } from "@/app/providers/store/store-types";
+import {
+  useVideosDashboardContext,
+  useVideosRangePickers,
+} from "@features/Dashboard";
 import VideosRangePicker from "./VideosRangePicker";
 
-type VideosRequestBodyKey = keyof VideosDashboardSlice["videosRequestBody"];
+type VideosRequestBodyKey =
+  | "sortOrder"
+  | "page"
+  | "minScreenshots"
+  | "maxScreenshots";
 
 type VideosRangeFilterBaseProps = {
   rangeKey: string;
@@ -18,7 +23,8 @@ export function VideosRangeFilterBase({
   maxKey,
 }: VideosRangeFilterBaseProps) {
   const { videosRequestBody } = useVideosDashboardContext();
-  const { setVideosRangePicker, getVideosRangePicker } = useStore();
+  const { setVideosRangePicker, getVideosRangePicker } =
+    useVideosRangePickers();
   const rangePicker = getVideosRangePicker(rangeKey);
 
   const currentFilter = useMemo(
@@ -26,7 +32,7 @@ export function VideosRangeFilterBase({
       min: (videosRequestBody[minKey] as number) || 0,
       max: (videosRequestBody[maxKey] as number | null) || null,
     }),
-    [videosRequestBody[minKey], videosRequestBody[maxKey]]
+    [videosRequestBody, minKey, maxKey]
   );
 
   useEffect(() => {
@@ -50,6 +56,9 @@ export function VideosRangeFilterBase({
     setVideosRangePicker,
     rangePicker,
     rangeKey,
+    maxKey,
+    minKey,
+    videosRequestBody,
   ]);
 
   return (

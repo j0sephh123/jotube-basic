@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
-import { useStore } from "@/app/providers/store/store";
-import { useVideosDashboardContext } from "@/features/Dashboard/model/useVideosDashboardContext";
-import Button from "@/shared/ui/button";
+import { useState, useEffect, useMemo } from "react";
+import {
+  useVideosDashboardContext,
+  useVideosRangePickers,
+} from "@features/Dashboard";
+import { Button } from "@shared/ui";
 
 type VideosRangePickerProps = {
   rangeKey: string;
@@ -11,7 +13,8 @@ export default function VideosRangePicker({
   rangeKey,
 }: VideosRangePickerProps) {
   const { setVideosRequestBodyBatch } = useVideosDashboardContext();
-  const { videosRangePickers, updateVideosRangePickerValues } = useStore();
+  const { videosRangePickers, updateVideosRangePickerValues } =
+    useVideosRangePickers();
   const config = videosRangePickers[rangeKey];
 
   const defaultConfig = {
@@ -22,7 +25,10 @@ export default function VideosRangePicker({
   };
 
   const { values, min, max, stepSize } = config || defaultConfig;
-  const safeValues = values && values.length >= 2 ? values : [min, max];
+  const safeValues = useMemo(
+    () => (values && values.length >= 2 ? values : [min, max]),
+    [values, min, max]
+  );
 
   const [minValue, setMinValue] = useState(
     safeValues[0]?.toString() || min.toString()
