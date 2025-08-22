@@ -1,4 +1,5 @@
-import { PropsWithChildren, ReactNode, useState } from "react";
+import type { PropsWithChildren, ReactNode} from "react";
+import { useState } from "react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import Button from "@/shared/ui/button";
 

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import nestFetcher from "@/shared/api/rest/nestFetcher";
 import { useMutation } from "@tanstack/react-query";
 

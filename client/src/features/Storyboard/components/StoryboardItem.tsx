@@ -1,4 +1,4 @@
-import { UploadWithStoryboard } from "@/features/Storyboard/model/useUploadsWithStoryboard";
+import type { UploadWithStoryboard } from "@/features/Storyboard/model/useUploadsWithStoryboard";
 import InfoCard from "@shared/ui/InfoCard";
 
 interface StoryboardItemProps {

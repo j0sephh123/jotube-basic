@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import ConfirmDialog from "@shared/ui/dialog/ConfirmDialog";
 import InputDialog from "@shared/ui/dialog/InputDialog";
 import { DialogContext, useDialogState } from "@shared/hooks/useDialog";

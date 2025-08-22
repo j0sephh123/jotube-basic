@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
+import type {
+  PlaylistDetailsResponse} from "@/shared/api/generated/graphql";
 import {
-  PlaylistDetailsResponse,
   SortOrder,
 } from "@/shared/api/generated/graphql";
 import ActionsCell from "@/features/Playlist/ui/PlaylistDetailsPage/cells/ActionsCell";

@@ -1,4 +1,4 @@
-import {
+import type {
   Store,
   StoryboardProcessingSlice,
 } from "@/app/providers/store/store-types";

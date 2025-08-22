@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { ToastContext } from "./context";
 import { useToastProvider } from "./model/useToastProvider";
 import ToastContainer from "./components/ToastContainer";

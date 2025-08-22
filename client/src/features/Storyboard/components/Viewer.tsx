@@ -1,4 +1,4 @@
-import { UploadWithStoryboard } from "@/features/Storyboard/model/useUploadsWithStoryboard";
+import type { UploadWithStoryboard } from "@/features/Storyboard/model/useUploadsWithStoryboard";
 import Modal from "@shared/ui/Modal";
 import Container from "@/features/Thumbnails/ui/Container";
 

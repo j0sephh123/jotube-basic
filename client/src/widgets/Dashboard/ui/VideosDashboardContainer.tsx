@@ -1,7 +1,7 @@
 import { useVideosDashboardQuery } from "@/features/Dashboard/api/useVideosDashboardQuery";
 import { Loader } from "lucide-react";
 import ErrorMessage from "@/shared/ui/static/ErrorMessage";
-import { DashboardVideoResponse } from "@/shared/api/generated/graphql";
+import type { DashboardVideoResponse } from "@/shared/api/generated/graphql";
 
 export default function VideosDashboardContainer({
   children,

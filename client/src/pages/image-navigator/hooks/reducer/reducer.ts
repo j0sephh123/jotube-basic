@@ -1,4 +1,4 @@
-import { ImageNavigatorResponse } from "../../types";
+import type { ImageNavigatorResponse } from "../../types";
 
 export interface ImageNavigatorState {
   ytVideoId: string;

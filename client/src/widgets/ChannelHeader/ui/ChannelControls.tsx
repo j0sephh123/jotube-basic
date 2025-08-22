@@ -1,8 +1,7 @@
 import { RotateCcw } from "lucide-react";
-import { useStore } from "@/app/providers/store/store";
-import { RangePickerTypes } from "@/app/providers/store/store-types";
 import { useSearchParams } from "react-router-dom";
 import { Button } from "@shared/ui/button";
+import { useChannelControls } from "../hooks/useChannelControls";
 
 type Props = {
   leftSlot: React.ReactNode;
@@ -11,37 +10,14 @@ type Props = {
 const ChannelControls = ({ leftSlot }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const sortOrder = (searchParams.get("sort") || "DESC") as "ASC" | "DESC";
+  const { handleResetRangeFilters } = useChannelControls();
+
   const toggleSort = () => {
     setSearchParams((prev) => {
       const newSort = prev.get("sort") === "ASC" ? "DESC" : "ASC";
       prev.set("sort", newSort);
       return prev;
     });
-  };
-
-  const { updateRangePickerValues } = useStore();
-
-  const handleResetRangeFilters = () => {
-    const processedRangePicker = useStore
-      .getState()
-      .getRangePicker(RangePickerTypes.PROCESSED);
-    const defaultsRangePicker = useStore
-      .getState()
-      .getRangePicker(RangePickerTypes.DEFAULTS);
-
-    if (processedRangePicker) {
-      updateRangePickerValues(RangePickerTypes.PROCESSED, [
-        processedRangePicker.min,
-        processedRangePicker.max,
-      ]);
-    }
-
-    if (defaultsRangePicker) {
-      updateRangePickerValues(RangePickerTypes.DEFAULTS, [
-        defaultsRangePicker.min,
-        defaultsRangePicker.max,
-      ]);
-    }
   };
 
   return (

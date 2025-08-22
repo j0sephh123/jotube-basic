@@ -1,7 +1,7 @@
 import { useChannelsDashboardQuery } from "@/features/Dashboard/api/useChannelsDashboardQuery";
 import { Loader } from "lucide-react";
 import ErrorMessage from "@/shared/ui/static/ErrorMessage";
-import { DashboardChannelResponse } from "@/shared/api/generated/graphql";
+import type { DashboardChannelResponse } from "@/shared/api/generated/graphql";
 
 export default function ChannelsDashboardContainer({
   children,

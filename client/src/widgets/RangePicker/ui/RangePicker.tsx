@@ -1,27 +1,11 @@
 import { useState, useEffect } from "react";
-import { useStore } from "@/app/providers/store/store";
-import { useDashboardContext } from "@/features/Dashboard/model/useDashboardContext";
-import { RangePickerTypes } from "@/app/providers/store/store-types";
-import Button from "@/shared/ui/button";
-
-type RangePickerProps = {
-  rangeKey: RangePickerTypes;
-};
+import type { RangePickerProps } from "../model/types";
+import { useRangePicker } from "../hooks/useRangePicker";
+import Button from "./Button";
 
 export default function RangePicker({ rangeKey }: RangePickerProps) {
-  const { setRequestBodyBatch } = useDashboardContext();
-  const { rangePickers, updateRangePickerValues } = useStore();
-  const config = rangePickers[rangeKey];
-
-  const defaultConfig = {
-    values: [0, 100] as ReadonlyArray<number>,
-    min: 0,
-    max: 100,
-    stepSize: 1,
-  };
-
-  const { values, min, max, stepSize } = config || defaultConfig;
-  const safeValues = values && values.length >= 2 ? values : [min, max];
+  const { safeValues, min, max, stepSize, handleRangeChange, handleReset } =
+    useRangePicker(rangeKey);
 
   const [minValue, setMinValue] = useState(
     safeValues[0]?.toString() || min.toString()
@@ -41,20 +25,7 @@ export default function RangePicker({ rangeKey }: RangePickerProps) {
     if (!isNaN(numValue) && numValue >= min && numValue <= max) {
       const currentMax = maxValue ? parseInt(maxValue, 10) : max;
       if (numValue <= currentMax) {
-        updateRangePickerValues(rangeKey, [numValue, currentMax]);
-        if (rangeKey === RangePickerTypes.PROCESSED) {
-          setRequestBodyBatch({
-            min: numValue,
-            max: currentMax === max ? null : currentMax,
-            page: 1,
-          });
-        } else if (rangeKey === RangePickerTypes.DEFAULTS) {
-          setRequestBodyBatch({
-            defaultMin: numValue,
-            defaultMax: currentMax === max ? null : currentMax,
-            page: 1,
-          });
-        }
+        handleRangeChange([numValue, currentMax]);
       }
     }
   };
@@ -65,57 +36,18 @@ export default function RangePicker({ rangeKey }: RangePickerProps) {
     if (!isNaN(numValue) && numValue >= min && numValue <= max) {
       const currentMin = parseInt(minValue, 10);
       if (numValue >= currentMin) {
-        updateRangePickerValues(rangeKey, [currentMin, numValue]);
-        if (rangeKey === RangePickerTypes.PROCESSED) {
-          setRequestBodyBatch({
-            min: currentMin,
-            max: numValue === max ? null : numValue,
-            page: 1,
-          });
-        } else if (rangeKey === RangePickerTypes.DEFAULTS) {
-          setRequestBodyBatch({
-            defaultMin: currentMin,
-            defaultMax: numValue === max ? null : numValue,
-            page: 1,
-          });
-        }
+        handleRangeChange([currentMin, numValue]);
       }
     } else if (value === "") {
       const currentMin = parseInt(minValue, 10);
-      updateRangePickerValues(rangeKey, [currentMin, max]);
-      if (rangeKey === RangePickerTypes.PROCESSED) {
-        setRequestBodyBatch({
-          min: currentMin,
-          max: null,
-          page: 1,
-        });
-      } else if (rangeKey === RangePickerTypes.DEFAULTS) {
-        setRequestBodyBatch({
-          defaultMin: currentMin,
-          defaultMax: null,
-          page: 1,
-        });
-      }
+      handleRangeChange([currentMin, max]);
     }
   };
 
-  const handleReset = () => {
-    updateRangePickerValues(rangeKey, [min, max]);
+  const handleResetClick = () => {
+    handleReset();
     setMinValue(min.toString());
     setMaxValue("");
-    if (rangeKey === RangePickerTypes.PROCESSED) {
-      setRequestBodyBatch({
-        min: 0,
-        max: null,
-        page: 1,
-      });
-    } else if (rangeKey === RangePickerTypes.DEFAULTS) {
-      setRequestBodyBatch({
-        defaultMin: 0,
-        defaultMax: null,
-        page: 1,
-      });
-    }
   };
 
   const formatValue = (value: number) => {
@@ -130,7 +62,7 @@ export default function RangePicker({ rangeKey }: RangePickerProps) {
       <div className="flex items-center justify-between">
         <span className="text-sm font-medium">Range</span>
         <Button
-          onClick={handleReset}
+          onClick={handleResetClick}
           className="text-xs text-base-content/60 hover:text-base-content"
         >
           Reset

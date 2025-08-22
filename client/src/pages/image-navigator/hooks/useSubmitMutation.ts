@@ -1,6 +1,6 @@
 import nestFetcher from "@/shared/api/rest/nestFetcher";
 import { useMutation } from "@tanstack/react-query";
-import { ImageNavigatorRequest, ImageNavigatorResponse } from "../types";
+import type { ImageNavigatorRequest, ImageNavigatorResponse } from "../types";
 
 export default function useSubmitMutation() {
   return useMutation<ImageNavigatorResponse, Error, ImageNavigatorRequest>({

@@ -10,8 +10,9 @@ type ScreenshotGroup = {
 };
 
 import { useDialog } from "@shared/hooks/useDialog";
+import type {
+  ChannelScreenshot} from "@features/Screenshot/hooks/useFetchChannelScreenshots";
 import {
-  ChannelScreenshot,
   useFetchChannelScreenshots,
 } from "@features/Screenshot/hooks/useFetchChannelScreenshots";
 import { useDeleteChannelScreenshot } from "@features/Screenshot/hooks/useDeleteChannelScreenshot";

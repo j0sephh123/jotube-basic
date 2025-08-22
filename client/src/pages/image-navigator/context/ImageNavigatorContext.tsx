@@ -1,10 +1,12 @@
-import React, { createContext, useContext, useReducer, ReactNode } from "react";
+import type { ReactNode } from "react";
+import React, { createContext, useContext, useReducer } from "react";
+import type {
+  ImageNavigatorState} from "../hooks/reducer/reducer";
 import {
   imageNavigatorReducer,
-  initialState,
-  ImageNavigatorState,
+  initialState
 } from "../hooks/reducer/reducer";
-import { ImageNavigatorResponse } from "../types";
+import type { ImageNavigatorResponse } from "../types";
 
 interface ImageNavigatorContextType {
   state: ImageNavigatorState;

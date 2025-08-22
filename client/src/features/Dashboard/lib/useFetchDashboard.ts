@@ -1,6 +1,7 @@
+import type {
+  FetchDashboardQueryVariables} from "@/shared/api/generated/graphql";
 import {
-  useFetchDashboardQuery,
-  FetchDashboardQueryVariables,
+  useFetchDashboardQuery
 } from "@/shared/api/generated/graphql";
 
 export default function useFetchDashboard(

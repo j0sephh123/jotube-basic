@@ -1,4 +1,4 @@
-import { SortOrder } from "@/shared/api/generated/graphql";
+import type { SortOrder } from "@/shared/api/generated/graphql";
 import { ViewType } from "@/features/Dashboard/lib/useDashboardParams";
 
 export const defaults: {

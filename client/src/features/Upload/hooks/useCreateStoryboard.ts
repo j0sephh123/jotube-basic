@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type {
+  DefaultError} from "@tanstack/react-query";
 import {
   useMutation,
-  DefaultError,
   useQueryClient,
 } from "@tanstack/react-query";
 import nestFetcher from "@/shared/api/rest/nestFetcher";
