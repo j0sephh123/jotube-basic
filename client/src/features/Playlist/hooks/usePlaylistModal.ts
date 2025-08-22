@@ -1,8 +1,8 @@
-import { useStore } from "@/app/providers/store/store";
+import { usePlaylist } from "@features/Playlist";
 
 export const usePlaylistModal = () => {
   const { isModalOpen, ytChannelId, closePlaylistModal, resetFormState } =
-    useStore();
+    usePlaylist();
 
   return {
     isModalOpen,

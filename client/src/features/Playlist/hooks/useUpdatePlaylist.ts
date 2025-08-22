@@ -1,8 +1,8 @@
 import { useMutation } from "@apollo/client";
-import { UPDATE_PLAYLIST } from "@entities/Playlist/api/playlist.gql";
+import { UpdatePlaylistDocument } from "@shared/api/generated/graphql";
 
 export const useUpdatePlaylist = () => {
-  const [mutate, result] = useMutation(UPDATE_PLAYLIST, {
+  const [mutate, result] = useMutation(UpdatePlaylistDocument, {
     refetchQueries: ["GetPlaylists"],
   });
 

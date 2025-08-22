@@ -1,18 +1,21 @@
 import { useState } from "react";
-import { useToastContext } from "@app/providers/toast";
-import CreateChannelModal from "@features/CreateChannel/ui/CreateChannelModal";
-import { useChannelsDashboardQuery } from "@/features/Dashboard/api/useChannelsDashboardQuery";
+import { useToast } from "@shared/hooks";
+import CreateChannelModal from "./ui/CreateChannelModal";
+import { useChannelsDashboardQuery } from "@features/Dashboard/api/useChannelsDashboardQuery";
 import useCreateChannel from "@features/Channel/hooks/useCreateChannel";
-import CreateChannelTrigger from "@features/CreateChannel/ui/CreateChannelTrigger";
-import CreateChannelForm from "@features/CreateChannel/ui/CreateChannelForm";
-import Actions from "@features/CreateChannel/ui/Actions";
-import { useCreateChannelForm } from "@features/CreateChannel/hooks/useCreateChannelForm";
+import CreateChannelTrigger from "./ui/CreateChannelTrigger";
+import CreateChannelForm from "./ui/CreateChannelForm";
+import Actions from "./ui/Actions";
+import { useCreateChannelForm } from "./hooks/useCreateChannelForm";
 import { useNavigate } from "react-router-dom";
-import { routes } from "@/shared/routes";
+
+const routes = {
+  channel: (ytChannelId: string) => `/channels/${ytChannelId}`,
+};
 
 export default function CreateChannel() {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { successToast, errorToast } = useToastContext();
+  const { successToast, errorToast } = useToast();
   const navigate = useNavigate();
   const { refetch } = useChannelsDashboardQuery();
   const channelCreateMutation = useCreateChannel({

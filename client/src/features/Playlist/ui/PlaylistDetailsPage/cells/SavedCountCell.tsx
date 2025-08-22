@@ -1,11 +1,14 @@
 import { Save } from "lucide-react";
 import { Link } from "react-router-dom";
-import { routes } from "@/shared/routes";
-import type { PlaylistChannelWithCountsResponse } from "@/shared/api/generated/graphql";
-import TableCol from "@/widgets/PlaylistDetails/ui/TableCol";
+import type { PlaylistChannelWithCountsResponse } from "@shared/api/generated/graphql";
+import TableCol from "../../../../../../widgets/PlaylistDetails/ui/TableCol";
 
 type SavedCountCellProps = {
   channel: PlaylistChannelWithCountsResponse;
+};
+
+const routes = {
+  savedChannel: (ytChannelId: string) => `/channels/${ytChannelId}/saved`,
 };
 
 export default function SavedCountCell({ channel }: SavedCountCellProps) {

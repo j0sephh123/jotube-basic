@@ -1,5 +1,5 @@
 import { ApolloProvider } from "@apollo/client";
-import { apolloClient } from "@app/providers/api/apolloClient";
+import { apolloClient } from "./api";
 
 export default function GQLProvider({
   children,

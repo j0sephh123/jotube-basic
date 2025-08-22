@@ -1,7 +1,7 @@
 import { ImageIcon } from "lucide-react";
-import useViewThumbnails from "@features/Thumbnails/hooks/useViewThumbnails";
-import type { PlaylistChannelWithCountsResponse } from "@/shared/api/generated/graphql";
-import TableCol from "@/widgets/PlaylistDetails/ui/TableCol";
+import useViewThumbnails from "../../../../../../features/Thumbnails/hooks/useViewThumbnails";
+import type { PlaylistChannelWithCountsResponse } from "@shared/api/generated/graphql";
+import TableCol from "../../../../../../widgets/PlaylistDetails/ui/TableCol";
 
 type ThumbnailCountCellProps = {
   channel: PlaylistChannelWithCountsResponse;

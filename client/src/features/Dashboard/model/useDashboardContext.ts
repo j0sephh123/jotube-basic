@@ -1,8 +1,8 @@
 import { useEffect, useCallback } from "react";
 import { useSearchParams, useParams } from "react-router-dom";
-  import { useStore } from "@/app/providers/store/store";
-import { defaults } from "@/features/Dashboard/model/dashboard-slice";
-import { ViewType } from "@/features/Dashboard/lib/useDashboardParams";
+import { useStore } from "@app/providers/store/store";
+import { defaults } from "./dashboard-slice";
+import { ViewType } from "../lib/useDashboardParams";
 import type { SortOrder } from "@shared/api";
 
 type RequestBody =
@@ -162,8 +162,15 @@ export const useDashboardContext = () => {
       newRequestBody.viewType = params.viewType as ViewType;
     }
 
-    useStore.setState({ requestBody: newRequestBody });
-  }, [urlSearchParams]);
+    Object.entries(newRequestBody).forEach(([key, value]) => {
+      if (key in defaults) {
+        setRequestBody(
+          key as RequestBody,
+          value as (typeof defaults)[keyof typeof defaults]
+        );
+      }
+    });
+  }, [urlSearchParams, setRequestBody]);
 
   useEffect(() => {
     if (viewType && Object.values(ViewType).includes(viewType as ViewType)) {

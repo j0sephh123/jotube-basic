@@ -1,8 +1,4 @@
-import type {
-  Store,
-  SlidesSlice,
-  SlidesData,
-} from "@/app/providers/store/store-types";
+import type { Store, SlidesSlice, SlidesData } from "../types";
 
 export const createSlidesSlice = (
   set: (fn: (state: Store) => Partial<Store>) => void

@@ -1,6 +1,6 @@
-import { ToastProvider } from "@app/providers/toast";
-import GQLProvider from "@app/providers/GQLProvider";
-import RestProvider from "@app/providers/RestProvider";
+import { ToastProvider } from "./toast";
+import GQLProvider from "./GQLProvider";
+import RestProvider from "./RestProvider";
 
 export default function AppProvider({
   children,

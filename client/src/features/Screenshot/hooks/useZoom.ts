@@ -1,3 +1,19 @@
-import { useZoom as useZoomStore } from "@app/providers/store/store-hooks";
+import { create } from "zustand";
+
+type ZoomStore = {
+  isVisible: boolean;
+  url: string;
+  onClose: () => void;
+  setZoom: (isVisible: boolean, url: string, onClose: () => void) => void;
+  closeZoom: () => void;
+};
+
+const useZoomStore = create<ZoomStore>((set) => ({
+  isVisible: false,
+  url: "",
+  onClose: () => {},
+  setZoom: (isVisible, url, onClose) => set({ isVisible, url, onClose }),
+  closeZoom: () => set({ isVisible: false, url: "", onClose: () => {} }),
+}));
 
 export const useZoom = useZoomStore;
