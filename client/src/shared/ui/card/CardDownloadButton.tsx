@@ -6,7 +6,11 @@ type CardDownloadButtonProps = {
   onDownload: (ytChannelId: string) => void;
 };
 
-export default function CardDownloadButton({ id, ytChannelId, onDownload }: CardDownloadButtonProps) {
+export default function CardDownloadButton({
+  id,
+  ytChannelId,
+  onDownload,
+}: CardDownloadButtonProps) {
   const handleDownload = () => {
     onDownload(ytChannelId);
   };

@@ -10,6 +10,7 @@ import type {
   RangePickersSlice,
   VideosRangePickersSlice,
   ZoomSlice,
+  StoryboardProcessingSlice,
 } from "./store-types";
 
 function makeScopedHook<Slice>() {
@@ -33,3 +34,4 @@ export const useVideosRangePickers = makeScopedHook<VideosRangePickersSlice>();
 export const useSidePanel = makeScopedHook<SidePanelSlice>();
 export const usePlaylist = makeScopedHook<PlaylistSlice>();
 export const useZoom = makeScopedHook<ZoomSlice>();
+export const useStoryboardProcessing = makeScopedHook<StoryboardProcessingSlice>();
