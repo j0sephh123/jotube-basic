@@ -1,7 +1,7 @@
 import { ViewType, useTitleClick } from "@features/Dashboard";
 import { SyncUploadsButton, FetchUploadsButton } from "@features/Upload";
-import Card from "@shared/ui/card";
-import { DeleteChannel } from "@entities/Channel/ui";
+import { Card } from "@shared/ui";
+import { DeleteChannel } from "@entities/Channel";
 import type { DashboardChannelResponse } from "@shared/api";
 import { usePlaylist } from "@app/providers/store/store";
 import { ListMusic, ExternalLink } from "lucide-react";

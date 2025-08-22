@@ -1,7 +1,7 @@
 import { RotateCcw } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
-import { Button } from "@shared/ui/button";
-import { useChannelControls } from "../hooks/useChannelControls";
+import { Button } from "@shared/ui";
+import { useChannelControls } from "@widgets/ChannelHeader";
 
 type Props = {
   leftSlot: React.ReactNode;

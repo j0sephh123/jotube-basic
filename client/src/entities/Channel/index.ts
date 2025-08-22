@@ -3,4 +3,4 @@ export {
   useRefetchChannelMetadata,
   useChannelMetadataQuery,
 } from "./model/useChannelMetadata";
-export { ViewThumbnails, ViewScreenshots } from "./ui";
+export { ViewThumbnails, ViewScreenshots, DeleteChannel } from "./ui";
