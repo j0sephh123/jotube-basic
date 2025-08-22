@@ -1,15 +1,14 @@
 import {
   useScreenshotsByVideo,
-  VideoScreenshot,
-} from "@/features/Screenshot/hooks/useScreenshotsByVideo";
-import { useVideoModal } from "@/shared/hooks/useVideoModal";
-import VideoModal from "@/shared/ui/VideoModal";
-import { formatSecondsToTime } from "@/shared/utils/format";
+  type VideoScreenshot,
+} from "@features/Screenshot";
+import { useVideoModal } from "@shared/hooks";
+import { VideoModal } from "@shared/ui";
+import { formatSecondsToTime } from "@shared/utils";
 import { Play, Clock } from "lucide-react";
 import { useState } from "react";
-import SidePanelHeader from "@/shared/ui/SidePanel/SidePanelHeader";
-import SidePanelWrapper from "@/shared/ui/SidePanel/SidePanelWrapper";
-import { useSidePanel } from "@/app/providers/store/store";
+import { SidePanelHeader, SidePanelWrapper } from "@shared/ui";
+import { useSidePanel } from "@app/index";
 
 type ScreenshotGroup = {
   screenshots: VideoScreenshot[];

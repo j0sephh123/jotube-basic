@@ -1,4 +1,4 @@
-import { useSidePanel } from "@/app/providers/store/store";
+import { useSidePanel } from "@app/index";
 import { ReactNode } from "react";
 
 type Props = {
