@@ -1,7 +1,7 @@
 import { useMemo, useEffect } from "react";
 import { useDashboardContext } from "@features/Dashboard/model/useDashboardContext";
-import { useRangePickers } from "@app/providers/store/store-hooks";
-import { RangePickerTypes, RequestBodyKey } from "../model/types";
+import { useStore } from "@/app/providers/store/store";
+import type { RangePickerTypes, RequestBodyKey } from "../model/types";
 
 export const useRangeFilter = (
   rangeKey: RangePickerTypes,
@@ -9,7 +9,7 @@ export const useRangeFilter = (
   maxKey: RequestBodyKey
 ) => {
   const { requestBody } = useDashboardContext();
-  const { setRangePicker, getRangePicker } = useRangePickers();
+  const { setRangePicker, getRangePicker } = useStore();
   const rangePicker = getRangePicker(rangeKey);
 
   const currentFilter = useMemo(
@@ -22,29 +22,20 @@ export const useRangeFilter = (
 
   useEffect(() => {
     if (!rangePicker) return;
-    const maxValue =
-      currentFilter.max === null ? rangePicker.max : currentFilter.max;
-    const shouldUpdate =
-      rangePicker.values[0] !== currentFilter.min ||
-      rangePicker.values[1] !== maxValue;
-    if (shouldUpdate) {
+
+    const { min, max } = currentFilter;
+    const newValues: [number, number] = [min, max || rangePicker.max];
+
+    if (
+      newValues[0] !== rangePicker.values[0] ||
+      newValues[1] !== rangePicker.values[1]
+    ) {
       setRangePicker(rangeKey, {
-        values: [currentFilter.min, maxValue],
-        min: rangePicker.min,
-        max: rangePicker.max,
-        stepSize: rangePicker.stepSize,
+        ...rangePicker,
+        values: newValues,
       });
     }
-  }, [
-    currentFilter.min,
-    currentFilter.max,
-    setRangePicker,
-    rangePicker,
-    rangeKey,
-  ]);
+  }, [currentFilter, rangePicker, rangeKey, setRangePicker]);
 
-  return {
-    currentFilter,
-    rangePicker,
-  };
+  return currentFilter;
 };

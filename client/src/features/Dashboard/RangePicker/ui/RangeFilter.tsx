@@ -1,5 +1,6 @@
-import RangePicker from "@features/Dashboard/RangePicker/ui/RangePicker";
-import { RangePickerTypes, RequestBodyKey } from "../model/types";
+import RangePicker from "./RangePicker";
+import type { RequestBodyKey } from "../model/types";
+import { RangePickerTypes } from "../model/types";
 import { useRangeFilter } from "../hooks/useRangeFilter";
 
 type RangeFilterBaseProps = {

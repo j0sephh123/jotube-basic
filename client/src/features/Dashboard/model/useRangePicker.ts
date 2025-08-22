@@ -1,12 +1,22 @@
 import { useMemo } from "react";
-import { useRangePickers } from "@app/providers/store/store-hooks";
-import { useDashboardContext } from "@features/Dashboard/model/useDashboardContext";
-import type { RangePickerConfig } from "../model/types";
-import { RangePickerTypes } from "../model/types";
+import { useStore } from "@/app/providers/store/store";
+import { useDashboardContext } from "./useDashboardContext";
+
+export enum RangePickerTypes {
+  PROCESSED = "processed",
+  DEFAULTS = "defaults",
+}
+
+type RangePickerConfig = {
+  values: ReadonlyArray<number>;
+  min: number;
+  max: number;
+  stepSize: number;
+};
 
 export const useRangePicker = (rangeKey: RangePickerTypes) => {
   const { setRequestBodyBatch } = useDashboardContext();
-  const { rangePickers, updateRangePickerValues } = useRangePickers();
+  const { rangePickers, updateRangePickerValues } = useStore();
   const config = rangePickers[rangeKey];
 
   const defaultConfig: RangePickerConfig = {

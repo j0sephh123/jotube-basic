@@ -1,5 +1,5 @@
-import type { PlaylistDetailsResponse } from "@/shared/api/generated/graphql";
-import { routes } from "@/shared/routes";
+import type { PlaylistDetailsResponse } from "@shared/api/generated/graphql";
+import { routes } from "@shared/routes";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 

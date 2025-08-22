@@ -1,7 +1,24 @@
 import { useState, useEffect } from "react";
-import { RangePickerProps } from "../model/types";
-import { useRangePicker } from "../hooks/useRangePicker";
-import Button from "./Button";
+import { useRangePicker } from "@features/Dashboard";
+import type { RangePickerTypes } from "@features/Dashboard";
+
+type RangePickerProps = {
+  rangeKey: RangePickerTypes;
+};
+
+type ButtonProps = {
+  onClick: () => void;
+  className?: string;
+  children: React.ReactNode;
+};
+
+function Button({ onClick, className = "", children }: ButtonProps) {
+  return (
+    <button onClick={onClick} className={`btn btn-sm btn-ghost ${className}`}>
+      {children}
+    </button>
+  );
+}
 
 export default function RangePicker({ rangeKey }: RangePickerProps) {
   const { safeValues, min, max, stepSize, handleRangeChange, handleReset } =
@@ -21,88 +38,56 @@ export default function RangePicker({ rangeKey }: RangePickerProps) {
 
   const handleMinChange = (value: string) => {
     setMinValue(value);
-    const numValue = parseInt(value, 10);
+    const numValue = Number(value);
     if (!isNaN(numValue) && numValue >= min && numValue <= max) {
-      const currentMax = maxValue ? parseInt(maxValue, 10) : max;
-      if (numValue <= currentMax) {
-        handleRangeChange([numValue, currentMax]);
+      const maxVal = maxValue ? Number(maxValue) : max;
+      if (numValue <= maxVal) {
+        handleRangeChange([numValue, maxVal]);
       }
     }
   };
 
   const handleMaxChange = (value: string) => {
     setMaxValue(value);
-    const numValue = parseInt(value, 10);
-    if (!isNaN(numValue) && numValue >= min && numValue <= max) {
-      const currentMin = parseInt(minValue, 10);
-      if (numValue >= currentMin) {
-        handleRangeChange([currentMin, numValue]);
+    if (value === "") {
+      const minVal = Number(minValue);
+      handleRangeChange([minVal, max]);
+    } else {
+      const numValue = Number(value);
+      if (!isNaN(numValue) && numValue >= min && numValue <= max) {
+        const minVal = Number(minValue);
+        if (numValue >= minVal) {
+          handleRangeChange([minVal, numValue]);
+        }
       }
-    } else if (value === "") {
-      const currentMin = parseInt(minValue, 10);
-      handleRangeChange([currentMin, max]);
     }
-  };
-
-  const handleResetClick = () => {
-    handleReset();
-    setMinValue(min.toString());
-    setMaxValue("");
-  };
-
-  const formatValue = (value: number) => {
-    if (value === max) {
-      return "∞";
-    }
-    return value.toString();
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <span className="text-sm font-medium">Range</span>
-        <Button
-          onClick={handleResetClick}
-          className="text-xs text-base-content/60 hover:text-base-content"
-        >
-          Reset
-        </Button>
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <div className="flex gap-2">
-          <div className="flex-1">
-            <label className="text-xs text-base-content/60">Min</label>
-            <input
-              type="number"
-              value={minValue}
-              onChange={(e) => handleMinChange(e.target.value)}
-              className="input input-sm input-bordered w-full"
-              min={min}
-              max={max}
-              step={stepSize}
-            />
-          </div>
-          <div className="flex-1">
-            <label className="text-xs text-base-content/60">Max</label>
-            <input
-              type="number"
-              value={maxValue}
-              onChange={(e) => handleMaxChange(e.target.value)}
-              className="input input-sm input-bordered w-full"
-              min={min}
-              max={max}
-              step={stepSize}
-              placeholder="∞"
-            />
-          </div>
-        </div>
-
-        <div className="flex justify-between text-xs text-base-content/60">
-          <span>{formatValue(safeValues[0] || min)}</span>
-          <span>{formatValue(safeValues[1] || max)}</span>
-        </div>
-      </div>
+    <div className="flex items-center gap-2">
+      <input
+        type="number"
+        value={minValue}
+        onChange={(e) => handleMinChange(e.target.value)}
+        min={min}
+        max={max}
+        step={stepSize}
+        className="input input-sm input-bordered w-20"
+      />
+      <span className="text-sm">-</span>
+      <input
+        type="number"
+        value={maxValue}
+        onChange={(e) => handleMaxChange(e.target.value)}
+        min={min}
+        max={max}
+        step={stepSize}
+        className="input input-sm input-bordered w-20"
+        placeholder={max.toString()}
+      />
+      <Button onClick={handleReset} className="btn-xs">
+        Reset
+      </Button>
     </div>
   );
 }
