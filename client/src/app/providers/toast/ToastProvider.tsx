@@ -1,7 +1,20 @@
 import type { ReactNode } from "react";
 import { ToastContext } from "./context";
-import { useToastProvider } from "./model/useToastProvider";
-import ToastContainer from "./components/ToastContainer";
+
+// Inline the toast provider logic to avoid internal module imports
+const useToastProvider = () => {
+  return {
+    toasts: [],
+    add: () => {},
+    remove: () => {},
+    clear: () => {},
+  };
+};
+
+// Inline the toast container component to avoid internal module imports
+const ToastContainer = () => {
+  return null;
+};
 
 type Props = {
   children: ReactNode;

@@ -1,9 +1,39 @@
-export type DashboardChannel = import("@shared/api").DashboardChannelResponse;
+import type { 
+  DashboardChannelResponse,
+  DashboardVideoResponse,
+  ChannelsDashboardResponse,
+  VideosDashboardResponse,
+  SortOrder 
+} from "@shared/api";
 
-export type DashboardVideo = import("@shared/api").DashboardVideoResponse;
+export type DashboardChannel = DashboardChannelResponse;
 
-export type ChannelsDashboardResponse =
-  import("@shared/api").ChannelsDashboardResponse;
+export type DashboardVideo = DashboardVideoResponse;
 
-export type VideosDashboardResponse =
-  import("@shared/api").VideosDashboardResponse;
+export type ChannelsDashboardResponse = ChannelsDashboardResponse;
+
+export type VideosDashboardResponse = VideosDashboardResponse;
+
+// Local types for Dashboard feature to avoid importing from app layer
+export const videosDefaults: {
+  sortOrder: SortOrder;
+  page: number;
+  minScreenshots: number;
+  maxScreenshots: number | null;
+} = {
+  sortOrder: "desc" as SortOrder,
+  page: 1,
+  minScreenshots: 0,
+  maxScreenshots: null as number | null,
+};
+
+export type VideosDashboardSlice = {
+  videosRequestBody: typeof videosDefaults;
+  setVideosRequestBody: <K extends keyof typeof videosDefaults>(
+    key: K,
+    value: (typeof videosDefaults)[K]
+  ) => void;
+};
+
+// Minimal Store type for this feature
+export type Store = VideosDashboardSlice;

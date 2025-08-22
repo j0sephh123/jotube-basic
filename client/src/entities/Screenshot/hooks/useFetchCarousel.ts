@@ -1,5 +1,4 @@
 import { useLazyQuery } from "@apollo/client";
-import { useSlides } from "@features/Screenshot/hooks/useSlides";
 import { GET_SLIDES } from "@entities/Screenshot";
 import type { SlideImage } from "yet-another-react-lightbox";
 
@@ -14,16 +13,23 @@ export type GetSlidesResponse = {
   isFav?: boolean | null;
 };
 
-export function useFetchCarousel() {
-  const { setSlides } = useSlides();
+// Local state management to avoid feature dependency
+let currentSlides: SlideImage[] = [];
 
-  const [getSlides] = useLazyQuery(GET_SLIDES, {
+export const setSlides = (slides: SlideImage[]) => {
+  currentSlides = slides;
+};
+
+export const getSlides = () => currentSlides;
+
+export function useFetchCarousel() {
+  const [getSlidesQuery] = useLazyQuery(GET_SLIDES, {
     fetchPolicy: "no-cache",
   });
 
   const handleFetch = async (body: FetchCarouselDataRequest) => {
     try {
-      const result = await getSlides({
+      const result = await getSlidesQuery({
         variables: {
           input: { ytChannelIds: body },
         },

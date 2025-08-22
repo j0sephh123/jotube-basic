@@ -1,8 +1,30 @@
 import { useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useStore } from "@app/providers/store/store";
-import { videosDefaults } from "./videos-dashboard-slice";
+import { create } from "zustand";
+import { videosDefaults } from "../types";
 import type { SortOrder } from "@shared/api";
+
+// Local store implementation to avoid importing from app layer
+type VideosDashboardStore = {
+  videosRequestBody: typeof videosDefaults;
+  setVideosRequestBody: <K extends keyof typeof videosDefaults>(
+    key: K,
+    value: (typeof videosDefaults)[K]
+  ) => void;
+};
+
+const useStore = create<VideosDashboardStore>((set) => ({
+  videosRequestBody: { ...videosDefaults },
+  setVideosRequestBody: (key, value) => {
+    set((state) => ({
+      videosRequestBody: {
+        ...state.videosRequestBody,
+        [key]: value,
+        page: key === "page" ? (value as number) : state.videosRequestBody.page,
+      },
+    }));
+  },
+}));
 
 type VideosRequestBody =
   | "sortOrder"

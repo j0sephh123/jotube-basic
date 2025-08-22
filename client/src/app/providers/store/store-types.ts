@@ -1,8 +1,15 @@
 import type { SlideImage } from "yet-another-react-lightbox";
 import type { ViewType } from "@features/Dashboard";
-import type { SidePanelSlice } from "@app/widgets/SidePanel";
 import type { PlaylistSlice } from "@features/Playlist";
 import type { SortOrder } from "@shared/api";
+
+// Local type definition to avoid importing from @app/widgets/SidePanel
+export type SidePanelSlice = {
+  isOpen: boolean;
+  toggle: () => void;
+  close: () => void;
+  open: () => void;
+};
 
 export type SlidesData = SlideImage[];
 
