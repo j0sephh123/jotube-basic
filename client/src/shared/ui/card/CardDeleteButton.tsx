@@ -1,13 +1,12 @@
 import { Trash2 } from "lucide-react";
-import { useDeleteUploads } from "@features/Upload/hooks/useUploadsDelete";
-import { useDialog } from "@shared/hooks/useDialog";
+import { useDialog } from "@shared/hooks";
 
 type CardDeleteButtonProps = {
   ytChannelId: string;
+  onDelete: (ytChannelId: string) => void;
 };
 
-function CardDeleteButton({ ytChannelId }: CardDeleteButtonProps) {
-  const deleteUploadsMutation = useDeleteUploads(() => {});
+function CardDeleteButton({ ytChannelId, onDelete }: CardDeleteButtonProps) {
   const dialogHook = useDialog();
 
   const handleDeleteClick = (e: React.MouseEvent) => {
@@ -21,10 +20,7 @@ function CardDeleteButton({ ytChannelId }: CardDeleteButtonProps) {
       cancelText: "Cancel",
       variant: "error",
       onYes: () => {
-        deleteUploadsMutation({
-          ytChannelId,
-          ytVideoIds: [],
-        });
+        onDelete(ytChannelId);
       },
     });
   };

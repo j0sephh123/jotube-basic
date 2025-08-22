@@ -1,27 +1,14 @@
-import { useChannelsDashboardQuery } from "@/features/Dashboard/api/useChannelsDashboardQuery";
-import useDownload from "@features/Upload/hooks/useDownload";
 import { Download } from "lucide-react";
 
 type CardDownloadButtonProps = {
   id: number;
+  ytChannelId: string;
+  onDownload: (ytChannelId: string) => void;
 };
 
-export default function CardDownloadButton({ id }: CardDownloadButtonProps) {
-  const { data } = useChannelsDashboardQuery();
-
-  const downloadMutation = useDownload();
-  const handleDownload = (id: number) => {
-    const channel = data?.channels.find(
-      (ch: { id: number; ytId: string }) => ch.id === id
-    );
-    if (!channel?.ytId) return;
-
-    downloadMutation.mutate([
-      {
-        downloadOption: 0,
-        ytChannelId: channel.ytId,
-      },
-    ]);
+export default function CardDownloadButton({ id, ytChannelId, onDownload }: CardDownloadButtonProps) {
+  const handleDownload = () => {
+    onDownload(ytChannelId);
   };
 
   return (

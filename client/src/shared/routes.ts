@@ -1,4 +1,4 @@
-import type { ViewType } from "@features/Dashboard";
+import type { ViewType } from "@shared/api/generated/graphql";
 
 export const routes = {
   home: () => "/",

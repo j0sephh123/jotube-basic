@@ -1,8 +1,12 @@
 import { Modal } from "@shared/ui";
-import { useZoom } from "@/app/providers/store/store";
 
-export default function ZoomModal() {
-  const { closeZoom, url, isVisible } = useZoom();
+type Props = {
+  isVisible: boolean;
+  url: string | null;
+  onClose: () => void;
+};
+
+export default function ZoomModal({ isVisible, url, onClose }: Props) {
 
   // const handleClose = () => {
   //   onClose();
@@ -14,7 +18,7 @@ export default function ZoomModal() {
   return (
     <Modal
       isModalVisible={isVisible}
-      onClose={closeZoom}
+      onClose={onClose}
       maxWidth="90vw"
       maxHeight="90vh"
     >
@@ -23,7 +27,7 @@ export default function ZoomModal() {
         src={url}
         alt="Zoomed screenshot"
         className="w-full h-full object-contain"
-        onClick={closeZoom}
+        onClick={onClose}
       />
     </Modal>
   );
