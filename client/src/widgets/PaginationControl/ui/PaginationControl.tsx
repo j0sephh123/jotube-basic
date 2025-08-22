@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useDashboardContext } from "@/features/Dashboard/model/useDashboardContext";
-import getPaginationRange from "@/widgets/PaginationControl/lib/getPaginationRange";
-import Button from "@/shared/ui/button";
+import { useDashboardContext } from "@features/Dashboard";
+import { getPaginationRange } from "@widgets/PaginationControl";
+import { Button } from "@shared/ui";
 
 type PaginationControlProps = {
   total: number;

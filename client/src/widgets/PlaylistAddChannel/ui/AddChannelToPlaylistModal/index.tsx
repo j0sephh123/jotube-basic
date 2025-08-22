@@ -1,18 +1,17 @@
 import { useState, useEffect, useRef } from "react";
-import { usePlaylist } from "@/app/providers/store/store";
-import { useGetChannel } from "@entities/Channel/model/useGetChannel";
-import { useChannelsDashboardQuery } from "@/features/Dashboard/api/useChannelsDashboardQuery";
-import { useClickOutside } from "@shared/lib/useClickOutside";
+import { usePlaylistModal } from "@features/Playlist";
+import { useGetChannel, useRefetchChannelMetadata } from "@entities/Channel";
+import { useChannelsDashboardQuery } from "@features/Dashboard";
+import { useClickOutside } from "@shared/lib";
 import { X } from "lucide-react";
-import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
-import { SelectPlaylistForm } from "@widgets/PlaylistAddChannel/ui/AddChannelToPlaylistModal/SelectPlaylistForm";
-import Title from "@widgets/PlaylistAddChannel/ui/AddChannelToPlaylistModal/Title";
+import { SelectPlaylistForm } from "./SelectPlaylistForm";
+import Title from "./Title";
 
 export const AddChannelToPlaylistModal = () => {
   const refetchChannelMetadata = useRefetchChannelMetadata();
   const { refetch } = useChannelsDashboardQuery();
   const { isModalOpen, ytChannelId, closePlaylistModal, resetFormState } =
-    usePlaylist();
+    usePlaylistModal();
   const { data: channel } = useGetChannel(ytChannelId);
   const modalRef = useRef<HTMLDivElement>(null);
 
