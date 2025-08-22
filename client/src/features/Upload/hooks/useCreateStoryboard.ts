@@ -1,14 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type {
-  DefaultError} from "@tanstack/react-query";
-import {
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
-import nestFetcher from "@/shared/api/rest/nestFetcher";
-import { useRefetchChannelUploads } from "@features/Upload/hooks/useUploadsList";
-import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
-import { useRefetchQueue } from "@shared/hooks/useQueue";
+import type { DefaultError } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import nestFetcher from "@shared/api/rest/nestFetcher";
+import { useRefetchChannelUploads } from "@features/Upload";
+import { useRefetchChannelMetadata } from "@entities/Channel";
+import { useRefetchQueue } from "@shared/hooks";
 
 type Body = {
   ytVideoId: string;

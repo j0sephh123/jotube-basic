@@ -1,12 +1,13 @@
-import Wrapper from "./primitive/Wrapper";
-import useSubmitMutation from "../hooks/useSubmitMutation";
-import ScreenshotItem from "./primitive/ScreenshotItem";
-import ArrowButton from "./primitive/ArrowButton";
-import Header from "./primitive/Header";
-import { getPublicImgUrl } from "@/shared/utils/image";
-import { useNavigatorState } from "../hooks/useNavigatorState";
-import ScreenshotControlWrapper from "./primitive/ScreenshotControlWrapper";
-import { ImageNavigatorProvider } from "../context/ImageNavigatorContext";
+import {
+  Wrapper,
+  ScreenshotItem,
+  ArrowButton,
+  Header,
+  ScreenshotControlWrapper,
+} from "./index";
+import { useSubmitMutation, useNavigatorState } from "../hooks";
+import { getPublicImgUrl } from "@shared/utils";
+import { ImageNavigatorProvider } from "../context";
 import { useEffect } from "react";
 
 function ImageNavigatorPageContent() {

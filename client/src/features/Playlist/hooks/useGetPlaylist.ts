@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { GET_PLAYLIST_DETAILS } from "@entities/Playlist/api/playlist.gql";
-import type { GetPlaylistDetailsQuery } from "@/shared/api/generated/graphql";
+import type { GetPlaylistDetailsQuery } from "@shared/api";
 import { useParams } from "react-router-dom";
 
 export const useGetPlaylist = () => {

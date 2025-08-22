@@ -1,5 +1,5 @@
-import { useDeleteUploadsMutation } from "@/shared/api/generated/graphql";
-import { useChannelsDashboardQuery } from "@/features/Dashboard/api/useChannelsDashboardQuery";
+import { useDeleteUploadsMutation } from "@shared/api";
+import { useChannelsDashboardQuery } from "@features/Dashboard";
 
 export function useDeleteUploads(onSuccess: () => void) {
   const { refetch } = useChannelsDashboardQuery();

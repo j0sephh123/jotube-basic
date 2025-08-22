@@ -1,8 +1,10 @@
-import useDownload from "@features/Upload/hooks/useDownload";
-import { useDeleteUploads } from "@features/Upload/hooks/useUploadsDelete";
-import { useQueue } from "@shared/hooks/useQueue";
-import { useSavedUploads } from "@features/Upload/hooks/useSavedUploads";
-import Card from "@features/Upload/components/Card";
+import {
+  useDownload,
+  useDeleteUploads,
+  useSavedUploads,
+} from "@features/Upload";
+import { useQueue } from "@shared/hooks";
+import { Card } from "@features/Upload";
 
 export default function SavedUploads({
   ytChannelId,

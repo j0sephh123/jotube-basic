@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "@shared/utils/globals";
+import { API_BASE_URL } from "@shared/utils";
 
 type Props = {
   url: string;

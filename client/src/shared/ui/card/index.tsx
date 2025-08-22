@@ -89,3 +89,4 @@ Card.DownloadButton = CardDownloadButton;
 Card.CreatedAt = CardCreatedAt;
 
 export default Card;
+export { formatLastSync, getLastSyncColor } from "./helper";

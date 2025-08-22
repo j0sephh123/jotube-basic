@@ -1,7 +1,6 @@
-import GridPageWrapper from "@/features/Screenshot/components/GridPageWrapper";
 import { useParams } from "react-router-dom";
-import { useScreenshotsByMonth } from "@/features/Screenshot/hooks/useScreenshotsByMonth";
-import InfoCard from "@/shared/ui/InfoCard";
+import { GridPageWrapper, useScreenshotsByMonth } from "@features/Screenshot";
+import { InfoCard } from "@shared/ui";
 
 export default function ScreenshotsByMonth(): JSX.Element {
   const { month } = useParams();

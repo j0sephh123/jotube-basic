@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getDistinctChannelIds } from "@shared/utils/utils";
+import { getDistinctChannelIds } from "@shared/utils";
 import nestFetcher from "@shared/api/rest/nestFetcher";
 export type QueueItem = {
   id: string;

@@ -1,7 +1,7 @@
-import type { SortOrder } from "@/shared/api/generated/graphql";
-import { useUploadsListQuery } from "@/shared/api/generated/graphql";
+import type { SortOrder } from "@shared/api";
+import { useUploadsListQuery } from "@shared/api";
 import { useCallback, useMemo } from "react";
-import { useQueue } from "@shared/hooks/useQueue";
+import { useQueue } from "@shared/hooks";
 
 export default function useUploadsList(
   ytChannelId: string,

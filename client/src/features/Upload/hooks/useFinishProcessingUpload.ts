@@ -1,4 +1,4 @@
-import { useFinishProcessingUploadMutation } from "@/shared/api/generated/graphql";
+import { useFinishProcessingUploadMutation } from "@shared/api";
 
 export function useFinishProcessingUpload(onSuccess?: () => void) {
   const [finishProcessingUploadMutation] = useFinishProcessingUploadMutation({

@@ -1,4 +1,4 @@
-import nestFetcher from "@/shared/api/rest/nestFetcher";
+import nestFetcher from "@shared/api/rest/nestFetcher";
 import { useMutation } from "@tanstack/react-query";
 import type { ImageNavigatorRequest, ImageNavigatorResponse } from "../types";
 

@@ -1,8 +1,8 @@
 import type { SlideImage } from "yet-another-react-lightbox";
-import type { ViewType } from "@/features/Dashboard/lib/useDashboardParams";
-import type { SidePanelSlice } from "@/widgets/SidePanel/model/side-panel-slice";
-import type { PlaylistSlice } from "@features/Playlist/store";
-import type { SortOrder } from "@/shared/api/generated/graphql";
+import type { ViewType } from "@features/Dashboard";
+import type { SidePanelSlice } from "@app/widgets/SidePanel";
+import type { PlaylistSlice } from "@features/Playlist";
+import type { SortOrder } from "@shared/api";
 
 export type SlidesData = SlideImage[];
 

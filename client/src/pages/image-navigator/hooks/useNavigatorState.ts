@@ -1,4 +1,4 @@
-import { useImageNavigator } from "../context/ImageNavigatorContext";
+import { useImageNavigator } from "../context";
 
 export function useNavigatorState() {
   const {

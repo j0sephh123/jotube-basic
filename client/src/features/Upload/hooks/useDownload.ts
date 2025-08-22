@@ -1,5 +1,4 @@
- 
-import nestFetcher from "@/shared/api/rest/nestFetcher";
+import nestFetcher from "@shared/api/rest/nestFetcher";
 import { useMutation } from "@tanstack/react-query";
 
 export default function useDownload(onSuccess?: () => void) {

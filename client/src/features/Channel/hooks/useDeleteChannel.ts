@@ -1,4 +1,4 @@
-import { useDeleteChannelMutation } from "@/shared/api/generated/graphql";
+import { useDeleteChannelMutation } from "@shared/api";
 
 export default function useDeleteChannel() {
   const [deleteChannelMutation] = useDeleteChannelMutation();

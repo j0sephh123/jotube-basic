@@ -1,4 +1,4 @@
-import { useGetThumbnailByVideoIdQuery } from "@/shared/api/generated/graphql";
+import { useGetThumbnailByVideoIdQuery } from "@shared/api";
 
 export function useThumbnailByVideoId(ytVideoId: string) {
   const { data, loading, error } = useGetThumbnailByVideoIdQuery({

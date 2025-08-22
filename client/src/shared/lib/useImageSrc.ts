@@ -1,4 +1,4 @@
-import { generateChannelAvatarUrl } from "@shared/utils/image";
+import { generateChannelAvatarUrl } from "@shared/utils";
 import { useState, useEffect } from "react";
 
 const placeholderAvatar =

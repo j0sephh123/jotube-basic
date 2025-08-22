@@ -1,7 +1,7 @@
 import {
   useGetChannelMetadataQuery,
   useGetChannelMetadataLazyQuery,
-} from "@/shared/api/generated/graphql";
+} from "@shared/api";
 import { useCallback } from "react";
 
 export function useChannelMetadataQuery(ytChannelId: string | undefined) {

@@ -1,4 +1,4 @@
-import nestFetcher from "@/shared/api/rest/nestFetcher";
+import nestFetcher from "@shared/api/rest/nestFetcher";
 import { useQuery } from "@tanstack/react-query";
 
 type Screenshot = {
@@ -9,7 +9,7 @@ type Screenshot = {
   isFav: boolean;
   ytChannelId: string;
   ytVideoId: string;
-}
+};
 
 export function useScreenshotsByDate(
   month: string | undefined,

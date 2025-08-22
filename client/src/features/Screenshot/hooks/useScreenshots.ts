@@ -1,4 +1,4 @@
-import { useGetScreenshotsQuery } from "@/shared/api/generated/graphql";
+import { useGetScreenshotsQuery } from "@shared/api";
 
 export function useScreenshots() {
   const { data, loading, error } = useGetScreenshotsQuery();

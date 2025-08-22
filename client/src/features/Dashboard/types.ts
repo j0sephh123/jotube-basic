@@ -1,11 +1,9 @@
-export type DashboardChannel =
-  import("@/shared/api/generated/graphql").DashboardChannelResponse;
+export type DashboardChannel = import("@shared/api").DashboardChannelResponse;
 
-export type DashboardVideo =
-  import("@/shared/api/generated/graphql").DashboardVideoResponse;
+export type DashboardVideo = import("@shared/api").DashboardVideoResponse;
 
 export type ChannelsDashboardResponse =
-  import("@/shared/api/generated/graphql").ChannelsDashboardResponse;
+  import("@shared/api").ChannelsDashboardResponse;
 
 export type VideosDashboardResponse =
-  import("@/shared/api/generated/graphql").VideosDashboardResponse;
+  import("@shared/api").VideosDashboardResponse;

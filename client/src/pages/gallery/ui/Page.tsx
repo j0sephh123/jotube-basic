@@ -1,6 +1,6 @@
 import { ConstructionIcon } from "lucide-react";
-import { useTypedChannelYtId } from "@/features/Dashboard/lib/useDashboardParams";
-import { useFetchChannelScreenshots } from "@/features/Screenshot/hooks/useFetchChannelScreenshots";
+import { useTypedChannelYtId } from "@features/Dashboard";
+import { useFetchChannelScreenshots } from "@features/Screenshot";
 
 export default function GalleryPage() {
   const ytChannelId = useTypedChannelYtId();

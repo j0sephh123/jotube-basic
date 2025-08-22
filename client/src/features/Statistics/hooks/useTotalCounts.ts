@@ -1,4 +1,4 @@
-import { useGetStatisticsCountsQuery } from "@/shared/api/generated/graphql";
+import { useGetStatisticsCountsQuery } from "@shared/api";
 
 export function useTotalCounts() {
   const { data, loading, error } = useGetStatisticsCountsQuery();

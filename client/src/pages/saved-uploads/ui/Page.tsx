@@ -1,5 +1,5 @@
-import SavedUploads from "@/features/Upload/components/SavedUploads";
-import { useTypedChannelYtId } from "@/features/Dashboard/lib/useDashboardParams";
+import { SavedUploads } from "@features/Upload";
+import { useTypedChannelYtId } from "@features/Dashboard";
 
 export default function SavedUploadsPage() {
   const ytChannelId = useTypedChannelYtId();

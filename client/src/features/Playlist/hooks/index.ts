@@ -5,3 +5,4 @@ export { useUpdatePlaylist } from "@features/Playlist/hooks/useUpdatePlaylist";
 export { useDeletePlaylist } from "@features/Playlist/hooks/useDeletePlaylist";
 export { useUpdateChannelPlaylist } from "@features/Playlist/hooks/useUpdateChannelPlaylist";
 export { usePlaylistModal } from "@features/Playlist/hooks/usePlaylistModal";
+export { usePlaylist } from "@features/Playlist/hooks/usePlaylist";

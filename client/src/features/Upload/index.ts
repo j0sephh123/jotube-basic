@@ -16,3 +16,6 @@ export { default as FetchUploadsButton } from "./components/FetchUploadsButton";
 export { default as DownloadAll } from "./components/DownloadAll";
 export { default as SaveAll } from "./components/SaveAll";
 export { default as RemoveAll } from "./components/RemoveAll";
+export { default as DefaultUploadCard } from "./components/DefaultUploadCard";
+export { default as SavedUploads } from "./components/SavedUploads";
+export { default as Card } from "./components/Card";

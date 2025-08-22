@@ -1,6 +1,5 @@
-import GridPageWrapper from "@/features/Screenshot/components/GridPageWrapper";
-import MonthCountCard from "@/entities/Screenshot/ui/MonthCountCard";
-import { useScreenshots } from "@/features/Screenshot/hooks/useScreenshots";
+import { GridPageWrapper, useScreenshots } from "@features/Screenshot";
+import { MonthCountCard } from "@entities/Screenshot";
 
 export default function Page(): JSX.Element {
   const { data = {}, isLoading } = useScreenshots();

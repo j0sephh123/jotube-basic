@@ -3,6 +3,7 @@ export {
   useDashboardParams,
   DashboardType,
   ViewType,
+  useTypedChannelYtId,
 } from "./lib/useDashboardParams";
 export { useDashboardContext } from "./model/useDashboardContext";
 export { useVideosDashboardContext } from "./model/useVideosDashboardContext";
@@ -19,3 +20,4 @@ export type { RequestBody } from "./model/useDashboardContext";
 export { useChannelsDashboardQuery } from "./api/useChannelsDashboardQuery";
 export { useVideosDashboardQuery } from "./api/useVideosDashboardQuery";
 export { default as useTitleClick } from "./lib/useTitleClick";
+export { default as useFetchDashboard } from "./lib/useFetchDashboard";

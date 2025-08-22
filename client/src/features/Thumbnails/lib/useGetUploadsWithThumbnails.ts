@@ -1,4 +1,4 @@
-import { useUploadsWithThumbnailsLazyQuery } from "@/shared/api/generated/graphql";
+import { useUploadsWithThumbnailsLazyQuery } from "@shared/api";
 
 export function useGetUploadsWithThumbnails() {
   const [getUploadsWithThumbnails, { data, loading, error }] =

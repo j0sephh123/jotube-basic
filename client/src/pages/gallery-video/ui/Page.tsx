@@ -1,4 +1,4 @@
-import { useTypedChannelYtId } from "@/features/Dashboard/lib/useDashboardParams";
+import { useTypedChannelYtId } from "@features/Dashboard";
 import { useState, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 
@@ -9,16 +9,15 @@ type ScreenshotGroup = {
   timeSpan: number;
 };
 
-import { useDialog } from "@shared/hooks/useDialog";
-import type {
-  ChannelScreenshot} from "@features/Screenshot/hooks/useFetchChannelScreenshots";
+import { useDialog } from "@shared/hooks";
+import type { ChannelScreenshot } from "@features/Screenshot";
 import {
   useFetchChannelScreenshots,
-} from "@features/Screenshot/hooks/useFetchChannelScreenshots";
-import { useDeleteChannelScreenshot } from "@features/Screenshot/hooks/useDeleteChannelScreenshot";
-import { useUpdateChannelScreenshot } from "@features/Screenshot/hooks/useUpdateChannelScreenshot";
-import ScreenshotItem from "@features/Gallery/components/GalleryItem";
-import { useZoom } from "@/app/providers/store/store";
+  useDeleteChannelScreenshot,
+  useUpdateChannelScreenshot,
+  useZoom,
+} from "@features/Screenshot";
+import { GalleryItem } from "@features/Gallery";
 
 const TEMPORAL_THRESHOLD = 3;
 
@@ -210,7 +209,7 @@ export default function GalleryVideoPage() {
                 );
 
                 return (
-                  <ScreenshotItem
+                  <GalleryItem
                     key={screenshot.id}
                     screenshot={screenshot}
                     isFav={screenshot.isFav ?? undefined}

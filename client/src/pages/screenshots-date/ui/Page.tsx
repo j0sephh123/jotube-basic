@@ -1,10 +1,12 @@
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import SimpleCardWithImage from "@/entities/Screenshot/ui/SimpleCardWithImage";
-import { useScreenshotsByDate } from "@/features/Screenshot/hooks/useScreenshotsByDate";
-import { useDeleteScreenshot } from "@/features/Screenshot/hooks/useDeleteScreenshot";
+import { SimpleCardWithImage } from "@entities/Screenshot";
+import {
+  useScreenshotsByDate,
+  useDeleteScreenshot,
+} from "@features/Screenshot";
 import { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { routes } from "@/shared/routes";
+import { routes } from "@shared/routes";
 
 type Screenshot = {
   id: number;

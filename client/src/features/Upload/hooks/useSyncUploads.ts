@@ -1,6 +1,6 @@
-import { useSyncUploadsMutation } from "@/shared/api/generated/graphql";
-import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
-import { useRefetchChannelUploads } from "@features/Upload/hooks/useUploadsList";
+import { useSyncUploadsMutation } from "@shared/api";
+import { useRefetchChannelMetadata } from "@entities/Channel";
+import { useRefetchChannelUploads } from "@features/Upload";
 
 export type SyncUploadsRequest = {
   ytChannelId: string;
