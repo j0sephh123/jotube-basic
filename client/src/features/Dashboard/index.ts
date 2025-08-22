@@ -7,7 +7,11 @@ export {
 export { useDashboardContext } from "./model/useDashboardContext";
 export { useVideosDashboardContext } from "./model/useVideosDashboardContext";
 export { useRangePicker, RangePickerTypes } from "./model/useRangePicker";
-export { CommonRangeFilterPopover } from "./RangePicker";
+export {
+  CommonRangeFilterPopover,
+  RangeFilterPopover,
+  DefaultsRangeFilterPopover,
+} from "./RangePicker";
 export { useVideosRangePickers } from "./hooks/useVideosRangePickers";
 export { useVideosDashboard } from "./hooks/useVideosDashboard";
 export { useSidePanel } from "./hooks/useSidePanel";

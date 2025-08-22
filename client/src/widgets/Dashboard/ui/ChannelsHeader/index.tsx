@@ -1,15 +1,15 @@
-import RangeFilterPopover from "@features/Dashboard/RangePicker/ui/RangeFilterPopover";
-import DefaultsRangeFilterPopover from "@features/Dashboard/RangePicker/ui/DefaultsRangeFilterPopover";
-import ViewTypeToggle from "@widgets/Dashboard/ui/ViewTypeToggle";
-import PaginationControl from "@widgets/PaginationControl/ui/PaginationControl";
-import { useDashboardContext } from "@features/Dashboard/model/useDashboardContext";
-import { useDashboardParams } from "@features/Dashboard/lib/useDashboardParams";
-import { Button } from "@shared/ui/button";
-import { useChannelsDashboardQuery } from "@features/Dashboard/api/useChannelsDashboardQuery";
+import {
+  RangeFilterPopover,
+  DefaultsRangeFilterPopover,
+  useDashboardContext,
+  useChannelsDashboardQuery,
+} from "@features/Dashboard";
+import { ViewTypeToggle } from "@widgets/Dashboard";
+import { PaginationControl } from "@widgets/PaginationControl";
+import { Button } from "@shared/ui";
 
 export default function ChannelsHeader() {
   const { requestBody, setRequestBodyBatch } = useDashboardContext();
-  const { type } = useDashboardParams();
   const { data } = useChannelsDashboardQuery(requestBody);
 
   const handleClearFilters = () => {
