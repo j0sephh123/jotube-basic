@@ -1,4 +1,4 @@
-import { useGetUploadsWithThumbnails } from "@widgets/Thumbnails/lib/useGetUploadsWithThumbnails";
+import { useGetUploadsWithThumbnails } from "@/features/Thumbnails/lib/useGetUploadsWithThumbnails";
 import { useStore } from "@/app/providers/store/store";
 
 export default function useViewThumbnails(id: number) {

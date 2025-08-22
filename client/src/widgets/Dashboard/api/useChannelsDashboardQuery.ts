@@ -53,6 +53,7 @@ export function useChannelsDashboardQuery() {
   };
 }
 
+// TODO remove
 export function useRefetchNoUploadsView() {
   const queryClient = useQueryClient();
   const { requestBody } = useStore();
@@ -69,6 +70,7 @@ export function useRefetchNoUploadsView() {
   }, [queryClient, requestBody, params.viewType]);
 }
 
+// TODO remove
 export function useRefetchGroupedThumbnails() {
   const queryClient = useQueryClient();
   const { requestBody } = useStore();

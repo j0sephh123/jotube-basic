@@ -3,17 +3,16 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
 // --- slice creators ---
-import { thumbnailsProcessingSlice } from "@widgets/Thumbnails/model/thumbnails-processing-slice";
+import { thumbnailsProcessingSlice } from "@/features/Thumbnails/model/thumbnails-processing-slice";
 import { createDashboardSlice } from "@widgets/Dashboard/model/dashboard-slice";
 import { createVideosDashboardSlice } from "@widgets/Dashboard/model/videos-dashboard-slice";
 import {
   createSidePanelSlice,
   SidePanelSlice,
 } from "@/widgets/SidePanel/model/side-panel-slice";
-import { createPlaylistSlice, PlaylistSlice } from "@features/Playlist/store";
 import { createRangePickersSlice } from "@widgets/Dashboard/model/range-picker-slice";
 import { createVideosRangePickersSlice } from "@widgets/Dashboard/model/videos-range-picker-slice";
-import { createSlidesSlice } from "@widgets/Thumbnails/model/slides-slice";
+import { createSlidesSlice } from "@/features/Thumbnails/model/slides-slice";
 import { createStoryboardProcessingSlice } from "@/features/Storyboard/model/storyboard-processing-slice";
 import { createZoomSlice } from "@/shared/model/zoom-slice";
 
@@ -29,6 +28,10 @@ import type {
   VideosRangePickersSlice,
   ZoomSlice,
 } from "@/app/providers/store/store-types";
+import {
+  createPlaylistSlice,
+  PlaylistSlice,
+} from "@/features/Playlist/model/playlist-slice";
 
 // ---- Store ----------------------------------------------------
 export const useStore = create<StoreType>()(

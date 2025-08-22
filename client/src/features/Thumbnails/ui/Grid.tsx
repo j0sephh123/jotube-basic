@@ -1,11 +1,11 @@
 import { useThumbnailsSlice, useZoom } from "@/app/providers/store/store";
-import ThumbnailGridCell from "@widgets/Thumbnails/ui/ThumbnailGridCell";
+import ThumbnailGridCell from "@/features/Thumbnails/ui/ThumbnailGridCell";
 import { generateThumbnailUrl } from "@shared/utils/image";
 import {
   COLUMNS,
   GRID_DATA,
   SPACING,
-} from "@widgets/Thumbnails/utils/constants";
+} from "@/features/Thumbnails/utils/constants";
 
 export default function Grid(): JSX.Element {
   const {

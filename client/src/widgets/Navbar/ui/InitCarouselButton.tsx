@@ -1,5 +1,5 @@
 import { useTotalCounts } from "@features/Statistics/hooks/useTotalCounts";
-import useViewScreenshots from "@widgets/Thumbnails/lib/useViewScreenshots";
+import useViewScreenshots from "@/features/Thumbnails/lib/useViewScreenshots";
 import { Loader, PlayCircle } from "lucide-react";
 import IconButton from "@shared/ui/icons/IconButton";
 

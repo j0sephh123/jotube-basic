@@ -1,7 +1,7 @@
 import { useThumbnailsSlice, useZoom } from "@/app/providers/store/store";
-import useSubmit from "@widgets/Thumbnails/lib/useSubmit";
-import useThumbnailsCount from "@widgets/Thumbnails/lib/useThumbnailsCount";
-import usePaginate from "@widgets/Thumbnails/lib/usePaginate";
+import useSubmit from "@/features/Thumbnails/lib/useSubmit";
+import useThumbnailsCount from "@/features/Thumbnails/lib/useThumbnailsCount";
+import usePaginate from "@/features/Thumbnails/lib/usePaginate";
 
 export default function useHandleKeyDown() {
   const { handlePrevious, handleNext } = usePaginate();

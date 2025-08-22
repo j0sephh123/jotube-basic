@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import TheCarousel from "@features/Screenshot/components/TheCarousel";
 import { DialogProvider } from "@shared/ui/dialog/DialogProvider";
-import ThumbnailsProcessing from "@/widgets/Thumbnails/ui";
+import ThumbnailsProcessing from "@/features/Thumbnails/ui";
 import ZoomModal from "@shared/ui/ZoomModal";
 import StoryboardProcessing from "@features/Storyboard/StoryboardProcessing";
 import CreateChannel from "@features/CreateChannel";

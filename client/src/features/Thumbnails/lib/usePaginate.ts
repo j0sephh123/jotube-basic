@@ -1,11 +1,11 @@
-import useThumbnailsCount from "@widgets/Thumbnails/lib/useThumbnailsCount";
 import { useThumbnailsSlice } from "@/app/providers/store/store";
+import useThumbnailsCount from "@/features/Thumbnails/lib/useThumbnailsCount";
 import { useDialog } from "@shared/hooks/useDialog";
-import useSubmit from "@widgets/Thumbnails/lib/useSubmit";
+import useSubmit from "@/features/Thumbnails/lib/useSubmit";
 
-export default function useHandleNext() {
-  const thumbnailsCount = useThumbnailsCount();
+export default function usePaginate() {
   const { currentIndex, setCurrentIndex } = useThumbnailsSlice();
+  const thumbnailsCount = useThumbnailsCount();
   const dialogHook = useDialog();
   const handleSubmit = useSubmit();
 
@@ -22,7 +22,11 @@ export default function useHandleNext() {
     confirm = () => console.log("Dialog not available");
   }
 
-  return () => {
+  const handlePrevious = () => {
+    setCurrentIndex(currentIndex - 1);
+  };
+
+  const handleNext = () => {
     if (thumbnailsCount === 0 || currentIndex < thumbnailsCount - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
@@ -40,4 +44,6 @@ export default function useHandleNext() {
       }
     }
   };
+
+  return { handlePrevious, handleNext };
 }

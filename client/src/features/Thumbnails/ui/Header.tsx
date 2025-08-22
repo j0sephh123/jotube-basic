@@ -1,6 +1,6 @@
 import { useThumbnailsSlice } from "@/app/providers/store/store";
-import SmoothProgressBar from "@widgets/Thumbnails/ui/SmoothProgressBar";
-import useThumbnailsCount from "@widgets/Thumbnails/lib/useThumbnailsCount";
+import SmoothProgressBar from "@/features/Thumbnails/ui/SmoothProgressBar";
+import useThumbnailsCount from "@/features/Thumbnails/lib/useThumbnailsCount";
 
 export default function Header() {
   const { metadata, currentIndex } = useThumbnailsSlice();

@@ -2,7 +2,7 @@ import { useCreateChannelMutation, ChannelMessage } from "@/shared/api/generated
 
 type Props = {
   onCreated: (message: string) => void;
-  onAlreadyExists: (message: string, ytChannelId: string) => void;
+  onAlreadyExists: (ytChannelId: string) => void;
   onInvalidVideoId: (message: string) => void;
   onFailedToCreate: (message: string) => void;
 };
@@ -27,7 +27,7 @@ export default function useCreateChannel({
           onCreated(messages[message]);
           return;
         case ChannelMessage.AlreadyExists:
-          onAlreadyExists(messages[message], ytChannelId as string);
+          onAlreadyExists(ytChannelId as string);
           return;
         case ChannelMessage.InvalidVideoId:
           onInvalidVideoId(messages[message]);

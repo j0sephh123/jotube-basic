@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { useThumbnailsSlice } from "@/app/providers/store/store";
-import { generateMainThumbnailUrl } from "@widgets/Thumbnails/utils/generateMainThumbnailUrl";
+import { generateMainThumbnailUrl } from "@/features/Thumbnails/utils/generateMainThumbnailUrl";
 
 const ThumbnailImage = memo(() => {
   const { metadata, currentIndex } = useThumbnailsSlice();

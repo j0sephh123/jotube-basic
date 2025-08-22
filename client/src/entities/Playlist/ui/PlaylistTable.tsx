@@ -1,14 +1,17 @@
 import { useState, useMemo } from "react";
-import { PlaylistDetailsResponse, SortOrder } from "@/shared/api/generated/graphql";
-import ActionsCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/ActionsCell";
-import GalleryCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/GalleryCell";
-import SavedCountCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/SavedCountCell";
-import ScreenshotCountCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/ScreenshotCountCell";
-import ThumbnailCountCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/ThumbnailCountCell";
-import VideoCountCell from "@/features/Playlist/components/PlaylistDetailsPage/cells/VideoCountCell";
+import {
+  PlaylistDetailsResponse,
+  SortOrder,
+} from "@/shared/api/generated/graphql";
+import ActionsCell from "@/features/Playlist/ui/PlaylistDetailsPage/cells/ActionsCell";
+import GalleryCell from "@/features/Playlist/ui/PlaylistDetailsPage/cells/GalleryCell";
+import SavedCountCell from "@/features/Playlist/ui/PlaylistDetailsPage/cells/SavedCountCell";
+import ScreenshotCountCell from "@/features/Playlist/ui/PlaylistDetailsPage/cells/ScreenshotCountCell";
+import ThumbnailCountCell from "@/features/Playlist/ui/PlaylistDetailsPage/cells/ThumbnailCountCell";
+import VideoCountCell from "@/features/Playlist/ui/PlaylistDetailsPage/cells/VideoCountCell";
 import TableHeader from "@/entities/Playlist/ui/PlaylistTableHeader";
 import TableRow from "@/entities/Playlist/ui/PlaylistTableRow";
-import { useRemoveFromPlaylist } from "@/features/Playlist/components/PlaylistDetailsPage/useRemoveFromPlaylist";
+import { useRemoveFromPlaylist } from "@/features/Playlist/ui/PlaylistDetailsPage/useRemoveFromPlaylist";
 import { useRefetchPlaylist } from "@/features/Playlist/hooks/useGetPlaylist";
 import TitleCell from "./TitleCell";
 

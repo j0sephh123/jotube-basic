@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import useViewScreenshots from "@widgets/Thumbnails/lib/useViewScreenshots";
+import useViewScreenshots from "@/features/Thumbnails/lib/useViewScreenshots";
 import { routes } from "@/shared/routes";
 import useViewThumbnails from "@shared/hooks/useViewThumbnails";
 import { Fragment } from "react";
