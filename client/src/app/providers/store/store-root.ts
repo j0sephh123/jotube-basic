@@ -6,7 +6,7 @@ import { createZoomSlice } from "./zoom-slice";
 
 import type { Store as StoreType } from "./store-types";
 
-export const useStore = create<StoreType>()((set, get) => ({
+export const useStore = create<StoreType>()((set, _get) => ({
   ...createSidePanelSlice(set),
   ...createZoomSlice(set),
 }));

@@ -1,8 +1,7 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
-import { API_BASE_URL } from "@shared/utils/globals";
 
 const httpLink = createHttpLink({
-  uri: `${API_BASE_URL}/graphql`,
+  uri: `${import.meta.env.VITE_VIDEO_SERVICE_URL}/graphql`,
 });
 
 export const apolloClient = new ApolloClient({

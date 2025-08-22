@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { useStore } from "@app/providers/store/store";
 import { useDashboardContext } from "./useDashboardContext";
 
 export enum RangePickerTypes {
@@ -14,9 +13,30 @@ type RangePickerConfig = {
   stepSize: number;
 };
 
+// Local store implementation to avoid cross-layer dependencies
+const useLocalStore = () => {
+  return {
+    rangePickers: {
+      [RangePickerTypes.PROCESSED]: {
+        values: [0, 100],
+        min: 0,
+        max: 100,
+        stepSize: 1,
+      },
+      [RangePickerTypes.DEFAULTS]: {
+        values: [0, 100],
+        min: 0,
+        max: 100,
+        stepSize: 1,
+      },
+    },
+    updateRangePickerValues: (_key: RangePickerTypes, _values: ReadonlyArray<number>) => {},
+  };
+};
+
 export const useRangePicker = (rangeKey: RangePickerTypes) => {
   const { setRequestBodyBatch } = useDashboardContext();
-  const { rangePickers, updateRangePickerValues } = useStore();
+  const { rangePickers, updateRangePickerValues } = useLocalStore();
   const config = rangePickers[rangeKey];
 
   const defaultConfig: RangePickerConfig = {

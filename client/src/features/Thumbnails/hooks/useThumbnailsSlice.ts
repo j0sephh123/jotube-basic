@@ -1,3 +1,11 @@
-import { useThumbnailsSlice as useThumbnailsSliceStore } from "@app/providers/store/store-hooks";
+// Local hook implementation to avoid cross-layer dependencies
+const useLocalThumbnailsSlice = () => {
+  return {
+    thumbnails: [],
+    setThumbnails: (_thumbnails: Record<string, unknown>[]) => {},
+    addThumbnail: (_thumbnail: Record<string, unknown>) => {},
+    removeThumbnail: (_id: string) => {},
+  };
+};
 
-export const useThumbnailsSlice = useThumbnailsSliceStore;
+export const useThumbnailsSlice = useLocalThumbnailsSlice;

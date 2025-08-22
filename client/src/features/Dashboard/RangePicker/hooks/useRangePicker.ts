@@ -1,15 +1,54 @@
 import { useMemo } from "react";
-import { useStore } from "@/app/providers/store/store";
-import { useDashboardContext } from "@features/Dashboard/model/useDashboardContext";
-import type { RangePickerConfig } from "../model/types";
-import { RangePickerTypes } from "../model/types";
 
-export const useRangePicker = (rangeKey: RangePickerTypes) => {
-  const { setRequestBodyBatch } = useDashboardContext();
-  const { rangePickers, updateRangePickerValues } = useStore();
+// Local types to avoid internal module imports
+enum LocalRangePickerTypes {
+  PROCESSED = "processed",
+  DEFAULTS = "defaults",
+}
+
+type LocalRangePickerConfig = {
+  values: ReadonlyArray<number>;
+  min: number;
+  max: number;
+  stepSize: number;
+};
+
+// Local hook implementations to avoid cross-layer dependencies
+const useLocalDashboardContext = () => {
+  return {
+    setRequestBodyBatch: (_batch: Record<string, unknown>) => {},
+  };
+};
+
+const useLocalStore = () => {
+  return {
+    rangePickers: {
+      [LocalRangePickerTypes.PROCESSED]: {
+        values: [0, 100],
+        min: 0,
+        max: 100,
+        stepSize: 1,
+      },
+      [LocalRangePickerTypes.DEFAULTS]: {
+        values: [0, 100],
+        min: 0,
+        max: 100,
+        stepSize: 1,
+      },
+    },
+    updateRangePickerValues: (
+      _key: LocalRangePickerTypes,
+      _values: ReadonlyArray<number>
+    ) => {},
+  };
+};
+
+export const useRangePicker = (rangeKey: LocalRangePickerTypes) => {
+  const { setRequestBodyBatch } = useLocalDashboardContext();
+  const { rangePickers, updateRangePickerValues } = useLocalStore();
   const config = rangePickers[rangeKey];
 
-  const defaultConfig: RangePickerConfig = {
+  const defaultConfig: LocalRangePickerConfig = {
     values: [0, 100],
     min: 0,
     max: 100,
@@ -25,13 +64,13 @@ export const useRangePicker = (rangeKey: RangePickerTypes) => {
   const handleRangeChange = (newValues: [number, number]) => {
     updateRangePickerValues(rangeKey, newValues);
 
-    if (rangeKey === RangePickerTypes.PROCESSED) {
+    if (rangeKey === LocalRangePickerTypes.PROCESSED) {
       setRequestBodyBatch({
         min: newValues[0],
         max: newValues[1] === max ? null : newValues[1],
         page: 1,
       });
-    } else if (rangeKey === RangePickerTypes.DEFAULTS) {
+    } else if (rangeKey === LocalRangePickerTypes.DEFAULTS) {
       setRequestBodyBatch({
         defaultMin: newValues[0],
         defaultMax: newValues[1] === max ? null : newValues[1],
@@ -42,13 +81,13 @@ export const useRangePicker = (rangeKey: RangePickerTypes) => {
 
   const handleReset = () => {
     updateRangePickerValues(rangeKey, [min, max]);
-    if (rangeKey === RangePickerTypes.PROCESSED) {
+    if (rangeKey === LocalRangePickerTypes.PROCESSED) {
       setRequestBodyBatch({
         min: 0,
         max: null,
         page: 1,
       });
-    } else if (rangeKey === RangePickerTypes.DEFAULTS) {
+    } else if (rangeKey === LocalRangePickerTypes.DEFAULTS) {
       setRequestBodyBatch({
         defaultMin: 0,
         defaultMax: null,

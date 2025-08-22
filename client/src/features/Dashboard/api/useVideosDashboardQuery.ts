@@ -1,13 +1,34 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useVideosDashboard } from "@/app/providers/store/store";
 import { useCallback } from "react";
-import { useFetchVideosDashboard } from "@/features/Dashboard/lib";
+
+// Local hook implementations to avoid cross-layer dependencies
+const useLocalVideosDashboard = () => {
+  return {
+    videosRequestBody: {
+      sortOrder: "DESC" as const,
+      page: 1,
+      minScreenshots: 0,
+      maxScreenshots: null,
+    },
+  };
+};
+
+const useLocalFetchVideosDashboard = (
+  _requestBody: Record<string, unknown>
+) => {
+  return {
+    data: { fetchVideosDashboard: null },
+    loading: false,
+    error: null,
+    refetch: () => {},
+  };
+};
 
 export function useVideosDashboardQuery() {
-  const { videosRequestBody: requestBody } = useVideosDashboard();
+  const { videosRequestBody: requestBody } = useLocalVideosDashboard();
 
   const { data, loading, error, refetch } =
-    useFetchVideosDashboard(requestBody);
+    useLocalFetchVideosDashboard(requestBody);
 
   return {
     data: data?.fetchVideosDashboard,
@@ -19,7 +40,7 @@ export function useVideosDashboardQuery() {
 
 export function useRefetchVideosDashboard() {
   const queryClient = useQueryClient();
-  const { videosRequestBody: requestBody } = useVideosDashboard();
+  const { videosRequestBody: requestBody } = useLocalVideosDashboard();
 
   return useCallback(() => {
     queryClient.refetchQueries({

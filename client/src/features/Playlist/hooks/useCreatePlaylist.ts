@@ -1,5 +1,16 @@
-import { useMutation } from "@apollo/client";
-import { CREATE_PLAYLIST } from "@entities/Playlist/api/playlist.gql";
+import { useMutation, gql } from "@apollo/client";
+
+// Local GraphQL mutation to avoid entities dependency
+const CREATE_PLAYLIST = gql`
+  mutation CreatePlaylist($createPlaylistInput: CreatePlaylistInput!) {
+    createPlaylist(createPlaylistInput: $createPlaylistInput) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
 
 export const useCreatePlaylist = () => {
   const [mutate, result] = useMutation(CREATE_PLAYLIST, {

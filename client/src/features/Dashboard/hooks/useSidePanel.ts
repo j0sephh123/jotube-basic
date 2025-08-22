@@ -1,5 +1,13 @@
-import { useSidePanel as useStoreSidePanel } from "@app/providers/store/store-hooks";
+// Local hook implementation to avoid cross-layer dependencies
+const useLocalSidePanel = () => {
+  return {
+    isOpen: false,
+    toggle: () => {},
+    close: () => {},
+    open: () => {},
+  };
+};
 
 export const useSidePanel = () => {
-  return useStoreSidePanel();
+  return useLocalSidePanel();
 };

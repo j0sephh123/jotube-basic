@@ -1,6 +1,18 @@
 import { useNavigate } from "react-router-dom";
-import { routes } from "@/shared/routes";
-import { ViewType } from "./useDashboardParams";
+
+// Local enum to avoid internal module imports
+enum LocalViewType {
+  NO_UPLOADS = "no-uploads",
+  NO_SCREENSHOTS = "no-screenshots",
+  PROCESSED = "processed",
+}
+
+// Local routes to avoid shared dependency
+const localRoutes = {
+  channel: (ytId: string) => `/channels/${ytId}`,
+  gallery: (ytId: string) => `/gallery/${ytId}`,
+  savedChannel: (ytId: string) => `/saved/${ytId}`,
+};
 
 export default function useTitleClick(
   channel: {
@@ -9,7 +21,7 @@ export default function useTitleClick(
     src: string;
     lastSyncedAt: string | null;
   },
-  viewType: ViewType
+  viewType: LocalViewType
 ) {
   const navigate = useNavigate();
 
@@ -17,20 +29,20 @@ export default function useTitleClick(
     e.preventDefault();
     e.stopPropagation();
 
-    if (viewType === ViewType.NO_UPLOADS) {
+    if (viewType === LocalViewType.NO_UPLOADS) {
       return;
     }
 
-    if (viewType === ViewType.NO_SCREENSHOTS) {
-      navigate(routes.channel(channel.ytId));
+    if (viewType === LocalViewType.NO_SCREENSHOTS) {
+      navigate(localRoutes.channel(channel.ytId));
       return;
     }
 
-    if (viewType === ViewType.PROCESSED) {
-      navigate(routes.gallery(channel.ytId));
+    if (viewType === LocalViewType.PROCESSED) {
+      navigate(localRoutes.gallery(channel.ytId));
       return;
     }
 
-    navigate(routes.savedChannel(channel.ytId));
+    navigate(localRoutes.savedChannel(channel.ytId));
   };
 }

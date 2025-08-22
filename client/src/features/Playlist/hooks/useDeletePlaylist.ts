@@ -1,5 +1,13 @@
-import { useMutation } from "@apollo/client";
-import { DELETE_PLAYLIST } from "@entities/Playlist/api/playlist.gql";
+import { useMutation, gql } from "@apollo/client";
+
+// Local GraphQL mutation to avoid entities dependency
+const DELETE_PLAYLIST = gql`
+  mutation DeletePlaylist($id: Int!) {
+    deletePlaylist(id: $id) {
+      success
+    }
+  }
+`;
 
 export const useDeletePlaylist = () => {
   const [mutate, result] = useMutation(DELETE_PLAYLIST, {

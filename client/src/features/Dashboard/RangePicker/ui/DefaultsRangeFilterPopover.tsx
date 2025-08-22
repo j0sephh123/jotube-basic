@@ -1,7 +1,12 @@
 import { SlidersHorizontal } from "lucide-react";
 import { RangeFilterBase } from "./RangeFilter";
 import { CommonRangeFilterPopover } from "./CommonRangeFilterPopover";
-import { RangePickerTypes } from "../model/types";
+
+// Local type definitions to avoid model layer dependency
+enum LocalRangePickerTypes {
+  PROCESSED = "processed",
+  DEFAULTS = "defaults",
+}
 
 export default function DefaultsRangeFilterPopover() {
   return (
@@ -11,7 +16,7 @@ export default function DefaultsRangeFilterPopover() {
       icon={<SlidersHorizontal className="w-4 h-4" />}
     >
       <RangeFilterBase
-        rangeKey={RangePickerTypes.DEFAULTS}
+        rangeKey={LocalRangePickerTypes.DEFAULTS}
         minKey="defaultMin"
         maxKey="defaultMax"
       />

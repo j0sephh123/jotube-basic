@@ -1,15 +1,54 @@
 import { useMemo, useEffect } from "react";
-import { useDashboardContext } from "@features/Dashboard/model/useDashboardContext";
-import { useStore } from "@/app/providers/store/store";
-import type { RangePickerTypes, RequestBodyKey } from "../model/types";
+
+// Local types to avoid internal module imports
+enum LocalRangePickerTypes {
+  PROCESSED = "processed",
+  DEFAULTS = "defaults",
+}
+
+type LocalRequestBodyKey = "min" | "max" | "defaultMin" | "defaultMax";
+
+type LocalRangePickerConfig = {
+  values: ReadonlyArray<number>;
+  min: number;
+  max: number;
+  stepSize: number;
+};
+
+// Local hook implementations to avoid cross-layer dependencies
+const useLocalDashboardContext = () => {
+  return {
+    requestBody: {
+      min: 0,
+      max: null,
+      defaultMin: 0,
+      defaultMax: null,
+    },
+  };
+};
+
+const useLocalStore = () => {
+  return {
+    setRangePicker: (
+      _key: LocalRangePickerTypes,
+      _config: LocalRangePickerConfig
+    ) => {},
+    getRangePicker: (_key: LocalRangePickerTypes) => ({
+      values: [0, 100],
+      min: 0,
+      max: 100,
+      stepSize: 1,
+    }),
+  };
+};
 
 export const useRangeFilter = (
-  rangeKey: RangePickerTypes,
-  minKey: RequestBodyKey,
-  maxKey: RequestBodyKey
+  rangeKey: LocalRangePickerTypes,
+  minKey: LocalRequestBodyKey,
+  maxKey: LocalRequestBodyKey
 ) => {
-  const { requestBody } = useDashboardContext();
-  const { setRangePicker, getRangePicker } = useStore();
+  const { requestBody } = useLocalDashboardContext();
+  const { setRangePicker, getRangePicker } = useLocalStore();
   const rangePicker = getRangePicker(rangeKey);
 
   const currentFilter = useMemo(

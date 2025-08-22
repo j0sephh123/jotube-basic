@@ -1,4 +1,8 @@
-import { RangePickerTypes } from "@/app/providers/store/store-types";
+// Local enum to avoid app dependency
+enum LocalRangePickerTypes {
+  PROCESSED = "processed",
+  DEFAULTS = "defaults",
+}
 
 export type RangePickerConfig = {
   values: ReadonlyArray<number>;
@@ -8,25 +12,28 @@ export type RangePickerConfig = {
 };
 
 export type RangePickersSlice = {
-  rangePickers: Record<RangePickerTypes, RangePickerConfig>;
-  setRangePicker: (key: RangePickerTypes, config: RangePickerConfig) => void;
+  rangePickers: Record<LocalRangePickerTypes, RangePickerConfig>;
+  setRangePicker: (
+    key: LocalRangePickerTypes,
+    config: RangePickerConfig
+  ) => void;
   updateRangePickerValues: (
-    key: RangePickerTypes,
+    key: LocalRangePickerTypes,
     values: ReadonlyArray<number>
   ) => void;
-  getRangePicker: (key: RangePickerTypes) => RangePickerConfig | undefined;
+  getRangePicker: (key: LocalRangePickerTypes) => RangePickerConfig | undefined;
 };
 
 export const createRangePickersSlice = (
   set: (
     fn: (state: {
-      rangePickers: Record<RangePickerTypes, RangePickerConfig>;
+      rangePickers: Record<LocalRangePickerTypes, RangePickerConfig>;
     }) => {
-      rangePickers: Record<RangePickerTypes, RangePickerConfig>;
+      rangePickers: Record<LocalRangePickerTypes, RangePickerConfig>;
     }
   ) => void,
   get: () => {
-    rangePickers: Record<RangePickerTypes, RangePickerConfig>;
+    rangePickers: Record<LocalRangePickerTypes, RangePickerConfig>;
   }
 ): RangePickersSlice => {
   const processedRangePickerConfig = {
@@ -43,7 +50,7 @@ export const createRangePickersSlice = (
 
   return {
     rangePickers: {
-      [RangePickerTypes.PROCESSED]: {
+      [LocalRangePickerTypes.PROCESSED]: {
         values: [
           processedRangePickerConfig.min,
           processedRangePickerConfig.max,
@@ -52,7 +59,7 @@ export const createRangePickersSlice = (
         max: processedRangePickerConfig.max,
         stepSize: processedRangePickerConfig.stepSize,
       },
-      [RangePickerTypes.DEFAULTS]: {
+      [LocalRangePickerTypes.DEFAULTS]: {
         values: [defaultsRangePickerConfig.min, defaultsRangePickerConfig.max],
         min: defaultsRangePickerConfig.min,
         max: defaultsRangePickerConfig.max,

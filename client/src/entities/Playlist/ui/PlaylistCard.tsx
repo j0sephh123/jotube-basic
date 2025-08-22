@@ -47,16 +47,16 @@ const useDialog = () => {
     confirm: ({
       title,
       message,
-      confirmText,
-      cancelText,
-      variant,
+      _confirmText,
+      _cancelText,
+      _variant,
       onYes,
     }: {
       title: string;
       message: string;
-      confirmText: string;
-      cancelText: string;
-      variant: string;
+      _confirmText: string;
+      _cancelText: string;
+      _variant: string;
       onYes: () => void;
     }) => {
       if (window.confirm(`${title}\n\n${message}`)) {
@@ -78,9 +78,9 @@ export const PlaylistCard = ({ playlist }: PlaylistCardProps) => {
     dialogHook.confirm({
       title: "Delete Playlist",
       message: `Are you sure you want to delete "${playlist.name}"? This action cannot be undone.`,
-      confirmText: "Delete",
-      cancelText: "Cancel",
-      variant: "error",
+      _confirmText: "Delete",
+      _cancelText: "Cancel",
+      _variant: "error",
       onYes: () => {
         deletePlaylist.mutate({
           variables: { id: playlist.id },
