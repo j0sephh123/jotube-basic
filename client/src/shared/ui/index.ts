@@ -1,4 +1,5 @@
 export * from "./button";
+export * from "./card";
 export { default as Modal } from "./Modal";
 export { default as ChannelLink } from "./ChannelLink";
 export { default as VideoModal } from "./VideoModal";

@@ -1,5 +1,5 @@
-import Button from "@/shared/ui/button";
-import { useStore } from "@/app/providers/store/store";
+import { Button } from "@shared/ui";
+import { useSidePanel } from "@features/Dashboard";
 
 type ScreenshotCountButtonProps = {
   screenshotCount: number;
@@ -12,7 +12,7 @@ export default function ScreenshotCountButton({
   videoYtId,
   channelYtId,
 }: ScreenshotCountButtonProps) {
-  const { openSidePanel } = useStore();
+  const { openSidePanel } = useSidePanel();
 
   const handleClick = () => {
     if (screenshotCount > 0) {

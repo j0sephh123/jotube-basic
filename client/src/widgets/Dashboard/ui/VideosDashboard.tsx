@@ -1,9 +1,11 @@
-import Card from "@/shared/ui/card";
-import VideosDashboardContainer from "@/widgets/Dashboard/ui/VideosDashboardContainer";
+import { Card } from "@shared/ui";
+import {
+  VideosDashboardContainer,
+  VideoChannelInfo,
+  ScreenshotCountButton,
+} from "@widgets/Dashboard";
 import { useNavigate } from "react-router-dom";
-import { routes } from "@/shared/routes";
-import VideoChannelInfo from "@/widgets/Dashboard/ui/VideoChannelInfo";
-import ScreenshotCountButton from "@/widgets/Dashboard/ui/ScreenshotCountButton";
+import { routes } from "@shared/routes";
 
 export default function VideosDashboard() {
   const navigate = useNavigate();
