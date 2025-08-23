@@ -52,6 +52,9 @@ export default function ChannelDashboardCard({
       saved={saved}
       defaults={defaults}
       storyboard={storyboard}
+      onNavigate={() => {}}
+      onViewScreenshots={() => {}}
+      onViewThumbnails={() => {}}
     />
   );
 
@@ -63,9 +66,9 @@ export default function ChannelDashboardCard({
     <SyncUploadsButton lastSyncedAt={lastSyncedAt} ytChannelId={ytId} id={id} />
   );
 
-  const downloadButton = <Card.DownloadButton id={id} />;
+  const downloadButton = <Card.DownloadButton id={id} ytChannelId={ytId} onDownload={() => {}} />;
 
-  const deleteUploadsButton = <Card.DeleteButton ytChannelId={ytId} />;
+  const deleteUploadsButton = <Card.DeleteButton ytChannelId={ytId} onDelete={() => {}} />;
 
   const deleteChannelbutton = (
     <DeleteChannel id={id} onSuccess={onChannelDelete} />
@@ -159,6 +162,7 @@ export default function ChannelDashboardCard({
       }
       deleteButtonSlot={getDeleteButtonSlot()}
       playlistButtonSlot={playlistButton}
+      onThumbnailClick={() => {}}
     />
   );
 }

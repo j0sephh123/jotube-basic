@@ -16,6 +16,7 @@ export default function ChannelsDashboard() {
             key={c.id}
             viewType={viewType}
             onChannelDelete={refetch}
+            openPlaylistModal={() => {}}
           />
         ))
       }

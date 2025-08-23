@@ -19,9 +19,8 @@ export { useDashboardStore } from "./hooks/useDashboardStore";
 export { useRangePickersStore } from "./hooks/useRangePickersStore";
 export {
   useChannelsDashboardQuery,
-  useRefetchNoUploadsView,
-} from "./api/useChannelsDashboardQuery";
-export { useVideosDashboardQuery } from "./api/useVideosDashboardQuery";
+  useRefetchChannelsDashboardQuery,
+} from "./hooks/useChannelsDashboardQuery";
+export { useVideosDashboardQuery } from "./hooks/useVideosDashboardQuery";
 export { default as useTitleClick } from "./lib/useTitleClick";
 export { default as useFetchDashboard } from "./lib/useFetchDashboard";
-export { useRefetchGroupedThumbnails } from "./api/useChannelsDashboardQuery";

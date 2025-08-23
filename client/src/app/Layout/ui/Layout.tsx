@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { TheCarousel } from "@features/Screenshot";
 import { DialogProvider, ZoomModal } from "@shared/ui";
-import { ThumbnailsProcessing } from "@features/Thumbnails";
+import { ThumbnailsProcessing, useThumbnailsSlice } from "@features/Thumbnails";
 import { StoryboardProcessing } from "@features/Storyboard";
 import CreateChannel from "@features/CreateChannel";
 import { SidePanel } from "@app/index";
@@ -11,6 +11,7 @@ import { useZoom } from "@shared/hooks";
 
 export default function Layout(): JSX.Element {
   const { isVisible, url, onClose } = useZoom();
+  const {metadata} = useThumbnailsSlice();
 
   return (
     <DialogProvider>
@@ -20,7 +21,7 @@ export default function Layout(): JSX.Element {
       </div>
       <CreateChannel />
       <TheCarousel />
-      <ThumbnailsProcessing />
+      {metadata.ytVideoId && <ThumbnailsProcessing />}
       <StoryboardProcessing />
       <SidePanel />
       <AddChannelToPlaylistModal />

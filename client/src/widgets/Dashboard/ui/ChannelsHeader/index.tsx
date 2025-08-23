@@ -9,8 +9,8 @@ import { PaginationControl } from "@widgets/PaginationControl";
 import { Button } from "@shared/ui";
 
 export default function ChannelsHeader() {
-  const { requestBody, setRequestBodyBatch } = useDashboardContext();
-  const { data } = useChannelsDashboardQuery(requestBody);
+  const { setRequestBodyBatch } = useDashboardContext();
+  const { data } = useChannelsDashboardQuery();
 
   const handleClearFilters = () => {
     setRequestBodyBatch({
@@ -28,14 +28,14 @@ export default function ChannelsHeader() {
         <RangeFilterPopover />
         <DefaultsRangeFilterPopover />
         <ViewTypeToggle />
-        <PaginationControl />
+        <PaginationControl total={data?.total || 0} />
       </div>
       <div className="flex items-center gap-2">
         <Button onClick={handleClearFilters} variant="ghost" size="sm">
           Clear Filters
         </Button>
         <span className="text-sm text-base-content/60">
-          {data?.channelsDashboard?.totalCount || 0} channels
+          {data?.total || 0} channels
         </span>
       </div>
     </div>

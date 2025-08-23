@@ -1,7 +1,7 @@
 import { useFetchUploads } from "@features/Upload";
 import { Download } from "lucide-react";
 import clsx from "clsx";
-import { useRefetchNoUploadsView } from "@features/Dashboard";
+import { useRefetchChannelsDashboardQuery } from "@features/Dashboard";
 
 type Props = {
   ytChannelId: string;
@@ -14,7 +14,8 @@ export default function FetchUploadsButton({
   videoCount,
   onSuccess,
 }: Props) {
-  const refetchNoUploadsView = useRefetchNoUploadsView();
+  const refetchChannelsDashboardQuery = useRefetchChannelsDashboardQuery();
+
   const {
     mutateAsync: handleFetchUploads,
     isPending,
@@ -24,7 +25,7 @@ export default function FetchUploadsButton({
       console.error("error", error);
     },
     onSuccess() {
-      refetchNoUploadsView();
+      refetchChannelsDashboardQuery();
       onSuccess?.();
     },
   });

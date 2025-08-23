@@ -698,6 +698,139 @@ export type DeleteChannelMutationVariables = Exact<{
 
 export type DeleteChannelMutation = { __typename?: 'Mutation', deleteChannel: { __typename?: 'DeleteChannelResponse', success: boolean, message: string } };
 
+export type GetChannelForPlaylistQueryVariables = Exact<{
+  ytChannelId: Scalars['String']['input'];
+}>;
+
+
+export type GetChannelForPlaylistQuery = { __typename?: 'Query', channelForPlaylist: { __typename?: 'ChannelForPlaylistResponse', id: number, title: string } };
+
+export type GetChannelMetadataQueryVariables = Exact<{
+  ytChannelId: Scalars['String']['input'];
+}>;
+
+
+export type GetChannelMetadataQuery = { __typename?: 'Query', channelMetadata: { __typename?: 'ChannelMetadataResponse', id: number, title: string, fetchedUntilEnd: boolean, videoCount: number, lastSyncedAt?: string | null, videoArtifactsCount: number, savedArtifactsCount: number, thumbnailArtifactsCount: number, screenshotArtifactsCount: number, storyboardArtifactsCount: number, playlist?: { __typename?: 'PlaylistInfo', id: number, name: string } | null } };
+
+export type GetChannelScreenshotsQueryVariables = Exact<{
+  ytChannelId: Scalars['String']['input'];
+}>;
+
+
+export type GetChannelScreenshotsQuery = { __typename?: 'Query', channelScreenshots: Array<{ __typename?: 'GetSlidesResponse', ytVideoId: string, id: number, second: number, src: string, isFav?: boolean | null }> };
+
+export type ChannelFragmentFragment = { __typename?: 'PlaylistChannelResponse', id: number, ytId: string };
+
+export type CreatePlaylistMutationVariables = Exact<{
+  createPlaylistInput: CreatePlaylistInput;
+}>;
+
+
+export type CreatePlaylistMutation = { __typename?: 'Mutation', createPlaylist: { __typename?: 'CreatePlaylistResponse', id: number, name: string, createdAt: string, updatedAt: string } };
+
+export type GetPlaylistsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPlaylistsQuery = { __typename?: 'Query', playlists: Array<{ __typename?: 'PlaylistResponse', id: number, name: string, createdAt: string, updatedAt: string, channels: Array<{ __typename?: 'PlaylistChannelResponse', title: string, id: number, ytId: string }> }> };
+
+export type GetPlaylistDetailsQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type GetPlaylistDetailsQuery = { __typename?: 'Query', playlistDetails?: { __typename?: 'PlaylistDetailsResponse', id: number, name: string, createdAt: string, updatedAt: string, channels: Array<{ __typename?: 'PlaylistChannelWithCountsResponse', id: number, title: string, ytId: string, src: string, videoCount: number, savedCount: number, screenshotCount: number, thumbnailCount: number }> } | null };
+
+export type UpdatePlaylistMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+  updatePlaylistInput: UpdatePlaylistInput;
+}>;
+
+
+export type UpdatePlaylistMutation = { __typename?: 'Mutation', updatePlaylist: { __typename?: 'UpdatePlaylistResponse', id: number, name: string, createdAt: string, updatedAt: string } };
+
+export type DeletePlaylistMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type DeletePlaylistMutation = { __typename?: 'Mutation', deletePlaylist: { __typename?: 'DeletePlaylistResponse', success: boolean } };
+
+export type UpdateChannelPlaylistMutationVariables = Exact<{
+  updateChannelPlaylistInput: UpdateChannelPlaylistInput;
+}>;
+
+
+export type UpdateChannelPlaylistMutation = { __typename?: 'Mutation', updateChannelPlaylist: { __typename?: 'UpdateChannelPlaylistResponse', id: number, title: string, ytId: string, src: string, videoCount: number, playlistId?: number | null } };
+
+export type GetSlidesQueryVariables = Exact<{
+  input: GetSlidesInput;
+}>;
+
+
+export type GetSlidesQuery = { __typename?: 'Query', getSlides: Array<{ __typename?: 'GetSlidesResponse', ytVideoId: string, id: number, second: number, src: string, isFav?: boolean | null }> };
+
+export type GetScreenshotsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetScreenshotsQuery = { __typename?: 'Query', screenshots: Array<{ __typename?: 'ScreenshotsCountsResponse', month: string, count: number }> };
+
+export type GetScreenshotsByVideoQueryVariables = Exact<{
+  ytVideoId: Scalars['String']['input'];
+}>;
+
+
+export type GetScreenshotsByVideoQuery = { __typename?: 'Query', screenshotsByVideo: Array<{ __typename?: 'VideoScreenshotResponse', id: number, second: number, ytChannelId: string, ytVideoId: string, isFav?: boolean | null, src: string }> };
+
+export type FetchDashboardQueryVariables = Exact<{
+  fetchDashboardInput: FetchDashboardInput;
+}>;
+
+
+export type FetchDashboardQuery = { __typename?: 'Query', fetchDashboard: { __typename?: 'ChannelsDashboardResponse', total: number, channels: Array<{ __typename?: 'DashboardChannelResponse', id: number, createdAt: any, title: string, ytId: string, src: string, lastSyncedAt?: any | null, videoCount: number, thumbnails: number, saved: number, defaults: number, storyboard: number, screenshotsCount: number, playlist?: { __typename?: 'DashboardPlaylistResponse', id: number, name: string } | null }> } };
+
+export type FetchVideosDashboardQueryVariables = Exact<{
+  page?: InputMaybe<Scalars['Float']['input']>;
+  sortOrder?: InputMaybe<Scalars['String']['input']>;
+  screenshotMin?: InputMaybe<Scalars['Float']['input']>;
+  screenshotMax?: InputMaybe<Scalars['Float']['input']>;
+}>;
+
+
+export type FetchVideosDashboardQuery = { __typename?: 'Query', fetchVideosDashboard: { __typename?: 'VideosDashboardResponse', total: number, videos: Array<{ __typename?: 'DashboardVideoResponse', id: number, ytId: string, title: string, src: string, channelId: number, channelTitle: string, channelYtId: string, screenshotCount: number }> } };
+
+export type SearchVideosQueryVariables = Exact<{
+  searchInput: SearchInput;
+}>;
+
+
+export type SearchVideosQuery = { __typename?: 'Query', searchVideos: Array<{ __typename?: 'SearchVideoResult', title: string, ytId: string, src: string, channelYtId: string, type: string }> };
+
+export type SearchChannelsQueryVariables = Exact<{
+  searchInput: SearchInput;
+}>;
+
+
+export type SearchChannelsQuery = { __typename?: 'Query', searchChannels: Array<{ __typename?: 'SearchChannelResult', title: string, ytId: string, src: string, type: string }> };
+
+export type GetStatisticsCountsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetStatisticsCountsQuery = { __typename?: 'Query', statisticsCounts: { __typename?: 'StatisticsCountsResponse', totalScreenshots: number, totalThumbnails: number, totalSaved: number } };
+
+export type StoryboardsQueryVariables = Exact<{
+  ytChannelId: Scalars['String']['input'];
+}>;
+
+
+export type StoryboardsQuery = { __typename?: 'Query', storyboards: Array<{ __typename?: 'UploadsVideoStoryboardResponse', id: number, ytId: string, title: string, src: string, publishedAt: string, createdAt: string, updatedAt: string, channelId: number, nextPageToken?: string | null, duration?: number | null, artifact: string, storyboard: { __typename?: 'StoryboardDataResponse', id: number, uploadsVideoId: number, fragments: number, url: string, createdAt: string, updatedAt: string } }> };
+
+export type GetThumbnailByVideoIdQueryVariables = Exact<{
+  ytVideoId: Scalars['String']['input'];
+}>;
+
+
+export type GetThumbnailByVideoIdQuery = { __typename?: 'Query', thumbnailByVideoId?: { __typename?: 'ThumbnailByVideoIdResponse', createdAt: string, id: number, perRow: number, updatedAt: string, uploadsVideoId: number, totalSeconds: number, thumbnailsCount: number, uploadsVideo: { __typename?: 'UploadsVideoResponse', ytId: string, channel: { __typename?: 'ChannelResponse', id: number, ytId: string, title: string } } } | null };
+
 export type SaveUploadMutationVariables = Exact<{
   saveUploadInput: SaveUploadInput;
 }>;
@@ -747,145 +880,12 @@ export type UploadsListQueryVariables = Exact<{
 
 export type UploadsListQuery = { __typename?: 'Query', uploadsList?: { __typename?: 'ChannelUploadsResponse', id: number, createdAt: string, updatedAt: string, title: string, ytId: string, src: string, videoCount: number, fetchStartVideoId: string, fetchedUntilEnd: boolean, lastSyncedAt?: string | null, uploads: Array<{ __typename?: 'UploadsListUploadResponse', artifact: string, channelId: number, createdAt: string, duration?: number | null, id: number, nextPageToken?: string | null, publishedAt: string, src: string, title: string, updatedAt: string, ytId: string }> } | null };
 
-export type StoryboardsQueryVariables = Exact<{
-  ytChannelId: Scalars['String']['input'];
-}>;
-
-
-export type StoryboardsQuery = { __typename?: 'Query', storyboards: Array<{ __typename?: 'UploadsVideoStoryboardResponse', id: number, ytId: string, title: string, src: string, publishedAt: string, createdAt: string, updatedAt: string, channelId: number, nextPageToken?: string | null, duration?: number | null, artifact: string, storyboard: { __typename?: 'StoryboardDataResponse', id: number, uploadsVideoId: number, fragments: number, url: string, createdAt: string, updatedAt: string } }> };
-
-export type SearchVideosQueryVariables = Exact<{
-  searchInput: SearchInput;
-}>;
-
-
-export type SearchVideosQuery = { __typename?: 'Query', searchVideos: Array<{ __typename?: 'SearchVideoResult', title: string, ytId: string, src: string, channelYtId: string, type: string }> };
-
-export type SearchChannelsQueryVariables = Exact<{
-  searchInput: SearchInput;
-}>;
-
-
-export type SearchChannelsQuery = { __typename?: 'Query', searchChannels: Array<{ __typename?: 'SearchChannelResult', title: string, ytId: string, src: string, type: string }> };
-
-export type CreatePlaylistMutationVariables = Exact<{
-  createPlaylistInput: CreatePlaylistInput;
-}>;
-
-
-export type CreatePlaylistMutation = { __typename?: 'Mutation', createPlaylist: { __typename?: 'CreatePlaylistResponse', id: number, name: string, createdAt: string, updatedAt: string } };
-
-export type ChannelFragmentFragment = { __typename?: 'PlaylistChannelResponse', id: number, ytId: string };
-
-export type GetPlaylistsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetPlaylistsQuery = { __typename?: 'Query', playlists: Array<{ __typename?: 'PlaylistResponse', id: number, name: string, createdAt: string, updatedAt: string, channels: Array<{ __typename?: 'PlaylistChannelResponse', title: string, id: number, ytId: string }> }> };
-
-export type GetPlaylistDetailsQueryVariables = Exact<{
-  id: Scalars['Int']['input'];
-}>;
-
-
-export type GetPlaylistDetailsQuery = { __typename?: 'Query', playlistDetails?: { __typename?: 'PlaylistDetailsResponse', id: number, name: string, createdAt: string, updatedAt: string, channels: Array<{ __typename?: 'PlaylistChannelWithCountsResponse', id: number, title: string, ytId: string, src: string, videoCount: number, savedCount: number, screenshotCount: number, thumbnailCount: number }> } | null };
-
-export type UpdatePlaylistMutationVariables = Exact<{
-  id: Scalars['Int']['input'];
-  updatePlaylistInput: UpdatePlaylistInput;
-}>;
-
-
-export type UpdatePlaylistMutation = { __typename?: 'Mutation', updatePlaylist: { __typename?: 'UpdatePlaylistResponse', id: number, name: string, createdAt: string, updatedAt: string } };
-
-export type DeletePlaylistMutationVariables = Exact<{
-  id: Scalars['Int']['input'];
-}>;
-
-
-export type DeletePlaylistMutation = { __typename?: 'Mutation', deletePlaylist: { __typename?: 'DeletePlaylistResponse', success: boolean } };
-
-export type UpdateChannelPlaylistMutationVariables = Exact<{
-  updateChannelPlaylistInput: UpdateChannelPlaylistInput;
-}>;
-
-
-export type UpdateChannelPlaylistMutation = { __typename?: 'Mutation', updateChannelPlaylist: { __typename?: 'UpdateChannelPlaylistResponse', id: number, title: string, ytId: string, src: string, videoCount: number, playlistId?: number | null } };
-
 export type UploadsWithThumbnailsQueryVariables = Exact<{
   input: UploadsWithThumbnailsInput;
 }>;
 
 
 export type UploadsWithThumbnailsQuery = { __typename?: 'Query', uploadsWithThumbnails: Array<{ __typename?: 'UploadsWithThumbnailsResponse', ytChannelId: string, ytVideoId: string }> };
-
-export type GetSlidesQueryVariables = Exact<{
-  input: GetSlidesInput;
-}>;
-
-
-export type GetSlidesQuery = { __typename?: 'Query', getSlides: Array<{ __typename?: 'GetSlidesResponse', ytVideoId: string, id: number, second: number, src: string, isFav?: boolean | null }> };
-
-export type GetChannelForPlaylistQueryVariables = Exact<{
-  ytChannelId: Scalars['String']['input'];
-}>;
-
-
-export type GetChannelForPlaylistQuery = { __typename?: 'Query', channelForPlaylist: { __typename?: 'ChannelForPlaylistResponse', id: number, title: string } };
-
-export type GetChannelMetadataQueryVariables = Exact<{
-  ytChannelId: Scalars['String']['input'];
-}>;
-
-
-export type GetChannelMetadataQuery = { __typename?: 'Query', channelMetadata: { __typename?: 'ChannelMetadataResponse', id: number, title: string, fetchedUntilEnd: boolean, videoCount: number, lastSyncedAt?: string | null, videoArtifactsCount: number, savedArtifactsCount: number, thumbnailArtifactsCount: number, screenshotArtifactsCount: number, storyboardArtifactsCount: number, playlist?: { __typename?: 'PlaylistInfo', id: number, name: string } | null } };
-
-export type FetchDashboardQueryVariables = Exact<{
-  fetchDashboardInput: FetchDashboardInput;
-}>;
-
-
-export type FetchDashboardQuery = { __typename?: 'Query', fetchDashboard: { __typename?: 'ChannelsDashboardResponse', total: number, channels: Array<{ __typename?: 'DashboardChannelResponse', id: number, createdAt: any, title: string, ytId: string, src: string, lastSyncedAt?: any | null, videoCount: number, thumbnails: number, saved: number, defaults: number, storyboard: number, screenshotsCount: number, playlist?: { __typename?: 'DashboardPlaylistResponse', id: number, name: string } | null }> } };
-
-export type FetchVideosDashboardQueryVariables = Exact<{
-  page?: InputMaybe<Scalars['Float']['input']>;
-  sortOrder?: InputMaybe<Scalars['String']['input']>;
-  screenshotMin?: InputMaybe<Scalars['Float']['input']>;
-  screenshotMax?: InputMaybe<Scalars['Float']['input']>;
-}>;
-
-
-export type FetchVideosDashboardQuery = { __typename?: 'Query', fetchVideosDashboard: { __typename?: 'VideosDashboardResponse', total: number, videos: Array<{ __typename?: 'DashboardVideoResponse', id: number, ytId: string, title: string, src: string, channelId: number, channelTitle: string, channelYtId: string, screenshotCount: number }> } };
-
-export type GetScreenshotsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetScreenshotsQuery = { __typename?: 'Query', screenshots: Array<{ __typename?: 'ScreenshotsCountsResponse', month: string, count: number }> };
-
-export type GetScreenshotsByVideoQueryVariables = Exact<{
-  ytVideoId: Scalars['String']['input'];
-}>;
-
-
-export type GetScreenshotsByVideoQuery = { __typename?: 'Query', screenshotsByVideo: Array<{ __typename?: 'VideoScreenshotResponse', id: number, second: number, ytChannelId: string, ytVideoId: string, isFav?: boolean | null, src: string }> };
-
-export type GetStatisticsCountsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetStatisticsCountsQuery = { __typename?: 'Query', statisticsCounts: { __typename?: 'StatisticsCountsResponse', totalScreenshots: number, totalThumbnails: number, totalSaved: number } };
-
-export type GetThumbnailByVideoIdQueryVariables = Exact<{
-  ytVideoId: Scalars['String']['input'];
-}>;
-
-
-export type GetThumbnailByVideoIdQuery = { __typename?: 'Query', thumbnailByVideoId?: { __typename?: 'ThumbnailByVideoIdResponse', createdAt: string, id: number, perRow: number, updatedAt: string, uploadsVideoId: number, totalSeconds: number, thumbnailsCount: number, uploadsVideo: { __typename?: 'UploadsVideoResponse', ytId: string, channel: { __typename?: 'ChannelResponse', id: number, ytId: string, title: string } } } | null };
-
-export type GetChannelScreenshotsQueryVariables = Exact<{
-  ytChannelId: Scalars['String']['input'];
-}>;
-
-
-export type GetChannelScreenshotsQuery = { __typename?: 'Query', channelScreenshots: Array<{ __typename?: 'GetSlidesResponse', ytVideoId: string, id: number, second: number, src: string, isFav?: boolean | null }> };
 
 export type DeleteUploadsMutationVariables = Exact<{
   ytChannelId: Scalars['String']['input'];
@@ -978,6 +978,872 @@ export function useDeleteChannelMutation(baseOptions?: Apollo.MutationHookOption
 export type DeleteChannelMutationHookResult = ReturnType<typeof useDeleteChannelMutation>;
 export type DeleteChannelMutationResult = Apollo.MutationResult<DeleteChannelMutation>;
 export type DeleteChannelMutationOptions = Apollo.BaseMutationOptions<DeleteChannelMutation, DeleteChannelMutationVariables>;
+export const GetChannelForPlaylistDocument = gql`
+    query GetChannelForPlaylist($ytChannelId: String!) {
+  channelForPlaylist(ytChannelId: $ytChannelId) {
+    id
+    title
+  }
+}
+    `;
+
+/**
+ * __useGetChannelForPlaylistQuery__
+ *
+ * To run a query within a React component, call `useGetChannelForPlaylistQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetChannelForPlaylistQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetChannelForPlaylistQuery({
+ *   variables: {
+ *      ytChannelId: // value for 'ytChannelId'
+ *   },
+ * });
+ */
+export function useGetChannelForPlaylistQuery(baseOptions: Apollo.QueryHookOptions<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables> & ({ variables: GetChannelForPlaylistQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>(GetChannelForPlaylistDocument, options);
+      }
+export function useGetChannelForPlaylistLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>(GetChannelForPlaylistDocument, options);
+        }
+export function useGetChannelForPlaylistSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>(GetChannelForPlaylistDocument, options);
+        }
+export type GetChannelForPlaylistQueryHookResult = ReturnType<typeof useGetChannelForPlaylistQuery>;
+export type GetChannelForPlaylistLazyQueryHookResult = ReturnType<typeof useGetChannelForPlaylistLazyQuery>;
+export type GetChannelForPlaylistSuspenseQueryHookResult = ReturnType<typeof useGetChannelForPlaylistSuspenseQuery>;
+export type GetChannelForPlaylistQueryResult = Apollo.QueryResult<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>;
+export const GetChannelMetadataDocument = gql`
+    query GetChannelMetadata($ytChannelId: String!) {
+  channelMetadata(ytChannelId: $ytChannelId) {
+    id
+    title
+    fetchedUntilEnd
+    videoCount
+    lastSyncedAt
+    playlist {
+      id
+      name
+    }
+    videoArtifactsCount
+    savedArtifactsCount
+    thumbnailArtifactsCount
+    screenshotArtifactsCount
+    storyboardArtifactsCount
+  }
+}
+    `;
+
+/**
+ * __useGetChannelMetadataQuery__
+ *
+ * To run a query within a React component, call `useGetChannelMetadataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetChannelMetadataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetChannelMetadataQuery({
+ *   variables: {
+ *      ytChannelId: // value for 'ytChannelId'
+ *   },
+ * });
+ */
+export function useGetChannelMetadataQuery(baseOptions: Apollo.QueryHookOptions<GetChannelMetadataQuery, GetChannelMetadataQueryVariables> & ({ variables: GetChannelMetadataQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>(GetChannelMetadataDocument, options);
+      }
+export function useGetChannelMetadataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>(GetChannelMetadataDocument, options);
+        }
+export function useGetChannelMetadataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>(GetChannelMetadataDocument, options);
+        }
+export type GetChannelMetadataQueryHookResult = ReturnType<typeof useGetChannelMetadataQuery>;
+export type GetChannelMetadataLazyQueryHookResult = ReturnType<typeof useGetChannelMetadataLazyQuery>;
+export type GetChannelMetadataSuspenseQueryHookResult = ReturnType<typeof useGetChannelMetadataSuspenseQuery>;
+export type GetChannelMetadataQueryResult = Apollo.QueryResult<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>;
+export const GetChannelScreenshotsDocument = gql`
+    query GetChannelScreenshots($ytChannelId: String!) {
+  channelScreenshots(ytChannelId: $ytChannelId) {
+    ytVideoId
+    id
+    second
+    src
+    isFav
+  }
+}
+    `;
+
+/**
+ * __useGetChannelScreenshotsQuery__
+ *
+ * To run a query within a React component, call `useGetChannelScreenshotsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetChannelScreenshotsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetChannelScreenshotsQuery({
+ *   variables: {
+ *      ytChannelId: // value for 'ytChannelId'
+ *   },
+ * });
+ */
+export function useGetChannelScreenshotsQuery(baseOptions: Apollo.QueryHookOptions<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables> & ({ variables: GetChannelScreenshotsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>(GetChannelScreenshotsDocument, options);
+      }
+export function useGetChannelScreenshotsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>(GetChannelScreenshotsDocument, options);
+        }
+export function useGetChannelScreenshotsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>(GetChannelScreenshotsDocument, options);
+        }
+export type GetChannelScreenshotsQueryHookResult = ReturnType<typeof useGetChannelScreenshotsQuery>;
+export type GetChannelScreenshotsLazyQueryHookResult = ReturnType<typeof useGetChannelScreenshotsLazyQuery>;
+export type GetChannelScreenshotsSuspenseQueryHookResult = ReturnType<typeof useGetChannelScreenshotsSuspenseQuery>;
+export type GetChannelScreenshotsQueryResult = Apollo.QueryResult<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>;
+export const CreatePlaylistDocument = gql`
+    mutation CreatePlaylist($createPlaylistInput: CreatePlaylistInput!) {
+  createPlaylist(createPlaylistInput: $createPlaylistInput) {
+    id
+    name
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export type CreatePlaylistMutationFn = Apollo.MutationFunction<CreatePlaylistMutation, CreatePlaylistMutationVariables>;
+
+/**
+ * __useCreatePlaylistMutation__
+ *
+ * To run a mutation, you first call `useCreatePlaylistMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePlaylistMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPlaylistMutation, { data, loading, error }] = useCreatePlaylistMutation({
+ *   variables: {
+ *      createPlaylistInput: // value for 'createPlaylistInput'
+ *   },
+ * });
+ */
+export function useCreatePlaylistMutation(baseOptions?: Apollo.MutationHookOptions<CreatePlaylistMutation, CreatePlaylistMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreatePlaylistMutation, CreatePlaylistMutationVariables>(CreatePlaylistDocument, options);
+      }
+export type CreatePlaylistMutationHookResult = ReturnType<typeof useCreatePlaylistMutation>;
+export type CreatePlaylistMutationResult = Apollo.MutationResult<CreatePlaylistMutation>;
+export type CreatePlaylistMutationOptions = Apollo.BaseMutationOptions<CreatePlaylistMutation, CreatePlaylistMutationVariables>;
+export const GetPlaylistsDocument = gql`
+    query GetPlaylists {
+  playlists {
+    id
+    name
+    createdAt
+    updatedAt
+    channels {
+      ...ChannelFragment
+      title
+    }
+  }
+}
+    ${ChannelFragmentFragmentDoc}`;
+
+/**
+ * __useGetPlaylistsQuery__
+ *
+ * To run a query within a React component, call `useGetPlaylistsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPlaylistsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPlaylistsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPlaylistsQuery(baseOptions?: Apollo.QueryHookOptions<GetPlaylistsQuery, GetPlaylistsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPlaylistsQuery, GetPlaylistsQueryVariables>(GetPlaylistsDocument, options);
+      }
+export function useGetPlaylistsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlaylistsQuery, GetPlaylistsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPlaylistsQuery, GetPlaylistsQueryVariables>(GetPlaylistsDocument, options);
+        }
+export function useGetPlaylistsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetPlaylistsQuery, GetPlaylistsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetPlaylistsQuery, GetPlaylistsQueryVariables>(GetPlaylistsDocument, options);
+        }
+export type GetPlaylistsQueryHookResult = ReturnType<typeof useGetPlaylistsQuery>;
+export type GetPlaylistsLazyQueryHookResult = ReturnType<typeof useGetPlaylistsLazyQuery>;
+export type GetPlaylistsSuspenseQueryHookResult = ReturnType<typeof useGetPlaylistsSuspenseQuery>;
+export type GetPlaylistsQueryResult = Apollo.QueryResult<GetPlaylistsQuery, GetPlaylistsQueryVariables>;
+export const GetPlaylistDetailsDocument = gql`
+    query GetPlaylistDetails($id: Int!) {
+  playlistDetails(id: $id) {
+    id
+    name
+    createdAt
+    updatedAt
+    channels {
+      id
+      title
+      ytId
+      src
+      videoCount
+      savedCount
+      screenshotCount
+      thumbnailCount
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetPlaylistDetailsQuery__
+ *
+ * To run a query within a React component, call `useGetPlaylistDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPlaylistDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPlaylistDetailsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetPlaylistDetailsQuery(baseOptions: Apollo.QueryHookOptions<GetPlaylistDetailsQuery, GetPlaylistDetailsQueryVariables> & ({ variables: GetPlaylistDetailsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPlaylistDetailsQuery, GetPlaylistDetailsQueryVariables>(GetPlaylistDetailsDocument, options);
+      }
+export function useGetPlaylistDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlaylistDetailsQuery, GetPlaylistDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPlaylistDetailsQuery, GetPlaylistDetailsQueryVariables>(GetPlaylistDetailsDocument, options);
+        }
+export function useGetPlaylistDetailsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetPlaylistDetailsQuery, GetPlaylistDetailsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetPlaylistDetailsQuery, GetPlaylistDetailsQueryVariables>(GetPlaylistDetailsDocument, options);
+        }
+export type GetPlaylistDetailsQueryHookResult = ReturnType<typeof useGetPlaylistDetailsQuery>;
+export type GetPlaylistDetailsLazyQueryHookResult = ReturnType<typeof useGetPlaylistDetailsLazyQuery>;
+export type GetPlaylistDetailsSuspenseQueryHookResult = ReturnType<typeof useGetPlaylistDetailsSuspenseQuery>;
+export type GetPlaylistDetailsQueryResult = Apollo.QueryResult<GetPlaylistDetailsQuery, GetPlaylistDetailsQueryVariables>;
+export const UpdatePlaylistDocument = gql`
+    mutation UpdatePlaylist($id: Int!, $updatePlaylistInput: UpdatePlaylistInput!) {
+  updatePlaylist(id: $id, updatePlaylistInput: $updatePlaylistInput) {
+    id
+    name
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export type UpdatePlaylistMutationFn = Apollo.MutationFunction<UpdatePlaylistMutation, UpdatePlaylistMutationVariables>;
+
+/**
+ * __useUpdatePlaylistMutation__
+ *
+ * To run a mutation, you first call `useUpdatePlaylistMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePlaylistMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePlaylistMutation, { data, loading, error }] = useUpdatePlaylistMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      updatePlaylistInput: // value for 'updatePlaylistInput'
+ *   },
+ * });
+ */
+export function useUpdatePlaylistMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePlaylistMutation, UpdatePlaylistMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePlaylistMutation, UpdatePlaylistMutationVariables>(UpdatePlaylistDocument, options);
+      }
+export type UpdatePlaylistMutationHookResult = ReturnType<typeof useUpdatePlaylistMutation>;
+export type UpdatePlaylistMutationResult = Apollo.MutationResult<UpdatePlaylistMutation>;
+export type UpdatePlaylistMutationOptions = Apollo.BaseMutationOptions<UpdatePlaylistMutation, UpdatePlaylistMutationVariables>;
+export const DeletePlaylistDocument = gql`
+    mutation DeletePlaylist($id: Int!) {
+  deletePlaylist(id: $id) {
+    success
+  }
+}
+    `;
+export type DeletePlaylistMutationFn = Apollo.MutationFunction<DeletePlaylistMutation, DeletePlaylistMutationVariables>;
+
+/**
+ * __useDeletePlaylistMutation__
+ *
+ * To run a mutation, you first call `useDeletePlaylistMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeletePlaylistMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deletePlaylistMutation, { data, loading, error }] = useDeletePlaylistMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeletePlaylistMutation(baseOptions?: Apollo.MutationHookOptions<DeletePlaylistMutation, DeletePlaylistMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeletePlaylistMutation, DeletePlaylistMutationVariables>(DeletePlaylistDocument, options);
+      }
+export type DeletePlaylistMutationHookResult = ReturnType<typeof useDeletePlaylistMutation>;
+export type DeletePlaylistMutationResult = Apollo.MutationResult<DeletePlaylistMutation>;
+export type DeletePlaylistMutationOptions = Apollo.BaseMutationOptions<DeletePlaylistMutation, DeletePlaylistMutationVariables>;
+export const UpdateChannelPlaylistDocument = gql`
+    mutation UpdateChannelPlaylist($updateChannelPlaylistInput: UpdateChannelPlaylistInput!) {
+  updateChannelPlaylist(updateChannelPlaylistInput: $updateChannelPlaylistInput) {
+    id
+    title
+    ytId
+    src
+    videoCount
+    playlistId
+  }
+}
+    `;
+export type UpdateChannelPlaylistMutationFn = Apollo.MutationFunction<UpdateChannelPlaylistMutation, UpdateChannelPlaylistMutationVariables>;
+
+/**
+ * __useUpdateChannelPlaylistMutation__
+ *
+ * To run a mutation, you first call `useUpdateChannelPlaylistMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateChannelPlaylistMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateChannelPlaylistMutation, { data, loading, error }] = useUpdateChannelPlaylistMutation({
+ *   variables: {
+ *      updateChannelPlaylistInput: // value for 'updateChannelPlaylistInput'
+ *   },
+ * });
+ */
+export function useUpdateChannelPlaylistMutation(baseOptions?: Apollo.MutationHookOptions<UpdateChannelPlaylistMutation, UpdateChannelPlaylistMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateChannelPlaylistMutation, UpdateChannelPlaylistMutationVariables>(UpdateChannelPlaylistDocument, options);
+      }
+export type UpdateChannelPlaylistMutationHookResult = ReturnType<typeof useUpdateChannelPlaylistMutation>;
+export type UpdateChannelPlaylistMutationResult = Apollo.MutationResult<UpdateChannelPlaylistMutation>;
+export type UpdateChannelPlaylistMutationOptions = Apollo.BaseMutationOptions<UpdateChannelPlaylistMutation, UpdateChannelPlaylistMutationVariables>;
+export const GetSlidesDocument = gql`
+    query GetSlides($input: GetSlidesInput!) {
+  getSlides(input: $input) {
+    ytVideoId
+    id
+    second
+    src
+    isFav
+  }
+}
+    `;
+
+/**
+ * __useGetSlidesQuery__
+ *
+ * To run a query within a React component, call `useGetSlidesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSlidesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSlidesQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useGetSlidesQuery(baseOptions: Apollo.QueryHookOptions<GetSlidesQuery, GetSlidesQueryVariables> & ({ variables: GetSlidesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSlidesQuery, GetSlidesQueryVariables>(GetSlidesDocument, options);
+      }
+export function useGetSlidesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSlidesQuery, GetSlidesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSlidesQuery, GetSlidesQueryVariables>(GetSlidesDocument, options);
+        }
+export function useGetSlidesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetSlidesQuery, GetSlidesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetSlidesQuery, GetSlidesQueryVariables>(GetSlidesDocument, options);
+        }
+export type GetSlidesQueryHookResult = ReturnType<typeof useGetSlidesQuery>;
+export type GetSlidesLazyQueryHookResult = ReturnType<typeof useGetSlidesLazyQuery>;
+export type GetSlidesSuspenseQueryHookResult = ReturnType<typeof useGetSlidesSuspenseQuery>;
+export type GetSlidesQueryResult = Apollo.QueryResult<GetSlidesQuery, GetSlidesQueryVariables>;
+export const GetScreenshotsDocument = gql`
+    query GetScreenshots {
+  screenshots {
+    month
+    count
+  }
+}
+    `;
+
+/**
+ * __useGetScreenshotsQuery__
+ *
+ * To run a query within a React component, call `useGetScreenshotsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetScreenshotsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetScreenshotsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetScreenshotsQuery(baseOptions?: Apollo.QueryHookOptions<GetScreenshotsQuery, GetScreenshotsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetScreenshotsQuery, GetScreenshotsQueryVariables>(GetScreenshotsDocument, options);
+      }
+export function useGetScreenshotsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetScreenshotsQuery, GetScreenshotsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetScreenshotsQuery, GetScreenshotsQueryVariables>(GetScreenshotsDocument, options);
+        }
+export function useGetScreenshotsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetScreenshotsQuery, GetScreenshotsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetScreenshotsQuery, GetScreenshotsQueryVariables>(GetScreenshotsDocument, options);
+        }
+export type GetScreenshotsQueryHookResult = ReturnType<typeof useGetScreenshotsQuery>;
+export type GetScreenshotsLazyQueryHookResult = ReturnType<typeof useGetScreenshotsLazyQuery>;
+export type GetScreenshotsSuspenseQueryHookResult = ReturnType<typeof useGetScreenshotsSuspenseQuery>;
+export type GetScreenshotsQueryResult = Apollo.QueryResult<GetScreenshotsQuery, GetScreenshotsQueryVariables>;
+export const GetScreenshotsByVideoDocument = gql`
+    query GetScreenshotsByVideo($ytVideoId: String!) {
+  screenshotsByVideo(ytVideoId: $ytVideoId) {
+    id
+    second
+    ytChannelId
+    ytVideoId
+    isFav
+    src
+  }
+}
+    `;
+
+/**
+ * __useGetScreenshotsByVideoQuery__
+ *
+ * To run a query within a React component, call `useGetScreenshotsByVideoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetScreenshotsByVideoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetScreenshotsByVideoQuery({
+ *   variables: {
+ *      ytVideoId: // value for 'ytVideoId'
+ *   },
+ * });
+ */
+export function useGetScreenshotsByVideoQuery(baseOptions: Apollo.QueryHookOptions<GetScreenshotsByVideoQuery, GetScreenshotsByVideoQueryVariables> & ({ variables: GetScreenshotsByVideoQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetScreenshotsByVideoQuery, GetScreenshotsByVideoQueryVariables>(GetScreenshotsByVideoDocument, options);
+      }
+export function useGetScreenshotsByVideoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetScreenshotsByVideoQuery, GetScreenshotsByVideoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetScreenshotsByVideoQuery, GetScreenshotsByVideoQueryVariables>(GetScreenshotsByVideoDocument, options);
+        }
+export function useGetScreenshotsByVideoSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetScreenshotsByVideoQuery, GetScreenshotsByVideoQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetScreenshotsByVideoQuery, GetScreenshotsByVideoQueryVariables>(GetScreenshotsByVideoDocument, options);
+        }
+export type GetScreenshotsByVideoQueryHookResult = ReturnType<typeof useGetScreenshotsByVideoQuery>;
+export type GetScreenshotsByVideoLazyQueryHookResult = ReturnType<typeof useGetScreenshotsByVideoLazyQuery>;
+export type GetScreenshotsByVideoSuspenseQueryHookResult = ReturnType<typeof useGetScreenshotsByVideoSuspenseQuery>;
+export type GetScreenshotsByVideoQueryResult = Apollo.QueryResult<GetScreenshotsByVideoQuery, GetScreenshotsByVideoQueryVariables>;
+export const FetchDashboardDocument = gql`
+    query FetchDashboard($fetchDashboardInput: FetchDashboardInput!) {
+  fetchDashboard(fetchDashboardInput: $fetchDashboardInput) {
+    channels {
+      id
+      createdAt
+      title
+      ytId
+      src
+      lastSyncedAt
+      videoCount
+      thumbnails
+      saved
+      defaults
+      storyboard
+      screenshotsCount
+      playlist {
+        id
+        name
+      }
+    }
+    total
+  }
+}
+    `;
+
+/**
+ * __useFetchDashboardQuery__
+ *
+ * To run a query within a React component, call `useFetchDashboardQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFetchDashboardQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFetchDashboardQuery({
+ *   variables: {
+ *      fetchDashboardInput: // value for 'fetchDashboardInput'
+ *   },
+ * });
+ */
+export function useFetchDashboardQuery(baseOptions: Apollo.QueryHookOptions<FetchDashboardQuery, FetchDashboardQueryVariables> & ({ variables: FetchDashboardQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FetchDashboardQuery, FetchDashboardQueryVariables>(FetchDashboardDocument, options);
+      }
+export function useFetchDashboardLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FetchDashboardQuery, FetchDashboardQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FetchDashboardQuery, FetchDashboardQueryVariables>(FetchDashboardDocument, options);
+        }
+export function useFetchDashboardSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FetchDashboardQuery, FetchDashboardQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FetchDashboardQuery, FetchDashboardQueryVariables>(FetchDashboardDocument, options);
+        }
+export type FetchDashboardQueryHookResult = ReturnType<typeof useFetchDashboardQuery>;
+export type FetchDashboardLazyQueryHookResult = ReturnType<typeof useFetchDashboardLazyQuery>;
+export type FetchDashboardSuspenseQueryHookResult = ReturnType<typeof useFetchDashboardSuspenseQuery>;
+export type FetchDashboardQueryResult = Apollo.QueryResult<FetchDashboardQuery, FetchDashboardQueryVariables>;
+export const FetchVideosDashboardDocument = gql`
+    query FetchVideosDashboard($page: Float, $sortOrder: String, $screenshotMin: Float, $screenshotMax: Float) {
+  fetchVideosDashboard(
+    page: $page
+    sortOrder: $sortOrder
+    screenshotMin: $screenshotMin
+    screenshotMax: $screenshotMax
+  ) {
+    videos {
+      id
+      ytId
+      title
+      src
+      channelId
+      channelTitle
+      channelYtId
+      screenshotCount
+    }
+    total
+  }
+}
+    `;
+
+/**
+ * __useFetchVideosDashboardQuery__
+ *
+ * To run a query within a React component, call `useFetchVideosDashboardQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFetchVideosDashboardQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFetchVideosDashboardQuery({
+ *   variables: {
+ *      page: // value for 'page'
+ *      sortOrder: // value for 'sortOrder'
+ *      screenshotMin: // value for 'screenshotMin'
+ *      screenshotMax: // value for 'screenshotMax'
+ *   },
+ * });
+ */
+export function useFetchVideosDashboardQuery(baseOptions?: Apollo.QueryHookOptions<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>(FetchVideosDashboardDocument, options);
+      }
+export function useFetchVideosDashboardLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>(FetchVideosDashboardDocument, options);
+        }
+export function useFetchVideosDashboardSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>(FetchVideosDashboardDocument, options);
+        }
+export type FetchVideosDashboardQueryHookResult = ReturnType<typeof useFetchVideosDashboardQuery>;
+export type FetchVideosDashboardLazyQueryHookResult = ReturnType<typeof useFetchVideosDashboardLazyQuery>;
+export type FetchVideosDashboardSuspenseQueryHookResult = ReturnType<typeof useFetchVideosDashboardSuspenseQuery>;
+export type FetchVideosDashboardQueryResult = Apollo.QueryResult<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>;
+export const SearchVideosDocument = gql`
+    query SearchVideos($searchInput: SearchInput!) {
+  searchVideos(searchInput: $searchInput) {
+    title
+    ytId
+    src
+    channelYtId
+    type
+  }
+}
+    `;
+
+/**
+ * __useSearchVideosQuery__
+ *
+ * To run a query within a React component, call `useSearchVideosQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchVideosQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchVideosQuery({
+ *   variables: {
+ *      searchInput: // value for 'searchInput'
+ *   },
+ * });
+ */
+export function useSearchVideosQuery(baseOptions: Apollo.QueryHookOptions<SearchVideosQuery, SearchVideosQueryVariables> & ({ variables: SearchVideosQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchVideosQuery, SearchVideosQueryVariables>(SearchVideosDocument, options);
+      }
+export function useSearchVideosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchVideosQuery, SearchVideosQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchVideosQuery, SearchVideosQueryVariables>(SearchVideosDocument, options);
+        }
+export function useSearchVideosSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<SearchVideosQuery, SearchVideosQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SearchVideosQuery, SearchVideosQueryVariables>(SearchVideosDocument, options);
+        }
+export type SearchVideosQueryHookResult = ReturnType<typeof useSearchVideosQuery>;
+export type SearchVideosLazyQueryHookResult = ReturnType<typeof useSearchVideosLazyQuery>;
+export type SearchVideosSuspenseQueryHookResult = ReturnType<typeof useSearchVideosSuspenseQuery>;
+export type SearchVideosQueryResult = Apollo.QueryResult<SearchVideosQuery, SearchVideosQueryVariables>;
+export const SearchChannelsDocument = gql`
+    query SearchChannels($searchInput: SearchInput!) {
+  searchChannels(searchInput: $searchInput) {
+    title
+    ytId
+    src
+    type
+  }
+}
+    `;
+
+/**
+ * __useSearchChannelsQuery__
+ *
+ * To run a query within a React component, call `useSearchChannelsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchChannelsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchChannelsQuery({
+ *   variables: {
+ *      searchInput: // value for 'searchInput'
+ *   },
+ * });
+ */
+export function useSearchChannelsQuery(baseOptions: Apollo.QueryHookOptions<SearchChannelsQuery, SearchChannelsQueryVariables> & ({ variables: SearchChannelsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchChannelsQuery, SearchChannelsQueryVariables>(SearchChannelsDocument, options);
+      }
+export function useSearchChannelsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchChannelsQuery, SearchChannelsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchChannelsQuery, SearchChannelsQueryVariables>(SearchChannelsDocument, options);
+        }
+export function useSearchChannelsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<SearchChannelsQuery, SearchChannelsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SearchChannelsQuery, SearchChannelsQueryVariables>(SearchChannelsDocument, options);
+        }
+export type SearchChannelsQueryHookResult = ReturnType<typeof useSearchChannelsQuery>;
+export type SearchChannelsLazyQueryHookResult = ReturnType<typeof useSearchChannelsLazyQuery>;
+export type SearchChannelsSuspenseQueryHookResult = ReturnType<typeof useSearchChannelsSuspenseQuery>;
+export type SearchChannelsQueryResult = Apollo.QueryResult<SearchChannelsQuery, SearchChannelsQueryVariables>;
+export const GetStatisticsCountsDocument = gql`
+    query GetStatisticsCounts {
+  statisticsCounts {
+    totalScreenshots
+    totalThumbnails
+    totalSaved
+  }
+}
+    `;
+
+/**
+ * __useGetStatisticsCountsQuery__
+ *
+ * To run a query within a React component, call `useGetStatisticsCountsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetStatisticsCountsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetStatisticsCountsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetStatisticsCountsQuery(baseOptions?: Apollo.QueryHookOptions<GetStatisticsCountsQuery, GetStatisticsCountsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetStatisticsCountsQuery, GetStatisticsCountsQueryVariables>(GetStatisticsCountsDocument, options);
+      }
+export function useGetStatisticsCountsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetStatisticsCountsQuery, GetStatisticsCountsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetStatisticsCountsQuery, GetStatisticsCountsQueryVariables>(GetStatisticsCountsDocument, options);
+        }
+export function useGetStatisticsCountsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetStatisticsCountsQuery, GetStatisticsCountsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetStatisticsCountsQuery, GetStatisticsCountsQueryVariables>(GetStatisticsCountsDocument, options);
+        }
+export type GetStatisticsCountsQueryHookResult = ReturnType<typeof useGetStatisticsCountsQuery>;
+export type GetStatisticsCountsLazyQueryHookResult = ReturnType<typeof useGetStatisticsCountsLazyQuery>;
+export type GetStatisticsCountsSuspenseQueryHookResult = ReturnType<typeof useGetStatisticsCountsSuspenseQuery>;
+export type GetStatisticsCountsQueryResult = Apollo.QueryResult<GetStatisticsCountsQuery, GetStatisticsCountsQueryVariables>;
+export const StoryboardsDocument = gql`
+    query Storyboards($ytChannelId: String!) {
+  storyboards(ytChannelId: $ytChannelId) {
+    id
+    ytId
+    title
+    src
+    publishedAt
+    createdAt
+    updatedAt
+    channelId
+    nextPageToken
+    duration
+    artifact
+    storyboard {
+      id
+      uploadsVideoId
+      fragments
+      url
+      createdAt
+      updatedAt
+    }
+  }
+}
+    `;
+
+/**
+ * __useStoryboardsQuery__
+ *
+ * To run a query within a React component, call `useStoryboardsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useStoryboardsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useStoryboardsQuery({
+ *   variables: {
+ *      ytChannelId: // value for 'ytChannelId'
+ *   },
+ * });
+ */
+export function useStoryboardsQuery(baseOptions: Apollo.QueryHookOptions<StoryboardsQuery, StoryboardsQueryVariables> & ({ variables: StoryboardsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<StoryboardsQuery, StoryboardsQueryVariables>(StoryboardsDocument, options);
+      }
+export function useStoryboardsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<StoryboardsQuery, StoryboardsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<StoryboardsQuery, StoryboardsQueryVariables>(StoryboardsDocument, options);
+        }
+export function useStoryboardsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<StoryboardsQuery, StoryboardsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<StoryboardsQuery, StoryboardsQueryVariables>(StoryboardsDocument, options);
+        }
+export type StoryboardsQueryHookResult = ReturnType<typeof useStoryboardsQuery>;
+export type StoryboardsLazyQueryHookResult = ReturnType<typeof useStoryboardsLazyQuery>;
+export type StoryboardsSuspenseQueryHookResult = ReturnType<typeof useStoryboardsSuspenseQuery>;
+export type StoryboardsQueryResult = Apollo.QueryResult<StoryboardsQuery, StoryboardsQueryVariables>;
+export const GetThumbnailByVideoIdDocument = gql`
+    query GetThumbnailByVideoId($ytVideoId: String!) {
+  thumbnailByVideoId(ytVideoId: $ytVideoId) {
+    createdAt
+    id
+    perRow
+    updatedAt
+    uploadsVideoId
+    totalSeconds
+    thumbnailsCount
+    uploadsVideo {
+      ytId
+      channel {
+        id
+        ytId
+        title
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetThumbnailByVideoIdQuery__
+ *
+ * To run a query within a React component, call `useGetThumbnailByVideoIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetThumbnailByVideoIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetThumbnailByVideoIdQuery({
+ *   variables: {
+ *      ytVideoId: // value for 'ytVideoId'
+ *   },
+ * });
+ */
+export function useGetThumbnailByVideoIdQuery(baseOptions: Apollo.QueryHookOptions<GetThumbnailByVideoIdQuery, GetThumbnailByVideoIdQueryVariables> & ({ variables: GetThumbnailByVideoIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetThumbnailByVideoIdQuery, GetThumbnailByVideoIdQueryVariables>(GetThumbnailByVideoIdDocument, options);
+      }
+export function useGetThumbnailByVideoIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetThumbnailByVideoIdQuery, GetThumbnailByVideoIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetThumbnailByVideoIdQuery, GetThumbnailByVideoIdQueryVariables>(GetThumbnailByVideoIdDocument, options);
+        }
+export function useGetThumbnailByVideoIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetThumbnailByVideoIdQuery, GetThumbnailByVideoIdQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetThumbnailByVideoIdQuery, GetThumbnailByVideoIdQueryVariables>(GetThumbnailByVideoIdDocument, options);
+        }
+export type GetThumbnailByVideoIdQueryHookResult = ReturnType<typeof useGetThumbnailByVideoIdQuery>;
+export type GetThumbnailByVideoIdLazyQueryHookResult = ReturnType<typeof useGetThumbnailByVideoIdLazyQuery>;
+export type GetThumbnailByVideoIdSuspenseQueryHookResult = ReturnType<typeof useGetThumbnailByVideoIdSuspenseQuery>;
+export type GetThumbnailByVideoIdQueryResult = Apollo.QueryResult<GetThumbnailByVideoIdQuery, GetThumbnailByVideoIdQueryVariables>;
 export const SaveUploadDocument = gql`
     mutation SaveUpload($saveUploadInput: SaveUploadInput!) {
   saveUpload(saveUploadInput: $saveUploadInput) {
@@ -1301,394 +2167,6 @@ export type UploadsListQueryHookResult = ReturnType<typeof useUploadsListQuery>;
 export type UploadsListLazyQueryHookResult = ReturnType<typeof useUploadsListLazyQuery>;
 export type UploadsListSuspenseQueryHookResult = ReturnType<typeof useUploadsListSuspenseQuery>;
 export type UploadsListQueryResult = Apollo.QueryResult<UploadsListQuery, UploadsListQueryVariables>;
-export const StoryboardsDocument = gql`
-    query Storyboards($ytChannelId: String!) {
-  storyboards(ytChannelId: $ytChannelId) {
-    id
-    ytId
-    title
-    src
-    publishedAt
-    createdAt
-    updatedAt
-    channelId
-    nextPageToken
-    duration
-    artifact
-    storyboard {
-      id
-      uploadsVideoId
-      fragments
-      url
-      createdAt
-      updatedAt
-    }
-  }
-}
-    `;
-
-/**
- * __useStoryboardsQuery__
- *
- * To run a query within a React component, call `useStoryboardsQuery` and pass it any options that fit your needs.
- * When your component renders, `useStoryboardsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useStoryboardsQuery({
- *   variables: {
- *      ytChannelId: // value for 'ytChannelId'
- *   },
- * });
- */
-export function useStoryboardsQuery(baseOptions: Apollo.QueryHookOptions<StoryboardsQuery, StoryboardsQueryVariables> & ({ variables: StoryboardsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<StoryboardsQuery, StoryboardsQueryVariables>(StoryboardsDocument, options);
-      }
-export function useStoryboardsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<StoryboardsQuery, StoryboardsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<StoryboardsQuery, StoryboardsQueryVariables>(StoryboardsDocument, options);
-        }
-export function useStoryboardsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<StoryboardsQuery, StoryboardsQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<StoryboardsQuery, StoryboardsQueryVariables>(StoryboardsDocument, options);
-        }
-export type StoryboardsQueryHookResult = ReturnType<typeof useStoryboardsQuery>;
-export type StoryboardsLazyQueryHookResult = ReturnType<typeof useStoryboardsLazyQuery>;
-export type StoryboardsSuspenseQueryHookResult = ReturnType<typeof useStoryboardsSuspenseQuery>;
-export type StoryboardsQueryResult = Apollo.QueryResult<StoryboardsQuery, StoryboardsQueryVariables>;
-export const SearchVideosDocument = gql`
-    query SearchVideos($searchInput: SearchInput!) {
-  searchVideos(searchInput: $searchInput) {
-    title
-    ytId
-    src
-    channelYtId
-    type
-  }
-}
-    `;
-
-/**
- * __useSearchVideosQuery__
- *
- * To run a query within a React component, call `useSearchVideosQuery` and pass it any options that fit your needs.
- * When your component renders, `useSearchVideosQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useSearchVideosQuery({
- *   variables: {
- *      searchInput: // value for 'searchInput'
- *   },
- * });
- */
-export function useSearchVideosQuery(baseOptions: Apollo.QueryHookOptions<SearchVideosQuery, SearchVideosQueryVariables> & ({ variables: SearchVideosQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<SearchVideosQuery, SearchVideosQueryVariables>(SearchVideosDocument, options);
-      }
-export function useSearchVideosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchVideosQuery, SearchVideosQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<SearchVideosQuery, SearchVideosQueryVariables>(SearchVideosDocument, options);
-        }
-export function useSearchVideosSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<SearchVideosQuery, SearchVideosQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<SearchVideosQuery, SearchVideosQueryVariables>(SearchVideosDocument, options);
-        }
-export type SearchVideosQueryHookResult = ReturnType<typeof useSearchVideosQuery>;
-export type SearchVideosLazyQueryHookResult = ReturnType<typeof useSearchVideosLazyQuery>;
-export type SearchVideosSuspenseQueryHookResult = ReturnType<typeof useSearchVideosSuspenseQuery>;
-export type SearchVideosQueryResult = Apollo.QueryResult<SearchVideosQuery, SearchVideosQueryVariables>;
-export const SearchChannelsDocument = gql`
-    query SearchChannels($searchInput: SearchInput!) {
-  searchChannels(searchInput: $searchInput) {
-    title
-    ytId
-    src
-    type
-  }
-}
-    `;
-
-/**
- * __useSearchChannelsQuery__
- *
- * To run a query within a React component, call `useSearchChannelsQuery` and pass it any options that fit your needs.
- * When your component renders, `useSearchChannelsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useSearchChannelsQuery({
- *   variables: {
- *      searchInput: // value for 'searchInput'
- *   },
- * });
- */
-export function useSearchChannelsQuery(baseOptions: Apollo.QueryHookOptions<SearchChannelsQuery, SearchChannelsQueryVariables> & ({ variables: SearchChannelsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<SearchChannelsQuery, SearchChannelsQueryVariables>(SearchChannelsDocument, options);
-      }
-export function useSearchChannelsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchChannelsQuery, SearchChannelsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<SearchChannelsQuery, SearchChannelsQueryVariables>(SearchChannelsDocument, options);
-        }
-export function useSearchChannelsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<SearchChannelsQuery, SearchChannelsQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<SearchChannelsQuery, SearchChannelsQueryVariables>(SearchChannelsDocument, options);
-        }
-export type SearchChannelsQueryHookResult = ReturnType<typeof useSearchChannelsQuery>;
-export type SearchChannelsLazyQueryHookResult = ReturnType<typeof useSearchChannelsLazyQuery>;
-export type SearchChannelsSuspenseQueryHookResult = ReturnType<typeof useSearchChannelsSuspenseQuery>;
-export type SearchChannelsQueryResult = Apollo.QueryResult<SearchChannelsQuery, SearchChannelsQueryVariables>;
-export const CreatePlaylistDocument = gql`
-    mutation CreatePlaylist($createPlaylistInput: CreatePlaylistInput!) {
-  createPlaylist(createPlaylistInput: $createPlaylistInput) {
-    id
-    name
-    createdAt
-    updatedAt
-  }
-}
-    `;
-export type CreatePlaylistMutationFn = Apollo.MutationFunction<CreatePlaylistMutation, CreatePlaylistMutationVariables>;
-
-/**
- * __useCreatePlaylistMutation__
- *
- * To run a mutation, you first call `useCreatePlaylistMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreatePlaylistMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createPlaylistMutation, { data, loading, error }] = useCreatePlaylistMutation({
- *   variables: {
- *      createPlaylistInput: // value for 'createPlaylistInput'
- *   },
- * });
- */
-export function useCreatePlaylistMutation(baseOptions?: Apollo.MutationHookOptions<CreatePlaylistMutation, CreatePlaylistMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreatePlaylistMutation, CreatePlaylistMutationVariables>(CreatePlaylistDocument, options);
-      }
-export type CreatePlaylistMutationHookResult = ReturnType<typeof useCreatePlaylistMutation>;
-export type CreatePlaylistMutationResult = Apollo.MutationResult<CreatePlaylistMutation>;
-export type CreatePlaylistMutationOptions = Apollo.BaseMutationOptions<CreatePlaylistMutation, CreatePlaylistMutationVariables>;
-export const GetPlaylistsDocument = gql`
-    query GetPlaylists {
-  playlists {
-    id
-    name
-    createdAt
-    updatedAt
-    channels {
-      ...ChannelFragment
-      title
-    }
-  }
-}
-    ${ChannelFragmentFragmentDoc}`;
-
-/**
- * __useGetPlaylistsQuery__
- *
- * To run a query within a React component, call `useGetPlaylistsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetPlaylistsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetPlaylistsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetPlaylistsQuery(baseOptions?: Apollo.QueryHookOptions<GetPlaylistsQuery, GetPlaylistsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetPlaylistsQuery, GetPlaylistsQueryVariables>(GetPlaylistsDocument, options);
-      }
-export function useGetPlaylistsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlaylistsQuery, GetPlaylistsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetPlaylistsQuery, GetPlaylistsQueryVariables>(GetPlaylistsDocument, options);
-        }
-export function useGetPlaylistsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetPlaylistsQuery, GetPlaylistsQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetPlaylistsQuery, GetPlaylistsQueryVariables>(GetPlaylistsDocument, options);
-        }
-export type GetPlaylistsQueryHookResult = ReturnType<typeof useGetPlaylistsQuery>;
-export type GetPlaylistsLazyQueryHookResult = ReturnType<typeof useGetPlaylistsLazyQuery>;
-export type GetPlaylistsSuspenseQueryHookResult = ReturnType<typeof useGetPlaylistsSuspenseQuery>;
-export type GetPlaylistsQueryResult = Apollo.QueryResult<GetPlaylistsQuery, GetPlaylistsQueryVariables>;
-export const GetPlaylistDetailsDocument = gql`
-    query GetPlaylistDetails($id: Int!) {
-  playlistDetails(id: $id) {
-    id
-    name
-    createdAt
-    updatedAt
-    channels {
-      id
-      title
-      ytId
-      src
-      videoCount
-      savedCount
-      screenshotCount
-      thumbnailCount
-    }
-  }
-}
-    `;
-
-/**
- * __useGetPlaylistDetailsQuery__
- *
- * To run a query within a React component, call `useGetPlaylistDetailsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetPlaylistDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetPlaylistDetailsQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useGetPlaylistDetailsQuery(baseOptions: Apollo.QueryHookOptions<GetPlaylistDetailsQuery, GetPlaylistDetailsQueryVariables> & ({ variables: GetPlaylistDetailsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetPlaylistDetailsQuery, GetPlaylistDetailsQueryVariables>(GetPlaylistDetailsDocument, options);
-      }
-export function useGetPlaylistDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlaylistDetailsQuery, GetPlaylistDetailsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetPlaylistDetailsQuery, GetPlaylistDetailsQueryVariables>(GetPlaylistDetailsDocument, options);
-        }
-export function useGetPlaylistDetailsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetPlaylistDetailsQuery, GetPlaylistDetailsQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetPlaylistDetailsQuery, GetPlaylistDetailsQueryVariables>(GetPlaylistDetailsDocument, options);
-        }
-export type GetPlaylistDetailsQueryHookResult = ReturnType<typeof useGetPlaylistDetailsQuery>;
-export type GetPlaylistDetailsLazyQueryHookResult = ReturnType<typeof useGetPlaylistDetailsLazyQuery>;
-export type GetPlaylistDetailsSuspenseQueryHookResult = ReturnType<typeof useGetPlaylistDetailsSuspenseQuery>;
-export type GetPlaylistDetailsQueryResult = Apollo.QueryResult<GetPlaylistDetailsQuery, GetPlaylistDetailsQueryVariables>;
-export const UpdatePlaylistDocument = gql`
-    mutation UpdatePlaylist($id: Int!, $updatePlaylistInput: UpdatePlaylistInput!) {
-  updatePlaylist(id: $id, updatePlaylistInput: $updatePlaylistInput) {
-    id
-    name
-    createdAt
-    updatedAt
-  }
-}
-    `;
-export type UpdatePlaylistMutationFn = Apollo.MutationFunction<UpdatePlaylistMutation, UpdatePlaylistMutationVariables>;
-
-/**
- * __useUpdatePlaylistMutation__
- *
- * To run a mutation, you first call `useUpdatePlaylistMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdatePlaylistMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updatePlaylistMutation, { data, loading, error }] = useUpdatePlaylistMutation({
- *   variables: {
- *      id: // value for 'id'
- *      updatePlaylistInput: // value for 'updatePlaylistInput'
- *   },
- * });
- */
-export function useUpdatePlaylistMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePlaylistMutation, UpdatePlaylistMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdatePlaylistMutation, UpdatePlaylistMutationVariables>(UpdatePlaylistDocument, options);
-      }
-export type UpdatePlaylistMutationHookResult = ReturnType<typeof useUpdatePlaylistMutation>;
-export type UpdatePlaylistMutationResult = Apollo.MutationResult<UpdatePlaylistMutation>;
-export type UpdatePlaylistMutationOptions = Apollo.BaseMutationOptions<UpdatePlaylistMutation, UpdatePlaylistMutationVariables>;
-export const DeletePlaylistDocument = gql`
-    mutation DeletePlaylist($id: Int!) {
-  deletePlaylist(id: $id) {
-    success
-  }
-}
-    `;
-export type DeletePlaylistMutationFn = Apollo.MutationFunction<DeletePlaylistMutation, DeletePlaylistMutationVariables>;
-
-/**
- * __useDeletePlaylistMutation__
- *
- * To run a mutation, you first call `useDeletePlaylistMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useDeletePlaylistMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [deletePlaylistMutation, { data, loading, error }] = useDeletePlaylistMutation({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useDeletePlaylistMutation(baseOptions?: Apollo.MutationHookOptions<DeletePlaylistMutation, DeletePlaylistMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<DeletePlaylistMutation, DeletePlaylistMutationVariables>(DeletePlaylistDocument, options);
-      }
-export type DeletePlaylistMutationHookResult = ReturnType<typeof useDeletePlaylistMutation>;
-export type DeletePlaylistMutationResult = Apollo.MutationResult<DeletePlaylistMutation>;
-export type DeletePlaylistMutationOptions = Apollo.BaseMutationOptions<DeletePlaylistMutation, DeletePlaylistMutationVariables>;
-export const UpdateChannelPlaylistDocument = gql`
-    mutation UpdateChannelPlaylist($updateChannelPlaylistInput: UpdateChannelPlaylistInput!) {
-  updateChannelPlaylist(updateChannelPlaylistInput: $updateChannelPlaylistInput) {
-    id
-    title
-    ytId
-    src
-    videoCount
-    playlistId
-  }
-}
-    `;
-export type UpdateChannelPlaylistMutationFn = Apollo.MutationFunction<UpdateChannelPlaylistMutation, UpdateChannelPlaylistMutationVariables>;
-
-/**
- * __useUpdateChannelPlaylistMutation__
- *
- * To run a mutation, you first call `useUpdateChannelPlaylistMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateChannelPlaylistMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateChannelPlaylistMutation, { data, loading, error }] = useUpdateChannelPlaylistMutation({
- *   variables: {
- *      updateChannelPlaylistInput: // value for 'updateChannelPlaylistInput'
- *   },
- * });
- */
-export function useUpdateChannelPlaylistMutation(baseOptions?: Apollo.MutationHookOptions<UpdateChannelPlaylistMutation, UpdateChannelPlaylistMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateChannelPlaylistMutation, UpdateChannelPlaylistMutationVariables>(UpdateChannelPlaylistDocument, options);
-      }
-export type UpdateChannelPlaylistMutationHookResult = ReturnType<typeof useUpdateChannelPlaylistMutation>;
-export type UpdateChannelPlaylistMutationResult = Apollo.MutationResult<UpdateChannelPlaylistMutation>;
-export type UpdateChannelPlaylistMutationOptions = Apollo.BaseMutationOptions<UpdateChannelPlaylistMutation, UpdateChannelPlaylistMutationVariables>;
 export const UploadsWithThumbnailsDocument = gql`
     query UploadsWithThumbnails($input: UploadsWithThumbnailsInput!) {
   uploadsWithThumbnails(input: $input) {
@@ -1730,484 +2208,6 @@ export type UploadsWithThumbnailsQueryHookResult = ReturnType<typeof useUploadsW
 export type UploadsWithThumbnailsLazyQueryHookResult = ReturnType<typeof useUploadsWithThumbnailsLazyQuery>;
 export type UploadsWithThumbnailsSuspenseQueryHookResult = ReturnType<typeof useUploadsWithThumbnailsSuspenseQuery>;
 export type UploadsWithThumbnailsQueryResult = Apollo.QueryResult<UploadsWithThumbnailsQuery, UploadsWithThumbnailsQueryVariables>;
-export const GetSlidesDocument = gql`
-    query GetSlides($input: GetSlidesInput!) {
-  getSlides(input: $input) {
-    ytVideoId
-    id
-    second
-    src
-    isFav
-  }
-}
-    `;
-
-/**
- * __useGetSlidesQuery__
- *
- * To run a query within a React component, call `useGetSlidesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetSlidesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetSlidesQuery({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useGetSlidesQuery(baseOptions: Apollo.QueryHookOptions<GetSlidesQuery, GetSlidesQueryVariables> & ({ variables: GetSlidesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetSlidesQuery, GetSlidesQueryVariables>(GetSlidesDocument, options);
-      }
-export function useGetSlidesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSlidesQuery, GetSlidesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetSlidesQuery, GetSlidesQueryVariables>(GetSlidesDocument, options);
-        }
-export function useGetSlidesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetSlidesQuery, GetSlidesQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetSlidesQuery, GetSlidesQueryVariables>(GetSlidesDocument, options);
-        }
-export type GetSlidesQueryHookResult = ReturnType<typeof useGetSlidesQuery>;
-export type GetSlidesLazyQueryHookResult = ReturnType<typeof useGetSlidesLazyQuery>;
-export type GetSlidesSuspenseQueryHookResult = ReturnType<typeof useGetSlidesSuspenseQuery>;
-export type GetSlidesQueryResult = Apollo.QueryResult<GetSlidesQuery, GetSlidesQueryVariables>;
-export const GetChannelForPlaylistDocument = gql`
-    query GetChannelForPlaylist($ytChannelId: String!) {
-  channelForPlaylist(ytChannelId: $ytChannelId) {
-    id
-    title
-  }
-}
-    `;
-
-/**
- * __useGetChannelForPlaylistQuery__
- *
- * To run a query within a React component, call `useGetChannelForPlaylistQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetChannelForPlaylistQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetChannelForPlaylistQuery({
- *   variables: {
- *      ytChannelId: // value for 'ytChannelId'
- *   },
- * });
- */
-export function useGetChannelForPlaylistQuery(baseOptions: Apollo.QueryHookOptions<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables> & ({ variables: GetChannelForPlaylistQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>(GetChannelForPlaylistDocument, options);
-      }
-export function useGetChannelForPlaylistLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>(GetChannelForPlaylistDocument, options);
-        }
-export function useGetChannelForPlaylistSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>(GetChannelForPlaylistDocument, options);
-        }
-export type GetChannelForPlaylistQueryHookResult = ReturnType<typeof useGetChannelForPlaylistQuery>;
-export type GetChannelForPlaylistLazyQueryHookResult = ReturnType<typeof useGetChannelForPlaylistLazyQuery>;
-export type GetChannelForPlaylistSuspenseQueryHookResult = ReturnType<typeof useGetChannelForPlaylistSuspenseQuery>;
-export type GetChannelForPlaylistQueryResult = Apollo.QueryResult<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>;
-export const GetChannelMetadataDocument = gql`
-    query GetChannelMetadata($ytChannelId: String!) {
-  channelMetadata(ytChannelId: $ytChannelId) {
-    id
-    title
-    fetchedUntilEnd
-    videoCount
-    lastSyncedAt
-    playlist {
-      id
-      name
-    }
-    videoArtifactsCount
-    savedArtifactsCount
-    thumbnailArtifactsCount
-    screenshotArtifactsCount
-    storyboardArtifactsCount
-  }
-}
-    `;
-
-/**
- * __useGetChannelMetadataQuery__
- *
- * To run a query within a React component, call `useGetChannelMetadataQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetChannelMetadataQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetChannelMetadataQuery({
- *   variables: {
- *      ytChannelId: // value for 'ytChannelId'
- *   },
- * });
- */
-export function useGetChannelMetadataQuery(baseOptions: Apollo.QueryHookOptions<GetChannelMetadataQuery, GetChannelMetadataQueryVariables> & ({ variables: GetChannelMetadataQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>(GetChannelMetadataDocument, options);
-      }
-export function useGetChannelMetadataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>(GetChannelMetadataDocument, options);
-        }
-export function useGetChannelMetadataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>(GetChannelMetadataDocument, options);
-        }
-export type GetChannelMetadataQueryHookResult = ReturnType<typeof useGetChannelMetadataQuery>;
-export type GetChannelMetadataLazyQueryHookResult = ReturnType<typeof useGetChannelMetadataLazyQuery>;
-export type GetChannelMetadataSuspenseQueryHookResult = ReturnType<typeof useGetChannelMetadataSuspenseQuery>;
-export type GetChannelMetadataQueryResult = Apollo.QueryResult<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>;
-export const FetchDashboardDocument = gql`
-    query FetchDashboard($fetchDashboardInput: FetchDashboardInput!) {
-  fetchDashboard(fetchDashboardInput: $fetchDashboardInput) {
-    channels {
-      id
-      createdAt
-      title
-      ytId
-      src
-      lastSyncedAt
-      videoCount
-      thumbnails
-      saved
-      defaults
-      storyboard
-      screenshotsCount
-      playlist {
-        id
-        name
-      }
-    }
-    total
-  }
-}
-    `;
-
-/**
- * __useFetchDashboardQuery__
- *
- * To run a query within a React component, call `useFetchDashboardQuery` and pass it any options that fit your needs.
- * When your component renders, `useFetchDashboardQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFetchDashboardQuery({
- *   variables: {
- *      fetchDashboardInput: // value for 'fetchDashboardInput'
- *   },
- * });
- */
-export function useFetchDashboardQuery(baseOptions: Apollo.QueryHookOptions<FetchDashboardQuery, FetchDashboardQueryVariables> & ({ variables: FetchDashboardQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<FetchDashboardQuery, FetchDashboardQueryVariables>(FetchDashboardDocument, options);
-      }
-export function useFetchDashboardLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FetchDashboardQuery, FetchDashboardQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<FetchDashboardQuery, FetchDashboardQueryVariables>(FetchDashboardDocument, options);
-        }
-export function useFetchDashboardSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FetchDashboardQuery, FetchDashboardQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<FetchDashboardQuery, FetchDashboardQueryVariables>(FetchDashboardDocument, options);
-        }
-export type FetchDashboardQueryHookResult = ReturnType<typeof useFetchDashboardQuery>;
-export type FetchDashboardLazyQueryHookResult = ReturnType<typeof useFetchDashboardLazyQuery>;
-export type FetchDashboardSuspenseQueryHookResult = ReturnType<typeof useFetchDashboardSuspenseQuery>;
-export type FetchDashboardQueryResult = Apollo.QueryResult<FetchDashboardQuery, FetchDashboardQueryVariables>;
-export const FetchVideosDashboardDocument = gql`
-    query FetchVideosDashboard($page: Float, $sortOrder: String, $screenshotMin: Float, $screenshotMax: Float) {
-  fetchVideosDashboard(
-    page: $page
-    sortOrder: $sortOrder
-    screenshotMin: $screenshotMin
-    screenshotMax: $screenshotMax
-  ) {
-    videos {
-      id
-      ytId
-      title
-      src
-      channelId
-      channelTitle
-      channelYtId
-      screenshotCount
-    }
-    total
-  }
-}
-    `;
-
-/**
- * __useFetchVideosDashboardQuery__
- *
- * To run a query within a React component, call `useFetchVideosDashboardQuery` and pass it any options that fit your needs.
- * When your component renders, `useFetchVideosDashboardQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFetchVideosDashboardQuery({
- *   variables: {
- *      page: // value for 'page'
- *      sortOrder: // value for 'sortOrder'
- *      screenshotMin: // value for 'screenshotMin'
- *      screenshotMax: // value for 'screenshotMax'
- *   },
- * });
- */
-export function useFetchVideosDashboardQuery(baseOptions?: Apollo.QueryHookOptions<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>(FetchVideosDashboardDocument, options);
-      }
-export function useFetchVideosDashboardLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>(FetchVideosDashboardDocument, options);
-        }
-export function useFetchVideosDashboardSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>(FetchVideosDashboardDocument, options);
-        }
-export type FetchVideosDashboardQueryHookResult = ReturnType<typeof useFetchVideosDashboardQuery>;
-export type FetchVideosDashboardLazyQueryHookResult = ReturnType<typeof useFetchVideosDashboardLazyQuery>;
-export type FetchVideosDashboardSuspenseQueryHookResult = ReturnType<typeof useFetchVideosDashboardSuspenseQuery>;
-export type FetchVideosDashboardQueryResult = Apollo.QueryResult<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>;
-export const GetScreenshotsDocument = gql`
-    query GetScreenshots {
-  screenshots {
-    month
-    count
-  }
-}
-    `;
-
-/**
- * __useGetScreenshotsQuery__
- *
- * To run a query within a React component, call `useGetScreenshotsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetScreenshotsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetScreenshotsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetScreenshotsQuery(baseOptions?: Apollo.QueryHookOptions<GetScreenshotsQuery, GetScreenshotsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetScreenshotsQuery, GetScreenshotsQueryVariables>(GetScreenshotsDocument, options);
-      }
-export function useGetScreenshotsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetScreenshotsQuery, GetScreenshotsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetScreenshotsQuery, GetScreenshotsQueryVariables>(GetScreenshotsDocument, options);
-        }
-export function useGetScreenshotsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetScreenshotsQuery, GetScreenshotsQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetScreenshotsQuery, GetScreenshotsQueryVariables>(GetScreenshotsDocument, options);
-        }
-export type GetScreenshotsQueryHookResult = ReturnType<typeof useGetScreenshotsQuery>;
-export type GetScreenshotsLazyQueryHookResult = ReturnType<typeof useGetScreenshotsLazyQuery>;
-export type GetScreenshotsSuspenseQueryHookResult = ReturnType<typeof useGetScreenshotsSuspenseQuery>;
-export type GetScreenshotsQueryResult = Apollo.QueryResult<GetScreenshotsQuery, GetScreenshotsQueryVariables>;
-export const GetScreenshotsByVideoDocument = gql`
-    query GetScreenshotsByVideo($ytVideoId: String!) {
-  screenshotsByVideo(ytVideoId: $ytVideoId) {
-    id
-    second
-    ytChannelId
-    ytVideoId
-    isFav
-    src
-  }
-}
-    `;
-
-/**
- * __useGetScreenshotsByVideoQuery__
- *
- * To run a query within a React component, call `useGetScreenshotsByVideoQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetScreenshotsByVideoQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetScreenshotsByVideoQuery({
- *   variables: {
- *      ytVideoId: // value for 'ytVideoId'
- *   },
- * });
- */
-export function useGetScreenshotsByVideoQuery(baseOptions: Apollo.QueryHookOptions<GetScreenshotsByVideoQuery, GetScreenshotsByVideoQueryVariables> & ({ variables: GetScreenshotsByVideoQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetScreenshotsByVideoQuery, GetScreenshotsByVideoQueryVariables>(GetScreenshotsByVideoDocument, options);
-      }
-export function useGetScreenshotsByVideoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetScreenshotsByVideoQuery, GetScreenshotsByVideoQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetScreenshotsByVideoQuery, GetScreenshotsByVideoQueryVariables>(GetScreenshotsByVideoDocument, options);
-        }
-export function useGetScreenshotsByVideoSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetScreenshotsByVideoQuery, GetScreenshotsByVideoQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetScreenshotsByVideoQuery, GetScreenshotsByVideoQueryVariables>(GetScreenshotsByVideoDocument, options);
-        }
-export type GetScreenshotsByVideoQueryHookResult = ReturnType<typeof useGetScreenshotsByVideoQuery>;
-export type GetScreenshotsByVideoLazyQueryHookResult = ReturnType<typeof useGetScreenshotsByVideoLazyQuery>;
-export type GetScreenshotsByVideoSuspenseQueryHookResult = ReturnType<typeof useGetScreenshotsByVideoSuspenseQuery>;
-export type GetScreenshotsByVideoQueryResult = Apollo.QueryResult<GetScreenshotsByVideoQuery, GetScreenshotsByVideoQueryVariables>;
-export const GetStatisticsCountsDocument = gql`
-    query GetStatisticsCounts {
-  statisticsCounts {
-    totalScreenshots
-    totalThumbnails
-    totalSaved
-  }
-}
-    `;
-
-/**
- * __useGetStatisticsCountsQuery__
- *
- * To run a query within a React component, call `useGetStatisticsCountsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetStatisticsCountsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetStatisticsCountsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetStatisticsCountsQuery(baseOptions?: Apollo.QueryHookOptions<GetStatisticsCountsQuery, GetStatisticsCountsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetStatisticsCountsQuery, GetStatisticsCountsQueryVariables>(GetStatisticsCountsDocument, options);
-      }
-export function useGetStatisticsCountsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetStatisticsCountsQuery, GetStatisticsCountsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetStatisticsCountsQuery, GetStatisticsCountsQueryVariables>(GetStatisticsCountsDocument, options);
-        }
-export function useGetStatisticsCountsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetStatisticsCountsQuery, GetStatisticsCountsQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetStatisticsCountsQuery, GetStatisticsCountsQueryVariables>(GetStatisticsCountsDocument, options);
-        }
-export type GetStatisticsCountsQueryHookResult = ReturnType<typeof useGetStatisticsCountsQuery>;
-export type GetStatisticsCountsLazyQueryHookResult = ReturnType<typeof useGetStatisticsCountsLazyQuery>;
-export type GetStatisticsCountsSuspenseQueryHookResult = ReturnType<typeof useGetStatisticsCountsSuspenseQuery>;
-export type GetStatisticsCountsQueryResult = Apollo.QueryResult<GetStatisticsCountsQuery, GetStatisticsCountsQueryVariables>;
-export const GetThumbnailByVideoIdDocument = gql`
-    query GetThumbnailByVideoId($ytVideoId: String!) {
-  thumbnailByVideoId(ytVideoId: $ytVideoId) {
-    createdAt
-    id
-    perRow
-    updatedAt
-    uploadsVideoId
-    totalSeconds
-    thumbnailsCount
-    uploadsVideo {
-      ytId
-      channel {
-        id
-        ytId
-        title
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useGetThumbnailByVideoIdQuery__
- *
- * To run a query within a React component, call `useGetThumbnailByVideoIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetThumbnailByVideoIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetThumbnailByVideoIdQuery({
- *   variables: {
- *      ytVideoId: // value for 'ytVideoId'
- *   },
- * });
- */
-export function useGetThumbnailByVideoIdQuery(baseOptions: Apollo.QueryHookOptions<GetThumbnailByVideoIdQuery, GetThumbnailByVideoIdQueryVariables> & ({ variables: GetThumbnailByVideoIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetThumbnailByVideoIdQuery, GetThumbnailByVideoIdQueryVariables>(GetThumbnailByVideoIdDocument, options);
-      }
-export function useGetThumbnailByVideoIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetThumbnailByVideoIdQuery, GetThumbnailByVideoIdQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetThumbnailByVideoIdQuery, GetThumbnailByVideoIdQueryVariables>(GetThumbnailByVideoIdDocument, options);
-        }
-export function useGetThumbnailByVideoIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetThumbnailByVideoIdQuery, GetThumbnailByVideoIdQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetThumbnailByVideoIdQuery, GetThumbnailByVideoIdQueryVariables>(GetThumbnailByVideoIdDocument, options);
-        }
-export type GetThumbnailByVideoIdQueryHookResult = ReturnType<typeof useGetThumbnailByVideoIdQuery>;
-export type GetThumbnailByVideoIdLazyQueryHookResult = ReturnType<typeof useGetThumbnailByVideoIdLazyQuery>;
-export type GetThumbnailByVideoIdSuspenseQueryHookResult = ReturnType<typeof useGetThumbnailByVideoIdSuspenseQuery>;
-export type GetThumbnailByVideoIdQueryResult = Apollo.QueryResult<GetThumbnailByVideoIdQuery, GetThumbnailByVideoIdQueryVariables>;
-export const GetChannelScreenshotsDocument = gql`
-    query GetChannelScreenshots($ytChannelId: String!) {
-  channelScreenshots(ytChannelId: $ytChannelId) {
-    ytVideoId
-    id
-    second
-    src
-    isFav
-  }
-}
-    `;
-
-/**
- * __useGetChannelScreenshotsQuery__
- *
- * To run a query within a React component, call `useGetChannelScreenshotsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetChannelScreenshotsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetChannelScreenshotsQuery({
- *   variables: {
- *      ytChannelId: // value for 'ytChannelId'
- *   },
- * });
- */
-export function useGetChannelScreenshotsQuery(baseOptions: Apollo.QueryHookOptions<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables> & ({ variables: GetChannelScreenshotsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>(GetChannelScreenshotsDocument, options);
-      }
-export function useGetChannelScreenshotsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>(GetChannelScreenshotsDocument, options);
-        }
-export function useGetChannelScreenshotsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>(GetChannelScreenshotsDocument, options);
-        }
-export type GetChannelScreenshotsQueryHookResult = ReturnType<typeof useGetChannelScreenshotsQuery>;
-export type GetChannelScreenshotsLazyQueryHookResult = ReturnType<typeof useGetChannelScreenshotsLazyQuery>;
-export type GetChannelScreenshotsSuspenseQueryHookResult = ReturnType<typeof useGetChannelScreenshotsSuspenseQuery>;
-export type GetChannelScreenshotsQueryResult = Apollo.QueryResult<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>;
 export const DeleteUploadsDocument = gql`
     mutation DeleteUploads($ytChannelId: String!, $ytVideoIds: [String!]!) {
   deleteUploads(ytChannelId: $ytChannelId, ytVideoIds: $ytVideoIds) {

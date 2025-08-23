@@ -3,7 +3,6 @@ import { useCallback } from "react";
 import { useFinishProcessingUpload } from "@features/Upload";
 import { useRefetchTotalCounts } from "@features/Statistics"; 
 import { useRefetchThumbnailByVideoId } from "@features/Thumbnails";
-import { useRefetchGroupedThumbnails } from "@features/Dashboard";
 
 export default function useSubmit() {
   const {
@@ -12,13 +11,11 @@ export default function useSubmit() {
     selectedImages,
     setSelectedImages,
   } = useThumbnailsSlice();
-  const refetchGroupedThumbnails = useRefetchGroupedThumbnails();
   const refetchTotalCounts = useRefetchTotalCounts();
   const refetchThumbnailByVideoId = useRefetchThumbnailByVideoId(
     thumbnailsProcessingData[0]?.ytVideoId
   );
   const refetchAll = () => {
-    refetchGroupedThumbnails();
     refetchTotalCounts();
     refetchThumbnailByVideoId();
   };

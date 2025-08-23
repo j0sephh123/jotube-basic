@@ -1,13 +1,8 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { useCallback } from "react";
-import {
-  ViewType,
-  useDashboardStore,
-  useFetchDashboard,
-} from "@features/Dashboard";
+import { useDashboardStore, useFetchDashboard } from "@features/Dashboard";
 import { ViewType as GraphQLViewType } from "@shared/api";
 import type { ChannelsDashboardResponse } from "@shared/api";
+import { useApolloClient } from "@apollo/client";
 
 export type ChannelsDashboardResponseData = ChannelsDashboardResponse;
 
@@ -55,35 +50,8 @@ export function useChannelsDashboardQuery() {
   };
 }
 
-// TODO remove
-export function useRefetchNoUploadsView() {
-  const queryClient = useQueryClient();
-  const { requestBody } = useDashboardStore();
-  const params = useParams();
+export function useRefetchChannelsDashboardQuery() {
+  const client = useApolloClient();
 
-  return useCallback(() => {
-    const requestBodyWithViewType = {
-      ...requestBody,
-      viewType: params.viewType,
-    };
-    queryClient.refetchQueries({
-      queryKey: ["dashboard", requestBodyWithViewType],
-    });
-  }, [queryClient, requestBody, params.viewType]);
-}
-
-// TODO remove
-export function useRefetchGroupedThumbnails() {
-  const queryClient = useQueryClient();
-  const { requestBody } = useDashboardStore();
-
-  return useCallback(() => {
-    const requestBodyWithViewType = {
-      ...requestBody,
-      viewType: ViewType.THUMBNAILS,
-    };
-    queryClient.refetchQueries({
-      queryKey: ["dashboard", requestBodyWithViewType],
-    });
-  }, [queryClient, requestBody]);
+  return () => client.refetchQueries({ include: ["FetchDashboard"] });
 }

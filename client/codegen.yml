@@ -1,7 +1,10 @@
 schema: "../server/schema.gql"
-documents: "src/shared/api/graphql/**/*.ts"
+documents:
+  - "src/**/*.gql.ts"
+  - "src/**/*.graphql"
+  - "src/**/*.gql"
 generates:
-  src/generated/graphql.ts:
+  src/shared/api/generated/graphql.ts:
     plugins:
       - "typescript"
       - "typescript-operations"
