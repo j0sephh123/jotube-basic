@@ -8,6 +8,7 @@ import { ChannelLink } from "@shared/ui";
 
 export default function VideoProcessingInfo() {
   const { data: queueData = [], refetch: refetchQueue, isLoading } = useQueue();
+  console.log(queueData);
   const [isOpen, setIsOpen] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
 

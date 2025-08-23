@@ -4,7 +4,7 @@ import { Queue } from 'bull';
 import { queueNames } from 'src/shared/constants';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
 import { LabelsDto } from 'src/queue/dtos/labels.dto';
-import { RemoveJobsDto } from './queue.controller';
+import { RemoveJobsDto } from 'src/queue/dtos/remove-jobs.dto';
 import { ArtifactType } from '@prisma/client';
 
 @Injectable()
@@ -14,6 +14,7 @@ export class QueueService {
     @InjectQueue(queueNames.storyboard)
     private readonly storyboardProcessor: Queue,
     private readonly prismaService: PrismaService,
+    @InjectQueue(queueNames.video) private readonly videoProcessor: Queue,
   ) {}
 
   async addUploads(
@@ -177,14 +178,31 @@ export class QueueService {
     return video;
   }
 
-  async getScreenshotsQueue() {
-    const [downloadJobs, storyboardJobs] = await Promise.all([
+  async getQueue() {
+    const [downloadJobs, storyboardJobs, videoJobs] = await Promise.all([
       this.downloadProcessor.getJobs(['active', 'waiting']),
       this.storyboardProcessor.getJobs(['active', 'waiting']),
+      this.videoProcessor.getJobs(['active', 'waiting']),
     ]);
 
     const downloads = await Promise.all(
       downloadJobs.map(async (job) => {
+        const state = await job.getState();
+        return {
+          id: job.id,
+          state,
+          ...job.data,
+        } as {
+          id: string;
+          state: string;
+          ytChannelId: string;
+          ytVideoId: string;
+        };
+      }),
+    );
+
+    const videos = await Promise.all(
+      videoJobs.map(async (job) => {
         const state = await job.getState();
         return {
           id: job.id,
@@ -224,7 +242,7 @@ export class QueueService {
       }),
     );
 
-    const queueData = [...downloads, ...storyboards];
+    const queueData = [...downloads, ...storyboards, ...videos];
 
     const videoIds = queueData.map((item) => item.ytVideoId);
     const channelIds = [...new Set(queueData.map((item) => item.ytChannelId))];

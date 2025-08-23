@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getDistinctChannelIds } from "@shared/utils";
 import { nestFetcher } from "@shared/api";
+
 export type QueueItem = {
   id: string;
   ytChannelId: string;
@@ -9,22 +9,15 @@ export type QueueItem = {
 };
 
 export function useQueue() {
-  const queue = useQuery({
+  return useQuery({
     refetchInterval: 5000,
     queryKey: ["queue"],
-    queryFn: async () => {
-      const queueData = await nestFetcher<QueueItem[]>({
+    queryFn: () =>
+      nestFetcher<QueueItem[]>({
         url: "/queues/queue",
         method: "GET",
-      });
-      return queueData;
-    },
+      }),
   });
-
-  return {
-    ...queue,
-    queueDistinctChannelIds: getDistinctChannelIds(queue.data ?? []),
-  };
 }
 
 export function useRefetchQueue() {

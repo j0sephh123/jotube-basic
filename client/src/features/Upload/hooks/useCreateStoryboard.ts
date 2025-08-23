@@ -22,13 +22,12 @@ export function useCreateStoryboard(ytChannelId: string) {
     DefaultError,
     Body
   >({
-    mutationFn: (body: Body) => {
-      return nestFetcher<Response>({
+    mutationFn: (body: Body) =>
+      nestFetcher<Response>({
         url: "/queues/add-storyboard",
         method: "POST",
         body: { data: body },
-      });
-    },
+      }),
     onSuccess: (_data, variables) => {
       ["asc", "desc"].forEach((sort) => {
         queryClient.setQueryData(
