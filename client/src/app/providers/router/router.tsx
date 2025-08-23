@@ -39,11 +39,15 @@ export default function Router() {
               <Route path=":ytVideoId" element={<GalleryVideoPage />} />
             </Route>
           </Route>
-          <Route path="/screenshots" element={<ScreenshotsPage />}>
-            <Route index element={<ScreenshotsPage />} />
-            <Route path=":month" element={<ScreenshotsByMonthPage />} />
-            <Route path=":month/:date" element={<ScreenshotsByDatePage />} />
-          </Route>
+          <Route path="/screenshots" element={<ScreenshotsPage />} />
+          <Route
+            path="/screenshots/:month"
+            element={<ScreenshotsByMonthPage />}
+          />
+          <Route
+            path="/screenshots/:month/:date"
+            element={<ScreenshotsByDatePage />}
+          />
           <Route path="/playlists" element={<PlaylistsPage />} />
           <Route path="/playlists/:id" element={<PlaylistDetailsPage />} />
           <Route path="/image-navigator" element={<ImageNavigatorPage />} />
