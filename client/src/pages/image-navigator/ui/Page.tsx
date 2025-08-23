@@ -8,7 +8,7 @@ import {
 import { useSubmitMutation, useNavigatorState } from "../hooks";
 import { getPublicImgUrl } from "@shared/utils";
 import { ImageNavigatorProvider } from "../context";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import type { ImageNavigatorResponse } from "../types";
 
 function ImageNavigatorPageContent() {
@@ -28,6 +28,7 @@ function ImageNavigatorPageContent() {
     clearSeenChannels,
   } = useNavigatorState();
   const submitMutation = useSubmitMutation();
+  const hasInitialized = useRef(false);
 
   const hasMorePreviousSeconds = currentSecondIndex > 0;
   const currentChannel = result?.channels[currentChannelIndex];
@@ -49,26 +50,27 @@ function ImageNavigatorPageContent() {
     : 0;
 
   useEffect(() => {
-    if (!result) {
+    if (!result && !hasInitialized.current) {
+      hasInitialized.current = true;
       clearSeenChannels();
       submitMutation
         .mutateAsync({
           type: "video",
         })
-        .then((result: ImageNavigatorResponse) => {
+        .then((fetchResult: ImageNavigatorResponse) => {
           if (
-            result &&
-            result.channels.length > 0 &&
-            result.channels[0] &&
-            result.channels[0].videos.length > 0
+            fetchResult &&
+            fetchResult.channels.length > 0 &&
+            fetchResult.channels[0] &&
+            fetchResult.channels[0].videos.length > 0
           ) {
-            const targetChannel = result.channels[0];
+            const targetChannel = fetchResult.channels[0];
             const targetVideo = targetChannel.videos[0];
 
             if (targetVideo) {
               addSeenChannel(targetChannel.ytChannelId);
               setResultAndPosition(
-                result,
+                fetchResult,
                 targetChannel.ytChannelId,
                 targetVideo.ytVideoId,
                 0,
@@ -77,9 +79,21 @@ function ImageNavigatorPageContent() {
               );
             }
           }
+        })
+        .catch((error) => {
+          console.error("Error fetching initial data:", error);
+          hasInitialized.current = false; // Reset on error so it can retry
         });
     }
-  }, [addSeenChannel, clearSeenChannels, result, setResultAndPosition, submitMutation]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [result]);
+
+  // Reset initialization flag when component unmounts or navigates away
+  useEffect(() => {
+    return () => {
+      hasInitialized.current = false;
+    };
+  }, []);
 
   const handlePrevious = () => {
     if (

@@ -16,7 +16,7 @@ import {
 import { routes } from "@shared/routes";
 import { useTotalCounts, useFreeSpace } from "@features/Statistics";
 import { IconButton, Text } from "@shared/ui";
-import { ViewType } from "@shared/api";
+import { ViewType } from "@features/Dashboard";
 
 export default function Navbar() {
   const { data: totalCounts } = useTotalCounts();
@@ -32,7 +32,7 @@ export default function Navbar() {
             icon={<SquarePlay />}
             to={routes.videos()}
             tooltip={{
-              content: "Videos",
+              content: "videos",
               position: "bottom",
               color: "primary",
             }}
@@ -41,17 +41,17 @@ export default function Navbar() {
             icon={<ListMusic />}
             to={routes.playlists()}
             tooltip={{
-              content: "Playlists",
+              content: "playlists",
               position: "bottom",
               color: "primary",
             }}
           />
           <IconButton
             icon={<Save />}
-            to={routes.dashboard(ViewType.Saved)}
+            to={routes.dashboard(ViewType.SAVED)}
             tip={totalCounts?.totalSaved ?? 0}
             tooltip={{
-              content: "Saved",
+              content: "saved",
               position: "bottom",
               color: "primary",
             }}
@@ -59,9 +59,9 @@ export default function Navbar() {
           <IconButton
             icon={<Grid2X2 />}
             tip={totalCounts?.totalThumbnails ?? 0}
-            to={routes.dashboard(ViewType.Thumbnails)}
+            to={routes.dashboard(ViewType.THUMBNAILS)}
             tooltip={{
-              content: "Thumbnails",
+              content: "thumbnails",
               position: "bottom",
               color: "primary",
             }}
@@ -70,7 +70,7 @@ export default function Navbar() {
             icon={<Image />}
             to={routes.imageNavigator()}
             tooltip={{
-              content: "Image Navigator",
+              content: "image navigator",
               position: "bottom",
               color: "primary",
             }}

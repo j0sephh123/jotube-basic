@@ -7,6 +7,11 @@ export const useGetIsActiveRoute = (ytChannelId: string) => {
     const path = `/channels/${ytChannelId}${
       where === "index" ? "" : `/${where}`
     }`;
+    
+    if (where === "gallery") {
+      return location.pathname === path;
+    }
+    
     return location.pathname === path;
   };
 };
