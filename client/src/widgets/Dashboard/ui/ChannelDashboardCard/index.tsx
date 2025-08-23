@@ -8,6 +8,7 @@ import clsx from "clsx";
 import { routes } from "@shared/routes";
 import { Link, useNavigate } from "react-router-dom";
 import { useViewThumbnails } from "@features/Thumbnails";
+import { useFetchCarousel } from "@entities/Screenshot";
 
 const statsTypes = [
   ViewType.THUMBNAILS,
@@ -44,7 +45,7 @@ export default function ChannelDashboardCard({
   onChannelDelete,
 }: Props) {
   const navigate = useNavigate();
-  const viewScreenshots = useViewThumbnails(id);
+  const fetchCarousel = useFetchCarousel();
   const viewThumbnails = useViewThumbnails(id);
 
   const cardStats = (
@@ -57,7 +58,7 @@ export default function ChannelDashboardCard({
       defaults={defaults}
       storyboard={storyboard}
       onNavigate={navigate}
-      onViewScreenshots={viewScreenshots}
+      onViewScreenshots={() => fetchCarousel([ytId])}
       onViewThumbnails={viewThumbnails}
     />
   );
@@ -70,9 +71,13 @@ export default function ChannelDashboardCard({
     <SyncUploadsButton lastSyncedAt={lastSyncedAt} ytChannelId={ytId} id={id} />
   );
 
-  const downloadButton = <Card.DownloadButton id={id} ytChannelId={ytId} onDownload={() => {}} />;
+  const downloadButton = (
+    <Card.DownloadButton id={id} ytChannelId={ytId} onDownload={() => {}} />
+  );
 
-  const deleteUploadsButton = <Card.DeleteButton ytChannelId={ytId} onDelete={() => {}} />;
+  const deleteUploadsButton = (
+    <Card.DeleteButton ytChannelId={ytId} onDelete={() => {}} />
+  );
 
   const deleteChannelbutton = (
     <DeleteChannel id={id} onSuccess={onChannelDelete} />
