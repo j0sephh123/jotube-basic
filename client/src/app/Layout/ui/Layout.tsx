@@ -3,7 +3,7 @@ import { TheCarousel } from "@features/Screenshot";
 import { DialogProvider, ZoomModal } from "@shared/ui";
 import { ThumbnailsProcessing, useThumbnailsSlice } from "@features/Thumbnails";
 import { StoryboardProcessing } from "@features/Storyboard";
-import CreateChannel from "@features/CreateChannel";
+import CreateChannel from "@widgets/CreateChannel";
 import { SidePanel } from "@app/index";
 import { Navbar } from "@widgets/Navbar";
 import { AddChannelToPlaylistModal } from "@widgets/PlaylistAddChannel";
