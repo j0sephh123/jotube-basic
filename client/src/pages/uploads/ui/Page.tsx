@@ -1,15 +1,15 @@
 import { useSearchParams } from "react-router-dom";
-import { 
-  useDeleteUploads, 
-  useSaveUpload, 
-  useUploadsList, 
+import {
+  useDeleteUploads,
+  useSaveUpload,
   useCreateStoryboard,
-  DefaultUploadCard
+  DefaultUploadCard,
 } from "@features/Upload";
 import { useRefetchChannelMetadata } from "@entities/Channel";
 import type { PropsWithChildren } from "react";
 import { useTypedChannelYtId } from "@features/Dashboard";
-import type { SortOrder } from "@shared/api/generated/graphql";
+import type { SortOrder } from "@shared/api";
+import { useUploadsList } from "@features/Upload";
 
 export default function DefaultUploadsPage() {
   const ytChannelId = useTypedChannelYtId();

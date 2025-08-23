@@ -1,4 +1,4 @@
-import type { PlaylistDetailsResponse } from "@shared/api/generated/graphql";
+import type { PlaylistDetailsResponse } from "@shared/api";
 
 type RightSectionProps = {
   playlist: PlaylistDetailsResponse;

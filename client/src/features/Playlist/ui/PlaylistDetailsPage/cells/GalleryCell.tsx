@@ -1,7 +1,7 @@
 import { ImageIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { routes } from "@shared/routes";
-import type { PlaylistChannelWithCountsResponse } from "@shared/api/generated/graphql";
+import type { PlaylistChannelWithCountsResponse } from "@shared/api";
 import { TableCol } from "@shared/ui";
 
 type GalleryCellProps = {

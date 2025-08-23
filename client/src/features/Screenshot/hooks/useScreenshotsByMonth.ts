@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import nestFetcher from "@shared/api/rest/nestFetcher";
+import { nestFetcher } from "@shared/api";
 
 export function useScreenshotsByMonth(month: string | undefined) {
   return useQuery<Record<string, number>>({

@@ -1,7 +1,7 @@
 import { useStoryboardProcessing } from "@shared/hooks";
 import { useSaveUpload } from "@features/Upload";
 import { useRefetchChannelMetadata } from "@entities/Channel";
-import { useUploadsDelete } from "@features/Upload";
+import { useDeleteUploads } from "@features/Upload";
 import { useTypedChannelYtId } from "@features/Dashboard";
 import { Modal } from "@shared/ui";
 import { useRef, useEffect } from "react";
@@ -75,7 +75,7 @@ export default function StoryboardProcessing() {
     }).then(handleSideEffect);
   };
 
-  const deleteUploadFromDbMutation = useUploadsDelete(handleSideEffect);
+  const deleteUploadFromDbMutation = useDeleteUploads(handleSideEffect);
 
   const handleDelete = () => {
     if (!firstUpload || !firstChannel?.ytChannelId) return;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useTypedChannelYtId } from "@features/Dashboard";
 import { useSaveUpload } from "@features/Upload";
 import { useRefetchChannelMetadata } from "@entities/Channel";
-import { useUploadsDelete } from "@features/Upload";
+import { useDeleteUploads } from "@features/Upload";
 import type { UploadWithStoryboard } from "@features/Storyboard";
 import {
   StoryboardContainer,
@@ -34,7 +34,7 @@ export default function StoryboardChannel() {
     }).then(handleSideEffect);
   };
 
-  const deleteUploadFromDbMutation = useUploadsDelete(handleSideEffect);
+  const deleteUploadFromDbMutation = useDeleteUploads(handleSideEffect);
 
   const handleDelete = (ytVideoIds: string[]) => {
     deleteUploadFromDbMutation({

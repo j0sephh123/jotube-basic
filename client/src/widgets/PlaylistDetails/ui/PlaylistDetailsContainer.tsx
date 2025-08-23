@@ -1,7 +1,7 @@
 import { useGetPlaylist } from "@features/Playlist";
 import { Loader } from "lucide-react";
 import { ErrorMessage } from "@shared/ui";
-import type { PlaylistDetailsResponse } from "@shared/api/generated/graphql";
+import type { PlaylistDetailsResponse } from "@shared/api";
 
 export default function PlaylistDetailsContainer({
   children,

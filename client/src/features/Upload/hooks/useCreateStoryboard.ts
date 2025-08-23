@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { DefaultError } from "@tanstack/react-query";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import nestFetcher from "@shared/api/rest/nestFetcher";
+import { nestFetcher } from "@shared/api";
 import { useRefetchChannelUploads } from "@features/Upload";
 import { useRefetchChannelMetadata } from "@entities/Channel";
 import { useRefetchQueue } from "@shared/hooks";

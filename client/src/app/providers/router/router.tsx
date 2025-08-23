@@ -6,13 +6,13 @@ import { ScreenshotsByDatePage } from "@pages/screenshots-date";
 import { SavedUploadsPage } from "@pages/saved-uploads";
 import { ChannelPageLayout } from "@widgets/ChannelPageLayout";
 import { GalleryPage } from "@pages/gallery";
-import Dashboard from "@features/Dashboard";
-import { DashboardWrapper } from "@widgets/Dashboard";
+import { DashboardWidget, DashboardWrapper } from "@widgets/Dashboard";
 import { UploadsPage } from "@pages/uploads";
 import { GalleryVideoPage } from "@pages/gallery-video";
 import { StoryboardPage } from "@pages/storyboard";
 import { ImageNavigatorPage } from "@pages/image-navigator";
-import { PlaylistsPage, PlaylistDetailsPage } from "@features/Playlist";
+import { PlaylistsPage } from "@pages/playlists";
+import { PlaylistDetailsPage } from "@pages/playlist-details";
 import { NotFound } from "@shared/ui";
 
 export default function Router() {
@@ -25,8 +25,8 @@ export default function Router() {
             element={<Navigate to="/dashboard/channels/saved" />}
           />
           <Route path="dashboard" element={<DashboardWrapper />}>
-            <Route path=":type" element={<Dashboard />}>
-              <Route path=":viewType" element={<Dashboard />} />
+            <Route path=":type" element={<DashboardWidget />}>
+              <Route path=":viewType" element={<DashboardWidget />} />
             </Route>
           </Route>
           <Route path="/channels/:ytChannelId" element={<ChannelPageLayout />}>

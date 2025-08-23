@@ -6,7 +6,7 @@ import {
   SquarePlay,
   Image,
 } from "lucide-react";
-import QuickSearch from "@widgets/Search";
+import { QuickSearch } from "@widgets/Search";
 import {
   InitCarouselButton,
   Screenshots,
@@ -16,7 +16,7 @@ import {
 import { routes } from "@shared/routes";
 import { useTotalCounts, useFreeSpace } from "@features/Statistics";
 import { IconButton, Text } from "@shared/ui";
-import { ViewType } from "@features/Dashboard";
+import { ViewType } from "@shared/api";
 
 export default function Navbar() {
   const { data: totalCounts } = useTotalCounts();
@@ -34,6 +34,7 @@ export default function Navbar() {
             tooltip={{
               content: "Videos",
               position: "bottom",
+              color: "primary",
             }}
           />
           <IconButton
@@ -42,24 +43,27 @@ export default function Navbar() {
             tooltip={{
               content: "Playlists",
               position: "bottom",
+              color: "primary",
             }}
           />
           <IconButton
             icon={<Save />}
-            to={routes.dashboard(ViewType.SAVED)}
+            to={routes.dashboard(ViewType.Saved)}
             tip={totalCounts?.totalSaved ?? 0}
             tooltip={{
               content: "Saved",
               position: "bottom",
+              color: "primary",
             }}
           />
           <IconButton
             icon={<Grid2X2 />}
             tip={totalCounts?.totalThumbnails ?? 0}
-            to={routes.dashboard(ViewType.THUMBNAILS)}
+            to={routes.dashboard(ViewType.Thumbnails)}
             tooltip={{
               content: "Thumbnails",
               position: "bottom",
+              color: "primary",
             }}
           />
           <IconButton
@@ -68,6 +72,7 @@ export default function Navbar() {
             tooltip={{
               content: "Image Navigator",
               position: "bottom",
+              color: "primary",
             }}
           />
           <InitCarouselButton />

@@ -23,4 +23,5 @@ export { useOpenDirectory } from "./OpenDirectoryButton/useOpenDirectory";
 export { useClickOutside } from "../lib/useClickOutside";
 export { default as Breadcrumb } from "./Breadcrumb";
 export { default as Lightbox } from "./Lightbox";
+export type { TooltipProps } from "./Tooltip";
 export * from "./static";

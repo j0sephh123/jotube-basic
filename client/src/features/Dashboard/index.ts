@@ -1,4 +1,3 @@
-export { default } from "./Dashboard";
 export {
   useDashboardParams,
   DashboardType,
@@ -18,7 +17,10 @@ export { useVideosDashboard } from "./hooks/useVideosDashboard";
 export { useSidePanel } from "./hooks/useSidePanel";
 export { useDashboardStore } from "./hooks/useDashboardStore";
 export { useRangePickersStore } from "./hooks/useRangePickersStore";
-export { useChannelsDashboardQuery } from "./api/useChannelsDashboardQuery";
+export {
+  useChannelsDashboardQuery,
+  useRefetchNoUploadsView,
+} from "./api/useChannelsDashboardQuery";
 export { useVideosDashboardQuery } from "./api/useVideosDashboardQuery";
 export { default as useTitleClick } from "./lib/useTitleClick";
 export { default as useFetchDashboard } from "./lib/useFetchDashboard";

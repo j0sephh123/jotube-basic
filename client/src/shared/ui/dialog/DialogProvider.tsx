@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { ConfirmDialog, InputDialog } from "@shared/ui";
-import { DialogContext, useDialogState } from "@shared/hooks";
+import { useDialogState, DialogContext } from "@shared/hooks";
 
 type DialogProviderProps = {
   children: ReactNode;

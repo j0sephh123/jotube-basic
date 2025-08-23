@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import nestFetcher from "@shared/api/rest/nestFetcher";
+import { nestFetcher } from "@shared/api";
 
 export const useUpdateChannelScreenshot = (ytChannelId: string) => {
   const queryClient = useQueryClient();

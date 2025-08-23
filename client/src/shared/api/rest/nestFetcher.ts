@@ -6,11 +6,7 @@ type Props = {
   body?: unknown;
 };
 
-export default async function nestFetcher<T>({
-  method,
-  url,
-  body,
-}: Props): Promise<T> {
+export async function nestFetcher<T>({ method, url, body }: Props): Promise<T> {
   const response = await fetch(`${API_BASE_URL}${url}`, {
     method,
     body: body ? JSON.stringify(body) : undefined,
@@ -29,3 +25,5 @@ export default async function nestFetcher<T>({
   }
   return data;
 }
+
+export default nestFetcher;

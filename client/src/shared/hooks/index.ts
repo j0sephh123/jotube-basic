@@ -5,3 +5,5 @@ export { useZoom } from "./useZoom";
 export { useToast } from "./useToast";
 export { useStoryboardProcessing } from "@app/providers/store/store-hooks";
 export { useFetchCarousel } from "@entities/Screenshot";
+export { useDialogState, DialogContext } from "./useDialog";
+export { useRefetchQueue } from "./useQueue";

@@ -1,2 +1,2 @@
-export { default as CreatePlaylist } from "./ui/CreatePlaylist";
-export { default as CreatePlaylistModal } from "./ui/CreatePlaylistModal";
+export { CreatePlaylist } from "./ui/CreatePlaylist";
+export { CreatePlaylistModal } from "./ui/CreatePlaylistModal";

@@ -1,4 +1,4 @@
-import nestFetcher from "@shared/api/rest/nestFetcher";
+import { nestFetcher } from "@shared/api";
 import { useQuery } from "@tanstack/react-query";
 
 type Screenshot = {

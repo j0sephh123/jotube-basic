@@ -1,3 +1,3 @@
 export * from "./reducer/reducer";
 export { useNavigatorState } from "./useNavigatorState";
-export { useSubmitMutation } from "./useSubmitMutation";
+export { default as useSubmitMutation } from "./useSubmitMutation";
