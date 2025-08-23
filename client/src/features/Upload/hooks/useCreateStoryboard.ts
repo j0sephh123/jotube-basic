@@ -45,7 +45,7 @@ export function useCreateStoryboard(ytChannelId: string) {
         );
       });
       refetchChannelUploads();
-      refetchChannelMetadata(ytChannelId);
+      refetchChannelMetadata();
       refetchQueue();
     },
     onError: (error: DefaultError) => {

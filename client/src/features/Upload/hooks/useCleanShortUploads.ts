@@ -14,7 +14,7 @@ export function useCleanShortUploads(ytChannelId: string) {
     {
       onCompleted: () => {
         refetchChannelUploads();
-        refetchChannelMetadata(ytChannelId);
+        refetchChannelMetadata();
       },
       onError: (error) => {
         console.error(error);

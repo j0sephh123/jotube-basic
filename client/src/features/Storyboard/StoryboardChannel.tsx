@@ -19,12 +19,12 @@ export default function StoryboardChannel() {
   const refetchChannelMetadata = useRefetchChannelMetadata();
 
   const save = useSaveUpload(() => {
-    refetchChannelMetadata(ytChannelId);
+    refetchChannelMetadata();
   });
 
   const handleSideEffect = () => {
     handleClose();
-    refetchChannelMetadata(ytChannelId);
+    refetchChannelMetadata();
   };
 
   const handleSave = () => {

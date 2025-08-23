@@ -23,7 +23,7 @@ export default function DefaultUploadsPage() {
 
   const handleSideEffect = () => {
     refetch();
-    refetchChannelMetadata(ytChannelId);
+    refetchChannelMetadata();
   };
 
   const deleteUploadFromDbMutation = useDeleteUploads(handleSideEffect);

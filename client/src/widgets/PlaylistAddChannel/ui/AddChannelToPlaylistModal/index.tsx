@@ -29,7 +29,7 @@ export const AddChannelToPlaylistModal = () => {
     resetFormState();
     closePlaylistModal();
     refetch();
-    refetchChannelMetadata(ytChannelId ?? undefined);
+    refetchChannelMetadata();
   };
 
   if (!isModalOpen || !ytChannelId || !channel) return null;

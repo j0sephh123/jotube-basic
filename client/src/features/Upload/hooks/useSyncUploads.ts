@@ -1,6 +1,7 @@
 import { useSyncUploadsMutation } from "@shared/api";
 import { useRefetchChannelMetadata } from "@entities/Channel";
 import { useRefetchChannelUploads } from "@features/Upload";
+import { useRefetchChannelsDashboardQuery } from "@features/Dashboard";
 
 export type SyncUploadsRequest = {
   ytChannelId: string;
@@ -10,11 +11,13 @@ export type SyncUploadsRequest = {
 export default function useSyncUploads(ytChannelId: string) {
   const refetchChannelMetadata = useRefetchChannelMetadata();
   const refetchChannelUploads = useRefetchChannelUploads(ytChannelId);
+  const refetchChannelsDashboard = useRefetchChannelsDashboardQuery();
 
   const [syncUploadsMutation, { loading }] = useSyncUploadsMutation({
     onCompleted: () => {
-      refetchChannelMetadata(ytChannelId);
+      refetchChannelMetadata();
       refetchChannelUploads();
+      refetchChannelsDashboard();
     },
   });
 

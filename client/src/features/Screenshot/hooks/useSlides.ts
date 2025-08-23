@@ -1,16 +1,3 @@
-import { create } from "zustand";
-import type { SlidesData } from "../types";
+import { useSlides as useStoreSlides } from "@app/providers/store/store";
 
-type SlidesStore = {
-  slides: SlidesData;
-  setSlides: (slides: SlidesData) => void;
-};
-
-const useSlidesStore = create<SlidesStore>((set) => ({
-  slides: [],
-  setSlides: (slides) => set({ slides }),
-}));
-
-export const useSlides = () => {
-  return useSlidesStore();
-};
+export const useSlides = useStoreSlides;

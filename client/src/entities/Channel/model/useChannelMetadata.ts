@@ -1,8 +1,5 @@
-import {
-  useGetChannelMetadataQuery,
-  useGetChannelMetadataLazyQuery,
-} from "@shared/api";
-import { useCallback } from "react";
+import { useApolloClient } from "@apollo/client";
+import { useGetChannelMetadataQuery } from "@shared/api";
 
 export function useChannelMetadataQuery(ytChannelId: string | undefined) {
   const { data, loading, error, refetch } = useGetChannelMetadataQuery({
@@ -19,13 +16,7 @@ export function useChannelMetadataQuery(ytChannelId: string | undefined) {
 }
 
 export function useRefetchChannelMetadata() {
-  const [refetchQuery] = useGetChannelMetadataLazyQuery();
+  const client = useApolloClient();
 
-  return useCallback(
-    (ytChannelId: string | undefined) => {
-      if (!ytChannelId) return;
-      refetchQuery({ variables: { ytChannelId } });
-    },
-    [refetchQuery]
-  );
+  return () => client.refetchQueries({ include: ["GetChannelMetadata"] });
 }

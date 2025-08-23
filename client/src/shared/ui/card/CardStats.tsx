@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import { Tooltip } from "@shared/ui";
+import { routes } from "@shared/routes";
 
 type CardStatsProps = {
   ytId: string;
@@ -30,13 +31,13 @@ export default function CardStats({
       value: defaults,
       tooltip: "Default videos",
       color: "text-yellow-400",
-      onClick: () => onNavigate(`/channel/${ytId}`),
+      onClick: () => onNavigate(routes.channel(ytId)),
     },
     {
       value: saved,
       tooltip: "Saved videos",
       color: "text-blue-400",
-      onClick: () => onNavigate(`/saved/${ytId}`),
+      onClick: () => onNavigate(routes.savedChannel(ytId)),
     },
     {
       value: screenshotsCount,
@@ -54,7 +55,7 @@ export default function CardStats({
       value: storyboard,
       tooltip: "Storyboard",
       color: "text-red-400 hover:text-red-300",
-      onClick: () => onNavigate(`/storyboard/${ytId}`),
+      onClick: () => onNavigate(routes.storyboard(ytId)),
     },
   ];
 

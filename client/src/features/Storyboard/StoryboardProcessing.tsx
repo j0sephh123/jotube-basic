@@ -26,9 +26,7 @@ export default function StoryboardProcessing() {
   }, [firstUpload?.id]);
 
   const save = useSaveUpload(() => {
-    if (firstChannel?.ytChannelId) {
-      refetchChannelMetadata(firstChannel.ytChannelId);
-    }
+    refetchChannelMetadata();
   });
 
   const handleSideEffect = () => {
@@ -61,9 +59,7 @@ export default function StoryboardProcessing() {
       }
     }
 
-    if (firstChannel?.ytChannelId) {
-      refetchChannelMetadata(firstChannel.ytChannelId);
-    }
+    refetchChannelMetadata();
   };
 
   const handleSave = () => {

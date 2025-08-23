@@ -3,11 +3,11 @@ import { SyncUploadsButton, FetchUploadsButton } from "@features/Upload";
 import { Card } from "@shared/ui";
 import { DeleteChannel } from "@entities/Channel";
 import type { DashboardChannelResponse } from "@shared/api";
-
 import { ListMusic, ExternalLink } from "lucide-react";
 import clsx from "clsx";
 import { routes } from "@shared/routes";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useViewThumbnails } from "@features/Thumbnails";
 
 const statsTypes = [
   ViewType.THUMBNAILS,
@@ -43,6 +43,10 @@ export default function ChannelDashboardCard({
   openPlaylistModal,
   onChannelDelete,
 }: Props) {
+  const navigate = useNavigate();
+  const viewScreenshots = useViewThumbnails(id);
+  const viewThumbnails = useViewThumbnails(id);
+
   const cardStats = (
     <Card.Stats
       ytId={ytId}
@@ -52,9 +56,9 @@ export default function ChannelDashboardCard({
       saved={saved}
       defaults={defaults}
       storyboard={storyboard}
-      onNavigate={() => {}}
-      onViewScreenshots={() => {}}
-      onViewThumbnails={() => {}}
+      onNavigate={navigate}
+      onViewScreenshots={viewScreenshots}
+      onViewThumbnails={viewThumbnails}
     />
   );
 

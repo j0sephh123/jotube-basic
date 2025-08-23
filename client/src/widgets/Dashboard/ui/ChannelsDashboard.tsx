@@ -12,8 +12,20 @@ export default function ChannelsDashboard() {
       {(channels, refetch) =>
         channels.map((c) => (
           <ChannelDashboardCard
-            {...c}
             key={c.id}
+            id={c.id}
+            ytId={c.ytId}
+            title={c.title}
+            src={c.src}
+            lastSyncedAt={c.lastSyncedAt}
+            screenshotsCount={c.screenshotsCount}
+            thumbnails={c.thumbnails}
+            saved={c.saved}
+            defaults={c.defaults}
+            storyboard={c.storyboard}
+            createdAt={c.createdAt}
+            videoCount={c.videoCount}
+            playlist={c.playlist}
             viewType={viewType}
             onChannelDelete={refetch}
             openPlaylistModal={() => {}}

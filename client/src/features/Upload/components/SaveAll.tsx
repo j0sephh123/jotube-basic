@@ -17,7 +17,7 @@ export default function SaveAll({ uploadsToSave }: Props) {
   const refetchSavedUploads = useRefetchSavedUploads(ytChannelId);
 
   const saveUploadMutation = useSaveUpload(() => {
-    refetchChannelMetadata(ytChannelId);
+    refetchChannelMetadata();
     refetchSavedUploads();
   });
 
