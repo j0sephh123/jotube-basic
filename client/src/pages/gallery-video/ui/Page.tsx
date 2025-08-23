@@ -35,7 +35,7 @@ export default function GalleryVideoPage() {
   const updateScreenshot = useUpdateChannelScreenshot(ytChannelId);
   const deleteScreenshot = useDeleteChannelScreenshot(ytChannelId);
   const dialogHook = useDialog();
-  const { setZoom } = useZoom();
+  const { setZoom, closeZoom } = useZoom();
 
   const videoScreenshots = useMemo(() => {
     if (!screenshots || !ytVideoId) return [];
@@ -99,7 +99,7 @@ export default function GalleryVideoPage() {
 
     const screenshot = videoScreenshots[clickedIndex];
     if (screenshot) {
-      setZoom(true, screenshot.src, () => {});
+      setZoom(true, screenshot.src, closeZoom);
     }
   };
 

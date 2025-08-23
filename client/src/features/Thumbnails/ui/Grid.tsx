@@ -16,11 +16,11 @@ export default function Grid(): JSX.Element {
     setSelectedImages,
     metadata: { ytChannelId, ytVideoId },
   } = useThumbnailsSlice();
-  const { setZoom } = useZoom();
+  const { setZoom, closeZoom } = useZoom();
 
   const handleZoom = (index: number): void => {
     const url = generateThumbnailUrl(ytChannelId, ytVideoId, index);
-    setZoom(true, url, () => {});
+    setZoom(true, url, closeZoom);
     setSelectedImages((prev) => [...prev, index]);
   };
 

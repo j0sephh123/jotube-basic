@@ -7,11 +7,11 @@ import CreateChannel from "@widgets/CreateChannel";
 import { SidePanel } from "@app/index";
 import { Navbar } from "@widgets/Navbar";
 import { AddChannelToPlaylistModal } from "@widgets/PlaylistAddChannel";
-import { useZoom } from "@shared/hooks";
+import { useZoom } from "@features/Screenshot";
 
 export default function Layout(): JSX.Element {
   const { isVisible, url, onClose } = useZoom();
-  const {metadata} = useThumbnailsSlice();
+  const { metadata } = useThumbnailsSlice();
 
   return (
     <DialogProvider>

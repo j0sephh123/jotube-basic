@@ -1,1 +1,1 @@
-export { useZoom } from "@shared/hooks";
+export { useZoom } from "@features/Screenshot";

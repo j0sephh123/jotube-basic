@@ -14,7 +14,8 @@ import {
 } from "@features/Thumbnails";
 
 export default function ThumbnailsProcessingContent() {
-  const { clearThumbnailsProcessingData } = useThumbnailsSlice();
+  const { clearThumbnailsProcessingData, thumbnailsProcessingData } =
+    useThumbnailsSlice();
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -24,9 +25,11 @@ export default function ThumbnailsProcessingContent() {
   useEvents(handleKeyDown, handleContainerWheel, containerRef);
   useResetSelection(containerRef);
 
+  const isModalVisible = thumbnailsProcessingData.length > 0;
+
   return (
     <Modal
-      isModalVisible
+      isModalVisible={isModalVisible}
       onClose={clearThumbnailsProcessingData}
       maxWidth="100vw"
       maxHeight="100vh"

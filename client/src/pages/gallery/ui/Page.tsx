@@ -7,7 +7,7 @@ import {
   useDeleteChannelScreenshot,
   useUpdateChannelScreenshot,
 } from "@features/Screenshot";
-import { useZoom } from "@shared/hooks";
+import { useZoom } from "@features/Screenshot";
 
 export default function GalleryPage() {
   const ytChannelId = useTypedChannelYtId();
@@ -22,7 +22,7 @@ export default function GalleryPage() {
   const updateScreenshot = useUpdateChannelScreenshot(ytChannelId);
   const deleteScreenshot = useDeleteChannelScreenshot(ytChannelId);
   const dialogHook = useDialog();
-  const { setZoom } = useZoom();
+  const { setZoom, closeZoom } = useZoom();
 
   const groupedScreenshots = useMemo(() => {
     if (!screenshots) return [];
@@ -69,7 +69,7 @@ export default function GalleryPage() {
   const handleImageClick = (index: number) => {
     const screenshot = screenshots?.[index];
     if (screenshot) {
-      setZoom(true, screenshot.src, () => {});
+      setZoom(true, screenshot.src, closeZoom);
     }
   };
 

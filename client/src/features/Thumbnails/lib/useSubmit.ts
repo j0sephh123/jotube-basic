@@ -1,15 +1,18 @@
 import { useThumbnailsSlice } from "@features/Thumbnails";
 import { useCallback } from "react";
 import { useFinishProcessingUpload } from "@features/Upload";
-import { useRefetchTotalCounts } from "@features/Statistics"; 
+import { useRefetchTotalCounts } from "@features/Statistics";
 import { useRefetchThumbnailByVideoId } from "@features/Thumbnails";
+import { useRefetchChannelsDashboardQuery } from "@features/Dashboard";
 
 export default function useSubmit() {
+  const refetchChannelsDashboard = useRefetchChannelsDashboardQuery();
   const {
     thumbnailsProcessingData,
     setThumbnailsProcessingData,
     selectedImages,
     setSelectedImages,
+    setCurrentIndex,
   } = useThumbnailsSlice();
   const refetchTotalCounts = useRefetchTotalCounts();
   const refetchThumbnailByVideoId = useRefetchThumbnailByVideoId(
@@ -22,8 +25,10 @@ export default function useSubmit() {
 
   const finishProcessingUploadM = useFinishProcessingUpload(() => {
     setSelectedImages([]);
+    setCurrentIndex(0);
     setThumbnailsProcessingData(thumbnailsProcessingData.slice(1));
     refetchAll();
+    refetchChannelsDashboard();
   });
 
   const handleSubmit = useCallback(() => {
