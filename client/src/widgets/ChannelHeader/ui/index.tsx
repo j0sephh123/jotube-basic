@@ -108,9 +108,11 @@ const ChannelHeader = ({ openPlaylistModal, onResetRangeFilters }: Props) => {
           }
         />
 
-        {!pathname.includes("/gallery") &&
-          !pathname.includes("/saved") &&
-          !pathname.includes("/storyboard") && (
+        {
+          !pathname.includes("/gallery") &&
+            !pathname.includes("/saved") &&
+            !pathname.includes("/storyboard") &&
+            !pathname.includes("/new-gallery") && (
             <ChannelControls
               leftSlot={
                 <>

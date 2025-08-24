@@ -35,5 +35,10 @@ export const useTabs = () => {
       label: "Gallery",
       count: screenshotArtifactsCount,
     },
+    {
+      where: "new-gallery" as const,
+      label: "New Gallery",
+      count: 0,
+    },
   ] as const;
 };

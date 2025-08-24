@@ -1,0 +1,1 @@
+export { default as NewGalleryPage } from "./ui/Page";

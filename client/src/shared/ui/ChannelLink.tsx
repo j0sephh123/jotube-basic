@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 type Props = PropsWithChildren<{
   ytId: string;
-  where: "index" | "saved" | "gallery" | "storyboard";
+  where: "index" | "saved" | "gallery" | "storyboard" | "new-gallery";
   className?: string;
   style?: React.CSSProperties;
   onClick?: () => void;
