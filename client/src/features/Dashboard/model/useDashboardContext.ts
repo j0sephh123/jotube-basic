@@ -50,6 +50,20 @@ export const useDashboardContext = () => {
   const [urlSearchParams, setURLSearchParams] = useSearchParams();
   const { requestBody, setRequestBody, setRequestBodyBatch } = useStore();
 
+  const setRequestBodyWithUrl = useCallback(
+    (key: string, value: unknown) => {
+      const newParams = new URLSearchParams(urlSearchParams);
+      if (value !== null && value !== undefined) {
+        newParams.set(key, String(value));
+      } else {
+        newParams.delete(key);
+      }
+      setURLSearchParams(newParams);
+      setRequestBody(key, value);
+    },
+    [urlSearchParams, setURLSearchParams, setRequestBody]
+  );
+
   const handleClearFilters = useCallback(() => {
     const newParams = new URLSearchParams(urlSearchParams);
     newParams.delete("min");
@@ -70,47 +84,52 @@ export const useDashboardContext = () => {
 
   useEffect(() => {
     const params = Object.fromEntries(urlSearchParams.entries());
+    const updates: Partial<DashboardRequestBody> = {};
 
     if (params.page) {
       const pageValue = parseInt(params.page, 10);
       if (!isNaN(pageValue) && pageValue > 0) {
-        setRequestBody("page", pageValue);
+        updates.page = pageValue;
       }
     }
 
     if (params.min) {
       const minValue = parseInt(params.min, 10);
       if (!isNaN(minValue) && minValue >= 0) {
-        setRequestBody("min", minValue);
+        updates.min = minValue;
       }
     }
 
     if (params.max) {
       const maxValue = parseInt(params.max, 10);
       if (!isNaN(maxValue) && maxValue > 0) {
-        setRequestBody("max", maxValue);
+        updates.max = maxValue;
       }
     }
 
     if (params.defaultMin) {
       const defaultMinValue = parseInt(params.defaultMin, 10);
       if (!isNaN(defaultMinValue) && defaultMinValue >= 0) {
-        setRequestBody("defaultMin", defaultMinValue);
+        updates.defaultMin = defaultMinValue;
       }
     }
 
     if (params.defaultMax) {
       const defaultMaxValue = parseInt(params.defaultMax, 10);
       if (!isNaN(defaultMaxValue) && defaultMaxValue > 0) {
-        setRequestBody("defaultMax", defaultMaxValue);
+        updates.defaultMax = defaultMaxValue;
       }
     }
-  }, [urlSearchParams, setRequestBody]);
+
+    if (Object.keys(updates).length > 0) {
+      setRequestBodyBatch(updates);
+    }
+  }, [urlSearchParams, setRequestBodyBatch]);
 
   return {
     requestBody,
     viewType: requestBody.viewType,
-    setRequestBody,
+    setRequestBody: setRequestBodyWithUrl,
     setRequestBodyBatch,
     handleClearFilters,
   };

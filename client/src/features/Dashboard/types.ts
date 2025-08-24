@@ -1,19 +1,13 @@
-import type { 
+import type {
   DashboardChannelResponse,
   DashboardVideoResponse,
-  ChannelsDashboardResponse,
-  VideosDashboardResponse,
-  SortOrder 
+  SortOrder,
 } from "@shared/api";
 import { SortOrder as SortOrderEnum } from "@shared/api";
 
 export type DashboardChannel = DashboardChannelResponse;
 
 export type DashboardVideo = DashboardVideoResponse;
-
-export type ChannelsDashboardResponse = ChannelsDashboardResponse;
-
-export type VideosDashboardResponse = VideosDashboardResponse;
 
 // Local types for Dashboard feature to avoid importing from app layer
 export const videosDefaults: {
