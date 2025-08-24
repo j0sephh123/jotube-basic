@@ -5,10 +5,9 @@ import { CopyValue, useOpenDirectory, useClickOutside } from "@shared/ui";
 type CardMenuProps = {
   id: number;
   ytId: string;
-  onClose?: () => void;
 };
 
-function CardMenu({ id, ytId, onClose }: CardMenuProps) {
+function CardMenu({ id, ytId }: CardMenuProps) {
   const handleOpenExplorer = useOpenDirectory({ ytChannelId: ytId });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -19,21 +18,18 @@ function CardMenu({ id, ytId, onClose }: CardMenuProps) {
     e.stopPropagation();
     navigator.clipboard.writeText(id.toString());
     setIsMenuOpen(false);
-    onClose?.();
   };
 
   const handleCopyYoutubeId = (e: React.MouseEvent) => {
     e.stopPropagation();
     navigator.clipboard.writeText(ytId);
     setIsMenuOpen(false);
-    onClose?.();
   };
 
   const handleOpenExplorerClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     handleOpenExplorer();
     setIsMenuOpen(false);
-    onClose?.();
   };
 
   return (

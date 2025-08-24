@@ -1,5 +1,6 @@
 export * from "./button";
 export { default as Card } from "./card";
+export { default as CardMenu } from "./card/CardMenu";
 export { default as Modal } from "./Modal";
 export { default as ChannelLink } from "./ChannelLink";
 export { default as VideoModal } from "./VideoModal";
@@ -24,4 +25,10 @@ export { useClickOutside } from "../lib/useClickOutside";
 export { default as Breadcrumb } from "./Breadcrumb";
 export { default as Lightbox } from "./Lightbox";
 export type { TooltipProps } from "./Tooltip";
+export { IconPlaylist } from "./icons/IconPlaylist";
+export { IconVideos } from "./icons/IconVideos";
+export { IconSaved } from "./icons/IconSaved";
+export { IconThumbnails } from "./icons/IconThumbnails";
+export { IconImageNavigator } from "./icons/IconImageNavigator";
+export { IconHome } from "./icons/IconHome";
 export * from "./static";

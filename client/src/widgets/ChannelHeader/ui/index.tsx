@@ -12,7 +12,7 @@ import {
   CleanShortUploads,
   FetchUploadsButton,
 } from "@features/Upload";
-import { ChannelLink, CopyValue, OpenDirectoryButton } from "@shared/ui";
+import { CardMenu, ChannelLink } from "@shared/ui";
 import Tabs from "./Tabs";
 import ViewThumbnails from "./ViewThumbnails";
 import { ViewScreenshots } from "@features/Thumbnails";
@@ -70,15 +70,15 @@ const ChannelHeader = ({ openPlaylistModal, onResetRangeFilters }: Props) => {
 
   return (
     <div className="bg-base-200 rounded-lg px-6 pt-16 shadow-md">
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col">
         <HeaderLayout
           left={
             <>
               <ChannelLink ytId={ytChannelId} where="saved">
                 <h2 className="text-xl font-bold pr-4">{title}</h2>
               </ChannelLink>
-              <CopyValue type="youtube" value={ytChannelId} />
-              <OpenDirectoryButton ytChannelId={ytChannelId} />
+              {playlistButton}
+              <CardMenu id={id} ytId={ytChannelId} />
             </>
           }
           center={<Tabs ytChannelId={ytChannelId} />}
@@ -96,7 +96,6 @@ const ChannelHeader = ({ openPlaylistModal, onResetRangeFilters }: Props) => {
                 ytChannelId={ytChannelId}
                 screenshotArtifactsCount={screenshotArtifactsCount}
               />
-              {playlistButton}
               {!fetchedUntilEnd && (
                 <FetchUploadsButton
                   ytChannelId={ytChannelId}
@@ -108,11 +107,10 @@ const ChannelHeader = ({ openPlaylistModal, onResetRangeFilters }: Props) => {
           }
         />
 
-        {
-          !pathname.includes("/gallery") &&
-            !pathname.includes("/saved") &&
-            !pathname.includes("/storyboard") &&
-            !pathname.includes("/new-gallery") && (
+        {!pathname.includes("/gallery") &&
+          !pathname.includes("/saved") &&
+          !pathname.includes("/storyboard") &&
+          !pathname.includes("/new-gallery") && (
             <ChannelControls
               leftSlot={
                 <>
