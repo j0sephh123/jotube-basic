@@ -25,6 +25,7 @@ export function UploadsDecorator({ Component, type }: Props) {
 
     if (type === "default") {
       refetchDefaultUploads();
+      refetchSavedUploads();
     }
 
     if (type === "saved") {
