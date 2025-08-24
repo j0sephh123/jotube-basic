@@ -5,23 +5,23 @@ import {
   SaveUpload,
   DownloadStoryboard,
 } from "@features/Upload";
-import { useDefaultUploads } from "@features/Upload";
+import { type UploadsListQueryResult } from "@shared/api";
 import { Card } from "@shared/ui";
 
 export type DefaultUploadsProps = {
   ytChannelId: string;
   handleSideEffect: () => void;
+  data: UploadsListQueryResult["data"];
 };
 
 export default function DefaultUploads({
   ytChannelId,
   handleSideEffect,
+  data,
 }: DefaultUploadsProps) {
-  const { data } = useDefaultUploads(ytChannelId);
-
   return (
     <>
-      {data?.uploads.map((upload) => {
+      {data?.uploadsList?.uploads.map((upload) => {
         return (
           <Card.Container key={upload.id}>
             <div className="relative group">
@@ -63,4 +63,3 @@ export default function DefaultUploads({
     </>
   );
 }
-

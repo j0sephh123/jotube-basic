@@ -218,7 +218,6 @@ type Query {
   getSlides(input: GetSlidesInput!): [GetSlidesResponse!]!
   playlistDetails(id: Int!): PlaylistDetailsResponse
   playlists: [PlaylistResponse!]!
-  savedUploads(savedUploadsInput: SavedUploadsInput!): [SavedUploadsResponse!]!
   screenshots: [ScreenshotsCountsResponse!]!
   screenshotsByVideo(ytVideoId: String!): [VideoScreenshotResponse!]!
   searchChannels(searchInput: SearchInput!): [SearchChannelResult!]!
@@ -243,17 +242,6 @@ input SaveUploadItemInput {
 type SaveUploadResponse {
   message: String!
   success: Boolean!
-}
-
-input SavedUploadsInput {
-  ytChannelIds: [String!]!
-}
-
-type SavedUploadsResponse {
-  channel: UploadsChannelResponse
-  totalUploads: Int!
-  uploads: [UploadResponse!]!
-  ytChannelId: String!
 }
 
 type ScreenshotsCountsResponse {
@@ -359,17 +347,6 @@ type UpdatePlaylistResponse {
   updatedAt: String!
 }
 
-type UploadResponse {
-  artifact: String!
-  createdAt: String!
-  duration: Int
-  id: Int!
-  publishedAt: String!
-  src: String!
-  title: String!
-  ytId: String!
-}
-
 type UploadWithStoryboardResponse {
   artifact: String!
   channelId: Int!
@@ -385,17 +362,9 @@ type UploadWithStoryboardResponse {
   ytId: String!
 }
 
-type UploadsChannelResponse {
-  id: Int!
-  src: String!
-  title: String!
-  totalUploads: Int!
-  uploads: [UploadResponse!]!
-  ytId: String!
-}
-
 input UploadsListInput {
   sortOrder: SortOrder!
+  type: String!
   ytChannelId: String!
 }
 

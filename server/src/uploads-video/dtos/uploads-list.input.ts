@@ -20,4 +20,8 @@ export class UploadsListInput {
   @Field(() => SortOrder)
   @IsEnum(SortOrder)
   sortOrder: SortOrder;
+
+  @Field(() => String)
+  @IsString()
+  type: string;
 }

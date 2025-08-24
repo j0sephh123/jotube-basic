@@ -5,7 +5,10 @@ import { useQueue } from "@shared/hooks";
 import { useSearchParams } from "react-router-dom";
 import { useApolloClient } from "@apollo/client";
 
-export function useDefaultUploads(ytChannelId: string) {
+export function useUploads(ytChannelId: string, type: "default" | "saved") {
+  console.log({
+    type,
+  });
   const queue = useQueue();
   const [searchParams] = useSearchParams();
   const sortOrder = (searchParams.get("sort") || "DESC") as SortOrder;
@@ -15,10 +18,10 @@ export function useDefaultUploads(ytChannelId: string) {
       uploadsListInput: {
         ytChannelId,
         sortOrder,
+        type,
       },
     },
     skip: !ytChannelId,
-    errorPolicy: "all",
   });
 
   const filteredData = useMemo(() => {

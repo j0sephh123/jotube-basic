@@ -3,7 +3,6 @@ import { saveUploadDto } from 'src/uploads-video/dtos/save-upload.dto';
 import { UploadsVideoService } from './uploads-video.service';
 import { fetchUploadsDto } from 'src/uploads-video/dtos/fetch-uploads.dto';
 import { syncUploadsDto } from 'src/uploads-video/dtos/sync-uploads.dto';
-import { savedUploadsDto } from 'src/uploads-video/dtos/saved-uploads.dto';
 import { cleanShortUploadsDto } from './dtos/clean-short-uploads.dto';
 import { SortOrder } from './dtos/uploads-list.input';
 
@@ -29,11 +28,6 @@ export class UploadsVideoController {
   @Post('/clean-short-uploads')
   cleanShortUploads(@Body() body: cleanShortUploadsDto) {
     return this.uploadsVideoService.cleanShortUploads(body);
-  }
-
-  @Post('/saved-uploads')
-  savedUploads(@Body() body: savedUploadsDto) {
-    return this.uploadsVideoService.savedUploads(body);
   }
 
   @Get('/uploads-list/:ytChannelId')

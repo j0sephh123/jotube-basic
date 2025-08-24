@@ -14,7 +14,6 @@ import {
 } from "@features/Upload";
 import { ChannelLink, CopyValue, OpenDirectoryButton } from "@shared/ui";
 import Tabs from "./Tabs";
-import BulkOperations from "./BulkOperations";
 import ViewThumbnails from "./ViewThumbnails";
 import { ViewScreenshots } from "@features/Thumbnails";
 import { ViewStoryboards } from "@widgets/Storyboard";
@@ -27,8 +26,6 @@ type Props = {
 const ChannelHeader = ({ openPlaylistModal, onResetRangeFilters }: Props) => {
   const ytChannelId = useTypedChannelYtId();
   const { pathname } = useLocation();
-  const isSavedPage = pathname.includes("/saved");
-  const isIndexPage = pathname.length === 34;
 
   const { data: metadata, refetch: refetchMetadata } =
     useChannelMetadataQuery(ytChannelId);
@@ -107,11 +104,6 @@ const ChannelHeader = ({ openPlaylistModal, onResetRangeFilters }: Props) => {
                   onSuccess={refetchMetadata}
                 />
               )}
-              <BulkOperations
-                ytChannelId={ytChannelId}
-                isSavedPage={isSavedPage}
-                isIndexPage={isIndexPage}
-              />
             </div>
           }
         />

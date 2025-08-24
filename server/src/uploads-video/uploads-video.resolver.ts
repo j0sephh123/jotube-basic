@@ -10,8 +10,6 @@ import { SyncUploadsResponse } from './dtos/sync-uploads.response';
 import { SyncUploadsInput } from './dtos/sync-uploads.input';
 import { CleanShortUploadsResponse } from './dtos/clean-short-uploads.response';
 import { CleanShortUploadsInput } from './dtos/clean-short-uploads.input';
-import { SavedUploadsResponse } from './dtos/saved-uploads.response';
-import { SavedUploadsInput } from './dtos/saved-uploads.input';
 import { UploadsListResponse } from './dtos/uploads-list.response';
 import { UploadsListInput } from './dtos/uploads-list.input';
 import { UploadsVideoStoryboardResponse } from './dtos/storyboards.response';
@@ -19,28 +17,6 @@ import { UploadsVideoStoryboardResponse } from './dtos/storyboards.response';
 @Resolver()
 export class UploadsVideoResolver {
   constructor(private readonly uploadsVideoService: UploadsVideoService) {}
-
-  @Query(() => [UploadsVideoStoryboardResponse])
-  async storyboards(
-    @Args('ytChannelId') ytChannelId: string,
-  ): Promise<UploadsVideoStoryboardResponse[]> {
-    try {
-      const results = await this.uploadsVideoService.storyboards(ytChannelId);
-
-      return results.map((result) => ({
-        ...result,
-        createdAt: result.createdAt.toISOString(),
-        updatedAt: result.updatedAt.toISOString(),
-        storyboard: {
-          ...result.storyboard,
-          createdAt: result.storyboard.createdAt.toISOString(),
-          updatedAt: result.storyboard.updatedAt.toISOString(),
-        },
-      }));
-    } catch {
-      return [];
-    }
-  }
 
   @Query(() => UploadsListResponse)
   async uploadsList(
@@ -50,7 +26,7 @@ export class UploadsVideoResolver {
       const result = await this.uploadsVideoService.uploadsList(
         uploadsListInput.ytChannelId,
         uploadsListInput.sortOrder,
-        'default',
+        uploadsListInput.type,
       );
 
       if (!result) {
@@ -70,36 +46,6 @@ export class UploadsVideoResolver {
       };
     } catch {
       return null;
-    }
-  }
-
-  @Query(() => [SavedUploadsResponse])
-  async savedUploads(
-    @Args('savedUploadsInput') savedUploadsInput: SavedUploadsInput,
-  ): Promise<SavedUploadsResponse[]> {
-    try {
-      const results =
-        await this.uploadsVideoService.savedUploads(savedUploadsInput);
-
-      return results.map((result) => ({
-        ...result,
-        channel: result.channel
-          ? {
-              ...result.channel,
-              uploads: result.channel.uploads.map((upload) => ({
-                ...upload,
-                createdAt: upload.createdAt.toISOString(),
-              })),
-              totalUploads: result.channel.uploads.length,
-            }
-          : null,
-        uploads: result.uploads.map((upload) => ({
-          ...upload,
-          createdAt: upload.createdAt.toISOString(),
-        })),
-      }));
-    } catch {
-      return [];
     }
   }
 
@@ -183,5 +129,27 @@ export class UploadsVideoResolver {
       ytVideoId,
       savedSeconds,
     });
+  }
+
+  @Query(() => [UploadsVideoStoryboardResponse])
+  async storyboards(
+    @Args('ytChannelId') ytChannelId: string,
+  ): Promise<UploadsVideoStoryboardResponse[]> {
+    try {
+      const results = await this.uploadsVideoService.storyboards(ytChannelId);
+
+      return results.map((result) => ({
+        ...result,
+        createdAt: result.createdAt.toISOString(),
+        updatedAt: result.updatedAt.toISOString(),
+        storyboard: {
+          ...result.storyboard,
+          createdAt: result.storyboard.createdAt.toISOString(),
+          updatedAt: result.storyboard.updatedAt.toISOString(),
+        },
+      }));
+    } catch {
+      return [];
+    }
   }
 }

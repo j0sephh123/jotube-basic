@@ -61,42 +61,6 @@ export const CLEAN_SHORT_UPLOADS = gql`
   }
 `;
 
-export const SAVED_UPLOADS = gql`
-  query SavedUploads($savedUploadsInput: SavedUploadsInput!) {
-    savedUploads(savedUploadsInput: $savedUploadsInput) {
-      ytChannelId
-      channel {
-        id
-        title
-        src
-        ytId
-        uploads {
-          createdAt
-          ytId
-          id
-          duration
-          publishedAt
-          src
-          title
-          artifact
-        }
-        totalUploads
-      }
-      uploads {
-        createdAt
-        ytId
-        id
-        duration
-        publishedAt
-        src
-        title
-        artifact
-      }
-      totalUploads
-    }
-  }
-`;
-
 export const UPLOADS_LIST = gql`
   query UploadsList($uploadsListInput: UploadsListInput!) {
     uploadsList(uploadsListInput: $uploadsListInput) {

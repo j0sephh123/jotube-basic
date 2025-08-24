@@ -12,7 +12,6 @@ import { DirectoryService } from 'src/file/directory.service';
 import { YoutubeService } from 'src/core/external-services/youtube-api/youtube.service';
 import { fetchUploadsDto } from 'src/uploads-video/dtos/fetch-uploads.dto';
 import { syncUploadsDto } from 'src/uploads-video/dtos/sync-uploads.dto';
-import { savedUploadsDto } from 'src/uploads-video/dtos/saved-uploads.dto';
 import { cleanShortUploadsDto } from 'src/uploads-video/dtos/clean-short-uploads.dto';
 import { ArtifactType } from '@prisma/client';
 import { SortOrder } from './dtos/uploads-list.input';
@@ -34,6 +33,7 @@ export class UploadsVideoService {
     sortOrder: SortOrder,
     type: string,
   ) {
+    console.log({ type });
     const whereQuery = () => {
       if (type === 'default') {
         return {
@@ -52,6 +52,12 @@ export class UploadsVideoService {
       throw new Error('Invalid type');
     };
 
+    const whereQueryResult = whereQuery();
+
+    console.log({
+      whereQueryResult,
+    });
+
     const channel = await this.prismaService.channel.findUnique({
       where: {
         ytId: ytChannelId,
@@ -59,7 +65,7 @@ export class UploadsVideoService {
       include: {
         uploads: {
           where: {
-            ...whereQuery(),
+            ...whereQueryResult,
           },
           orderBy: {
             publishedAt: sortOrder === SortOrder.ASC ? 'asc' : 'desc',
@@ -70,57 +76,6 @@ export class UploadsVideoService {
     });
 
     return channel;
-  }
-
-  async savedUploads({ ytChannelIds }: savedUploadsDto) {
-    const channelPromises = ytChannelIds.map(async (ytChannelId) => {
-      const channel = await this.prismaService.channel.findUnique({
-        where: { ytId: ytChannelId },
-        select: {
-          id: true,
-          title: true,
-          src: true,
-          ytId: true,
-          uploads: {
-            where: {
-              artifact: { in: [ArtifactType.SAVED, ArtifactType.DOWNLOADED] },
-            },
-            select: {
-              createdAt: true,
-              ytId: true,
-              id: true,
-              duration: true,
-              publishedAt: true,
-              src: true,
-              title: true,
-              artifact: true,
-            },
-          },
-        },
-      });
-
-      if (!channel) {
-        return {
-          ytChannelId,
-          channel: null,
-          uploads: [],
-          totalUploads: 0,
-        };
-      }
-
-      const uploads = channel.uploads;
-
-      return {
-        ytChannelId,
-        channel,
-        uploads,
-        totalUploads: channel.uploads.length,
-      };
-    });
-
-    const results = await Promise.all(channelPromises);
-
-    return results;
   }
 
   public async storyboards(ytChannelId: string) {

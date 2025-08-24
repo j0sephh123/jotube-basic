@@ -4,9 +4,9 @@ import { useQueue } from "@shared/hooks";
 import {
   type SavedUploadsProps,
   type DefaultUploadsProps,
-  useRefetchSavedUploads,
   useRefetchChannelUploads,
 } from "@features/Upload";
+import { useUploads } from "@features/Upload";
 
 type Props = {
   Component: React.ComponentType<SavedUploadsProps | DefaultUploadsProps>;
@@ -18,23 +18,24 @@ export function UploadsDecorator({ Component, type }: Props) {
   const refetchChannelMetadata = useRefetchChannelMetadata();
   const { refetch: refetchQueue } = useQueue();
   const refetchDefaultUploads = useRefetchChannelUploads(ytChannelId);
-  const refetchSavedUploads = useRefetchSavedUploads(ytChannelId);
+  const { data } = useUploads(ytChannelId, type);
 
   const handleSideEffect = () => {
     refetchChannelMetadata();
-
-    if (type === "default") {
-      refetchDefaultUploads();
-      refetchSavedUploads();
-    }
+    refetchDefaultUploads();
 
     if (type === "saved") {
       refetchQueue();
-      refetchSavedUploads();
     }
   };
 
+  if (!data) return null;
+
   return (
-    <Component ytChannelId={ytChannelId} handleSideEffect={handleSideEffect} />
+    <Component
+      ytChannelId={ytChannelId}
+      handleSideEffect={handleSideEffect}
+      data={{ uploadsList: data }}
+    />
   );
 }
