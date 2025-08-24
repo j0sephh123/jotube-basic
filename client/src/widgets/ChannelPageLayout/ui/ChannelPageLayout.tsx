@@ -8,7 +8,15 @@ export default function ChannelPageLayout() {
         openPlaylistModal={() => {}}
         onResetRangeFilters={() => {}}
       />
-      <Outlet />
+      <div className="overflow-hidden">
+        <div className="flex h-[70vh]">
+          <div className="flex-1 overflow-y-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 p-2">
+              <Outlet />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

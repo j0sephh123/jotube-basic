@@ -5,7 +5,6 @@ import {
   SaveUpload,
   DownloadStoryboard,
 } from "@features/Upload";
-import type { PropsWithChildren } from "react";
 import { useDefaultUploads } from "@features/Upload";
 import { Card } from "@shared/ui";
 
@@ -21,7 +20,7 @@ export default function DefaultUploads({
   const { data } = useDefaultUploads(ytChannelId);
 
   return (
-    <Wrapper>
+    <>
       {data?.uploads.map((upload) => {
         return (
           <Card.Container key={upload.id}>
@@ -61,20 +60,7 @@ export default function DefaultUploads({
           </Card.Container>
         );
       })}
-    </Wrapper>
+    </>
   );
 }
 
-const Wrapper = ({ children }: PropsWithChildren) => {
-  return (
-    <div className="overflow-hidden">
-      <div className="flex h-[70vh]">
-        <div className="flex-1 overflow-y-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 p-2">
-            {children}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};

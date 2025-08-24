@@ -20,9 +20,7 @@ export default function SavedUploads({
   const { data } = useSavedUploads(ytChannelId);
 
   return (
-    <div className="overflow-hidden">
-      <div className="h-[70vh] overflow-y-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 p-2">
+    <>
           {data?.[0]?.channel?.uploads
             ?.filter((upload) => {
               const isDownloading = queue?.some(
@@ -55,9 +53,7 @@ export default function SavedUploads({
                   </div>
                 }
               />
-            ))}
-        </div>
-      </div>
-    </div>
+        ))}
+    </>
   );
 }
