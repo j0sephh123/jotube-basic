@@ -31,4 +31,8 @@ export { IconSaved } from "./icons/IconSaved";
 export { IconThumbnails } from "./icons/IconThumbnails";
 export { IconImageNavigator } from "./icons/IconImageNavigator";
 export { IconHome } from "./icons/IconHome";
+export { IconStoryboard } from "./icons/IconStoryboard";
+export { IconGallery } from "./icons/IconGallery";
+export { IconNewGallery } from "./icons/IconNewGallery";
+export { IconUploads } from "./icons/IconUploads";
 export * from "./static";

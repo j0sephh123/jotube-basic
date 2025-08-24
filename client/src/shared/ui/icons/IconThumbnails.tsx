@@ -4,14 +4,18 @@ import { ViewType } from "@shared/api";
 import { IconButton } from "@shared/ui";
 
 export function IconThumbnails({
+  ytChannelId,
   totalThumbnails = 0,
 }: {
+  ytChannelId?: string;
   totalThumbnails?: number;
 }) {
+  const to = ytChannelId ? routes.thumbnails() : routes.dashboard(ViewType.Thumbnails);
+  
   return (
     <IconButton
       icon={<Grid2X2 />}
-      to={routes.dashboard(ViewType.Thumbnails)}
+      to={to}
       tip={totalThumbnails}
       tooltip={{
         content: "thumbnails",

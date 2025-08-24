@@ -3,12 +3,20 @@ import { routes } from "@shared/routes";
 import { ViewType } from "@shared/api";
 import { IconButton } from "@shared/ui";
 
-export function IconSaved({ totalSaved = 0 }: { totalSaved?: number }) {
+export function IconSaved({ 
+  ytChannelId, 
+  count = 0 
+}: { 
+  ytChannelId?: string;
+  count?: number;
+}) {
+  const to = ytChannelId ? routes.savedChannel(ytChannelId) : routes.dashboard(ViewType.Saved);
+  
   return (
     <IconButton
       icon={<Save />}
-      to={routes.dashboard(ViewType.Saved)}
-      tip={totalSaved}
+      to={to}
+      tip={count}
       tooltip={{
         content: "saved",
         position: "bottom",

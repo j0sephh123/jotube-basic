@@ -1,6 +1,6 @@
 import type { ViewType } from "@shared/api";
 
-export const routes = {
+export const  routes = {
   home: () => "/",
   config: () => "/config",
   dashboard: (viewType: ViewType) => `/dashboard/channels/${viewType}`,
@@ -10,10 +10,11 @@ export const routes = {
   galleryVideo: (ytChannelId: string, ytVideoId: string) =>
     `/channels/${ytChannelId}/gallery/${ytVideoId}`,
   screenshots: (ytChannelId: string) => `/channels/${ytChannelId}/screenshots`,
+  newGallery: (ytChannelId: string) => `/channels/${ytChannelId}/new-gallery`,
   screenshotsDate: (ytChannelId: string, date: string) =>
     `/channels/${ytChannelId}/screenshots/${date}`,
   thumbnails: () => `/thumbnails`,
-  uploads: (ytChannelId: string) => `/channels/${ytChannelId}/uploads`,
+  uploads: (ytChannelId: string) => `/channels/${ytChannelId}`,
   storyboard: (ytChannelId: string) => `/channels/${ytChannelId}/storyboard`,
   videos: () => "/dashboard/videos",
   playlists: () => "/playlists",

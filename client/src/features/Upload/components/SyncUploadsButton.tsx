@@ -1,6 +1,7 @@
 import { RefreshCw } from "lucide-react";
 import clsx from "clsx";
 import { useSyncUploads } from "@features/Upload";
+import { Button } from "@shared/ui";
 
 // Local utility functions to avoid shared dependency
 const getLastSyncColor = (lastSync: string | null) => {
@@ -26,6 +27,7 @@ type SyncUploadsButtonProps = {
   ytChannelId: string;
   id: number;
   onSuccess?: () => void;
+  isDisabled?: boolean;
 };
 
 export default function SyncUploadsButton({
@@ -33,6 +35,7 @@ export default function SyncUploadsButton({
   ytChannelId,
   id,
   onSuccess,
+  isDisabled,
 }: SyncUploadsButtonProps) {
   const syncUploads = useSyncUploads(ytChannelId);
   const lastSync = lastSyncedAt || null;
@@ -52,8 +55,9 @@ export default function SyncUploadsButton({
   };
 
   return (
-    <button
+    <Button
       onClick={handleSync}
+      disabled={isDisabled}
       className="text-xs flex items-center gap-1 hover:bg-gray-700/50 p-1 rounded transition-colors w-20 justify-center"
     >
       <RefreshCw
@@ -66,6 +70,6 @@ export default function SyncUploadsButton({
       <span className={clsx(getLastSyncColor(lastSync), "font-medium")}>
         {formatLastSync(lastSync)}
       </span>
-    </button>
+    </Button>
   );
 }

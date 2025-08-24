@@ -1,12 +1,15 @@
 import { Scissors } from "lucide-react";
 import clsx from "clsx";
 import { useCleanShortUploads } from "@features/Upload";
+import { Button } from "@shared/ui";
 
 type CleanShortUploadsProps = {
   ytChannelId: string;
+  isDisabled?: boolean;
 };
 
 export default function CleanShortUploads({
+  isDisabled,
   ytChannelId,
 }: CleanShortUploadsProps) {
   const cleanShortUploads = useCleanShortUploads(ytChannelId);
@@ -24,8 +27,9 @@ export default function CleanShortUploads({
   };
 
   return (
-    <button
+    <Button
       onClick={handleClean}
+      disabled={isDisabled}
       className="text-xs flex items-center gap-1 hover:bg-red-700/50 px-2 py-1 rounded transition-colors w-24 justify-center"
     >
       <Scissors
@@ -37,6 +41,6 @@ export default function CleanShortUploads({
       <span className="text-red-400 font-medium">
         {cleanShortUploads.isPending ? "Cleaning..." : "Clean Short"}
       </span>
-    </button>
+    </Button>
   );
 }

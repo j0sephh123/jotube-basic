@@ -30,6 +30,12 @@ const ChannelHeader = ({ openPlaylistModal, onResetRangeFilters }: Props) => {
   const { data: metadata, refetch: refetchMetadata } =
     useChannelMetadataQuery(ytChannelId);
 
+  const areControlsDisabled =
+    pathname.includes("/gallery") ||
+    pathname.includes("/saved") ||
+    pathname.includes("/storyboard") ||
+    pathname.includes("/new-gallery");
+
   if (!metadata) return null;
 
   const {
@@ -81,7 +87,29 @@ const ChannelHeader = ({ openPlaylistModal, onResetRangeFilters }: Props) => {
               <CardMenu id={id} ytId={ytChannelId} />
             </>
           }
-          center={<Tabs ytChannelId={ytChannelId} />}
+          center={
+            <>
+              <Tabs ytChannelId={ytChannelId} />
+              <ChannelControls
+                areControlsDisabled={areControlsDisabled}
+                leftSlot={
+                  <>
+                    <SyncUploadsButton
+                      isDisabled={areControlsDisabled}
+                      lastSyncedAt={metadata?.lastSyncedAt ?? null}
+                      ytChannelId={ytChannelId}
+                      id={metadata?.id ?? 0}
+                    />
+                    <CleanShortUploads
+                      isDisabled={areControlsDisabled}
+                      ytChannelId={ytChannelId}
+                    />
+                  </>
+                }
+                onResetRangeFilters={onResetRangeFilters}
+              />
+            </>
+          }
           right={
             <div className="flex items-center gap-2">
               <ViewStoryboards
@@ -106,25 +134,6 @@ const ChannelHeader = ({ openPlaylistModal, onResetRangeFilters }: Props) => {
             </div>
           }
         />
-
-        {!pathname.includes("/gallery") &&
-          !pathname.includes("/saved") &&
-          !pathname.includes("/storyboard") &&
-          !pathname.includes("/new-gallery") && (
-            <ChannelControls
-              leftSlot={
-                <>
-                  <SyncUploadsButton
-                    lastSyncedAt={metadata?.lastSyncedAt ?? null}
-                    ytChannelId={ytChannelId}
-                    id={metadata?.id ?? 0}
-                  />
-                  <CleanShortUploads ytChannelId={ytChannelId} />
-                </>
-              }
-              onResetRangeFilters={onResetRangeFilters}
-            />
-          )}
       </div>
     </div>
   );

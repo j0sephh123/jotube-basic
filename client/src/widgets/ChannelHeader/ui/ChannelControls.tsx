@@ -5,9 +5,14 @@ import { Button } from "@shared/ui";
 type Props = {
   leftSlot: React.ReactNode;
   onResetRangeFilters: () => void;
+  areControlsDisabled: boolean;
 };
 
-const ChannelControls = ({ leftSlot, onResetRangeFilters }: Props) => {
+const ChannelControls = ({
+  leftSlot,
+  onResetRangeFilters,
+  areControlsDisabled,
+}: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const sortOrder = (searchParams.get("sort") || "DESC") as "ASC" | "DESC";
 
@@ -23,7 +28,7 @@ const ChannelControls = ({ leftSlot, onResetRangeFilters }: Props) => {
     <div className="flex flex-wrap items-center justify-between gap-4">
       <div className="flex flex-wrap items-center gap-4">{leftSlot}</div>
       <div className="flex items-center gap-2">
-        <Button onClick={toggleSort}>
+        <Button onClick={toggleSort} disabled={areControlsDisabled}>
           Sort:
           {sortOrder === "ASC" ? "↑ Oldest first" : "↓ Newest first"}
         </Button>
@@ -33,6 +38,7 @@ const ChannelControls = ({ leftSlot, onResetRangeFilters }: Props) => {
           size="sm"
           onClick={onResetRangeFilters}
           title="Reset range filters"
+          disabled={areControlsDisabled}
         >
           <RotateCcw className="w-4 h-4" />
         </Button>
