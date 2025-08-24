@@ -1,8 +1,9 @@
 import type { SortOrder } from "@shared/api";
-import { useUploadsListQuery } from "@shared/api";
+import { UploadsListDocument, useUploadsListQuery } from "@shared/api";
 import { useCallback, useMemo } from "react";
 import { useQueue } from "@shared/hooks";
 import { useSearchParams } from "react-router-dom";
+import { useApolloClient } from "@apollo/client";
 
 export function useDefaultUploads(ytChannelId: string) {
   const queue = useQueue();
@@ -13,7 +14,7 @@ export function useDefaultUploads(ytChannelId: string) {
     variables: {
       uploadsListInput: {
         ytChannelId,
-        sortOrder
+        sortOrder,
       },
     },
     skip: !ytChannelId,
@@ -39,8 +40,12 @@ export function useDefaultUploads(ytChannelId: string) {
 }
 
 export function useRefetchChannelUploads(ytChannelId: string | undefined) {
+  const apolloClient = useApolloClient();
+
   return useCallback(() => {
     if (!ytChannelId) return;
-    // This will be handled by the GraphQL query refetch
-  }, [ytChannelId]);
+    apolloClient.refetchQueries({
+      include: [UploadsListDocument],
+    });
+  }, [apolloClient, ytChannelId]);
 }

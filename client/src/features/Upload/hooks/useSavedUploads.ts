@@ -1,4 +1,5 @@
-import { useSavedUploadsQuery } from "@shared/api";
+import { useApolloClient } from "@apollo/client";
+import { SavedUploadsDocument, useSavedUploadsQuery } from "@shared/api";
 import { useCallback } from "react";
 
 export function useSavedUploads(ytChannelId: string) {
@@ -20,8 +21,12 @@ export function useSavedUploads(ytChannelId: string) {
 }
 
 export function useRefetchSavedUploads(ytChannelId: string) {
+  const apolloClient = useApolloClient();
+
   return useCallback(() => {
     if (!ytChannelId) return;
-    // This will be handled by the GraphQL query refetch
-  }, [ytChannelId]);
+    apolloClient.refetchQueries({
+      include: [SavedUploadsDocument],
+    });
+  }, [apolloClient, ytChannelId]);
 }
