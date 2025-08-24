@@ -4,7 +4,10 @@ import { ChannelHeader } from "@widgets/ChannelHeader";
 export default function ChannelPageLayout() {
   return (
     <div className="container mx-auto px-4 py-2">
-      <ChannelHeader />
+      <ChannelHeader
+        openPlaylistModal={() => {}}
+        onResetRangeFilters={() => {}}
+      />
       <Outlet />
     </div>
   );

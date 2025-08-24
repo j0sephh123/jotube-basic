@@ -21,14 +21,14 @@ export const useTabs = () => {
       count: videoArtifactsCount,
     },
     {
-      where: "storyboard" as const,
-      label: "Storyboard",
-      count: storyboardArtifactsCount,
-    },
-    {
       where: "saved" as const,
       label: "Saved",
       count: savedArtifactsCount,
+    },
+    {
+      where: "storyboard" as const,
+      label: "Storyboard",
+      count: storyboardArtifactsCount,
     },
     {
       where: "gallery" as const,

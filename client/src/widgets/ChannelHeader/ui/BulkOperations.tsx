@@ -1,11 +1,9 @@
 import {
-  useUploadsList,
+  useDefaultUploads,
   DownloadAll,
   SaveAll,
   RemoveAll,
 } from "@features/Upload";
-import { useSearchParams } from "react-router-dom";
-import { SortOrder } from "@shared/api";
 import { useMemo } from "react";
 
 type Props = {
@@ -15,9 +13,7 @@ type Props = {
 };
 
 const BulkOperations = ({ ytChannelId, isSavedPage, isIndexPage }: Props) => {
-  const [searchParams] = useSearchParams();
-  const sortOrder = (searchParams.get("sort") || SortOrder.Desc) as SortOrder;
-  const { data: channelData } = useUploadsList(ytChannelId, sortOrder);
+  const { data: channelData } = useDefaultUploads(ytChannelId);
 
   const uploadsToSave = useMemo(
     () =>

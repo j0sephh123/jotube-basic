@@ -2,12 +2,12 @@ import type { SortOrder } from "@shared/api";
 import { useUploadsListQuery } from "@shared/api";
 import { useCallback, useMemo } from "react";
 import { useQueue } from "@shared/hooks";
+import { useSearchParams } from "react-router-dom";
 
-export default function useUploadsList(
-  ytChannelId: string,
-  sortOrder: SortOrder
-) {
+export function useDefaultUploads(ytChannelId: string) {
   const queue = useQueue();
+  const [searchParams] = useSearchParams();
+  const sortOrder = (searchParams.get("sort") || "DESC") as SortOrder;
 
   const query = useUploadsListQuery({
     variables: {

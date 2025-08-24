@@ -7,7 +7,11 @@ type Props = {
   ytVideoIds: string[];
 };
 
-export function DeleteUpload({ handleSideEffect, ytChannelId, ytVideoIds }: Props) {
+export function DeleteUpload({
+  handleSideEffect,
+  ytChannelId,
+  ytVideoIds,
+}: Props) {
   const deleteUploadFromDbMutation = useDeleteUploads(handleSideEffect);
   const handleDelete = (ytVideoIds: string[]) => {
     deleteUploadFromDbMutation({
@@ -17,7 +21,11 @@ export function DeleteUpload({ handleSideEffect, ytChannelId, ytVideoIds }: Prop
   };
 
   return (
-    <Button color="error" variant="outline" onClick={() => handleDelete(ytVideoIds)}>
+    <Button
+      color="error"
+      variant="outline"
+      onClick={() => handleDelete(ytVideoIds)}
+    >
       Delete
     </Button>
   );
