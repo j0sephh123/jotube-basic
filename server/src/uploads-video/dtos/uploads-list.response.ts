@@ -37,7 +37,7 @@ export class UploadsListUploadResponse {
 }
 
 @ObjectType()
-export class ChannelUploadsResponse {
+export class UploadsListResponse {
   @Field(() => Int)
   id: number;
 

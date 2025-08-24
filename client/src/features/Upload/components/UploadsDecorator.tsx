@@ -1,11 +1,11 @@
 import { useRefetchChannelMetadata } from "@entities/Channel";
 import { useTypedChannelYtId } from "@features/Dashboard";
-import { useDefaultUploads } from "../hooks/useDefaultUploads";
 import { useQueue } from "@shared/hooks";
 import {
   useSavedUploads,
   type SavedUploadsProps,
   type DefaultUploadsProps,
+  useDefaultUploads,
 } from "@features/Upload";
 
 type Props = {

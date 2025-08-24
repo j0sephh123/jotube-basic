@@ -13,7 +13,7 @@ export function useDefaultUploads(ytChannelId: string) {
     variables: {
       uploadsListInput: {
         ytChannelId,
-        sortOrder,
+        sortOrder
       },
     },
     skip: !ytChannelId,

@@ -29,7 +29,29 @@ export class UploadsVideoService {
     private prismaService: PrismaService,
   ) {}
 
-  public async uploadsList(ytChannelId: string, sortOrder: SortOrder) {
+  public async uploadsList(
+    ytChannelId: string,
+    sortOrder: SortOrder,
+    type: string,
+  ) {
+    const whereQuery = () => {
+      if (type === 'default') {
+        return {
+          artifact: ArtifactType.VIDEO,
+        };
+      }
+
+      if (type === 'saved') {
+        return {
+          artifact: {
+            in: [ArtifactType.SAVED, ArtifactType.DOWNLOADED],
+          },
+        };
+      }
+
+      throw new Error('Invalid type');
+    };
+
     const channel = await this.prismaService.channel.findUnique({
       where: {
         ytId: ytChannelId,
@@ -37,7 +59,7 @@ export class UploadsVideoService {
       include: {
         uploads: {
           where: {
-            artifact: ArtifactType.VIDEO,
+            ...whereQuery(),
           },
           orderBy: {
             publishedAt: sortOrder === SortOrder.ASC ? 'asc' : 'desc',
@@ -48,6 +70,57 @@ export class UploadsVideoService {
     });
 
     return channel;
+  }
+
+  async savedUploads({ ytChannelIds }: savedUploadsDto) {
+    const channelPromises = ytChannelIds.map(async (ytChannelId) => {
+      const channel = await this.prismaService.channel.findUnique({
+        where: { ytId: ytChannelId },
+        select: {
+          id: true,
+          title: true,
+          src: true,
+          ytId: true,
+          uploads: {
+            where: {
+              artifact: { in: [ArtifactType.SAVED, ArtifactType.DOWNLOADED] },
+            },
+            select: {
+              createdAt: true,
+              ytId: true,
+              id: true,
+              duration: true,
+              publishedAt: true,
+              src: true,
+              title: true,
+              artifact: true,
+            },
+          },
+        },
+      });
+
+      if (!channel) {
+        return {
+          ytChannelId,
+          channel: null,
+          uploads: [],
+          totalUploads: 0,
+        };
+      }
+
+      const uploads = channel.uploads;
+
+      return {
+        ytChannelId,
+        channel,
+        uploads,
+        totalUploads: channel.uploads.length,
+      };
+    });
+
+    const results = await Promise.all(channelPromises);
+
+    return results;
   }
 
   public async storyboards(ytChannelId: string) {
@@ -382,57 +455,6 @@ export class UploadsVideoService {
     });
 
     return result;
-  }
-
-  async savedUploads({ ytChannelIds }: savedUploadsDto) {
-    const channelPromises = ytChannelIds.map(async (ytChannelId) => {
-      const channel = await this.prismaService.channel.findUnique({
-        where: { ytId: ytChannelId },
-        select: {
-          id: true,
-          title: true,
-          src: true,
-          ytId: true,
-          uploads: {
-            where: {
-              artifact: { in: [ArtifactType.SAVED, ArtifactType.DOWNLOADED] },
-            },
-            select: {
-              createdAt: true,
-              ytId: true,
-              id: true,
-              duration: true,
-              publishedAt: true,
-              src: true,
-              title: true,
-              artifact: true,
-            },
-          },
-        },
-      });
-
-      if (!channel) {
-        return {
-          ytChannelId,
-          channel: null,
-          uploads: [],
-          totalUploads: 0,
-        };
-      }
-
-      const uploads = channel.uploads;
-
-      return {
-        ytChannelId,
-        channel,
-        uploads,
-        totalUploads: channel.uploads.length,
-      };
-    });
-
-    const results = await Promise.all(channelPromises);
-
-    return results;
   }
 
   private async deleteDownloadedVideo({

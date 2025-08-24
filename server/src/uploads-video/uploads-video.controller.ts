@@ -40,8 +40,9 @@ export class UploadsVideoController {
   uploadsList(
     @Param('ytChannelId') ytChannelId: string,
     @Query('sortOrder') sortOrder: SortOrder,
+    @Query('type') type: string,
   ) {
-    return this.uploadsVideoService.uploadsList(ytChannelId, sortOrder);
+    return this.uploadsVideoService.uploadsList(ytChannelId, sortOrder, type);
   }
 
   @Get('/storyboards/:ytChannelId')

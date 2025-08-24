@@ -35,20 +35,6 @@ type ChannelResponse {
   ytId: String!
 }
 
-type ChannelUploadsResponse {
-  createdAt: String!
-  fetchStartVideoId: String!
-  fetchedUntilEnd: Boolean!
-  id: Int!
-  lastSyncedAt: String
-  src: String!
-  title: String!
-  updatedAt: String!
-  uploads: [UploadsListUploadResponse!]!
-  videoCount: Int!
-  ytId: String!
-}
-
 type ChannelsDashboardResponse {
   channels: [DashboardChannelResponse!]!
   total: Int!
@@ -240,7 +226,7 @@ type Query {
   statisticsCounts: StatisticsCountsResponse!
   storyboards(ytChannelId: String!): [UploadsVideoStoryboardResponse!]!
   thumbnailByVideoId(ytVideoId: String!): ThumbnailByVideoIdResponse
-  uploadsList(uploadsListInput: UploadsListInput!): ChannelUploadsResponse
+  uploadsList(uploadsListInput: UploadsListInput!): UploadsListResponse!
   uploadsWithStoryboards(input: StoryboardQueryInput!): [UploadWithStoryboardResponse!]!
   uploadsWithThumbnails(input: UploadsWithThumbnailsInput!): [UploadsWithThumbnailsResponse!]!
 }
@@ -411,6 +397,20 @@ type UploadsChannelResponse {
 input UploadsListInput {
   sortOrder: SortOrder!
   ytChannelId: String!
+}
+
+type UploadsListResponse {
+  createdAt: String!
+  fetchStartVideoId: String!
+  fetchedUntilEnd: Boolean!
+  id: Int!
+  lastSyncedAt: String
+  src: String!
+  title: String!
+  updatedAt: String!
+  uploads: [UploadsListUploadResponse!]!
+  videoCount: Int!
+  ytId: String!
 }
 
 type UploadsListUploadResponse {

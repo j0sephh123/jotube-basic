@@ -12,7 +12,7 @@ import { CleanShortUploadsResponse } from './dtos/clean-short-uploads.response';
 import { CleanShortUploadsInput } from './dtos/clean-short-uploads.input';
 import { SavedUploadsResponse } from './dtos/saved-uploads.response';
 import { SavedUploadsInput } from './dtos/saved-uploads.input';
-import { ChannelUploadsResponse } from './dtos/uploads-list.response';
+import { UploadsListResponse } from './dtos/uploads-list.response';
 import { UploadsListInput } from './dtos/uploads-list.input';
 import { UploadsVideoStoryboardResponse } from './dtos/storyboards.response';
 
@@ -42,14 +42,15 @@ export class UploadsVideoResolver {
     }
   }
 
-  @Query(() => ChannelUploadsResponse, { nullable: true })
+  @Query(() => UploadsListResponse)
   async uploadsList(
     @Args('uploadsListInput') uploadsListInput: UploadsListInput,
-  ): Promise<ChannelUploadsResponse | null> {
+  ): Promise<UploadsListResponse | null> {
     try {
       const result = await this.uploadsVideoService.uploadsList(
         uploadsListInput.ytChannelId,
         uploadsListInput.sortOrder,
+        'default',
       );
 
       if (!result) {
