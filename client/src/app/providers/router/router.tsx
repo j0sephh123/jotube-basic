@@ -13,11 +13,7 @@ import { PlaylistsPage } from "@pages/playlists";
 import { PlaylistDetailsPage } from "@pages/playlist-details";
 import { NotFound } from "@shared/ui";
 import { GalleryLayout } from "@features/Gallery";
-import {
-  UploadsDecorator,
-  SavedUploads,
-  DefaultUploads,
-} from "@features/Upload";
+import { UploadsDecorator } from "@features/Upload";
 
 export default function Router() {
   return (
@@ -34,18 +30,8 @@ export default function Router() {
             </Route>
           </Route>
           <Route path="/channels/:ytChannelId" element={<ChannelPageLayout />}>
-            <Route
-              index
-              element={
-                <UploadsDecorator type="default" Component={DefaultUploads} />
-              }
-            />
-            <Route
-              path="saved"
-              element={
-                <UploadsDecorator type="saved" Component={SavedUploads} />
-              }
-            />
+            <Route index element={<UploadsDecorator type="default" />} />
+            <Route path="saved" element={<UploadsDecorator type="saved" />} />
             <Route path="storyboard" element={<StoryboardPage />} />
             <Route path="gallery" element={<GalleryLayout />}>
               <Route index element={<GalleryPage />} />

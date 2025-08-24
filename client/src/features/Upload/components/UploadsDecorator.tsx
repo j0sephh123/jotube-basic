@@ -1,19 +1,15 @@
 import { useRefetchChannelMetadata } from "@entities/Channel";
 import { useTypedChannelYtId } from "@features/Dashboard";
 import { useQueue } from "@shared/hooks";
-import {
-  type SavedUploadsProps,
-  type DefaultUploadsProps,
-  useRefetchChannelUploads,
-} from "@features/Upload";
+import { useRefetchChannelUploads } from "@features/Upload";
 import { useUploads } from "@features/Upload";
+import UploadsList from "./UploadsList";
 
 type Props = {
-  Component: React.ComponentType<SavedUploadsProps | DefaultUploadsProps>;
   type: "default" | "saved";
 };
 
-export function UploadsDecorator({ Component, type }: Props) {
+export function UploadsDecorator({ type }: Props) {
   const ytChannelId = useTypedChannelYtId();
   const refetchChannelMetadata = useRefetchChannelMetadata();
   const { refetch: refetchQueue } = useQueue();
@@ -32,10 +28,11 @@ export function UploadsDecorator({ Component, type }: Props) {
   if (!data) return null;
 
   return (
-    <Component
+    <UploadsList
       ytChannelId={ytChannelId}
       handleSideEffect={handleSideEffect}
       data={{ uploadsList: data }}
+      type={type}
     />
   );
 }

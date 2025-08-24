@@ -3,25 +3,27 @@ import { formatSecondsToMMSS } from "@shared/utils";
 import { Avatar } from "@shared/ui";
 
 export function VideoPlayer({
-  item,
+  ytId,
+  src,
+  id,
+  title,
+  duration,
 }: {
-  item: {
-    ytId: string;
-    src: string;
-    id: number;
-    title: string;
-    duration?: number | null;
-  };
+  ytId: string;
+  src: string;
+  id: number;
+  title: string;
+  duration?: number | null;
 }) {
   const { playingVideos, handleVideoClick, getEmbedUrl } = useVideoPlayer();
 
   return (
     <>
-      {playingVideos[item.ytId] ? (
+      {playingVideos[ytId] ? (
         <div className="w-full aspect-video">
           <iframe
-            src={getEmbedUrl(item.ytId)}
-            title={item.title}
+            src={getEmbedUrl(ytId)}
+            title={title}
             className="w-full h-full"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
@@ -30,17 +32,17 @@ export function VideoPlayer({
       ) : (
         <figure
           className="relative cursor-pointer aspect-video"
-          onClick={() => handleVideoClick(item.ytId)}
+          onClick={() => handleVideoClick(ytId)}
         >
           <Avatar
-            ytId={item.ytId}
-            id={item.id}
-            src={item.src}
+            ytId={ytId}
+            id={id}
+            src={src}
             className="w-full h-full object-cover"
           />
-          {item.duration && (
+          {duration && (
             <div className="absolute bottom-2 right-2 bg-black bg-opacity-80 text-white text-xs px-2 py-1 rounded">
-              {formatSecondsToMMSS(item.duration)}
+              {formatSecondsToMMSS(duration)}
             </div>
           )}
           <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-30">

@@ -12,13 +12,9 @@ export { default as DownloadAll } from "./components/DownloadAll";
 export { default as SaveAll } from "../../widgets/ChannelHeader/ui/SaveAll";
 export { default as RemoveAll } from "../../widgets/ChannelHeader/ui/RemoveAll";
 export {
-  default as SavedUploads,
-  type SavedUploadsProps,
-} from "./components/SavedUploads";
-export {
-  default as DefaultUploads,
-  type DefaultUploadsProps,
-} from "./components/DefaultUploads";
+  default as UploadsList,
+  type UploadsListProps,
+} from "./components/UploadsList";
 export { default as useSyncUploads } from "./hooks/useSyncUploads";
 export { default as useDownload } from "./hooks/useDownload";
 export { useDeleteUploads } from "./hooks/useUploadsDelete";
