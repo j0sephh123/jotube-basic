@@ -26,8 +26,8 @@ type CardProps = {
   downloadButtonSlot?: React.ReactNode;
   deleteButtonSlot?: React.ReactNode;
   playlistButtonSlot?: React.ReactNode;
-  handleTitleClick: (e: React.MouseEvent) => void;
-  onThumbnailClick: () => void;
+  handleTitleClick?: (e: React.MouseEvent) => void;
+  onThumbnailClick?: () => void;
 };
 
 function Card({
@@ -55,7 +55,7 @@ function Card({
           src={src}
           ytChannelId={ytChannelId}
           screenshots={screenshots}
-          onThumbnailClick={onThumbnailClick}
+          onThumbnailClick={onThumbnailClick || (() => {})}
         />
         {cardMenuSlot && (
           <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
@@ -64,7 +64,7 @@ function Card({
         )}
       </div>
       <Card.Content>
-        <Card.Title title={title} onClick={handleTitleClick} />
+        <Card.Title title={title} onClick={handleTitleClick || (() => {})} />
         {secondRow}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
