@@ -26,10 +26,8 @@ export default function VideosHeader() {
             Reset
           </Button>
         </div>
-        {data && (
-          <div className="bg-base-100 border-t border-base-300 rounded-b-lg">
-            <VideosPaginationControl total={data.total} />
-          </div>
+        {data && data.total > 0 && (
+          <VideosPaginationControl total={data.total} />
         )}
       </div>
     </div>

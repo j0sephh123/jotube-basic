@@ -14,7 +14,7 @@ export default function ChannelPageLayout() {
         onResetRangeFilters={() => {}}
       />
       <div className="overflow-hidden">
-        <div className="flex h-[70vh]">
+        <div className="flex h-[85vh]">
           <div className="flex-1 overflow-y-auto">
             <div
               className={clsx(

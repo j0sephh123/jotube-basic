@@ -12,14 +12,18 @@ export default function VideosDashboardContainer({
 
   if (isLoading) {
     return (
-      <div className="flex-1 flex items-center justify-center">
+      <div className="flex-1 flex items-center justify-center min-h-[400px]">
         <Loader className="w-8 h-8 animate-spin" />
       </div>
     );
   }
 
   if (error || !data || !data.videos) {
-    return <ErrorMessage message="Error fetching dashboard data" />;
+    return (
+      <div className="flex-1 flex items-center justify-center min-h-[400px]">
+        <ErrorMessage message="Error fetching dashboard data" />
+      </div>
+    );
   }
 
   return <>{children(data.videos)}</>;

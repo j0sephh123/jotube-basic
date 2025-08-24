@@ -1,34 +1,25 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
-
-// Local hook implementations to avoid cross-layer dependencies
-const useLocalVideosDashboard = () => {
-  return {
-    videosRequestBody: {
-      sortOrder: "DESC" as const,
-      page: 1,
-      minScreenshots: 0,
-      maxScreenshots: null,
-    },
-  };
-};
-
-const useLocalFetchVideosDashboard = (
-  _requestBody: Record<string, unknown>
-) => {
-  return {
-    data: { fetchVideosDashboard: null },
-    loading: false,
-    error: null,
-    refetch: () => {},
-  };
-};
+import { useVideosDashboardContext } from "..";
+import { useFetchVideosDashboardQuery } from "@shared/api";
 
 export function useVideosDashboardQuery() {
-  const { videosRequestBody: requestBody } = useLocalVideosDashboard();
+  const { videosRequestBody } = useVideosDashboardContext();
 
-  const { data, loading, error, refetch } =
-    useLocalFetchVideosDashboard(requestBody);
+  const variables = {
+    page: videosRequestBody.page,
+    sortOrder: videosRequestBody.sortOrder.toLowerCase() as "asc" | "desc",
+    screenshotMin:
+      videosRequestBody.minScreenshots > 0
+        ? videosRequestBody.minScreenshots
+        : undefined,
+    screenshotMax: videosRequestBody.maxScreenshots || undefined,
+  };
+
+  const { data, loading, error, refetch } = useFetchVideosDashboardQuery({
+    variables,
+    fetchPolicy: "cache-and-network",
+  });
 
   return {
     data: data?.fetchVideosDashboard,
@@ -40,11 +31,21 @@ export function useVideosDashboardQuery() {
 
 export function useRefetchVideosDashboard() {
   const queryClient = useQueryClient();
-  const { videosRequestBody: requestBody } = useLocalVideosDashboard();
+  const { videosRequestBody } = useVideosDashboardContext();
 
   return useCallback(() => {
+    const variables = {
+      page: videosRequestBody.page,
+      sortOrder: videosRequestBody.sortOrder.toLowerCase() as "asc" | "desc",
+      screenshotMin:
+        videosRequestBody.minScreenshots > 0
+          ? videosRequestBody.minScreenshots
+          : undefined,
+      screenshotMax: videosRequestBody.maxScreenshots || undefined,
+    };
+
     queryClient.refetchQueries({
-      queryKey: ["dashboard", "videos", requestBody],
+      queryKey: ["fetchVideosDashboard", variables],
     });
-  }, [queryClient, requestBody]);
+  }, [queryClient, videosRequestBody]);
 }

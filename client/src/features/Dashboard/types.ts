@@ -5,6 +5,7 @@ import type {
   VideosDashboardResponse,
   SortOrder 
 } from "@shared/api";
+import { SortOrder as SortOrderEnum } from "@shared/api";
 
 export type DashboardChannel = DashboardChannelResponse;
 
@@ -21,7 +22,7 @@ export const videosDefaults: {
   minScreenshots: number;
   maxScreenshots: number | null;
 } = {
-  sortOrder: "desc" as SortOrder,
+  sortOrder: SortOrderEnum.Desc,
   page: 1,
   minScreenshots: 0,
   maxScreenshots: null as number | null,

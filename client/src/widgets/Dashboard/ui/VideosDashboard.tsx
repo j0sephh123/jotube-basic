@@ -11,10 +11,10 @@ export default function VideosDashboard() {
   const navigate = useNavigate();
 
   return (
-    <>
-      <VideosDashboardContainer>
-        {(videos) =>
-          videos.map((video) => (
+    <VideosDashboardContainer>
+      {(videos) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
+          {videos.map((video) => (
             <Card
               key={video.id}
               id={video.id}
@@ -38,9 +38,9 @@ export default function VideosDashboard() {
                 />
               }
             />
-          ))
-        }
-      </VideosDashboardContainer>
-    </>
+          ))}
+        </div>
+      )}
+    </VideosDashboardContainer>
   );
 }

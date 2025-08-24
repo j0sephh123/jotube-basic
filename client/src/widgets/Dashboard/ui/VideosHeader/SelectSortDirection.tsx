@@ -8,13 +8,13 @@ export default function SelectSortDirection(): JSX.Element {
     useVideosDashboardContext();
 
   const icons: Record<SortOrder, JSX.Element> = {
-    ASC: <ArrowUp size={14} />,
-    DESC: <ArrowDown size={14} />,
+    [SortOrder.Asc]: <ArrowUp size={14} />,
+    [SortOrder.Desc]: <ArrowDown size={14} />,
   };
 
   const labels: Record<SortOrder, string> = {
-    ASC: "ASC",
-    DESC: "DESC",
+    [SortOrder.Asc]: "ASC",
+    [SortOrder.Desc]: "DESC",
   };
 
   const toggleSortOrder = () => {
@@ -27,9 +27,9 @@ export default function SelectSortDirection(): JSX.Element {
 
   return (
     <Button onClick={toggleSortOrder}>
-      {icons[videosRequestBody.sortOrder as SortOrder]}
+      {icons[videosRequestBody.sortOrder]}
       <span className="ml-2">
-        {labels[videosRequestBody.sortOrder as SortOrder]}
+        {labels[videosRequestBody.sortOrder]}
       </span>
     </Button>
   );

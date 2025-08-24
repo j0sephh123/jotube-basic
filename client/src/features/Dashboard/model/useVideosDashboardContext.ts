@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { create } from "zustand";
 import { videosDefaults } from "../types";
@@ -47,6 +47,7 @@ const NULLABLE_PARAMS: readonly VideosRequestBody[] = [
 export const useVideosDashboardContext = () => {
   const [urlSearchParams, setURLSearchParams] = useSearchParams();
   const { videosRequestBody, setVideosRequestBody } = useStore();
+  const lastUrlParams = useRef<string>("");
 
   const setVideosRequestBodyWithUrl = useCallback(
     <K extends keyof typeof videosDefaults>(
@@ -121,6 +122,10 @@ export const useVideosDashboardContext = () => {
   );
 
   useEffect(() => {
+    const currentUrlParams = urlSearchParams.toString();
+    if (currentUrlParams === lastUrlParams.current) return;
+
+    lastUrlParams.current = currentUrlParams;
     const params = Object.fromEntries(urlSearchParams.entries());
 
     const newRequestBody = { ...videosDefaults };

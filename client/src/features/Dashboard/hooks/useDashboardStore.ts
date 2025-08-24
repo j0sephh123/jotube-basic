@@ -1,31 +1,43 @@
 import { useEffect } from "react";
+import { create } from "zustand";
+import { useDashboardParams } from "../lib";
 
-// Local hook implementations to avoid cross-layer dependencies
-const useLocalDashboardParams = () => {
-  return {
-    type: "channels" as const,
-    viewType: "saved" as const,
+type DashboardStore = {
+  requestBody: {
+    sortOrder: "ASC" | "DESC";
+    page: number;
+    min: number;
+    max: number | null;
+    defaultMin: number;
+    defaultMax: number | null;
+    viewType: string;
   };
+  setRequestBody: (key: string, value: unknown) => void;
 };
 
-const useLocalStore = () => {
-  return {
-    setRequestBody: (_key: string, _value: unknown) => {},
-    requestBody: {
-      sortOrder: "DESC" as const,
-      page: 1,
-      min: 0,
-      max: null,
-      defaultMin: 0,
-      defaultMax: null,
-      viewType: "saved" as const,
-    },
-  };
-};
+const useStore = create<DashboardStore>((set) => ({
+  requestBody: {
+    sortOrder: "DESC",
+    page: 1,
+    min: 0,
+    max: null,
+    defaultMin: 0,
+    defaultMax: null,
+    viewType: "saved",
+  },
+  setRequestBody: (key, value) => {
+    set((state) => ({
+      requestBody: {
+        ...state.requestBody,
+        [key]: value,
+      },
+    }));
+  },
+}));
 
 export function useDashboardStore() {
-  const { type, viewType } = useLocalDashboardParams();
-  const { setRequestBody, requestBody } = useLocalStore();
+  const { type, viewType } = useDashboardParams();
+  const { setRequestBody, requestBody } = useStore();
 
   useEffect(() => {
     if (viewType) {
