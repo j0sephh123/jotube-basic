@@ -1,5 +1,4 @@
 export * from "./format";
-export { getWaitingJobIds, groupByChannel } from "./queue-utils";
 export {
   timeAgo,
   getCurrentMonth,

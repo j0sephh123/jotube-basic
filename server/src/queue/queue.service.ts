@@ -32,6 +32,8 @@ export class QueueService {
       return { success: true };
     }
 
+    console.log(addVideosDto);
+
     const allJobs = [];
 
     for (const item of addVideosDto) {
