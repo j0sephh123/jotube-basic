@@ -25,11 +25,7 @@ export function GalleryVideo() {
   const { ytVideoId } = useParams<{ ytVideoId: string }>();
   const [mode, setMode] = useState<"view" | "clip">("clip");
 
-  const {
-    data: screenshots,
-    isLoading,
-    error,
-  } = useFetchChannelScreenshots();
+  const { data: screenshots, isLoading, error } = useFetchChannelScreenshots();
 
   const updateScreenshot = useUpdateChannelScreenshot();
   const deleteScreenshot = useDeleteChannelScreenshot();
@@ -180,14 +176,9 @@ export function GalleryVideo() {
                       screenshot={screenshot}
                       isFav={screenshot.isFav ?? undefined}
                       index={globalIndex}
-                      mode={mode}
-                      isDisabled={false}
-                      isInRanges={false}
                       onFavorite={handleFavorite}
                       onDelete={handleDelete}
                       onImageClick={handleImageClick}
-                      onAddToRanges={() => {}}
-                      onRemoveSecond={() => {}}
                     />
                   );
                 })}

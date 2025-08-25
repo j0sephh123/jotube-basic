@@ -5,3 +5,4 @@ export { GalleryVideo } from "./components/GalleryVideo";
 export { GalleryVirtualised } from "./components/GalleryVirtualised";
 export { GalleryVirtualisedItem } from "./components/GalleryVirtualisedItem";
 export { NewGallery } from "./components/NewGallery";
+export { useGroupScreenshotsByVideo } from "./hooks/useGroupScreenshotsByVideo";

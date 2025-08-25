@@ -1,5 +1,7 @@
 import { useGetChannelScreenshotsQuery } from "@shared/api";
 import { useTypedChannelYtId } from "@features/Dashboard";
+import { useApolloClient } from "@apollo/client";
+import { useCallback } from "react";
 
 export type ChannelScreenshot = {
   __typename?: "GetSlidesResponse";
@@ -23,4 +25,12 @@ export function useFetchChannelScreenshots() {
     isLoading: loading,
     error,
   };
+}
+
+export function useRefetchChannelScreenshots() {
+  const queryClient = useApolloClient();
+
+  return useCallback(() => {
+    queryClient.refetchQueries({ include: ["GetChannelScreenshots"] });
+  }, [queryClient]);
 }
