@@ -17,9 +17,12 @@ export default function DashboardWrapper() {
       <div className="bg-base-100 rounded-lg flex flex-col h-full">
         {React.createElement(header[type])}
         <div className="flex-1 min-h-0 overflow-y-auto px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 p-4">
-            <Outlet />
-          </div>
+          {type === "channels" && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 p-4">
+              <Outlet />
+            </div>
+          )}
+          {type === "videos" && <Outlet />}
         </div>
       </div>
     </div>
