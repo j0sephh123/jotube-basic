@@ -1,4 +1,5 @@
 import { useGetChannelScreenshotsQuery } from "@shared/api";
+import { useTypedChannelYtId } from "@features/Dashboard";
 
 export type ChannelScreenshot = {
   __typename?: "GetSlidesResponse";
@@ -9,7 +10,9 @@ export type ChannelScreenshot = {
   isFav?: boolean | null;
 };
 
-export function useFetchChannelScreenshots(ytChannelId: string) {
+export function useFetchChannelScreenshots() {
+  const ytChannelId = useTypedChannelYtId();
+
   const { data, loading, error } = useGetChannelScreenshotsQuery({
     variables: { ytChannelId },
     skip: !ytChannelId,

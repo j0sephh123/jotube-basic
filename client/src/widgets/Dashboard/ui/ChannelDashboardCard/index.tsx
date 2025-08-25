@@ -1,9 +1,9 @@
 import { ViewType, useTitleClick } from "@features/Dashboard";
 import { SyncUploadsButton, FetchUploadsButton } from "@features/Upload";
-import { Card } from "@shared/ui";
+import { Button, Card } from "@shared/ui";
 import { DeleteChannel } from "@entities/Channel";
 import type { DashboardChannelResponse } from "@shared/api";
-import { ListMusic, ExternalLink } from "lucide-react";
+import { ListMusic, ExternalLink, Images } from "lucide-react";
 import clsx from "clsx";
 import { routes } from "@shared/routes";
 import { Link, useNavigate } from "react-router-dom";
@@ -172,6 +172,13 @@ export default function ChannelDashboardCard({
       deleteButtonSlot={getDeleteButtonSlot()}
       playlistButtonSlot={playlistButton}
       onThumbnailClick={() => {}}
+      galleryButtonSlot={
+        <Link to={routes.newGallery(ytId)}>
+          <Button>
+            <Images />
+          </Button>
+        </Link>
+      }
     />
   );
 }

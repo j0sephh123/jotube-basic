@@ -2,7 +2,7 @@ import { AutoSizer, Grid } from "react-virtualized";
 import type { GridCellProps } from "react-virtualized";
 import type { WithSrc, GalleryProps } from "./types";
 
-export function Gallery<T extends WithSrc>({
+export function GalleryVirtualised<T extends WithSrc>({
   items,
   ItemComponent,
   itemsPerRow = 4,
