@@ -6,3 +6,10 @@ export { GalleryVirtualised } from "./components/GalleryVirtualised";
 export { GalleryVirtualisedItem } from "./components/GalleryVirtualisedItem";
 export { NewGallery } from "./components/NewGallery";
 export { useGroupScreenshotsByVideo } from "./hooks/useGroupScreenshotsByVideo";
+export { SidePanel } from "./components/GalleryLayout/Sidepanel";
+export {
+  useGroupScreenshotsByTime,
+  type ScreenshotGroup,
+} from "./hooks/useGroupScreenshotsByTime";
+export { useGalleryVideoScreenshots } from "./hooks/useGalleryVideoScreenshots";
+export { GalleryVideoHeader } from "./components/GalleryVideo/GalleryVideoHeader";

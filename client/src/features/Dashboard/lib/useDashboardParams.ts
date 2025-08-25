@@ -21,6 +21,13 @@ export const useTypedChannelYtId = () => {
   return ytChannelId;
 };
 
+export const useTypedVideoYtId = () => {
+  const params = useParams<{ ytVideoId: string }>();
+  const ytVideoId = params.ytVideoId as string;
+
+  return ytVideoId;
+};
+
 export const useDashboardParams = () => {
   const params = useParams<{ type: DashboardType; viewType: ViewType }>();
   const type = params.type as DashboardType;
