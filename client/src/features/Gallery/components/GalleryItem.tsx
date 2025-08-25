@@ -1,7 +1,6 @@
 import { Heart, Trash2, Eye, Copy, Star } from "lucide-react";
 import clsx from "clsx";
-import { useVideoModal } from "@shared/hooks";
-import { VideoModal } from "@shared/ui";
+import { useVideoModalStore } from "@shared/hooks";
 import { formatSecondsToTime } from "@shared/utils";
 import { type ChannelScreenshot } from "@features/Screenshot";
 
@@ -33,14 +32,13 @@ export default function GalleryItem({
   onAddToRanges,
   onRemoveSecond,
 }: Props) {
-  const { isVideoModalVisible, openVideoModal, closeVideoModal, getEmbedUrl } =
-    useVideoModal();
+  const { openVideoModal } = useVideoModalStore();
 
   const handleGalleryItemClick = () => {
     if (isDisabled) return;
 
     if (mode === "clip") {
-      openVideoModal();
+      openVideoModal(screenshot.ytVideoId, screenshot.second);
     } else {
       onImageClick(index);
     }
@@ -185,14 +183,6 @@ export default function GalleryItem({
           </div>
         </div>
       </div>
-
-      <VideoModal
-        isVisible={isVideoModalVisible}
-        onClose={closeVideoModal}
-        videoId={screenshot.ytVideoId}
-        embedUrl={getEmbedUrl(screenshot.ytVideoId, screenshot.second)}
-        startTime={screenshot.second}
-      />
     </>
   );
 }

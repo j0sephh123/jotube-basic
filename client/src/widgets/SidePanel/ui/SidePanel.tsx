@@ -2,8 +2,7 @@ import {
   useScreenshotsByVideo,
   type VideoScreenshot,
 } from "@features/Screenshot";
-import { useVideoModal } from "@shared/hooks";
-import { VideoModal } from "@shared/ui";
+import { useVideoModalStore } from "@shared/hooks";
 import { formatSecondsToTime } from "@shared/utils";
 import { Play, Clock } from "lucide-react";
 import { useState } from "react";
@@ -22,8 +21,7 @@ const TEMPORAL_THRESHOLD = 3;
 export default function SidePanel() {
   const isOpen = useSidePanel((s) => s.isOpen);
   const videoId = useSidePanel((s) => s.videoId);
-  const { isVideoModalVisible, openVideoModal, closeVideoModal, getEmbedUrl } =
-    useVideoModal();
+  const { openVideoModal } = useVideoModalStore();
   const { data: screenshots } = useScreenshotsByVideo(videoId || "");
   const [selectedScreenshotTime, setSelectedScreenshotTime] = useState(0);
 
@@ -81,7 +79,7 @@ export default function SidePanel() {
 
   const handleScreenshotClick = (screenshot: VideoScreenshot) => {
     setSelectedScreenshotTime(screenshot.second);
-    openVideoModal();
+    openVideoModal(videoId, screenshot.second);
   };
 
   if (!isOpen || !videoId) return null;
@@ -146,14 +144,6 @@ export default function SidePanel() {
           </div>
         </div>
       </SidePanelWrapper>
-
-      <VideoModal
-        isVisible={isVideoModalVisible}
-        onClose={closeVideoModal}
-        videoId={videoId}
-        embedUrl={getEmbedUrl(videoId, selectedScreenshotTime)}
-        startTime={selectedScreenshotTime}
-      />
     </>
   );
 }

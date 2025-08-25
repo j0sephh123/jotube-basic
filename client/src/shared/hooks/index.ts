@@ -1,6 +1,6 @@
 export { useDialog } from "./useDialog";
 export { useQueue } from "./useQueue";
-export { useVideoModal } from "./useVideoModal";
+export { useVideoModalStore } from "./useVideoModalStore";
 
 export { useToast } from "./useToast";
 export { useStoryboardProcessing } from "@app/providers/store/store-hooks";

@@ -175,6 +175,23 @@ export type ZoomSlice = {
   closeZoom: () => void;
 };
 
+export type VideoModalSlice = {
+  isVideoModalVisible: boolean;
+  videoId: string;
+  embedUrl: string;
+  startTime: number;
+  onClose: () => void;
+  setVideoModal: (
+    isVisible: boolean,
+    videoId: string,
+    embedUrl: string,
+    startTime: number,
+    onClose: () => void
+  ) => void;
+  closeVideoModal: () => void;
+  getEmbedUrl: (videoId: string, startTime?: number) => string;
+};
+
 export type Store = SlidesSlice &
   ThumbnailsProcessingSlice &
   StoryboardProcessingSlice &
@@ -184,4 +201,5 @@ export type Store = SlidesSlice &
   VideosRangePickersSlice &
   SidePanelSlice &
   PlaylistSlice &
-  ZoomSlice;
+  ZoomSlice &
+  VideoModalSlice;
