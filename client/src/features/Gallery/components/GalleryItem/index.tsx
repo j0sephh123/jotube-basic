@@ -5,6 +5,7 @@ import ZoomButton from "./ZoomButton";
 import FavoriteButton from "./FavoriteButton";
 import TopLabels from "./TopLabels";
 import Image from "./Image";
+import VideoButton from "./VideoButton";
 
 type Props = {
   screenshot: ChannelScreenshot;
@@ -43,6 +44,11 @@ export default function GalleryItem({
             <FavoriteButton index={index} onFavorite={onFavorite} />
             <DeleteButton index={index} onDelete={onDelete} />
             <ZoomButton index={index} onImageClick={onImageClick} />
+            <VideoButton
+              ytVideoId={screenshot.ytVideoId}
+              second={screenshot.second}
+              onVideoClick={openVideoModal}
+            />
           </div>
         </div>
       </div>

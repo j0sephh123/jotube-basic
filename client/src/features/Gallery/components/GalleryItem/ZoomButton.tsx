@@ -8,7 +8,7 @@ type Props = {
 export default function ZoomButton({ index, onImageClick }: Props) {
   return (
     <div
-      className="cursor-pointer absolute top-0 right-0 w-1/2 h-full bg-blue-500/80 hover:bg-blue-500 flex items-center justify-center"
+      className="cursor-pointer absolute bottom-0 right-0 w-1/2 h-1/2 bg-blue-500/80 hover:bg-blue-500 flex items-center justify-center"
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
