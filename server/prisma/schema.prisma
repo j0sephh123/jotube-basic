@@ -9,54 +9,39 @@ datasource db {
 }
 
 model Channel {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  title String @unique @db.VarChar(255)
-  ytId  String @unique @db.VarChar(24)
-  src   String @unique @db.VarChar(255)
-
-  videoCount Int
-
-  fetchStartVideoId String    @db.VarChar(11)
-  fetchedUntilEnd   Boolean   @default(false)
+  id                Int            @id @default(autoincrement())
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  title             String         @unique @db.VarChar(255)
+  ytId              String         @unique @db.VarChar(24)
+  src               String         @unique @db.VarChar(255)
+  videoCount        Int
+  fetchStartVideoId String         @db.VarChar(11)
+  fetchedUntilEnd   Boolean        @default(false)
   lastSyncedAt      DateTime?
-
-  uploads     UploadsVideo[]
-  screenshots Screenshot[]
-
-  playlistId Int?
-  playlist   Playlist? @relation(fields: [playlistId], references: [id], onDelete: SetNull)
+  playlistId        Int?
+  playlist          Playlist?      @relation(fields: [playlistId], references: [id])
+  screenshots       Screenshot[]
+  uploads           UploadsVideo[]
 
   @@index([playlistId])
-}
-
-enum ArtifactType {
-  VIDEO // default
-  SAVED
-  DOWNLOADED // not used, but will be used in the future
-  STORYBOARD // not used, but will be used in the future
-  THUMBNAIL
-  SCREENSHOT
 }
 
 model UploadsVideo {
   id            Int          @id @default(autoincrement())
   ytId          String       @unique @db.VarChar(11)
   title         String
-  src           String
   publishedAt   String
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
   channelId     Int
-  channel       Channel      @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  src           String
   nextPageToken String?
   duration      Int?
   artifact      ArtifactType @default(VIDEO)
-
-  thumbnail  Thumbnail?  @relation
-  storyboard Storyboard? @relation
+  storyboard    Storyboard?
+  thumbnail     Thumbnail?
+  channel       Channel      @relation(fields: [channelId], references: [id], onDelete: Cascade)
 
   @@index([channelId, artifact])
 }
@@ -64,49 +49,65 @@ model UploadsVideo {
 model Thumbnail {
   id             Int          @id @default(autoincrement())
   uploadsVideoId Int          @unique
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  perRow         Int
+  totalSeconds   Int          @default(0)
   uploadsVideo   UploadsVideo @relation(fields: [uploadsVideoId], references: [id], onDelete: Cascade)
-
-  perRow       Int
-  totalSeconds Int @default(0)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model Storyboard {
   id             Int          @id @default(autoincrement())
   uploadsVideoId Int          @unique
+  fragments      Int
+  url            String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
   uploadsVideo   UploadsVideo @relation(fields: [uploadsVideoId], references: [id], onDelete: Cascade)
-
-  fragments Int
-  url       String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model Screenshot {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  second Int
-
-  ytChannelId String
-  channel     Channel @relation(fields: [ytChannelId], references: [ytId], onDelete: Cascade)
-
-  ytVideoId String
-
-  isFav Boolean?
+  id            Int                         @id @default(autoincrement())
+  createdAt     DateTime                    @default(now())
+  updatedAt     DateTime                    @updatedAt
+  second        Int
+  ytChannelId   String
+  ytVideoId     String
+  isFav         Boolean?
+  featuredLinks ChannelFeaturedScreenshot[]
+  channel       Channel                     @relation(fields: [ytChannelId], references: [ytId], onDelete: Cascade)
 
   @@index([ytChannelId])
-  @@index([ytVideoId], name: "idx_screenshot_ytVideoId")
+  @@index([ytVideoId], map: "idx_screenshot_ytVideoId")
+}
+
+model ChannelFeaturedScreenshot {
+  id           Int        @id @default(autoincrement())
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  channelId    Int
+  screenshotId Int
+  note         String?
+  screenshot   Screenshot @relation(fields: [screenshotId], references: [id], onDelete: Cascade)
+
+  @@unique([channelId, screenshotId])
+  @@index([channelId])
+  @@index([screenshotId])
 }
 
 model Playlist {
-  id          Int       @id @default(autoincrement())
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  name        String
-  channels    Channel[]
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  name      String
+  channels  Channel[]
+}
+
+enum ArtifactType {
+  VIDEO
+  SAVED
+  DOWNLOADED
+  STORYBOARD
+  THUMBNAIL
+  SCREENSHOT
 }
