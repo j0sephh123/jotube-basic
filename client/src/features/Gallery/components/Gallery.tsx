@@ -26,28 +26,16 @@ export default function Gallery() {
           {groupedScreenshotsByVideo.map(
             ({ videoId, screenshots: videoScreenshots }) => (
               <GroupWrapper key={videoId} videoId={videoId}>
-                {videoScreenshots.map((screenshot) => {
-                  const globalIndex =
-                    screenshots?.findIndex((s) => s.id === screenshot.id) ?? 0;
-
-                  return (
-                    <GalleryItem
-                      key={screenshot.id}
-                      screenshot={screenshot}
-                      isFav={screenshot.isFav ?? undefined}
-                      index={globalIndex ?? 0}
-                      onFavorite={(index) =>
-                        handleFavorite(index, videoScreenshots)
-                      }
-                      onDelete={(index) =>
-                        handleDelete(index, videoScreenshots)
-                      }
-                      onImageClick={(index) =>
-                        handleZoom(index, videoScreenshots)
-                      }
-                    />
-                  );
-                })}
+                {videoScreenshots.map((screenshot) => (
+                  <GalleryItem
+                    key={screenshot.id}
+                    screenshot={screenshot}
+                    isFav={screenshot.isFav ?? undefined}
+                    onFavorite={() => handleFavorite(screenshot)}
+                    onDelete={() => handleDelete(screenshot)}
+                    onImageClick={() => handleZoom(screenshot)}
+                  />
+                ))}
               </GroupWrapper>
             )
           )}

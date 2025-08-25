@@ -34,29 +34,16 @@ export function GalleryVideo() {
               <GalleryVideoHeader group={group} />
 
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {group.screenshots.map((screenshot) => {
-                  const globalIndex = videoScreenshots.findIndex(
-                    (s) => s.id === screenshot.id
-                  );
-
-                  return (
-                    <GalleryItem
-                      key={screenshot.id}
-                      screenshot={screenshot}
-                      isFav={screenshot.isFav ?? undefined}
-                      index={globalIndex}
-                      onFavorite={(index) =>
-                        handleFavorite(index, group.screenshots)
-                      }
-                      onDelete={(index) =>
-                        handleDelete(index, group.screenshots)
-                      }
-                      onImageClick={(index) =>
-                        handleZoom(index, group.screenshots)
-                      }
-                    />
-                  );
-                })}
+                {group.screenshots.map((screenshot) => (
+                  <GalleryItem
+                    key={screenshot.id}
+                    screenshot={screenshot}
+                    isFav={screenshot.isFav ?? undefined}
+                    onFavorite={() => handleFavorite(screenshot)}
+                    onDelete={() => handleDelete(screenshot)}
+                    onImageClick={() => handleZoom(screenshot)}
+                  />
+                ))}
               </div>
             </div>
           ))}

@@ -9,16 +9,14 @@ import VideoButton from "./VideoButton";
 
 type Props = {
   screenshot: ChannelScreenshot;
-  index: number;
   isFav?: boolean;
-  onFavorite: (index: number) => void;
-  onDelete: (index: number) => void;
-  onImageClick: (index: number) => void;
+  onFavorite: (screenshot: ChannelScreenshot) => void;
+  onDelete: (screenshot: ChannelScreenshot) => void;
+  onImageClick: (screenshot: ChannelScreenshot) => void;
 };
 
 export default function GalleryItem({
   screenshot,
-  index,
   isFav,
   onFavorite,
   onDelete,
@@ -26,24 +24,21 @@ export default function GalleryItem({
 }: Props) {
   const { openVideoModal } = useVideoModalStore();
 
-  const handleGalleryItemClick = () => {
-    openVideoModal(screenshot.ytVideoId, screenshot.second);
-    onImageClick(index);
-  };
-
   return (
     <>
       <div className="flex-1 relative group">
         <div
           className="aspect-video bg-gray-800 rounded-lg overflow-hidden cursor-pointer"
-          onClick={handleGalleryItemClick}
+          onClick={() =>
+            openVideoModal(screenshot.ytVideoId, screenshot.second)
+          }
         >
           <Image src={screenshot.src} />
           <TopLabels isFav={isFav} second={screenshot.second} />
           <div className="absolute inset-0 transition-all duration-200 opacity-0 group-hover:opacity-100">
-            <FavoriteButton index={index} onFavorite={onFavorite} />
-            <DeleteButton index={index} onDelete={onDelete} />
-            <ZoomButton index={index} onImageClick={onImageClick} />
+            <FavoriteButton screenshot={screenshot} onFavorite={onFavorite} />
+            <DeleteButton screenshot={screenshot} onDelete={onDelete} />
+            <ZoomButton screenshot={screenshot} onImageClick={onImageClick} />
             <VideoButton
               ytVideoId={screenshot.ytVideoId}
               second={screenshot.second}

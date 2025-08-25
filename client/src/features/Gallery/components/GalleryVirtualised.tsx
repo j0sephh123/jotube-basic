@@ -10,7 +10,7 @@ export function GalleryVirtualised<T extends WithSrc>({
   onScrollProgress,
 }: GalleryProps<T>) {
   return (
-    <div className="w-full h-[92vh]">
+    <div className="w-full h-[78vh]">
       <AutoSizer>
         {(size: { width: number; height: number }) => {
           const { width, height } = size;

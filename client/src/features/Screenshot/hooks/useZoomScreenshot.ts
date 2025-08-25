@@ -6,11 +6,8 @@ export function useZoomScreenshot() {
   const { setZoom, closeZoom } = useZoom();
 
   return useCallback(
-    (index: number, screenshots: ChannelScreenshot[]) => {
-      const screenshot = screenshots?.[index];
-      if (screenshot) {
-        setZoom(true, screenshot.src, closeZoom);
-      }
+    (screenshot: ChannelScreenshot) => {
+      setZoom(true, screenshot.src, closeZoom);
     },
     [setZoom, closeZoom]
   );

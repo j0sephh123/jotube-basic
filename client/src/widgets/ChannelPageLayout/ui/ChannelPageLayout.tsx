@@ -16,10 +16,11 @@ export default function ChannelPageLayout() {
       />
       <div className="overflow-hidden">
         <div className="flex h-[85vh]">
-          <div className="flex-1 overflow-y-auto">
+          <div className="flex-1">
             <div
               className={clsx(
-                !isNewGallery && !isGallery &&
+                !isNewGallery &&
+                  !isGallery &&
                   "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 p-2"
               )}
             >

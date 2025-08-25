@@ -10,18 +10,15 @@ export function useSetFavorite() {
   const updateScreenshot = useUpdateChannelScreenshot();
 
   return useCallback(
-    (index: number, screenshots: ChannelScreenshot[]) => {
-      const screenshot = screenshots?.[index];
-      if (screenshot) {
-        updateScreenshot
-          .mutateAsync({
-            id: screenshot.id,
-            isFav: !screenshot.isFav,
-          })
-          .then(() => {
-            refetchChannelScreenshots();
-          });
-      }
+    (screenshot: ChannelScreenshot) => {
+      updateScreenshot
+        .mutateAsync({
+          id: screenshot.id,
+          isFav: !screenshot.isFav,
+        })
+        .then(() => {
+          refetchChannelScreenshots();
+        });
     },
     [refetchChannelScreenshots, updateScreenshot]
   );
