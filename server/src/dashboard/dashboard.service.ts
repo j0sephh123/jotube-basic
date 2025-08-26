@@ -61,8 +61,30 @@ export class DashboardService {
     });
     const sorted = this.sortChannels(filtered, sortOrder, viewType);
 
+    const featuredScreenshotsData =
+      await this.prismaService.channelFeaturedScreenshot.findMany({
+        include: {
+          screenshot: true,
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+      });
+
+    const channelsWithFeaturedScreenshots = sorted.map((channel) => ({
+      ...channel,
+      featuredScreenshots: featuredScreenshotsData
+        .filter((fs) => fs.screenshot.ytChannelId === channel.ytId)
+        .map((fs) => ({
+          id: fs.screenshot.id,
+          second: fs.screenshot.second,
+          ytVideoId: fs.screenshot.ytVideoId,
+          src: `${fs.screenshot.ytChannelId}/${fs.screenshot.ytVideoId}/saved_screenshots/${fs.screenshot.ytVideoId}-${fs.screenshot.second}.png`,
+        })),
+    }));
+
     return {
-      channels: sorted.slice(skip, skip + PER_PAGE),
+      channels: channelsWithFeaturedScreenshots.slice(skip, skip + PER_PAGE),
       total: sorted.length,
     };
   }

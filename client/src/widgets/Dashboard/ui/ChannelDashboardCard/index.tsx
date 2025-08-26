@@ -2,13 +2,17 @@ import { ViewType, useTitleClick } from "@features/Dashboard";
 import { SyncUploadsButton, FetchUploadsButton } from "@features/Upload";
 import { Button, Card } from "@shared/ui";
 import { DeleteChannel } from "@entities/Channel";
-import type { DashboardChannelResponse } from "@shared/api";
+import type {
+  DashboardChannelResponse,
+  FeaturedScreenshotResponse,
+} from "@shared/api";
 import { ListMusic, ExternalLink, Images } from "lucide-react";
 import clsx from "clsx";
 import { routes } from "@shared/routes";
 import { Link, useNavigate } from "react-router-dom";
 import { useViewThumbnails } from "@features/Thumbnails";
 import { useFetchCarousel } from "@entities/Screenshot";
+import { createFeaturedScreenshot } from "@shared/utils";
 
 const statsTypes = [
   ViewType.THUMBNAILS,
@@ -24,6 +28,7 @@ type Props = DashboardChannelResponse & {
   viewType: ViewType;
   openPlaylistModal: (ytId: string) => void;
   onChannelDelete?: () => void;
+  featuredScreenshots: FeaturedScreenshotResponse[];
 };
 
 export default function ChannelDashboardCard({
@@ -43,6 +48,7 @@ export default function ChannelDashboardCard({
   playlist,
   openPlaylistModal,
   onChannelDelete,
+  featuredScreenshots,
 }: Props) {
   const navigate = useNavigate();
   const fetchCarousel = useFetchCarousel();
@@ -153,7 +159,11 @@ export default function ChannelDashboardCard({
       id={id}
       ytId={ytId}
       title={title}
-      src={src}
+      src={
+        featuredScreenshots.length > 0
+          ? createFeaturedScreenshot(featuredScreenshots[0]?.src || "")
+          : src
+      }
       lastSyncedAt={lastSyncedAt}
       ytChannelId={ytId}
       handleTitleClick={handleTitleClick}

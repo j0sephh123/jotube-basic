@@ -38,10 +38,6 @@ export function useChannelsDashboardQuery() {
     viewType: mapViewTypeToGraphQL(params.viewType),
   };
 
-  console.table(
-    requestBodyWithViewType
-  );
-
   const { data, loading, error, refetch } = useFetchDashboard(
     {
       fetchDashboardInput: requestBodyWithViewType,
@@ -53,7 +49,7 @@ export function useChannelsDashboardQuery() {
   );
 
   return {
-    data: data?.fetchDashboard as ChannelsDashboardResponseData | undefined,
+    data: data?.fetchDashboard,
     isLoading: loading,
     error,
     refetch,

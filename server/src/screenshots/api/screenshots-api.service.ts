@@ -66,11 +66,59 @@ export class ScreenshotsApiService {
     return results;
   }
 
-  async updateScreenshot(id: number, data: { isFav: boolean }) {
-    return this.prismaService.screenshot.update({
+  async toggleFeaturedScreenshot(id: number) {
+    const screenshot = await this.prismaService.screenshot.findUnique({
       where: { id },
-      data,
+      include: {
+        featuredLinks: {
+          include: {
+            screenshot: true,
+          },
+        },
+      },
     });
+
+    if (!screenshot) {
+      throw new Error('Screenshot not found');
+    }
+
+    const channel = await this.prismaService.channel.findUnique({
+      where: { ytId: screenshot.ytChannelId },
+    });
+
+    if (!channel) {
+      throw new Error('Channel not found');
+    }
+
+    const existingFeaturedLink =
+      await this.prismaService.channelFeaturedScreenshot.findUnique({
+        where: {
+          channelId_screenshotId: {
+            channelId: channel.id,
+            screenshotId: id,
+          },
+        },
+      });
+
+    if (existingFeaturedLink) {
+      await this.prismaService.channelFeaturedScreenshot.delete({
+        where: {
+          channelId_screenshotId: {
+            channelId: channel.id,
+            screenshotId: id,
+          },
+        },
+      });
+      return { featured: false };
+    } else {
+      await this.prismaService.channelFeaturedScreenshot.create({
+        data: {
+          channelId: channel.id,
+          screenshotId: id,
+        },
+      });
+      return { featured: true };
+    }
   }
 
   async deleteScreenshot(id: number) {

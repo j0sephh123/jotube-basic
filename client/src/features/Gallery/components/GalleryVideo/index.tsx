@@ -1,6 +1,6 @@
 import {
   useZoomScreenshot,
-  useSetFavorite,
+  useSetFeaturedScreenshot,
   useDeleteWithConfirm,
 } from "@features/Screenshot";
 import {
@@ -12,11 +12,11 @@ import {
 import { StaticStates } from "@shared/ui";
 
 export function GalleryVideo() {
-  const { videoScreenshots, screenshots, isLoading, error } =
+  const { screenshots, isLoading, error } =
     useGalleryVideoScreenshots();
 
   const handleZoom = useZoomScreenshot();
-  const handleFavorite = useSetFavorite();
+  const handleSetFeatured = useSetFeaturedScreenshot();
   const handleDelete = useDeleteWithConfirm();
 
   const groupedScreenshotsByTime = useGroupScreenshotsByTime();
@@ -39,7 +39,7 @@ export function GalleryVideo() {
                     key={screenshot.id}
                     screenshot={screenshot}
                     isFav={screenshot.isFav ?? undefined}
-                    onFavorite={() => handleFavorite(screenshot)}
+                    onFavorite={() => handleSetFeatured(screenshot)}
                     onDelete={() => handleDelete(screenshot)}
                     onImageClick={() => handleZoom(screenshot)}
                   />

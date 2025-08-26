@@ -87,7 +87,6 @@ model ChannelFeaturedScreenshot {
   updatedAt    DateTime   @updatedAt
   channelId    Int
   screenshotId Int
-  note         String?
   screenshot   Screenshot @relation(fields: [screenshotId], references: [id], onDelete: Cascade)
 
   @@unique([channelId, screenshotId])

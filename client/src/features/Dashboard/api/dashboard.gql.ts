@@ -20,6 +20,12 @@ export const FETCH_DASHBOARD = gql`
           id
           name
         }
+        featuredScreenshots {
+          src
+          id
+          second
+          ytVideoId
+        }
       }
       total
     }

@@ -96,6 +96,7 @@ export type DashboardChannelResponse = {
   __typename?: 'DashboardChannelResponse';
   createdAt: Scalars['DateTime']['output'];
   defaults: Scalars['Int']['output'];
+  featuredScreenshots: Array<FeaturedScreenshotResponse>;
   id: Scalars['Int']['output'];
   lastSyncedAt?: Maybe<Scalars['DateTime']['output']>;
   playlist?: Maybe<DashboardPlaylistResponse>;
@@ -120,6 +121,7 @@ export type DashboardVideoResponse = {
   channelId: Scalars['Int']['output'];
   channelTitle: Scalars['String']['output'];
   channelYtId: Scalars['String']['output'];
+  featuredScreenshots: Array<FeaturedScreenshotResponse>;
   id: Scalars['Int']['output'];
   screenshotCount: Scalars['Int']['output'];
   src: Scalars['String']['output'];
@@ -141,6 +143,14 @@ export type DeletePlaylistResponse = {
 export type DeleteUploadsResponse = {
   __typename?: 'DeleteUploadsResponse';
   success: Scalars['Boolean']['output'];
+};
+
+export type FeaturedScreenshotResponse = {
+  __typename?: 'FeaturedScreenshotResponse';
+  id: Scalars['Int']['output'];
+  second: Scalars['Int']['output'];
+  src: Scalars['String']['output'];
+  ytVideoId: Scalars['String']['output'];
 };
 
 export type FetchDashboardInput = {
@@ -747,7 +757,7 @@ export type FetchDashboardQueryVariables = Exact<{
 }>;
 
 
-export type FetchDashboardQuery = { __typename?: 'Query', fetchDashboard: { __typename?: 'ChannelsDashboardResponse', total: number, channels: Array<{ __typename?: 'DashboardChannelResponse', id: number, createdAt: any, title: string, ytId: string, src: string, lastSyncedAt?: any | null, videoCount: number, thumbnails: number, saved: number, defaults: number, storyboard: number, screenshotsCount: number, playlist?: { __typename?: 'DashboardPlaylistResponse', id: number, name: string } | null }> } };
+export type FetchDashboardQuery = { __typename?: 'Query', fetchDashboard: { __typename?: 'ChannelsDashboardResponse', total: number, channels: Array<{ __typename?: 'DashboardChannelResponse', id: number, createdAt: any, title: string, ytId: string, src: string, lastSyncedAt?: any | null, videoCount: number, thumbnails: number, saved: number, defaults: number, storyboard: number, screenshotsCount: number, playlist?: { __typename?: 'DashboardPlaylistResponse', id: number, name: string } | null, featuredScreenshots: Array<{ __typename?: 'FeaturedScreenshotResponse', src: string, id: number, second: number, ytVideoId: string }> }> } };
 
 export type FetchVideosDashboardQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Float']['input']>;
@@ -1461,6 +1471,12 @@ export const FetchDashboardDocument = gql`
       playlist {
         id
         name
+      }
+      featuredScreenshots {
+        src
+        id
+        second
+        ytVideoId
       }
     }
     total

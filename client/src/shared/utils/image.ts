@@ -4,6 +4,10 @@ export const imagesBasePath = `${
   import.meta.env.VITE_VIDEO_SERVICE_URL
 }/images/`;
 
+export const createFeaturedScreenshot = (src: string) => {
+  return `${imagesBasePath}${src}`;
+};
+
 export const getPublicImgUrl = (
   ytChannelId: string,
   ytVideoId: string,

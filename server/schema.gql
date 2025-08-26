@@ -71,6 +71,7 @@ type CreatePlaylistResponse {
 type DashboardChannelResponse {
   createdAt: DateTime!
   defaults: Int!
+  featuredScreenshots: [FeaturedScreenshotResponse!]!
   id: Int!
   lastSyncedAt: DateTime
   playlist: DashboardPlaylistResponse
@@ -93,6 +94,7 @@ type DashboardVideoResponse {
   channelId: Int!
   channelTitle: String!
   channelYtId: String!
+  featuredScreenshots: [FeaturedScreenshotResponse!]!
   id: Int!
   screenshotCount: Int!
   src: String!
@@ -116,6 +118,13 @@ type DeletePlaylistResponse {
 
 type DeleteUploadsResponse {
   success: Boolean!
+}
+
+type FeaturedScreenshotResponse {
+  id: Int!
+  second: Int!
+  src: String!
+  ytVideoId: String!
 }
 
 input FetchDashboardInput {

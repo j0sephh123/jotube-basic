@@ -11,6 +11,20 @@ export class DashboardPlaylistResponse {
 }
 
 @ObjectType()
+export class FeaturedScreenshotResponse {
+  @Field(() => Int)
+  id: number;
+
+  @Field(() => Int)
+  second: number;
+
+  @Field()
+  ytVideoId: string;
+
+  @Field()
+  src: string;
+}
+@ObjectType()
 export class DashboardChannelResponse implements DashboardChannel {
   @Field(() => Int)
   id: number;
@@ -50,6 +64,9 @@ export class DashboardChannelResponse implements DashboardChannel {
 
   @Field(() => DashboardPlaylistResponse, { nullable: true })
   playlist: DashboardPlaylistResponse | null;
+
+  @Field(() => [FeaturedScreenshotResponse])
+  featuredScreenshots: FeaturedScreenshotResponse[];
 }
 
 @ObjectType()
@@ -86,6 +103,9 @@ export class DashboardVideoResponse implements DashboardVideo {
 
   @Field(() => Int)
   screenshotCount: number;
+
+  @Field(() => [FeaturedScreenshotResponse])
+  featuredScreenshots: FeaturedScreenshotResponse[];
 }
 
 @ObjectType()

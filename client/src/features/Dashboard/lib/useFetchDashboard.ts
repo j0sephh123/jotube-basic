@@ -1,11 +1,14 @@
-import type { FetchDashboardQueryVariables } from "@shared/api";
+import type {
+  FetchDashboardQuery,
+  FetchDashboardQueryVariables,
+} from "@shared/api";
 import { useFetchDashboardQuery } from "@shared/api";
-import type { ApolloQueryHookOptions } from "@apollo/client";
+import type { QueryHookOptions } from "@apollo/client";
 
 export default function useFetchDashboard(
   variables: FetchDashboardQueryVariables,
   options?: Omit<
-    ApolloQueryHookOptions<any, FetchDashboardQueryVariables>,
+    QueryHookOptions<FetchDashboardQuery, FetchDashboardQueryVariables>,
     "variables"
   >
 ) {

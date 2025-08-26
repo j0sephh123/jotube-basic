@@ -1,4 +1,9 @@
-import { useDeleteWithConfirm, useFetchChannelScreenshots, useSetFavorite, useZoomScreenshot } from "@features/Screenshot";
+import {
+  useDeleteWithConfirm,
+  useFetchChannelScreenshots,
+  useSetFeaturedScreenshot,
+  useZoomScreenshot,
+} from "@features/Screenshot";
 import { StaticStates } from "@shared/ui";
 import { GalleryVirtualised } from "./GalleryVirtualised";
 import GalleryItem from "./GalleryItem";
@@ -10,7 +15,7 @@ export function NewGallery() {
     console.log(`Scroll progress: ${(scrollProgress * 100).toFixed(1)}%`);
   };
 
-  const handleFavorite = useSetFavorite();
+  const handleSetFeatured = useSetFeaturedScreenshot();
   const handleDelete = useDeleteWithConfirm();
   const handleZoom = useZoomScreenshot();
 
@@ -27,7 +32,7 @@ export function NewGallery() {
           ItemComponent={({ item }) => (
             <GalleryItem
               screenshot={item}
-              onFavorite={handleFavorite}
+              onFavorite={handleSetFeatured}
               onDelete={handleDelete}
               onImageClick={handleZoom}
             />
