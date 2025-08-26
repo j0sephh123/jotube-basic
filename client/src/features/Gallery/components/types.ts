@@ -6,6 +6,7 @@ export type GalleryProps<T extends WithSrc> = {
   itemsPerRow?: number;
   rowHeight?: number;
   onScrollProgress?: (scrollProgress: number) => void;
+  className?: string;
 };
 
 export type GalleryItemProps<T extends WithSrc> = {

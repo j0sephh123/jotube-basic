@@ -14,7 +14,6 @@ import { PlaylistDetailsPage } from "@pages/playlist-details";
 import { NotFound } from "@shared/ui";
 import { GalleryLayout } from "@features/Gallery";
 import { UploadsDecorator } from "@features/Upload";
-import { NewGalleryPage } from "@pages/new-gallery";
 
 export default function Router() {
   return (
@@ -38,10 +37,6 @@ export default function Router() {
               <Route index element={<GalleryPage />} />
               <Route path=":ytVideoId" element={<GalleryVideoPage />} />
             </Route>
-            <Route
-              path="/channels/:ytChannelId/new-gallery"
-              element={<NewGalleryPage />}
-            />
           </Route>
           <Route path="/screenshots" element={<ScreenshotsPage />} />
           <Route

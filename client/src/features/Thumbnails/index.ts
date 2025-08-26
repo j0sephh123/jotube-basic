@@ -28,4 +28,5 @@ export { default as useSubmit } from "./lib/useSubmit";
 export { default as useThumbnailsCount } from "./lib/useThumbnailsCount";
 export { default as usePaginate } from "./lib/usePaginate";
 export { generateMainThumbnailUrl } from "./utils/generateMainThumbnailUrl";
+export { useKbdEvent } from "./lib/useKbdEvent";
 export * from "./utils/constants";

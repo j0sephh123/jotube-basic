@@ -11,7 +11,12 @@ export default function VideosDashboard() {
   const { setGalleryModal } = useGalleryModal();
 
   const handleThumbnailClick = (video: DashboardVideoResponse) => {
-    setGalleryModal(video.ytId, video.channelYtId);
+    setGalleryModal(
+      {
+        ytVideoId: video.ytId,
+        ytChannelId: video.channelYtId,
+      },
+    );
   };
 
   return (

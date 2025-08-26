@@ -12,9 +12,6 @@ export type ChannelScreenshot = {
 };
 
 export function useFetchChannelScreenshots(ytChannelId: string) {
-  console.log("useFetchChannelScreenshots", {
-    ytChannelId,
-  });
   const { data, loading, error } = useGetChannelScreenshotsQuery({
     variables: { ytChannelId },
     skip: !ytChannelId,

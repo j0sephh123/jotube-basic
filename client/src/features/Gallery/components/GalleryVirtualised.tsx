@@ -1,6 +1,7 @@
 import { AutoSizer, Grid } from "react-virtualized";
 import type { GridCellProps } from "react-virtualized";
 import type { WithSrc, GalleryProps } from "./types";
+import clsx from "clsx";
 
 export function GalleryVirtualised<T extends WithSrc>({
   items,
@@ -8,9 +9,10 @@ export function GalleryVirtualised<T extends WithSrc>({
   itemsPerRow = 4,
   rowHeight = 200,
   onScrollProgress,
+  className,
 }: GalleryProps<T>) {
   return (
-    <div className="w-full h-[78vh]">
+    <div className={clsx("w-full h-[78vh]", className)}>
       <AutoSizer>
         {(size: { width: number; height: number }) => {
           const { width, height } = size;

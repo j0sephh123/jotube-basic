@@ -9,19 +9,28 @@ import {
 import { StaticStates } from "..";
 import { GalleryItem } from "@features/Gallery";
 import { createPortal } from "react-dom";
+import { useKbdEvent } from "@features/Thumbnails";
+import { GalleryVirtualised } from "@features/Gallery";
 
 export function GalleryModal() {
   const { isGalleryModalVisible, closeGalleryModal, ytChannelId, ytVideoId } =
     useGalleryModal();
 
-  const { videoScreenshots, isLoading, error } = useGalleryVideoScreenshots({
-    ytVideoId,
-    ytChannelId,
-  });
+  const { videoScreenshots, screenshots, isLoading, error } =
+    useGalleryVideoScreenshots({
+      ytVideoId,
+      ytChannelId,
+    });
+
+  const screenshotsToUse = ytVideoId === "" ? screenshots : videoScreenshots;
 
   const handleZoom = useZoomScreenshot();
   const handleSetFeatured = useSetFeaturedScreenshot();
   const handleDelete = useDeleteWithConfirm();
+
+  useKbdEvent(() => {
+    closeGalleryModal();
+  }, "Escape");
 
   if (!isGalleryModalVisible) return null;
 
@@ -47,20 +56,21 @@ export function GalleryModal() {
           <StaticStates
             isLoading={isLoading}
             isError={!!error}
-            isEmpty={videoScreenshots?.length === 0}
+            isEmpty={screenshotsToUse?.length === 0}
           >
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {videoScreenshots?.map((screenshot) => (
+            <GalleryVirtualised
+              className="h-[97vh]"
+              onScrollProgress={() => undefined}
+              items={screenshotsToUse ?? []}
+              ItemComponent={({ item }) => (
                 <GalleryItem
-                  key={screenshot.id}
-                  screenshot={screenshot}
-                  isFav={screenshot.isFav ?? undefined}
-                  onFavorite={() => handleSetFeatured(screenshot)}
-                  onDelete={() => handleDelete(screenshot)}
-                  onImageClick={() => handleZoom(screenshot)}
+                  screenshot={item}
+                  onFavorite={handleSetFeatured}
+                  onDelete={handleDelete}
+                  onImageClick={handleZoom}
                 />
-              ))}
-            </div>
+              )}
+            />
           </StaticStates>
         </div>
       </div>

@@ -1,3 +1,4 @@
+/* eslint-disable boundaries/element-types */
 import { ViewType, useTitleClick } from "@features/Dashboard";
 import { SyncUploadsButton, FetchUploadsButton } from "@features/Upload";
 import { Button, Card } from "@shared/ui";
@@ -14,6 +15,7 @@ import { useViewThumbnails } from "@features/Thumbnails";
 import { useFetchCarousel } from "@entities/Screenshot";
 import { createFeaturedScreenshot } from "@shared/utils";
 import { useMemo, useState } from "react";
+import { useGalleryModal } from "@app/providers";
 
 const statsTypes = [
   ViewType.THUMBNAILS,
@@ -170,12 +172,21 @@ export default function ChannelDashboardCard({
 
   const handleThumbnailClick = () => {
     if (featuredScreenshots.length > 1) {
-      console.log(featuredScreenshots);
-
       setCurrentFeaturedScreenshotIndex(
         (currentFeaturedScreenshotIndex + 1) % featuredScreenshots.length
       );
     }
+  };
+
+  const { setGalleryModal } = useGalleryModal();
+
+  const handleGalleryClick = () => {
+    setGalleryModal(
+      {
+        ytVideoId: "",
+        ytChannelId: ytId,
+      }
+    );
   };
 
   return (
@@ -205,11 +216,9 @@ export default function ChannelDashboardCard({
       onThumbnailClick={handleThumbnailClick}
       featuredScreenshotsLength={featuredScreenshots.length}
       galleryButtonSlot={
-        <Link to={routes.newGallery(ytId)}>
-          <Button>
-            <Images />
-          </Button>
-        </Link>
+        <Button onClick={handleGalleryClick}>
+          <Images />
+        </Button>
       }
     />
   );

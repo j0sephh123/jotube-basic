@@ -197,10 +197,10 @@ export type GalleryModalSlice = {
   ytVideoId: string;
   ytChannelId: string;
   onClose: () => void;
-  setGalleryModal: (
-    ytVideoId: string,
-    ytChannelId: string,
-  ) => void;
+  setGalleryModal: (props: {
+    ytVideoId: string;
+    ytChannelId: string;
+  }) => void;
   closeGalleryModal: () => void;
 };
 
