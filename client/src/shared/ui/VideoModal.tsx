@@ -20,7 +20,7 @@ export default function VideoModal({
   return createPortal(
     <div
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-      style={{ zIndex: 99999 }}
+      style={{ zIndex: 9999999 }}
       onClick={onClose}
     >
       <div

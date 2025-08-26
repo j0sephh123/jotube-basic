@@ -7,9 +7,11 @@ import {
 import { StaticStates } from "@shared/ui";
 import { GalleryVirtualised } from "./GalleryVirtualised";
 import GalleryItem from "./GalleryItem";
+import { useTypedChannelYtId } from "@features/Dashboard";
 
 export function NewGallery() {
-  const { data: screenshots, isLoading, error } = useFetchChannelScreenshots();
+  const ytChannelId = useTypedChannelYtId();
+  const { data: screenshots, isLoading, error } = useFetchChannelScreenshots(ytChannelId);
 
   const handleScrollProgress = (scrollProgress: number) => {
     console.log(`Scroll progress: ${(scrollProgress * 100).toFixed(1)}%`);

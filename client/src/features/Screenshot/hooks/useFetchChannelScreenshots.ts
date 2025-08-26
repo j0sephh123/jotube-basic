@@ -1,5 +1,4 @@
 import { useGetChannelScreenshotsQuery } from "@shared/api";
-import { useTypedChannelYtId } from "@features/Dashboard";
 import { useApolloClient } from "@apollo/client";
 import { useCallback } from "react";
 
@@ -12,9 +11,10 @@ export type ChannelScreenshot = {
   isFav?: boolean | null;
 };
 
-export function useFetchChannelScreenshots() {
-  const ytChannelId = useTypedChannelYtId();
-
+export function useFetchChannelScreenshots(ytChannelId: string) {
+  console.log("useFetchChannelScreenshots", {
+    ytChannelId,
+  });
   const { data, loading, error } = useGetChannelScreenshotsQuery({
     variables: { ytChannelId },
     skip: !ytChannelId,

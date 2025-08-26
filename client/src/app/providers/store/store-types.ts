@@ -192,6 +192,18 @@ export type VideoModalSlice = {
   getEmbedUrl: (videoId: string, startTime?: number) => string;
 };
 
+export type GalleryModalSlice = {
+  isGalleryModalVisible: boolean;
+  ytVideoId: string;
+  ytChannelId: string;
+  onClose: () => void;
+  setGalleryModal: (
+    ytVideoId: string,
+    ytChannelId: string,
+  ) => void;
+  closeGalleryModal: () => void;
+};
+
 export type Store = SlidesSlice &
   ThumbnailsProcessingSlice &
   StoryboardProcessingSlice &
@@ -202,4 +214,5 @@ export type Store = SlidesSlice &
   SidePanelSlice &
   PlaylistSlice &
   ZoomSlice &
-  VideoModalSlice;
+  VideoModalSlice &
+  GalleryModalSlice;

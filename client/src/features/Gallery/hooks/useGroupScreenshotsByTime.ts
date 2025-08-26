@@ -1,4 +1,4 @@
-import { useTypedVideoYtId } from "@features/Dashboard";
+import { useTypedChannelYtId, useTypedVideoYtId } from "@features/Dashboard";
 import {
   useFetchChannelScreenshots,
   type ChannelScreenshot,
@@ -65,7 +65,8 @@ export function useGroupScreenshotsByTime() {
     return groups;
   };
 
-  const { data: screenshots } = useFetchChannelScreenshots();
+  const ytChannelId = useTypedChannelYtId();
+  const { data: screenshots } = useFetchChannelScreenshots(ytChannelId);
 
   const videoScreenshots = useMemo(() => {
     if (!screenshots || !ytVideoId) return [];

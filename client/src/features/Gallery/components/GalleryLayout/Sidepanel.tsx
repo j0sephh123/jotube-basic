@@ -15,7 +15,7 @@ export function SidePanel() {
     });
   };
 
-  const { data: screenshots } = useFetchChannelScreenshots();
+  const { data: screenshots } = useFetchChannelScreenshots(ytChannelId);
 
   const groupedScreenshots = useMemo(() => {
     if (!screenshots) return [];

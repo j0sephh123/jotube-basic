@@ -36,4 +36,5 @@ export { IconGallery } from "./icons/IconGallery";
 export { IconNewGallery } from "./icons/IconNewGallery";
 export { IconUploads } from "./icons/IconUploads";
 export { default as StaticStates } from "./StaticStates";
+export { GalleryModal } from "./GalleryModal";
 export * from "./static";

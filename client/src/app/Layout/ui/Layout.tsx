@@ -1,6 +1,11 @@
 import { Outlet } from "react-router-dom";
 import { TheCarousel } from "@features/Screenshot";
-import { DialogProvider, ZoomModal, VideoModal } from "@shared/ui";
+import {
+  DialogProvider,
+  ZoomModal,
+  VideoModal,
+  GalleryModal,
+} from "@shared/ui";
 import { ThumbnailsProcessing, useThumbnailsSlice } from "@features/Thumbnails";
 import { StoryboardProcessing } from "@features/Storyboard";
 import CreateChannel from "@widgets/CreateChannel";
@@ -17,18 +22,21 @@ export default function Layout(): JSX.Element {
   const { metadata } = useThumbnailsSlice();
 
   return (
-    <DialogProvider>
-      <Navbar />
-      <div className="w-full h-[99vh] overflow-auto">
-        <Outlet />
-      </div>
-      <CreateChannel />
-      <TheCarousel />
-      {metadata.ytVideoId && <ThumbnailsProcessing />}
-      <StoryboardProcessing />
-      <SidePanel />
-      <AddChannelToPlaylistModal />
-      <ZoomModal isVisible={isVisible} url={url} onClose={onClose} />
+    <>
+      <DialogProvider>
+        <Navbar />
+        <div className="w-full h-[99vh] overflow-auto">
+          <Outlet />
+        </div>
+        <CreateChannel />
+        <TheCarousel />
+        {metadata.ytVideoId && <ThumbnailsProcessing />}
+        <StoryboardProcessing />
+        <SidePanel />
+        <AddChannelToPlaylistModal />
+        <ZoomModal isVisible={isVisible} url={url} onClose={onClose} />
+        <GalleryModal />
+      </DialogProvider>
       <VideoModal
         isVisible={isVideoModalVisible}
         onClose={closeVideoModal}
@@ -36,6 +44,6 @@ export default function Layout(): JSX.Element {
         embedUrl={embedUrl}
         startTime={startTime}
       />
-    </DialogProvider>
+    </>
   );
 }

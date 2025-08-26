@@ -1,4 +1,5 @@
-import { useVideoModal } from "@app/providers/store/store-hooks";
+/* eslint-disable boundaries/element-types */
+import { useVideoModal } from "@app/providers";
 
 export const useVideoModalStore = () => {
   const { setVideoModal, closeVideoModal, getEmbedUrl } = useVideoModal();

@@ -2,6 +2,7 @@
 import { create } from "zustand";
 import { createZoomSlice } from "./zoom-slice";
 import { createVideoModalSlice } from "./video-modal-slice";
+import { createGalleryModalSlice } from "./gallery-modal-slice";
 import type { Store as StoreType } from "./store-types";
 import type { SlideImage } from "yet-another-react-lightbox";
 
@@ -66,6 +67,7 @@ export const useStore = create<StoreType>()(
     ({
       ...createZoomSlice(set),
       ...createVideoModalSlice(set),
+      ...createGalleryModalSlice(set),
       ...createThumbnailsSlice(set),
       ...createSlidesSlice(set),
       // Minimal implementation to satisfy Store type

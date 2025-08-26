@@ -1,11 +1,17 @@
-import { useTypedVideoYtId } from "@features/Dashboard";
 import { useFetchChannelScreenshots } from "@features/Screenshot";
 import { useMemo } from "react";
 
-export function useGalleryVideoScreenshots() {
-  const ytVideoId = useTypedVideoYtId();
+type Props = {
+  ytVideoId: string;
+  ytChannelId: string;
+};
 
-  const { data: screenshots, isLoading, error } = useFetchChannelScreenshots();
+export function useGalleryVideoScreenshots({ ytVideoId, ytChannelId }: Props) {
+  const {
+    data: screenshots,
+    isLoading,
+    error,
+  } = useFetchChannelScreenshots(ytChannelId);
 
   const videoScreenshots = useMemo(() => {
     if (!screenshots || !ytVideoId) return [];

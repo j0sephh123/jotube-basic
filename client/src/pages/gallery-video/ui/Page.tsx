@@ -1,8 +1,9 @@
 import { GalleryVideo } from "@features/Gallery";
-import { useTypedChannelYtId } from "@features/Dashboard";
+import { useTypedChannelYtId, useTypedVideoYtId } from "@features/Dashboard";
 
 export default function GalleryVideoPage() {
+  const ytVideoId = useTypedVideoYtId();
   const ytChannelId = useTypedChannelYtId();
 
-  return <GalleryVideo ytChannelId={ytChannelId} />;
+  return <GalleryVideo ytVideoId={ytVideoId} ytChannelId={ytChannelId} />;
 }

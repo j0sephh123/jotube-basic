@@ -11,9 +11,16 @@ import {
 } from "@features/Gallery";
 import { StaticStates } from "@shared/ui";
 
-export function GalleryVideo() {
-  const { screenshots, isLoading, error } =
-    useGalleryVideoScreenshots();
+type Props = {
+  ytVideoId: string;
+  ytChannelId: string;
+};
+
+export function GalleryVideo({ ytVideoId, ytChannelId }: Props) {
+  const { screenshots, isLoading, error } = useGalleryVideoScreenshots({
+    ytVideoId,
+    ytChannelId,
+  });
 
   const handleZoom = useZoomScreenshot();
   const handleSetFeatured = useSetFeaturedScreenshot();
