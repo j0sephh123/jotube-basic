@@ -29,6 +29,7 @@ type CardProps = {
   galleryButtonSlot?: React.ReactNode;
   handleTitleClick?: (e: React.MouseEvent) => void;
   onThumbnailClick?: () => void;
+  featuredScreenshotsLength: number;
 };
 
 function Card({
@@ -47,6 +48,7 @@ function Card({
   galleryButtonSlot,
   handleTitleClick,
   onThumbnailClick,
+  featuredScreenshotsLength,
 }: CardProps) {
   return (
     <Card.Container>
@@ -64,6 +66,9 @@ function Card({
             {cardMenuSlot}
           </div>
         )}
+        <div className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+          <div className="badge badge-primary">{featuredScreenshotsLength}</div>
+        </div>
       </div>
       <Card.Content>
         <Card.Title title={title} onClick={handleTitleClick || (() => {})} />

@@ -13,6 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useViewThumbnails } from "@features/Thumbnails";
 import { useFetchCarousel } from "@entities/Screenshot";
 import { createFeaturedScreenshot } from "@shared/utils";
+import { useMemo, useState } from "react";
 
 const statsTypes = [
   ViewType.THUMBNAILS,
@@ -53,6 +54,20 @@ export default function ChannelDashboardCard({
   const navigate = useNavigate();
   const fetchCarousel = useFetchCarousel();
   const viewThumbnails = useViewThumbnails(id);
+
+  const [currentFeaturedScreenshotIndex, setCurrentFeaturedScreenshotIndex] =
+    useState(0);
+
+  const getSrc = useMemo(() => {
+    if (featuredScreenshots.length < 2) {
+      const first = featuredScreenshots[0];
+      return first ? createFeaturedScreenshot(first.src) : src;
+    }
+
+    return createFeaturedScreenshot(
+      featuredScreenshots[currentFeaturedScreenshotIndex]?.src || src
+    );
+  }, [featuredScreenshots, src, currentFeaturedScreenshotIndex]);
 
   const cardStats = (
     <Card.Stats
@@ -153,17 +168,23 @@ export default function ChannelDashboardCard({
       : syncButton;
   };
 
+  const handleThumbnailClick = () => {
+    if (featuredScreenshots.length > 1) {
+      console.log(featuredScreenshots);
+
+      setCurrentFeaturedScreenshotIndex(
+        (currentFeaturedScreenshotIndex + 1) % featuredScreenshots.length
+      );
+    }
+  };
+
   return (
     <Card
       key={id}
       id={id}
       ytId={ytId}
       title={title}
-      src={
-        featuredScreenshots.length > 0
-          ? createFeaturedScreenshot(featuredScreenshots[0]?.src || "")
-          : src
-      }
+      src={getSrc}
       lastSyncedAt={lastSyncedAt}
       ytChannelId={ytId}
       handleTitleClick={handleTitleClick}
@@ -181,7 +202,8 @@ export default function ChannelDashboardCard({
       }
       deleteButtonSlot={getDeleteButtonSlot()}
       playlistButtonSlot={playlistButton}
-      onThumbnailClick={() => {}}
+      onThumbnailClick={handleThumbnailClick}
+      featuredScreenshotsLength={featuredScreenshots.length}
       galleryButtonSlot={
         <Link to={routes.newGallery(ytId)}>
           <Button>
