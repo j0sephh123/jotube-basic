@@ -1,6 +1,5 @@
 import { Grid2X2 } from "lucide-react";
 import { routes } from "@shared/routes";
-import { ViewType } from "@shared/api";
 import { IconButton } from "@shared/ui";
 
 export function IconThumbnails({
@@ -10,8 +9,10 @@ export function IconThumbnails({
   ytChannelId?: string;
   totalThumbnails?: number;
 }) {
-  const to = ytChannelId ? routes.thumbnails() : routes.dashboard(ViewType.Thumbnails);
-  
+  const to = ytChannelId
+    ? routes.thumbnails()
+    : `/dashboard/channels/thumbnails`;
+
   return (
     <IconButton
       icon={<Grid2X2 />}

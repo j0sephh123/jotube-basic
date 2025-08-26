@@ -28,7 +28,7 @@ export default function Navbar() {
           <Screenshots />
           <IconVideos />
           <IconPlaylist />
-          <IconSaved totalSaved={totalCounts?.totalSaved ?? 0} />
+          <IconSaved count={totalCounts?.totalSaved ?? 0} />
           <IconThumbnails totalThumbnails={totalCounts?.totalThumbnails ?? 0} />
           <IconImageNavigator />
           <InitCarouselButton />

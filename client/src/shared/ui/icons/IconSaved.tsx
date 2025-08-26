@@ -1,17 +1,18 @@
 import { Save } from "lucide-react";
 import { routes } from "@shared/routes";
-import { ViewType } from "@shared/api";
 import { IconButton } from "@shared/ui";
 
-export function IconSaved({ 
-  ytChannelId, 
-  count = 0 
-}: { 
+export function IconSaved({
+  ytChannelId,
+  count = 0,
+}: {
   ytChannelId?: string;
   count?: number;
 }) {
-  const to = ytChannelId ? routes.savedChannel(ytChannelId) : routes.dashboard(ViewType.Saved);
-  
+  const to = ytChannelId
+    ? routes.savedChannel(ytChannelId)
+    : `/dashboard/channels/saved`;
+
   return (
     <IconButton
       icon={<Save />}
