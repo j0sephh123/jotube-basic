@@ -1,9 +1,8 @@
 import {
   useDeleteWithConfirm,
-  useFetchChannelScreenshots,
   useZoomScreenshot,
 } from "@features/Screenshot";
-import { GalleryItem } from "@features/Gallery";
+import { GalleryItem, useScreenshotsForGallery } from "@features/Gallery";
 import { StaticStates } from "@shared/ui";
 import { useSetFeaturedScreenshot } from "@features/Screenshot";
 import { useGroupScreenshotsByVideo } from "@features/Gallery";
@@ -11,11 +10,10 @@ import { useTypedChannelYtId } from "@features/Dashboard";
 
 export default function Gallery() {
   const ytChannelId = useTypedChannelYtId();
-  const {
-    data: screenshots,
-    isLoading,
-    error,
-  } = useFetchChannelScreenshots(ytChannelId);
+  const { screenshots, isLoading, error } = useScreenshotsForGallery({
+    ytChannelId,
+    ytVideoId: "",
+  });
   const groupedScreenshotsByVideo = useGroupScreenshotsByVideo(screenshots);
   const handleSetFeatured = useSetFeaturedScreenshot();
   const handleDelete = useDeleteWithConfirm();

@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 import { type VideoGroup } from "./types";
-import { useFetchChannelScreenshots } from "@features/Screenshot";
 import { useNavigate } from "react-router-dom";
 import { routes } from "@shared/routes";
 import { useTypedChannelYtId } from "@features/Dashboard";
+import { useScreenshotsForGallery } from "@features/Gallery";
 
 export function VideosWithScreenshotsAmountList() {
   const ytChannelId = useTypedChannelYtId();
@@ -15,7 +15,10 @@ export function VideosWithScreenshotsAmountList() {
     });
   };
 
-  const { data: screenshots } = useFetchChannelScreenshots(ytChannelId);
+  const { screenshots } = useScreenshotsForGallery({
+    ytChannelId,
+    ytVideoId: "",
+  });
 
   const groupedScreenshots = useMemo(() => {
     if (!screenshots) return [];

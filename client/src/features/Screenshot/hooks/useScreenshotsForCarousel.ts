@@ -6,7 +6,7 @@ import type { SlideImage } from "yet-another-react-lightbox";
 import { useSlides } from "@app/providers/store/store";
 import { type ChannelScreenshot } from "./useFetchChannelScreenshots";
 
-export function useGetScreenshots() {
+export function useScreenshotsForCarousel() {
   const [getScreenshotsQuery] = useLazyQuery(GET_SLIDES, {
     fetchPolicy: "no-cache",
   });

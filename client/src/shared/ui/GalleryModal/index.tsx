@@ -1,6 +1,6 @@
 /* eslint-disable boundaries/element-types */
 import { useGalleryModal } from "@app/providers";
-import { useGalleryVideoScreenshots } from "@features/Gallery";
+import { useScreenshotsForGallery } from "@features/Gallery";
 import {
   useDeleteWithConfirm,
   useSetFeaturedScreenshot,
@@ -17,7 +17,7 @@ export function GalleryModal() {
     useGalleryModal();
 
   const { videoScreenshots, screenshots, isLoading, error } =
-    useGalleryVideoScreenshots({
+    useScreenshotsForGallery({
       ytVideoId,
       ytChannelId,
     });

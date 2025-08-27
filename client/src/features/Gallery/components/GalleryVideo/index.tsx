@@ -6,7 +6,7 @@ import {
 } from "@features/Screenshot";
 import {
   GalleryItem,
-  useGalleryVideoScreenshots,
+  useScreenshotsForGallery,
   GalleryVideoHeader,
 } from "@features/Gallery";
 import { StaticStates } from "@shared/ui";
@@ -26,7 +26,7 @@ type Props = {
 
 export function GalleryVideo({ ytVideoId, ytChannelId }: Props) {
   const { screenshots, videoScreenshots, isLoading, error } =
-    useGalleryVideoScreenshots({
+    useScreenshotsForGallery({
       ytVideoId,
       ytChannelId,
     });

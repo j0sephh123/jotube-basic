@@ -6,7 +6,7 @@ type Props = {
   ytChannelId: string;
 };
 
-export function useGalleryVideoScreenshots({ ytVideoId, ytChannelId }: Props) {
+export function useScreenshotsForGallery({ ytVideoId, ytChannelId }: Props) {
   const {
     data: screenshots,
     isLoading,
