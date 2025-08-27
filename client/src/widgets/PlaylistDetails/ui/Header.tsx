@@ -3,7 +3,7 @@ import { routes } from "@shared/routes";
 import { ArrowLeft } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { SmallCard } from "./SmallCard";
-import { useGetScreenshots } from "@features/Screenshot";
+import { useScreenshotsForCarousel } from "@features/Screenshot";
 
 type HeaderProps = {
   playlist: PlaylistDetailsResponse;
@@ -12,7 +12,7 @@ type HeaderProps = {
 export default function Header({
   playlist: { id, name, channels },
 }: HeaderProps) {
-  const handleGetScreenshots = useGetScreenshots();
+  const handleGetScreenshots = useScreenshotsForCarousel();
 
   const { uploadsType } = useParams<{ uploadsType: "default" | "saved" }>();
 

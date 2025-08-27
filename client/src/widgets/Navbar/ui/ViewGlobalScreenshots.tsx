@@ -1,10 +1,10 @@
 import { useTotalCounts } from "@features/Statistics";
 import { Loader, PlayCircle } from "lucide-react";
 import { IconButton } from "@shared/ui";
-import { useGetScreenshots } from "@features/Screenshot";
+import { useScreenshotsForCarousel } from "@features/Screenshot";
 
 export default function ViewGlobalScreenshots() {
-  const viewScreenshots = useGetScreenshots();
+  const viewScreenshots = useScreenshotsForCarousel();
   const { data: totalCounts, isLoading } = useTotalCounts();
   const totalScreenshots = totalCounts?.totalScreenshots;
   const screenshotCount = totalScreenshots ?? "N/A";

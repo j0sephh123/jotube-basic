@@ -13,4 +13,4 @@ export { useSetFeaturedScreenshot } from "./hooks/useSetFeaturedScreenshot";
 export { useDeleteWithConfirm } from "./hooks/useDeleteWithConfirm";
 export { useZoomScreenshot } from "./hooks/useZoomScreenshot";
 export { useFeaturedScreenshots } from "./hooks/useFeaturedScreenshots";
-export { useScreenshotsForCarousel as useGetScreenshots } from "./hooks/useScreenshotsForCarousel";
+export { useScreenshotsForCarousel } from "./hooks/useScreenshotsForCarousel";

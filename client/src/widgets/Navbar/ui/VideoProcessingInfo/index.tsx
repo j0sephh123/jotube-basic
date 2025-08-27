@@ -18,10 +18,6 @@ export default function VideoProcessingInfo() {
 
   const groupedByChannel = useGroupByChannel();
 
-  console.log({
-    groupedByChannel,
-  });
-
   return (
     <VideoProcessingInfoWrapper
       isOpen={isOpen}

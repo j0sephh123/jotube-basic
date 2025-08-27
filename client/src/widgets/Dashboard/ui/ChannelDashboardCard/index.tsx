@@ -15,7 +15,7 @@ import { useViewThumbnails } from "@features/Thumbnails";
 import { useGalleryModal } from "@app/providers";
 import {
   useFeaturedScreenshots,
-  useGetScreenshots,
+  useScreenshotsForCarousel,
 } from "@features/Screenshot";
 
 const statsTypes = [
@@ -55,7 +55,7 @@ export default function ChannelDashboardCard({
   featuredScreenshots,
 }: Props) {
   const navigate = useNavigate();
-  const handleViewScreenshots = useGetScreenshots();
+  const handleViewScreenshots = useScreenshotsForCarousel();
   const viewThumbnails = useViewThumbnails(id);
 
   const { getSrc, handleThumbnailClick } = useFeaturedScreenshots(
