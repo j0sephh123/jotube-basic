@@ -1,9 +1,10 @@
-import { useGetPlaylist } from "@features/Playlist";
-import { UploadsListItem } from "@features/Upload";
+import { useGetPlaylist, useGetPlaylistUploads } from "@features/Playlist";
 import {
-  type PlaylistDetailsResponse,
-  useGetPlaylistUploadsListQuery,
-} from "@shared/api";
+  useRefetchPlaylist,
+  useRefetchPlaylistUploads,
+} from "@features/Playlist";
+import { UploadsListItem } from "@features/Upload";
+import { type PlaylistDetailsResponse } from "@shared/api";
 import { StaticStates } from "@shared/ui";
 import { Header } from "@widgets/PlaylistDetails";
 import { Link, useParams } from "react-router-dom";
@@ -14,20 +15,21 @@ export function PlaylistUploadsListPage() {
     uploadsType: "default" | "saved";
   }>();
 
-  const { data, loading, error } = useGetPlaylistUploadsListQuery({
-    variables: {
-      playlistUploadsListInput: {
-        playlistId: Number(params.id),
-        uploadsType: params.uploadsType as "default" | "saved",
-      },
-    },
-  });
+  const { data, loading, error } = useGetPlaylistUploads();
 
   const {
     data: playlist,
     loading: isPlaylistLoading,
     error: playlistError,
   } = useGetPlaylist();
+
+  const refetchPlaylist = useRefetchPlaylist();
+  const refetchPlaylistUploads = useRefetchPlaylistUploads();
+
+  const handleSideEffect = () => {
+    refetchPlaylist();
+    refetchPlaylistUploads();
+  };
 
   return (
     <StaticStates
@@ -58,7 +60,7 @@ export function PlaylistUploadsListPage() {
               }}
               ytChannelId={ytChannelId}
               type={params.uploadsType as "default" | "saved"}
-              handleSideEffect={() => undefined}
+              handleSideEffect={handleSideEffect}
               channelTitleSlot={
                 <Link to={`/channels/${ytChannelId}/saved`}>
                   <div className="text text-gray-400">{channelTitle}</div>

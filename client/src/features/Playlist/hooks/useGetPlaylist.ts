@@ -1,4 +1,4 @@
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, gql, useApolloClient } from "@apollo/client";
 import type { GetPlaylistDetailsQuery } from "@shared/api";
 import { useParams } from "react-router-dom";
 
@@ -41,7 +41,10 @@ export const useGetPlaylist = () => {
 };
 
 export const useRefetchPlaylist = () => {
+  const apolloClient = useApolloClient();
   return () => {
-    // This will be handled by the GraphQL query refetch
+    apolloClient.refetchQueries({
+      include: [GET_PLAYLIST_DETAILS],
+    });
   };
 };
