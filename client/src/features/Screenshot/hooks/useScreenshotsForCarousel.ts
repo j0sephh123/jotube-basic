@@ -1,16 +1,16 @@
 /* eslint-disable import/no-internal-modules */
 /* eslint-disable boundaries/element-types */
 import { useLazyQuery } from "@apollo/client";
-import { GET_SLIDES } from "@entities/Screenshot";
+import { GET_SHUFFLED_SCREENSHOTS } from "@entities/Screenshot";
 import type { SlideImage } from "yet-another-react-lightbox";
-import { useSlides } from "@app/providers/store/store";
+import { useCarouselScreenshots } from "@app/providers/store/store";
 import { type ChannelScreenshot } from "./useFetchChannelScreenshots";
 
 export function useScreenshotsForCarousel() {
-  const [getScreenshotsQuery] = useLazyQuery(GET_SLIDES, {
+  const [getScreenshotsQuery] = useLazyQuery(GET_SHUFFLED_SCREENSHOTS, {
     fetchPolicy: "no-cache",
   });
-  const { setSlides } = useSlides();
+  const { setSlides } = useCarouselScreenshots();
 
   const handleFetch = async (ytChannelIds: string[]) => {
     try {

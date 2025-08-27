@@ -2,7 +2,7 @@ import { type PlaylistSlice } from "@features/Playlist";
 import { useStore } from "./store-root";
 
 import type {
-  SlidesSlice,
+  CarouselScreenshotsSlice,
   ThumbnailsProcessingSlice,
   DashboardSlice,
   VideosDashboardSlice,
@@ -25,7 +25,7 @@ function makeScopedHook<Slice>() {
   return useScoped;
 }
 
-export const useSlides = makeScopedHook<SlidesSlice>();
+export const useCarouselScreenshots = makeScopedHook<CarouselScreenshotsSlice>();
 export const useThumbnailsSlice = makeScopedHook<ThumbnailsProcessingSlice>();
 export const useDashboard = makeScopedHook<DashboardSlice>();
 export const useVideosDashboard = makeScopedHook<VideosDashboardSlice>();

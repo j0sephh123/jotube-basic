@@ -1,1 +1,1 @@
-export { GET_SCREENSHOTS as GET_SLIDES } from "./api/screenshot.gql";
+export { GET_SHUFFLED_SCREENSHOTS } from "./api/screenshot.gql";

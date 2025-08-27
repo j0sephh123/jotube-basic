@@ -1,8 +1,8 @@
-import { useSlides } from "@features/Screenshot";
+import { useCarouselScreenshots } from "@features/Screenshot";
 import { Lightbox } from "@shared/ui";
 
 export default function TheCarousel() {
-  const { slides, setSlides } = useSlides();
+  const { slides, setSlides } = useCarouselScreenshots();
   const onClose = () => setSlides([]);
 
   if (slides.length === 0) return null;

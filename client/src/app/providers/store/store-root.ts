@@ -4,7 +4,7 @@ import { createZoomSlice } from "./zoom-slice";
 import { createVideoModalSlice } from "./video-modal-slice";
 import { createGalleryModalSlice } from "./gallery-modal-slice";
 import type { Store as StoreType } from "./store-types";
-import type { SlideImage } from "yet-another-react-lightbox";
+import { createCarouselScreenshotsSlice } from "./screenshots-for-carousel-slice";
 
 // Local thumbnails slice implementation
 const createThumbnailsSlice = (
@@ -55,12 +55,6 @@ const createThumbnailsSlice = (
 });
 
 // Local slides slice implementation
-const createSlidesSlice = (
-  set: (fn: (state: StoreType) => Partial<StoreType>) => void
-) => ({
-  slides: [],
-  setSlides: (slides: SlideImage[]) => set(() => ({ slides })),
-});
 
 export const useStore = create<StoreType>()(
   (set, _get) =>
@@ -69,8 +63,7 @@ export const useStore = create<StoreType>()(
       ...createVideoModalSlice(set),
       ...createGalleryModalSlice(set),
       ...createThumbnailsSlice(set),
-      ...createSlidesSlice(set),
-      // Minimal implementation to satisfy Store type
+      ...createCarouselScreenshotsSlice(set),
       isOpen: false,
       toggle: () => set((state: StoreType) => ({ isOpen: !state.isOpen })),
       close: () => set({ isOpen: false }),

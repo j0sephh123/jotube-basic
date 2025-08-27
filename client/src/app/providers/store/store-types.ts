@@ -1,13 +1,11 @@
-import type { SlideImage } from "yet-another-react-lightbox";
+import type { SlideImage as ReactLightboxSlideImage } from "yet-another-react-lightbox";
 import type { ViewType } from "@features/Dashboard";
 import type { PlaylistSlice } from "@features/Playlist";
 import type { SortOrder } from "@shared/api";
 
-export type SlidesData = SlideImage[];
-
-export type SlidesSlice = {
-  slides: SlidesData;
-  setSlides: (slides: SlidesData) => void;
+export type CarouselScreenshotsSlice = {
+  slides: ReactLightboxSlideImage[];
+  setSlides: (slides: ReactLightboxSlideImage[]) => void;
 };
 
 export type ThumbnailItem = {
@@ -193,7 +191,7 @@ export type GalleryModalSlice = {
   closeGalleryModal: () => void;
 };
 
-export type Store = SlidesSlice &
+export type Store = CarouselScreenshotsSlice &
   ThumbnailsProcessingSlice &
   StoryboardProcessingSlice &
   DashboardSlice &
