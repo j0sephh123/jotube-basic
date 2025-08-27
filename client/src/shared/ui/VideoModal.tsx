@@ -1,27 +1,20 @@
+/* eslint-disable boundaries/element-types */
+/* eslint-disable import/no-internal-modules */
 import { createPortal } from "react-dom";
 import { formatSecondsToTime } from "@shared/utils";
+import { useVideoModal } from "@app/providers/store/store-hooks";
 
-type VideoModalProps = {
-  isVisible: boolean;
-  onClose: () => void;
-  videoId: string;
-  embedUrl: string;
-  startTime?: number;
-};
+export default function VideoModal() {
+  const { isVideoModalVisible, embedUrl, startTime, closeVideoModal } =
+    useVideoModal();
 
-export default function VideoModal({
-  isVisible,
-  onClose,
-  embedUrl,
-  startTime,
-}: VideoModalProps) {
-  if (!isVisible) return null;
+  if (!isVideoModalVisible) return null;
 
   return createPortal(
     <div
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
       style={{ zIndex: 9999999 }}
-      onClick={onClose}
+      onClick={closeVideoModal}
     >
       <div
         className="bg-base-100 p-6 rounded-lg w-full max-w-6xl"
@@ -44,13 +37,13 @@ export default function VideoModal({
           </div>
         )}
         <div className="flex justify-center">
-          <button className="btn btn-ghost" onClick={onClose}>
+          <button className="btn btn-ghost" onClick={closeVideoModal}>
             Close
           </button>
         </div>
         <button
           className="btn btn-ghost absolute top-4 right-4"
-          onClick={onClose}
+          onClick={closeVideoModal}
         >
           ✕
         </button>
