@@ -1,5 +1,4 @@
 import { type PlaylistSlice } from "@features/Playlist";
-import { type SidePanelSlice } from "@widgets/SidePanel";
 import { useStore } from "./store-root";
 
 import type {
@@ -9,7 +8,6 @@ import type {
   VideosDashboardSlice,
   RangePickersSlice,
   VideosRangePickersSlice,
-  ZoomSlice,
   VideoModalSlice,
   GalleryModalSlice,
   StoryboardProcessingSlice,
@@ -33,10 +31,8 @@ export const useDashboard = makeScopedHook<DashboardSlice>();
 export const useVideosDashboard = makeScopedHook<VideosDashboardSlice>();
 export const useRangePickers = makeScopedHook<RangePickersSlice>();
 export const useVideosRangePickers = makeScopedHook<VideosRangePickersSlice>();
-export const useSidePanel = makeScopedHook<SidePanelSlice>();
 export const usePlaylist = makeScopedHook<PlaylistSlice>();
-export const useZoom = makeScopedHook<ZoomSlice>();
 export const useVideoModal = makeScopedHook<VideoModalSlice>();
 export const useStoryboardProcessing =
   makeScopedHook<StoryboardProcessingSlice>();
-export const useGalleryModal = makeScopedHook<GalleryModalSlice>(); 
+export const useGalleryModal = makeScopedHook<GalleryModalSlice>();

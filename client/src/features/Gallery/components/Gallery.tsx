@@ -36,7 +36,6 @@ export default function Gallery() {
                   <GalleryItem
                     key={screenshot.id}
                     screenshot={screenshot}
-                    isFav={screenshot.isFav ?? undefined}
                     onFavorite={() => handleSetFeatured(screenshot)}
                     onDelete={() => handleDelete(screenshot)}
                     onImageClick={() => handleZoom(screenshot)}

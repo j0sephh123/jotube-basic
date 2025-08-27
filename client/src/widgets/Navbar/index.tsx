@@ -1,7 +1,6 @@
 import { QuickSearch } from "@widgets/Search";
 import {
   ViewGlobalScreenshots,
-  Screenshots,
   VideoProcessingInfo,
   ThemeSwitcher,
 } from "@widgets/Navbar";
@@ -25,7 +24,6 @@ export default function Navbar() {
       <div className="navbar shadow-sm flex justify-between items-center w-full">
         <div className="flex gap-2">
           <IconHome />
-          <Screenshots />
           <IconVideos />
           <IconPlaylist />
           <IconSaved count={totalCounts?.totalSaved ?? 0} />

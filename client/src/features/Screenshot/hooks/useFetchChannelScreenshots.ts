@@ -8,7 +8,6 @@ export type ChannelScreenshot = {
   src: string;
   ytVideoId: string;
   second: number;
-  isFav?: boolean | null;
 };
 
 export function useFetchChannelScreenshots(ytChannelId: string) {

@@ -9,14 +9,13 @@ import {
 import { ThumbnailsProcessing, useThumbnailsSlice } from "@features/Thumbnails";
 import { StoryboardProcessing } from "@features/Storyboard";
 import CreateChannel from "@widgets/CreateChannel";
-import { SidePanel } from "@app/index";
 import { Navbar } from "@widgets/Navbar";
 import { AddChannelToPlaylistModal } from "@widgets/PlaylistAddChannel";
-import { useZoom } from "@features/Screenshot";
+import { useZoomStore } from "@features/Screenshot";
 import { useVideoModal } from "@app/index";
 
 export default function Layout(): JSX.Element {
-  const { isVisible, url, onClose } = useZoom();
+  const { isVisible, url, onClose } = useZoomStore();
   const { isVideoModalVisible, videoId, embedUrl, startTime, closeVideoModal } =
     useVideoModal();
   const { metadata } = useThumbnailsSlice();
@@ -32,7 +31,6 @@ export default function Layout(): JSX.Element {
         <TheCarousel />
         {metadata.ytVideoId && <ThumbnailsProcessing />}
         <StoryboardProcessing />
-        <SidePanel />
         <AddChannelToPlaylistModal />
         <ZoomModal isVisible={isVisible} url={url} onClose={onClose} />
         <GalleryModal />

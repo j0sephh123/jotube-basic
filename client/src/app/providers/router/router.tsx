@@ -1,8 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "@app/Layout";
-import { ScreenshotsPage } from "@pages/screenshots";
-import { ScreenshotsByMonthPage } from "@pages/screenshots-month";
-import { ScreenshotsByDatePage } from "@pages/screenshots-date";
 import { ChannelPageLayout } from "@widgets/ChannelPageLayout";
 import { GalleryPage } from "@pages/gallery";
 import { DashboardWidget, DashboardWrapper } from "@widgets/Dashboard";
@@ -40,15 +37,6 @@ export default function Router() {
               <Route path=":ytVideoId" element={<GalleryVideoPage />} />
             </Route>
           </Route>
-          <Route path="/screenshots" element={<ScreenshotsPage />} />
-          <Route
-            path="/screenshots/:month"
-            element={<ScreenshotsByMonthPage />}
-          />
-          <Route
-            path="/screenshots/:month/:date"
-            element={<ScreenshotsByDatePage />}
-          />
           <Route path="/playlists" element={<PlaylistWrapper />}>
             <Route index element={<PlaylistsPage />} />
             <Route path=":id" element={<PlaylistDetailsPage />} />

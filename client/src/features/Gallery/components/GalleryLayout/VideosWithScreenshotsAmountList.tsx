@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { routes } from "@shared/routes";
 import { useTypedChannelYtId } from "@features/Dashboard";
 
-export function SidePanel() {
+export function VideosWithScreenshotsAmountList() {
   const ytChannelId = useTypedChannelYtId();
   const navigate = useNavigate();
 

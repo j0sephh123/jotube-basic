@@ -55,7 +55,6 @@ export const GET_CHANNEL_SCREENSHOTS = gql`
       id
       second
       src
-      isFav
     }
   }
 `;

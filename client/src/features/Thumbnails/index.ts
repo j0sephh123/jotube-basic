@@ -6,7 +6,6 @@ export { default as useEvents } from "./lib/useEvents";
 export { default as useResetSelection } from "./lib/useResetSelection";
 export { useGetUploadsWithThumbnails } from "./lib/useGetUploadsWithThumbnails";
 export { useThumbnailsSlice } from "./hooks/useThumbnailsSlice";
-export { useZoom } from "./hooks/useZoom";
 export { default as useViewThumbnails } from "./hooks/useViewThumbnails";
 export {
   useThumbnailByVideoId,

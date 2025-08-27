@@ -1,6 +1,6 @@
+import { useZoomStore } from "@features/Screenshot";
 import {
   useThumbnailsSlice,
-  useZoom,
   ThumbnailGridCell,
   COLUMNS,
   GRID_DATA,
@@ -16,7 +16,7 @@ export default function Grid(): JSX.Element {
     setSelectedImages,
     metadata: { ytChannelId, ytVideoId },
   } = useThumbnailsSlice();
-  const { setZoom, closeZoom } = useZoom();
+  const { setZoom, closeZoom } = useZoomStore();
 
   const handleZoom = (index: number): void => {
     const url = generateThumbnailUrl(ytChannelId, ytVideoId, index);

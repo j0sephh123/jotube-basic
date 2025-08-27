@@ -7,7 +7,6 @@ export const GET_SLIDES = gql`
       id
       second
       src
-      isFav
     }
   }
 `;
@@ -28,7 +27,6 @@ export const GET_SCREENSHOTS_BY_VIDEO = gql`
       second
       ytChannelId
       ytVideoId
-      isFav
       src
     }
   }

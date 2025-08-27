@@ -1,4 +1,4 @@
-import { Heart, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { useState } from "react";
 
 // Local type definitions to avoid external dependencies
@@ -154,7 +154,6 @@ export default function SimpleCardWithImage({
   second,
   channelTitle,
   videoTitle,
-  isFav,
   ytChannelId,
   ytVideoId,
   onDelete,
@@ -206,16 +205,6 @@ export default function SimpleCardWithImage({
             </LocalChannelLink>
           </div>
           <div className="flex justify-end gap-1 mt-2">
-            <button
-              onClick={() => onUpdateScreenshot(id, !isFav)}
-              className="btn btn-ghost btn-sm"
-            >
-              <Heart
-                className={`w-4 h-4 ${
-                  isFav ? "fill-red-500 text-red-500" : "text-gray-500"
-                }`}
-              />
-            </button>
             <button
               onClick={handleDeleteClick}
               className="btn btn-ghost btn-sm"

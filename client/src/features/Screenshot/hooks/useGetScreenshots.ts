@@ -13,7 +13,6 @@ export type GetSlidesResponse = {
   src: string;
   ytVideoId: string;
   second: number;
-  isFav?: boolean | null;
 };
 
 export function useGetScreenshots() {

@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
-import { SidePanel } from "@features/Gallery";
+import { VideosWithScreenshotsAmountList } from "@features/Gallery";
 
 export default function GalleryLayout() {
   return (
     <div className="flex h-screen">
-      <SidePanel />
+      <VideosWithScreenshotsAmountList />
       <div className="flex-1 flex-col h-screen overflow-y-auto">
         <Outlet />
       </div>

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import { useThumbnailsSlice, useZoom } from "@features/Thumbnails";
+import { useThumbnailsSlice } from "@features/Thumbnails";
 import useThumbnailsCount from "./useThumbnailsCount";
+import { useZoomStore } from "@features/Screenshot";
 
 export default function useEvents(
   handleKeyDown: (event: KeyboardEvent) => void,
@@ -8,7 +9,7 @@ export default function useEvents(
   containerRef: React.RefObject<HTMLDivElement>
 ) {
   const thumbnailsCount = useThumbnailsCount();
-  const { isVisible: isZoomModalVisible } = useZoom();
+  const { isVisible: isZoomModalVisible } = useZoomStore();
   const { currentIndex } = useThumbnailsSlice();
 
   useEffect(() => {

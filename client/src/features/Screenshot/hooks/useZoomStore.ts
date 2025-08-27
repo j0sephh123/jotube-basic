@@ -8,12 +8,10 @@ type ZoomStore = {
   closeZoom: () => void;
 };
 
-const useZoomStore = create<ZoomStore>((set) => ({
+export const useZoomStore = create<ZoomStore>((set) => ({
   isVisible: false,
   url: "",
   onClose: () => {},
   setZoom: (isVisible, url, onClose) => set({ isVisible, url, onClose }),
   closeZoom: () => set({ isVisible: false, url: "", onClose: () => {} }),
 }));
-
-export const useZoom = useZoomStore;

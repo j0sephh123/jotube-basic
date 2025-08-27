@@ -9,7 +9,6 @@ import VideoButton from "./VideoButton";
 
 type Props = {
   screenshot: ChannelScreenshot;
-  isFav?: boolean;
   onFavorite: (screenshot: ChannelScreenshot) => void;
   onDelete: (screenshot: ChannelScreenshot) => void;
   onImageClick: (screenshot: ChannelScreenshot) => void;
@@ -17,7 +16,6 @@ type Props = {
 
 export default function GalleryItem({
   screenshot,
-  isFav,
   onFavorite,
   onDelete,
   onImageClick,
@@ -34,7 +32,7 @@ export default function GalleryItem({
           }
         >
           <Image src={screenshot.src} />
-          <TopLabels isFav={isFav} second={screenshot.second} />
+          <TopLabels second={screenshot.second} />
           <div className="absolute inset-0 transition-all duration-200 opacity-0 group-hover:opacity-100">
             <FavoriteButton screenshot={screenshot} onFavorite={onFavorite} />
             <DeleteButton screenshot={screenshot} onDelete={onDelete} />

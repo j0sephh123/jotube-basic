@@ -1,6 +1,6 @@
+import { useZoomStore } from "@features/Screenshot";
 import {
   useThumbnailsSlice,
-  useZoom,
   useSubmit,
   useThumbnailsCount,
   usePaginate,
@@ -10,7 +10,7 @@ export default function useHandleKeyDown() {
   const { handlePrevious, handleNext } = usePaginate();
   const { currentIndex, clearThumbnailsProcessingData } = useThumbnailsSlice();
   const thumbnailsCount = useThumbnailsCount();
-  const { isVisible: isZoomModalVisible } = useZoom();
+  const { isVisible: isZoomModalVisible } = useZoomStore();
   const handleSubmit = useSubmit();
   return (event: KeyboardEvent) => {
     if (isZoomModalVisible) return;

@@ -3,14 +3,6 @@ import type { ViewType } from "@features/Dashboard";
 import type { PlaylistSlice } from "@features/Playlist";
 import type { SortOrder } from "@shared/api";
 
-// Local type definition to avoid importing from @app/widgets/SidePanel
-export type SidePanelSlice = {
-  isOpen: boolean;
-  toggle: () => void;
-  close: () => void;
-  open: () => void;
-};
-
 export type SlidesData = SlideImage[];
 
 export type SlidesSlice = {
@@ -197,10 +189,7 @@ export type GalleryModalSlice = {
   ytVideoId: string;
   ytChannelId: string;
   onClose: () => void;
-  setGalleryModal: (props: {
-    ytVideoId: string;
-    ytChannelId: string;
-  }) => void;
+  setGalleryModal: (props: { ytVideoId: string; ytChannelId: string }) => void;
   closeGalleryModal: () => void;
 };
 
@@ -211,7 +200,6 @@ export type Store = SlidesSlice &
   RangePickersSlice &
   VideosDashboardSlice &
   VideosRangePickersSlice &
-  SidePanelSlice &
   PlaylistSlice &
   ZoomSlice &
   VideoModalSlice &
