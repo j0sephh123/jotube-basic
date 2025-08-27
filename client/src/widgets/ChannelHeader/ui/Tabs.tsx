@@ -11,18 +11,17 @@ import { useChannelMetadataQuery } from "@entities/Channel";
 import { useGalleryModal } from "@app/providers";
 
 export default function Tabs({ ytChannelId }: { ytChannelId: string }) {
-  const { data: metadata } = useChannelMetadataQuery(ytChannelId);
+  const { data } = useChannelMetadataQuery(ytChannelId);
   const { setGalleryModal } = useGalleryModal();
 
-
-  if (!metadata) return [];
+  if (!data) return [];
 
   const {
     videoArtifactsCount,
     savedArtifactsCount,
     screenshotArtifactsCount,
     storyboardArtifactsCount,
-  } = metadata;
+  } = data;
 
   const uploads = (
     <IconUploads ytChannelId={ytChannelId} count={videoArtifactsCount} />
@@ -41,15 +40,11 @@ export default function Tabs({ ytChannelId }: { ytChannelId: string }) {
 
   const gallery = <IconGallery ytChannelId={ytChannelId} />;
 
-
-
   const handleGalleryClick = () => {
-    setGalleryModal(
-      {
-        ytVideoId: "",
-        ytChannelId: ytChannelId,
-      }
-    );
+    setGalleryModal({
+      ytVideoId: "",
+      ytChannelId: ytChannelId,
+    });
   };
 
   const newGallery = (
