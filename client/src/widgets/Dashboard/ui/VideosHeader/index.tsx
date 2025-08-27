@@ -1,5 +1,5 @@
 import { RotateCcw } from "lucide-react";
-import VideosRangeFilterPopover from "./VideosRangeFilterPopover";
+
 import SelectSortDirection from "./SelectSortDirection";
 import VideosPaginationControl from "./VideosPaginationControl";
 import {
@@ -20,7 +20,7 @@ export default function VideosHeader() {
           <span className="text-sm whitespace-nowrap">
             {data?.total} results
           </span>
-          <VideosRangeFilterPopover />
+
           <Button onClick={handleClearFilters}>
             <RotateCcw className="w-4 h-4" />
             Reset

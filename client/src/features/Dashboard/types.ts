@@ -13,13 +13,9 @@ export type DashboardVideo = DashboardVideoResponse;
 export const videosDefaults: {
   sortOrder: SortOrder;
   page: number;
-  minScreenshots: number;
-  maxScreenshots: number | null;
 } = {
   sortOrder: SortOrderEnum.Desc,
   page: 1,
-  minScreenshots: 0,
-  maxScreenshots: null as number | null,
 };
 
 export type VideosDashboardSlice = {

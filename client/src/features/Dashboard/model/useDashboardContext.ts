@@ -5,10 +5,6 @@ import { create } from "zustand";
 type DashboardRequestBody = {
   sortOrder: "ASC" | "DESC";
   page: number;
-  min: number;
-  max: number | null;
-  defaultMin: number;
-  defaultMax: number | null;
   viewType: string;
 };
 
@@ -22,10 +18,6 @@ const useStore = create<DashboardStore>((set) => ({
   requestBody: {
     sortOrder: "DESC",
     page: 1,
-    min: 0,
-    max: null,
-    defaultMin: 0,
-    defaultMax: null,
     viewType: "saved",
   },
   setRequestBody: (key, value) => {
@@ -66,18 +58,10 @@ export const useDashboardContext = () => {
 
   const handleClearFilters = useCallback(() => {
     const newParams = new URLSearchParams(urlSearchParams);
-    newParams.delete("min");
-    newParams.delete("max");
-    newParams.delete("defaultMin");
-    newParams.delete("defaultMax");
     newParams.set("page", "1");
     setURLSearchParams(newParams);
 
     setRequestBodyBatch({
-      min: 0,
-      max: null,
-      defaultMin: 0,
-      defaultMax: null,
       page: 1,
     });
   }, [urlSearchParams, setURLSearchParams, setRequestBodyBatch]);
@@ -90,34 +74,6 @@ export const useDashboardContext = () => {
       const pageValue = parseInt(params.page, 10);
       if (!isNaN(pageValue) && pageValue > 0) {
         updates.page = pageValue;
-      }
-    }
-
-    if (params.min) {
-      const minValue = parseInt(params.min, 10);
-      if (!isNaN(minValue) && minValue >= 0) {
-        updates.min = minValue;
-      }
-    }
-
-    if (params.max) {
-      const maxValue = parseInt(params.max, 10);
-      if (!isNaN(maxValue) && maxValue > 0) {
-        updates.max = maxValue;
-      }
-    }
-
-    if (params.defaultMin) {
-      const defaultMinValue = parseInt(params.defaultMin, 10);
-      if (!isNaN(defaultMinValue) && defaultMinValue >= 0) {
-        updates.defaultMin = defaultMinValue;
-      }
-    }
-
-    if (params.defaultMax) {
-      const defaultMaxValue = parseInt(params.defaultMax, 10);
-      if (!isNaN(defaultMaxValue) && defaultMaxValue > 0) {
-        updates.defaultMax = defaultMaxValue;
       }
     }
 

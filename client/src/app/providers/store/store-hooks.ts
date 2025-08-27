@@ -6,8 +6,6 @@ import type {
   ThumbnailsProcessingSlice,
   DashboardSlice,
   VideosDashboardSlice,
-  RangePickersSlice,
-  VideosRangePickersSlice,
   VideoModalSlice,
   GalleryModalSlice,
   StoryboardProcessingSlice,
@@ -31,8 +29,7 @@ export const useCarouselScreenshots =
 export const useThumbnailsSlice = makeScopedHook<ThumbnailsProcessingSlice>();
 export const useDashboard = makeScopedHook<DashboardSlice>();
 export const useVideosDashboard = makeScopedHook<VideosDashboardSlice>();
-export const useRangePickers = makeScopedHook<RangePickersSlice>();
-export const useVideosRangePickers = makeScopedHook<VideosRangePickersSlice>();
+
 export const usePlaylist = makeScopedHook<PlaylistSlice>();
 export const useVideoModal = makeScopedHook<VideoModalSlice>();
 export const useStoryboardProcessing =

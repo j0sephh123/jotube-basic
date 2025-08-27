@@ -26,23 +26,11 @@ const useStore = create<VideosDashboardStore>((set) => ({
   },
 }));
 
-type VideosRequestBody =
-  | "sortOrder"
-  | "page"
-  | "minScreenshots"
-  | "maxScreenshots";
+type VideosRequestBody = "sortOrder" | "page";
 
-const URL_PARAMS: readonly VideosRequestBody[] = [
-  "sortOrder",
-  "page",
-  "minScreenshots",
-  "maxScreenshots",
-];
+const URL_PARAMS: readonly VideosRequestBody[] = ["sortOrder", "page"];
 
-const NULLABLE_PARAMS: readonly VideosRequestBody[] = [
-  "minScreenshots",
-  "maxScreenshots",
-];
+const NULLABLE_PARAMS: readonly VideosRequestBody[] = [];
 
 export const useVideosDashboardContext = () => {
   const [urlSearchParams, setURLSearchParams] = useSearchParams();
@@ -144,35 +132,15 @@ export const useVideosDashboardContext = () => {
       }
     }
 
-    if (params.minScreenshots) {
-      const minValue = parseInt(params.minScreenshots, 10);
-      if (!isNaN(minValue) && minValue >= 0) {
-        newRequestBody.minScreenshots = minValue;
-      }
-    }
-
-    if (params.maxScreenshots) {
-      const maxValue = parseInt(params.maxScreenshots, 10);
-      if (!isNaN(maxValue) && maxValue > 0) {
-        newRequestBody.maxScreenshots = maxValue;
-      }
-    }
-
     useStore.setState({ videosRequestBody: newRequestBody });
   }, [urlSearchParams]);
 
   const handleClearFilters = useCallback(() => {
     const newParams = new URLSearchParams(urlSearchParams);
-    newParams.delete("minScreenshots");
-    newParams.delete("maxScreenshots");
-    newParams.delete("defaultMinScreenshots");
-    newParams.delete("defaultMaxScreenshots");
     newParams.set("page", "1");
     setURLSearchParams(newParams);
 
     setVideosRequestBodyBatch({
-      minScreenshots: undefined,
-      maxScreenshots: undefined,
       page: 1,
     });
   }, [urlSearchParams, setURLSearchParams, setVideosRequestBodyBatch]);

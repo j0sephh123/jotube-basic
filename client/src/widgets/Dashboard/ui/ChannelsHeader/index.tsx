@@ -1,6 +1,4 @@
 import {
-  RangeFilterPopover,
-  DefaultsRangeFilterPopover,
   useDashboardContext,
   useChannelsDashboardQuery,
 } from "@features/Dashboard";
@@ -25,8 +23,7 @@ export default function ChannelsHeader() {
   return (
     <div className="flex flex-wrap items-center justify-between gap-4">
       <div className="flex flex-wrap items-center gap-2">
-        <RangeFilterPopover />
-        <DefaultsRangeFilterPopover />
+
         <ViewTypeToggle />
         <PaginationControl total={data?.total || 0} />
       </div>

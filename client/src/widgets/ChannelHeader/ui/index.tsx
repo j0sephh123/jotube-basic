@@ -20,10 +20,9 @@ import { ViewStoryboards } from "@widgets/Storyboard";
 
 type Props = {
   openPlaylistModal: (ytId: string) => void;
-  onResetRangeFilters: () => void;
 };
 
-const ChannelHeader = ({ openPlaylistModal, onResetRangeFilters }: Props) => {
+const ChannelHeader = ({ openPlaylistModal }: Props) => {
   const ytChannelId = useTypedChannelYtId();
   const { pathname } = useLocation();
 
@@ -106,7 +105,6 @@ const ChannelHeader = ({ openPlaylistModal, onResetRangeFilters }: Props) => {
                     />
                   </>
                 }
-                onResetRangeFilters={onResetRangeFilters}
               />
             </>
           }

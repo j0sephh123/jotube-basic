@@ -27,34 +27,13 @@ export const useStore = create<StoreType>()((set, _get) => ({
     viewType: ViewType.SAVED,
   },
   setRequestBody: () => {},
-  rangePickers: {
-    processed: {
-      values: [],
-      min: 0,
-      max: 0,
-      stepSize: 0,
-    },
-    defaults: {
-      values: [],
-      min: 0,
-      max: 0,
-      stepSize: 0,
-    },
-  },
-  setRangePicker: () => {},
-  updateRangePickerValues: () => {},
-  getRangePicker: () => undefined,
+
   videosRequestBody: {
     sortOrder: SortOrder.Desc,
     page: 1,
-    minScreenshots: 0,
-    maxScreenshots: null,
   },
   setVideosRequestBody: () => {},
-  videosRangePickers: {},
-  setVideosRangePicker: () => {},
-  updateVideosRangePickerValues: () => {},
-  getVideosRangePicker: () => undefined,
+
   playlists: [],
   setPlaylists: () => {},
   addPlaylist: () => {},

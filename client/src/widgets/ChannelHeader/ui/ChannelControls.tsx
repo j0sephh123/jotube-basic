@@ -4,15 +4,10 @@ import { Button } from "@shared/ui";
 
 type Props = {
   leftSlot: React.ReactNode;
-  onResetRangeFilters: () => void;
   areControlsDisabled: boolean;
 };
 
-const ChannelControls = ({
-  leftSlot,
-  onResetRangeFilters,
-  areControlsDisabled,
-}: Props) => {
+const ChannelControls = ({ leftSlot, areControlsDisabled }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const sortOrder = (searchParams.get("sort") || "DESC") as "ASC" | "DESC";
 
@@ -31,16 +26,6 @@ const ChannelControls = ({
         <Button onClick={toggleSort} disabled={areControlsDisabled}>
           Sort:
           {sortOrder === "ASC" ? "↑ Oldest first" : "↓ Newest first"}
-        </Button>
-        <Button
-          color="neutral"
-          variant="ghost"
-          size="sm"
-          onClick={onResetRangeFilters}
-          title="Reset range filters"
-          disabled={areControlsDisabled}
-        >
-          <RotateCcw className="w-4 h-4" />
         </Button>
       </div>
     </div>

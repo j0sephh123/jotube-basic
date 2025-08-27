@@ -77,85 +77,28 @@ export type DashboardSlice = {
   ) => void;
 };
 
-export enum RangePickerTypes {
-  PROCESSED = "processed",
-  DEFAULTS = "defaults",
-}
 
-export type RangePickerConfig = {
-  values: ReadonlyArray<number>;
-  min: number;
-  max: number;
-  stepSize: number;
-};
-
-export type RangePickersSlice = {
-  rangePickers: Record<RangePickerTypes, RangePickerConfig>;
-  setRangePicker: (key: RangePickerTypes, config: RangePickerConfig) => void;
-  updateRangePickerValues: (
-    key: RangePickerTypes,
-    values: ReadonlyArray<number>
-  ) => void;
-  getRangePicker: (key: RangePickerTypes) => RangePickerConfig | undefined;
-};
 
 export type VideosDashboardSlice = {
   videosRequestBody: {
     sortOrder: SortOrder;
     page: number;
-    minScreenshots: number;
-    maxScreenshots: number | null;
   };
   setVideosRequestBody: <
     K extends keyof {
       sortOrder: SortOrder;
       page: number;
-      minScreenshots: number;
-      maxScreenshots: number | null;
     }
   >(
     key: K,
     value: {
       sortOrder: SortOrder;
       page: number;
-      minScreenshots: number;
-      maxScreenshots: number | null;
     }[K]
   ) => void;
 };
 
-export type VideosRangePickersSlice = {
-  videosRangePickers: Record<
-    string,
-    {
-      values: ReadonlyArray<number>;
-      min: number;
-      max: number;
-      stepSize: number;
-    }
-  >;
-  setVideosRangePicker: (
-    key: string,
-    config: {
-      values: ReadonlyArray<number>;
-      min: number;
-      max: number;
-      stepSize: number;
-    }
-  ) => void;
-  updateVideosRangePickerValues: (
-    key: string,
-    values: ReadonlyArray<number>
-  ) => void;
-  getVideosRangePicker: (key: string) =>
-    | {
-        values: ReadonlyArray<number>;
-        min: number;
-        max: number;
-        stepSize: number;
-      }
-    | undefined;
-};
+
 
 export type ZoomSlice = {
   isVisible: boolean;
@@ -195,9 +138,7 @@ export type Store = CarouselScreenshotsSlice &
   ThumbnailsProcessingSlice &
   StoryboardProcessingSlice &
   DashboardSlice &
-  RangePickersSlice &
   VideosDashboardSlice &
-  VideosRangePickersSlice &
   PlaylistSlice &
   ZoomSlice &
   VideoModalSlice &
