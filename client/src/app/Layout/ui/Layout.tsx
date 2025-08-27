@@ -11,11 +11,11 @@ import { StoryboardProcessing } from "@features/Storyboard";
 import CreateChannel from "@widgets/CreateChannel";
 import { Navbar } from "@widgets/Navbar";
 import { AddChannelToPlaylistModal } from "@widgets/PlaylistAddChannel";
-import { useZoomStore } from "@features/Screenshot";
+import { useZoom } from "@features/Screenshot";
 import { useVideoModal } from "@app/index";
 
 export default function Layout(): JSX.Element {
-  const { isVisible, url, onClose } = useZoomStore();
+  const { isVisible, url, onClose } = useZoom();
   const { isVideoModalVisible, videoId, embedUrl, startTime, closeVideoModal } =
     useVideoModal();
   const { metadata } = useThumbnailsSlice();

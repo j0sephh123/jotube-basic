@@ -11,6 +11,7 @@ import type {
   VideoModalSlice,
   GalleryModalSlice,
   StoryboardProcessingSlice,
+  ZoomSlice,
 } from "./store-types";
 
 function makeScopedHook<Slice>() {
@@ -37,3 +38,4 @@ export const useVideoModal = makeScopedHook<VideoModalSlice>();
 export const useStoryboardProcessing =
   makeScopedHook<StoryboardProcessingSlice>();
 export const useGalleryModal = makeScopedHook<GalleryModalSlice>();
+export const useZoom = makeScopedHook<ZoomSlice>();

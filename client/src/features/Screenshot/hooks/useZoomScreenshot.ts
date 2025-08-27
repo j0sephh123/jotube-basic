@@ -1,9 +1,9 @@
 import { useCallback } from "react";
 import { type ChannelScreenshot } from "./useFetchChannelScreenshots";
-import { useZoomStore } from "./useZoomStore";
+import { useZoom } from "@app/providers/store/store-hooks";
 
 export function useZoomScreenshot() {
-  const { setZoom, closeZoom } = useZoomStore();
+  const { setZoom, closeZoom } = useZoom();
 
   return useCallback(
     (screenshot: ChannelScreenshot) => {

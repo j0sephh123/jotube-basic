@@ -6,7 +6,7 @@ export {
 } from "./hooks/useFetchChannelScreenshots";
 export { useDeleteChannelScreenshot } from "./hooks/useDeleteChannelScreenshot";
 export { useUpdateChannelScreenshot } from "./hooks/useUpdateChannelScreenshot";
-export { useZoomStore } from "./hooks/useZoomStore";
+export { useZoom } from "@app/providers/store/store-hooks";
 export { useCarouselScreenshots } from "./hooks/useCarouselScreenshots";
 export type { ChannelScreenshot } from "./hooks/useFetchChannelScreenshots";
 export { useSetFeaturedScreenshot } from "./hooks/useSetFeaturedScreenshot";

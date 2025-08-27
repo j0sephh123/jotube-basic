@@ -1,12 +1,16 @@
-import { useThumbnailsSlice,   } from "@features/Thumbnails";
-import { useThumbnailsCount, usePaginate, useSubmit } from "@features/Thumbnails";
-import { useZoomStore } from "@features/Screenshot";
+import { useThumbnailsSlice } from "@features/Thumbnails";
+import {
+  useThumbnailsCount,
+  usePaginate,
+  useSubmit,
+} from "@features/Thumbnails";
+import { useZoom } from "@features/Screenshot";
 
 export default function useHandleContainerWheel() {
   const { handlePrevious, handleNext } = usePaginate();
   const { currentIndex } = useThumbnailsSlice();
   const thumbnailsCount = useThumbnailsCount();
-  const { isVisible: isZoomModalVisible } = useZoomStore();
+  const { isVisible: isZoomModalVisible } = useZoom();
   const handleSubmit = useSubmit();
   return (event: WheelEvent) => {
     if (isZoomModalVisible) return;
