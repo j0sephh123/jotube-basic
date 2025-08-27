@@ -6,10 +6,6 @@ type DashboardStore = {
   requestBody: {
     sortOrder: "ASC" | "DESC";
     page: number;
-    min: number;
-    max: number | null;
-    defaultMin: number;
-    defaultMax: number | null;
     viewType: string;
   };
   setRequestBody: (key: string, value: unknown) => void;
@@ -19,10 +15,6 @@ const useStore = create<DashboardStore>((set) => ({
   requestBody: {
     sortOrder: "DESC",
     page: 1,
-    min: 0,
-    max: null,
-    defaultMin: 0,
-    defaultMax: null,
     viewType: "saved",
   },
   setRequestBody: (key, value) => {
