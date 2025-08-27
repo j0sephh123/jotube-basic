@@ -5,56 +5,7 @@ import { createVideoModalSlice } from "./video-modal-slice";
 import { createGalleryModalSlice } from "./gallery-modal-slice";
 import type { Store as StoreType } from "./store-types";
 import { createCarouselScreenshotsSlice } from "./screenshots-for-carousel-slice";
-
-// Local thumbnails slice implementation
-const createThumbnailsSlice = (
-  set: (fn: (state: StoreType) => Partial<StoreType>) => void
-) => ({
-  metadata: { ytChannelId: "", ytVideoId: "" },
-  thumbnailsProcessingData: [],
-  setThumbnailsProcessingData: (
-    data: { ytChannelId: string; ytVideoId: string }[]
-  ) =>
-    set(() => {
-      if (data.length > 0 && data[0]) {
-        return {
-          thumbnailsProcessingData: data,
-          metadata: {
-            ytChannelId: data[0].ytChannelId,
-            ytVideoId: data[0].ytVideoId,
-          },
-        };
-      }
-      return {
-        thumbnailsProcessingData: [],
-        metadata: { ytChannelId: "", ytVideoId: "" },
-      };
-    }),
-  clearThumbnailsProcessingData: () =>
-    set(() => ({
-      thumbnailsProcessingData: [],
-      metadata: { ytChannelId: "", ytVideoId: "" },
-    })),
-  selectedImages: [],
-  setSelectedImages: (arg: number[] | ((prev: number[]) => number[])) =>
-    set((state) => ({
-      selectedImages:
-        typeof arg === "function" ? arg(state.selectedImages) : arg,
-    })),
-  toggleSelectedImage: (index: number, batch: number) =>
-    set((state) => {
-      const imageIndex = batch * 40 + index + 1;
-      return {
-        selectedImages: state.selectedImages.includes(imageIndex)
-          ? state.selectedImages.filter((i) => i !== imageIndex)
-          : [...state.selectedImages, imageIndex],
-      };
-    }),
-  currentIndex: 0,
-  setCurrentIndex: (index: number) => set(() => ({ currentIndex: index })),
-});
-
-// Local slides slice implementation
+import { createThumbnailsSlice } from "./thumbnails-slice";
 
 export const useStore = create<StoreType>()(
   (set, _get) =>
@@ -64,10 +15,6 @@ export const useStore = create<StoreType>()(
       ...createGalleryModalSlice(set),
       ...createThumbnailsSlice(set),
       ...createCarouselScreenshotsSlice(set),
-      isOpen: false,
-      toggle: () => set((state: StoreType) => ({ isOpen: !state.isOpen })),
-      close: () => set({ isOpen: false }),
-      open: () => set({ isOpen: true }),
       storyboardProcessingData: [],
       setStoryboardProcessingData: () => {},
       clearStoryboardProcessingData: () => {},

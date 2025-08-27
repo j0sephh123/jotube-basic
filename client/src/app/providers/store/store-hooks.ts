@@ -25,7 +25,8 @@ function makeScopedHook<Slice>() {
   return useScoped;
 }
 
-export const useCarouselScreenshots = makeScopedHook<CarouselScreenshotsSlice>();
+export const useCarouselScreenshots =
+  makeScopedHook<CarouselScreenshotsSlice>();
 export const useThumbnailsSlice = makeScopedHook<ThumbnailsProcessingSlice>();
 export const useDashboard = makeScopedHook<DashboardSlice>();
 export const useVideosDashboard = makeScopedHook<VideosDashboardSlice>();
