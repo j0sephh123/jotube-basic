@@ -7,17 +7,27 @@ export function GalleryVirtualised<T extends WithSrc>({
   items,
   ItemComponent,
   itemsPerRow = 4,
-  rowHeight = 200,
   onScrollProgress,
   className,
 }: GalleryProps<T>) {
   return (
     <div className={clsx("w-full h-[78vh]", className)}>
       <AutoSizer>
-        {(size: { width: number; height: number }) => {
-          const { width, height } = size;
+        {({ width, height }: { width: number; height: number }) => {
           const colCount = Math.max(1, itemsPerRow);
           const colWidth = Math.floor(width / colCount);
+
+          // Tailwind p-2 = 8px each side
+          const gutter = 8;
+          const horizontalPad = gutter * 2;
+          const verticalPad = gutter * 2;
+
+          // 16:9 aspect box inside the padded cell
+          const aspect = 16 / 9;
+          const innerWidth = Math.max(0, colWidth - horizontalPad);
+          const contentHeight = Math.ceil(innerWidth / aspect);
+          const computedRowHeight = contentHeight + verticalPad;
+
           const rowCount = Math.ceil(items.length / colCount);
 
           const cell = ({
@@ -43,11 +53,11 @@ export function GalleryVirtualised<T extends WithSrc>({
               columnCount={colCount}
               columnWidth={colWidth}
               rowCount={rowCount}
-              rowHeight={rowHeight}
+              rowHeight={computedRowHeight}
               overscanRowCount={3}
               cellRenderer={cell}
               onScroll={({ scrollTop }) => {
-                const totalHeight = rowCount * rowHeight;
+                const totalHeight = rowCount * computedRowHeight;
                 const scrollProgress = Math.min(scrollTop / totalHeight, 1);
                 onScrollProgress?.(scrollProgress);
               }}

@@ -69,6 +69,15 @@ export default function Header({
             onClick={() =>
               handleGetScreenshots(channels.map((channel) => channel.ytId))
             }
+            title="Gallery"
+            value={totalCounts.screenshotCount}
+            className="text-primary"
+            wrapperClassName="bg-primary/10"
+          />
+          <SmallCard
+            onClick={() =>
+              handleGetScreenshots(channels.map((channel) => channel.ytId))
+            }
             title="Screenshots"
             value={totalCounts.screenshotCount}
             className="text-warning"
