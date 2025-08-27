@@ -14,7 +14,7 @@ export class ThumbnailsResolver {
   async getScreenshots(
     @Args('input') input: GetScreenshotsInput,
   ): Promise<GetScreenshotsResponse[]> {
-    return this.thumbnailsApiService.getScreenshots(input.ytChannelIds || []);
+    return this.thumbnailsApiService.getScreenshots(input.ytChannelIds);
   }
 
   @Query(() => [UploadsWithThumbnailsResponse])
