@@ -9,9 +9,7 @@ export { useDashboardContext } from "./model/useDashboardContext";
 export { useVideosDashboardContext } from "./model/useVideosDashboardContext";
 export { createDashboardSlice } from "./model/dashboard-slice";
 export { createVideosDashboardSlice } from "./model/videos-dashboard-slice";
-
 export { useVideosDashboard } from "./hooks/useVideosDashboard";
-export { useSidePanel } from "./hooks/useSidePanel";
 export { useDashboardStore } from "./hooks/useDashboardStore";
 export {
   useChannelsDashboardQuery,

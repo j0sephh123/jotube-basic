@@ -1,7 +1,6 @@
 export { default as VideosDashboard } from "./ui/VideosDashboard";
 export { default as VideosDashboardContainer } from "./ui/VideosDashboardContainer";
 export { default as VideoChannelInfo } from "./ui/VideoChannelInfo";
-export { default as ScreenshotCountButton } from "./ui/ScreenshotCountButton";
 export { default as ViewTypeToggle } from "./ui/ViewTypeToggle";
 export { default as DashboardWrapper } from "./ui/DashboardWrapper";
 export { default as ChannelsDashboard } from "./ui/ChannelsDashboard";
