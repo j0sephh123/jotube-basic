@@ -220,6 +220,25 @@ type PlaylistResponse {
   updatedAt: String!
 }
 
+input PlaylistUploadsListInput {
+  playlistId: Int!
+  uploadsType: String!
+}
+
+type PlaylistUploadsListResponse {
+  uploads: [PlaylistUploadsListUploadResponse!]!
+}
+
+type PlaylistUploadsListUploadResponse {
+  channelTitle: String!
+  id: Int!
+  publishedAt: String!
+  src: String!
+  title: String!
+  ytChannelId: String!
+  ytId: String!
+}
+
 type Query {
   channelForPlaylist(ytChannelId: String!): ChannelForPlaylistResponse!
   channelMetadata(ytChannelId: String!): ChannelMetadataResponse!
@@ -228,6 +247,7 @@ type Query {
   fetchVideosDashboard(page: Float, screenshotMax: Float, screenshotMin: Float, sortOrder: String): VideosDashboardResponse!
   getSlides(input: GetSlidesInput!): [GetSlidesResponse!]!
   playlistDetails(id: Int!): PlaylistDetailsResponse
+  playlistUploadsList(playlistUploadsListInput: PlaylistUploadsListInput!): PlaylistUploadsListResponse!
   playlists: [PlaylistResponse!]!
   screenshots: [ScreenshotsCountsResponse!]!
   screenshotsByVideo(ytVideoId: String!): [VideoScreenshotResponse!]!

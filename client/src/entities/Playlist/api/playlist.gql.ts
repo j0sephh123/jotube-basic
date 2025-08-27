@@ -93,3 +93,19 @@ export const UPDATE_CHANNEL_PLAYLIST = gql`
     }
   }
 `;
+
+export const GET_PLAYLIST_UPLOADS_LIST = gql`
+  query GetPlaylistUploadsList($playlistUploadsListInput: PlaylistUploadsListInput!) {
+    playlistUploadsList(playlistUploadsListInput: $playlistUploadsListInput) {
+      uploads {
+        id
+        ytId
+        title
+        publishedAt
+        channelTitle
+        ytChannelId
+        src
+      }
+    }
+  }
+`;

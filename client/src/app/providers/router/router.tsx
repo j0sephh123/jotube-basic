@@ -14,6 +14,8 @@ import { PlaylistDetailsPage } from "@pages/playlist-details";
 import { NotFound } from "@shared/ui";
 import { GalleryLayout } from "@features/Gallery";
 import { UploadsDecorator } from "@features/Upload";
+import { PlaylistUploadsListPage } from "@pages/playlistUploadsList";
+import { PlaylistWrapper } from "@widgets/PlaylistWrapper";
 
 export default function Router() {
   return (
@@ -47,8 +49,14 @@ export default function Router() {
             path="/screenshots/:month/:date"
             element={<ScreenshotsByDatePage />}
           />
-          <Route path="/playlists" element={<PlaylistsPage />} />
-          <Route path="/playlists/:id" element={<PlaylistDetailsPage />} />
+          <Route path="/playlists" element={<PlaylistWrapper />}>
+            <Route index element={<PlaylistsPage />} />
+            <Route path=":id" element={<PlaylistDetailsPage />} />
+            <Route
+              path=":id/uploads/:uploadsType"
+              element={<PlaylistUploadsListPage />}
+            />
+          </Route>
           <Route path="/image-navigator" element={<ImageNavigatorPage />} />
           <Route
             path="/thumbnails"

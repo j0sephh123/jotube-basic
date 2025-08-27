@@ -4,6 +4,9 @@ import { CreatePlaylistDto } from './dtos/create-playlist.dto';
 import { UpdatePlaylistDto } from './dtos/update-playlist.dto';
 import { UpdateChannelPlaylistDto } from './dtos/update-channel-playlist.dto';
 import { PlaylistDetailsResponse } from './dtos/playlist.response';
+import { PlaylistUploadsListInput } from './dtos/playlist-uploads-list.input';
+import { PlaylistUploadsListResponse } from './dtos/playlist-uploads-list.response';
+import { ArtifactType } from '@prisma/client';
 
 @Injectable()
 export class PlaylistService {
@@ -162,5 +165,70 @@ export class PlaylistService {
     });
 
     return channel;
+  }
+
+  async playlistUploadsList(
+    body: PlaylistUploadsListInput,
+  ): Promise<PlaylistUploadsListResponse> {
+    const whereQuery = () => {
+      if (body.uploadsType === 'default') {
+        return {
+          artifact: ArtifactType.VIDEO,
+        };
+      }
+
+      if (body.uploadsType === 'saved') {
+        return {
+          artifact: {
+            in: [ArtifactType.SAVED, ArtifactType.DOWNLOADED],
+          },
+        };
+      }
+
+      throw new Error('Invalid type');
+    };
+
+    const channels = await this.prismaService.channel.findMany({
+      where: {
+        playlistId: body.playlistId,
+      },
+    });
+
+    const uploads = await this.prismaService.uploadsVideo.findMany({
+      where: {
+        channelId: { in: channels.map((channel) => channel.id) },
+        ...whereQuery(),
+      },
+      orderBy: {
+        publishedAt: 'desc',
+      },
+      select: {
+        id: true,
+        ytId: true,
+        title: true,
+        publishedAt: true,
+        src: true,
+        channel: {
+          select: {
+            title: true,
+            ytId: true,
+          },
+        },
+      },
+      take: 50,
+      skip: 0,
+    });
+
+    return {
+      uploads: uploads.map((upload) => ({
+        id: upload.id,
+        ytId: upload.ytId,
+        title: upload.title,
+        publishedAt: upload.publishedAt,
+        channelTitle: upload.channel.title,
+        ytChannelId: upload.channel.ytId,
+        src: upload.src,
+      })),
+    };
   }
 }

@@ -1,11 +1,16 @@
-import { useGetPlaylists, useCreatePlaylist, usePlaylist } from "@features/Playlist";
+import {
+  useGetPlaylists,
+  useCreatePlaylist,
+  usePlaylist,
+} from "@features/Playlist";
 import { PlaylistCard } from "@entities/Playlist";
 import { CreatePlaylist, CreatePlaylistModal } from "@widgets/CreatePlaylist";
-import { ErrorMessage, Loading } from "@shared/ui";
+import { StaticStates } from "@shared/ui";
 
 export const PlaylistsPage = () => {
   const { isModalOpen, closePlaylistModal } = usePlaylist();
-  const { data: playlists, loading, error } = useGetPlaylists();
+  const { data, loading, error } = useGetPlaylists();
+  console.log(data)
   const createPlaylist = useCreatePlaylist();
 
   const handleCreatePlaylist = (name: string) => {
@@ -19,33 +24,20 @@ export const PlaylistsPage = () => {
     });
   };
 
-  if (loading) return <Loading />;
-  if (error) return <ErrorMessage message="Error loading playlists" />;
-  if (!playlists || playlists.length === 0)
-    return (
-      <div className="text-center py-12">
-        <p className="text-gray-500 text-lg">
-          No playlists yet. Create your first one!
-        </p>
-      </div>
-    );
-
   return (
-    <div className="container mx-auto p-6 mt-16">
-      <CreatePlaylist />
-
+    <StaticStates isLoading={loading} isError={!!error} isEmpty={!data}>
+      <CreatePlaylist onCreatePlaylist={() => undefined} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {playlists.map((playlist) => (
+        {data?.map((playlist) => (
           <PlaylistCard key={playlist.id} playlist={playlist} />
         ))}
       </div>
-
       <CreatePlaylistModal
         isOpen={isModalOpen}
         onClose={closePlaylistModal}
         onSubmit={handleCreatePlaylist}
         isLoading={createPlaylist.isPending}
       />
-    </div>
+    </StaticStates>
   );
 };

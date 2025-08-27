@@ -13,6 +13,8 @@ import {
   DeletePlaylistResponse,
   UpdateChannelPlaylistResponse,
 } from './dtos/playlist.response';
+import { PlaylistUploadsListResponse } from './dtos/playlist-uploads-list.response';
+import { PlaylistUploadsListInput } from './dtos/playlist-uploads-list.input';
 
 @Resolver()
 export class PlaylistResolver {
@@ -50,6 +52,14 @@ export class PlaylistResolver {
     } catch {
       return null;
     }
+  }
+
+  @Query(() => PlaylistUploadsListResponse)
+  async playlistUploadsList(
+    @Args('playlistUploadsListInput')
+    playlistUploadsListInput: PlaylistUploadsListInput,
+  ): Promise<PlaylistUploadsListResponse> {
+    return this.playlistService.playlistUploadsList(playlistUploadsListInput);
   }
 
   @Mutation(() => UpdatePlaylistResponse)

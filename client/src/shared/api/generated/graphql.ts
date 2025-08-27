@@ -319,6 +319,27 @@ export type PlaylistResponse = {
   updatedAt: Scalars['String']['output'];
 };
 
+export type PlaylistUploadsListInput = {
+  playlistId: Scalars['Int']['input'];
+  uploadsType: Scalars['String']['input'];
+};
+
+export type PlaylistUploadsListResponse = {
+  __typename?: 'PlaylistUploadsListResponse';
+  uploads: Array<PlaylistUploadsListUploadResponse>;
+};
+
+export type PlaylistUploadsListUploadResponse = {
+  __typename?: 'PlaylistUploadsListUploadResponse';
+  channelTitle: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  publishedAt: Scalars['String']['output'];
+  src: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  ytChannelId: Scalars['String']['output'];
+  ytId: Scalars['String']['output'];
+};
+
 export type Query = {
   __typename?: 'Query';
   channelForPlaylist: ChannelForPlaylistResponse;
@@ -328,6 +349,7 @@ export type Query = {
   fetchVideosDashboard: VideosDashboardResponse;
   getSlides: Array<GetSlidesResponse>;
   playlistDetails?: Maybe<PlaylistDetailsResponse>;
+  playlistUploadsList: PlaylistUploadsListResponse;
   playlists: Array<PlaylistResponse>;
   screenshots: Array<ScreenshotsCountsResponse>;
   screenshotsByVideo: Array<VideoScreenshotResponse>;
@@ -377,6 +399,11 @@ export type QueryGetSlidesArgs = {
 
 export type QueryPlaylistDetailsArgs = {
   id: Scalars['Int']['input'];
+};
+
+
+export type QueryPlaylistUploadsListArgs = {
+  playlistUploadsListInput: PlaylistUploadsListInput;
 };
 
 
@@ -741,6 +768,13 @@ export type UpdateChannelPlaylistMutationVariables = Exact<{
 
 
 export type UpdateChannelPlaylistMutation = { __typename?: 'Mutation', updateChannelPlaylist: { __typename?: 'UpdateChannelPlaylistResponse', id: number, title: string, ytId: string, src: string, videoCount: number, playlistId?: number | null } };
+
+export type GetPlaylistUploadsListQueryVariables = Exact<{
+  playlistUploadsListInput: PlaylistUploadsListInput;
+}>;
+
+
+export type GetPlaylistUploadsListQuery = { __typename?: 'Query', playlistUploadsList: { __typename?: 'PlaylistUploadsListResponse', uploads: Array<{ __typename?: 'PlaylistUploadsListUploadResponse', id: number, ytId: string, title: string, publishedAt: string, channelTitle: string, ytChannelId: string, src: string }> } };
 
 export type GetSlidesQueryVariables = Exact<{
   input: GetSlidesInput;
@@ -1332,6 +1366,54 @@ export function useUpdateChannelPlaylistMutation(baseOptions?: Apollo.MutationHo
 export type UpdateChannelPlaylistMutationHookResult = ReturnType<typeof useUpdateChannelPlaylistMutation>;
 export type UpdateChannelPlaylistMutationResult = Apollo.MutationResult<UpdateChannelPlaylistMutation>;
 export type UpdateChannelPlaylistMutationOptions = Apollo.BaseMutationOptions<UpdateChannelPlaylistMutation, UpdateChannelPlaylistMutationVariables>;
+export const GetPlaylistUploadsListDocument = gql`
+    query GetPlaylistUploadsList($playlistUploadsListInput: PlaylistUploadsListInput!) {
+  playlistUploadsList(playlistUploadsListInput: $playlistUploadsListInput) {
+    uploads {
+      id
+      ytId
+      title
+      publishedAt
+      channelTitle
+      ytChannelId
+      src
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetPlaylistUploadsListQuery__
+ *
+ * To run a query within a React component, call `useGetPlaylistUploadsListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPlaylistUploadsListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPlaylistUploadsListQuery({
+ *   variables: {
+ *      playlistUploadsListInput: // value for 'playlistUploadsListInput'
+ *   },
+ * });
+ */
+export function useGetPlaylistUploadsListQuery(baseOptions: Apollo.QueryHookOptions<GetPlaylistUploadsListQuery, GetPlaylistUploadsListQueryVariables> & ({ variables: GetPlaylistUploadsListQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPlaylistUploadsListQuery, GetPlaylistUploadsListQueryVariables>(GetPlaylistUploadsListDocument, options);
+      }
+export function useGetPlaylistUploadsListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlaylistUploadsListQuery, GetPlaylistUploadsListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPlaylistUploadsListQuery, GetPlaylistUploadsListQueryVariables>(GetPlaylistUploadsListDocument, options);
+        }
+export function useGetPlaylistUploadsListSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetPlaylistUploadsListQuery, GetPlaylistUploadsListQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetPlaylistUploadsListQuery, GetPlaylistUploadsListQueryVariables>(GetPlaylistUploadsListDocument, options);
+        }
+export type GetPlaylistUploadsListQueryHookResult = ReturnType<typeof useGetPlaylistUploadsListQuery>;
+export type GetPlaylistUploadsListLazyQueryHookResult = ReturnType<typeof useGetPlaylistUploadsListLazyQuery>;
+export type GetPlaylistUploadsListSuspenseQueryHookResult = ReturnType<typeof useGetPlaylistUploadsListSuspenseQuery>;
+export type GetPlaylistUploadsListQueryResult = Apollo.QueryResult<GetPlaylistUploadsListQuery, GetPlaylistUploadsListQueryVariables>;
 export const GetSlidesDocument = gql`
     query GetSlides($input: GetSlidesInput!) {
   getSlides(input: $input) {

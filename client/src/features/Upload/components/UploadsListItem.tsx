@@ -8,48 +8,57 @@ import {
 } from "@features/Upload";
 import { type UploadsListQuery } from "@shared/api";
 import { Card } from "@shared/ui";
+import { ReactNode } from "react";
 
 type Props = {
-  upload: UploadsListQuery["uploadsList"]["uploads"][0];
+  upload: Pick<
+    UploadsListQuery["uploadsList"]["uploads"][0],
+    "id" | "ytId" | "title" | "publishedAt" | "duration" | "src"
+  >;
   ytChannelId: string;
   type: "default" | "saved";
   handleSideEffect: () => void;
+  channelTitleSlot: ReactNode;
 };
 
 export function UploadsListItem({
-  upload,
+  upload: { id, ytId, title, publishedAt, duration, src },
   ytChannelId,
   type,
   handleSideEffect,
+  channelTitleSlot,
 }: Props) {
   return (
     <Card.Container>
       <div className="relative group">
         <VideoPlayer
-          ytId={upload.ytId}
-          src={upload.src}
-          id={upload.id}
-          title={upload.title}
-          duration={upload.duration}
+          ytId={ytId}
+          src={src}
+          id={id}
+          title={title}
+          duration={duration}
         />
         <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
-          <Card.Menu id={upload.id} ytId={upload.ytId} />
+          <Card.Menu id={id} ytId={ytId} />
         </div>
       </div>
       <Card.Content>
-        <Card.Title title={upload.title} onClick={() => {}} />
-        <PublishedTimeAgo date={upload.publishedAt} />
+        <Card.Title title={title} onClick={() => {}} />
+        <div className="flex justify-between gap-4 items-center">
+          {channelTitleSlot}
+          <PublishedTimeAgo date={publishedAt} />
+        </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             {type === "default" ? (
               <>
                 <SaveUpload
-                  ytVideoId={upload.ytId}
+                  ytVideoId={ytId}
                   ytChannelId={ytChannelId}
                   handleSideEffect={handleSideEffect}
                 />
                 <DownloadStoryboard
-                  ytVideoId={upload.ytId}
+                  ytVideoId={ytId}
                   ytChannelId={ytChannelId}
                   handleSideEffect={handleSideEffect}
                 />
@@ -58,13 +67,13 @@ export function UploadsListItem({
               <DownloadUpload
                 ytChannelId={ytChannelId}
                 handleSideEffect={handleSideEffect}
-                ytVideoId={upload.ytId}
+                ytVideoId={ytId}
               />
             )}
             <DeleteUpload
               handleSideEffect={handleSideEffect}
               ytChannelId={ytChannelId}
-              ytVideoIds={[upload.ytId]}
+              ytVideoIds={[ytId]}
             />
           </div>
         </div>

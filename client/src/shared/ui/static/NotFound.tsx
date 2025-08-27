@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { HomeIcon, ArrowLeftIcon } from "lucide-react";
-import { routes } from "@shared/routes";
+import { HomeIcon } from "lucide-react";
+import { GoBack } from "../GoBack";
 
 export default function NotFound() {
   return (
@@ -18,19 +18,13 @@ export default function NotFound() {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link to={routes.dashboard("saved")}>
+          <Link to={`/dashboard/channels/saved`}>
             <button className="btn btn-primary">
               <HomeIcon className="w-4 h-4 mr-2" />
               Go to Dashboard
             </button>
           </Link>
-          <button
-            onClick={() => window.history.back()}
-            className="btn btn-outline"
-          >
-            <ArrowLeftIcon className="w-4 h-4 mr-2" />
-            Go Back
-          </button>
+          <GoBack to={`/dashboard/channels/saved`} />
         </div>
       </div>
     </div>
