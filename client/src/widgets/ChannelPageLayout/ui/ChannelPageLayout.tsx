@@ -14,18 +14,16 @@ export default function ChannelPageLayout() {
         openPlaylistModal={() => {}}
         onResetRangeFilters={() => {}}
       />
-      <div className="overflow-hidden">
-        <div className="flex h-[85vh]">
-          <div className="flex-1">
-            <div
-              className={clsx(
-                !isNewGallery &&
-                  !isGallery &&
-                  "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 p-2"
-              )}
-            >
-              <Outlet />
-            </div>
+      <div className="flex h-[85vh]">
+        <div className="flex-1">
+          <div
+            className={clsx(
+              !isNewGallery &&
+                !isGallery &&
+                "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 p-2"
+            )}
+          >
+            <Outlet />
           </div>
         </div>
       </div>

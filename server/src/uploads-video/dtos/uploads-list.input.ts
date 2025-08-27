@@ -1,5 +1,5 @@
-import { InputType, Field, registerEnumType } from '@nestjs/graphql';
-import { IsString, IsEnum } from 'class-validator';
+import { InputType, Field, registerEnumType, Int } from '@nestjs/graphql';
+import { IsString, IsEnum, IsInt } from 'class-validator';
 
 export enum SortOrder {
   ASC = 'ASC',
@@ -24,4 +24,8 @@ export class UploadsListInput {
   @Field(() => String)
   @IsString()
   type: string;
+
+  @Field(() => Int)
+  @IsInt()
+  take: number;
 }

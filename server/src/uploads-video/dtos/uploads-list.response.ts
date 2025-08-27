@@ -37,6 +37,12 @@ export class UploadsListUploadResponse {
 }
 
 @ObjectType()
+export class UploadsListMetadata {
+  @Field(() => Int)
+  take: number;
+}
+
+@ObjectType()
 export class UploadsListResponse {
   @Field(() => Int)
   id: number;
@@ -70,4 +76,7 @@ export class UploadsListResponse {
 
   @Field(() => [UploadsListUploadResponse])
   uploads: UploadsListUploadResponse[];
+
+  @Field(() => UploadsListMetadata)
+  metadata: UploadsListMetadata;
 }

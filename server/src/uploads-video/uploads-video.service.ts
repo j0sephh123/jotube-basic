@@ -15,6 +15,8 @@ import { syncUploadsDto } from 'src/uploads-video/dtos/sync-uploads.dto';
 import { cleanShortUploadsDto } from 'src/uploads-video/dtos/clean-short-uploads.dto';
 import { ArtifactType } from '@prisma/client';
 import { SortOrder } from './dtos/uploads-list.input';
+import { UploadsListResponse } from './dtos/uploads-list.response';
+import { UploadsListInput } from './dtos/uploads-list.input';
 
 @Injectable()
 export class UploadsVideoService {
@@ -28,12 +30,12 @@ export class UploadsVideoService {
     private prismaService: PrismaService,
   ) {}
 
-  public async uploadsList(
-    ytChannelId: string,
-    sortOrder: SortOrder,
-    type: string,
-  ) {
-    console.log({ type });
+  public async uploadsList({
+    ytChannelId,
+    sortOrder,
+    type,
+    take,
+  }: UploadsListInput): Promise<UploadsListResponse> {
     const whereQuery = () => {
       if (type === 'default') {
         return {
@@ -54,10 +56,6 @@ export class UploadsVideoService {
 
     const whereQueryResult = whereQuery();
 
-    console.log({
-      whereQueryResult,
-    });
-
     const channel = await this.prismaService.channel.findUnique({
       where: {
         ytId: ytChannelId,
@@ -70,12 +68,25 @@ export class UploadsVideoService {
           orderBy: {
             publishedAt: sortOrder === SortOrder.ASC ? 'asc' : 'desc',
           },
-          take: 50,
+          take,
         },
       },
     });
 
-    return channel;
+    return {
+      ...channel,
+      createdAt: channel.createdAt.toISOString(),
+      updatedAt: channel.updatedAt.toISOString(),
+      lastSyncedAt: channel.lastSyncedAt?.toISOString() || null,
+      uploads: channel.uploads.map((upload) => ({
+        ...upload,
+        createdAt: upload.createdAt.toISOString(),
+        updatedAt: upload.updatedAt.toISOString(),
+      })),
+      metadata: {
+        take,
+      },
+    };
   }
 
   public async storyboards(ytChannelId: string) {

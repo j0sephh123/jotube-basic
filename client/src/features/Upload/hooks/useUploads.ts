@@ -19,6 +19,7 @@ export function useUploads(ytChannelId: string, type: "default" | "saved") {
         ytChannelId,
         sortOrder,
         type,
+        take: 50,
       },
     },
     skip: !ytChannelId,

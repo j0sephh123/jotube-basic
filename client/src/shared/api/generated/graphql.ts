@@ -565,8 +565,14 @@ export type UploadWithStoryboardResponse = {
 
 export type UploadsListInput = {
   sortOrder: SortOrder;
+  take: Scalars['Int']['input'];
   type: Scalars['String']['input'];
   ytChannelId: Scalars['String']['input'];
+};
+
+export type UploadsListMetadata = {
+  __typename?: 'UploadsListMetadata';
+  take: Scalars['Int']['output'];
 };
 
 export type UploadsListResponse = {
@@ -576,6 +582,7 @@ export type UploadsListResponse = {
   fetchedUntilEnd: Scalars['Boolean']['output'];
   id: Scalars['Int']['output'];
   lastSyncedAt?: Maybe<Scalars['String']['output']>;
+  metadata: UploadsListMetadata;
   src: Scalars['String']['output'];
   title: Scalars['String']['output'];
   updatedAt: Scalars['String']['output'];

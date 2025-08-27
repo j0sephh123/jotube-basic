@@ -375,8 +375,13 @@ type UploadWithStoryboardResponse {
 
 input UploadsListInput {
   sortOrder: SortOrder!
+  take: Int!
   type: String!
   ytChannelId: String!
+}
+
+type UploadsListMetadata {
+  take: Int!
 }
 
 type UploadsListResponse {
@@ -385,6 +390,7 @@ type UploadsListResponse {
   fetchedUntilEnd: Boolean!
   id: Int!
   lastSyncedAt: String
+  metadata: UploadsListMetadata!
   src: String!
   title: String!
   updatedAt: String!

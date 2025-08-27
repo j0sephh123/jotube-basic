@@ -19,33 +19,18 @@ export class UploadsVideoResolver {
   constructor(private readonly uploadsVideoService: UploadsVideoService) {}
 
   @Query(() => UploadsListResponse)
-  async uploadsList(
+  uploadsList(
     @Args('uploadsListInput') uploadsListInput: UploadsListInput,
-  ): Promise<UploadsListResponse | null> {
+  ): Promise<UploadsListResponse> {
     try {
-      const result = await this.uploadsVideoService.uploadsList(
-        uploadsListInput.ytChannelId,
-        uploadsListInput.sortOrder,
-        uploadsListInput.type,
-      );
-
-      if (!result) {
-        return null;
-      }
-
-      return {
-        ...result,
-        createdAt: result.createdAt.toISOString(),
-        updatedAt: result.updatedAt.toISOString(),
-        lastSyncedAt: result.lastSyncedAt?.toISOString() || null,
-        uploads: result.uploads.map((upload) => ({
-          ...upload,
-          createdAt: upload.createdAt.toISOString(),
-          updatedAt: upload.updatedAt.toISOString(),
-        })),
-      };
+      return this.uploadsVideoService.uploadsList({
+        ytChannelId: uploadsListInput.ytChannelId,
+        sortOrder: uploadsListInput.sortOrder,
+        type: uploadsListInput.type,
+        take: uploadsListInput.take,
+      });
     } catch {
-      return null;
+      throw new Error('Failed to fetch uploads');
     }
   }
 
