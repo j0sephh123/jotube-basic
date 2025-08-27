@@ -27,3 +27,4 @@ export { SaveUpload } from "./components/SaveUpload";
 export { DownloadStoryboard } from "./components/DownloadStoryboard";
 export { UploadsDecorator } from "./components/UploadsDecorator";
 export { useUploads, useRefetchChannelUploads } from "./hooks/useUploads";
+export { UploadsListItem } from "./components/UploadsListItem";
