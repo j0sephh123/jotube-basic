@@ -249,7 +249,6 @@ type Query {
   playlistUploadsList(playlistUploadsListInput: PlaylistUploadsListInput!): PlaylistUploadsListResponse!
   playlists: [PlaylistResponse!]!
   screenshots: [ScreenshotsCountsResponse!]!
-  screenshotsByVideo(ytVideoId: String!): [VideoScreenshotResponse!]!
   searchChannels(searchInput: SearchInput!): [SearchChannelResult!]!
   searchVideos(searchInput: SearchInput!): [SearchVideoResult!]!
   statisticsCounts: StatisticsCountsResponse!
@@ -457,14 +456,6 @@ input UploadsWithThumbnailsInput {
 }
 
 type UploadsWithThumbnailsResponse {
-  ytChannelId: String!
-  ytVideoId: String!
-}
-
-type VideoScreenshotResponse {
-  id: Float!
-  second: Float!
-  src: String!
   ytChannelId: String!
   ytVideoId: String!
 }

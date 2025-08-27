@@ -1,9 +1,6 @@
-import { Resolver, Query, Args } from '@nestjs/graphql';
+import { Resolver, Query } from '@nestjs/graphql';
 import { ScreenshotsApiService } from './api/screenshots-api.service';
-import {
-  ScreenshotsCountsResponse,
-  VideoScreenshotResponse,
-} from './dtos/screenshots.response';
+import { ScreenshotsCountsResponse } from './dtos/screenshots.response';
 
 @Resolver()
 export class ScreenshotsResolver {
@@ -16,12 +13,5 @@ export class ScreenshotsResolver {
       month,
       count: count as number,
     }));
-  }
-
-  @Query(() => [VideoScreenshotResponse], { name: 'screenshotsByVideo' })
-  async screenshotsByVideo(
-    @Args('ytVideoId') ytVideoId: string,
-  ): Promise<VideoScreenshotResponse[]> {
-    return this.screenshotsApiService.getScreenshotsByVideo(ytVideoId);
   }
 }
