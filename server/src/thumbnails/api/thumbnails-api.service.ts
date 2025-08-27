@@ -8,7 +8,6 @@ type Item = {
   second: number;
   ytChannelId: string;
   ytVideoId: string;
-  isFav: boolean;
 };
 
 @Injectable()
@@ -18,21 +17,21 @@ export class ThumbnailsApiService {
     private readonly thumbnailsManagerService: ThumbnailsManagerService,
   ) {}
 
-  public async getSlides(ytChannelIds: string[]) {
+  public async getScreenshots(ytChannelIds: string[]) {
     if (ytChannelIds.length === 0) {
-      return this.getAllChannelsSlides();
+      return this.getAllChannelsScreenshots();
     }
 
-    const slidesPromises = ytChannelIds.map((ytChannelIdArg) =>
-      this.getSlidesForChannel(ytChannelIdArg),
+    const screenshotsPromises = ytChannelIds.map((ytChannelIdArg) =>
+      this.getScreenshotsForChannel(ytChannelIdArg),
     );
 
-    const channelSlides = await Promise.all(slidesPromises);
+    const channelScreenshots = await Promise.all(screenshotsPromises);
 
-    return channelSlides.flat();
+    return channelScreenshots.flat();
   }
 
-  private async getSlidesForChannel(ytChannelId: string) {
+  private async getScreenshotsForChannel(ytChannelId: string) {
     const randomScreenshots = await this.prismaService.$queryRaw<Item[]>`
           SELECT * FROM Screenshot 
           WHERE ytChannelId = ${ytChannelId}
@@ -40,26 +39,25 @@ export class ThumbnailsApiService {
           -- LIMIT 50
         `;
 
-    return this.mapToSlides(randomScreenshots);
+    return this.mapToScreenshots(randomScreenshots);
   }
 
-  private async getAllChannelsSlides() {
+  private async getAllChannelsScreenshots() {
     const randomScreenshots = await this.prismaService.$queryRaw<Item[]>`
       SELECT * FROM Screenshot 
       ORDER BY RAND() 
       -- LIMIT 50
     `;
 
-    return this.mapToSlides(randomScreenshots);
+    return this.mapToScreenshots(randomScreenshots);
   }
 
-  private mapToSlides(screenshots: Item[]) {
-    return screenshots.map(({ id, second, ytChannelId, ytVideoId, isFav }) => ({
+  private mapToScreenshots(screenshots: Item[]) {
+    return screenshots.map(({ id, second, ytChannelId, ytVideoId }) => ({
       ytVideoId,
       id,
       second,
       src: `http://localhost:3003/images/${ytChannelId}/${ytVideoId}/saved_screenshots/${ytVideoId}-${second}.png`,
-      isFav,
     }));
   }
 
@@ -146,11 +144,10 @@ export class ThumbnailsApiService {
         second: true,
         ytChannelId: true,
         ytVideoId: true,
-        isFav: true,
       },
     });
 
-    return this.mapToSlides(screenshots);
+    return this.mapToScreenshots(screenshots);
   }
 
   public async getThumbnailsForDashboard() {

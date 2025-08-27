@@ -153,13 +153,12 @@ type FinishProcessUploadResponse {
   ytId: String!
 }
 
-input GetSlidesInput {
+input GetScreenshotsInput {
   ytChannelIds: [String!]
 }
 
-type GetSlidesResponse {
+type GetScreenshotsResponse {
   id: Float!
-  isFav: Boolean
   second: Float!
   src: String!
   ytVideoId: String!
@@ -242,10 +241,10 @@ type PlaylistUploadsListUploadResponse {
 type Query {
   channelForPlaylist(ytChannelId: String!): ChannelForPlaylistResponse!
   channelMetadata(ytChannelId: String!): ChannelMetadataResponse!
-  channelScreenshots(ytChannelId: String!): [GetSlidesResponse!]!
+  channelScreenshots(ytChannelId: String!): [GetScreenshotsResponse!]!
   fetchDashboard(fetchDashboardInput: FetchDashboardInput!): ChannelsDashboardResponse!
   fetchVideosDashboard(page: Float, screenshotMax: Float, screenshotMin: Float, sortOrder: String): VideosDashboardResponse!
-  getSlides(input: GetSlidesInput!): [GetSlidesResponse!]!
+  getScreenshots(input: GetScreenshotsInput!): [GetScreenshotsResponse!]!
   playlistDetails(id: Int!): PlaylistDetailsResponse
   playlistUploadsList(playlistUploadsListInput: PlaylistUploadsListInput!): PlaylistUploadsListResponse!
   playlists: [PlaylistResponse!]!
@@ -464,7 +463,6 @@ type UploadsWithThumbnailsResponse {
 
 type VideoScreenshotResponse {
   id: Float!
-  isFav: Boolean
   second: Float!
   src: String!
   ytChannelId: String!

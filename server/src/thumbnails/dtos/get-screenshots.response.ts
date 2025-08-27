@@ -1,7 +1,7 @@
 import { ObjectType, Field } from '@nestjs/graphql';
 
 @ObjectType()
-export class GetSlidesResponse {
+export class GetScreenshotsResponse {
   @Field()
   ytVideoId: string;
 
@@ -13,7 +13,4 @@ export class GetSlidesResponse {
 
   @Field()
   src: string;
-
-  @Field({ nullable: true })
-  isFav: boolean | null;
 }

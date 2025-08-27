@@ -181,14 +181,13 @@ export type FinishProcessUploadResponse = {
   ytId: Scalars['String']['output'];
 };
 
-export type GetSlidesInput = {
+export type GetScreenshotsInput = {
   ytChannelIds?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
-export type GetSlidesResponse = {
-  __typename?: 'GetSlidesResponse';
+export type GetScreenshotsResponse = {
+  __typename?: 'GetScreenshotsResponse';
   id: Scalars['Float']['output'];
-  isFav?: Maybe<Scalars['Boolean']['output']>;
   second: Scalars['Float']['output'];
   src: Scalars['String']['output'];
   ytVideoId: Scalars['String']['output'];
@@ -344,10 +343,10 @@ export type Query = {
   __typename?: 'Query';
   channelForPlaylist: ChannelForPlaylistResponse;
   channelMetadata: ChannelMetadataResponse;
-  channelScreenshots: Array<GetSlidesResponse>;
+  channelScreenshots: Array<GetScreenshotsResponse>;
   fetchDashboard: ChannelsDashboardResponse;
   fetchVideosDashboard: VideosDashboardResponse;
-  getSlides: Array<GetSlidesResponse>;
+  getScreenshots: Array<GetScreenshotsResponse>;
   playlistDetails?: Maybe<PlaylistDetailsResponse>;
   playlistUploadsList: PlaylistUploadsListResponse;
   playlists: Array<PlaylistResponse>;
@@ -392,8 +391,8 @@ export type QueryFetchVideosDashboardArgs = {
 };
 
 
-export type QueryGetSlidesArgs = {
-  input: GetSlidesInput;
+export type QueryGetScreenshotsArgs = {
+  input: GetScreenshotsInput;
 };
 
 
@@ -668,7 +667,6 @@ export type UploadsWithThumbnailsResponse = {
 export type VideoScreenshotResponse = {
   __typename?: 'VideoScreenshotResponse';
   id: Scalars['Float']['output'];
-  isFav?: Maybe<Scalars['Boolean']['output']>;
   second: Scalars['Float']['output'];
   src: Scalars['String']['output'];
   ytChannelId: Scalars['String']['output'];
@@ -724,7 +722,7 @@ export type GetChannelScreenshotsQueryVariables = Exact<{
 }>;
 
 
-export type GetChannelScreenshotsQuery = { __typename?: 'Query', channelScreenshots: Array<{ __typename?: 'GetSlidesResponse', ytVideoId: string, id: number, second: number, src: string, isFav?: boolean | null }> };
+export type GetChannelScreenshotsQuery = { __typename?: 'Query', channelScreenshots: Array<{ __typename?: 'GetScreenshotsResponse', ytVideoId: string, id: number, second: number, src: string }> };
 
 export type ChannelFragmentFragment = { __typename?: 'PlaylistChannelResponse', id: number, ytId: string };
 
@@ -776,24 +774,19 @@ export type GetPlaylistUploadsListQueryVariables = Exact<{
 
 export type GetPlaylistUploadsListQuery = { __typename?: 'Query', playlistUploadsList: { __typename?: 'PlaylistUploadsListResponse', uploads: Array<{ __typename?: 'PlaylistUploadsListUploadResponse', id: number, ytId: string, title: string, publishedAt: string, channelTitle: string, ytChannelId: string, src: string }> } };
 
-export type GetSlidesQueryVariables = Exact<{
-  input: GetSlidesInput;
+export type GetScreenshotsQueryVariables = Exact<{
+  input: GetScreenshotsInput;
 }>;
 
 
-export type GetSlidesQuery = { __typename?: 'Query', getSlides: Array<{ __typename?: 'GetSlidesResponse', ytVideoId: string, id: number, second: number, src: string, isFav?: boolean | null }> };
-
-export type GetScreenshotsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetScreenshotsQuery = { __typename?: 'Query', screenshots: Array<{ __typename?: 'ScreenshotsCountsResponse', month: string, count: number }> };
+export type GetScreenshotsQuery = { __typename?: 'Query', getScreenshots: Array<{ __typename?: 'GetScreenshotsResponse', ytVideoId: string, id: number, second: number, src: string }> };
 
 export type GetScreenshotsByVideoQueryVariables = Exact<{
   ytVideoId: Scalars['String']['input'];
 }>;
 
 
-export type GetScreenshotsByVideoQuery = { __typename?: 'Query', screenshotsByVideo: Array<{ __typename?: 'VideoScreenshotResponse', id: number, second: number, ytChannelId: string, ytVideoId: string, isFav?: boolean | null, src: string }> };
+export type GetScreenshotsByVideoQuery = { __typename?: 'Query', screenshotsByVideo: Array<{ __typename?: 'VideoScreenshotResponse', id: number, second: number, ytChannelId: string, ytVideoId: string, src: string }> };
 
 export type FetchDashboardQueryVariables = Exact<{
   fetchDashboardInput: FetchDashboardInput;
@@ -1086,7 +1079,6 @@ export const GetChannelScreenshotsDocument = gql`
     id
     second
     src
-    isFav
   }
 }
     `;
@@ -1414,55 +1406,13 @@ export type GetPlaylistUploadsListQueryHookResult = ReturnType<typeof useGetPlay
 export type GetPlaylistUploadsListLazyQueryHookResult = ReturnType<typeof useGetPlaylistUploadsListLazyQuery>;
 export type GetPlaylistUploadsListSuspenseQueryHookResult = ReturnType<typeof useGetPlaylistUploadsListSuspenseQuery>;
 export type GetPlaylistUploadsListQueryResult = Apollo.QueryResult<GetPlaylistUploadsListQuery, GetPlaylistUploadsListQueryVariables>;
-export const GetSlidesDocument = gql`
-    query GetSlides($input: GetSlidesInput!) {
-  getSlides(input: $input) {
+export const GetScreenshotsDocument = gql`
+    query GetScreenshots($input: GetScreenshotsInput!) {
+  getScreenshots(input: $input) {
     ytVideoId
     id
     second
     src
-    isFav
-  }
-}
-    `;
-
-/**
- * __useGetSlidesQuery__
- *
- * To run a query within a React component, call `useGetSlidesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetSlidesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetSlidesQuery({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useGetSlidesQuery(baseOptions: Apollo.QueryHookOptions<GetSlidesQuery, GetSlidesQueryVariables> & ({ variables: GetSlidesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetSlidesQuery, GetSlidesQueryVariables>(GetSlidesDocument, options);
-      }
-export function useGetSlidesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSlidesQuery, GetSlidesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetSlidesQuery, GetSlidesQueryVariables>(GetSlidesDocument, options);
-        }
-export function useGetSlidesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetSlidesQuery, GetSlidesQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetSlidesQuery, GetSlidesQueryVariables>(GetSlidesDocument, options);
-        }
-export type GetSlidesQueryHookResult = ReturnType<typeof useGetSlidesQuery>;
-export type GetSlidesLazyQueryHookResult = ReturnType<typeof useGetSlidesLazyQuery>;
-export type GetSlidesSuspenseQueryHookResult = ReturnType<typeof useGetSlidesSuspenseQuery>;
-export type GetSlidesQueryResult = Apollo.QueryResult<GetSlidesQuery, GetSlidesQueryVariables>;
-export const GetScreenshotsDocument = gql`
-    query GetScreenshots {
-  screenshots {
-    month
-    count
   }
 }
     `;
@@ -1479,10 +1429,11 @@ export const GetScreenshotsDocument = gql`
  * @example
  * const { data, loading, error } = useGetScreenshotsQuery({
  *   variables: {
+ *      input: // value for 'input'
  *   },
  * });
  */
-export function useGetScreenshotsQuery(baseOptions?: Apollo.QueryHookOptions<GetScreenshotsQuery, GetScreenshotsQueryVariables>) {
+export function useGetScreenshotsQuery(baseOptions: Apollo.QueryHookOptions<GetScreenshotsQuery, GetScreenshotsQueryVariables> & ({ variables: GetScreenshotsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetScreenshotsQuery, GetScreenshotsQueryVariables>(GetScreenshotsDocument, options);
       }
@@ -1505,7 +1456,6 @@ export const GetScreenshotsByVideoDocument = gql`
     second
     ytChannelId
     ytVideoId
-    isFav
     src
   }
 }

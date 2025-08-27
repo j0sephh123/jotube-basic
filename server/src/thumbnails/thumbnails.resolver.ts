@@ -2,19 +2,19 @@ import { Resolver, Query, Args } from '@nestjs/graphql';
 import { ThumbnailsApiService } from './api/thumbnails-api.service';
 import { UploadsWithThumbnailsInput } from './dtos/uploads-with-thumbnails.input';
 import { UploadsWithThumbnailsResponse } from './dtos/uploads-with-thumbnails.response';
-import { GetSlidesInput } from './dtos/get-slides.input';
-import { GetSlidesResponse } from './dtos/get-slides.response';
+import { GetScreenshotsInput } from './dtos/get-screenshots.input';
+import { GetScreenshotsResponse } from './dtos/get-screenshots.response';
 import { ThumbnailByVideoIdResponse } from './dtos/thumbnail.response';
 
 @Resolver()
 export class ThumbnailsResolver {
   constructor(private readonly thumbnailsApiService: ThumbnailsApiService) {}
 
-  @Query(() => [GetSlidesResponse])
-  async getSlides(
-    @Args('input') input: GetSlidesInput,
-  ): Promise<GetSlidesResponse[]> {
-    return this.thumbnailsApiService.getSlides(input.ytChannelIds || []);
+  @Query(() => [GetScreenshotsResponse])
+  async getScreenshots(
+    @Args('input') input: GetScreenshotsInput,
+  ): Promise<GetScreenshotsResponse[]> {
+    return this.thumbnailsApiService.getScreenshots(input.ytChannelIds || []);
   }
 
   @Query(() => [UploadsWithThumbnailsResponse])
@@ -39,10 +39,10 @@ export class ThumbnailsResolver {
     };
   }
 
-  @Query(() => [GetSlidesResponse])
+  @Query(() => [GetScreenshotsResponse])
   async channelScreenshots(
     @Args('ytChannelId') ytChannelId: string,
-  ): Promise<GetSlidesResponse[]> {
+  ): Promise<GetScreenshotsResponse[]> {
     return this.thumbnailsApiService.getChannelScreenshots(ytChannelId);
   }
 }

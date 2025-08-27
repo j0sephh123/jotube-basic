@@ -141,28 +141,6 @@ export class ScreenshotsApiService {
     });
   }
 
-  async favoriteScreenshots() {
-    const favScreenshots = await this.prismaService.screenshot.findMany({
-      where: {
-        isFav: true,
-      },
-    });
-
-    return favScreenshots.map((screenshot) => ({
-      src: `http://localhost:3003/images/${screenshot.ytChannelId}/${screenshot.ytVideoId}/saved_screenshots/${screenshot.ytVideoId}-${screenshot.second}.png`,
-    }));
-  }
-
-  async favoriteCount() {
-    const count = await this.prismaService.screenshot.count({
-      where: {
-        isFav: true,
-      },
-    });
-
-    return count;
-  }
-
   async getScreenshotsByVideo(ytVideoId: string) {
     const screenshots = await this.prismaService.screenshot.findMany({
       where: {
@@ -176,7 +154,6 @@ export class ScreenshotsApiService {
         second: true,
         ytChannelId: true,
         ytVideoId: true,
-        isFav: true,
       },
     });
 

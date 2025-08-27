@@ -2,7 +2,7 @@ import { InputType, Field } from '@nestjs/graphql';
 import { IsArray, IsString, IsOptional } from 'class-validator';
 
 @InputType()
-export class GetSlidesInput {
+export class GetScreenshotsInput {
   @Field(() => [String], { nullable: true })
   @IsOptional()
   @IsArray()

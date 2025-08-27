@@ -29,9 +29,6 @@ export class VideoScreenshotResponse {
   @Field(() => String)
   ytVideoId: string;
 
-  @Field(() => Boolean, { nullable: true })
-  isFav: boolean | null;
-
   @Field(() => String)
   src: string;
 }

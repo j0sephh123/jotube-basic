@@ -1,4 +1,1 @@
-export { default as SimpleCardWithImage } from "./ui/SimpleCardWithImage";
-export { default as MonthCountCard } from "./ui/MonthCountCard";
-export { GET_SLIDES } from "./api/screenshot.gql";
-export { useGetScreenshots as useFetchCarousel } from "../../features/Screenshot/hooks/useGetScreenshots";
+export { GET_SCREENSHOTS as GET_SLIDES } from "./api/screenshot.gql";

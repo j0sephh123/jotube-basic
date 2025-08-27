@@ -4,33 +4,24 @@ import { useLazyQuery } from "@apollo/client";
 import { GET_SLIDES } from "@entities/Screenshot";
 import type { SlideImage } from "yet-another-react-lightbox";
 import { useSlides } from "@app/providers/store/store";
-
-export type FetchCarouselDataRequest = string[];
-
-export type GetSlidesResponse = {
-  __typename?: "GetSlidesResponse";
-  id: number;
-  src: string;
-  ytVideoId: string;
-  second: number;
-};
+import { type ChannelScreenshot } from "./useFetchChannelScreenshots";
 
 export function useGetScreenshots() {
-  const [getSlidesQuery] = useLazyQuery(GET_SLIDES, {
+  const [getScreenshotsQuery] = useLazyQuery(GET_SLIDES, {
     fetchPolicy: "no-cache",
   });
   const { setSlides } = useSlides();
 
-  const handleFetch = async (body: FetchCarouselDataRequest) => {
+  const handleFetch = async (ytChannelIds: string[]) => {
     try {
-      const result = await getSlidesQuery({
+      const result = await getScreenshotsQuery({
         variables: {
-          input: { ytChannelIds: body },
+          input: { ytChannelIds },
         },
       });
-      const data = result.data?.getSlides || [];
+      const data = result.data?.getScreenshots || [];
       const transformedData: SlideImage[] = data.map(
-        (item: GetSlidesResponse) => ({
+        (item: ChannelScreenshot) => ({
           type: "image",
           src: item.src,
           alt: `Screenshot at ${item.second}s from video ${item.ytVideoId}`,

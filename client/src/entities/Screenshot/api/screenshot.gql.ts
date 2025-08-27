@@ -1,21 +1,12 @@
 import { gql } from "@apollo/client";
 
-export const GET_SLIDES = gql`
-  query GetSlides($input: GetSlidesInput!) {
-    getSlides(input: $input) {
+export const GET_SCREENSHOTS = gql`
+  query GetScreenshots($input: GetScreenshotsInput!) {
+    getScreenshots(input: $input) {
       ytVideoId
       id
       second
       src
-    }
-  }
-`;
-
-export const GET_SCREENSHOTS = gql`
-  query GetScreenshots {
-    screenshots {
-      month
-      count
     }
   }
 `;
