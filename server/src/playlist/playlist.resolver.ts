@@ -46,21 +46,7 @@ export class PlaylistResolver {
   ): Promise<PlaylistDetailsResponse | null> {
     try {
       const result = await this.playlistService.details(id);
-      return {
-        ...result,
-        createdAt: result.createdAt.toISOString(),
-        updatedAt: result.updatedAt.toISOString(),
-        channels: result.channels.map((channel) => ({
-          id: channel.id,
-          title: channel.title,
-          ytId: channel.ytId,
-          src: channel.src,
-          videoCount: channel.counts.videoCount,
-          savedCount: channel.counts.savedCount,
-          screenshotCount: channel.counts.screenshotCount,
-          thumbnailCount: channel.counts.thumbnailCount,
-        })),
-      };
+      return result;
     } catch {
       return null;
     }

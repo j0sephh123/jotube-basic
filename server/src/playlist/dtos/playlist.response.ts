@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { FeaturedScreenshotResponse } from 'src/dashboard/dtos/dashboard.response';
 
 @ObjectType()
 export class PlaylistChannelResponse {
@@ -26,6 +27,9 @@ export class PlaylistChannelWithCountsResponse {
   @Field()
   src: string;
 
+  @Field({ nullable: true })
+  lastSyncedAt?: string;
+
   @Field(() => Int)
   videoCount: number;
 
@@ -37,6 +41,9 @@ export class PlaylistChannelWithCountsResponse {
 
   @Field(() => Int)
   thumbnailCount: number;
+
+  @Field(() => [FeaturedScreenshotResponse])
+  featuredScreenshots: FeaturedScreenshotResponse[];
 }
 
 @ObjectType()

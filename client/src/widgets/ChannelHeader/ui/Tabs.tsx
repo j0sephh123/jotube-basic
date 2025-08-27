@@ -1,3 +1,5 @@
+/* eslint-disable boundaries/element-types */
+/* eslint-disable import/no-internal-modules */
 import {
   IconGallery,
   IconNewGallery,
@@ -6,9 +8,12 @@ import {
   IconSaved,
 } from "@shared/ui";
 import { useChannelMetadataQuery } from "@entities/Channel";
+import { useGalleryModal } from "@app/providers";
 
 export default function Tabs({ ytChannelId }: { ytChannelId: string }) {
   const { data: metadata } = useChannelMetadataQuery(ytChannelId);
+  const { setGalleryModal } = useGalleryModal();
+
 
   if (!metadata) return [];
 
@@ -35,9 +40,21 @@ export default function Tabs({ ytChannelId }: { ytChannelId: string }) {
   );
 
   const gallery = <IconGallery ytChannelId={ytChannelId} />;
+
+
+
+  const handleGalleryClick = () => {
+    setGalleryModal(
+      {
+        ytVideoId: "",
+        ytChannelId: ytChannelId,
+      }
+    );
+  };
+
   const newGallery = (
     <IconNewGallery
-      ytChannelId={ytChannelId}
+      onClick={handleGalleryClick}
       count={screenshotArtifactsCount}
     />
   );

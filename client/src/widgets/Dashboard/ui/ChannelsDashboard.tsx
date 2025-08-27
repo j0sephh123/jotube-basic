@@ -10,7 +10,7 @@ export default function ChannelsDashboard() {
   return (
     <ChannelsDashboardContainer>
       {(channels, refetch) =>
-        channels.map((c) => (
+        channels?.map((c) => (
           <ChannelDashboardCard
             key={c.id}
             id={c.id}

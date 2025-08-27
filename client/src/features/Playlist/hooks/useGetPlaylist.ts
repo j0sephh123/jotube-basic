@@ -17,8 +17,15 @@ const GET_PLAYLIST_DETAILS = gql`
         src
         videoCount
         savedCount
-        screenshotCount
+        screenshotCount 
         thumbnailCount
+        lastSyncedAt
+        featuredScreenshots {
+          id
+          second
+          ytVideoId
+          src
+        }
       }
     }
   }

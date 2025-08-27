@@ -283,7 +283,9 @@ export type PlaylistChannelResponse = {
 
 export type PlaylistChannelWithCountsResponse = {
   __typename?: 'PlaylistChannelWithCountsResponse';
+  featuredScreenshots: Array<FeaturedScreenshotResponse>;
   id: Scalars['Int']['output'];
+  lastSyncedAt?: Maybe<Scalars['String']['output']>;
   savedCount: Scalars['Int']['output'];
   screenshotCount: Scalars['Int']['output'];
   src: Scalars['String']['output'];

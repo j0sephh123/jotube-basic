@@ -1,14 +1,12 @@
 import { GalleryVertical } from "lucide-react";
-import { routes } from "@shared/routes";
 import { IconButton } from "@shared/ui";
 
-export function IconNewGallery({ ytChannelId, count }: { ytChannelId?: string, count?: number }) {
-  const to = ytChannelId ? routes.newGallery(ytChannelId) : undefined;
+export function IconNewGallery({ count, onClick }: { count?: number, onClick?: () => void }) {
 
   return (
     <IconButton
       icon={<GalleryVertical />}
-      to={to}
+      onClick={onClick}
       tip={count}
       tooltip={{
         content: "new gallery",

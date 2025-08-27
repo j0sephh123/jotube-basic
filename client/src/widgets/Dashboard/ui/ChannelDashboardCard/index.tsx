@@ -13,9 +13,8 @@ import { routes } from "@shared/routes";
 import { Link, useNavigate } from "react-router-dom";
 import { useViewThumbnails } from "@features/Thumbnails";
 import { useFetchCarousel } from "@entities/Screenshot";
-import { createFeaturedScreenshot } from "@shared/utils";
-import { useMemo, useState } from "react";
 import { useGalleryModal } from "@app/providers";
+import { useFeaturedScreenshots } from "@features/Screenshot";
 
 const statsTypes = [
   ViewType.THUMBNAILS,
@@ -57,19 +56,10 @@ export default function ChannelDashboardCard({
   const fetchCarousel = useFetchCarousel();
   const viewThumbnails = useViewThumbnails(id);
 
-  const [currentFeaturedScreenshotIndex, setCurrentFeaturedScreenshotIndex] =
-    useState(0);
-
-  const getSrc = useMemo(() => {
-    if (featuredScreenshots.length < 2) {
-      const first = featuredScreenshots[0];
-      return first ? createFeaturedScreenshot(first.src) : src;
-    }
-
-    return createFeaturedScreenshot(
-      featuredScreenshots[currentFeaturedScreenshotIndex]?.src || src
-    );
-  }, [featuredScreenshots, src, currentFeaturedScreenshotIndex]);
+  const { getSrc, handleThumbnailClick } = useFeaturedScreenshots(
+    featuredScreenshots,
+    src
+  );
 
   const cardStats = (
     <Card.Stats
@@ -170,23 +160,13 @@ export default function ChannelDashboardCard({
       : syncButton;
   };
 
-  const handleThumbnailClick = () => {
-    if (featuredScreenshots.length > 1) {
-      setCurrentFeaturedScreenshotIndex(
-        (currentFeaturedScreenshotIndex + 1) % featuredScreenshots.length
-      );
-    }
-  };
-
   const { setGalleryModal } = useGalleryModal();
 
   const handleGalleryClick = () => {
-    setGalleryModal(
-      {
-        ytVideoId: "",
-        ytChannelId: ytId,
-      }
-    );
+    setGalleryModal({
+      ytVideoId: "",
+      ytChannelId: ytId,
+    });
   };
 
   return (

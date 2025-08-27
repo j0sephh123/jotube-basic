@@ -19,3 +19,4 @@ export type { ChannelScreenshot } from "./hooks/useFetchChannelScreenshots";
 export { useSetFeaturedScreenshot } from "./hooks/useSetFeaturedScreenshot";
 export { useDeleteWithConfirm } from "./hooks/useDeleteWithConfirm";
 export { useZoomScreenshot } from "./hooks/useZoomScreenshot";
+export { useFeaturedScreenshots } from "./hooks/useFeaturedScreenshots";

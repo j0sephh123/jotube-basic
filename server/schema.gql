@@ -187,7 +187,9 @@ type PlaylistChannelResponse {
 }
 
 type PlaylistChannelWithCountsResponse {
+  featuredScreenshots: [FeaturedScreenshotResponse!]!
   id: Int!
+  lastSyncedAt: String
   savedCount: Int!
   screenshotCount: Int!
   src: String!
