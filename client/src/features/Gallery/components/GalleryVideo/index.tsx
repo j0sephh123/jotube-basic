@@ -2,14 +2,22 @@ import {
   useZoomScreenshot,
   useSetFeaturedScreenshot,
   useDeleteWithConfirm,
+  type ChannelScreenshot,
 } from "@features/Screenshot";
 import {
   GalleryItem,
-  useGroupScreenshotsByTime,
   useGalleryVideoScreenshots,
   GalleryVideoHeader,
 } from "@features/Gallery";
 import { StaticStates } from "@shared/ui";
+import { useMemo } from "react";
+
+type ScreenshotGroup = {
+  screenshots: ChannelScreenshot[];
+  startTime: number;
+  endTime: number;
+  timeSpan: number;
+};
 
 type Props = {
   ytVideoId: string;
@@ -17,16 +25,20 @@ type Props = {
 };
 
 export function GalleryVideo({ ytVideoId, ytChannelId }: Props) {
-  const { screenshots, isLoading, error } = useGalleryVideoScreenshots({
-    ytVideoId,
-    ytChannelId,
-  });
+  const { screenshots, videoScreenshots, isLoading, error } =
+    useGalleryVideoScreenshots({
+      ytVideoId,
+      ytChannelId,
+    });
+
+  const groupedScreenshotsByTime = useMemo(
+    () => createTemporalGroups(videoScreenshots),
+    [videoScreenshots]
+  );
 
   const handleZoom = useZoomScreenshot();
   const handleSetFeatured = useSetFeaturedScreenshot();
   const handleDelete = useDeleteWithConfirm();
-
-  const groupedScreenshotsByTime = useGroupScreenshotsByTime();
 
   return (
     <StaticStates
@@ -57,4 +69,51 @@ export function GalleryVideo({ ytVideoId, ytChannelId }: Props) {
       </div>
     </StaticStates>
   );
+}
+
+function createTemporalGroups(
+  screenshots: ChannelScreenshot[]
+): ScreenshotGroup[] {
+  if (screenshots.length === 0) return [];
+
+  const sortedScreenshots = [...screenshots].sort(
+    (a, b) => a.second - b.second
+  );
+  const groups: ScreenshotGroup[] = [];
+  let currentGroup: ChannelScreenshot[] = [sortedScreenshots[0]!];
+  let currentStartTime = sortedScreenshots[0]!.second;
+  let currentEndTime = sortedScreenshots[0]!.second;
+
+  for (let i = 1; i < sortedScreenshots.length; i++) {
+    const currentScreenshot = sortedScreenshots[i]!;
+    const previousScreenshot = sortedScreenshots[i - 1]!;
+    const timeDifference = currentScreenshot.second - previousScreenshot.second;
+
+    if (timeDifference <= 3) {
+      currentGroup.push(currentScreenshot);
+      currentEndTime = currentScreenshot.second;
+    } else {
+      groups.push({
+        screenshots: currentGroup,
+        startTime: currentStartTime,
+        endTime: currentEndTime,
+        timeSpan: currentEndTime - currentStartTime,
+      });
+
+      currentGroup = [currentScreenshot];
+      currentStartTime = currentScreenshot.second;
+      currentEndTime = currentScreenshot.second;
+    }
+  }
+
+  if (currentGroup.length > 0) {
+    groups.push({
+      screenshots: currentGroup,
+      startTime: currentStartTime,
+      endTime: currentEndTime,
+      timeSpan: currentEndTime - currentStartTime,
+    });
+  }
+
+  return groups;
 }
