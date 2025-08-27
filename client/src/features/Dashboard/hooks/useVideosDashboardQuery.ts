@@ -9,11 +9,6 @@ export function useVideosDashboardQuery() {
   const variables = {
     page: videosRequestBody.page,
     sortOrder: videosRequestBody.sortOrder.toLowerCase() as "asc" | "desc",
-    screenshotMin:
-      videosRequestBody.minScreenshots > 0
-        ? videosRequestBody.minScreenshots
-        : undefined,
-    screenshotMax: videosRequestBody.maxScreenshots || undefined,
   };
 
   const { data, loading, error, refetch } = useFetchVideosDashboardQuery({
@@ -37,11 +32,6 @@ export function useRefetchVideosDashboard() {
     const variables = {
       page: videosRequestBody.page,
       sortOrder: videosRequestBody.sortOrder.toLowerCase() as "asc" | "desc",
-      screenshotMin:
-        videosRequestBody.minScreenshots > 0
-          ? videosRequestBody.minScreenshots
-          : undefined,
-      screenshotMax: videosRequestBody.maxScreenshots || undefined,
     };
 
     queryClient.refetchQueries({

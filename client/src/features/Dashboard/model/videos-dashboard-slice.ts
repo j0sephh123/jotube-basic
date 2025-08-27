@@ -3,13 +3,9 @@ import type { SortOrder } from "@shared/api";
 export const videosDefaults: {
   sortOrder: SortOrder;
   page: number;
-  minScreenshots: number;
-  maxScreenshots: number | null;
 } = {
   sortOrder: "desc" as SortOrder,
   page: 1,
-  minScreenshots: 0,
-  maxScreenshots: null as number | null,
 };
 
 export type VideosDashboardSlice = {

@@ -4,8 +4,6 @@ const useLocalVideosDashboard = () => {
     videosRequestBody: {
       sortOrder: "DESC" as const,
       page: 1,
-      minScreenshots: 0,
-      maxScreenshots: null,
     },
     setVideosRequestBody: (_key: string, _value: unknown) => {},
   };
