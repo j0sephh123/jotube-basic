@@ -1,31 +1,14 @@
 import type { SortOrder } from "@shared/api";
-
-// Local enum to avoid internal module imports
-enum LocalViewType {
-  SAVED = "saved",
-  PROCESSED = "processed",
-  NO_UPLOADS = "no-uploads",
-  NO_SCREENSHOTS = "no-screenshots",
-  THUMBNAILS = "thumbnails",
-  HAS_STORYBOARDS = "has-storyboards",
-}
+import { ViewType } from "@features/Dashboard";
 
 export const defaults: {
   sortOrder: SortOrder;
   page: number;
-  min: number;
-  max: number | null;
-  defaultMin: number;
-  defaultMax: number | null;
-  viewType: LocalViewType;
+  viewType: ViewType;
 } = {
   sortOrder: "DESC" as SortOrder,
   page: 1,
-  min: 0,
-  max: null as number | null,
-  defaultMin: 0,
-  defaultMax: null as number | null,
-  viewType: LocalViewType.SAVED,
+  viewType: ViewType.SAVED,
 };
 
 export type DashboardSlice = {

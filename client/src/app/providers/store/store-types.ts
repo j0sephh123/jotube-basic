@@ -65,10 +65,6 @@ export type DashboardSlice = {
   requestBody: {
     sortOrder: SortOrder;
     page: number;
-    min: number;
-    max: number | null;
-    defaultMin: number;
-    defaultMax: number | null;
     viewType: ViewType;
   };
   setRequestBody: <K extends keyof DashboardSlice["requestBody"]>(

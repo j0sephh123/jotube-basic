@@ -30,6 +30,22 @@ export const useThumbnailsSlice = makeScopedHook<ThumbnailsProcessingSlice>();
 export const useDashboard = makeScopedHook<DashboardSlice>();
 export const useVideosDashboard = makeScopedHook<VideosDashboardSlice>();
 
+export const useDashboardStore = () => {
+  const dashboard = useDashboard();
+  return {
+    requestBody: dashboard.requestBody,
+    setRequestBody: dashboard.setRequestBody,
+  };
+};
+
+export const useVideosDashboardStore = () => {
+  const videosDashboard = useVideosDashboard();
+  return {
+    videosRequestBody: videosDashboard.videosRequestBody,
+    setVideosRequestBody: videosDashboard.setVideosRequestBody,
+  };
+};
+
 export const usePlaylist = makeScopedHook<PlaylistSlice>();
 export const useVideoModal = makeScopedHook<VideoModalSlice>();
 export const useStoryboardProcessing =

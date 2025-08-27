@@ -5,8 +5,8 @@ import { createGalleryModalSlice } from "./gallery-modal-slice";
 import type { Store as StoreType } from "./store-types";
 import { createCarouselScreenshotsSlice } from "./screenshots-for-carousel-slice";
 import { createThumbnailsSlice } from "./thumbnails-slice";
-import { SortOrder } from "@shared/api";
-import { ViewType } from "@features/Dashboard";
+import { createDashboardSlice } from "@features/Dashboard";
+import { createVideosDashboardSlice } from "@features/Dashboard";
 
 export const useStore = create<StoreType>()((set, _get) => ({
   ...createZoomSlice(set),
@@ -14,25 +14,11 @@ export const useStore = create<StoreType>()((set, _get) => ({
   ...createGalleryModalSlice(set),
   ...createThumbnailsSlice(set),
   ...createCarouselScreenshotsSlice(set),
+  ...createDashboardSlice(set),
+  ...createVideosDashboardSlice(set),
   storyboardProcessingData: [],
   setStoryboardProcessingData: () => {},
   clearStoryboardProcessingData: () => {},
-  requestBody: {
-    sortOrder: SortOrder.Desc,
-    page: 1,
-    min: 0,
-    max: null,
-    defaultMin: 0,
-    defaultMax: null,
-    viewType: ViewType.SAVED,
-  },
-  setRequestBody: () => {},
-
-  videosRequestBody: {
-    sortOrder: SortOrder.Desc,
-    page: 1,
-  },
-  setVideosRequestBody: () => {},
 
   playlists: [],
   setPlaylists: () => {},

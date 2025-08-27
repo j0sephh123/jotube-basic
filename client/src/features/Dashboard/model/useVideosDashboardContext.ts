@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { create } from "zustand";
-import { videosDefaults } from "../types";
+import { videosDefaults } from "./videos-dashboard-slice";
 import type { SortOrder } from "@shared/api";
 
 // Local store implementation to avoid importing from app layer
