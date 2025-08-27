@@ -1,3 +1,4 @@
+import { type ReactNode } from "react";
 import {
   DeleteUpload,
   PublishedTimeAgo,
@@ -8,7 +9,6 @@ import {
 } from "@features/Upload";
 import { type UploadsListQuery } from "@shared/api";
 import { Card } from "@shared/ui";
-import { ReactNode } from "react";
 
 type Props = {
   upload: Pick<

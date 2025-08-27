@@ -20,3 +20,4 @@ export { useSetFeaturedScreenshot } from "./hooks/useSetFeaturedScreenshot";
 export { useDeleteWithConfirm } from "./hooks/useDeleteWithConfirm";
 export { useZoomScreenshot } from "./hooks/useZoomScreenshot";
 export { useFeaturedScreenshots } from "./hooks/useFeaturedScreenshots";
+export { useGetScreenshots } from "./hooks/useGetScreenshots";

@@ -1,6 +1,6 @@
 import { QuickSearch } from "@widgets/Search";
 import {
-  InitCarouselButton,
+  ViewGlobalScreenshots,
   Screenshots,
   VideoProcessingInfo,
   ThemeSwitcher,
@@ -31,7 +31,7 @@ export default function Navbar() {
           <IconSaved count={totalCounts?.totalSaved ?? 0} />
           <IconThumbnails totalThumbnails={totalCounts?.totalThumbnails ?? 0} />
           <IconImageNavigator />
-          <InitCarouselButton />
+          <ViewGlobalScreenshots />
         </div>
         <div className="flex items-center gap-4">
           <QuickSearch />

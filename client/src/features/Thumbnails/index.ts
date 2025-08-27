@@ -1,4 +1,3 @@
-export { default as useViewScreenshots } from "./lib/useViewScreenshots";
 export { default as useIsLastItem } from "./lib/useIsLastItem";
 export { default as useHandleNext } from "./lib/useHandleNext";
 export { default as useHandleKeyDown } from "./lib/useHandleKeyDown";

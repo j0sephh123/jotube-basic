@@ -3,6 +3,7 @@ import { routes } from "@shared/routes";
 import { ArrowLeft } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { SmallCard } from "./SmallCard";
+import { useGetScreenshots } from "@features/Screenshot";
 
 type HeaderProps = {
   playlist: PlaylistDetailsResponse;
@@ -11,6 +12,8 @@ type HeaderProps = {
 export default function Header({
   playlist: { id, name, channels },
 }: HeaderProps) {
+  const handleGetScreenshots = useGetScreenshots();
+
   const { uploadsType } = useParams<{ uploadsType: "default" | "saved" }>();
 
   const totalCounts = channels.reduce(
@@ -63,7 +66,9 @@ export default function Header({
             wrapperClassName="bg-success/10"
           />
           <SmallCard
-            onClick={() => undefined}
+            onClick={() =>
+              handleGetScreenshots(channels.map((channel) => channel.ytId))
+            }
             title="Screenshots"
             value={totalCounts.screenshotCount}
             className="text-warning"

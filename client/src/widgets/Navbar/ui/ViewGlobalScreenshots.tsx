@@ -1,29 +1,27 @@
 import { useTotalCounts } from "@features/Statistics";
-import { useViewScreenshots } from "@features/Thumbnails";
 import { Loader, PlayCircle } from "lucide-react";
 import { IconButton } from "@shared/ui";
+import { useGetScreenshots } from "@features/Screenshot";
 
-export default function InitCarouselButton() {
-  const viewScreenshots = useViewScreenshots();
-  const handleAllCarousel = () => viewScreenshots([]);
+export default function ViewGlobalScreenshots() {
+  const viewScreenshots = useGetScreenshots();
   const { data: totalCounts, isLoading } = useTotalCounts();
   const totalScreenshots = totalCounts?.totalScreenshots;
-
   const screenshotCount = totalScreenshots ?? "N/A";
-  const displayValue =
-    typeof screenshotCount === "number"
-      ? `${screenshotCount}`
-      : screenshotCount;
 
   return (
     <div className="relative">
       <IconButton
         icon={<PlayCircle />}
         tooltip={{ content: "View all screenshots", position: "bottom" }}
-        onClick={handleAllCarousel}
+        onClick={() => viewScreenshots([])}
       />
       <span className="absolute -bottom-1 -right-1 text-xs bg-zinc-600 text-white rounded-full px-1 py-0 text-[10px] leading-tight min-w-4 text-center">
-        {isLoading ? <Loader className="w-2 h-2 animate-spin" /> : displayValue}
+        {isLoading ? (
+          <Loader className="w-2 h-2 animate-spin" />
+        ) : (
+          screenshotCount
+        )}
       </span>
     </div>
   );

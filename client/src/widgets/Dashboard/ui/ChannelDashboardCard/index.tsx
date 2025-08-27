@@ -12,9 +12,11 @@ import clsx from "clsx";
 import { routes } from "@shared/routes";
 import { Link, useNavigate } from "react-router-dom";
 import { useViewThumbnails } from "@features/Thumbnails";
-import { useFetchCarousel } from "@entities/Screenshot";
 import { useGalleryModal } from "@app/providers";
-import { useFeaturedScreenshots } from "@features/Screenshot";
+import {
+  useFeaturedScreenshots,
+  useGetScreenshots,
+} from "@features/Screenshot";
 
 const statsTypes = [
   ViewType.THUMBNAILS,
@@ -53,7 +55,7 @@ export default function ChannelDashboardCard({
   featuredScreenshots,
 }: Props) {
   const navigate = useNavigate();
-  const fetchCarousel = useFetchCarousel();
+  const handleViewScreenshots = useGetScreenshots();
   const viewThumbnails = useViewThumbnails(id);
 
   const { getSrc, handleThumbnailClick } = useFeaturedScreenshots(
@@ -71,7 +73,7 @@ export default function ChannelDashboardCard({
       defaults={defaults}
       storyboard={storyboard}
       onNavigate={navigate}
-      onViewScreenshots={() => fetchCarousel([ytId])}
+      onViewScreenshots={() => handleViewScreenshots([ytId])}
       onViewThumbnails={viewThumbnails}
     />
   );

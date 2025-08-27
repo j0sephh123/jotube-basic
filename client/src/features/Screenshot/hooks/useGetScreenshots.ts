@@ -1,3 +1,5 @@
+/* eslint-disable import/no-internal-modules */
+/* eslint-disable boundaries/element-types */
 import { useLazyQuery } from "@apollo/client";
 import { GET_SLIDES } from "@entities/Screenshot";
 import type { SlideImage } from "yet-another-react-lightbox";
@@ -14,7 +16,7 @@ export type GetSlidesResponse = {
   isFav?: boolean | null;
 };
 
-export function useFetchCarousel() {
+export function useGetScreenshots() {
   const [getSlidesQuery] = useLazyQuery(GET_SLIDES, {
     fetchPolicy: "no-cache",
   });
