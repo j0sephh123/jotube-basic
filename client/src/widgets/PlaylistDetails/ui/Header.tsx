@@ -1,7 +1,7 @@
 import type { PlaylistDetailsResponse } from "@shared/api";
 import { routes } from "@shared/routes";
 import { ArrowLeft } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { SmallCard } from "./SmallCard";
 
 type HeaderProps = {
@@ -11,6 +11,8 @@ type HeaderProps = {
 export default function Header({
   playlist: { id, name, channels },
 }: HeaderProps) {
+  const { uploadsType } = useParams<{ uploadsType: "default" | "saved" }>();
+
   const totalCounts = channels.reduce(
     (acc, channel) => ({
       videoCount: acc.videoCount + channel.videoCount,
@@ -45,6 +47,7 @@ export default function Header({
       <div className="card bg-base-100 shadow-xl">
         <div className="flex gap-4">
           <SmallCard
+            hasDistinctBorder={uploadsType === "default"}
             onClick={() => navigate(`/playlists/${id}/uploads/default`)}
             title="Total Videos"
             value={totalCounts.videoCount}
@@ -52,6 +55,7 @@ export default function Header({
             wrapperClassName="bg-primary/10"
           />
           <SmallCard
+            hasDistinctBorder={uploadsType === "saved"}
             onClick={() => navigate(`/playlists/${id}/uploads/saved`)}
             title="Saved Videos"
             value={totalCounts.savedCount}
