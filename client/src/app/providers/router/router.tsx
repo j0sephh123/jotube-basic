@@ -22,6 +22,7 @@ export default function Router() {
             element={<Navigate to="/dashboard/channels/saved" />}
           />
           <Route path="dashboard" element={<DashboardWrapper />}>
+            {/* fix at some point */}
             <Route path=":type" element={<DashboardWidget />}>
               <Route path=":viewType" element={<DashboardWidget />} />
             </Route>
