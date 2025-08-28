@@ -1,4 +1,10 @@
-import type { ZoomSlice } from "./store-types";
+export type ZoomSlice = {
+  isVisible: boolean;
+  url: string;
+  onClose: () => void;
+  setZoom: (isVisible: boolean, url: string, onClose: () => void) => void;
+  closeZoom: () => void;
+};
 
 export const createZoomSlice = (
   set: (fn: (state: ZoomSlice) => ZoomSlice) => void

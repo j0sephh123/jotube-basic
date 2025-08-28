@@ -1,12 +1,13 @@
+/* eslint-disable import/no-internal-modules */
 import { create } from "zustand";
-import { createZoomSlice } from "./zoom-slice";
-import { createVideoModalSlice } from "./video-modal-slice";
-import { createGalleryModalSlice } from "./gallery-modal-slice";
+import { createZoomSlice } from "../../../features/Screenshot/model/zoom-slice";
+import { createVideoModalSlice } from "../../../features/Upload/model/video-modal-slice";
 import type { Store as StoreType } from "./store-types";
-import { createCarouselScreenshotsSlice } from "./screenshots-for-carousel-slice";
-import { createThumbnailsSlice } from "./thumbnails-slice";
+import { createCarouselScreenshotsSlice } from "@features/Screenshot/model";
+import { createThumbnailsSlice } from "@features/Thumbnails/model";
 import { createDashboardSlice } from "@features/Dashboard";
 import { createVideosDashboardSlice } from "@features/Dashboard";
+import { createGalleryModalSlice } from "@features/Gallery/model";
 
 export const useStore = create<StoreType>()((set, _get) => ({
   ...createZoomSlice(set),
@@ -19,7 +20,6 @@ export const useStore = create<StoreType>()((set, _get) => ({
   storyboardProcessingData: [],
   setStoryboardProcessingData: () => {},
   clearStoryboardProcessingData: () => {},
-
   playlists: [],
   setPlaylists: () => {},
   addPlaylist: () => {},

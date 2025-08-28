@@ -1,3 +1,20 @@
+export type VideoModalSlice = {
+  isVideoModalVisible: boolean;
+  videoId: string;
+  embedUrl: string;
+  startTime: number;
+  onClose: () => void;
+  setVideoModal: (
+    isVisible: boolean,
+    videoId: string,
+    embedUrl: string,
+    startTime: number,
+    onClose: () => void
+  ) => void;
+  closeVideoModal: () => void;
+  getEmbedUrl: (videoId: string, startTime?: number) => string;
+};
+
 export const createVideoModalSlice = (
   set: (fn: (state: VideoModalSlice) => VideoModalSlice) => void
 ): VideoModalSlice => ({
@@ -43,19 +60,4 @@ export const createVideoModalSlice = (
     return baseUrl;
   },
 });
-export type VideoModalSlice = {
-  isVideoModalVisible: boolean;
-  videoId: string;
-  embedUrl: string;
-  startTime: number;
-  onClose: () => void;
-  setVideoModal: (
-    isVisible: boolean,
-    videoId: string,
-    embedUrl: string,
-    startTime: number,
-    onClose: () => void
-  ) => void;
-  closeVideoModal: () => void;
-  getEmbedUrl: (videoId: string, startTime?: number) => string;
-};
+

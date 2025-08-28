@@ -1,16 +1,16 @@
+/* eslint-disable import/no-internal-modules */
 import { type PlaylistSlice } from "@features/Playlist";
 import { useStore } from "./store-root";
-
+import type { GalleryModalSlice } from "@features/Gallery/model";
 import type {
-  CarouselScreenshotsSlice,
-  ThumbnailsProcessingSlice,
   DashboardSlice,
   VideosDashboardSlice,
-  GalleryModalSlice,
   StoryboardProcessingSlice,
-  ZoomSlice,
 } from "./store-types";
-import type { VideoModalSlice } from "./video-modal-slice";
+import type { ThumbnailsProcessingSlice } from "@features/Thumbnails/model";
+import type { CarouselScreenshotsSlice } from "@features/Screenshot/model";
+import type { VideoModalSlice } from "@features/Upload/model/video-modal-slice";
+import type { ZoomSlice } from "@features/Screenshot/model";
 
 function makeScopedHook<Slice>() {
   function useScoped(): Slice;

@@ -1,4 +1,8 @@
-import type { Store as StoreType } from "./store-types";
+/* eslint-disable boundaries/element-types */
+import type {
+  Store as StoreType,
+  ThumbnailItem,
+} from "@app/providers/store/store-types";
 
 export const createThumbnailsSlice = (
   set: (fn: (state: StoreType) => Partial<StoreType>) => void
@@ -46,3 +50,20 @@ export const createThumbnailsSlice = (
   currentIndex: 0,
   setCurrentIndex: (index: number) => set(() => ({ currentIndex: index })),
 });
+
+export type ThumbnailsProcessingSlice = {
+  thumbnailsProcessingData: ThumbnailItem[];
+  setThumbnailsProcessingData: (
+    arg: ThumbnailsProcessingSlice["thumbnailsProcessingData"]
+  ) => void;
+  clearThumbnailsProcessingData: () => void;
+  selectedImages: number[];
+  setSelectedImages: (arg: number[] | ((prev: number[]) => number[])) => void;
+  toggleSelectedImage: (index: number, batch: number, perRow: number) => void;
+  currentIndex: number;
+  setCurrentIndex: (index: number) => void;
+  metadata: {
+    ytChannelId: string;
+    ytVideoId: string;
+  };
+};

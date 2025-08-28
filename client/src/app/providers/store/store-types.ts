@@ -1,14 +1,12 @@
-import type { SlideImage as ReactLightboxSlideImage } from "yet-another-react-lightbox";
+/* eslint-disable import/no-internal-modules */
 import type { ViewType } from "@features/Dashboard";
 import type { PlaylistSlice } from "@features/Playlist";
 import type { SortOrder } from "@shared/api";
-import type { GalleryModalSlice } from "./gallery-modal-slice";
-import type { VideoModalSlice } from "./video-modal-slice";
-
-export type CarouselScreenshotsSlice = {
-  slides: ReactLightboxSlideImage[];
-  setSlides: (slides: ReactLightboxSlideImage[]) => void;
-};
+import type { GalleryModalSlice } from "@features/Gallery/model";
+import type { VideoModalSlice } from "../../../features/Upload/model/video-modal-slice";
+import type { CarouselScreenshotsSlice } from "@features/Screenshot/model";
+import type { ThumbnailsProcessingSlice } from "@features/Thumbnails/model";
+import type { ZoomSlice } from "@features/Screenshot/model";
 
 export type ThumbnailItem = {
   ytChannelId: string;
@@ -46,23 +44,6 @@ export type StoryboardProcessingSlice = {
   clearStoryboardProcessingData: () => void;
 };
 
-export type ThumbnailsProcessingSlice = {
-  thumbnailsProcessingData: ThumbnailItem[];
-  setThumbnailsProcessingData: (
-    arg: ThumbnailsProcessingSlice["thumbnailsProcessingData"]
-  ) => void;
-  clearThumbnailsProcessingData: () => void;
-  selectedImages: number[];
-  setSelectedImages: (arg: number[] | ((prev: number[]) => number[])) => void;
-  toggleSelectedImage: (index: number, batch: number, perRow: number) => void;
-  currentIndex: number;
-  setCurrentIndex: (index: number) => void;
-  metadata: {
-    ytChannelId: string;
-    ytVideoId: string;
-  };
-};
-
 export type DashboardSlice = {
   requestBody: {
     sortOrder: SortOrder;
@@ -92,14 +73,6 @@ export type VideosDashboardSlice = {
       page: number;
     }[K]
   ) => void;
-};
-
-export type ZoomSlice = {
-  isVisible: boolean;
-  url: string;
-  onClose: () => void;
-  setZoom: (isVisible: boolean, url: string, onClose: () => void) => void;
-  closeZoom: () => void;
 };
 
 export type Store = CarouselScreenshotsSlice &
