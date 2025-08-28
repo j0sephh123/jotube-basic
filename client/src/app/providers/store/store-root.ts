@@ -27,7 +27,6 @@ export const useStore = create<StoreType>()((set, _get) => ({
   isModalOpen: false,
   ytChannelId: "",
   showCreateForm: false,
-  closePlaylistModal: () => {},
   setYtChannelId: () => {},
   setShowCreateForm: () => {},
 }));
