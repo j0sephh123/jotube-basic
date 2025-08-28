@@ -3,15 +3,15 @@ import { useMemo } from "react";
 
 type Props = {
   ytVideoId: string;
-  ytChannelId: string;
+  ytChannelIds: string[];
 };
 
-export function useScreenshotsForGallery({ ytVideoId, ytChannelId }: Props) {
+export function useScreenshotsForGallery({ ytVideoId, ytChannelIds }: Props) {
   const {
     data: screenshots,
     isLoading,
     error,
-  } = useFetchChannelScreenshots([ytChannelId]);
+  } = useFetchChannelScreenshots(ytChannelIds);
 
   const videoScreenshots = useMemo(() => {
     if (!screenshots || !ytVideoId) return [];

@@ -28,7 +28,7 @@ export function GalleryVideo({ ytVideoId, ytChannelId }: Props) {
   const { screenshots, videoScreenshots, isLoading, error } =
     useScreenshotsForGallery({
       ytVideoId,
-      ytChannelId,
+      ytChannelIds: [ytChannelId],
     });
 
   const groupedScreenshotsByTime = useMemo(

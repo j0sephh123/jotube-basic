@@ -167,7 +167,7 @@ export default function ChannelDashboardCard({
   const handleGalleryClick = () => {
     setGalleryModal({
       ytVideoId: "",
-      ytChannelId: ytId,
+      ytChannelIds: [ytId],
     });
   };
 

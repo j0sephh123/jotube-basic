@@ -13,13 +13,13 @@ import { useKbdEvent } from "@features/Thumbnails";
 import { GalleryVirtualised } from "@features/Gallery";
 
 export function GalleryModal() {
-  const { isGalleryModalVisible, closeGalleryModal, ytChannelId, ytVideoId } =
+  const { isGalleryModalVisible, closeGalleryModal, ytChannelIds, ytVideoId } =
     useGalleryModal();
 
   const { videoScreenshots, screenshots, isLoading, error } =
     useScreenshotsForGallery({
       ytVideoId,
-      ytChannelId,
+      ytChannelIds,
     });
 
   const screenshotsToUse = ytVideoId === "" ? screenshots : videoScreenshots;

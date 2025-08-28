@@ -5,14 +5,14 @@ export const createGalleryModalSlice = (
 ): GalleryModalSlice => ({
   isGalleryModalVisible: false,
   ytVideoId: "",
-  ytChannelId: "",
+  ytChannelIds: [],
   onClose: () => {},
-  setGalleryModal: ({ ytVideoId, ytChannelId }) =>
+  setGalleryModal: ({ ytVideoId, ytChannelIds }) =>
     set((state) => ({
       ...state,
       isGalleryModalVisible: true,
       ytVideoId,
-      ytChannelId,
+      ytChannelIds,
     })),
   closeGalleryModal: () =>
     set((state) => {

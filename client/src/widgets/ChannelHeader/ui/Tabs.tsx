@@ -43,7 +43,7 @@ export default function Tabs({ ytChannelId }: { ytChannelId: string }) {
   const handleGalleryClick = () => {
     setGalleryModal({
       ytVideoId: "",
-      ytChannelId: ytChannelId,
+      ytChannelIds: [ytChannelId],
     });
   };
 

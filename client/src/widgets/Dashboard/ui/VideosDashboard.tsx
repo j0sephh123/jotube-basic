@@ -14,7 +14,7 @@ export default function VideosDashboard() {
     setGalleryModal(
       {
         ytVideoId: video.ytId,
-        ytChannelId: video.channelYtId,
+        ytChannelIds: [video.channelYtId],
       },
     );
   };

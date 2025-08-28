@@ -124,9 +124,9 @@ export type VideoModalSlice = {
 export type GalleryModalSlice = {
   isGalleryModalVisible: boolean;
   ytVideoId: string;
-  ytChannelId: string;
+  ytChannelIds: string[];
   onClose: () => void;
-  setGalleryModal: (props: { ytVideoId: string; ytChannelId: string }) => void;
+  setGalleryModal: (props: { ytVideoId: string; ytChannelIds: string[] }) => void;
   closeGalleryModal: () => void;
 };
 
