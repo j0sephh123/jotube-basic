@@ -8,8 +8,9 @@ import { createThumbnailsSlice } from "@features/Thumbnails/model";
 import { createDashboardSlice } from "@features/Dashboard";
 import { createVideosDashboardSlice } from "@features/Dashboard";
 import { createGalleryModalSlice } from "@features/Gallery/model";
+import { createStoryboardProcessingSlice } from "../../../features/Storyboard/model/storyboard-processing-slice";
 
-export const useStore = create<StoreType>()((set, _get) => ({
+export const useStore = create<StoreType>()((set) => ({
   ...createZoomSlice(set),
   ...createVideoModalSlice(set),
   ...createGalleryModalSlice(set),
@@ -17,7 +18,5 @@ export const useStore = create<StoreType>()((set, _get) => ({
   ...createCarouselScreenshotsSlice(set),
   ...createDashboardSlice(set),
   ...createVideosDashboardSlice(set),
-  storyboardProcessingData: [],
-  setStoryboardProcessingData: () => {},
-  clearStoryboardProcessingData: () => {},
+  ...createStoryboardProcessingSlice(set),
 }));
