@@ -5,7 +5,6 @@ export type PlaylistSlice = {
   openPlaylistModal: (ytChannelId: string) => void;
   closePlaylistModal: () => void;
   setShowCreateForm: (show: boolean) => void;
-  resetFormState: () => void;
 };
 
 export const createPlaylistSlice = (
@@ -29,9 +28,5 @@ export const createPlaylistSlice = (
   setShowCreateForm: (show: boolean) =>
     set({
       showCreateForm: show,
-    }),
-  resetFormState: () =>
-    set({
-      showCreateForm: false,
     }),
 });

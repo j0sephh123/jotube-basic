@@ -31,5 +31,4 @@ export const useStore = create<StoreType>()((set, _get) => ({
   closePlaylistModal: () => {},
   setYtChannelId: () => {},
   setShowCreateForm: () => {},
-  resetFormState: () => {},
 }));
