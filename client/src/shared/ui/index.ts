@@ -38,4 +38,5 @@ export { IconUploads } from "./icons/IconUploads";
 export { default as StaticStates } from "./StaticStates";
 export { GalleryModal } from "./GalleryModal";
 export { GoBack } from "./GoBack";
+export { default as Grid } from "./Grid";
 export * from "./static";
