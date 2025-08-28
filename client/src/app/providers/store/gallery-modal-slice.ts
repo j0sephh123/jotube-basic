@@ -1,4 +1,14 @@
-import type { GalleryModalSlice } from "./store-types";
+export type GalleryModalSlice = {
+  isGalleryModalVisible: boolean;
+  ytVideoId: string;
+  ytChannelIds: string[];
+  onClose: () => void;
+  setGalleryModal: (props: {
+    ytVideoId: string;
+    ytChannelIds: string[];
+  }) => void;
+  closeGalleryModal: () => void;
+};
 
 export const createGalleryModalSlice = (
   set: (fn: (state: GalleryModalSlice) => GalleryModalSlice) => void

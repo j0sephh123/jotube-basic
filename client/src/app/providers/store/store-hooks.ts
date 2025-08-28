@@ -6,11 +6,11 @@ import type {
   ThumbnailsProcessingSlice,
   DashboardSlice,
   VideosDashboardSlice,
-  VideoModalSlice,
   GalleryModalSlice,
   StoryboardProcessingSlice,
   ZoomSlice,
 } from "./store-types";
+import type { VideoModalSlice } from "./video-modal-slice";
 
 function makeScopedHook<Slice>() {
   function useScoped(): Slice;

@@ -2,6 +2,8 @@ import type { SlideImage as ReactLightboxSlideImage } from "yet-another-react-li
 import type { ViewType } from "@features/Dashboard";
 import type { PlaylistSlice } from "@features/Playlist";
 import type { SortOrder } from "@shared/api";
+import type { GalleryModalSlice } from "./gallery-modal-slice";
+import type { VideoModalSlice } from "./video-modal-slice";
 
 export type CarouselScreenshotsSlice = {
   slides: ReactLightboxSlideImage[];
@@ -73,8 +75,6 @@ export type DashboardSlice = {
   ) => void;
 };
 
-
-
 export type VideosDashboardSlice = {
   videosRequestBody: {
     sortOrder: SortOrder;
@@ -94,40 +94,12 @@ export type VideosDashboardSlice = {
   ) => void;
 };
 
-
-
 export type ZoomSlice = {
   isVisible: boolean;
   url: string;
   onClose: () => void;
   setZoom: (isVisible: boolean, url: string, onClose: () => void) => void;
   closeZoom: () => void;
-};
-
-export type VideoModalSlice = {
-  isVideoModalVisible: boolean;
-  videoId: string;
-  embedUrl: string;
-  startTime: number;
-  onClose: () => void;
-  setVideoModal: (
-    isVisible: boolean,
-    videoId: string,
-    embedUrl: string,
-    startTime: number,
-    onClose: () => void
-  ) => void;
-  closeVideoModal: () => void;
-  getEmbedUrl: (videoId: string, startTime?: number) => string;
-};
-
-export type GalleryModalSlice = {
-  isGalleryModalVisible: boolean;
-  ytVideoId: string;
-  ytChannelIds: string[];
-  onClose: () => void;
-  setGalleryModal: (props: { ytVideoId: string; ytChannelIds: string[] }) => void;
-  closeGalleryModal: () => void;
 };
 
 export type Store = CarouselScreenshotsSlice &
