@@ -3,7 +3,6 @@ import { useSearchParams } from "react-router-dom";
 import { create } from "zustand";
 
 type DashboardRequestBody = {
-  sortOrder: "ASC" | "DESC";
   page: number;
   viewType: string;
 };
@@ -16,7 +15,6 @@ type DashboardStore = {
 
 const useStore = create<DashboardStore>((set) => ({
   requestBody: {
-    sortOrder: "DESC",
     page: 1,
     viewType: "saved",
   },

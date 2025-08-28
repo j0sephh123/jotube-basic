@@ -1,12 +1,9 @@
-import type { SortOrder } from "@shared/api";
 import { ViewType } from "@features/Dashboard";
 
 export const defaults: {
-  sortOrder: SortOrder;
   page: number;
   viewType: ViewType;
 } = {
-  sortOrder: "DESC" as SortOrder,
   page: 1,
   viewType: ViewType.SAVED,
 };

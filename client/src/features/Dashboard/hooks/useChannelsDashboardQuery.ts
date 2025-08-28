@@ -3,6 +3,7 @@ import { useDashboardContext, useFetchDashboard } from "@features/Dashboard";
 import { ViewType as GraphQLViewType } from "@shared/api";
 import type { ChannelsDashboardResponse } from "@shared/api";
 import { useApolloClient } from "@apollo/client";
+import { useFinalSortOrder } from "@features/Dashboard";
 
 export type ChannelsDashboardResponseData = ChannelsDashboardResponse;
 
@@ -33,14 +34,15 @@ export function useChannelsDashboardQuery() {
   const { requestBody } = useDashboardContext();
   const params = useParams();
 
-  const requestBodyWithViewType = {
-    ...requestBody,
-    viewType: mapViewTypeToGraphQL(params.viewType),
-  };
+  const { finalSortOrder } = useFinalSortOrder();
 
   const { data, loading, error, refetch } = useFetchDashboard(
     {
-      fetchDashboardInput: requestBodyWithViewType,
+      fetchDashboardInput: {
+        page: requestBody.page,
+        viewType: mapViewTypeToGraphQL(params.viewType),
+        sortOrder: finalSortOrder,
+      },
     },
     {
       fetchPolicy: "no-cache",

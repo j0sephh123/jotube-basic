@@ -1,31 +1,25 @@
-import { ArrowUp, ArrowDown } from "lucide-react";
-import { useDashboardContext } from "@features/Dashboard";
 import { Button } from "@shared/ui";
-import { SortOrder } from "@shared/api";
+import { useFinalSortOrder } from "@features/Dashboard";
+import type { FinalSortOrder } from "@features/Dashboard";
+import { ArrowUp, ArrowDown } from "lucide-react";
 
 export default function SelectSortDirection(): JSX.Element {
-  const { requestBody, setRequestBody } = useDashboardContext();
+  const { finalSortOrder, toggleSortOrder } = useFinalSortOrder();
 
-  const icons: Record<SortOrder, JSX.Element> = {
-    ASC: <ArrowUp size={14} />,
-    DESC: <ArrowDown size={14} />,
+  const icons: Record<FinalSortOrder, JSX.Element> = {
+    asc: <ArrowUp size={14} />,
+    desc: <ArrowDown size={14} />,
   };
 
-  const labels: Record<SortOrder, string> = {
-    ASC: "ASC",
-    DESC: "DESC",
-  };
-
-  const toggleSortOrder = () => {
-    const newSortOrder =
-      requestBody.sortOrder === SortOrder.Asc ? SortOrder.Desc : SortOrder.Asc;
-    setRequestBody("sortOrder", newSortOrder);
+  const labels: Record<FinalSortOrder, string> = {
+    asc: "ASC",
+    desc: "DESC",
   };
 
   return (
     <Button onClick={toggleSortOrder}>
-      {icons[requestBody.sortOrder as SortOrder]}
-      <span className="ml-2">{labels[requestBody.sortOrder as SortOrder]}</span>
+      {icons[finalSortOrder]}
+      <span className="ml-2">{labels[finalSortOrder]}</span>
     </Button>
   );
 }
