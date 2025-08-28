@@ -1,7 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "@app/Layout";
 import { ChannelPageLayout } from "@widgets/ChannelPageLayout";
-import { GalleryPage } from "@pages/gallery";
 import { DashboardWidget, DashboardWrapper } from "@widgets/Dashboard";
 import { GalleryVideoPage } from "@pages/gallery-video";
 import { StoryboardPage } from "@pages/storyboard";
@@ -33,7 +32,7 @@ export default function Router() {
             <Route path="saved" element={<UploadsDecorator type="saved" />} />
             <Route path="storyboard" element={<StoryboardPage />} />
             <Route path="gallery" element={<GalleryLayout />}>
-              <Route index element={<GalleryPage />} />
+              <Route index element={<></>} />
               <Route path=":ytVideoId" element={<GalleryVideoPage />} />
             </Route>
           </Route>
