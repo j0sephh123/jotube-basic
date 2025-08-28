@@ -1,9 +1,12 @@
-import { useMemo } from "react";
-import { type VideoGroup } from "./types";
 import { useNavigate } from "react-router-dom";
 import { routes } from "@shared/routes";
 import { useTypedChannelYtId } from "@features/Dashboard";
-import { useScreenshotsForGallery } from "@features/Gallery";
+import { useVideoScreenshotCounts } from "@features/Gallery";
+
+type VideoScreenshotCount = {
+  ytVideoId: string;
+  screenshotCount: number;
+};
 
 export function VideosWithScreenshotsAmountList() {
   const ytChannelId = useTypedChannelYtId();
@@ -15,59 +18,52 @@ export function VideosWithScreenshotsAmountList() {
     });
   };
 
-  const { screenshots } = useScreenshotsForGallery({
-    ytChannelId,
-    ytVideoId: "",
-  });
+  const {
+    data: videoScreenshotCounts,
+    isLoading,
+    error,
+  } = useVideoScreenshotCounts(ytChannelId);
 
-  const groupedScreenshots = useMemo(() => {
-    if (!screenshots) return [];
-    const groups = new Map<string, { id: number }[]>();
-    screenshots.forEach((screenshot) => {
-      const videoId = screenshot.ytVideoId;
-      if (!groups.has(videoId)) {
-        groups.set(videoId, []);
-      }
-      groups.get(videoId)!.push({ id: screenshot.id });
-    });
-    const uniqueVideoIds = Array.from(groups.keys());
-    const videoGroups: VideoGroup[] = [];
-    uniqueVideoIds.forEach((videoId) => {
-      const groupScreenshots = groups.get(videoId)!;
-      videoGroups.push({
-        ytVideoId: videoId,
-        screenshots: groupScreenshots.map((s) => ({ id: s.id })),
-      });
-    });
-    return videoGroups;
-  }, [screenshots]);
-
-  const sortedGroupedScreenshots = useMemo(() => {
-    return [...groupedScreenshots].sort(
-      (a, b) => b.screenshots.length - a.screenshots.length
+  if (isLoading) {
+    return (
+      <div className="w-64 bg-gray-900 border-r border-gray-700 h-screen overflow-y-auto">
+        <div className="p-4">
+          <div className="mb-4 text-sm text-gray-300">Loading...</div>
+        </div>
+      </div>
     );
-  }, [groupedScreenshots]);
+  }
+
+  if (error) {
+    return (
+      <div className="w-64 bg-gray-900 border-r border-gray-700 h-screen overflow-y-auto">
+        <div className="p-4">
+          <div className="mb-4 text-sm text-red-400">Error loading data</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-64 bg-gray-900 border-r border-gray-700 h-screen overflow-y-auto">
       <div className="p-4">
         <div className="mb-4 text-sm text-gray-300">
-          Total: {sortedGroupedScreenshots.length}
+          Total: {videoScreenshotCounts?.length || 0}
         </div>
         <div className="space-y-2">
-          {sortedGroupedScreenshots.map((videoGroup) => (
+          {videoScreenshotCounts?.map((videoCount: VideoScreenshotCount) => (
             <button
-              key={videoGroup.ytVideoId}
-              onClick={() => handleVideoClick(videoGroup.ytVideoId)}
+              key={videoCount.ytVideoId}
+              onClick={() => handleVideoClick(videoCount.ytVideoId)}
               className={`w-full text-left p-3 rounded-lg transition-colors ${
-                location.pathname.endsWith(`/gallery/${videoGroup.ytVideoId}`)
+                location.pathname.endsWith(`/gallery/${videoCount.ytVideoId}`)
                   ? "bg-blue-600 text-white"
                   : "bg-gray-800 hover:bg-gray-700"
               }`}
             >
               <div className="flex items-center justify-between mb-1">
                 <div className="text-xs text-gray-400">
-                  {videoGroup.screenshots.length} screenshots
+                  {videoCount.screenshotCount} screenshots
                 </div>
               </div>
             </button>

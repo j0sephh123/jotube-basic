@@ -103,4 +103,23 @@ export class ScreenshotsApiService {
       where: { id },
     });
   }
+
+  async getVideoScreenshotCounts(ytChannelId: string) {
+    const results = await this.prismaService.$queryRaw<
+      { ytVideoId: string; screenshotCount: bigint }[]
+    >`
+      SELECT 
+        ytVideoId,
+        COUNT(*) as screenshotCount
+      FROM Screenshot
+      WHERE ytChannelId = ${ytChannelId}
+      GROUP BY ytVideoId
+      ORDER BY screenshotCount DESC
+    `;
+
+    return results.map((result) => ({
+      ytVideoId: result.ytVideoId,
+      screenshotCount: Number(result.screenshotCount),
+    }));
+  }
 }
