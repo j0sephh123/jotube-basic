@@ -5,6 +5,8 @@ import {
 import { ViewTypeToggle } from "@widgets/Dashboard";
 import { PaginationControl } from "@widgets/PaginationControl";
 import { Button } from "@shared/ui";
+import SelectSortDirection from "./SelectSortDirection";
+import { SortOrder } from "@shared/api";
 
 export default function ChannelsHeader() {
   const { setRequestBodyBatch } = useDashboardContext();
@@ -12,10 +14,7 @@ export default function ChannelsHeader() {
 
   const handleClearFilters = () => {
     setRequestBodyBatch({
-      min: 0,
-      max: null,
-      defaultMin: 0,
-      defaultMax: null,
+      sortOrder: SortOrder.Desc,
       page: 1,
     });
   };
@@ -23,7 +22,7 @@ export default function ChannelsHeader() {
   return (
     <div className="flex flex-wrap items-center justify-between gap-4">
       <div className="flex flex-wrap items-center gap-2">
-
+        <SelectSortDirection />
         <ViewTypeToggle />
         <PaginationControl total={data?.total || 0} />
       </div>
