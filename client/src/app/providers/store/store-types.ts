@@ -1,5 +1,4 @@
 /* eslint-disable import/no-internal-modules */
-import type { ViewType } from "@features/Dashboard";
 import type { PlaylistSlice } from "@features/Playlist";
 import type { SortOrder } from "@shared/api";
 import type { GalleryModalSlice } from "@features/Gallery/model";
@@ -44,18 +43,6 @@ export type StoryboardProcessingSlice = {
   clearStoryboardProcessingData: () => void;
 };
 
-export type DashboardSlice = {
-  requestBody: {
-    sortOrder: SortOrder;
-    page: number;
-    viewType: ViewType;
-  };
-  setRequestBody: <K extends keyof DashboardSlice["requestBody"]>(
-    key: K,
-    value: DashboardSlice["requestBody"][K]
-  ) => void;
-};
-
 export type VideosDashboardSlice = {
   videosRequestBody: {
     sortOrder: SortOrder;
@@ -78,7 +65,6 @@ export type VideosDashboardSlice = {
 export type Store = CarouselScreenshotsSlice &
   ThumbnailsProcessingSlice &
   StoryboardProcessingSlice &
-  DashboardSlice &
   VideosDashboardSlice &
   PlaylistSlice &
   ZoomSlice &

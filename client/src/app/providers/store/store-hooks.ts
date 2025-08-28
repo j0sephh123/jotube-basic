@@ -3,7 +3,6 @@ import { type PlaylistSlice } from "@features/Playlist";
 import { useStore } from "./store-root";
 import type { GalleryModalSlice } from "@features/Gallery/model";
 import type {
-  DashboardSlice,
   VideosDashboardSlice,
   StoryboardProcessingSlice,
   Store,
@@ -24,23 +23,10 @@ export const useThumbnailsSlice = makeScopedHook<
   ThumbnailsProcessingSlice
 >(useStore, (store: Store) => store);
 
-export const useDashboard = makeScopedHook<Store, DashboardSlice>(
-  useStore,
-  (store: Store) => store
-);
-
 export const useVideosDashboard = makeScopedHook<Store, VideosDashboardSlice>(
   useStore,
   (store: Store) => store
 );
-
-export const useDashboardStore = () => {
-  const dashboard = useDashboard();
-  return {
-    requestBody: dashboard.requestBody,
-    setRequestBody: dashboard.setRequestBody,
-  };
-};
 
 export const useVideosDashboardStore = () => {
   const videosDashboard = useVideosDashboard();
