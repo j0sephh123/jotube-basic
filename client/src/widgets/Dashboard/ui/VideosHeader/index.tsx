@@ -1,6 +1,6 @@
 import { SelectSortDirection } from "@widgets/Dashboard";
-import VideosPaginationControl from "./VideosPaginationControl";
 import { useVideosDashboardQuery } from "@features/Dashboard";
+import { PaginationControl } from "@widgets/PaginationControl";
 
 export default function VideosHeader() {
   const { data } = useVideosDashboardQuery();
@@ -15,7 +15,7 @@ export default function VideosHeader() {
           </span>
         </div>
         {data && data.total > 0 && (
-          <VideosPaginationControl total={data.total} />
+          <PaginationControl total={data.total} />
         )}
       </div>
     </div>
