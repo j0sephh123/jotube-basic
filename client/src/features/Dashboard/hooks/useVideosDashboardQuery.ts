@@ -1,4 +1,3 @@
-import { useParams } from "react-router-dom";
 import {
   useFetchVideosDashboard,
   useFinalPage,
@@ -10,8 +9,6 @@ import { useApolloClient } from "@apollo/client";
 export type VideosDashboardResponseData = VideosDashboardResponse;
 
 export function useVideosDashboardQuery() {
-  const params = useParams();
-
   const { finalSortOrder } = useFinalSortOrder();
   const { finalPage } = useFinalPage();
 
