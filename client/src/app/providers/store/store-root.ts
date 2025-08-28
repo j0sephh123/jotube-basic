@@ -20,8 +20,4 @@ export const useStore = create<StoreType>()((set, _get) => ({
   storyboardProcessingData: [],
   setStoryboardProcessingData: () => {},
   clearStoryboardProcessingData: () => {},
-  isModalOpen: false,
-  ytChannelId: "",
-  showCreateForm: false,
-  setYtChannelId: () => {},
 }));
