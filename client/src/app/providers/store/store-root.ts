@@ -5,7 +5,6 @@ import { createVideoModalSlice } from "../../../features/Upload/model/video-moda
 import type { Store as StoreType } from "./store-types";
 import { createCarouselScreenshotsSlice } from "@features/Screenshot/model";
 import { createThumbnailsSlice } from "@features/Thumbnails/model";
-import { createDashboardSlice } from "@features/Dashboard";
 import { createVideosDashboardSlice } from "@features/Dashboard";
 import { createGalleryModalSlice } from "@features/Gallery/model";
 import { createStoryboardProcessingSlice } from "../../../features/Storyboard/model/storyboard-processing-slice";
@@ -16,7 +15,6 @@ export const useStore = create<StoreType>()((set) => ({
   ...createGalleryModalSlice(set),
   ...createThumbnailsSlice(set),
   ...createCarouselScreenshotsSlice(set),
-  ...createDashboardSlice(set),
   ...createVideosDashboardSlice(set),
   ...createStoryboardProcessingSlice(set),
 }));

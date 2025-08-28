@@ -17,8 +17,11 @@ export function useFinalSortOrder() {
 
   const toggleSortOrder = useCallback(() => {
     const newSortOrder = finalSortOrder === "asc" ? "desc" : "asc";
-    setSearchParams({ sortOrder: newSortOrder });
-  }, [finalSortOrder, setSearchParams]);
+    setSearchParams({
+      ...Object.fromEntries(urlSearchParams),
+      sortOrder: newSortOrder,
+    });
+  }, [finalSortOrder, setSearchParams, urlSearchParams]);
 
   return { finalSortOrder, toggleSortOrder };
 }

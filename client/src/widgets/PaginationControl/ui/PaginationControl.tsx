@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useDashboardContext } from "@features/Dashboard";
+import { useFinalPage } from "@features/Dashboard";
 import { getPaginationRange } from "@widgets/PaginationControl";
 import { Button } from "@shared/ui";
 
@@ -10,13 +10,13 @@ type PaginationControlProps = {
 export default function PaginationControl({
   total,
 }: PaginationControlProps): JSX.Element {
-  const { requestBody, setRequestBody } = useDashboardContext();
+  const { finalPage, togglePage } = useFinalPage();
   const totalPages = Math.ceil(total / 12);
-  const currentPage = requestBody.page;
+  const currentPage = finalPage;
   const paginationRange = getPaginationRange(currentPage, totalPages, 1);
 
   const onPageChange = (page: number): void => {
-    setRequestBody("page", page);
+    togglePage(page);
   };
 
   return (

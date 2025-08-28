@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useDashboardContext, useFetchDashboard } from "@features/Dashboard";
+import { useFetchDashboard, useFinalPage } from "@features/Dashboard";
 import { ViewType as GraphQLViewType } from "@shared/api";
 import type { ChannelsDashboardResponse } from "@shared/api";
 import { useApolloClient } from "@apollo/client";
@@ -31,15 +31,15 @@ const mapViewTypeToGraphQL = (
 };
 
 export function useChannelsDashboardQuery() {
-  const { requestBody } = useDashboardContext();
   const params = useParams();
 
   const { finalSortOrder } = useFinalSortOrder();
+  const { finalPage } = useFinalPage();
 
   const { data, loading, error, refetch } = useFetchDashboard(
     {
       fetchDashboardInput: {
-        page: requestBody.page,
+        page: finalPage,
         viewType: mapViewTypeToGraphQL(params.viewType),
         sortOrder: finalSortOrder,
       },
