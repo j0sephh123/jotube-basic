@@ -6,29 +6,33 @@ import type {
   DashboardSlice,
   VideosDashboardSlice,
   StoryboardProcessingSlice,
+  Store,
 } from "./store-types";
 import type { ThumbnailsProcessingSlice } from "@features/Thumbnails/model";
 import type { CarouselScreenshotsSlice } from "@features/Screenshot/model";
 import type { VideoModalSlice } from "@features/Upload/model/video-modal-slice";
 import type { ZoomSlice } from "@features/Screenshot/model";
+import { makeScopedHook } from "@shared/lib";
 
-function makeScopedHook<Slice>() {
-  function useScoped(): Slice;
-  function useScoped<T>(selector: (s: Slice) => T): T;
-  function useScoped<T>(selector?: (s: Slice) => T): T | Slice {
-    const sel = (selector ?? ((s: Slice) => s as unknown as T)) as (
-      s: Slice
-    ) => T;
-    return useStore((s) => sel(s as unknown as Slice));
-  }
-  return useScoped;
-}
+export const useCarouselScreenshots = makeScopedHook<
+  Store,
+  CarouselScreenshotsSlice
+>(useStore, (store: Store) => store);
 
-export const useCarouselScreenshots =
-  makeScopedHook<CarouselScreenshotsSlice>();
-export const useThumbnailsSlice = makeScopedHook<ThumbnailsProcessingSlice>();
-export const useDashboard = makeScopedHook<DashboardSlice>();
-export const useVideosDashboard = makeScopedHook<VideosDashboardSlice>();
+export const useThumbnailsSlice = makeScopedHook<
+  Store,
+  ThumbnailsProcessingSlice
+>(useStore, (store: Store) => store);
+
+export const useDashboard = makeScopedHook<Store, DashboardSlice>(
+  useStore,
+  (store: Store) => store
+);
+
+export const useVideosDashboard = makeScopedHook<Store, VideosDashboardSlice>(
+  useStore,
+  (store: Store) => store
+);
 
 export const useDashboardStore = () => {
   const dashboard = useDashboard();
@@ -46,9 +50,27 @@ export const useVideosDashboardStore = () => {
   };
 };
 
-export const usePlaylist = makeScopedHook<PlaylistSlice>();
-export const useVideoModal = makeScopedHook<VideoModalSlice>();
-export const useStoryboardProcessing =
-  makeScopedHook<StoryboardProcessingSlice>();
-export const useGalleryModal = makeScopedHook<GalleryModalSlice>();
-export const useZoom = makeScopedHook<ZoomSlice>();
+export const usePlaylist = makeScopedHook<Store, PlaylistSlice>(
+  useStore,
+  (store: Store) => store
+);
+
+export const useVideoModal = makeScopedHook<Store, VideoModalSlice>(
+  useStore,
+  (store: Store) => store
+);
+
+export const useStoryboardProcessing = makeScopedHook<
+  Store,
+  StoryboardProcessingSlice
+>(useStore, (store: Store) => store);
+
+export const useGalleryModal = makeScopedHook<Store, GalleryModalSlice>(
+  useStore,
+  (store: Store) => store
+);
+
+export const useZoom = makeScopedHook<Store, ZoomSlice>(
+  useStore,
+  (store: Store) => store
+);
