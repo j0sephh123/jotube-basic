@@ -25,7 +25,6 @@ const statsTypes = [
   ViewType.HAS_STORYBOARDS,
 ];
 const fetchUploadsTypes = [ViewType.NO_UPLOADS];
-const downloadTypes = [ViewType.THUMBNAILS, ViewType.PROCESSED, ViewType.SAVED];
 const deleteChannelTypes = [ViewType.NO_UPLOADS];
 
 type Props = DashboardChannelResponse & {
@@ -86,14 +85,6 @@ export default function ChannelDashboardCard({
     <SyncUploadsButton lastSyncedAt={lastSyncedAt} ytChannelId={ytId} id={id} />
   );
 
-  const downloadButton = (
-    <Card.DownloadButton id={id} ytChannelId={ytId} onDownload={() => {}} />
-  );
-
-  const deleteUploadsButton = (
-    <Card.DeleteButton ytChannelId={ytId} onDelete={() => {}} />
-  );
-
   const deleteChannelbutton = (
     <DeleteChannel id={id} onSuccess={onChannelDelete} />
   );
@@ -150,7 +141,7 @@ export default function ChannelDashboardCard({
     }
     return deleteChannelTypes.includes(viewType)
       ? deleteChannelbutton
-      : deleteUploadsButton;
+      : null;
   };
 
   const getActionButtonSlot = () => {
@@ -190,9 +181,6 @@ export default function ChannelDashboardCard({
       }
       cardMenuSlot={cardMenu}
       actionButtonSlot={getActionButtonSlot()}
-      downloadButtonSlot={
-        downloadTypes.includes(viewType) ? downloadButton : undefined
-      }
       deleteButtonSlot={getDeleteButtonSlot()}
       playlistButtonSlot={playlistButton}
       onThumbnailClick={handleThumbnailClick}
