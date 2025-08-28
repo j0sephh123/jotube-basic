@@ -364,6 +364,16 @@ export class DashboardService {
     const total = filteredRows.length;
     const paginatedRows = filteredRows.slice(offset, offset + PER_PAGE);
 
+    const featuredScreenshotsData =
+      await this.prismaService.channelFeaturedScreenshot.findMany({
+        include: {
+          screenshot: true,
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+      });
+
     return {
       videos: paginatedRows.map(
         (r): DashboardVideo => ({
@@ -375,6 +385,14 @@ export class DashboardService {
           channelTitle: r.channelTitle,
           channelYtId: r.channelYtId,
           screenshotCount: Number(r.screenshotCount),
+          featuredScreenshots: featuredScreenshotsData
+            .filter((fs) => fs.screenshot.ytChannelId === r.channelYtId)
+            .map((fs) => ({
+              id: fs.screenshot.id,
+              second: fs.screenshot.second,
+              ytVideoId: fs.screenshot.ytVideoId,
+              src: `${fs.screenshot.ytChannelId}/${fs.screenshot.ytVideoId}/saved_screenshots/${fs.screenshot.ytVideoId}-${fs.screenshot.second}.png`,
+            })),
         }),
       ) as any,
       total,

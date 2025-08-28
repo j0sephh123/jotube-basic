@@ -1,16 +1,17 @@
-import { SelectSortDirection } from "@widgets/Dashboard";
 import { useVideosDashboardQuery } from "@features/Dashboard";
 import { PaginationControl } from "@widgets/PaginationControl";
 
-export default function VideosHeader() {
+type Props = {
+  leftSlot: React.ReactNode;
+};
+
+export default function VideosHeader({ leftSlot }: Props) {
   const { data } = useVideosDashboardQuery();
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-4">
-      <div className="flex items-center gap-2">
-        <SelectSortDirection />
-      </div>
+    <>
+      {leftSlot}
       <PaginationControl total={data?.total || 0} />
-    </div>
+    </>
   );
 }

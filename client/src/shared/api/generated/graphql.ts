@@ -774,7 +774,7 @@ export type FetchVideosDashboardQueryVariables = Exact<{
 }>;
 
 
-export type FetchVideosDashboardQuery = { __typename?: 'Query', fetchVideosDashboard: { __typename?: 'VideosDashboardResponse', total: number, videos: Array<{ __typename?: 'DashboardVideoResponse', id: number, ytId: string, title: string, src: string, channelId: number, channelTitle: string, channelYtId: string, screenshotCount: number }> } };
+export type FetchVideosDashboardQuery = { __typename?: 'Query', fetchVideosDashboard: { __typename?: 'VideosDashboardResponse', total: number, videos: Array<{ __typename?: 'DashboardVideoResponse', id: number, ytId: string, title: string, src: string, channelId: number, channelTitle: string, channelYtId: string, screenshotCount: number, featuredScreenshots: Array<{ __typename?: 'FeaturedScreenshotResponse', src: string, id: number, second: number, ytVideoId: string }> }> } };
 
 export type SearchVideosQueryVariables = Exact<{
   searchInput: SearchInput;
@@ -1501,6 +1501,12 @@ export const FetchVideosDashboardDocument = gql`
       channelTitle
       channelYtId
       screenshotCount
+      featuredScreenshots {
+        src
+        id
+        second
+        ytVideoId
+      }
     }
     total
   }

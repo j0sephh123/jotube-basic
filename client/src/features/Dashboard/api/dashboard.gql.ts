@@ -54,6 +54,12 @@ export const FETCH_VIDEOS_DASHBOARD = gql`
         channelTitle
         channelYtId
         screenshotCount
+        featuredScreenshots {
+          src
+          id
+          second
+          ytVideoId
+        }
       }
       total
     }

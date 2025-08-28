@@ -15,7 +15,7 @@ export default function VideosDashboardContainer({
       isError={!!error || !data || !data.videos}
       isEmpty={!data?.videos}
     >
-      {children(data?.videos as DashboardVideoResponse[])}
+      {children(data?.videos || [])}
     </StaticStates>
   );
 }

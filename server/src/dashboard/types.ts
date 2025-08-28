@@ -60,6 +60,12 @@ export interface DashboardVideo {
   channelTitle: string;
   channelYtId: string;
   screenshotCount: number;
+  featuredScreenshots: Array<{
+    id: number;
+    second: number;
+    ytVideoId: string;
+    src: string;
+  }>;
 }
 
 export interface VideosDashboardResponse {
