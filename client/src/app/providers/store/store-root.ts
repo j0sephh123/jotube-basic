@@ -24,5 +24,4 @@ export const useStore = create<StoreType>()((set, _get) => ({
   ytChannelId: "",
   showCreateForm: false,
   setYtChannelId: () => {},
-  setShowCreateForm: () => {},
 }));
