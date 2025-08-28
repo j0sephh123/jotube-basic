@@ -4,7 +4,6 @@ export { useGetPlaylist } from "@features/Playlist/hooks/useGetPlaylist";
 export { useUpdatePlaylist } from "@features/Playlist/hooks/useUpdatePlaylist";
 export { useDeletePlaylist } from "@features/Playlist/hooks/useDeletePlaylist";
 export { useUpdateChannelPlaylist } from "@features/Playlist/hooks/useUpdateChannelPlaylist";
-export { usePlaylist } from "@features/Playlist/hooks/usePlaylist";
 export { useRefetchPlaylist } from "@features/Playlist/hooks/useGetPlaylist";
 export { useGetPlaylistUploads } from "@features/Playlist/hooks/useGetPlaylistUploads";
 export { useRefetchPlaylistUploads } from "@features/Playlist/hooks/useGetPlaylistUploads";
