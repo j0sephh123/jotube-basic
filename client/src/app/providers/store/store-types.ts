@@ -43,29 +43,9 @@ export type StoryboardProcessingSlice = {
   clearStoryboardProcessingData: () => void;
 };
 
-export type VideosDashboardSlice = {
-  videosRequestBody: {
-    sortOrder: SortOrder;
-    page: number;
-  };
-  setVideosRequestBody: <
-    K extends keyof {
-      sortOrder: SortOrder;
-      page: number;
-    }
-  >(
-    key: K,
-    value: {
-      sortOrder: SortOrder;
-      page: number;
-    }[K]
-  ) => void;
-};
-
 export type Store = CarouselScreenshotsSlice &
   ThumbnailsProcessingSlice &
   StoryboardProcessingSlice &
-  VideosDashboardSlice &
   PlaylistSlice &
   ZoomSlice &
   VideoModalSlice &

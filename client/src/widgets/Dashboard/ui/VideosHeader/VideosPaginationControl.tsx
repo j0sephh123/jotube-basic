@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useVideosDashboardContext } from "@features/Dashboard";
+import { useFinalPage } from "@features/Dashboard";
 import { getPaginationRange } from "@widgets/PaginationControl";
 import { Button } from "@shared/ui";
 
@@ -10,14 +10,13 @@ type VideosPaginationControlProps = {
 export default function VideosPaginationControl({
   total,
 }: VideosPaginationControlProps): JSX.Element {
-  const { videosRequestBody, setVideosRequestBody } =
-    useVideosDashboardContext();
+  const { finalPage, togglePage } = useFinalPage();
   const totalPages = Math.ceil(total / 12);
-  const currentPage = videosRequestBody.page;
+  const currentPage = finalPage;
   const paginationRange = getPaginationRange(currentPage, totalPages, 1);
 
   const onPageChange = (page: number): void => {
-    setVideosRequestBody("page", page);
+    togglePage(page);
   };
 
   return (

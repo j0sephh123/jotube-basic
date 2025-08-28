@@ -1,7 +1,7 @@
 import { useChannelsDashboardQuery } from "@features/Dashboard";
 import { ViewTypeToggle } from "@widgets/Dashboard";
 import { PaginationControl } from "@widgets/PaginationControl";
-import SelectSortDirection from "./SelectSortDirection";
+import { SelectSortDirection } from "@widgets/Dashboard";
 
 export default function ChannelsHeader() {
   const { data } = useChannelsDashboardQuery();

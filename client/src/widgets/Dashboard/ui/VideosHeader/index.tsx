@@ -1,15 +1,8 @@
-import { RotateCcw } from "lucide-react";
-
-import SelectSortDirection from "./SelectSortDirection";
+import { SelectSortDirection } from "@widgets/Dashboard";
 import VideosPaginationControl from "./VideosPaginationControl";
-import {
-  useVideosDashboardContext,
-  useVideosDashboardQuery,
-} from "@features/Dashboard";
-import { Button } from "@shared/ui";
+import { useVideosDashboardQuery } from "@features/Dashboard";
 
 export default function VideosHeader() {
-  const { handleClearFilters } = useVideosDashboardContext();
   const { data } = useVideosDashboardQuery();
 
   return (
@@ -20,11 +13,6 @@ export default function VideosHeader() {
           <span className="text-sm whitespace-nowrap">
             {data?.total} results
           </span>
-
-          <Button onClick={handleClearFilters}>
-            <RotateCcw className="w-4 h-4" />
-            Reset
-          </Button>
         </div>
         {data && data.total > 0 && (
           <VideosPaginationControl total={data.total} />

@@ -9,3 +9,4 @@ export { default as ChannelDashboardCard } from "./ui/ChannelDashboardCard";
 export { default as ChannelsHeader } from "./ui/ChannelsHeader";
 export { default as VideosHeader } from "./ui/VideosHeader";
 export { default as DashboardWidget } from "./ui/DashboardWidget";
+export { default as SelectSortDirection } from "./ui/SelectSortDirection"; 

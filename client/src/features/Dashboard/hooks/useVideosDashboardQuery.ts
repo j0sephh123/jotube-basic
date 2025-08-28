@@ -1,19 +1,23 @@
-import { useQueryClient } from "@tanstack/react-query";
-import { useCallback } from "react";
-import { useVideosDashboardContext } from "..";
-import { useFetchVideosDashboardQuery } from "@shared/api";
+import { useParams } from "react-router-dom";
+import {
+  useFetchVideosDashboard,
+  useFinalPage,
+  useFinalSortOrder,
+} from "@features/Dashboard";
+import type { VideosDashboardResponse } from "@shared/api";
+import { useApolloClient } from "@apollo/client";
+
+export type VideosDashboardResponseData = VideosDashboardResponse;
 
 export function useVideosDashboardQuery() {
-  const { videosRequestBody } = useVideosDashboardContext();
+  const params = useParams();
 
-  const variables = {
-    page: videosRequestBody.page,
-    sortOrder: videosRequestBody.sortOrder.toLowerCase() as "asc" | "desc",
-  };
+  const { finalSortOrder } = useFinalSortOrder();
+  const { finalPage } = useFinalPage();
 
-  const { data, loading, error, refetch } = useFetchVideosDashboardQuery({
-    variables,
-    fetchPolicy: "cache-and-network",
+  const { data, loading, error, refetch } = useFetchVideosDashboard({
+    page: finalPage,
+    sortOrder: finalSortOrder.toLowerCase() as "asc" | "desc",
   });
 
   return {
@@ -24,18 +28,8 @@ export function useVideosDashboardQuery() {
   };
 }
 
-export function useRefetchVideosDashboard() {
-  const queryClient = useQueryClient();
-  const { videosRequestBody } = useVideosDashboardContext();
+export function useRefetchVideosDashboardQuery() {
+  const client = useApolloClient();
 
-  return useCallback(() => {
-    const variables = {
-      page: videosRequestBody.page,
-      sortOrder: videosRequestBody.sortOrder.toLowerCase() as "asc" | "desc",
-    };
-
-    queryClient.refetchQueries({
-      queryKey: ["fetchVideosDashboard", variables],
-    });
-  }, [queryClient, videosRequestBody]);
+  return () => client.refetchQueries({ include: ["FetchVideosDashboard"] });
 }

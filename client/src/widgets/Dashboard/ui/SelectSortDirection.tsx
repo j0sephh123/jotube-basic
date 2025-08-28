@@ -1,7 +1,6 @@
-import { Button } from "@shared/ui";
-import { useFinalSortOrder } from "@features/Dashboard";
-import type { FinalSortOrder } from "@features/Dashboard";
 import { ArrowUp, ArrowDown } from "lucide-react";
+import { useFinalSortOrder, type FinalSortOrder } from "@features/Dashboard";
+import { Button } from "@shared/ui";
 
 export default function SelectSortDirection(): JSX.Element {
   const { finalSortOrder, toggleSortOrder } = useFinalSortOrder();
