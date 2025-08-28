@@ -49,8 +49,8 @@ export const GET_CHANNEL_METADATA = gql`
 `;
 
 export const GET_CHANNEL_SCREENSHOTS = gql`
-  query GetChannelScreenshots($ytChannelId: String!) {
-    channelScreenshots(ytChannelId: $ytChannelId) {
+  query GetChannelScreenshots($input: GetScreenshotsInput!) { 
+    channelScreenshots(input: $input) {
       ytVideoId
       id
       second

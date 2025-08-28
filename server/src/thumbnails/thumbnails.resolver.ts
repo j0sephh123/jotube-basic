@@ -41,8 +41,8 @@ export class ThumbnailsResolver {
 
   @Query(() => [GetScreenshotsResponse])
   async channelScreenshots(
-    @Args('ytChannelId') ytChannelId: string,
+    @Args('input') input: GetScreenshotsInput,
   ): Promise<GetScreenshotsResponse[]> {
-    return this.thumbnailsApiService.getChannelScreenshots(ytChannelId);
+    return this.thumbnailsApiService.getChannelScreenshots(input);
   }
 }

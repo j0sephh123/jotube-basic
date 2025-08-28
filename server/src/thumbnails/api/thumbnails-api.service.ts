@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
 import { ThumbnailsManagerService } from 'src/thumbnails/manager/thumbnails-manager.service';
 import { ArtifactType } from '@prisma/client';
+import { GetScreenshotsInput } from '../dtos/get-screenshots.input';
 
 type Item = {
   id: number;
@@ -133,10 +134,10 @@ export class ThumbnailsApiService {
     };
   }
 
-  public async getChannelScreenshots(ytChannelId: string) {
+  public async getChannelScreenshots({ ytChannelIds }: GetScreenshotsInput) {
     const screenshots = await this.prismaService.screenshot.findMany({
       where: {
-        ytChannelId,
+        ytChannelId: { in: ytChannelIds },
       },
       orderBy: [{ ytVideoId: 'asc' }, { second: 'asc' }],
       select: {

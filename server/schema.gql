@@ -241,7 +241,7 @@ type PlaylistUploadsListUploadResponse {
 type Query {
   channelForPlaylist(ytChannelId: String!): ChannelForPlaylistResponse!
   channelMetadata(ytChannelId: String!): ChannelMetadataResponse!
-  channelScreenshots(ytChannelId: String!): [GetScreenshotsResponse!]!
+  channelScreenshots(input: GetScreenshotsInput!): [GetScreenshotsResponse!]!
   fetchDashboard(fetchDashboardInput: FetchDashboardInput!): ChannelsDashboardResponse!
   fetchVideosDashboard(page: Float, screenshotMax: Float, screenshotMin: Float, sortOrder: String): VideosDashboardResponse!
   getScreenshots(input: GetScreenshotsInput!): [GetScreenshotsResponse!]!

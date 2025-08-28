@@ -350,7 +350,6 @@ export type Query = {
   playlistDetails?: Maybe<PlaylistDetailsResponse>;
   playlistUploadsList: PlaylistUploadsListResponse;
   playlists: Array<PlaylistResponse>;
-  screenshots: Array<ScreenshotsCountsResponse>;
   searchChannels: Array<SearchChannelResult>;
   searchVideos: Array<SearchVideoResult>;
   statisticsCounts: StatisticsCountsResponse;
@@ -373,7 +372,7 @@ export type QueryChannelMetadataArgs = {
 
 
 export type QueryChannelScreenshotsArgs = {
-  ytChannelId: Scalars['String']['input'];
+  input: GetScreenshotsInput;
 };
 
 
@@ -452,12 +451,6 @@ export type SaveUploadResponse = {
   __typename?: 'SaveUploadResponse';
   message: Scalars['String']['output'];
   success: Scalars['Boolean']['output'];
-};
-
-export type ScreenshotsCountsResponse = {
-  __typename?: 'ScreenshotsCountsResponse';
-  count: Scalars['Float']['output'];
-  month: Scalars['String']['output'];
 };
 
 export type SearchChannelResult = {
@@ -703,7 +696,7 @@ export type GetChannelMetadataQueryVariables = Exact<{
 export type GetChannelMetadataQuery = { __typename?: 'Query', channelMetadata: { __typename?: 'ChannelMetadataResponse', id: number, title: string, fetchedUntilEnd: boolean, videoCount: number, lastSyncedAt?: string | null, videoArtifactsCount: number, savedArtifactsCount: number, thumbnailArtifactsCount: number, screenshotArtifactsCount: number, storyboardArtifactsCount: number, playlist?: { __typename?: 'PlaylistInfo', id: number, name: string } | null } };
 
 export type GetChannelScreenshotsQueryVariables = Exact<{
-  ytChannelId: Scalars['String']['input'];
+  input: GetScreenshotsInput;
 }>;
 
 
@@ -1051,8 +1044,8 @@ export type GetChannelMetadataLazyQueryHookResult = ReturnType<typeof useGetChan
 export type GetChannelMetadataSuspenseQueryHookResult = ReturnType<typeof useGetChannelMetadataSuspenseQuery>;
 export type GetChannelMetadataQueryResult = Apollo.QueryResult<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>;
 export const GetChannelScreenshotsDocument = gql`
-    query GetChannelScreenshots($ytChannelId: String!) {
-  channelScreenshots(ytChannelId: $ytChannelId) {
+    query GetChannelScreenshots($input: GetScreenshotsInput!) {
+  channelScreenshots(input: $input) {
     ytVideoId
     id
     second
@@ -1073,7 +1066,7 @@ export const GetChannelScreenshotsDocument = gql`
  * @example
  * const { data, loading, error } = useGetChannelScreenshotsQuery({
  *   variables: {
- *      ytChannelId: // value for 'ytChannelId'
+ *      input: // value for 'input'
  *   },
  * });
  */
