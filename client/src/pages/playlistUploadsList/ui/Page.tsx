@@ -6,8 +6,8 @@ import {
 import { UploadsListItem } from "@features/Upload";
 import { type PlaylistDetailsResponse } from "@shared/api";
 import { StaticStates } from "@shared/ui";
-import { Header } from "@widgets/PlaylistDetails";
 import { Link, useParams } from "react-router-dom";
+import { PlaylistDetailsHeader } from "@widgets/PlaylistDetails";
 
 export function PlaylistUploadsListPage() {
   const params = useParams<{
@@ -39,7 +39,7 @@ export function PlaylistUploadsListPage() {
       isError={!!error || !!playlistError}
       isEmpty={!data}
     >
-      <Header playlist={playlist?.playlistDetails as PlaylistDetailsResponse} />
+      <PlaylistDetailsHeader playlist={playlist?.playlistDetails as PlaylistDetailsResponse} />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
         {data?.playlistUploadsList?.uploads.map(
           ({

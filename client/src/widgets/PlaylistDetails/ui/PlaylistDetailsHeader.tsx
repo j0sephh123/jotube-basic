@@ -1,18 +1,21 @@
+/* eslint-disable boundaries/element-types */
 import type { PlaylistDetailsResponse } from "@shared/api";
 import { routes } from "@shared/routes";
 import { ArrowLeft } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { SmallCard } from "./SmallCard";
 import { useScreenshotsForCarousel } from "@features/Screenshot";
+import { useGalleryModal } from "@app/providers";
 
 type HeaderProps = {
   playlist: PlaylistDetailsResponse;
 };
 
-export default function Header({
+export default function PlaylistDetailsHeader({
   playlist: { id, name, channels },
 }: HeaderProps) {
   const handleGetScreenshots = useScreenshotsForCarousel();
+  const { setGalleryModal } = useGalleryModal();
 
   const { uploadsType } = useParams<{ uploadsType: "default" | "saved" }>();
 
@@ -67,7 +70,10 @@ export default function Header({
           />
           <SmallCard
             onClick={() =>
-              handleGetScreenshots(channels.map((channel) => channel.ytId))
+              setGalleryModal({
+                ytVideoId: "",
+                ytChannelIds: channels.map((channel) => channel.ytId),
+              })
             }
             title="Gallery"
             value={totalCounts.screenshotCount}

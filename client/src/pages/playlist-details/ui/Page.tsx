@@ -1,12 +1,15 @@
 import { PlaylistGrid } from "@entities/Playlist";
-import { Header, PlaylistDetailsContainer } from "@widgets/PlaylistDetails";
+import {
+  PlaylistDetailsHeader,
+  PlaylistDetailsContainer,
+} from "@widgets/PlaylistDetails";
 
 export const PlaylistDetailsPage = () => {
   return (
     <PlaylistDetailsContainer>
       {(playlist) => (
         <>
-          <Header playlist={playlist} />
+          <PlaylistDetailsHeader playlist={playlist} />
           <PlaylistGrid playlist={playlist} />
         </>
       )}
