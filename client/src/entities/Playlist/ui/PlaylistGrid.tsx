@@ -19,7 +19,6 @@ export default function PlaylistGrid({ playlist }: TableProps) {
           title={channel.title}
           src={channel.src}
           videoCount={channel.videoCount}
-          openPlaylistModal={() => {}}
           onChannelDelete={() => {}}
           featuredScreenshots={channel.featuredScreenshots}
           createdAt={playlist.createdAt}

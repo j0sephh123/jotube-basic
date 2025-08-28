@@ -7,10 +7,8 @@ import type {
   DashboardChannelResponse,
   FeaturedScreenshotResponse,
 } from "@shared/api";
-import { ListMusic, ExternalLink, Images } from "lucide-react";
-import clsx from "clsx";
-import { routes } from "@shared/routes";
-import { Link, useNavigate } from "react-router-dom";
+import { ListMusic, Images } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { useViewThumbnails } from "@features/Thumbnails";
 import { useGalleryModal } from "@app/providers";
 import {
@@ -29,7 +27,6 @@ const deleteChannelTypes = [ViewType.NO_UPLOADS];
 
 type Props = DashboardChannelResponse & {
   viewType: ViewType;
-  openPlaylistModal: (ytId: string) => void;
   onChannelDelete?: () => void;
   featuredScreenshots: FeaturedScreenshotResponse[];
 };
@@ -49,7 +46,6 @@ export default function ChannelDashboardCard({
   videoCount,
   viewType,
   playlist,
-  openPlaylistModal,
   onChannelDelete,
   featuredScreenshots,
 }: Props) {
@@ -93,31 +89,6 @@ export default function ChannelDashboardCard({
     <FetchUploadsButton ytChannelId={ytId} videoCount={videoCount} />
   );
 
-  const playlistButton = (
-    <div className="flex items-center gap-2">
-      <button
-        onClick={() => openPlaylistModal(ytId)}
-        className={clsx(
-          "btn btn-sm",
-          playlist ? "btn-primary" : "btn-ghost btn-secondary"
-        )}
-        title={playlist ? `Current: ${playlist.name}` : "Add to Playlist"}
-      >
-        <ListMusic className="w-4 h-4" />
-        {playlist && <span className="ml-1">{playlist.name}</span>}
-      </button>
-      {playlist && (
-        <Link
-          to={routes.playlist(playlist.id)}
-          className="btn btn-sm btn-ghost"
-          title={`Go to ${playlist.name} playlist`}
-        >
-          <ExternalLink className="w-4 h-4" />
-        </Link>
-      )}
-    </div>
-  );
-
   const playlistInfo = playlist && (
     <div className="flex items-center gap-2 text-sm text-gray-600">
       <ListMusic className="w-4 h-4" />
@@ -139,9 +110,7 @@ export default function ChannelDashboardCard({
     if (viewType === ViewType.NO_SCREENSHOTS) {
       return null;
     }
-    return deleteChannelTypes.includes(viewType)
-      ? deleteChannelbutton
-      : null;
+    return deleteChannelTypes.includes(viewType) ? deleteChannelbutton : null;
   };
 
   const getActionButtonSlot = () => {
@@ -182,7 +151,6 @@ export default function ChannelDashboardCard({
       cardMenuSlot={cardMenu}
       actionButtonSlot={getActionButtonSlot()}
       deleteButtonSlot={getDeleteButtonSlot()}
-      playlistButtonSlot={playlistButton}
       onThumbnailClick={handleThumbnailClick}
       featuredScreenshotsLength={featuredScreenshots.length}
       galleryButtonSlot={

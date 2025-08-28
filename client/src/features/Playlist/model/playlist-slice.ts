@@ -2,7 +2,6 @@ export type PlaylistSlice = {
   isModalOpen: boolean;
   ytChannelId: string | null;
   showCreateForm: boolean;
-  openPlaylistModal: (ytChannelId: string) => void;
   closePlaylistModal: () => void;
   setShowCreateForm: (show: boolean) => void;
 };
@@ -13,12 +12,6 @@ export const createPlaylistSlice = (
   isModalOpen: false,
   ytChannelId: null,
   showCreateForm: false,
-  openPlaylistModal: (ytChannelId: string) =>
-    set({
-      isModalOpen: true,
-      ytChannelId,
-      showCreateForm: false,
-    }),
   closePlaylistModal: () =>
     set({
       isModalOpen: false,

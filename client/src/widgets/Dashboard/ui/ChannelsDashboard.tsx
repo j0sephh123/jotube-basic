@@ -28,7 +28,6 @@ export default function ChannelsDashboard() {
             playlist={c.playlist}
             viewType={viewType}
             onChannelDelete={refetch}
-            openPlaylistModal={() => {}}
             featuredScreenshots={c.featuredScreenshots}
           />
         ))

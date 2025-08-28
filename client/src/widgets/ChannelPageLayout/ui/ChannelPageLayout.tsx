@@ -10,7 +10,7 @@ export default function ChannelPageLayout() {
 
   return (
     <div className="container mx-auto px-4 py-2">
-      <ChannelHeader openPlaylistModal={() => {}} />
+      <ChannelHeader />
       <div className="flex h-[85vh]">
         <div className="flex-1">
           <div

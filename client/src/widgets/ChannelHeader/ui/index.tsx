@@ -1,10 +1,6 @@
 import { useChannelMetadataQuery } from "@entities/Channel";
 import { useLocation } from "react-router-dom";
 import { useTypedChannelYtId } from "@features/Dashboard";
-import { ListMusic, ExternalLink } from "lucide-react";
-import clsx from "clsx";
-import { routes } from "@shared/routes";
-import { Link } from "react-router-dom";
 import HeaderLayout from "./HeaderLayout";
 import ChannelControls from "./ChannelControls";
 import {
@@ -18,11 +14,7 @@ import ViewThumbnails from "./ViewThumbnails";
 import { ViewScreenshots } from "@features/Thumbnails";
 import { ViewStoryboards } from "@widgets/Storyboard";
 
-type Props = {
-  openPlaylistModal: (ytId: string) => void;
-};
-
-const ChannelHeader = ({ openPlaylistModal }: Props) => {
+const ChannelHeader = () => {
   const ytChannelId = useTypedChannelYtId();
   const { pathname } = useLocation();
 
@@ -42,36 +34,10 @@ const ChannelHeader = ({ openPlaylistModal }: Props) => {
     screenshotArtifactsCount,
     id,
     thumbnailArtifactsCount,
-    playlist,
     videoCount,
     fetchedUntilEnd,
     storyboardArtifactsCount,
   } = metadata;
-
-  const playlistButton = (
-    <div className="flex items-center gap-2">
-      <button
-        onClick={() => openPlaylistModal(ytChannelId)}
-        className={clsx(
-          "btn btn-sm",
-          playlist ? "btn-primary" : "btn-ghost btn-secondary"
-        )}
-        title={playlist ? `Current: ${playlist.name}` : "Add to Playlist"}
-      >
-        <ListMusic className="w-4 h-4" />
-        {playlist && <span className="ml-1">{playlist.name}</span>}
-      </button>
-      {playlist && (
-        <Link
-          to={routes.playlist(playlist.id)}
-          className="btn btn-sm btn-ghost"
-          title={`Go to ${playlist.name} playlist`}
-        >
-          <ExternalLink className="w-4 h-4" />
-        </Link>
-      )}
-    </div>
-  );
 
   return (
     <div className="bg-base-200 rounded-lg px-6 pt-16 shadow-md">
@@ -82,7 +48,6 @@ const ChannelHeader = ({ openPlaylistModal }: Props) => {
               <ChannelLink ytId={ytChannelId} where="saved">
                 <h2 className="text-xl font-bold pr-4">{title}</h2>
               </ChannelLink>
-              {playlistButton}
               <CardMenu id={id} ytId={ytChannelId} />
             </>
           }
