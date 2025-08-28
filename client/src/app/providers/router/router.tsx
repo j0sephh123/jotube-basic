@@ -2,13 +2,12 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "@app/Layout";
 import { ChannelPageLayout } from "@widgets/ChannelPageLayout";
 import { DashboardWidget, DashboardWrapper } from "@widgets/Dashboard";
-import { GalleryVideoPage } from "@pages/gallery-video";
 import { StoryboardPage } from "@pages/storyboard";
 import { ImageNavigatorPage } from "@pages/image-navigator";
 import { PlaylistsPage } from "@pages/playlists";
 import { PlaylistDetailsPage } from "@pages/playlist-details";
 import { NotFound } from "@shared/ui";
-import { GalleryLayout } from "@features/Gallery";
+import { GalleryVideosList } from "@features/Gallery";
 import { UploadsDecorator } from "@features/Upload";
 import { PlaylistUploadsListPage } from "@pages/playlistUploadsList";
 import { PlaylistWrapper } from "@widgets/PlaylistWrapper";
@@ -31,10 +30,7 @@ export default function Router() {
             <Route index element={<UploadsDecorator type="default" />} />
             <Route path="saved" element={<UploadsDecorator type="saved" />} />
             <Route path="storyboard" element={<StoryboardPage />} />
-            <Route path="gallery" element={<GalleryLayout />}>
-              <Route index element={<></>} />
-              <Route path=":ytVideoId" element={<GalleryVideoPage />} />
-            </Route>
+            <Route path="gallery" element={<GalleryVideosList />} />
           </Route>
           <Route path="/playlists" element={<PlaylistWrapper />}>
             <Route index element={<PlaylistsPage />} />
