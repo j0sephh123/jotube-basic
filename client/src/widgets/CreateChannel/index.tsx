@@ -20,7 +20,6 @@ export default function CreateChannel() {
 
   const [createChannelMutation] = useCreateChannelMutation({
     onCompleted({ createChannel: { ytChannelId, message } }) {
-      console.log({ message });
       switch (message) {
         case ChannelMessage.CreatedSuccessfully:
           setMessage("Channel created successfully!");
