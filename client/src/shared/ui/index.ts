@@ -40,3 +40,4 @@ export { GalleryModal } from "./GalleryModal";
 export { GoBack } from "./GoBack";
 export { default as Grid } from "./Grid";
 export * from "./static";
+export { default as Notification } from "../../widgets/Notification/Notification";

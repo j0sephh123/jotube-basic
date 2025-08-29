@@ -19,6 +19,7 @@
   "dependencies": {
     "@apollo/client": "^3.13.9",
     "@radix-ui/react-popover": "^1.1.6",
+    "@radix-ui/react-toast": "^1.2.15",
     "@tailwindcss/vite": "^4.0.7",
     "@tanstack/query-async-storage-persister": "^5.83.0",
     "@tanstack/query-core": "^5.83.0",
@@ -39,6 +40,7 @@
     "tailwindcss": "^4.0.7",
     "tailwindcss-animate": "^1.0.7",
     "use-sync-external-store": "^1.5.0",
+    "valtio": "^2.1.7",
     "yet-another-react-lightbox": "^3.21.7",
     "zustand": "^5.0.3"
   },

@@ -5,6 +5,7 @@ import {
   ZoomModal,
   VideoModal,
   GalleryModal,
+  Notification,
 } from "@shared/ui";
 import { ThumbnailsProcessing, useThumbnailsSlice } from "@features/Thumbnails";
 import { StoryboardProcessing } from "@features/Storyboard";
@@ -27,6 +28,7 @@ export default function Layout(): JSX.Element {
         <StoryboardProcessing />
         <ZoomModal />
         <GalleryModal />
+        <Notification />
       </DialogProvider>
       <VideoModal />
     </>

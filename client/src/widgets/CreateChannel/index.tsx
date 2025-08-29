@@ -1,3 +1,4 @@
+/* eslint-disable import/no-internal-modules */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PlusIcon } from "lucide-react";
@@ -10,6 +11,7 @@ import { Modal } from "@shared/ui";
 import { routes } from "@shared/routes";
 import { Actions, CreateChannelForm } from "./ui";
 import { useCreateChannelForm } from "./hooks";
+import { setMessage } from "@widgets/Notification/notificationStore";
 
 export default function CreateChannel() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -21,7 +23,7 @@ export default function CreateChannel() {
       console.log({ message });
       switch (message) {
         case ChannelMessage.CreatedSuccessfully:
-          // success("Channel created successfully!");
+          setMessage("Channel created successfully!");
           refetchChannelsDashboardQuery();
           handleCloseModal();
           return;
@@ -30,11 +32,11 @@ export default function CreateChannel() {
           navigate(routes.channel(ytChannelId as string));
           return;
         case ChannelMessage.InvalidVideoId:
-          // error("Invalid YouTube video ID");
+          setMessage("Invalid YouTube video ID");
           handleCloseModal();
           return;
         case ChannelMessage.FailedToCreate:
-          // error("Failed to create channel");
+          setMessage("Failed to create channel");
           handleCloseModal();
           return;
         default:
