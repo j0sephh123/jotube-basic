@@ -1,17 +1,13 @@
-import { ToastProvider } from "./toast";
+import { type PropsWithChildren } from "react";
 import GQLProvider from "./GQLProvider";
 import RestProvider from "./RestProvider";
 
 export default function AppProvider({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: PropsWithChildren) {
   return (
-    <ToastProvider>
-      <GQLProvider>
-        <RestProvider>{children}</RestProvider>
-      </GQLProvider>
-    </ToastProvider>
+    <GQLProvider>
+      <RestProvider>{children}</RestProvider>
+    </GQLProvider>
   );
 }

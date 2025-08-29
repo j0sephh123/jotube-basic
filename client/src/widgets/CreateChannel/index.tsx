@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useToast } from "@shared/hooks";
 import { useNavigate } from "react-router-dom";
 import { PlusIcon } from "lucide-react";
 import {
@@ -14,15 +13,15 @@ import { useCreateChannelForm } from "./hooks";
 
 export default function CreateChannel() {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { success, error } = useToast();
   const navigate = useNavigate();
   const refetchChannelsDashboardQuery = useRefetchChannelsDashboardQuery();
 
   const [createChannelMutation] = useCreateChannelMutation({
     onCompleted({ createChannel: { ytChannelId, message } }) {
+      console.log({ message });
       switch (message) {
         case ChannelMessage.CreatedSuccessfully:
-          success("Channel created successfully!");
+          // success("Channel created successfully!");
           refetchChannelsDashboardQuery();
           handleCloseModal();
           return;
@@ -31,11 +30,11 @@ export default function CreateChannel() {
           navigate(routes.channel(ytChannelId as string));
           return;
         case ChannelMessage.InvalidVideoId:
-          error("Invalid YouTube video ID");
+          // error("Invalid YouTube video ID");
           handleCloseModal();
           return;
         case ChannelMessage.FailedToCreate:
-          error("Failed to create channel");
+          // error("Failed to create channel");
           handleCloseModal();
           return;
         default:
