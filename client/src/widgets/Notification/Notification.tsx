@@ -14,11 +14,11 @@ export default function Notification() {
           }
         }}
         duration={3000}
-        className="card shadow-xl bg-base-100 border border-base-300 p-4 w-96 max-w-[100vw]"
+        className="card shadow-xl bg-base-100 border-2 border-primary p-4 w-96 max-w-[100vw]"
       >
         <ToastTitle className="font-semibold">{message}</ToastTitle>
       </Toast>
-      <ToastViewport className="fixed bottom-4 right-4 z-[2147483647] flex flex-col gap-2 w-96 max-w-[100vw]" />
+      <ToastViewport className="fixed top-4 right-4 z-[2147483647] flex flex-col gap-2 w-96 max-w-[100vw]" />
     </>
   );
 }

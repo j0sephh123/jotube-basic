@@ -11,6 +11,7 @@ import { ThumbnailsProcessing, useThumbnailsSlice } from "@features/Thumbnails";
 import { StoryboardProcessing } from "@features/Storyboard";
 import CreateChannel from "@widgets/CreateChannel";
 import { Navbar } from "@widgets/Navbar";
+import PlaylistModal from "@widgets/PlaylistModal";
 
 export default function Layout(): JSX.Element {
   const { metadata } = useThumbnailsSlice();
@@ -29,6 +30,7 @@ export default function Layout(): JSX.Element {
         <ZoomModal />
         <GalleryModal />
         <Notification />
+        <PlaylistModal />
       </DialogProvider>
       <VideoModal />
     </>

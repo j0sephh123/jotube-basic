@@ -9,9 +9,10 @@ import {
 import { useRefetchChannelsDashboardQuery } from "@features/Dashboard";
 import { Modal } from "@shared/ui";
 import { routes } from "@shared/routes";
-import { Actions, CreateChannelForm } from "./ui";
-import { useCreateChannelForm } from "./hooks";
+import { Actions, Label, Title } from "./ui";
+import { useCreateEntityForm } from "@shared/ui";
 import { setMessage } from "@widgets/Notification/notificationStore";
+import CreateEntityForm from "@shared/ui/CreateEntityForm";
 
 export default function CreateChannel() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -47,23 +48,23 @@ export default function CreateChannel() {
     },
   });
 
+  const { value, inputRef, handleInputChange, clearInput } =
+    useCreateEntityForm(isModalVisible);
+
   const handleCloseModal = () => {
     setIsModalVisible(false);
     clearInput();
   };
 
-  const handleChannelCreate = async ({ ytVideoId }: { ytVideoId: string }) => {
+  const handleChannelCreate = async ({ value }: { value: string }) => {
     await createChannelMutation({
       variables: {
         createChannelInput: {
-          ytVideoId,
+          ytVideoId: value,
         },
       },
     });
   };
-
-  const { ytVideoId, inputRef, handleInputChange, clearInput } =
-    useCreateChannelForm(isModalVisible);
 
   return (
     <>
@@ -79,18 +80,28 @@ export default function CreateChannel() {
         maxWidth="600px"
         maxHeight="500px"
       >
-        <CreateChannelForm
-          ytVideoId={ytVideoId}
+        <CreateEntityForm
+          value={value}
           inputRef={inputRef}
           handleInputChange={handleInputChange}
+          placeholder="Enter YouTube video ID"
           actions={
             <Actions
               onClose={handleCloseModal}
               handleSubmit={() => {
-                handleChannelCreate({ ytVideoId });
+                handleChannelCreate({ value });
               }}
             />
           }
+          description={
+            <label className="label py-1">
+              <span className="label-text-alt text-xs">
+                Example: dQw4w9WgXcQ ({value.length} characters)
+              </span>
+            </label>
+          }
+          title={<Title />}
+          label={<Label />}
         />
       </Modal>
     </>

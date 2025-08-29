@@ -1,4 +1,4 @@
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, gql, useApolloClient } from "@apollo/client";
 import type { GetPlaylistsQuery } from "@shared/api";
 
 // Local GraphQL query to avoid entities dependency
@@ -25,4 +25,9 @@ export const useGetPlaylists = () => {
     ...query,
     data: query.data?.playlists,
   };
+};
+
+export function useRefetchPlaylists() {
+  const apolloClient = useApolloClient();
+  return () => apolloClient.refetchQueries({ include: ["GetPlaylists"] });  
 };

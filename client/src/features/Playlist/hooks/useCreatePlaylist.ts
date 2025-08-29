@@ -1,6 +1,5 @@
 import { useMutation, gql } from "@apollo/client";
 
-// Local GraphQL mutation to avoid entities dependency
 const CREATE_PLAYLIST = gql`
   mutation CreatePlaylist($createPlaylistInput: CreatePlaylistInput!) {
     createPlaylist(createPlaylistInput: $createPlaylistInput) {

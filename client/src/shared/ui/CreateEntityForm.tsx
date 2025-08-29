@@ -1,39 +1,42 @@
-import Title from "./Title";
-import Label from "./Label";
+import { type ReactNode } from "react";
 
 type Props = {
   actions: React.ReactNode;
-  ytVideoId: string;
+  value: string;
   inputRef: React.RefObject<HTMLInputElement>;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  description?: ReactNode;
+  placeholder: string;
+  title: ReactNode;
+  label: ReactNode;
 };
 
-export default function CreateChannelForm({
+export default function CreateEntityForm({
   actions,
-  ytVideoId,
+  value,
   inputRef,
   handleInputChange,
+  description,
+  placeholder,
+  title,
+  label,
 }: Props) {
   return (
     <div className="bg-transparent p-4 w-[90%] mx-auto min-h-[400px] flex flex-col justify-center">
-      <Title />
+      {title}
       <div className="form-control w-full mb-4">
-        <Label />
+        {label}
         <div className="relative">
           <input
             type="text"
             ref={inputRef}
             className="input input-bordered w-full bg-base-100 focus:ring-2 h-12 text-lg focus:ring-primary"
             onChange={handleInputChange}
-            value={ytVideoId}
-            placeholder="Enter YouTube video ID"
+            value={value}
+            placeholder={placeholder}
           />
         </div>
-        <label className="label py-1">
-          <span className="label-text-alt text-xs">
-            Example: dQw4w9WgXcQ ({ytVideoId.length} characters)
-          </span>
-        </label>
+        {description}
       </div>
       {actions}
     </div>

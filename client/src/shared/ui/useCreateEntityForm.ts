@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 
-export function useCreateChannelForm(isModalVisible: boolean) {
-  const [ytVideoId, setVideoId] = useState("");
+export function useCreateEntityForm(isModalVisible: boolean) {
+  const [value, setValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -14,15 +14,15 @@ export function useCreateChannelForm(isModalVisible: boolean) {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim();
-    setVideoId(value);
+    setValue(value);
   };
 
   const clearInput = () => {
-    setVideoId("");
+    setValue("");
   };
 
   return {
-    ytVideoId,
+    value,
     inputRef,
     handleInputChange,
     clearInput,
