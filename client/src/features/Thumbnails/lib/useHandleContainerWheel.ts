@@ -10,10 +10,10 @@ export default function useHandleContainerWheel() {
   const { handlePrevious, handleNext } = usePaginate();
   const { currentIndex } = useThumbnailsSlice();
   const thumbnailsCount = useThumbnailsCount();
-  const { isVisible: isZoomModalVisible } = useZoom();
+  const { url } = useZoom();
   const handleSubmit = useSubmit();
   return (event: WheelEvent) => {
-    if (isZoomModalVisible) return;
+    if (url) return;
 
     event.preventDefault();
     const deltaY = event.deltaY;
