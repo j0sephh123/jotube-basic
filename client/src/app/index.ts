@@ -1,1 +1,1 @@
-export { useVideoModal } from "./providers/store/store-hooks";
+export { useVideoModalState as useVideoModal } from "./features/Upload/model/videoModalStore";

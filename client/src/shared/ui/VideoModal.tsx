@@ -2,11 +2,13 @@
 /* eslint-disable import/no-internal-modules */
 import { createPortal } from "react-dom";
 import { formatSecondsToTime } from "@shared/utils";
-import { useVideoModal } from "@app/providers/store/store-hooks";
+import {
+  useVideoModalState,
+  closeVideoModal,
+} from "@features/Upload/model/videoModalStore";
 
 export default function VideoModal() {
-  const { isVideoModalVisible, embedUrl, startTime, closeVideoModal } =
-    useVideoModal();
+  const { isVideoModalVisible, embedUrl, startTime } = useVideoModalState();
 
   if (!isVideoModalVisible) return null;
 

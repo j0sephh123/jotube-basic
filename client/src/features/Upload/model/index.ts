@@ -1,1 +1,1 @@
-export * from "./video-modal-slice";
+export * from "./videoModalStore";

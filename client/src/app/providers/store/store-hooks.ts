@@ -3,18 +3,12 @@ import { useStore } from "./store-root";
 import type { GalleryModalSlice } from "@features/Gallery/model";
 import type { StoryboardProcessingSlice, Store } from "./store-types";
 import type { ThumbnailsProcessingSlice } from "@features/Thumbnails/model";
-import type { VideoModalSlice } from "@features/Upload/model/video-modal-slice";
 import { makeScopedHook } from "@shared/lib";
 
 export const useThumbnailsSlice = makeScopedHook<
   Store,
   ThumbnailsProcessingSlice
 >(useStore, (store: Store) => store);
-
-export const useVideoModal = makeScopedHook<Store, VideoModalSlice>(
-  useStore,
-  (store: Store) => store
-);
 
 export const useStoryboardProcessing = makeScopedHook<
   Store,

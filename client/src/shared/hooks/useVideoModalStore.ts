@@ -1,12 +1,14 @@
 /* eslint-disable boundaries/element-types */
-import { useVideoModal } from "@app/providers";
+import {
+  setVideoModal,
+  closeVideoModal,
+  getEmbedUrl,
+} from "@features/Upload/model/videoModalStore";
 
 export const useVideoModalStore = () => {
-  const { setVideoModal, closeVideoModal, getEmbedUrl } = useVideoModal();
-
   const openVideoModal = (videoId: string, startTime: number) => {
     const embedUrl = getEmbedUrl(videoId, startTime);
-    setVideoModal(true, videoId, embedUrl, startTime, () => {});
+    setVideoModal(true, videoId, embedUrl, startTime);
   };
 
   return {

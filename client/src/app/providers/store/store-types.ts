@@ -1,8 +1,5 @@
 /* eslint-disable import/no-internal-modules */
-import type { PlaylistSlice } from "@features/Playlist";
-import type { SortOrder } from "@shared/api";
 import type { GalleryModalSlice } from "@features/Gallery/model";
-import type { VideoModalSlice } from "../../../features/Upload/model/video-modal-slice";
 import type { ThumbnailsProcessingSlice } from "@features/Thumbnails/model";
 
 export type ThumbnailItem = {
@@ -43,6 +40,4 @@ export type StoryboardProcessingSlice = {
 
 export type Store = ThumbnailsProcessingSlice &
   StoryboardProcessingSlice &
-  PlaylistSlice &
-  VideoModalSlice &
   GalleryModalSlice;
