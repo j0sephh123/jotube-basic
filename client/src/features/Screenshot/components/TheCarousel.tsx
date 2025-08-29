@@ -2,7 +2,8 @@ import { Lightbox } from "@shared/ui";
 import {
   setSlides,
   useCarouselScreenshotsState,
-} from "../model/carouselScreenshotsStore";
+} from "@features/Screenshot";
+import type { SlideImage } from "yet-another-react-lightbox";
 
 export default function TheCarousel() {
   const { slides } = useCarouselScreenshotsState();
@@ -10,5 +11,11 @@ export default function TheCarousel() {
 
   if (slides.length === 0) return null;
 
-  return <Lightbox slides={slides} open={slides.length > 0} close={onClose} />;
+  return (
+    <Lightbox
+      slides={slides as SlideImage[]}
+      open={slides.length > 0}
+      close={onClose}
+    />
+  );
 }

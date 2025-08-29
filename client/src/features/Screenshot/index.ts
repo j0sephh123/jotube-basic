@@ -13,3 +13,4 @@ export { useDeleteWithConfirm } from "./hooks/useDeleteWithConfirm";
 export { useZoomScreenshot } from "./hooks/useZoomScreenshot";
 export { useFeaturedScreenshots } from "./hooks/useFeaturedScreenshots";
 export { useScreenshotsForCarousel } from "./hooks/useScreenshotsForCarousel";
+export * from "./model";
