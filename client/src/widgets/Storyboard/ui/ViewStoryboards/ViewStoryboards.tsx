@@ -1,6 +1,6 @@
 import { Button } from "@shared/ui";
 import { useUploadsWithStoryboard } from "@features/Storyboard";
-import { useStoryboardProcessing } from "@shared/hooks";
+import { setStoryboardProcessingData } from "@features/Storyboard/model/storyboardStore";
 
 type Props = {
   ytChannelId: string;
@@ -11,7 +11,6 @@ export default function ViewStoryboards({
   ytChannelId,
   storyboardArtifactsCount,
 }: Props) {
-  const { setStoryboardProcessingData } = useStoryboardProcessing();
   const { data: storyboardsData, refetch: getStoryboards } =
     useUploadsWithStoryboard();
 

@@ -1,12 +1,6 @@
-/* eslint-disable import/no-internal-modules */
-import type { ThumbnailsProcessingSlice } from "@features/Thumbnails/model";
+import { proxy, useSnapshot } from "valtio";
 
-export type ThumbnailItem = {
-  ytChannelId: string;
-  ytVideoId: string;
-};
-
-export type StoryboardProcessingSlice = {
+type State = {
   storyboardProcessingData: Array<{
     ytChannelId: string;
     uploads: Array<{
@@ -31,10 +25,20 @@ export type StoryboardProcessingSlice = {
       };
     }>;
   }>;
-  setStoryboardProcessingData: (
-    data: StoryboardProcessingSlice["storyboardProcessingData"]
-  ) => void;
-  clearStoryboardProcessingData: () => void;
 };
 
-export type Store = ThumbnailsProcessingSlice & StoryboardProcessingSlice;
+const state = proxy<State>({
+  storyboardProcessingData: [],
+});
+
+export const setStoryboardProcessingData = (
+  data: State["storyboardProcessingData"]
+) => {
+  state.storyboardProcessingData = data;
+};
+
+export const clearStoryboardProcessingData = () => {
+  state.storyboardProcessingData = [];
+};
+
+export const useStoryboardState = () => useSnapshot(state);

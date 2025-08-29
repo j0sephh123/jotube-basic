@@ -1,3 +1,1 @@
-import { useThumbnailsSlice as useStoreThumbnailsSlice } from "@app/providers/store/store";
-
-export const useThumbnailsSlice = useStoreThumbnailsSlice;
+export { useThumbnailsState as useThumbnailsSlice } from "../model/thumbnailsStore";

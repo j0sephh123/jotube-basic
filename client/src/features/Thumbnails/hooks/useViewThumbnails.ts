@@ -1,7 +1,7 @@
-import { useGetUploadsWithThumbnails, useThumbnailsSlice } from "@features/Thumbnails";
+import { useGetUploadsWithThumbnails } from "@features/Thumbnails";
+import { setThumbnailsProcessingData } from "@features/Thumbnails/model/thumbnailsStore";
 
-  export default function useViewThumbnails(id: number) {
-  const { setThumbnailsProcessingData } = useThumbnailsSlice();
+export default function useViewThumbnails(id: number) {
   const getUploadsWithThumbnails = useGetUploadsWithThumbnails();
 
   return async () => {

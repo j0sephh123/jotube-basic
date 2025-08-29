@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { Modal } from "@shared/ui";
+import { clearThumbnailsProcessingData } from "@features/Thumbnails/model/thumbnailsStore";
 import {
   Footer,
   Grid,
@@ -14,8 +15,7 @@ import {
 } from "@features/Thumbnails";
 
 export default function ThumbnailsProcessingContent() {
-  const { clearThumbnailsProcessingData, thumbnailsProcessingData } =
-    useThumbnailsSlice();
+  const { thumbnailsProcessingData } = useThumbnailsSlice();
 
   const containerRef = useRef<HTMLDivElement>(null);
 

@@ -6,14 +6,16 @@ import {
   GRID_DATA,
   SPACING,
 } from "@features/Thumbnails";
+import {
+  toggleSelectedImage,
+  setSelectedImages,
+} from "@features/Thumbnails/model/thumbnailsStore";
 import { generateThumbnailUrl } from "@shared/utils";
 
 export default function Grid(): JSX.Element {
   const {
     currentIndex: batch,
     selectedImages,
-    toggleSelectedImage,
-    setSelectedImages,
     metadata: { ytChannelId, ytVideoId },
   } = useThumbnailsSlice();
 
@@ -38,7 +40,7 @@ export default function Grid(): JSX.Element {
             key={index}
             index={index}
             selectedImages={selectedImages}
-            handleSelect={(i, b, p) => toggleSelectedImage(i, b, p)}
+            handleSelect={(i, b) => toggleSelectedImage(i, b)}
             handleZoom={handleZoom}
             batch={batch}
             perRow={COLUMNS}

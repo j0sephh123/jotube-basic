@@ -1,1 +1,1 @@
-export * from "./thumbnails-slice";
+export * from "./thumbnailsStore";

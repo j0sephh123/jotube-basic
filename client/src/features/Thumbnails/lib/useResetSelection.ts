@@ -1,11 +1,12 @@
-import { useThumbnailsSlice } from "@features/Thumbnails";
+import {
+  setSelectedImages,
+  setCurrentIndex,
+} from "@features/Thumbnails/model/thumbnailsStore";
 import { useEffect } from "react";
 
 export default function useResetSelection(
   containerRef: React.RefObject<HTMLDivElement>
 ) {
-  const { setSelectedImages, setCurrentIndex } = useThumbnailsSlice();
-
   useEffect(() => {
     setSelectedImages([]);
     setCurrentIndex(0);

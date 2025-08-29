@@ -1,4 +1,8 @@
-import { useStoryboardProcessing } from "@shared/hooks";
+import {
+  setStoryboardProcessingData,
+  clearStoryboardProcessingData,
+  useStoryboardState,
+} from "./model/storyboardStore";
 import { useSaveUpload } from "@features/Upload";
 import { useRefetchChannelMetadata } from "@entities/Channel";
 import { useDeleteUploads } from "@features/Upload";
@@ -7,11 +11,7 @@ import { Modal } from "@shared/ui";
 import { useRef, useEffect } from "react";
 
 export default function StoryboardProcessing() {
-  const {
-    storyboardProcessingData,
-    clearStoryboardProcessingData,
-    setStoryboardProcessingData,
-  } = useStoryboardProcessing();
+  const { storyboardProcessingData } = useStoryboardState();
 
   const firstChannel = storyboardProcessingData[0];
   const firstUpload = firstChannel?.uploads[0];

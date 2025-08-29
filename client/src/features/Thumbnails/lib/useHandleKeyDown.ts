@@ -5,10 +5,11 @@ import {
   useThumbnailsCount,
   usePaginate,
 } from "@features/Thumbnails";
+import { clearThumbnailsProcessingData } from "@features/Thumbnails/model/thumbnailsStore";
 
 export default function useHandleKeyDown() {
   const { handlePrevious, handleNext } = usePaginate();
-  const { currentIndex, clearThumbnailsProcessingData } = useThumbnailsSlice();
+  const { currentIndex } = useThumbnailsSlice();
   const thumbnailsCount = useThumbnailsCount();
   const { url } = useZoom();
   const handleSubmit = useSubmit();

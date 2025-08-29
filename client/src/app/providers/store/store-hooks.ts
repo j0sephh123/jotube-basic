@@ -1,15 +1,4 @@
 /* eslint-disable import/no-internal-modules */
-import { useStore } from "./store-root";
-import type { StoryboardProcessingSlice, Store } from "./store-types";
-import type { ThumbnailsProcessingSlice } from "@features/Thumbnails/model";
-import { makeScopedHook } from "@shared/lib";
+export { useThumbnailsState as useThumbnailsSlice } from "@features/Thumbnails/model";
 
-export const useThumbnailsSlice = makeScopedHook<
-  Store,
-  ThumbnailsProcessingSlice
->(useStore, (store: Store) => store);
-
-export const useStoryboardProcessing = makeScopedHook<
-  Store,
-  StoryboardProcessingSlice
->(useStore, (store: Store) => store);
+export { useStoryboardState as useStoryboardProcessing } from "@features/Storyboard/model";
