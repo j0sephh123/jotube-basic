@@ -1,10 +1,10 @@
 /* eslint-disable boundaries/element-types */
 import { Link } from "react-router-dom";
-import { Trash2 } from "lucide-react";
+import { Edit, Trash2 } from "lucide-react";
 import { type PlaylistResponse } from "@shared/api";
-import { useDeletePlaylist } from "@features/Playlist";
+import { setPlaylistModal, useDeletePlaylist } from "@features/Playlist";
 import { useDialog } from "@shared/hooks";
-import { InfoCard } from "@shared/ui";
+import { Button, InfoCard } from "@shared/ui";
 import { useRefetchPlaylists } from "@features/Playlist";
 
 interface PlaylistCardProps {
@@ -38,6 +38,10 @@ export const PlaylistCard = ({ playlist }: PlaylistCardProps) => {
     });
   };
 
+  const handleEditClick = () => {
+    setPlaylistModal("update", playlist.id);
+  };
+
   return (
     <div className="relative">
       <InfoCard
@@ -49,26 +53,30 @@ export const PlaylistCard = ({ playlist }: PlaylistCardProps) => {
               {(playlist.channels?.length || 0) !== 1 ? "s" : ""}
             </p>
             <p className="text-xs text-base-content/60">
-              Created{" "}
+              Created
               {playlist.createdAt
                 ? new Date(playlist.createdAt).toLocaleDateString()
                 : "Unknown date"}
             </p>
             <div className="flex justify-between items-center mt-4">
-              <button
-                onClick={handleDeleteClick}
-                className="btn btn-error btn-sm btn-circle"
-                disabled={deletePlaylist.isPending}
-                aria-label="Delete playlist"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
               <Link
                 to={`/playlists/${playlist.id}`}
                 className="btn btn-primary btn-sm"
               >
                 View Details
               </Link>
+              <div className="flex gap-2">
+                <Button variant="outline" onClick={handleEditClick}>
+                  <Edit className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={handleDeleteClick}
+                  disabled={deletePlaylist.isPending}
+                >
+                  <Trash2 className="w-4 h-4" />
+                </Button>
+              </div>
             </div>
           </div>
         }
