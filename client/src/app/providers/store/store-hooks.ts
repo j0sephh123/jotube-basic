@@ -1,5 +1,4 @@
 /* eslint-disable import/no-internal-modules */
-import { type PlaylistSlice } from "@features/Playlist";
 import { useStore } from "./store-root";
 import type { GalleryModalSlice } from "@features/Gallery/model";
 import type { StoryboardProcessingSlice, Store } from "./store-types";
@@ -11,11 +10,6 @@ export const useThumbnailsSlice = makeScopedHook<
   Store,
   ThumbnailsProcessingSlice
 >(useStore, (store: Store) => store);
-
-export const usePlaylist = makeScopedHook<Store, PlaylistSlice>(
-  useStore,
-  (store: Store) => store
-);
 
 export const useVideoModal = makeScopedHook<Store, VideoModalSlice>(
   useStore,
