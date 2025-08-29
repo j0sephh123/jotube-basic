@@ -8,6 +8,8 @@ import {
   closePlaylistModal,
   useCreatePlaylist,
   usePlaylistModalState,
+  useRefetchPlaylist,
+  useUpdatePlaylist,
 } from "@features/Playlist";
 import { useGetPlaylist } from "@features/Playlist";
 import { useEffect } from "react";
@@ -15,25 +17,36 @@ import { useEffect } from "react";
 export default function PlaylistModal() {
   const { type, playlistId } = usePlaylistModalState();
   const { data: playlist } = useGetPlaylist(playlistId);
+  const refetchPlaylist = useRefetchPlaylist();
   const { mutate: createPlaylistMutation } = useCreatePlaylist();
+  const { mutate: updatePlaylistMutation } = useUpdatePlaylist();
   const { value, inputRef, handleInputChange, clearInput } =
     useCreateEntityForm(type !== null);
 
-    useEffect(() => {
-      if (playlistId && playlist) {
-        handleInputChange(playlist.playlistDetails?.name || "");
-      }
-    }, [handleInputChange, playlist, playlistId]);
+  useEffect(() => {
+    if (playlistId && playlist) {
+      handleInputChange(playlist.playlistDetails?.name || "");
+    }
+  }, [handleInputChange, playlist, playlistId]);
 
   const handleCloseModal = () => {
     closePlaylistModal();
     clearInput();
   };
 
-  const handlePlaylistCreate = async () => {
-    await createPlaylistMutation({
-      variables: { createPlaylistInput: { name: value } },
-    });
+  const handleSubmit = async () => {
+    if (type === "create") {
+      await createPlaylistMutation({
+        variables: { createPlaylistInput: { name: value } },
+      });
+    } else if (type === "update") {
+      await updatePlaylistMutation({
+        variables: { id: playlistId, updatePlaylistInput: { name: value } },
+        onCompleted: () => {
+          refetchPlaylist();
+        },
+      });
+    }
     handleCloseModal();
   };
 
@@ -58,7 +71,7 @@ export default function PlaylistModal() {
               <button
                 className="btn btn-primary"
                 type="submit"
-                onClick={() => handlePlaylistCreate()}
+                onClick={() => handleSubmit()}
               >
                 {type === "create" ? "Create Playlist" : "Update Playlist"}
               </button>
@@ -67,7 +80,9 @@ export default function PlaylistModal() {
           title={
             <h2 className="text-xl font-bold text-center flex items-center justify-center gap-2">
               <IconPlaylist />
-              <span>{type === "create" ? "Create Playlist" : "Update Playlist"}</span>
+              <span>
+                {type === "create" ? "Create Playlist" : "Update Playlist"}
+              </span>
             </h2>
           }
           label={

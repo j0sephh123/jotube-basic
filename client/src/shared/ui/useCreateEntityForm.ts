@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 export function useCreateEntityForm(isModalVisible: boolean) {
   const [value, setValue] = useState("");
@@ -12,9 +12,9 @@ export function useCreateEntityForm(isModalVisible: boolean) {
     }
   }, [isModalVisible]);
 
-  const handleInputChange = (value: string) => {
+  const handleInputChange = useCallback((value: string) => {
     setValue(value);
-  };
+  }, []);
 
   const clearInput = () => {
     setValue("");
