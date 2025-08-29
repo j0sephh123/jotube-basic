@@ -4,15 +4,9 @@ import { useStore } from "./store-root";
 import type { GalleryModalSlice } from "@features/Gallery/model";
 import type { StoryboardProcessingSlice, Store } from "./store-types";
 import type { ThumbnailsProcessingSlice } from "@features/Thumbnails/model";
-import type { CarouselScreenshotsSlice } from "@features/Screenshot/model";
 import type { VideoModalSlice } from "@features/Upload/model/video-modal-slice";
 import type { ZoomSlice } from "@features/Screenshot/model";
 import { makeScopedHook } from "@shared/lib";
-
-export const useCarouselScreenshots = makeScopedHook<
-  Store,
-  CarouselScreenshotsSlice
->(useStore, (store: Store) => store);
 
 export const useThumbnailsSlice = makeScopedHook<
   Store,

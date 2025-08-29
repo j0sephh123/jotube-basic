@@ -3,15 +3,13 @@
 import { useLazyQuery } from "@apollo/client";
 import { GET_SHUFFLED_SCREENSHOTS } from "@entities/Screenshot";
 import type { SlideImage } from "yet-another-react-lightbox";
-import { useCarouselScreenshots } from "@app/providers/store/store";
 import { type ChannelScreenshot } from "./useFetchChannelScreenshots";
+import { setSlides } from "../model/carouselScreenshotsStore";
 
 export function useScreenshotsForCarousel() {
   const [getScreenshotsQuery] = useLazyQuery(GET_SHUFFLED_SCREENSHOTS, {
     fetchPolicy: "no-cache",
   });
-  const { setSlides } = useCarouselScreenshots();
-
   const handleFetch = async (ytChannelIds: string[]) => {
     try {
       const result = await getScreenshotsQuery({
