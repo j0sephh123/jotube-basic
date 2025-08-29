@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
 
@@ -27,6 +27,26 @@ type AddToQueueRequest = {
   ytVideoId: string;
 };
 
+/**
+ * Flattened result type to avoid downstream narrowing errors.
+ * You can read `result.reason` safely without a type guard.
+ */
+type AddToQueueResult = {
+  ok: boolean;
+  data?: unknown;
+  reason?:
+    | 'MISCONFIG'
+    | 'NETWORK'
+    | 'UPSTREAM_4XX'
+    | 'UPSTREAM_5XX'
+    | 'BAD_JSON'
+    | `UPSTREAM_${number}`;
+};
+
+/**
+ * Downloader service — Option A (degrade gracefully).
+ * Never throws due to upstream issues; returns safe fallbacks.
+ */
 @Injectable()
 export class YouTubeDownloaderService {
   constructor(
@@ -34,6 +54,10 @@ export class YouTubeDownloaderService {
     private readonly configService: ConfigService,
   ) {}
 
+  /**
+   * GET JSON with retry and timeout.
+   * Throws plain Error strings only; callers swallow and degrade.
+   */
   private async httpGetJsonWithRetry<T>(
     url: string,
     opts?: { timeoutMs?: number; retries?: number; baseDelayMs?: number },
@@ -45,37 +69,33 @@ export class YouTubeDownloaderService {
     const baseDelay = opts?.baseDelayMs ?? 300;
 
     let attempt = 0;
-    // simple bounded retry with expo backoff + jitter
-    // NOTE: Node 18+ supports AbortSignal.timeout
+
     while (true) {
       attempt++;
       const controller = AbortSignal.timeout(timeoutMs);
+
       try {
         const res = await fetch(url, { signal: controller });
+
         if (!res.ok) {
-          // treat 5xx as retryable, 4xx as non-retryable
-          if (res.status >= 500 && attempt <= retries + 1) {
-            throw new Error(`Retryable status ${res.status}`);
+          if (res.status >= 500 && attempt <= retries) {
+            throw new Error(`RETRYABLE_${res.status}`);
           }
-          // Non-retryable: throw HttpException so controller can map to 502/504
           const text = await res.text().catch(() => '');
-          throw new HttpException(
-            `Upstream responded ${res.status}: ${text?.slice(0, 200)}`,
-            res.status === 404 ? HttpStatus.NOT_FOUND : HttpStatus.BAD_GATEWAY,
-          );
+          throw new Error(`NONRETRYABLE_${res.status}:${text.slice(0, 200)}`);
         }
-        // JSON parse may throw
-        const data = (await res.json()) as T;
+
+        const data = (await res.json()) as T; // may throw
         return data;
       } catch (err: any) {
+        const msg = String(err?.message ?? '');
         const isAbort =
-          err?.name === 'TimeoutError' ||
-          /aborted|Timeout/i.test(String(err?.message));
+          err?.name === 'TimeoutError' || /aborted|timeout/i.test(msg);
         const isRetryable =
           isAbort ||
-          /Retryable status/.test(String(err?.message)) ||
+          /RETRYABLE_/i.test(msg) ||
           /ECONNRESET|ECONNREFUSED|EAI_AGAIN|ENOTFOUND|socket hang up/i.test(
-            String(err?.message),
+            msg,
           );
 
         if (attempt <= retries + 1 && isRetryable) {
@@ -85,33 +105,23 @@ export class YouTubeDownloaderService {
           continue;
         }
 
-        // Convert to a clean upstream error for the controller layer
-        if (isAbort) {
-          throw new HttpException(
-            'Upstream timeout',
-            HttpStatus.GATEWAY_TIMEOUT,
-          );
-        }
-        // last resort
-        throw new HttpException(
-          'Upstream fetch failed',
-          HttpStatus.BAD_GATEWAY,
-        );
+        if (isAbort) throw new Error('UPSTREAM_TIMEOUT');
+        throw new Error('UPSTREAM_FAILED');
       }
     }
   }
 
+  /**
+   * Returns the current download queue grouped by channel.
+   * On any upstream failure or misconfiguration, returns {}.
+   */
   async getDownloadQueue(): Promise<DownloadQueueByChannel> {
     const base = this.configService.get<string>('DL_SERVICE_URL');
     if (!base) {
-      // Misconfiguration should surface clearly but not crash the process
-      throw new HttpException(
-        'DL_SERVICE_URL not configured',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      console.warn('[DL] DL_SERVICE_URL not configured');
+      return {};
     }
 
-    // 1) Call the Python service with timeout + retries
     const queueUrl = base.replace(/\/+$/, '') + '/queue';
 
     let result: QueueItem[] = [];
@@ -121,42 +131,32 @@ export class YouTubeDownloaderService {
           this.configService.get('DL_FETCH_TIMEOUT_MS') ?? 10000,
         ),
       });
-    } catch (e) {
-      // If your UX tolerates degraded mode: return empty object instead of throwing.
-      // return {};
-      // If you prefer explicit failure to callers:
-      throw e;
-    }
-
-    if (!Array.isArray(result) || result.length === 0) {
+    } catch (e: any) {
+      console.warn('[DL] queue fetch failed:', e?.message ?? e);
       return {};
     }
 
-    // 2) Batch DB lookup instead of N+1
+    if (!Array.isArray(result) || result.length === 0) return {};
+
+    // Batch DB lookup instead of N+1
     const videoIds = Array.from(
       new Set(result.map((r) => r.ytVideoId).filter(Boolean)),
     );
+    if (videoIds.length === 0) return {};
 
     const dbVideos = await this.prismaService.uploadsVideo.findMany({
       where: { ytId: { in: videoIds } },
       include: {
-        channel: {
-          select: { ytId: true, title: true },
-        },
+        channel: { select: { ytId: true, title: true } },
       },
     });
 
-    // index by ytId for O(1) lookup
     const byYtId = new Map(dbVideos.map((v) => [v.ytId, v]));
 
-    // 3) Reduce with defensive null checks
     const grouped: DownloadQueueByChannel = {};
     for (const item of result) {
       const dbItem = byYtId.get(item.ytVideoId);
-      if (!dbItem || !dbItem.channel) {
-        // Unknown to DB → skip quietly (or log)
-        continue;
-      }
+      if (!dbItem || !dbItem.channel) continue;
 
       const downloadItem: DownloadQueueItem = {
         ytChannelId: dbItem.channel.ytId,
@@ -167,61 +167,62 @@ export class YouTubeDownloaderService {
         downloadProgress: String(item.progress ?? ''),
       };
 
-      const key = dbItem.channel.ytId;
-      if (!grouped[key]) grouped[key] = [];
-      grouped[key].push(downloadItem);
+      (grouped[dbItem.channel.ytId] ??= []).push(downloadItem);
     }
 
     return grouped;
   }
 
-  async addToQueue({ ytChannelId, ytVideoId }: AddToQueueRequest) {
+  /**
+   * Adds a video to the downloader queue.
+   * Never throws; returns a structured result instead.
+   */
+  async addToQueue({
+    ytChannelId,
+    ytVideoId,
+  }: AddToQueueRequest): Promise<AddToQueueResult> {
     const base = this.configService.get<string>('DL_SERVICE_URL');
     if (!base) {
-      throw new HttpException(
-        'DL_SERVICE_URL not configured',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      console.warn('[DL] DL_SERVICE_URL not configured');
+      return { ok: false, reason: 'MISCONFIG' };
     }
-    const url = base.replace(/\/+$/, '') + '/add-to-queue';
 
+    const url = base.replace(/\/+$/, '') + '/add-to-queue';
     const timeoutMs = Number(
       this.configService.get('DL_FETCH_TIMEOUT_MS') ?? 10000,
     );
     const controller = AbortSignal.timeout(timeoutMs);
 
-    let res: Response;
     try {
-      res = await fetch(url, {
+      const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ytChannelId, ytVideoId }),
         signal: controller,
       });
-    } catch (err: any) {
-      const isAbort =
-        err?.name === 'TimeoutError' ||
-        /aborted|Timeout/i.test(String(err?.message));
-      if (isAbort)
-        throw new HttpException('Upstream timeout', HttpStatus.GATEWAY_TIMEOUT);
-      throw new HttpException('Upstream fetch failed', HttpStatus.BAD_GATEWAY);
-    }
 
-    if (!res.ok) {
-      const text = await res.text().catch(() => '');
-      throw new HttpException(
-        `Failed to add to queue: ${res.status} ${text?.slice(0, 200)}`,
-        res.status >= 500 ? HttpStatus.BAD_GATEWAY : HttpStatus.BAD_REQUEST,
-      );
-    }
+      if (!res.ok) {
+        const reason: AddToQueueResult['reason'] =
+          res.status >= 500
+            ? 'UPSTREAM_5XX'
+            : res.status >= 400
+              ? 'UPSTREAM_4XX'
+              : (`UPSTREAM_${res.status}` as const);
 
-    try {
-      return await res.json();
-    } catch {
-      throw new HttpException(
-        'Invalid JSON from upstream',
-        HttpStatus.BAD_GATEWAY,
-      );
+        console.warn('[DL] add-to-queue upstream error:', res.status);
+        return { ok: false, reason };
+      }
+
+      try {
+        const json = await res.json();
+        return { ok: true, data: json };
+      } catch {
+        console.warn('[DL] add-to-queue: invalid JSON from upstream');
+        return { ok: false, reason: 'BAD_JSON' };
+      }
+    } catch (e: any) {
+      console.warn('[DL] add-to-queue failed:', e?.message ?? e);
+      return { ok: false, reason: 'NETWORK' };
     }
   }
 }
