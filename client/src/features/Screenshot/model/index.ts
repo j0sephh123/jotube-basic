@@ -1,2 +1,2 @@
-export * from "./zoom-slice";
+export * from "./zoomStore";
 export * from "./carouselScreenshotsStore";

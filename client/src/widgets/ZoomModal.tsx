@@ -1,17 +1,8 @@
+import { useZoom } from "@features/Screenshot";
 import { Modal } from "@shared/ui";
 
-type Props = {
-  isVisible: boolean;
-  url: string | null;
-  onClose: () => void;
-};
-
-export default function ZoomModal({ isVisible, url, onClose }: Props) {
-
-  // const handleClose = () => {
-  //   onClose();
-  //   setZoomImage(null);
-  // };
+export default function ZoomModal() {
+  const { isVisible, url, onClose } = useZoom();
 
   if (!isVisible || !url) return null;
 

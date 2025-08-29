@@ -10,10 +10,8 @@ import { ThumbnailsProcessing, useThumbnailsSlice } from "@features/Thumbnails";
 import { StoryboardProcessing } from "@features/Storyboard";
 import CreateChannel from "@widgets/CreateChannel";
 import { Navbar } from "@widgets/Navbar";
-import { useZoom } from "@features/Screenshot";
 
 export default function Layout(): JSX.Element {
-  const { isVisible, url, onClose } = useZoom();
   const { metadata } = useThumbnailsSlice();
 
   return (
@@ -27,7 +25,7 @@ export default function Layout(): JSX.Element {
         <TheCarousel />
         {metadata.ytVideoId && <ThumbnailsProcessing />}
         <StoryboardProcessing />
-        <ZoomModal isVisible={isVisible} url={url} onClose={onClose} />
+        <ZoomModal />
         <GalleryModal />
       </DialogProvider>
       <VideoModal />

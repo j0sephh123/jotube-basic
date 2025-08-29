@@ -15,7 +15,7 @@ export { default as Avatar } from "./Avatar";
 export { DialogProvider } from "./dialog/DialogProvider";
 export { default as ConfirmDialog } from "./dialog/ConfirmDialog";
 export { default as InputDialog } from "./dialog/InputDialog";
-export { default as ZoomModal } from "./ZoomModal";
+export { default as ZoomModal } from "../../widgets/ZoomModal";
 export { default as CopyValue } from "./CopyValue";
 export { default as InfoCard } from "./InfoCard";
 export { default as TableCol } from "./TableCol";
