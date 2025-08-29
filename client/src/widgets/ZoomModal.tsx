@@ -1,15 +1,15 @@
-import { useZoom } from "@features/Screenshot";
+import { closeZoom, useZoom } from "@features/Screenshot";
 import { Modal } from "@shared/ui";
 
 export default function ZoomModal() {
-  const { isVisible, url, onClose } = useZoom();
+  const { url } = useZoom();
 
-  if (!isVisible || !url) return null;
+  if (!url) return null;
 
   return (
     <Modal
-      isModalVisible={isVisible}
-      onClose={onClose}
+      isModalVisible={!!url}
+      onClose={closeZoom}
       maxWidth="90vw"
       maxHeight="90vh"
     >
@@ -18,7 +18,7 @@ export default function ZoomModal() {
         src={url}
         alt="Zoomed screenshot"
         className="w-full h-full object-contain"
-        onClick={onClose}
+        onClick={closeZoom}
       />
     </Modal>
   );

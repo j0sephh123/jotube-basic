@@ -1,31 +1,19 @@
 import { proxy, useSnapshot } from "valtio";
 
 type State = {
-  isVisible: boolean;
-  url: string;
-  onClose: () => void;
+  url: string | null;
 };
 
 const state = proxy<State>({
-  isVisible: false,
   url: "",
-  onClose: () => {},
 });
 
-export const setZoom = (
-  isVisible: boolean,
-  url: string,
-  onClose: () => void
-) => {
-  state.isVisible = isVisible;
+export const setZoom = (url: string) => {
   state.url = url;
-  state.onClose = onClose;
 };
 
 export const closeZoom = () => {
-  state.isVisible = false;
-  state.url = "";
-  state.onClose = () => {};
+  state.url = null;
 };
 
 export const useZoomState = () => useSnapshot(state);

@@ -1,4 +1,4 @@
-import { setZoom, closeZoom } from "@features/Screenshot";
+import { setZoom } from "@features/Screenshot";
 import {
   useThumbnailsSlice,
   ThumbnailGridCell,
@@ -19,7 +19,7 @@ export default function Grid(): JSX.Element {
 
   const handleZoom = (index: number): void => {
     const url = generateThumbnailUrl(ytChannelId, ytVideoId, index);
-    setZoom(true, url, closeZoom);
+    setZoom(url);
     setSelectedImages((prev) => [...prev, index]);
   };
 
