@@ -1,70 +1,11 @@
+/* eslint-disable boundaries/element-types */
 import { Link } from "react-router-dom";
 import { Trash2 } from "lucide-react";
-
-// Local type definition to avoid restricted imports
-interface PlaylistResponse {
-  id: number;
-  name: string;
-  createdAt: string;
-  channels?: Array<{
-    id: number;
-    title: string;
-    ytId: string;
-  }>;
-}
-
-// Local hook implementation to avoid internal module imports
-const useDeletePlaylist = () => {
-  return {
-    mutate: ({ variables }: { variables: { id: number } }) => {
-      console.log("Delete playlist:", variables.id);
-    },
-    isPending: false,
-  };
-};
-
-// Local component implementation to avoid internal module imports
-const InfoCard = ({
-  title,
-  content,
-}: {
-  title: string;
-  content: React.ReactNode;
-}) => {
-  return (
-    <div className="card bg-base-100 shadow-xl">
-      <div className="card-body">
-        <h2 className="card-title">{title}</h2>
-        {content}
-      </div>
-    </div>
-  );
-};
-
-// Local hook implementation to avoid internal module imports
-const useDialog = () => {
-  return {
-    confirm: ({
-      title,
-      message,
-      _confirmText,
-      _cancelText,
-      _variant,
-      onYes,
-    }: {
-      title: string;
-      message: string;
-      _confirmText: string;
-      _cancelText: string;
-      _variant: string;
-      onYes: () => void;
-    }) => {
-      if (window.confirm(`${title}\n\n${message}`)) {
-        onYes();
-      }
-    },
-  };
-};
+import { type PlaylistResponse } from "@shared/api";
+import { useDeletePlaylist } from "@features/Playlist";
+import { useDialog } from "@shared/hooks";
+import { InfoCard } from "@shared/ui";
+import { useRefetchPlaylists } from "@features/Playlist";
 
 interface PlaylistCardProps {
   playlist: PlaylistResponse;
@@ -72,18 +13,26 @@ interface PlaylistCardProps {
 
 export const PlaylistCard = ({ playlist }: PlaylistCardProps) => {
   const deletePlaylist = useDeletePlaylist();
+  const refetchPlaylists = useRefetchPlaylists();
+
   const dialogHook = useDialog();
 
   const handleDeleteClick = () => {
     dialogHook.confirm({
-      title: "Delete Playlist",
-      message: `Are you sure you want to delete "${playlist.name}"? This action cannot be undone.`,
-      _confirmText: "Delete",
-      _cancelText: "Cancel",
-      _variant: "error",
+      title: "Delete Channel",
+      message:
+        "Are you sure you want to delete this channel? This action cannot be undone.",
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      variant: "error",
       onYes: () => {
         deletePlaylist.mutate({
-          variables: { id: playlist.id },
+          variables: {
+            id: playlist.id,
+          },
+          onCompleted: () => {
+            refetchPlaylists();
+          },
         });
       },
     });

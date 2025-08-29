@@ -10,7 +10,7 @@ import type {
 import { ListMusic, Images } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useViewThumbnails } from "@features/Thumbnails";
-import { setGalleryModal } from "@features/Gallery/model/galleryModalStore";
+import { setGalleryModal } from "@features/Gallery";
 import {
   useFeaturedScreenshots,
   useScreenshotsForCarousel,
