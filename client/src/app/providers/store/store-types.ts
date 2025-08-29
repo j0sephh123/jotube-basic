@@ -1,5 +1,4 @@
 /* eslint-disable import/no-internal-modules */
-import type { GalleryModalSlice } from "@features/Gallery/model";
 import type { ThumbnailsProcessingSlice } from "@features/Thumbnails/model";
 
 export type ThumbnailItem = {
@@ -38,6 +37,4 @@ export type StoryboardProcessingSlice = {
   clearStoryboardProcessingData: () => void;
 };
 
-export type Store = ThumbnailsProcessingSlice &
-  StoryboardProcessingSlice &
-  GalleryModalSlice;
+export type Store = ThumbnailsProcessingSlice & StoryboardProcessingSlice;

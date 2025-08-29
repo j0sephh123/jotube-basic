@@ -4,19 +4,16 @@ import { VideosDashboardContainer, VideoChannelInfo } from "@widgets/Dashboard";
 import { useNavigate } from "react-router-dom";
 import { routes } from "@shared/routes";
 import { type DashboardVideoResponse } from "@shared/api";
-import { useGalleryModal } from "@app/providers";
+import { setGalleryModal } from "@features/Gallery/model/galleryModalStore";
 
 export default function VideosDashboard() {
   const navigate = useNavigate();
-  const { setGalleryModal } = useGalleryModal();
 
   const handleThumbnailClick = (video: DashboardVideoResponse) => {
-    setGalleryModal(
-      {
-        ytVideoId: video.ytId,
-        ytChannelIds: [video.channelYtId],
-      },
-    );
+    setGalleryModal({
+      ytVideoId: video.ytId,
+      ytChannelIds: [video.channelYtId],
+    });
   };
 
   return (

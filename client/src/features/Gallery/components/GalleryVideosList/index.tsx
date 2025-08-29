@@ -1,5 +1,5 @@
 /* eslint-disable boundaries/element-types */
-import { useGalleryModal } from "@app/providers";
+import { setGalleryModal } from "@features/Gallery/model/galleryModalStore";
 import { useTypedChannelYtId } from "@features/Dashboard";
 import { useVideoScreenshotCounts } from "@features/Gallery";
 import { StaticStates } from "@shared/ui";
@@ -11,7 +11,6 @@ type VideoScreenshotCount = {
 
 export function GalleryVideosList() {
   const ytChannelId = useTypedChannelYtId();
-  const { setGalleryModal } = useGalleryModal();
 
   const handleVideoClick = (videoId: string) => {
     setGalleryModal({

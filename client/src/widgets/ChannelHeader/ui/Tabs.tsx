@@ -8,11 +8,10 @@ import {
   IconSaved,
 } from "@shared/ui";
 import { useChannelMetadataQuery } from "@entities/Channel";
-import { useGalleryModal } from "@app/providers";
+import { setGalleryModal } from "@features/Gallery/model/galleryModalStore";
 
 export default function Tabs({ ytChannelId }: { ytChannelId: string }) {
   const { data } = useChannelMetadataQuery(ytChannelId);
-  const { setGalleryModal } = useGalleryModal();
 
   if (!data) return [];
 

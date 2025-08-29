@@ -1,1 +1,1 @@
-export * from "./gallery-modal-slice";
+export * from "./galleryModalStore";

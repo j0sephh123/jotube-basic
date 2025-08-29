@@ -10,7 +10,7 @@ import type {
 import { ListMusic, Images } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useViewThumbnails } from "@features/Thumbnails";
-import { useGalleryModal } from "@app/providers";
+import { setGalleryModal } from "@features/Gallery/model/galleryModalStore";
 import {
   useFeaturedScreenshots,
   useScreenshotsForCarousel,
@@ -121,8 +121,6 @@ export default function ChannelDashboardCard({
       ? fetchUploadsButton
       : syncButton;
   };
-
-  const { setGalleryModal } = useGalleryModal();
 
   const handleGalleryClick = () => {
     setGalleryModal({

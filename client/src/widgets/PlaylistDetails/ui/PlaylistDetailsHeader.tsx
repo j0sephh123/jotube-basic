@@ -5,7 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { SmallCard } from "./SmallCard";
 import { useScreenshotsForCarousel } from "@features/Screenshot";
-import { useGalleryModal } from "@app/providers";
+import { setGalleryModal } from "@features/Gallery/model/galleryModalStore";
 
 type HeaderProps = {
   playlist: PlaylistDetailsResponse;
@@ -15,7 +15,6 @@ export default function PlaylistDetailsHeader({
   playlist: { id, name, channels },
 }: HeaderProps) {
   const handleGetScreenshots = useScreenshotsForCarousel();
-  const { setGalleryModal } = useGalleryModal();
 
   const { uploadsType } = useParams<{ uploadsType: "default" | "saved" }>();
 
