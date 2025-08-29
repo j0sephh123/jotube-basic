@@ -17,7 +17,7 @@ const GET_PLAYLIST_DETAILS = gql`
         src
         videoCount
         savedCount
-        screenshotCount 
+        screenshotCount
         thumbnailCount
         lastSyncedAt
         featuredScreenshots {
@@ -31,11 +31,11 @@ const GET_PLAYLIST_DETAILS = gql`
   }
 `;
 
-export const useGetPlaylist = () => {
+export const useGetPlaylist = (idArgument: number | null) => {
   const { id } = useParams<{ id: string }>();
   return useQuery<GetPlaylistDetailsQuery>(GET_PLAYLIST_DETAILS, {
-    variables: { id: parseInt(id!) },
-    skip: !id,
+    variables: { id: idArgument ? idArgument : parseInt(id!) },
+    skip: !id && !idArgument,
     errorPolicy: "all",
   });
 };

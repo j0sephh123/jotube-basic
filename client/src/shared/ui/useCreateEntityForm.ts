@@ -12,8 +12,7 @@ export function useCreateEntityForm(isModalVisible: boolean) {
     }
   }, [isModalVisible]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.trim();
+  const handleInputChange = (value: string) => {
     setValue(value);
   };
 
