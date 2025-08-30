@@ -1,16 +1,16 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 
-export function useCreateEntityForm(isModalVisible: boolean) {
+export function useCreateEntityForm() {
   const [value, setValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (isModalVisible && inputRef.current) {
+    if (inputRef.current) {
       setTimeout(() => {
         inputRef.current?.focus();
       }, 100);
     }
-  }, [isModalVisible]);
+  }, []);
 
   const handleInputChange = useCallback((value: string) => {
     setValue(value);

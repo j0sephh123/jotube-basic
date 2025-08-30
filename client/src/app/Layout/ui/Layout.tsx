@@ -12,9 +12,11 @@ import { StoryboardProcessing } from "@features/Storyboard";
 import CreateChannel from "@widgets/CreateChannel";
 import { Navbar } from "@widgets/Navbar";
 import PlaylistModal from "@widgets/PlaylistModal";
+import { usePlaylistModalState } from "@features/Playlist";
 
 export default function Layout(): JSX.Element {
   const { metadata } = useThumbnailsSlice();
+  const { type } = usePlaylistModalState();
 
   return (
     <>
@@ -30,7 +32,7 @@ export default function Layout(): JSX.Element {
         <ZoomModal />
         <GalleryModal />
         <Notification />
-        <PlaylistModal />
+        {type !== null && <PlaylistModal />}
       </DialogProvider>
       <VideoModal />
     </>
