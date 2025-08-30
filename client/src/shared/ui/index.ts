@@ -43,3 +43,4 @@ export * from "./static";
 export { default as Notification } from "../../widgets/Notification/Notification";
 export { default as CreateEntityForm } from "./CreateEntityForm";
 export { useCreateEntityForm } from "./useCreateEntityForm";
+export { Select } from "./Select";

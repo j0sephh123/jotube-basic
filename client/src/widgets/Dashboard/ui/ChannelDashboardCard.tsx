@@ -54,8 +54,6 @@ export default function ChannelDashboardCard({
   const handleViewScreenshots = useScreenshotsForCarousel();
   const viewThumbnails = useViewThumbnails(id);
 
-  console.log({ playlist });
-
   const { getSrc, handleThumbnailClick } = useFeaturedScreenshots(
     featuredScreenshots,
     src
@@ -92,18 +90,23 @@ export default function ChannelDashboardCard({
     <FetchUploadsButton ytChannelId={ytId} videoCount={videoCount} />
   );
 
-  const playlistInfo = playlist && (
+  const playlistInfo = (
     <div
       className="flex items-center gap-2 text-sm cursor-pointer"
       onClick={() =>
         setPlaylistModal({
-          type: "modifyChannelForPlaylist",
-          playlistId: playlist.id,
+          type: "modifyPlaylistForChannel",
+          channelId: id,
+          playlistId: playlist?.id ?? 0,
         })
       }
     >
       <ListMusic className="w-4 h-4" />
-      <span className="truncate">{playlist.name}</span>
+      {playlist ? (
+        <span className="truncate">{playlist.name}</span>
+      ) : (
+        <span className="truncate">No playlist</span>
+      )}
     </div>
   );
 

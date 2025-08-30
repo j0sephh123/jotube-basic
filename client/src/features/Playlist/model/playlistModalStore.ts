@@ -9,11 +9,13 @@ export type PlaylistModalState = {
     | "modifyPlaylistForChannel"
     | null;
   playlistId: number | null;
+  channelId: number | null;
 };
 
 const state = proxy<PlaylistModalState>({
   type: null,
   playlistId: null,
+  channelId: null,
 });
 
 type CreateProps = { type: "create" };
@@ -24,6 +26,7 @@ type ModifyChannelForPlaylistProps = {
 };
 type ModifyPlaylistForChannelProps = {
   type: "modifyPlaylistForChannel";
+  channelId: number;
   playlistId: number;
 };
 
@@ -47,9 +50,10 @@ export const setPlaylistModal = (props: SetPlaylistModalProps) => {
       state.type = "modifyChannelForPlaylist";
       state.playlistId = playlistId;
     })
-    .with({ type: "modifyPlaylistForChannel" }, ({ playlistId }) => {
+    .with({ type: "modifyPlaylistForChannel" }, ({ channelId, playlistId }) => {
       state.type = "modifyPlaylistForChannel";
       state.playlistId = playlistId;
+      state.channelId = channelId;
     })
     .exhaustive();
 };

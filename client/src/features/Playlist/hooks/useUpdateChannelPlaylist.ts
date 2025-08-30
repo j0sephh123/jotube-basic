@@ -1,8 +1,7 @@
-import { useMutation } from "@apollo/client";
-import { UpdateChannelPlaylistDocument } from "@shared/api";
+import { useUpdateChannelPlaylistMutation } from "@shared/api";
 
 export const useUpdateChannelPlaylist = () => {
-  const [mutate, result] = useMutation(UpdateChannelPlaylistDocument, {
+  const [mutate, result] = useUpdateChannelPlaylistMutation({
     refetchQueries: ["GetPlaylists"],
   });
 
