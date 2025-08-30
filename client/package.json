@@ -39,6 +39,7 @@
     "tailwind-merge": "^3.0.1",
     "tailwindcss": "^4.0.7",
     "tailwindcss-animate": "^1.0.7",
+    "ts-pattern": "^5.8.0",
     "use-sync-external-store": "^1.5.0",
     "valtio": "^2.1.7",
     "yet-another-react-lightbox": "^3.21.7",

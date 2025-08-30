@@ -10,7 +10,7 @@ export const PlaylistsPage = () => {
       <Button
         variant="outline"
         color="primary"
-        onClick={() => setPlaylistModal("create")}
+        onClick={() => setPlaylistModal({ type: "create" })}
       >
         Create playlist
       </Button>

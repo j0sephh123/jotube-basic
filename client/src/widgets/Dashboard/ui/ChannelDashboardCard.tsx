@@ -15,6 +15,7 @@ import {
   useFeaturedScreenshots,
   useScreenshotsForCarousel,
 } from "@features/Screenshot";
+import { setPlaylistModal } from "@features/Playlist";
 
 const statsTypes = [
   ViewType.THUMBNAILS,
@@ -92,7 +93,15 @@ export default function ChannelDashboardCard({
   );
 
   const playlistInfo = playlist && (
-    <div className="flex items-center gap-2 text-sm text-gray-600">
+    <div
+      className="flex items-center gap-2 text-sm cursor-pointer"
+      onClick={() =>
+        setPlaylistModal({
+          type: "modifyChannelForPlaylist",
+          playlistId: playlist.id,
+        })
+      }
+    >
       <ListMusic className="w-4 h-4" />
       <span className="truncate">{playlist.name}</span>
     </div>

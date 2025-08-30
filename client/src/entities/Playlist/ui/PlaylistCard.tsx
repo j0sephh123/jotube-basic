@@ -39,7 +39,7 @@ export const PlaylistCard = ({ playlist }: PlaylistCardProps) => {
   };
 
   const handleEditClick = () => {
-    setPlaylistModal("update", playlist.id);
+    setPlaylistModal({ type: "update", playlistId: playlist.id });
   };
 
   return (

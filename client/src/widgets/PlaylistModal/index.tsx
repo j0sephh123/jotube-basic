@@ -26,6 +26,14 @@ export default function PlaylistModal() {
     handleCloseModal();
   };
 
+  if(type === 'modifyChannelForPlaylist') {
+    console.log('modifyChannel');
+  }
+
+  if(type === 'modifyPlaylistForChannel') {
+    console.log('modifyPlaylist');
+  }
+
   return (
     <Wrapper>
       <CreateEntityForm
@@ -34,7 +42,7 @@ export default function PlaylistModal() {
         handleInputChange={handleInputChange}
         placeholder="Enter playlist name"
         actions={
-          <Actions onCancel={handleCloseModal} onSubmit={handleSubmit} />
+          <Actions onSubmit={handleSubmit} onCancel={handleCloseModal} />
         }
         title={<Title />}
         label={<Label />}
