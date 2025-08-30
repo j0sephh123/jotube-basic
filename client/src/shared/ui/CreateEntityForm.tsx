@@ -4,7 +4,7 @@ type Props = {
   actions: React.ReactNode;
   value: string;
   inputRef: React.RefObject<HTMLInputElement>;
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleInputChange: (value: string) => void;
   description?: ReactNode;
   placeholder: string;
   title: ReactNode;
@@ -31,7 +31,7 @@ export default function CreateEntityForm({
             type="text"
             ref={inputRef}
             className="input input-bordered w-full bg-base-100 focus:ring-2 h-12 text-lg focus:ring-primary"
-            onChange={handleInputChange}
+            onChange={(e) => handleInputChange(e.target.value.trim())}
             value={value}
             placeholder={placeholder}
           />

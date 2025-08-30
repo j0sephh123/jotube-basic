@@ -1,18 +1,18 @@
 import { proxy, useSnapshot } from "valtio";
 
-type State = {
+export type PlaylistModalState = {
   type: "create" | "update" | null;
   playlistId: number | null;
 };
 
-const state = proxy<State>({
+const state = proxy<PlaylistModalState>({
   type: null,
   playlistId: null,
 });
 
 export const setPlaylistModal = (
-  type: State["type"],
-  playlistId?: State["playlistId"]
+  type: PlaylistModalState["type"],
+  playlistId?: PlaylistModalState["playlistId"]
 ) => {
   state.type = type;
   state.playlistId = playlistId || null;

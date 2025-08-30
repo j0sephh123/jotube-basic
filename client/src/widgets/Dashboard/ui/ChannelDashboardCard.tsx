@@ -53,6 +53,8 @@ export default function ChannelDashboardCard({
   const handleViewScreenshots = useScreenshotsForCarousel();
   const viewThumbnails = useViewThumbnails(id);
 
+  console.log({ playlist });
+
   const { getSrc, handleThumbnailClick } = useFeaturedScreenshots(
     featuredScreenshots,
     src
@@ -129,6 +131,14 @@ export default function ChannelDashboardCard({
     });
   };
 
+  const getSecondRowContent = () => {
+    if (statsTypes.includes(viewType)) {
+      return cardStats;
+    }
+
+    return cardCreatedAt;
+  };
+
   return (
     <Card
       key={id}
@@ -139,13 +149,7 @@ export default function ChannelDashboardCard({
       lastSyncedAt={lastSyncedAt}
       ytChannelId={ytId}
       handleTitleClick={handleTitleClick}
-      secondRow={
-        statsTypes.includes(viewType)
-          ? cardStats
-          : playlist
-          ? playlistInfo
-          : cardCreatedAt
-      }
+      secondRow={getSecondRowContent()}
       cardMenuSlot={cardMenu}
       actionButtonSlot={getActionButtonSlot()}
       deleteButtonSlot={getDeleteButtonSlot()}
@@ -156,6 +160,7 @@ export default function ChannelDashboardCard({
           <Images />
         </Button>
       }
+      playlistButtonSlot={playlistInfo}
     />
   );
 }
