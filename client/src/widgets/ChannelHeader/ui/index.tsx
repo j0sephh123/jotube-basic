@@ -1,5 +1,4 @@
 import { useChannelMetadataQuery } from "@entities/Channel";
-import { useLocation } from "react-router-dom";
 import { useTypedChannelYtId } from "@features/Dashboard";
 import HeaderLayout from "./HeaderLayout";
 import ChannelControls from "./ChannelControls";
@@ -16,16 +15,9 @@ import { ViewStoryboards } from "@widgets/Storyboard";
 
 const ChannelHeader = () => {
   const ytChannelId = useTypedChannelYtId();
-  const { pathname } = useLocation();
 
   const { data: channelMetadata, refetch: refetchMetadata } =
     useChannelMetadataQuery(ytChannelId);
-
-  const areControlsDisabled =
-    pathname.includes("/gallery") ||
-    pathname.includes("/saved") ||
-    pathname.includes("/storyboard") ||
-    pathname.includes("/new-gallery");
 
   if (!channelMetadata) return null;
 
@@ -55,19 +47,14 @@ const ChannelHeader = () => {
             <>
               <Tabs ytChannelId={ytChannelId} />
               <ChannelControls
-                areControlsDisabled={areControlsDisabled}
                 leftSlot={
                   <>
                     <SyncUploadsButton
-                      isDisabled={areControlsDisabled}
                       lastSyncedAt={channelMetadata?.lastSyncedAt ?? null}
                       ytChannelId={ytChannelId}
                       id={channelMetadata?.id ?? 0}
                     />
-                    <CleanShortUploads
-                      isDisabled={areControlsDisabled}
-                      ytChannelId={ytChannelId}
-                    />
+                    <CleanShortUploads ytChannelId={ytChannelId} />
                   </>
                 }
               />

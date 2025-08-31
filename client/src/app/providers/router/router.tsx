@@ -2,7 +2,6 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "@app/Layout";
 import { ChannelPageLayout } from "@widgets/ChannelPageLayout";
 import { DashboardWidget, DashboardWrapper } from "@widgets/Dashboard";
-import { StoryboardPage } from "@pages/storyboard";
 import { ImageNavigatorPage } from "@pages/image-navigator";
 import { PlaylistsPage } from "@pages/playlists";
 import { PlaylistDetailsPage } from "@pages/playlist-details";
@@ -30,7 +29,6 @@ export default function Router() {
           <Route path="/channels/:ytChannelId" element={<ChannelPageLayout />}>
             <Route index element={<UploadsDecorator type="default" />} />
             <Route path="saved" element={<UploadsDecorator type="saved" />} />
-            <Route path="storyboard" element={<StoryboardPage />} />
             <Route path="gallery" element={<GalleryVideosList />} />
           </Route>
           <Route path="/playlists" element={<PlaylistWrapper />}>

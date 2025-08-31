@@ -3,7 +3,6 @@
 import {
   IconGallery,
   IconNewGallery,
-  IconStoryboard,
   IconUploads,
   IconSaved,
 } from "@shared/ui";
@@ -19,7 +18,6 @@ export default function Tabs({ ytChannelId }: { ytChannelId: string }) {
     videoArtifactsCount,
     savedArtifactsCount,
     screenshotArtifactsCount,
-    storyboardArtifactsCount,
   } = data;
 
   const uploads = (
@@ -28,13 +26,6 @@ export default function Tabs({ ytChannelId }: { ytChannelId: string }) {
 
   const saved = (
     <IconSaved ytChannelId={ytChannelId} count={savedArtifactsCount} />
-  );
-
-  const storyboard = (
-    <IconStoryboard
-      ytChannelId={ytChannelId}
-      count={storyboardArtifactsCount}
-    />
   );
 
   const gallery = <IconGallery ytChannelId={ytChannelId} />;
@@ -57,7 +48,6 @@ export default function Tabs({ ytChannelId }: { ytChannelId: string }) {
     <>
       {uploads}
       {saved}
-      {storyboard}
       {gallery}
       {newGallery}
     </>

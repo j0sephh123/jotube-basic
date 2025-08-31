@@ -8,7 +8,6 @@ import {
   Notification,
 } from "@shared/ui";
 import { ThumbnailsProcessing } from "@features/Thumbnails";
-import { StoryboardProcessing } from "@features/Storyboard";
 import CreateChannel from "@widgets/CreateChannel";
 import { Navbar } from "@widgets/Navbar";
 import PlaylistModal from "@widgets/PlaylistModal";
@@ -28,7 +27,6 @@ export default function Layout(): JSX.Element {
         <CreateChannel />
         <TheCarousel />
         <ThumbnailsProcessing />
-        <StoryboardProcessing />
         <ZoomModal />
         <GalleryModal />
         <Notification />

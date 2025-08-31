@@ -1,6 +1,6 @@
 import { Button } from "@shared/ui";
 import { useUploadsWithStoryboard } from "@features/Storyboard";
-import { setStoryboardProcessingData } from "@features/Storyboard/model/storyboardStore";
+import { setStoryboardProcessingData } from "@features/Storyboard";
 
 type Props = {
   ytChannelId: string;
