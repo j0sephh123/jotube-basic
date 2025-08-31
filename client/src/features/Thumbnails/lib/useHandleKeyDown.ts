@@ -1,15 +1,15 @@
 import { useZoom } from "@features/Screenshot";
 import {
-  useThumbnailsSlice,
+  useThumbnailsState,
   useSubmit,
   useThumbnailsCount,
   usePaginate,
 } from "@features/Thumbnails";
-import { clearThumbnailsProcessingData } from "@features/Thumbnails/model/thumbnailsStore";
+import { clearThumbnailsProcessingData } from "@features/Thumbnails";
 
 export default function useHandleKeyDown() {
   const { handlePrevious, handleNext } = usePaginate();
-  const { currentIndex } = useThumbnailsSlice();
+  const { currentIndex } = useThumbnailsState();
   const thumbnailsCount = useThumbnailsCount();
   const { url } = useZoom();
   const handleSubmit = useSubmit();

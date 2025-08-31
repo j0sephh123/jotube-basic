@@ -1,12 +1,12 @@
 import {
-  useThumbnailsSlice,
+  useThumbnailsState,
   useThumbnailByVideoId,
   ThumbnailsProcessingContent,
 } from "@features/Thumbnails";
 
 export default function ThumbnailsProcessing() {
-  const { thumbnailsProcessingData, metadata } = useThumbnailsSlice();
-  const { data, isLoading } = useThumbnailByVideoId(metadata.ytVideoId);
+  const { thumbnailsProcessingData } = useThumbnailsState();
+  const { data, isLoading } = useThumbnailByVideoId(thumbnailsProcessingData[0]?.ytVideoId ?? undefined);
 
   if (thumbnailsProcessingData.length === 0 || isLoading || !data) {
     return null;

@@ -5,7 +5,6 @@ export { default as useHandleContainerWheel } from "./lib/useHandleContainerWhee
 export { default as useEvents } from "./lib/useEvents";
 export { default as useResetSelection } from "./lib/useResetSelection";
 export { useGetUploadsWithThumbnails } from "./lib/useGetUploadsWithThumbnails";
-export { useThumbnailsSlice } from "./hooks/useThumbnailsSlice";
 export { default as useViewThumbnails } from "./hooks/useViewThumbnails";
 export {
   useThumbnailByVideoId,
@@ -28,3 +27,4 @@ export { default as usePaginate } from "./lib/usePaginate";
 export { generateMainThumbnailUrl } from "./utils/generateMainThumbnailUrl";
 export { useKbdEvent } from "./lib/useKbdEvent";
 export * from "./utils/constants";
+export * from "./model";

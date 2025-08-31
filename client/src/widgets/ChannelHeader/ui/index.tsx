@@ -18,7 +18,7 @@ const ChannelHeader = () => {
   const ytChannelId = useTypedChannelYtId();
   const { pathname } = useLocation();
 
-  const { data: metadata, refetch: refetchMetadata } =
+  const { data: channelMetadata, refetch: refetchMetadata } =
     useChannelMetadataQuery(ytChannelId);
 
   const areControlsDisabled =
@@ -27,7 +27,7 @@ const ChannelHeader = () => {
     pathname.includes("/storyboard") ||
     pathname.includes("/new-gallery");
 
-  if (!metadata) return null;
+  if (!channelMetadata) return null;
 
   const {
     title,
@@ -37,7 +37,7 @@ const ChannelHeader = () => {
     videoCount,
     fetchedUntilEnd,
     storyboardArtifactsCount,
-  } = metadata;
+  } = channelMetadata;
 
   return (
     <div className="bg-base-200 rounded-lg px-6 pt-16 shadow-md">
@@ -60,9 +60,9 @@ const ChannelHeader = () => {
                   <>
                     <SyncUploadsButton
                       isDisabled={areControlsDisabled}
-                      lastSyncedAt={metadata?.lastSyncedAt ?? null}
+                      lastSyncedAt={channelMetadata?.lastSyncedAt ?? null}
                       ytChannelId={ytChannelId}
-                      id={metadata?.id ?? 0}
+                      id={channelMetadata?.id ?? 0}
                     />
                     <CleanShortUploads
                       isDisabled={areControlsDisabled}

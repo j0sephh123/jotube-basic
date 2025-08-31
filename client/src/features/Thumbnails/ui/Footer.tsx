@@ -1,5 +1,5 @@
 import {
-  useThumbnailsSlice,
+  useThumbnailsState,
   useSubmit,
   useIsLastItem,
   useThumbnailsCount,
@@ -12,7 +12,7 @@ import { Button } from "@shared/ui";
 export default function Footer() {
   const { handlePrevious, handleNext } = usePaginate();
   const thumbnailsCount = useThumbnailsCount();
-  const { metadata, selectedImages, currentIndex } = useThumbnailsSlice();
+  const { thumbnailsProcessingData, selectedImages, currentIndex } = useThumbnailsState();
   const isLastItem = useIsLastItem();
   const isPreviousDisabled = thumbnailsCount === 0 ? false : currentIndex === 0;
 
@@ -23,8 +23,8 @@ export default function Footer() {
       <div className="font-bold flex items-center gap-4">
         <div>Selected: {selectedImages.length}</div>
         <OpenDirectoryButton
-          ytChannelId={metadata.ytChannelId}
-          ytVideoId={metadata.ytVideoId}
+          ytChannelId={thumbnailsProcessingData[0]?.ytChannelId ?? ""}
+          ytVideoId={thumbnailsProcessingData[0]?.ytVideoId ?? ""}
         />
       </div>
       <div className="flex items-center gap-2">

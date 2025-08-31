@@ -1,4 +1,4 @@
-import { useThumbnailsSlice } from "@features/Thumbnails";
+import { useThumbnailsState } from "@features/Thumbnails";
 import {
   useThumbnailsCount,
   usePaginate,
@@ -8,7 +8,7 @@ import { useZoom } from "@features/Screenshot";
 
 export default function useHandleContainerWheel() {
   const { handlePrevious, handleNext } = usePaginate();
-  const { currentIndex } = useThumbnailsSlice();
+  const { currentIndex } = useThumbnailsState();
   const thumbnailsCount = useThumbnailsCount();
   const { url } = useZoom();
   const handleSubmit = useSubmit();

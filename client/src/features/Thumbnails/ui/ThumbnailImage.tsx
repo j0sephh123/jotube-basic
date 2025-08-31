@@ -1,13 +1,13 @@
 import { memo } from "react";
 import {
-  useThumbnailsSlice,
+  useThumbnailsState,
   generateMainThumbnailUrl,
 } from "@features/Thumbnails";
 
 const ThumbnailImage = memo(() => {
-  const { metadata, currentIndex } = useThumbnailsSlice();
-  const { ytChannelId, ytVideoId } = metadata;
-  const src = generateMainThumbnailUrl(ytChannelId, ytVideoId, currentIndex);
+  const { thumbnailsProcessingData, currentIndex } = useThumbnailsState();
+  const { ytChannelId, ytVideoId } = thumbnailsProcessingData[0] ?? {};
+  const src = generateMainThumbnailUrl(ytChannelId ?? "", ytVideoId ?? "", currentIndex);
 
   return (
     <img

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Modal } from "@shared/ui";
-import { clearThumbnailsProcessingData } from "@features/Thumbnails/model/thumbnailsStore";
+import { clearThumbnailsProcessingData } from "@features/Thumbnails";
 import {
   Footer,
   Grid,
@@ -10,12 +10,12 @@ import {
   useResetSelection,
   useHandleKeyDown,
   useHandleContainerWheel,
-  useThumbnailsSlice,
+  useThumbnailsState,
   useEvents,
 } from "@features/Thumbnails";
 
 export default function ThumbnailsProcessingContent() {
-  const { thumbnailsProcessingData } = useThumbnailsSlice();
+  const { thumbnailsProcessingData } = useThumbnailsState();
 
   const containerRef = useRef<HTMLDivElement>(null);
 

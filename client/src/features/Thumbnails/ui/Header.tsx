@@ -1,11 +1,11 @@
 import {
-  useThumbnailsSlice,
+  useThumbnailsState,
   SmoothProgressBar,
   useThumbnailsCount,
 } from "@features/Thumbnails";
 
 export default function Header() {
-  const { metadata, currentIndex } = useThumbnailsSlice();
+  const { thumbnailsProcessingData, currentIndex } = useThumbnailsState();
   const thumbnailsCount = useThumbnailsCount();
 
   const current = currentIndex || 0;
@@ -17,10 +17,10 @@ export default function Header() {
         <div className="flex items-center gap-2">
           <h2 className="text-xl font-bold">Processing Thumbnails</h2>
           <div className="ml-4 text-gray-300 text-sm">
-            Channel: {metadata.ytChannelId}
+            Channel: {thumbnailsProcessingData[0]?.ytChannelId ?? ""}
           </div>
           <div className="text-gray-300 text-sm">
-            Video: {metadata.ytVideoId}
+            Video: {thumbnailsProcessingData[0]?.ytVideoId ?? ""}
           </div>
           <div className="text-gray-300 text-sm">
             {currentIndex + 1} / {thumbnailsCount}

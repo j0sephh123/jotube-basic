@@ -7,15 +7,16 @@ import {
   GalleryModal,
   Notification,
 } from "@shared/ui";
-import { ThumbnailsProcessing, useThumbnailsSlice } from "@features/Thumbnails";
+import { ThumbnailsProcessing, useThumbnailsState } from "@features/Thumbnails";
 import { StoryboardProcessing } from "@features/Storyboard";
 import CreateChannel from "@widgets/CreateChannel";
 import { Navbar } from "@widgets/Navbar";
 import PlaylistModal from "@widgets/PlaylistModal";
 import { usePlaylistModalState } from "@features/Playlist";
+import { Debug } from "@shared/Debug";
 
 export default function Layout(): JSX.Element {
-  const { metadata } = useThumbnailsSlice();
+  const { thumbnailsProcessingData } = useThumbnailsState();
   const { type } = usePlaylistModalState();
 
   return (
@@ -27,7 +28,7 @@ export default function Layout(): JSX.Element {
         </div>
         <CreateChannel />
         <TheCarousel />
-        {metadata.ytVideoId && <ThumbnailsProcessing />}
+        {thumbnailsProcessingData.length > 0 && <ThumbnailsProcessing />}
         <StoryboardProcessing />
         <ZoomModal />
         <GalleryModal />
@@ -35,6 +36,7 @@ export default function Layout(): JSX.Element {
         {type !== null && <PlaylistModal />}
       </DialogProvider>
       <VideoModal />
+      <Debug />
     </>
   );
 }

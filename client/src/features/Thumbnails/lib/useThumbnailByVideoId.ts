@@ -1,9 +1,9 @@
 import { useGetThumbnailByVideoIdQuery } from "@shared/api";
 
-export function useThumbnailByVideoId(ytVideoId: string) {
+export function useThumbnailByVideoId(ytVideoId: string | undefined) {
   const { data, loading, error } = useGetThumbnailByVideoIdQuery({
-    variables: { ytVideoId },
-    skip: ytVideoId.length === 0,
+    variables: { ytVideoId: ytVideoId ?? "" },
+    skip: !ytVideoId,
   });
 
   return {
@@ -15,7 +15,7 @@ export function useThumbnailByVideoId(ytVideoId: string) {
 
 export function useRefetchThumbnailByVideoId(ytVideoId: string | undefined) {
   const { refetch } = useGetThumbnailByVideoIdQuery({
-    variables: { ytVideoId: ytVideoId || "" },
+    variables: { ytVideoId: ytVideoId ?? "" },
     skip: !ytVideoId,
   });
 

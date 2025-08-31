@@ -1,11 +1,10 @@
-import { useThumbnailsSlice } from "@features/Thumbnails";
-import { setCurrentIndex } from "@features/Thumbnails/model/thumbnailsStore";
+import { useThumbnailsState, setCurrentIndex } from "@features/Thumbnails";
 import { useDialog } from "@shared/hooks";
 import { useSubmit, useThumbnailsCount } from "@features/Thumbnails";
 
 export default function useHandleNext() {
   const thumbnailsCount = useThumbnailsCount();
-  const { currentIndex } = useThumbnailsSlice();
+  const { currentIndex } = useThumbnailsState();
   const dialogHook = useDialog();
   const handleSubmit = useSubmit();
 
