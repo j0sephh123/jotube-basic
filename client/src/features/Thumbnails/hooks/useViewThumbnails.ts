@@ -6,6 +6,6 @@ export default function useViewThumbnails(id: number) {
 
   return async () => {
     const thumbnails = await getUploadsWithThumbnails.mutateAsync([id]);
-    setProcessingData(thumbnails);
+    setProcessingData("thumbnails", thumbnails);
   };
 }

@@ -8,7 +8,6 @@ import {
   Notification,
 } from "@shared/ui";
 import { ThumbnailsProcessing } from "@features/Thumbnails";
-import { useProcessingState } from "@shared/store";
 import { StoryboardProcessing } from "@features/Storyboard";
 import CreateChannel from "@widgets/CreateChannel";
 import { Navbar } from "@widgets/Navbar";
@@ -17,7 +16,6 @@ import { usePlaylistModalState } from "@features/Playlist";
 import { Debug } from "@shared/Debug";
 
 export default function Layout(): JSX.Element {
-  const { items: thumbnailsProcessingData } = useProcessingState();
   const { type } = usePlaylistModalState();
 
   return (
@@ -29,7 +27,7 @@ export default function Layout(): JSX.Element {
         </div>
         <CreateChannel />
         <TheCarousel />
-        {thumbnailsProcessingData.length > 0 && <ThumbnailsProcessing />}
+        <ThumbnailsProcessing />
         <StoryboardProcessing />
         <ZoomModal />
         <GalleryModal />

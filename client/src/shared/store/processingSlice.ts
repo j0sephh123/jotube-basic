@@ -5,20 +5,23 @@ type State = {
   items: UploadsWithThumbnailsResponse[];
   selectedItems: number[];
   currentIndex: number;
+  type: "thumbnails" | "storyboards";
 };
 
 export const processingState = proxy<State>({
   items: [],
   selectedItems: [],
   currentIndex: 0,
+  type: "thumbnails",
 });
 
-export const setProcessingData = (data: State["items"]) => {
+export const setProcessingData = (type: State["type"], data: State["items"]) => {
   if (data.length > 0 && data[0]) {
     processingState.items = data;
   } else {
     processingState.items = [];
   }
+  processingState.type = type;
 };
 
 export const clearProcessingData = () => {

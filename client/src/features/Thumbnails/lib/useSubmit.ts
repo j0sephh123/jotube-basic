@@ -26,7 +26,7 @@ export default function useSubmit() {
   const finishProcessingUploadM = useFinishProcessingUpload(() => {
     setSelectedImages([]);
     setCurrentIndex(0);
-    setProcessingData(thumbnailsProcessingData.slice(1));
+    setProcessingData("thumbnails", thumbnailsProcessingData.slice(1));
     refetchAll();
     refetchChannelsDashboard();
   });

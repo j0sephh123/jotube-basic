@@ -10,13 +10,13 @@ export {
   useThumbnailByVideoId,
   useRefetchThumbnailByVideoId,
 } from "./lib/useThumbnailByVideoId";
-export { default as ThumbnailsProcessing } from "./ui/ThumbnailsProcessingContent";
+export { default as ThumbnailsProcessing } from "../../widgets/ManualPicker";
 export { default as Footer } from "./ui/Footer";
 export { default as Grid } from "./ui/Grid";
 export { default as Header } from "./ui/Header";
 export { default as ThumbnailImage } from "./ui/ThumbnailImage";
 export { default as Container } from "./ui/Container";
-export { default as ThumbnailsProcessingContent } from "./ui/ThumbnailsProcessingContent";
+export { default as ThumbnailsProcessingContent } from "../../widgets/ManualPicker";
 export { default as ThumbnailGridCell } from "./ui/ThumbnailGridCell";
 export { default as SmoothProgressBar } from "./ui/SmoothProgressBar";
 export { HoverableDiv } from "./ui/HoverableDiv";
