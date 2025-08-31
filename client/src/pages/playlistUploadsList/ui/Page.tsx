@@ -21,7 +21,7 @@ export function PlaylistUploadsListPage() {
     data: playlist,
     loading: isPlaylistLoading,
     error: playlistError,
-  } = useGetPlaylist();
+  } = useGetPlaylist(null);
 
   const refetchPlaylist = useRefetchPlaylist();
   const refetchPlaylistUploads = useRefetchPlaylistUploads();

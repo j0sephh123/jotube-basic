@@ -2,7 +2,7 @@ import { useUpdateChannelPlaylistMutation } from "@shared/api";
 
 export const useUpdateChannelPlaylist = () => {
   const [mutate, result] = useUpdateChannelPlaylistMutation({
-    refetchQueries: ["GetPlaylists"],
+    refetchQueries: ["GetPlaylists", "GetPlaylistDetails"],
   });
 
   return {

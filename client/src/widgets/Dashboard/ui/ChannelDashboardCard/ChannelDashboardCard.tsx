@@ -16,6 +16,7 @@ import {
   useScreenshotsForCarousel,
 } from "@features/Screenshot";
 import { setPlaylistModal } from "@features/Playlist";
+import { useRemoveFromPlaylist } from "@features/Playlist";
 
 const statsTypes = [
   ViewType.THUMBNAILS,
@@ -30,6 +31,7 @@ type Props = DashboardChannelResponse & {
   viewType: ViewType;
   onChannelDelete?: () => void;
   featuredScreenshots: FeaturedScreenshotResponse[];
+  isPlaylistPage?: boolean;
 };
 
 export default function ChannelDashboardCard({
@@ -49,6 +51,7 @@ export default function ChannelDashboardCard({
   playlist,
   onChannelDelete,
   featuredScreenshots,
+  isPlaylistPage,
 }: Props) {
   const navigate = useNavigate();
   const handleViewScreenshots = useScreenshotsForCarousel();
@@ -90,7 +93,16 @@ export default function ChannelDashboardCard({
     <FetchUploadsButton ytChannelId={ytId} videoCount={videoCount} />
   );
 
-  const playlistInfo = (
+  const removeFromPlaylist = useRemoveFromPlaylist();
+
+  const playlistInfo = isPlaylistPage ? (
+    <Button
+      onClick={() => removeFromPlaylist.handleRemoveFromPlaylist(id)}
+      size="sm"
+    >
+      Remove
+    </Button>
+  ) : (
     <div
       className="flex items-center gap-2 text-sm cursor-pointer"
       onClick={() =>

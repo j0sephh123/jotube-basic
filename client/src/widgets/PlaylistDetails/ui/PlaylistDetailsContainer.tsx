@@ -7,7 +7,7 @@ export default function PlaylistDetailsContainer({
 }: {
   children: (playlist: PlaylistDetailsResponse) => React.ReactNode;
 }) {
-  const { data: playlist, loading: isLoading, error } = useGetPlaylist();
+  const { data: playlist, loading: isLoading, error } = useGetPlaylist(null);
 
   return (
     <StaticStates
