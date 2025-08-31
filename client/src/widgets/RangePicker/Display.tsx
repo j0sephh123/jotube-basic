@@ -1,18 +1,20 @@
+import { openRangePicker } from "./rangePickerStore";
+import { useReset } from "./useReset";
+
 export function Display({
   minLabel,
   maxLabel,
   min,
   max,
-  reset,
-  open,
 }: {
-  reset: () => void;
   minLabel: string;
   maxLabel: string;
   min: number | null;
   max: number | null;
-  open: () => void;
 }) {
+  const open = () => openRangePicker();
+  const reset = useReset(); 
+
   return (
     <div
       onClick={open}

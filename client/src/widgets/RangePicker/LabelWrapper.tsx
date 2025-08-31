@@ -1,10 +1,9 @@
+import { type PropsWithChildren } from "react";
+
 export function LabelWrapper({
   children,
   label,
-}: {
-  children: React.ReactNode;
-  label: string;
-}) {
+}: PropsWithChildren<{ label: string }>) {
   return (
     <label className="form-control">
       <span className="label-text mb-2 text-base">{label}</span>
