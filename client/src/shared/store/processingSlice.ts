@@ -97,3 +97,8 @@ export const setCurrentIndex = (index: number) => {
 };
 
 export const useProcessingState = () => useSnapshot(processingState);
+
+export const useThumbnailsProcessingState = () =>
+  useSnapshot(processingState as ThumbnailsState);
+export const useStoryboardsProcessingState = () =>
+  useSnapshot(processingState as StoryboardsState);

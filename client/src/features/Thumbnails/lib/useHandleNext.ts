@@ -1,10 +1,10 @@
-import { useProcessingState, setCurrentIndex } from "@shared/store";
+import { useThumbnailsProcessingState, setCurrentIndex } from "@shared/store";
 import { useDialog } from "@shared/hooks";
 import { useSubmit, useThumbnailsCount } from "@features/Thumbnails";
 
 export default function useHandleNext() {
   const thumbnailsCount = useThumbnailsCount();
-  const { currentIndex } = useProcessingState();
+  const { currentIndex } = useThumbnailsProcessingState();
   const dialogHook = useDialog();
   const handleSubmit = useSubmit();
 

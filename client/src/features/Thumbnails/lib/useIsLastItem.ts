@@ -1,9 +1,9 @@
-import { useProcessingState } from "@shared/store";
+import { useThumbnailsProcessingState } from "@shared/store";
 import { useThumbnailByVideoId } from "@features/Thumbnails";
 
 export default function useIsLastItem() {
   const { items: thumbnailsProcessingData, currentIndex } =
-    useProcessingState();
+    useThumbnailsProcessingState();
   const { data } = useThumbnailByVideoId(
     thumbnailsProcessingData[0]?.ytVideoId ?? undefined
   );

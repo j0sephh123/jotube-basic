@@ -4,7 +4,7 @@ import {
   useThumbnailsCount,
   usePaginate,
 } from "@features/Thumbnails";
-import { useProcessingState } from "@shared/store";
+import { useThumbnailsProcessingState } from "@shared/store";
 import { OpenDirectoryButton } from "@shared/ui";
 import { ArrowLeft, ArrowRight, Save } from "lucide-react";
 import { Button } from "@shared/ui";
@@ -16,7 +16,7 @@ export default function Footer() {
     items: thumbnailsProcessingData,
     selectedItems: selectedImages,
     currentIndex,
-  } = useProcessingState();
+  } = useThumbnailsProcessingState();
   const isLastItem = useIsLastItem();
   const isPreviousDisabled = thumbnailsCount === 0 ? false : currentIndex === 0;
 

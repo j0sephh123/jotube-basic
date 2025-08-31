@@ -1,10 +1,10 @@
 import { memo } from "react";
 import { generateMainThumbnailUrl } from "@features/Thumbnails";
-import { useProcessingState } from "@shared/store";
+import { useThumbnailsProcessingState } from "@shared/store";
 
 const ThumbnailImage = memo(() => {
   const { items: thumbnailsProcessingData, currentIndex } =
-    useProcessingState();
+    useThumbnailsProcessingState();
   const { ytChannelId, ytVideoId } = thumbnailsProcessingData[0] ?? {};
   const src = generateMainThumbnailUrl(
     ytChannelId ?? "",

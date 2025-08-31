@@ -1,9 +1,9 @@
-import { useProcessingState, setCurrentIndex } from "@shared/store";
+import { useThumbnailsProcessingState, setCurrentIndex } from "@shared/store";
 import { useDialog } from "@shared/hooks";
 import { useSubmit, useThumbnailsCount } from "@features/Thumbnails";
 
 export default function usePaginate() {
-  const { currentIndex } = useProcessingState();
+  const { currentIndex } = useThumbnailsProcessingState();
   const thumbnailsCount = useThumbnailsCount();
   const dialogHook = useDialog();
   const handleSubmit = useSubmit();

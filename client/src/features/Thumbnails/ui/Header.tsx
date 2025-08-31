@@ -1,9 +1,9 @@
 import { SmoothProgressBar, useThumbnailsCount } from "@features/Thumbnails";
-import { useProcessingState } from "@shared/store";
+import { useThumbnailsProcessingState } from "@shared/store";
 import { Link } from "react-router-dom";
 
 export default function Header() {
-  const { items, currentIndex } = useProcessingState();
+  const { items, currentIndex } = useThumbnailsProcessingState();
   const thumbnailsCount = useThumbnailsCount();
 
   const ytChannelId = items?.[0]?.ytChannelId ?? "";

@@ -1,10 +1,10 @@
-import { setProcessingData, useProcessingState } from "@shared/store";
+import { setProcessingData, useStoryboardsProcessingState } from "@shared/store";
 import type { UploadWithStoryboardResponse } from "@shared/api/generated/graphql";
 import { Grid } from "@widgets/Grid";
 import { useDeleteUploads, useSaveUpload } from "@features/Upload";
 
 export function ManualStoryboardsPicker() {
-  const { items } = useProcessingState();
+  const { items } = useStoryboardsProcessingState();
   const typesItems = items as UploadWithStoryboardResponse[];
 
   const handleSideEffect = () => {

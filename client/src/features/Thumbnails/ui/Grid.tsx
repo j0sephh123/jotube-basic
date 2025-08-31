@@ -8,7 +8,7 @@ import {
 import {
   toggleSelectedImage,
   setSelectedImages,
-  useProcessingState,
+  useThumbnailsProcessingState,
 } from "@shared/store";
 import { generateThumbnailUrl } from "@shared/utils";
 
@@ -17,7 +17,7 @@ export default function Grid(): JSX.Element {
     currentIndex: batch,
     selectedItems: selectedImages,
     items: thumbnailsProcessingData,
-  } = useProcessingState();
+  } = useThumbnailsProcessingState();
 
   const handleZoom = (index: number): void => {
     const url = generateThumbnailUrl(

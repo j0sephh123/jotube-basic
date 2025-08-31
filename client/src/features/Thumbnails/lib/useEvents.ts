@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useProcessingState } from "@shared/store";
+import { useThumbnailsProcessingState } from "@shared/store";
 import useThumbnailsCount from "./useThumbnailsCount";
 
 export default function useEvents(
@@ -8,7 +8,7 @@ export default function useEvents(
   containerRef: React.RefObject<HTMLDivElement>
 ) {
   const thumbnailsCount = useThumbnailsCount();
-  const { currentIndex } = useProcessingState();
+  const { currentIndex } = useThumbnailsProcessingState();
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);

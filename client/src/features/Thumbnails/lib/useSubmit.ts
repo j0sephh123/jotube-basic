@@ -2,7 +2,7 @@ import {
   setProcessingData,
   setSelectedImages,
   setCurrentIndex,
-  useProcessingState,
+  useThumbnailsProcessingState,
 } from "@shared/store";
 import { useCallback } from "react";
 import { useFinishProcessingUpload } from "@features/Upload";
@@ -13,7 +13,7 @@ import { useRefetchChannelsDashboardQuery } from "@features/Dashboard";
 export default function useSubmit() {
   const refetchChannelsDashboard = useRefetchChannelsDashboardQuery();
   const { items: thumbnailsProcessingData, selectedItems: selectedImages } =
-    useProcessingState();
+    useThumbnailsProcessingState();
   const refetchTotalCounts = useRefetchTotalCounts();
   const refetchThumbnailByVideoId = useRefetchThumbnailByVideoId(
     thumbnailsProcessingData[0]?.ytVideoId
