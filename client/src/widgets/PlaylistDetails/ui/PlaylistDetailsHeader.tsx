@@ -1,11 +1,11 @@
-/* eslint-disable boundaries/element-types */
 import type { PlaylistDetailsResponse } from "@shared/api";
-import { routes } from "@shared/routes";
 import { ArrowLeft } from "lucide-react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { SmallCard } from "./SmallCard";
 import { useScreenshotsForCarousel } from "@features/Screenshot";
-import { setGalleryModal } from "@features/Gallery/model/galleryModalStore";
+import { setGalleryModal } from "@features/Gallery";
+import { CustomLink } from "@shared/ui";
+import { useCustomNavigate } from "@shared/hooks";
 
 type HeaderProps = {
   playlist: PlaylistDetailsResponse;
@@ -33,17 +33,17 @@ export default function PlaylistDetailsHeader({
     }
   );
 
-  const navigate = useNavigate();
+  const navigate = useCustomNavigate();
 
   return (
     <div className="flex items-center justify-between mb-6">
       <div className="flex items-center gap-4">
-        <Link
-          to={routes.playlists()}
+        <CustomLink
+          to={`/playlists`}
           className="btn btn-ghost btn-sm btn-circle"
         >
           <ArrowLeft className="w-5 h-5" />
-        </Link>
+        </CustomLink>
         <div>
           <h1 className="text-2xl font-bold">{name}</h1>
           <p className="text-base-content/60">{channels.length} channels</p>

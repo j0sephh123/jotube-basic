@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { X } from "lucide-react";
 import { useQueue } from "@shared/hooks";
-import { Button, ChannelLink } from "@shared/ui";
+import { Button, CustomLink } from "@shared/ui";
 import useActions from "./useActions";
 import VideoProcessingInfoWrapper from "./Wrapper";
 import useGroupByChannel from "./useGroupByChannel";
+import { type To } from "@shared/types";
 
 export default function VideoProcessingInfo() {
   const { data: queueData = [] } = useQueue();
@@ -46,13 +47,12 @@ export default function VideoProcessingInfo() {
             >
               <div className="bg-zinc-800 px-3 py-2">
                 <div className="flex justify-between items-center">
-                  <ChannelLink
-                    ytId={channelId}
-                    where="saved"
+                  <CustomLink
+                    to={`/channels/${channelId}/saved` as To}
                     className="text-blue-400 hover:underline font-medium truncate max-w-[220px]"
                   >
                     {items[0]?.channelTitle}
-                  </ChannelLink>
+                  </CustomLink>
                   <div className="flex items-center gap-2">
                     <span className="badge badge-sm badge-outline">
                       {activeCount} active / {waitingCount} waiting

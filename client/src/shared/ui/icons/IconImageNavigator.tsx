@@ -1,12 +1,11 @@
 import { Image } from "lucide-react";
-import { routes } from "@shared/routes";
 import { IconButton } from "@shared/ui";
 
 export function IconImageNavigator() {
   return (
     <IconButton
       icon={<Image />}
-      to={routes.imageNavigator()}
+      to={`/image-navigator`}
       tooltip={{
         content: "image navigator",
         position: "bottom",
@@ -15,3 +14,4 @@ export function IconImageNavigator() {
     />
   );
 }
+  

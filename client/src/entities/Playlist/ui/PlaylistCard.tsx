@@ -1,10 +1,9 @@
 /* eslint-disable boundaries/element-types */
-import { Link } from "react-router-dom";
 import { Edit, Trash2 } from "lucide-react";
 import { type PlaylistResponse } from "@shared/api";
 import { setPlaylistModal, useDeletePlaylist } from "@features/Playlist";
 import { useDialog } from "@shared/hooks";
-import { Button, InfoCard } from "@shared/ui";
+import { Button, CustomLink, InfoCard } from "@shared/ui";
 import { useRefetchPlaylists } from "@features/Playlist";
 
 interface PlaylistCardProps {
@@ -59,12 +58,12 @@ export const PlaylistCard = ({ playlist }: PlaylistCardProps) => {
                 : "Unknown date"}
             </p>
             <div className="flex justify-between items-center mt-4">
-              <Link
+              <CustomLink
                 to={`/playlists/${playlist.id}`}
                 className="btn btn-primary btn-sm"
               >
                 View Details
-              </Link>
+              </CustomLink>
               <div className="flex gap-2">
                 <Button variant="outline" onClick={handleEditClick}>
                   <Edit className="w-4 h-4" />

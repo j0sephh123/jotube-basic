@@ -1,6 +1,5 @@
 /* eslint-disable import/no-internal-modules */
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { PlusIcon } from "lucide-react";
 import {
   useCreateChannelMutation,
@@ -8,7 +7,7 @@ import {
 } from "@shared/api/generated/graphql";
 import { useRefetchChannelsDashboardQuery } from "@features/Dashboard";
 import { Modal } from "@shared/ui";
-import { routes } from "@shared/routes";
+import { useCustomNavigate } from "@shared/hooks";
 import { Actions, Label, Title } from "./ui";
 import { useCreateEntityForm } from "@shared/ui";
 import { setMessage } from "@widgets/Notification/notificationStore";
@@ -16,7 +15,7 @@ import CreateEntityForm from "@shared/ui/CreateEntityForm";
 
 export default function CreateChannel() {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const navigate = useNavigate();
+  const navigate = useCustomNavigate();
   const refetchChannelsDashboardQuery = useRefetchChannelsDashboardQuery();
 
   const [createChannelMutation] = useCreateChannelMutation({
@@ -29,7 +28,7 @@ export default function CreateChannel() {
           return;
         case ChannelMessage.AlreadyExists:
           handleCloseModal();
-          navigate(routes.channel(ytChannelId as string));
+          navigate(`/channels/${ytChannelId}`);
           return;
         case ChannelMessage.InvalidVideoId:
           setMessage("Invalid YouTube video ID");
@@ -49,7 +48,7 @@ export default function CreateChannel() {
   });
 
   const { value, inputRef, handleInputChange, clearInput } =
-    useCreateEntityForm(isModalVisible);
+    useCreateEntityForm();
 
   const handleCloseModal = () => {
     setIsModalVisible(false);

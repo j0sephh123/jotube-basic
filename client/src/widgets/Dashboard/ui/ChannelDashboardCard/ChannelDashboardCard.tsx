@@ -8,7 +8,6 @@ import type {
   FeaturedScreenshotResponse,
 } from "@shared/api";
 import { ListMusic, Images } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { useViewThumbnails } from "@features/Thumbnails";
 import { setGalleryModal } from "@features/Gallery";
 import {
@@ -18,6 +17,7 @@ import {
 import { setPlaylistModal } from "@features/Playlist";
 import { useRemoveFromPlaylist } from "@features/Playlist";
 import { useGetUploadsWithStoryboards } from "@features/Storyboard";
+import { useCustomNavigate } from "@shared/hooks";
 
 const statsTypes = [
   ViewType.THUMBNAILS,
@@ -54,7 +54,7 @@ export default function ChannelDashboardCard({
   featuredScreenshots,
   isPlaylistPage,
 }: Props) {
-  const navigate = useNavigate();
+  const navigate = useCustomNavigate();
   const handleViewScreenshots = useScreenshotsForCarousel();
   const viewThumbnails = useViewThumbnails(id);
 

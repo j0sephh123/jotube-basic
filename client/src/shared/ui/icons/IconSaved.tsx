@@ -1,6 +1,6 @@
 import { Save } from "lucide-react";
-import { routes } from "@shared/routes";
 import { IconButton } from "@shared/ui";
+import { makeYtChannelId, type To } from "@shared/types";
 
 export function IconSaved({
   ytChannelId,
@@ -9,8 +9,8 @@ export function IconSaved({
   ytChannelId?: string;
   count?: number;
 }) {
-  const to = ytChannelId
-    ? routes.savedChannel(ytChannelId)
+  const to: To = ytChannelId
+    ? `/channels/${makeYtChannelId(ytChannelId)}/saved`
     : `/dashboard/channels/saved`;
 
   return (

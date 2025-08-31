@@ -1,12 +1,12 @@
 import { Card } from "@shared/ui";
 import { VideosDashboardContainer, VideoChannelInfo } from "@widgets/Dashboard";
-import { useNavigate } from "react-router-dom";
-import { routes } from "@shared/routes";
+import { useCustomNavigate } from "@shared/hooks";
 import { type DashboardVideoResponse } from "@shared/api";
 import { setGalleryModal } from "@features/Gallery";
+import { makeYtChannelId, makeYtVideoId } from "@shared/types";
 
 export default function VideosDashboard() {
-  const navigate = useNavigate();
+  const navigate = useCustomNavigate();
 
   const handleThumbnailClick = (video: DashboardVideoResponse) => {
     setGalleryModal({
@@ -29,7 +29,7 @@ export default function VideosDashboard() {
               src={video.src}
               onThumbnailClick={() => handleThumbnailClick(video)}
               handleTitleClick={() => {
-                navigate(routes.galleryVideo(video.channelYtId, video.ytId));
+                navigate(`/channels/${makeYtChannelId(video.channelYtId)}/gallery/${makeYtVideoId(video.ytId)}`);
               }}
               secondRow={
                 <VideoChannelInfo

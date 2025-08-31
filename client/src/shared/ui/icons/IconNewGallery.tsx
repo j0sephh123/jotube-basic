@@ -1,8 +1,13 @@
 import { GalleryVertical } from "lucide-react";
 import { IconButton } from "@shared/ui";
 
-export function IconNewGallery({ count, onClick }: { count?: number, onClick?: () => void }) {
-
+export function IconNewGallery({
+  count,
+  onClick,
+}: {
+  count?: number;
+  onClick?: () => void;
+}) {
   return (
     <IconButton
       icon={<GalleryVertical />}

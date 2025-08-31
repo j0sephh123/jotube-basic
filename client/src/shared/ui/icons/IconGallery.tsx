@@ -1,14 +1,12 @@
 import { Images } from "lucide-react";
-import { routes } from "@shared/routes";
 import { IconButton } from "@shared/ui";
+import { makeYtChannelId } from "@shared/types";
 
-export function IconGallery({ ytChannelId }: { ytChannelId?: string }) {
-  const to = ytChannelId ? routes.gallery(ytChannelId) : undefined;
-
+export function IconGallery({ ytChannelId }: { ytChannelId: string }) {
   return (
     <IconButton
       icon={<Images />}
-      to={to}
+      to={`/channels/${makeYtChannelId(ytChannelId)}/gallery`}
       tooltip={{
         content: "gallery",
         position: "bottom",

@@ -1,5 +1,4 @@
-import { useNavigate } from "react-router-dom";
-import { routes } from "@shared/routes";
+import { useCustomNavigate } from "@shared/hooks";
 import { useDashboardParams, ViewType } from "@features/Dashboard";
 import clsx from "clsx";
 import { Button } from "@shared/ui";
@@ -14,14 +13,11 @@ const viewTypeOrder = [
 ];
 
 export default function ViewTypeToggle() {
-  const navigate = useNavigate();
+  const navigate = useCustomNavigate();
   const { viewType } = useDashboardParams();
 
   const handleToggle = (newViewType: ViewType) => {
-    navigate(routes.dashboard(newViewType), {
-      replace: true,
-      state: { viewType: newViewType, timestamp: Date.now() },
-    });
+    navigate(`/dashboard/channels/${newViewType}`);
   };
 
   return (

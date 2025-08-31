@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom";
+import { useCustomNavigate } from "@shared/hooks";
 import { ViewType } from "./useDashboardParams";
-import { routes } from "@shared/routes";
+import { makeYtChannelId } from "@shared/types";
 
 export default function useTitleClick(
   channel: {
@@ -11,7 +11,7 @@ export default function useTitleClick(
   },
   viewType: ViewType
 ) {
-  const navigate = useNavigate();
+  const navigate = useCustomNavigate();
 
   return (e: React.MouseEvent) => {
     e.preventDefault();
@@ -22,15 +22,15 @@ export default function useTitleClick(
     }
 
     if (viewType === ViewType.NO_SCREENSHOTS) {
-      navigate(routes.channel(channel.ytId));
+      navigate(`/channels/${makeYtChannelId(channel.ytId)}`);
       return;
     }
 
     if (viewType === ViewType.PROCESSED) {
-      navigate(routes.gallery(channel.ytId));
+      navigate(`/channels/${makeYtChannelId(channel.ytId)}/gallery`);
       return;
     }
 
-    navigate(routes.savedChannel(channel.ytId));
+    navigate(`/channels/${makeYtChannelId(channel.ytId)}/saved`);
   };
 }

@@ -1,9 +1,15 @@
 import { Video } from "lucide-react";
-import { routes } from "@shared/routes";
+import { makeYtChannelId, type To } from "@shared/types";
 import { IconButton } from "@shared/ui";
 
-export function IconUploads({ ytChannelId, count }: { ytChannelId?: string, count?: number }) {
-  const to = ytChannelId ? routes.uploads(ytChannelId) : routes.videos();
+export function IconUploads({
+  ytChannelId,
+  count,
+}: {
+  ytChannelId?: string;
+  count?: number;
+}) {
+  const to: To = ytChannelId ? `/channels/${makeYtChannelId(ytChannelId)}` : `/dashboard/videos`;
 
   return (
     <IconButton

@@ -7,11 +7,12 @@ import {
   CleanShortUploads,
   FetchUploadsButton,
 } from "@features/Upload";
-import { CardMenu, ChannelLink } from "@shared/ui";
+import { CardMenu, CustomLink } from "@shared/ui";
 import Tabs from "./Tabs";
 import ViewThumbnails from "./ViewThumbnails";
 import { ViewScreenshots } from "@features/Thumbnails";
 import { ViewStoryboards } from "@widgets/Storyboard";
+import { makeYtChannelId } from "@shared/types";
 
 const ChannelHeader = () => {
   const ytChannelId = useTypedChannelYtId();
@@ -37,9 +38,9 @@ const ChannelHeader = () => {
         <HeaderLayout
           left={
             <>
-              <ChannelLink ytId={ytChannelId} where="saved">
+              <CustomLink to={`/channels/${makeYtChannelId(ytChannelId)}/saved`}>
                 <h2 className="text-xl font-bold pr-4">{title}</h2>
-              </ChannelLink>
+              </CustomLink>
               <CardMenu id={id} ytId={ytChannelId} />
             </>
           }

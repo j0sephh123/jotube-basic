@@ -1,6 +1,7 @@
 import { SmoothProgressBar, useThumbnailsCount } from "@features/Thumbnails";
 import { useThumbnailsProcessingState } from "@shared/store";
-import { Link } from "react-router-dom";
+import { CustomLink } from "@shared/ui";
+import { makeYtChannelId } from "@shared/types";
 
 export default function Header() {
   const { items, currentIndex } = useThumbnailsProcessingState();
@@ -17,11 +18,11 @@ export default function Header() {
     <div className="flex flex-col gap-4 p-4 bg-gray-800">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <Link to={`/channels/${ytChannelId}/saved`}>
+          <CustomLink to={`/channels/${makeYtChannelId(ytChannelId)}/saved`}>
             <div className="ml-4 text-gray-300 text-sm">
               Channel: {channelTitle ?? ""}
             </div>
-          </Link>
+          </CustomLink>
           <div className="text-gray-300 text-sm">Video: {ytVideoId ?? ""}</div>
           <div className="text-gray-300 text-sm">
             {currentIndex + 1} / {thumbnailsCount}

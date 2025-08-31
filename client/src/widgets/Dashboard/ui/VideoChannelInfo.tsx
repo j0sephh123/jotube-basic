@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { routes } from "@shared/routes";
+import { makeYtChannelId } from "@shared/types";
+import { CustomLink } from "@shared/ui";
 
 type VideoChannelInfoProps = {
   channelTitle: string;
@@ -12,12 +12,12 @@ export default function VideoChannelInfo({
 }: VideoChannelInfoProps) {
   return (
     <div className="text-sm text-gray-400">
-      <Link
-        to={routes.savedChannel(channelYtId)}
+      <CustomLink
+        to={`/channels/${makeYtChannelId(channelYtId)}/saved`}
         className="hover:text-blue-400 hover:underline transition-colors truncate block"
       >
         {channelTitle}
-      </Link>
+      </CustomLink>
     </div>
   );
 }
