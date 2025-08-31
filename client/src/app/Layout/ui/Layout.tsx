@@ -7,7 +7,8 @@ import {
   GalleryModal,
   Notification,
 } from "@shared/ui";
-import { ThumbnailsProcessing, useThumbnailsState } from "@features/Thumbnails";
+import { ThumbnailsProcessing } from "@features/Thumbnails";
+import { useProcessingState } from "@shared/store";
 import { StoryboardProcessing } from "@features/Storyboard";
 import CreateChannel from "@widgets/CreateChannel";
 import { Navbar } from "@widgets/Navbar";
@@ -16,7 +17,7 @@ import { usePlaylistModalState } from "@features/Playlist";
 import { Debug } from "@shared/Debug";
 
 export default function Layout(): JSX.Element {
-  const { thumbnailsProcessingData } = useThumbnailsState();
+  const { items: thumbnailsProcessingData } = useProcessingState();
   const { type } = usePlaylistModalState();
 
   return (

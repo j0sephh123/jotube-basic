@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useThumbnailsState } from "@features/Thumbnails";
+import { useProcessingState } from "@shared/store";
 import useThumbnailsCount from "./useThumbnailsCount";
 
 export default function useEvents(
@@ -8,7 +8,7 @@ export default function useEvents(
   containerRef: React.RefObject<HTMLDivElement>
 ) {
   const thumbnailsCount = useThumbnailsCount();
-  const { currentIndex } = useThumbnailsState();
+  const { currentIndex } = useProcessingState();
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
@@ -27,10 +27,5 @@ export default function useEvents(
         container.removeEventListener("wheel", handleContainerWheel);
       };
     }
-  }, [
-    currentIndex,
-    thumbnailsCount,
-    containerRef,
-    handleContainerWheel,
-  ]);
+  }, [currentIndex, thumbnailsCount, containerRef, handleContainerWheel]);
 }

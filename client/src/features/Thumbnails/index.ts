@@ -27,4 +27,3 @@ export { default as usePaginate } from "./lib/usePaginate";
 export { generateMainThumbnailUrl } from "./utils/generateMainThumbnailUrl";
 export { useKbdEvent } from "./lib/useKbdEvent";
 export * from "./utils/constants";
-export * from "./model";

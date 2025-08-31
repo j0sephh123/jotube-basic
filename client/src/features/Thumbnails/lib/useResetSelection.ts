@@ -1,7 +1,7 @@
 import {
   setSelectedImages,
   setCurrentIndex,
-} from "@features/Thumbnails/model/thumbnailsStore";
+} from "@shared/store/processingSlice";
 import { useEffect } from "react";
 
 export default function useResetSelection(

@@ -1,11 +1,9 @@
-import {
-  useThumbnailsState,
-  SmoothProgressBar,
-  useThumbnailsCount,
-} from "@features/Thumbnails";
+import { SmoothProgressBar, useThumbnailsCount } from "@features/Thumbnails";
+import { useProcessingState } from "@shared/store";
 
 export default function Header() {
-  const { thumbnailsProcessingData, currentIndex } = useThumbnailsState();
+  const { items: thumbnailsProcessingData, currentIndex } =
+    useProcessingState();
   const thumbnailsCount = useThumbnailsCount();
 
   const current = currentIndex || 0;

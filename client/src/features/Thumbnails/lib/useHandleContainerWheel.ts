@@ -1,4 +1,4 @@
-import { useThumbnailsState } from "@features/Thumbnails";
+import { useProcessingState } from "@shared/store";
 import {
   useThumbnailsCount,
   usePaginate,
@@ -8,7 +8,7 @@ import { useZoom } from "@features/Screenshot";
 
 export default function useHandleContainerWheel() {
   const { handlePrevious, handleNext } = usePaginate();
-  const { currentIndex } = useThumbnailsState();
+  const { currentIndex } = useProcessingState();
   const thumbnailsCount = useThumbnailsCount();
   const { url } = useZoom();
   const handleSubmit = useSubmit();

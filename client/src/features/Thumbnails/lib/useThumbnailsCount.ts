@@ -1,8 +1,8 @@
-import { useThumbnailsState } from "@features/Thumbnails";
+import { useProcessingState } from "@shared/store";
 import { useThumbnailByVideoId } from "@features/Thumbnails";
 
 export default function useThumbnailsCount() {
-  const { thumbnailsProcessingData } = useThumbnailsState();
+  const { items: thumbnailsProcessingData } = useProcessingState();
   const { data } = useThumbnailByVideoId(
     thumbnailsProcessingData[0]?.ytVideoId ?? undefined
   );
