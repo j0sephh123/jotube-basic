@@ -6,12 +6,13 @@ export function useGetUploadsWithThumbnails() {
       fetchPolicy: "no-cache",
     });
 
-  const mutateAsync = (channelIds: number[]) => {
-    return getUploadsWithThumbnails({
+  const mutateAsync = async (channelIds: number[]) => {
+    const result = await getUploadsWithThumbnails({
       variables: {
         input: { channelIds },
       },
-    }).then((result) => result.data?.uploadsWithThumbnails || []);
+    });
+    return result.data?.uploadsWithThumbnails || [];
   };
 
   return {

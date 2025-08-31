@@ -3,6 +3,7 @@ import { PrismaService } from 'src/core/database/prisma/prisma.service';
 import { ThumbnailsManagerService } from 'src/thumbnails/manager/thumbnails-manager.service';
 import { ArtifactType } from '@prisma/client';
 import { GetScreenshotsInput } from '../dtos/get-screenshots.input';
+import { UploadsWithThumbnailsResponse } from '../dtos/uploads-with-thumbnails.response';
 
 type Item = {
   id: number;
@@ -62,7 +63,9 @@ export class ThumbnailsApiService {
     }));
   }
 
-  public async uploadsWithThumbnails(channelIds: number[]) {
+  public async uploadsWithThumbnails(
+    channelIds: number[],
+  ): Promise<UploadsWithThumbnailsResponse[]> {
     const resp = await this.prismaService.uploadsVideo.findMany({
       where: {
         channelId: { in: channelIds },
@@ -71,7 +74,7 @@ export class ThumbnailsApiService {
       select: {
         ytId: true,
         channel: {
-          select: { ytId: true },
+          select: { ytId: true, title: true },
         },
       },
     });
@@ -79,6 +82,7 @@ export class ThumbnailsApiService {
     return resp.map((video) => ({
       ytChannelId: video.channel.ytId,
       ytVideoId: video.ytId,
+      channelTitle: video.channel.title,
     }));
   }
 

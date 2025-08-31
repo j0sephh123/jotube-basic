@@ -7,4 +7,7 @@ export class UploadsWithThumbnailsResponse {
 
   @Field()
   ytVideoId: string;
+
+  @Field()
+  channelTitle: string;
 }

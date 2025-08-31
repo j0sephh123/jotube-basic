@@ -450,6 +450,7 @@ input UploadsWithThumbnailsInput {
 }
 
 type UploadsWithThumbnailsResponse {
+  channelTitle: String!
   ytChannelId: String!
   ytVideoId: String!
 }

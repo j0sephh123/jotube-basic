@@ -647,6 +647,7 @@ export type UploadsWithThumbnailsInput = {
 
 export type UploadsWithThumbnailsResponse = {
   __typename?: 'UploadsWithThumbnailsResponse';
+  channelTitle: Scalars['String']['output'];
   ytChannelId: Scalars['String']['output'];
   ytVideoId: Scalars['String']['output'];
 };
@@ -856,7 +857,7 @@ export type UploadsWithThumbnailsQueryVariables = Exact<{
 }>;
 
 
-export type UploadsWithThumbnailsQuery = { __typename?: 'Query', uploadsWithThumbnails: Array<{ __typename?: 'UploadsWithThumbnailsResponse', ytChannelId: string, ytVideoId: string }> };
+export type UploadsWithThumbnailsQuery = { __typename?: 'Query', uploadsWithThumbnails: Array<{ __typename?: 'UploadsWithThumbnailsResponse', ytChannelId: string, ytVideoId: string, channelTitle: string }> };
 
 export type DeleteUploadsMutationVariables = Exact<{
   ytChannelId: Scalars['String']['input'];
@@ -2048,6 +2049,7 @@ export const UploadsWithThumbnailsDocument = gql`
   uploadsWithThumbnails(input: $input) {
     ytChannelId
     ytVideoId
+    channelTitle
   }
 }
     `;

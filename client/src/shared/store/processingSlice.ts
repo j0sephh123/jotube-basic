@@ -1,12 +1,8 @@
+import type { UploadsWithThumbnailsResponse } from "@shared/api/generated/graphql";
 import { proxy, useSnapshot } from "valtio";
 
-type ThumbnailItem = {
-  ytChannelId: string;
-  ytVideoId: string;
-};
-
 type State = {
-  items: ThumbnailItem[];
+  items: UploadsWithThumbnailsResponse[];
   selectedItems: number[];
   currentIndex: number;
 };
@@ -17,9 +13,7 @@ export const processingState = proxy<State>({
   currentIndex: 0,
 });
 
-export const setProcessingData = (
-  data: { ytChannelId: string; ytVideoId: string }[]
-) => {
+export const setProcessingData = (data: State["items"]) => {
   if (data.length > 0 && data[0]) {
     processingState.items = data;
   } else {
@@ -27,7 +21,7 @@ export const setProcessingData = (
   }
 };
 
-export const clearThumbnailsProcessingData = () => {
+export const clearProcessingData = () => {
   processingState.items = [];
 };
 

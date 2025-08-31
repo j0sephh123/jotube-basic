@@ -96,6 +96,7 @@ export const UPLOADS_WITH_THUMBNAILS = gql`
     uploadsWithThumbnails(input: $input) {
       ytChannelId
       ytVideoId
+      channelTitle
     }
   }
 `;

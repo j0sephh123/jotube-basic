@@ -4,10 +4,7 @@ import {
   useThumbnailsCount,
   usePaginate,
 } from "@features/Thumbnails";
-import {
-  clearThumbnailsProcessingData,
-  useProcessingState,
-} from "@shared/store";
+import { clearProcessingData, useProcessingState } from "@shared/store";
 
 export default function useHandleKeyDown() {
   const { handlePrevious, handleNext } = usePaginate();
@@ -37,7 +34,7 @@ export default function useHandleKeyDown() {
         break;
       case "Escape":
         event.preventDefault();
-        clearThumbnailsProcessingData();
+        clearProcessingData();
         break;
     }
   };

@@ -1,5 +1,5 @@
 import { useGetUploadsWithThumbnails } from "@features/Thumbnails";
-import { setProcessingData } from "@shared/store/processingSlice";
+import { setProcessingData } from "@shared/store";
 
 export default function useViewThumbnails(id: number) {
   const getUploadsWithThumbnails = useGetUploadsWithThumbnails();

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Modal } from "@shared/ui";
-import { clearThumbnailsProcessingData } from "@shared/store";
+import { clearProcessingData } from "@shared/store";
 import {
   Footer,
   Grid,
@@ -30,7 +30,7 @@ export default function ThumbnailsProcessingContent() {
   return (
     <Modal
       isModalVisible={isModalVisible}
-      onClose={clearThumbnailsProcessingData}
+      onClose={clearProcessingData}
       maxWidth="100vw"
       maxHeight="100vh"
     >
