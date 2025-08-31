@@ -8,6 +8,7 @@ import {
 } from "@widgets/Dashboard";
 import { DashboardType } from "@features/Dashboard";
 import { useDashboardParams } from "@features/Dashboard";
+import { Grid } from "@widgets/Grid";
 
 const header: Record<
   DashboardType,
@@ -36,12 +37,9 @@ export default function DashboardWrapper() {
           />
         </div>
         <div className="flex-1 min-h-0 overflow-y-auto px-4">
-          {type === "channels" && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 p-4">
-              <Outlet />
-            </div>
-          )}
-          {type === "videos" && <Outlet />}
+          <Grid>
+            <Outlet />
+          </Grid>
         </div>
       </div>
     </div>

@@ -1,10 +1,9 @@
-/* eslint-disable boundaries/element-types */
 import { Card } from "@shared/ui";
 import { VideosDashboardContainer, VideoChannelInfo } from "@widgets/Dashboard";
 import { useNavigate } from "react-router-dom";
 import { routes } from "@shared/routes";
 import { type DashboardVideoResponse } from "@shared/api";
-import { setGalleryModal } from "@features/Gallery/model/galleryModalStore";
+import { setGalleryModal } from "@features/Gallery";
 
 export default function VideosDashboard() {
   const navigate = useNavigate();
@@ -19,7 +18,7 @@ export default function VideosDashboard() {
   return (
     <VideosDashboardContainer>
       {(videos) => (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
+        <>
           {videos.map((video) => (
             <Card
               key={video.id}
@@ -40,7 +39,7 @@ export default function VideosDashboard() {
               }
             />
           ))}
-        </div>
+        </>
       )}
     </VideosDashboardContainer>
   );
