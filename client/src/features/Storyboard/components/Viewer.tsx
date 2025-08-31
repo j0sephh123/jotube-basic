@@ -1,6 +1,8 @@
 import type { UploadWithStoryboard } from "@features/Storyboard";
 import { Modal } from "@shared/ui";
 import { Container } from "@features/Thumbnails";
+// eslint-disable-next-line boundaries/element-types
+import { Grid } from "@widgets/Grid";
 
 interface ViewerProps {
   isModalOpen: boolean;
@@ -45,23 +47,25 @@ export default function Viewer({
           </p>
         </div>
         <Container>
-          <div className="w-full p-4 grid grid-cols-2 gap-4">
-            {storyboardItems.map(({ index, url }) => (
-              <div
-                key={index}
-                className="bg-base-200 rounded shadow-sm p-2 flex flex-col items-center"
-              >
-                <img
-                  src={url}
-                  alt={`Storyboard M${index}`}
-                  className="w-full h-auto object-contain"
-                />
-                <div className="mt-2 text-xs text-base-content/70">
-                  M{index}
+          <Grid>
+            <>
+              {storyboardItems.map(({ index, url }) => (
+                <div
+                  key={index}
+                  className="bg-base-200 rounded shadow-sm p-2 flex flex-col items-center"
+                >
+                  <img
+                    src={url}
+                    alt={`Storyboard M${index}`}
+                    className="w-full h-auto object-contain"
+                  />
+                  <div className="mt-2 text-xs text-base-content/70">
+                    M{index}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </>
+          </Grid>
         </Container>
         <div className="p-4 border-t border-base-300 flex justify-end gap-2">
           <button

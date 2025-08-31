@@ -8,6 +8,7 @@ import { type PlaylistDetailsResponse } from "@shared/api";
 import { StaticStates } from "@shared/ui";
 import { Link, useParams } from "react-router-dom";
 import { PlaylistDetailsHeader } from "@widgets/PlaylistDetails";
+import { Grid } from "@widgets/Grid";
 
 export function PlaylistUploadsListPage() {
   const params = useParams<{
@@ -40,7 +41,7 @@ export function PlaylistUploadsListPage() {
       isEmpty={!data}
     >
       <PlaylistDetailsHeader playlist={playlist?.playlistDetails as PlaylistDetailsResponse} />
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+      <Grid>
         {data?.playlistUploadsList?.uploads.map(
           ({
             ytId,
@@ -71,7 +72,7 @@ export function PlaylistUploadsListPage() {
             />
           )
         )}
-      </div>
+      </Grid>
     </StaticStates>
   );
 }

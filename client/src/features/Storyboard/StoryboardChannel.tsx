@@ -1,3 +1,4 @@
+/* eslint-disable boundaries/element-types */
 import { useState } from "react";
 import { useTypedChannelYtId } from "@features/Dashboard";
 import { useSaveUpload } from "@features/Upload";
@@ -54,18 +55,16 @@ export default function StoryboardChannel() {
     <StoryboardContainer>
       {(uploadsWithStoryboard) => (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {uploadsWithStoryboard.map((uploadWithStoryboard) => (
-              <StoryboardItem
-                key={uploadWithStoryboard.id}
-                storyboard={uploadWithStoryboard}
-                onStoryboardClick={(uploadWithStoryboard) => {
-                  setActiveStoryboard(uploadWithStoryboard);
-                  setIsModalOpen(true);
-                }}
-              />
-            ))}
-          </div>
+          {uploadsWithStoryboard.map((uploadWithStoryboard) => (
+            <StoryboardItem
+              key={uploadWithStoryboard.id}
+              storyboard={uploadWithStoryboard}
+              onStoryboardClick={(uploadWithStoryboard) => {
+                setActiveStoryboard(uploadWithStoryboard);
+                setIsModalOpen(true);
+              }}
+            />
+          ))}
           <Viewer
             isModalOpen={isModalOpen}
             activeStoryboard={activeStoryboard}

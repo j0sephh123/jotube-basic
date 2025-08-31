@@ -1,14 +1,16 @@
+/* eslint-disable boundaries/element-types */
 import {
   setStoryboardProcessingData,
   clearStoryboardProcessingData,
   useStoryboardState,
-} from "./model/storyboardStore";
+} from "@features/Storyboard";
 import { useSaveUpload } from "@features/Upload";
 import { useRefetchChannelMetadata } from "@entities/Channel";
 import { useDeleteUploads } from "@features/Upload";
 import { useTypedChannelYtId } from "@features/Dashboard";
 import { Modal } from "@shared/ui";
 import { useRef, useEffect } from "react";
+import { Grid } from "@widgets/Grid";
 
 export default function StoryboardProcessing() {
   const { storyboardProcessingData } = useStoryboardState();
@@ -122,7 +124,7 @@ export default function StoryboardProcessing() {
           ref={scrollContainerRef}
           className="flex-1 w-full p-4 overflow-y-auto"
         >
-          <div className="grid grid-cols-2 gap-4">
+          <Grid>
             {storyboardItems.map(({ index, url }) => (
               <div
                 key={index}
@@ -138,7 +140,7 @@ export default function StoryboardProcessing() {
                 </div>
               </div>
             ))}
-          </div>
+          </Grid>
         </div>
         <div className="p-4 border-t border-base-300 bg-base-100 sticky bottom-0 z-10">
           <div className="flex justify-end gap-2">

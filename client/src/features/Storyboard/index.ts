@@ -4,3 +4,4 @@ export { default as StoryboardProcessing } from "./StoryboardProcessing";
 export { default as StoryboardChannel } from "./StoryboardChannel";
 export * from "./components";
 export { STORYBOARDS } from "./api/storyboard.gql";
+export * from "./model";

@@ -3,6 +3,7 @@
 import type { PlaylistDetailsResponse } from "@shared/api";
 import { ViewType } from "@features/Dashboard";
 import DashboardChannelCard from "@widgets/Dashboard/ui/ChannelDashboardCard/ChannelDashboardCard";
+import { Grid } from "@widgets/Grid";
 
 type TableProps = {
   playlist: PlaylistDetailsResponse;
@@ -10,7 +11,7 @@ type TableProps = {
 
 export default function PlaylistGrid({ playlist }: TableProps) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+    <Grid>
       {playlist.channels.map((channel) => (
         <DashboardChannelCard
           key={channel.id}
@@ -32,6 +33,6 @@ export default function PlaylistGrid({ playlist }: TableProps) {
           isPlaylistPage
         />
       ))}
-    </div>
+    </Grid>
   );
 }
