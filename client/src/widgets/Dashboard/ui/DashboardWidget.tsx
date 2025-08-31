@@ -7,7 +7,11 @@ export default function DashboardWidget() {
   const { type } = useParams<{ type: DashboardType }>();
 
   if (type === DashboardType.CHANNELS) {
-    return <ChannelsDashboard />;
+    return (
+      <>
+        <ChannelsDashboard />
+      </>
+    );
   }
 
   return <VideosDashboard />;

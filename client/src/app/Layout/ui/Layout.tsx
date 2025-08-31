@@ -12,7 +12,6 @@ import CreateChannel from "@widgets/CreateChannel";
 import { Navbar } from "@widgets/Navbar";
 import PlaylistModal from "@widgets/PlaylistModal";
 import { usePlaylistModalState } from "@features/Playlist";
-import { Debug } from "@shared/Debug";
 
 export default function Layout(): JSX.Element {
   const { type } = usePlaylistModalState();
@@ -33,7 +32,6 @@ export default function Layout(): JSX.Element {
         {type !== null && <PlaylistModal />}
       </DialogProvider>
       <VideoModal />
-      <Debug />
     </>
   );
 }

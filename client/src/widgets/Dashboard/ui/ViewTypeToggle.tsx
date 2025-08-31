@@ -21,22 +21,20 @@ export default function ViewTypeToggle() {
   };
 
   return (
-    <div className="flex items-center gap-2">
-      <span className="text-sm font-medium">View:</span>
-      <div className="join">
-        {viewTypeOrder.map((type) => (
-          <Button
-            key={type}
-            className={clsx("join-item", {
-              "btn-primary": viewType === type,
-              "btn-outline": viewType !== type,
-            })}
-            onClick={() => handleToggle(type)}
-          >
-            {type}
-          </Button>
-        ))}
-      </div>
+    <div className="grid grid-cols-3 gap-2">
+      {viewTypeOrder.map((type) => (
+        <Button
+          size="sm"
+          key={type}
+          className={clsx("", {
+            "btn-primary": viewType === type,
+            "btn-outline": viewType !== type,
+          })}
+          onClick={() => handleToggle(type)}
+        >
+          {type}
+        </Button>
+      ))}
     </div>
   );
 }

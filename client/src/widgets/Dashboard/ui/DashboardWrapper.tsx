@@ -9,6 +9,7 @@ import {
 import { DashboardType } from "@features/Dashboard";
 import { useDashboardParams } from "@features/Dashboard";
 import { Grid } from "@widgets/Grid";
+import { RangePicker } from "@widgets/RangePicker";
 
 const header: Record<
   DashboardType,
@@ -29,9 +30,12 @@ export default function DashboardWrapper() {
         <div className="flex flex-wrap items-center justify-between gap-4">
           <Header
             leftSlot={
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-4">
                 <SelectSortDirection />
                 {type === DashboardType.CHANNELS && <ViewTypeToggle />}
+                {type === DashboardType.CHANNELS && (
+                  <RangePicker minLabel="Min" maxLabel="Max" />
+                )}
               </div>
             }
           />
