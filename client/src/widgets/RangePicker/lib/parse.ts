@@ -1,4 +1,4 @@
-import { type Parsed } from "./types";
+import { type Parsed } from "../types";
 
 export function parse(params: URLSearchParams): Parsed {
   const minRaw = params.get("min");

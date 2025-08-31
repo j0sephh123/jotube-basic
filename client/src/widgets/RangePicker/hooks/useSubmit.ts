@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
-import { closeRangePicker } from "./rangePickerStore";
+import { closeRangePicker } from "../rangePickerStore";
 
 export function useSubmit() {
   const [searchParams, setSearchParams] = useSearchParams();

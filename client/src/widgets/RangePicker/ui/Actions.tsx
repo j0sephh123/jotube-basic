@@ -1,13 +1,8 @@
-import { closeRangePicker } from "./rangePickerStore";
-import { useSubmit } from "./useSubmit";
+import { closeRangePicker, useRangePickerState } from "../rangePickerStore";
+import { useSubmit } from "../hooks";
 
-export function Actions({
-  draftMin,
-  draftMax,
-}: {
-  draftMin: string;
-  draftMax: string;
-}) {
+export function Actions() {
+  const { draftMin, draftMax } = useRangePickerState();
   const close = () => closeRangePicker();
   const submit = useSubmit();
 
