@@ -1,12 +1,21 @@
-// TODO
-/**
- * Thumbnails Grid
- * playlistuploadslist
- */
+import clsx from "clsx";
+import type { PropsWithChildren } from "react";
 
-export function Grid({ children }: { children: React.ReactNode }) {
+type Props = PropsWithChildren<{
+  cols?: number;
+}>;
+
+export function Grid({ children, cols = 4 }: Props) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 p-4">
+    <div
+      className={clsx(
+        "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 p-4",
+        {
+          "lg:grid-cols-4": cols === 4,
+          "lg:grid-cols-3": cols === 3,
+        }
+      )}
+    >
       {children}
     </div>
   );
