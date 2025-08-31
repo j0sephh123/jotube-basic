@@ -6,19 +6,10 @@ export class StoryboardFragmentResponse {
   id: number;
 
   @Field(() => Int)
-  uploadsVideoId: number;
-
-  @Field(() => Int)
   fragments: number;
 
   @Field()
   url: string;
-
-  @Field()
-  createdAt: string;
-
-  @Field()
-  updatedAt: string;
 }
 
 @ObjectType()
@@ -34,12 +25,6 @@ export class StoryboardChannelResponse {
 
   @Field()
   ytId: string;
-
-  @Field(() => [StoryboardFragmentResponse])
-  uploads: StoryboardFragmentResponse[];
-
-  @Field(() => Int)
-  totalUploads: number;
 }
 
 @ObjectType()
@@ -59,12 +44,6 @@ export class UploadWithStoryboardResponse {
   @Field()
   publishedAt: string;
 
-  @Field()
-  createdAt: string;
-
-  @Field()
-  updatedAt: string;
-
   @Field(() => Int)
   channelId: number;
 
@@ -79,4 +58,7 @@ export class UploadWithStoryboardResponse {
 
   @Field(() => StoryboardFragmentResponse)
   storyboard: StoryboardFragmentResponse;
+
+  @Field(() => StoryboardChannelResponse)
+  channel: StoryboardChannelResponse;
 }

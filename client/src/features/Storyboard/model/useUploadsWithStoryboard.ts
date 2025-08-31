@@ -1,45 +1,45 @@
-import { useQuery } from "@apollo/client";
-import { STORYBOARDS } from "@features/Storyboard";
 import { useTypedChannelYtId } from "@features/Dashboard";
-
-export type StoryboardData = {
-  id: number;
-  uploadsVideoId: number;
-  fragments: number;
-  url: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type UploadWithStoryboard = {
-  id: number;
-  ytId: string;
-  title: string;
-  src: string;
-  publishedAt: string;
-  createdAt: string;
-  updatedAt: string;
-  channelId: number;
-  nextPageToken: string | null;
-  duration: number | null;
-  artifact: string;
-  storyboard: StoryboardData;
-};
+import {
+  useUploadsWithStoryboardsLazyQuery,
+  useUploadsWithStoryboardsQuery,
+} from "@shared/api";
+import { setProcessingData } from "@shared/store";
 
 export function useUploadsWithStoryboard() {
   const ytChannelId = useTypedChannelYtId();
 
-  const { data, loading, error, refetch } = useQuery<{
-    storyboards: UploadWithStoryboard[];
-  }>(STORYBOARDS, {
-    variables: { ytChannelId },
+  const { data, loading, error, refetch } = useUploadsWithStoryboardsQuery({
+    variables: { input: { ytChannelId } },
     skip: !ytChannelId,
   });
 
   return {
-    data: data?.storyboards,
+    data: data?.uploadsWithStoryboards,
     isLoading: loading,
     error,
     refetch,
+  };
+}
+
+export function useGetUploadsWithStoryboards() {
+  const [getUploadsWithStoryboards, { data, loading, error }] =
+    useUploadsWithStoryboardsLazyQuery({
+      fetchPolicy: "no-cache",
+    });
+
+  const mutateAsync = async (ytChannelId: string) => {
+    const result = await getUploadsWithStoryboards({
+      variables: {
+        input: { ytChannelId },
+      },
+    });
+    setProcessingData("storyboards", result.data?.uploadsWithStoryboards || []);
+  };
+
+  return {
+    mutateAsync,
+    data,
+    loading,
+    error,
   };
 }

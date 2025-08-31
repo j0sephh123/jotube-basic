@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ArtifactType, UploadsVideo } from '@prisma/client';
 import { spawn } from 'child_process';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
+import { UploadWithStoryboardResponse } from './dtos/upload-with-storyboard.response';
 
 interface VideoInfoResponse {
   success: boolean;
@@ -117,7 +118,9 @@ export class StoryboardService {
     });
   }
 
-  async getUploadsWithStoryboards(ytChannelId: string) {
+  async getUploadsWithStoryboards(
+    ytChannelId: string,
+  ): Promise<UploadWithStoryboardResponse[]> {
     const uploads = await this.prismaService.uploadsVideo.findMany({
       where: {
         channel: {
@@ -125,11 +128,55 @@ export class StoryboardService {
         },
         artifact: ArtifactType.STORYBOARD,
       },
-      include: {
-        storyboard: true,
+      select: {
+        id: true,
+        ytId: true,
+        title: true,
+        src: true,
+        publishedAt: true,
+        channelId: true,
+        nextPageToken: true,
+        duration: true,
+        artifact: true,
+        storyboard: {
+          select: {
+            id: true,
+            fragments: true,
+            url: true,
+          },
+        },
+        channel: {
+          select: {
+            id: true,
+            title: true,
+            src: true,
+            ytId: true,
+          },
+        },
       },
     });
 
-    return uploads;
+    return uploads.map((upload) => ({
+      id: upload.id,
+      ytId: upload.ytId,
+      title: upload.title,
+      src: upload.src,
+      publishedAt: upload.publishedAt,
+      channelId: upload.channelId,
+      nextPageToken: upload.nextPageToken,
+      duration: upload.duration,
+      artifact: upload.artifact,
+      storyboard: {
+        id: upload.storyboard.id,
+        fragments: upload.storyboard.fragments,
+        url: upload.storyboard.url,
+      },
+      channel: {
+        id: upload.channel.id,
+        title: upload.channel.title,
+        src: upload.channel.src,
+        ytId: upload.channel.ytId,
+      },
+    }));
   }
 }

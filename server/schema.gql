@@ -303,6 +303,13 @@ type StatisticsCountsResponse {
   totalThumbnails: Float!
 }
 
+type StoryboardChannelResponse {
+  id: Int!
+  src: String!
+  title: String!
+  ytId: String!
+}
+
 type StoryboardDataResponse {
   createdAt: String!
   fragments: Int!
@@ -313,11 +320,8 @@ type StoryboardDataResponse {
 }
 
 type StoryboardFragmentResponse {
-  createdAt: String!
   fragments: Int!
   id: Int!
-  updatedAt: String!
-  uploadsVideoId: Int!
   url: String!
 }
 
@@ -372,8 +376,8 @@ type UpdatePlaylistResponse {
 
 type UploadWithStoryboardResponse {
   artifact: String!
+  channel: StoryboardChannelResponse!
   channelId: Int!
-  createdAt: String!
   duration: Int
   id: Int!
   nextPageToken: String
@@ -381,7 +385,6 @@ type UploadWithStoryboardResponse {
   src: String!
   storyboard: StoryboardFragmentResponse!
   title: String!
-  updatedAt: String!
   ytId: String!
 }
 

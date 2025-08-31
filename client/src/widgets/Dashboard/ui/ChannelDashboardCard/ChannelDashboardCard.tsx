@@ -17,6 +17,7 @@ import {
 } from "@features/Screenshot";
 import { setPlaylistModal } from "@features/Playlist";
 import { useRemoveFromPlaylist } from "@features/Playlist";
+import { useGetUploadsWithStoryboards } from "@features/Storyboard";
 
 const statsTypes = [
   ViewType.THUMBNAILS,
@@ -62,6 +63,8 @@ export default function ChannelDashboardCard({
     src
   );
 
+  const viewStoryboards = useGetUploadsWithStoryboards();
+
   const cardStats = (
     <Card.Stats
       ytId={ytId}
@@ -74,6 +77,7 @@ export default function ChannelDashboardCard({
       onNavigate={navigate}
       onViewScreenshots={() => handleViewScreenshots([ytId])}
       onViewThumbnails={viewThumbnails}
+      onViewStoryboards={() => viewStoryboards.mutateAsync(ytId)}
     />
   );
 

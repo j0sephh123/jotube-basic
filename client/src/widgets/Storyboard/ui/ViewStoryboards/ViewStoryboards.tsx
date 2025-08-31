@@ -1,5 +1,8 @@
 import { Button } from "@shared/ui";
-import { useUploadsWithStoryboard } from "@features/Storyboard";
+import {
+  type UploadWithStoryboard,
+  useGetUploadsWithStoryboards,
+} from "@features/Storyboard";
 import { setStoryboardProcessingData } from "@features/Storyboard";
 
 type Props = {
@@ -11,20 +14,18 @@ export default function ViewStoryboards({
   ytChannelId,
   storyboardArtifactsCount,
 }: Props) {
-  const { data: storyboardsData, refetch: getStoryboards } =
-    useUploadsWithStoryboard();
+  const { data, mutateAsync: getStoryboards } = useGetUploadsWithStoryboards();
 
   const handleClick = () => {
-    if (storyboardsData) {
+    if (data) {
       setStoryboardProcessingData([
         {
           ytChannelId,
-          uploads: storyboardsData,
+          uploads: data as unknown as UploadWithStoryboard[],
         },
       ]);
     } else {
-      // If no data, refetch to get the latest
-      getStoryboards();
+      getStoryboards(ytChannelId);
     }
   };
 

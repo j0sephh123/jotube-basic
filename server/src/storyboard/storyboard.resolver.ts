@@ -15,15 +15,6 @@ export class StoryboardResolver {
       input.ytChannelId,
     );
 
-    return uploads.map((upload) => ({
-      ...upload,
-      createdAt: upload.createdAt.toISOString(),
-      updatedAt: upload.updatedAt.toISOString(),
-      storyboard: {
-        ...upload.storyboard,
-        createdAt: upload.storyboard.createdAt.toISOString(),
-        updatedAt: upload.storyboard.updatedAt.toISOString(),
-      },
-    }));
+    return uploads;
   }
 }

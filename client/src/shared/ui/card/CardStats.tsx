@@ -13,6 +13,7 @@ type CardStatsProps = {
   onNavigate: (route: string) => void;
   onViewScreenshots: (ytIds: string[]) => void;
   onViewThumbnails: () => void;
+  onViewStoryboards: () => void;
 };
 
 export default function CardStats({
@@ -25,6 +26,7 @@ export default function CardStats({
   onNavigate,
   onViewScreenshots,
   onViewThumbnails,
+  onViewStoryboards,
 }: CardStatsProps) {
   const stats = [
     {
@@ -55,7 +57,7 @@ export default function CardStats({
       value: storyboard,
       tooltip: "Storyboard",
       color: "text-red-400 hover:text-red-300",
-      onClick: () => onNavigate(routes.storyboard(ytId)),
+      onClick: () => onViewStoryboards(),
     },
   ];
 

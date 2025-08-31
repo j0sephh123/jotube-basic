@@ -487,6 +487,14 @@ export type StatisticsCountsResponse = {
   totalThumbnails: Scalars['Float']['output'];
 };
 
+export type StoryboardChannelResponse = {
+  __typename?: 'StoryboardChannelResponse';
+  id: Scalars['Int']['output'];
+  src: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  ytId: Scalars['String']['output'];
+};
+
 export type StoryboardDataResponse = {
   __typename?: 'StoryboardDataResponse';
   createdAt: Scalars['String']['output'];
@@ -499,11 +507,8 @@ export type StoryboardDataResponse = {
 
 export type StoryboardFragmentResponse = {
   __typename?: 'StoryboardFragmentResponse';
-  createdAt: Scalars['String']['output'];
   fragments: Scalars['Int']['output'];
   id: Scalars['Int']['output'];
-  updatedAt: Scalars['String']['output'];
-  uploadsVideoId: Scalars['Int']['output'];
   url: Scalars['String']['output'];
 };
 
@@ -563,8 +568,8 @@ export type UpdatePlaylistResponse = {
 export type UploadWithStoryboardResponse = {
   __typename?: 'UploadWithStoryboardResponse';
   artifact: Scalars['String']['output'];
+  channel: StoryboardChannelResponse;
   channelId: Scalars['Int']['output'];
-  createdAt: Scalars['String']['output'];
   duration?: Maybe<Scalars['Int']['output']>;
   id: Scalars['Int']['output'];
   nextPageToken?: Maybe<Scalars['String']['output']>;
@@ -572,7 +577,6 @@ export type UploadWithStoryboardResponse = {
   src: Scalars['String']['output'];
   storyboard: StoryboardFragmentResponse;
   title: Scalars['String']['output'];
-  updatedAt: Scalars['String']['output'];
   ytId: Scalars['String']['output'];
 };
 
@@ -829,7 +833,7 @@ export type UploadsWithStoryboardsQueryVariables = Exact<{
 }>;
 
 
-export type UploadsWithStoryboardsQuery = { __typename?: 'Query', uploadsWithStoryboards: Array<{ __typename?: 'UploadWithStoryboardResponse', id: number, ytId: string, title: string, src: string, publishedAt: string, createdAt: string, updatedAt: string, channelId: number, nextPageToken?: string | null, duration?: number | null, artifact: string, storyboard: { __typename?: 'StoryboardFragmentResponse', id: number, uploadsVideoId: number, fragments: number, url: string, createdAt: string, updatedAt: string } }> };
+export type UploadsWithStoryboardsQuery = { __typename?: 'Query', uploadsWithStoryboards: Array<{ __typename?: 'UploadWithStoryboardResponse', artifact: string, channelId: number, duration?: number | null, id: number, nextPageToken?: string | null, publishedAt: string, src: string, title: string, ytId: string, storyboard: { __typename?: 'StoryboardFragmentResponse', fragments: number, id: number, url: string }, channel: { __typename?: 'StoryboardChannelResponse', id: number, src: string, title: string, ytId: string } }> };
 
 export type SyncUploadsMutationVariables = Exact<{
   syncUploadsInput: SyncUploadsInput;
@@ -1861,24 +1865,25 @@ export type FetchUploadsMutationOptions = Apollo.BaseMutationOptions<FetchUpload
 export const UploadsWithStoryboardsDocument = gql`
     query UploadsWithStoryboards($input: StoryboardQueryInput!) {
   uploadsWithStoryboards(input: $input) {
-    id
-    ytId
-    title
-    src
-    publishedAt
-    createdAt
-    updatedAt
-    channelId
-    nextPageToken
-    duration
     artifact
+    channelId
+    duration
+    id
+    nextPageToken
+    publishedAt
+    src
     storyboard {
-      id
-      uploadsVideoId
       fragments
+      id
       url
-      createdAt
-      updatedAt
+    }
+    title
+    ytId
+    channel {
+      id
+      src
+      title
+      ytId
     }
   }
 }
