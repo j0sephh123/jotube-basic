@@ -273,6 +273,13 @@ export type MutationUpdatePlaylistArgs = {
   updatePlaylistInput: UpdatePlaylistInput;
 };
 
+/** Processing phases for video uploads */
+export enum Phase {
+  Download = 'DOWNLOAD',
+  Screenshots = 'SCREENSHOTS',
+  Thumbnails = 'THUMBNAILS'
+}
+
 export type PlaylistChannelResponse = {
   __typename?: 'PlaylistChannelResponse';
   id: Scalars['Int']['output'];
@@ -339,6 +346,16 @@ export type PlaylistUploadsListUploadResponse = {
   ytId: Scalars['String']['output'];
 };
 
+export type ProcessingPhaseResponse = {
+  __typename?: 'ProcessingPhaseResponse';
+  createdAt: Scalars['DateTime']['output'];
+  endedAt?: Maybe<Scalars['DateTime']['output']>;
+  id: Scalars['Float']['output'];
+  phase: Phase;
+  uploadsVideo: UploadsVideoInfo;
+  uploadsVideoId: Scalars['Float']['output'];
+};
+
 export type Query = {
   __typename?: 'Query';
   channelForPlaylist: ChannelForPlaylistResponse;
@@ -350,6 +367,7 @@ export type Query = {
   playlistDetails?: Maybe<PlaylistDetailsResponse>;
   playlistUploadsList: PlaylistUploadsListResponse;
   playlists: Array<PlaylistResponse>;
+  processingPhases: Array<ProcessingPhaseResponse>;
   searchChannels: Array<SearchChannelResult>;
   searchVideos: Array<SearchVideoResult>;
   statisticsCounts: StatisticsCountsResponse;
@@ -623,6 +641,13 @@ export type UploadsListUploadResponse = {
   ytId: Scalars['String']['output'];
 };
 
+export type UploadsVideoInfo = {
+  __typename?: 'UploadsVideoInfo';
+  id: Scalars['Float']['output'];
+  title: Scalars['String']['output'];
+  ytId: Scalars['String']['output'];
+};
+
 export type UploadsVideoResponse = {
   __typename?: 'UploadsVideoResponse';
   channel: ChannelResponse;
@@ -780,6 +805,11 @@ export type FetchVideosDashboardQueryVariables = Exact<{
 
 
 export type FetchVideosDashboardQuery = { __typename?: 'Query', fetchVideosDashboard: { __typename?: 'VideosDashboardResponse', total: number, videos: Array<{ __typename?: 'DashboardVideoResponse', id: number, ytId: string, title: string, src: string, channelId: number, channelTitle: string, channelYtId: string, screenshotCount: number, featuredScreenshots: Array<{ __typename?: 'FeaturedScreenshotResponse', src: string, id: number, second: number, ytVideoId: string }> }> } };
+
+export type GetProcessingPhasesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetProcessingPhasesQuery = { __typename?: 'Query', processingPhases: Array<{ __typename?: 'ProcessingPhaseResponse', id: number, uploadsVideoId: number, phase: Phase, createdAt: any, endedAt?: any | null, uploadsVideo: { __typename?: 'UploadsVideoInfo', id: number, ytId: string, title: string } }> };
 
 export type SearchVideosQueryVariables = Exact<{
   searchInput: SearchInput;
@@ -1553,6 +1583,54 @@ export type FetchVideosDashboardQueryHookResult = ReturnType<typeof useFetchVide
 export type FetchVideosDashboardLazyQueryHookResult = ReturnType<typeof useFetchVideosDashboardLazyQuery>;
 export type FetchVideosDashboardSuspenseQueryHookResult = ReturnType<typeof useFetchVideosDashboardSuspenseQuery>;
 export type FetchVideosDashboardQueryResult = Apollo.QueryResult<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>;
+export const GetProcessingPhasesDocument = gql`
+    query GetProcessingPhases {
+  processingPhases {
+    id
+    uploadsVideoId
+    phase
+    createdAt
+    endedAt
+    uploadsVideo {
+      id
+      ytId
+      title
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetProcessingPhasesQuery__
+ *
+ * To run a query within a React component, call `useGetProcessingPhasesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProcessingPhasesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProcessingPhasesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetProcessingPhasesQuery(baseOptions?: Apollo.QueryHookOptions<GetProcessingPhasesQuery, GetProcessingPhasesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetProcessingPhasesQuery, GetProcessingPhasesQueryVariables>(GetProcessingPhasesDocument, options);
+      }
+export function useGetProcessingPhasesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProcessingPhasesQuery, GetProcessingPhasesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetProcessingPhasesQuery, GetProcessingPhasesQueryVariables>(GetProcessingPhasesDocument, options);
+        }
+export function useGetProcessingPhasesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetProcessingPhasesQuery, GetProcessingPhasesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetProcessingPhasesQuery, GetProcessingPhasesQueryVariables>(GetProcessingPhasesDocument, options);
+        }
+export type GetProcessingPhasesQueryHookResult = ReturnType<typeof useGetProcessingPhasesQuery>;
+export type GetProcessingPhasesLazyQueryHookResult = ReturnType<typeof useGetProcessingPhasesLazyQuery>;
+export type GetProcessingPhasesSuspenseQueryHookResult = ReturnType<typeof useGetProcessingPhasesSuspenseQuery>;
+export type GetProcessingPhasesQueryResult = Apollo.QueryResult<GetProcessingPhasesQuery, GetProcessingPhasesQueryVariables>;
 export const SearchVideosDocument = gql`
     query SearchVideos($searchInput: SearchInput!) {
   searchVideos(searchInput: $searchInput) {

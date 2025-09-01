@@ -8,19 +8,16 @@ export type ProcessingPhase = {
   phase: Phase;
   createdAt: string;
   endedAt: string | null;
+  uploadsVideo: {
+    id: number;
+    ytId: string;
+    title: string;
+  };
 };
 
-export type UploadsVideo = {
+export type VideoWithPhases = {
   id: number;
   ytId: string;
   title: string;
-  artifact:
-    | "VIDEO"
-    | "SAVED"
-    | "DOWNLOADED"
-    | "STORYBOARD"
-    | "THUMBNAIL"
-    | "SCREENSHOT";
+  phases: ProcessingPhase[];
 };
-
-export type VideoWithPhases = UploadsVideo & { phases: ProcessingPhase[] };
