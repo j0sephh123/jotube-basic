@@ -43,7 +43,31 @@ model UploadsVideo {
   thumbnail     Thumbnail?
   channel       Channel      @relation(fields: [channelId], references: [id], onDelete: Cascade)
 
+  processingPhases ProcessingPhase[]
+
   @@index([channelId, artifact])
+}
+
+enum Phase {
+  DOWNLOAD
+  SCREENSHOTS
+  THUMBNAILS
+}
+
+model ProcessingPhase {
+  id             Int   @id @default(autoincrement())
+  uploadsVideoId Int
+  phase          Phase
+
+  // createdAt is the phase "start" timestamp
+  createdAt DateTime  @default(now())
+  // endedAt is set when the phase completes
+  endedAt   DateTime?
+
+  uploadsVideo UploadsVideo @relation(fields: [uploadsVideoId], references: [id], onDelete: Cascade)
+
+  @@unique([uploadsVideoId, phase])
+  @@index([uploadsVideoId, phase, endedAt])
 }
 
 model Thumbnail {

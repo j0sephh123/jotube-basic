@@ -5,7 +5,7 @@ import { QueueElement } from './add-to-queue.dto';
 import { ScreenshotsJobService } from 'src/screenshots/jobs/screenshotsJob.service';
 import { ThumbnailsService } from 'src/thumbnails/thumbnails.service';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
-import { ArtifactType } from '@prisma/client';
+import { ArtifactType, Phase } from '@prisma/client';
 
 @Processor(queueNames.video)
 export class VideoProcessor {
@@ -18,15 +18,62 @@ export class VideoProcessor {
   @Process()
   async processVideo(job: Job<QueueElement>) {
     // TODO add error handling, transactions, etc
+    const videoId = await this.prismaService.uploadsVideo.findUnique({
+      where: {
+        ytId: job.data.ytVideoId,
+      },
+      select: {
+        id: true,
+      },
+    });
 
+    if (!videoId) {
+      throw new Error('Video not found');
+    }
+
+    await this.prismaService.processingPhase.create({
+      data: {
+        uploadsVideoId: videoId.id,
+        phase: Phase.SCREENSHOTS,
+      },
+    });
     await this.screenshotsJobService.captureScreenshots({
       ytChannelId: job.data.ytChannelId,
       ytVideoId: job.data.ytVideoId,
     });
 
+    await this.prismaService.processingPhase.update({
+      where: {
+        uploadsVideoId_phase: {
+          uploadsVideoId: videoId.id,
+          phase: Phase.SCREENSHOTS,
+        },
+      },
+      data: {
+        endedAt: new Date(),
+      },
+    });
+    await this.prismaService.processingPhase.create({
+      data: {
+        uploadsVideoId: videoId.id,
+        phase: Phase.THUMBNAILS,
+      },
+    });
     await this.thumbnailsService.generateThumbnails({
       ytChannelId: job.data.ytChannelId,
       ytVideoId: job.data.ytVideoId,
+    });
+
+    await this.prismaService.processingPhase.update({
+      where: {
+        uploadsVideoId_phase: {
+          uploadsVideoId: videoId.id,
+          phase: Phase.THUMBNAILS,
+        },
+      },
+      data: {
+        endedAt: new Date(),
+      },
     });
 
     const uploadsVideo = await this.prismaService.uploadsVideo.update({
