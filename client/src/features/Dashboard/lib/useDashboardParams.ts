@@ -1,5 +1,3 @@
-import { useParams } from "react-router-dom";
-
 export enum ViewType {
   SAVED = "saved",
   PROCESSED = "processed",
@@ -13,25 +11,3 @@ export enum DashboardType {
   CHANNELS = "channels",
   VIDEOS = "videos",
 }
-
-export const useTypedChannelYtId = () => {
-  const params = useParams<{ ytChannelId: string }>();
-  const ytChannelId = params.ytChannelId as string;
-
-  return ytChannelId;
-};
-
-export const useTypedVideoYtId = () => {
-  const params = useParams<{ ytVideoId: string }>();
-  const ytVideoId = params.ytVideoId as string;
-
-  return ytVideoId;
-};
-
-export const useDashboardParams = () => {
-  const params = useParams<{ type: DashboardType; viewType: ViewType }>();
-  const type = params.type as DashboardType;
-  const viewType = params.viewType as ViewType;
-
-  return { type, viewType };
-};

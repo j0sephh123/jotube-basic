@@ -1,12 +1,12 @@
-import { useTypedChannelYtId } from "@features/Dashboard";
 import {
   useUploadsWithStoryboardsLazyQuery,
   useUploadsWithStoryboardsQuery,
 } from "@shared/api";
+import { useTypedParams } from "@shared/hooks";
 import { setProcessingData } from "@shared/store";
 
 export function useUploadsWithStoryboard() {
-  const ytChannelId = useTypedChannelYtId();
+  const ytChannelId = useTypedParams("ytChannelId");
 
   const { data, loading, error, refetch } = useUploadsWithStoryboardsQuery({
     variables: { input: { ytChannelId } },

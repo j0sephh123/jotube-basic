@@ -1,5 +1,4 @@
 import { useChannelMetadataQuery } from "@entities/Channel";
-import { useTypedChannelYtId } from "@features/Dashboard";
 import HeaderLayout from "./HeaderLayout";
 import ChannelControls from "./ChannelControls";
 import {
@@ -13,9 +12,10 @@ import ViewThumbnails from "./ViewThumbnails";
 import { ViewScreenshots } from "@features/Thumbnails";
 import { ViewStoryboards } from "@widgets/Storyboard";
 import { makeYtChannelId } from "@shared/types";
+import { useTypedParams } from "@shared/hooks";
 
 const ChannelHeader = () => {
-  const ytChannelId = useTypedChannelYtId();
+  const ytChannelId = useTypedParams("ytChannelId");    
 
   const { data: channelMetadata, refetch: refetchMetadata } =
     useChannelMetadataQuery(ytChannelId);

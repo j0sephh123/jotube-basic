@@ -7,7 +7,7 @@ import {
   ViewTypeToggle,
 } from "@widgets/Dashboard";
 import { DashboardType } from "@features/Dashboard";
-import { useDashboardParams } from "@features/Dashboard";
+import { useTypedParams } from "@shared/hooks";
 import { Grid } from "@widgets/Grid";
 import { RangePicker } from "@widgets/RangePicker";
 
@@ -20,7 +20,7 @@ const header: Record<
 };
 
 export default function DashboardWrapper() {
-  const { type } = useDashboardParams();
+  const { type } = useTypedParams("DashboardParams");
 
   const Header = header[type];
 

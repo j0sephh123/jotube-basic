@@ -1,6 +1,6 @@
 import { Button } from "@shared/ui";
 import { useSaveUpload } from "@features/Upload";
-import { useTypedChannelYtId } from "@features/Dashboard";
+import { useTypedParams } from "@shared/hooks";
 import { useRefetchChannelMetadata } from "@entities/Channel";
 import { useRefetchChannelUploads } from "@features/Upload";
 
@@ -12,7 +12,7 @@ type Props = {
 };
 
 export default function SaveAll({ uploadsToSave }: Props) {
-  const ytChannelId = useTypedChannelYtId();
+  const ytChannelId = useTypedParams("ytChannelId");
   const refetchChannelMetadata = useRefetchChannelMetadata();
   const refetchChannelUploads = useRefetchChannelUploads(ytChannelId);
 

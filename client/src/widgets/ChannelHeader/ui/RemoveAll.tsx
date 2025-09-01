@@ -1,10 +1,10 @@
 import { Button } from "@shared/ui";
 import { Trash2 } from "lucide-react";
-import { useTypedChannelYtId } from "@features/Dashboard";
+import { useTypedParams } from "@shared/hooks";
 import { useDeleteUploads } from "@features/Upload";
 
 export default function RemoveAll() {
-  const ytChannelId = useTypedChannelYtId();
+  const ytChannelId = useTypedParams("ytChannelId");
 
   const deleteUploadsMutation = useDeleteUploads(() => {
     // Refetch will be handled by the mutation

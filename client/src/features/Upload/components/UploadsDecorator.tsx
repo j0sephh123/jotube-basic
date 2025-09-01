@@ -1,6 +1,5 @@
 import { useRefetchChannelMetadata } from "@entities/Channel";
-import { useTypedChannelYtId } from "@features/Dashboard";
-import { useQueue } from "@shared/hooks";
+import { useQueue, useTypedParams } from "@shared/hooks";
 import { useRefetchChannelUploads } from "@features/Upload";
 import { useUploads } from "@features/Upload";
 import UploadsList from "./UploadsList";
@@ -10,7 +9,7 @@ type Props = {
 };
 
 export function UploadsDecorator({ type }: Props) {
-  const ytChannelId = useTypedChannelYtId();
+  const ytChannelId = useTypedParams("ytChannelId");
   const refetchChannelMetadata = useRefetchChannelMetadata();
   const { refetch: refetchQueue } = useQueue();
   const refetchDefaultUploads = useRefetchChannelUploads(ytChannelId);

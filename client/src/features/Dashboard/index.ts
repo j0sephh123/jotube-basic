@@ -1,10 +1,4 @@
-export {
-  useDashboardParams,
-  DashboardType,
-  ViewType,
-  useTypedChannelYtId,
-  useTypedVideoYtId,
-} from "./lib/useDashboardParams";
+export { DashboardType, ViewType } from "./lib/useDashboardParams";
 export {
   useChannelsDashboardQuery,
   useRefetchChannelsDashboardQuery,

@@ -1,37 +1,10 @@
-import { useParams } from "react-router-dom";
 import { useFetchDashboard, useFinalPage } from "@features/Dashboard";
-import { ViewType as GraphQLViewType } from "@shared/api";
-import type { ChannelsDashboardResponse } from "@shared/api";
 import { useApolloClient } from "@apollo/client";
 import { useFinalSortOrder } from "@features/Dashboard";
-
-export type ChannelsDashboardResponseData = ChannelsDashboardResponse;
-
-const mapViewTypeToGraphQL = (
-  viewType: string | undefined
-): GraphQLViewType | undefined => {
-  if (!viewType) return undefined;
-
-  switch (viewType) {
-    case "saved":
-      return GraphQLViewType.Saved;
-    case "processed":
-      return GraphQLViewType.Processed;
-    case "no-uploads":
-      return GraphQLViewType.NoUploads;
-    case "no-screenshots":
-      return GraphQLViewType.NoScreenshots;
-    case "thumbnails":
-      return GraphQLViewType.Thumbnails;
-    case "has-storyboards":
-      return GraphQLViewType.HasStoryboards;
-    default:
-      return undefined;
-  }
-};
+import { useTypedParams } from "@shared/hooks";
 
 export function useChannelsDashboardQuery() {
-  const params = useParams();
+  const viewType = useTypedParams("ViewType");
 
   const { finalSortOrder } = useFinalSortOrder();
   const { finalPage } = useFinalPage();
@@ -40,7 +13,7 @@ export function useChannelsDashboardQuery() {
     {
       fetchDashboardInput: {
         page: finalPage,
-        viewType: mapViewTypeToGraphQL(params.viewType),
+        viewType,
         sortOrder: finalSortOrder,
       },
     },

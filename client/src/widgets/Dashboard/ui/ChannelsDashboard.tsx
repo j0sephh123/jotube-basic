@@ -1,11 +1,12 @@
-import { useDashboardParams } from "@features/Dashboard";
+import { useTypedParams } from "@shared/hooks";
+import { type ViewType } from "@features/Dashboard";
 import {
   ChannelDashboardCard,
   ChannelsDashboardContainer,
 } from "@widgets/Dashboard";
 
 export default function ChannelsDashboard() {
-  const { viewType } = useDashboardParams();
+  const { viewType } = useTypedParams("DashboardParams");
 
   return (
     <ChannelsDashboardContainer>
@@ -26,7 +27,7 @@ export default function ChannelsDashboard() {
             createdAt={c.createdAt}
             videoCount={c.videoCount}
             playlist={c.playlist}
-            viewType={viewType}
+            viewType={viewType as unknown as ViewType}
             onChannelDelete={refetch}
             featuredScreenshots={c.featuredScreenshots}
           />

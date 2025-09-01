@@ -1,5 +1,5 @@
-import { useCustomNavigate } from "@shared/hooks";
-import { useDashboardParams, ViewType } from "@features/Dashboard";
+import { useCustomNavigate, useTypedParams } from "@shared/hooks";
+import { ViewType } from "@features/Dashboard";
 import clsx from "clsx";
 import { Button } from "@shared/ui";
 
@@ -14,7 +14,7 @@ const viewTypeOrder = [
 
 export default function ViewTypeToggle() {
   const navigate = useCustomNavigate();
-  const { viewType } = useDashboardParams();
+  const { viewType } = useTypedParams("DashboardParams");
 
   const handleToggle = (newViewType: ViewType) => {
     navigate(`/dashboard/channels/${newViewType}`);
@@ -27,8 +27,8 @@ export default function ViewTypeToggle() {
           size="sm"
           key={type}
           className={clsx("", {
-            "btn-primary": viewType === type,
-            "btn-outline": viewType !== type,
+            "btn-primary": (viewType as unknown as ViewType) === type,
+            "btn-outline": (viewType as unknown as ViewType) !== type,
           })}
           onClick={() => handleToggle(type)}
         >
