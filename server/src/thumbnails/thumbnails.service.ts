@@ -1,8 +1,31 @@
 import { Injectable } from '@nestjs/common';
-import * as fs from 'fs';
 import * as path from 'path';
+import * as fs from 'fs/promises';
 import sharp from 'sharp';
 import { FilePathService } from 'src/file/file-path.service';
+import os from 'os';
+
+sharp.cache({ files: 0, memory: 64, items: 64 });
+sharp.concurrency(Math.max(1, Math.min(4, os.cpus().length - 1)));
+
+function pLimit(concurrency: number) {
+  let active = 0;
+  const queue: Array<() => void> = [];
+  const next = () => {
+    active--;
+    if (queue.length) queue.shift()!();
+  };
+  return async function <T>(fn: () => Promise<T>): Promise<T> {
+    if (active >= concurrency)
+      await new Promise<void>((res) => queue.push(res));
+    active++;
+    try {
+      return await fn();
+    } finally {
+      next();
+    }
+  };
+}
 
 @Injectable()
 export class ThumbnailsService {
@@ -26,108 +49,86 @@ export class ThumbnailsService {
 
     console.log('thumbnails_start', ytVideoId);
 
-    try {
-      const files = this.getSortedFiles(screenshotsDir);
-      const framesPerFile = framesPerRow * 5;
-      const totalFiles = Math.ceil(files.length / framesPerFile);
+    const files = await this.getSortedFiles(screenshotsDir);
 
-      const totalSpacing = (framesPerRow - 1) * this.SPACING;
-      const frameWidth = Math.floor(
-        (this.THUMBNAIL_WIDTH - totalSpacing) / framesPerRow,
+    // geometry
+    const gridRows = 5;
+    const framesPerFile = framesPerRow * gridRows;
+    const totalFiles = Math.ceil(files.length / framesPerFile);
+
+    const totalSpacingX = (framesPerRow - 1) * this.SPACING;
+    const frameWidth = Math.floor(
+      (this.THUMBNAIL_WIDTH - totalSpacingX) / framesPerRow,
+    );
+    const frameHeight = Math.floor(frameWidth * (9 / 16));
+    const totalSpacingY = (gridRows - 1) * this.SPACING;
+    const thumbnailHeight = gridRows * frameHeight + totalSpacingY;
+
+    await fs.mkdir(thumbnailsDir, { recursive: true });
+
+    const generatedFiles: string[] = [];
+
+    // Process one thumbnail at a time (bounded peak memory)
+    for (let fileIndex = 0; fileIndex < totalFiles; fileIndex++) {
+      const startIndex = fileIndex * framesPerFile;
+      const endIndex = Math.min(startIndex + framesPerFile, files.length);
+      const batch = files.slice(startIndex, endIndex);
+
+      // Resize this batch only, with limited parallelism
+      const limit = pLimit(3); // tweak: 2–4 is usually safe
+      const resized: Buffer[] = await Promise.all(
+        batch.map((fname) =>
+          limit(() =>
+            sharp(path.join(screenshotsDir, fname))
+              .resize(frameWidth, frameHeight)
+              .toBuffer({ resolveWithObject: false }),
+          ),
+        ),
       );
-      const frameHeight = Math.floor(frameWidth * (9 / 16));
-      const gridHeight = 5;
-      const thumbnailHeight =
-        gridHeight * frameHeight + (gridHeight - 1) * this.SPACING;
 
-      const resizedFrames = await this.resizeFrames(
-        files,
-        screenshotsDir,
+      const composites = this.createCompositeFrames(
+        resized,
+        framesPerRow,
         frameWidth,
         frameHeight,
       );
 
-      const generatedFiles: string[] = [];
+      const outputThumbnail = `${thumbnailsDir}/${fileIndex}.png`;
+      await sharp({
+        create: {
+          width: this.THUMBNAIL_WIDTH,
+          height: thumbnailHeight,
+          channels: 3,
+          background: { r: 0, g: 0, b: 0 },
+        },
+      })
+        .composite(composites)
+        .png()
+        .toFile(outputThumbnail);
 
-      for (let fileIndex = 0; fileIndex < totalFiles; fileIndex++) {
-        const startIndex = fileIndex * framesPerFile;
-        const endIndex = Math.min(
-          startIndex + framesPerFile,
-          resizedFrames.length,
-        );
-        const fileFrames = resizedFrames.slice(startIndex, endIndex);
-
-        const compositeFrames = this.createCompositeFrames(
-          fileFrames,
-          framesPerRow,
-          frameWidth,
-          frameHeight,
-        );
-
-        const outputThumbnail = `${thumbnailsDir}/${fileIndex}.png`;
-        const thumbnailPath = await this.generateGridImage(
-          compositeFrames,
-          this.THUMBNAIL_WIDTH,
-          thumbnailHeight,
-          outputThumbnail,
-        );
-
-        generatedFiles.push(thumbnailPath);
-      }
-
-      console.log('thumbnails_finish', ytVideoId);
-
-      return {
-        success: true,
-        paths: generatedFiles,
-        totalFrames: files.length,
-        totalFiles,
-      };
-    } catch (error) {
-      throw error;
+      generatedFiles.push(outputThumbnail);
     }
+
+    console.log('thumbnails_finish', ytVideoId);
+
+    return {
+      success: true,
+      paths: generatedFiles,
+      totalFrames: files.length,
+      totalFiles,
+    };
   }
 
-  private getSortedFiles(dir: string): string[] {
-    try {
-      const files = fs.readdirSync(dir).filter((file) => file.endsWith('.png'));
-
-      files.sort((a, b) => {
-        const secondsA = this.extractSeconds(a);
-        const secondsB = this.extractSeconds(b);
-        return secondsA - secondsB;
-      });
-
-      return files;
-    } catch (error) {
-      throw error;
-    }
+  private async getSortedFiles(dir: string): Promise<string[]> {
+    const all = await fs.readdir(dir);
+    const files = all.filter((f) => f.endsWith('.png'));
+    files.sort((a, b) => this.extractSeconds(a) - this.extractSeconds(b));
+    return files;
   }
 
   private extractSeconds(filename: string): number {
     const parts = filename.split('-');
     return parseInt(parts[parts.length - 1].replace('.png', ''), 10);
-  }
-
-  private async resizeFrames(
-    files: string[],
-    dir: string,
-    frameWidth: number,
-    frameHeight: number,
-  ) {
-    try {
-      const resizedFrames = await Promise.all(
-        files.map((file) =>
-          sharp(path.join(dir, file))
-            .resize(frameWidth, frameHeight)
-            .toBuffer(),
-        ),
-      );
-
-      return resizedFrames;
-    } catch (error) {
-      throw error;
-    }
   }
 
   private createCompositeFrames(
@@ -141,34 +142,5 @@ export class ThumbnailsService {
       const y = Math.floor(index / framesPerRow) * (frameHeight + this.SPACING);
       return { input: buffer, top: y, left: x };
     });
-  }
-
-  private async generateGridImage(
-    compositeFrames: { input: Buffer; top: number; left: number }[],
-    thumbnailWidth: number,
-    thumbnailHeight: number,
-    outputPath: string,
-  ) {
-    try {
-      const outputDir = path.dirname(outputPath);
-      if (!fs.existsSync(outputDir)) {
-        fs.mkdirSync(outputDir, { recursive: true });
-      }
-
-      await sharp({
-        create: {
-          width: thumbnailWidth,
-          height: thumbnailHeight,
-          channels: 3,
-          background: { r: 0, g: 0, b: 0 },
-        },
-      })
-        .composite(compositeFrames)
-        .toFile(outputPath);
-
-      return outputPath;
-    } catch (error) {
-      throw error;
-    }
   }
 }
