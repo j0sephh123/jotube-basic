@@ -36,6 +36,7 @@ import { PlaylistModule } from './playlist/playlist.module';
 import { StatisticsModule } from './statistics/statistics.module';
 import { AppGraphQLModule } from './graphql/graphql.module';
 import { ImageNavigatorModule } from './image-navigator/image-navigator.module';
+import { ProcessingPhaseModule } from './processing-phase/processing-phase.module';
 
 @Module({
   imports: [
@@ -91,6 +92,7 @@ import { ImageNavigatorModule } from './image-navigator/image-navigator.module';
     DashboardModule,
     AppGraphQLModule,
     ImageNavigatorModule,
+    ProcessingPhaseModule,
   ],
   controllers: [QueueController, SearchController, StatisticsController],
   providers: [
