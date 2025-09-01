@@ -9,7 +9,8 @@ import { NotFound } from "@shared/ui";
 import { GalleryVideosList } from "@features/Gallery";
 import { UploadsDecorator } from "@features/Upload";
 import { PlaylistUploadsListPage } from "@pages/playlistUploadsList";
-import { PlaylistWrapper } from "@widgets/PlaylistWrapper";
+import { ProcessingPhasePage } from "@pages/processing-phase";
+import { PageWrapper } from "@widgets/PageWrapper";
 
 export default function Router() {
   return (
@@ -31,7 +32,7 @@ export default function Router() {
             <Route path="saved" element={<UploadsDecorator type="saved" />} />
             <Route path="gallery" element={<GalleryVideosList />} />
           </Route>
-          <Route path="/playlists" element={<PlaylistWrapper />}>
+          <Route path="/playlists" element={<PageWrapper />}>
             <Route index element={<PlaylistsPage />} />
             <Route path=":id" element={<PlaylistDetailsPage />} />
             <Route
@@ -40,6 +41,9 @@ export default function Router() {
             />
           </Route>
           <Route path="/image-navigator" element={<ImageNavigatorPage />} />
+          <Route path="/processing-phase" element={<PageWrapper />}>
+            <Route index element={<ProcessingPhasePage />} />
+          </Route>
           <Route
             path="/thumbnails"
             element={<Navigate to="/dashboard/channels/thumbnails" />}

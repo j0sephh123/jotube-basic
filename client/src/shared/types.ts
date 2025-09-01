@@ -23,6 +23,7 @@ type ViewTypeType = `/dashboard/channels/${ViewType}`;
 type PlaylistUploads = `/playlists/${number}/uploads/${string}`;
 type PlaylistUploadsDefault = `/playlists/${number}/uploads/default`;
 type PlaylistUploadsSaved = `/playlists/${number}/uploads/saved`;
+type ProcessingPhase = `/processing-phase`;
 
 export type To =
   | Playlists
@@ -41,7 +42,8 @@ export type To =
   | ViewTypeType
   | PlaylistUploads
   | PlaylistUploadsDefault
-  | PlaylistUploadsSaved;
+  | PlaylistUploadsSaved
+  | ProcessingPhase;
 
 export function makeYtChannelId(s: string): YtChannelId {
   if (s.length !== 24 || s.includes("/"))

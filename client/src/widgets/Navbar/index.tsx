@@ -13,6 +13,7 @@ import {
   IconThumbnails,
   IconImageNavigator,
   Text,
+  IconProcessingLog,
 } from "@shared/ui";
 
 export default function Navbar() {
@@ -30,6 +31,7 @@ export default function Navbar() {
           <IconThumbnails totalThumbnails={totalCounts?.totalThumbnails ?? 0} />
           <IconImageNavigator />
           <ViewGlobalScreenshots />
+          <IconProcessingLog />
         </div>
         <div className="flex items-center gap-4">
           <QuickSearch />
