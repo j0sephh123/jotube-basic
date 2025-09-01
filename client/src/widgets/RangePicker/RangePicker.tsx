@@ -8,22 +8,28 @@ import {
   setDraftMax,
 } from "./rangePickerStore";
 import { useSetValues } from "./hooks";
+import { type RangePickerProps } from "./types";
 
-type Props = {
-  minLabel: string;
-  maxLabel: string;
-};
-
-export function RangePicker({ minLabel, maxLabel }: Props) {
+export function RangePicker({
+  minLabel,
+  maxLabel,
+  minKey,
+  maxKey,
+}: RangePickerProps) {
   const { isOpen, draftMin, draftMax } = useRangePickerState();
 
   const close = () => closeRangePicker();
 
-  useSetValues();
+  useSetValues({ minKey, maxKey });
 
   return (
     <div className="w-auto min-w-[200px] max-w-[300px]">
-      <Trigger minLabel={minLabel} maxLabel={maxLabel} />
+      <Trigger
+        minLabel={minLabel}
+        maxLabel={maxLabel}
+        minKey={minKey}
+        maxKey={maxKey}
+      />
       <Modal isModalVisible={isOpen} onClose={close}>
         <FormWrapper
           main={
@@ -36,7 +42,7 @@ export function RangePicker({ minLabel, maxLabel }: Props) {
               </LabelWrapper>
             </>
           }
-          footer={<Actions />}
+          footer={<Actions minKey={minKey} maxKey={maxKey} />}
         />
       </Modal>
     </div>

@@ -1,10 +1,11 @@
 import { closeRangePicker, useRangePickerState } from "../rangePickerStore";
 import { useSubmit } from "../hooks";
+import { type RangePickerKeys } from "../types";
 
-export function Actions() {
+export function Actions({ minKey, maxKey }: RangePickerKeys) {
   const { draftMin, draftMax } = useRangePickerState();
   const close = () => closeRangePicker();
-  const submit = useSubmit();
+  const submit = useSubmit({ minKey, maxKey });
 
   return (
     <div className="mt-8 flex justify-center gap-4">

@@ -34,7 +34,20 @@ export default function DashboardWrapper() {
                 <SelectSortDirection />
                 {type === DashboardType.CHANNELS && <ViewTypeToggle />}
                 {type === DashboardType.CHANNELS && (
-                  <RangePicker minLabel="Min" maxLabel="Max" />
+                  <>
+                    <RangePicker
+                      minLabel="Min"
+                      maxLabel="Max"
+                      minKey="min"
+                      maxKey="max"
+                    />
+                    <RangePicker
+                      minLabel="Default Min"
+                      maxLabel="Default Max"
+                      minKey="defaultMin"
+                      maxKey="defaultMax"
+                    />
+                  </>
                 )}
               </div>
             }

@@ -1,8 +1,9 @@
 import { useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import { closeRangePicker } from "../rangePickerStore";
+import { type RangePickerKeys } from "../types";
 
-export function useSubmit() {
+export function useSubmit({ minKey, maxKey }: RangePickerKeys) {
   const [searchParams, setSearchParams] = useSearchParams();
   const close = () => closeRangePicker();
 
@@ -16,14 +17,14 @@ export function useSubmit() {
       if (vMin !== null && Number.isNaN(vMin)) return;
       if (vMax !== null && Number.isNaN(vMax)) return;
       if (vMin !== null && vMax !== null && vMin > vMax) return;
-      if (vMin === null) next.delete("min");
-      else next.set("min", String(vMin));
-      if (vMax === null) next.delete("max");
-      else next.set("max", String(vMax));
+      if (vMin === null) next.delete(minKey);
+      else next.set(minKey, String(vMin));
+      if (vMax === null) next.delete(maxKey);
+      else next.set(maxKey, String(vMax));
       setSearchParams(next);
       close();
     },
-    [searchParams, setSearchParams]
+    [maxKey, minKey, searchParams, setSearchParams]
   );
 
   return submit;

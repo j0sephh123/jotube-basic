@@ -1,17 +1,17 @@
 import { openRangePicker } from "../rangePickerStore";
 import { useParsedSearchParams } from "../hooks";
 import { useReset } from "../hooks";
+import { type RangePickerProps } from "../types";
 
 export function Trigger({
   minLabel,
   maxLabel,
-}: {
-  minLabel: string;
-  maxLabel: string;
-}) {
-  const { min, max } = useParsedSearchParams();
+  minKey,
+  maxKey,
+}: RangePickerProps) {
+  const { min, max } = useParsedSearchParams({ minKey, maxKey });
   const open = () => openRangePicker();
-  const reset = useReset();
+  const reset = useReset({ minKey, maxKey });
 
   return (
     <div
