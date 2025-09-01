@@ -14,6 +14,7 @@ import {
   IconImageNavigator,
   Text,
   IconProcessingLog,
+  IconStoryboard,
 } from "@shared/ui";
 
 export default function Navbar() {
@@ -32,6 +33,7 @@ export default function Navbar() {
           <IconImageNavigator />
           <ViewGlobalScreenshots />
           <IconProcessingLog />
+          <IconStoryboard />
         </div>
         <div className="flex items-center gap-4">
           <QuickSearch />

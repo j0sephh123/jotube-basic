@@ -1,10 +1,11 @@
-export function TableWrapper({ children }: { children: React.ReactNode }) {
+import type { ReactNode } from "react";
+
+export function TableWrapper({ children }: { children: ReactNode }) {
   return (
     <div className="overflow-x-auto rounded-2xl shadow">
       <table className="table table-zebra">
         <thead>
           <tr>
-            <th className="w-10" />
             <th>Video</th>
             <th>Download</th>
             <th>Screenshots</th>

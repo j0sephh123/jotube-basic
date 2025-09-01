@@ -1,9 +1,6 @@
-import React from "react";
-import { Phase, PhaseStatus, ProcessingPhase } from ".";
-import { formatRelative } from "./utils";
-import { formatDuration } from "./utils";
-import { formatAbs } from "./utils";
-import { Chip } from "./Chip";
+import { formatAbs, formatRelative, formatDuration } from "@shared/utils";
+import type { Phase, PhaseStatus, ProcessingPhase } from "./types";
+import { Chip } from "./StatusBadge";
 import { label } from "./utils";
 
 export function PhaseRow({
