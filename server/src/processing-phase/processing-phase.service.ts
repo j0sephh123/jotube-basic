@@ -16,7 +16,7 @@ export class ProcessingPhaseService {
       orderBy: {
         createdAt: 'desc',
       },
-      take: 50,
+      take: 100,
       include: {
         uploadsVideo: {
           select: {
