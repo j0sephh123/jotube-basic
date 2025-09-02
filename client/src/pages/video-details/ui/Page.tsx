@@ -1,4 +1,7 @@
-import { useGetVideoByYtIdQuery } from "@shared/api";
+import {
+  type UploadsWithThumbnailsResponse,
+  useGetVideoByYtIdQuery,
+} from "@shared/api";
 import { useTypedParams } from "@shared/hooks";
 import { StaticStates, DateDisplay, Button } from "@shared/ui";
 import { VideoHeader } from "./VideoHeader";
@@ -6,18 +9,29 @@ import { ArtifactControl } from "./ArtifactControl";
 import { VideoPlayer } from "@features/Upload";
 import { VideoFiles } from "./VideoFiles";
 import { VideoDetailsWrapper } from "./VideoDetailsWrapper";
+import { setProcessingData } from "@shared/store";
 
 export function VideoDetailsPage() {
   const ytChannelId = useTypedParams("ytChannelId");
-  const ytId = useTypedParams("ytVideoId");
+  const ytVideoId = useTypedParams("ytVideoId");
   const { data, loading, error, refetch } = useGetVideoByYtIdQuery({
     variables: {
       getVideoByYtIdInput: {
         ytChannelId,
-        ytId,
+        ytId: ytVideoId,
       },
     },
   });
+
+  const handleViewThumbnails = () => {
+    setProcessingData("thumbnails", [
+      {
+        ytChannelId,
+        ytVideoId,
+        channelTitle: data?.getVideoByYtId.channelTitle,
+      },
+    ] as UploadsWithThumbnailsResponse[]);
+  };
 
   if (!data) return null;
 
@@ -42,7 +56,7 @@ export function VideoDetailsPage() {
               <DateDisplay value={video.publishedAt} label="Published" />
             </div>
             <VideoPlayer
-              ytId={video.ytId}
+              ytId={ytVideoId}
               src={video.src}
               id={video.id}
               title={video.title}
@@ -52,20 +66,14 @@ export function VideoDetailsPage() {
           <div className="space-y-4">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600 p-4">
               <div className="flex gap-2">
-                <Button >
-                  Gallery
-                </Button>
-                <Button>
-                  Screenshots
-                </Button>
-                <Button>
-                  Thumbnails
-                </Button>
+                <Button>Gallery</Button>
+                <Button>Screenshots</Button>
+                <Button onClick={handleViewThumbnails}>Thumbnails</Button>
               </div>
             </div>
             <VideoFiles
               ytChannelId={ytChannelId}
-              ytVideoId={ytId}
+              ytVideoId={ytVideoId}
               filesWithSize={video.filesWithSize}
               directoriesWithSize={video.directoriesWithSize}
               totalSizeMB={video.totalSizeMB}
