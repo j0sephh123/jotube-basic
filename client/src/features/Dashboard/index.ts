@@ -7,7 +7,6 @@ export {
   useVideosDashboardQuery,
   useRefetchVideosDashboardQuery,
 } from "./hooks/useVideosDashboardQuery";
-export { default as useTitleClick } from "./lib/useTitleClick";
 export { default as useFetchDashboard } from "./lib/useFetchDashboard";
 export { default as useFetchVideosDashboard } from "./lib/useFetchVideosDashboard";
 export { useFinalSortOrder } from "./hooks/useFinalSortOrder";

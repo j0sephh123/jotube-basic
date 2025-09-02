@@ -9,6 +9,7 @@ import {
 } from "@features/Upload";
 import { type UploadsListQuery } from "@shared/api";
 import { Card } from "@shared/ui";
+import { makeYtChannelId, makeYtVideoId } from "@shared/types";
 
 type Props = {
   upload: Pick<
@@ -18,7 +19,7 @@ type Props = {
   ytChannelId: string;
   type: "default" | "saved";
   handleSideEffect: () => void;
-  channelTitleSlot: ReactNode;
+  channelTitleSlot?: ReactNode;
 };
 
 export function UploadsListItem({
@@ -43,7 +44,12 @@ export function UploadsListItem({
         </div>
       </div>
       <Card.Content>
-        <Card.Title title={title} onClick={() => {}} />
+        <Card.Title
+          title={title}
+          to={`/channels/${makeYtChannelId(ytChannelId)}/videos/${makeYtVideoId(
+            ytId
+          )}`}
+        />
         <div className="flex justify-between gap-4 items-center">
           {channelTitleSlot}
           <PublishedTimeAgo date={publishedAt} />

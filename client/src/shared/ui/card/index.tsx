@@ -1,4 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
+import { type To } from "@shared/types";
 import CardContainer from "./CardContainer";
 import CardImage from "./CardImage";
 import CardContent from "./CardContent";
@@ -27,9 +28,9 @@ type CardProps = {
   deleteButtonSlot?: React.ReactNode;
   playlistButtonSlot?: React.ReactNode;
   galleryButtonSlot?: React.ReactNode;
-  handleTitleClick?: (e: React.MouseEvent) => void;
   onThumbnailClick?: () => void;
   featuredScreenshotsLength?: number;
+  to: To;
 };
 
 function Card({
@@ -46,9 +47,9 @@ function Card({
   deleteButtonSlot,
   playlistButtonSlot,
   galleryButtonSlot,
-  handleTitleClick,
   onThumbnailClick,
   featuredScreenshotsLength,
+  to,
 }: CardProps) {
   return (
     <Card.Container>
@@ -73,7 +74,7 @@ function Card({
         </div>
       </div>
       <Card.Content>
-        <Card.Title title={title} onClick={handleTitleClick || (() => {})} />
+        <Card.Title title={title} to={to} />
         {secondRow}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">

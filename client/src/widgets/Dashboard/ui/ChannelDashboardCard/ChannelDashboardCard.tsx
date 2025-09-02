@@ -1,5 +1,5 @@
 /* eslint-disable boundaries/element-types */
-import { ViewType, useTitleClick } from "@features/Dashboard";
+import { ViewType } from "@features/Dashboard";
 import { SyncUploadsButton, FetchUploadsButton } from "@features/Upload";
 import { Button, Card } from "@shared/ui";
 import { DeleteChannel } from "@entities/Channel";
@@ -18,6 +18,7 @@ import { setPlaylistModal } from "@features/Playlist";
 import { useRemoveFromPlaylist } from "@features/Playlist";
 import { useGetUploadsWithStoryboards } from "@features/Storyboard";
 import { useCustomNavigate } from "@shared/hooks";
+import { makeYtChannelId } from "@shared/types";
 
 const statsTypes = [
   ViewType.THUMBNAILS,
@@ -126,16 +127,6 @@ export default function ChannelDashboardCard({
     </div>
   );
 
-  const handleTitleClick = useTitleClick(
-    {
-      ytId,
-      title,
-      src,
-      lastSyncedAt,
-    },
-    viewType
-  );
-
   const getDeleteButtonSlot = () => {
     if (viewType === ViewType.NO_SCREENSHOTS) {
       return null;
@@ -176,7 +167,7 @@ export default function ChannelDashboardCard({
       src={getSrc}
       lastSyncedAt={lastSyncedAt}
       ytChannelId={ytId}
-      handleTitleClick={handleTitleClick}
+      to={`/channels/${makeYtChannelId(ytId)}`}
       secondRow={getSecondRowContent()}
       cardMenuSlot={cardMenu}
       actionButtonSlot={getActionButtonSlot()}

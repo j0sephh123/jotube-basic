@@ -1,5 +1,5 @@
 import { CopyValue, CustomLink } from "@shared/ui";
-import { makeYtChannelId } from "@shared/types";
+import { makeYtChannelId, makeYtVideoId } from "@shared/types";
 
 export function TitleCell({
   title,
@@ -17,13 +17,19 @@ export function TitleCell({
   return (
     <td>
       <div className="flex flex-col">
-        <span
-          className="font-medium truncate block"
-          style={{ maxWidth: "160px", width: "160px" }}
-          title={title}
+        <CustomLink
+          to={`/channels/${makeYtChannelId(channelYtId)}/videos/${makeYtVideoId(
+            ytId
+          )}`}
         >
-          {title}
-        </span>
+          <span
+            className="font-medium truncate block hover:text-blue-400 hover:underline transition-colors"
+            style={{ maxWidth: "160px", width: "160px" }}
+            title={title}
+          >
+            {title}
+          </span>
+        </CustomLink>
         <div className="flex">
           <CopyValue value={videoId} type="id" />
           <CopyValue value={ytId} type="youtube" />

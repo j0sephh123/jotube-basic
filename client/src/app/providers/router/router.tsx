@@ -14,6 +14,7 @@ import {
   ProcessingPhaseWrapper,
 } from "@pages/processing-phase";
 import { PageWrapper } from "@widgets/PageWrapper";
+import { VideoDetailsPage } from "@pages/video-details";
 
 export default function Router() {
   return (
@@ -35,6 +36,10 @@ export default function Router() {
             <Route path="saved" element={<UploadsDecorator type="saved" />} />
             <Route path="gallery" element={<GalleryVideosList />} />
           </Route>
+          <Route
+            path="/channels/:ytChannelId/videos/:ytVideoId"
+            element={<VideoDetailsPage />}
+          />
           <Route path="/playlists" element={<PageWrapper />}>
             <Route index element={<PlaylistsPage />} />
             <Route path=":id" element={<PlaylistDetailsPage />} />

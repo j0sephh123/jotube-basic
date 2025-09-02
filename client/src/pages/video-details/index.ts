@@ -1,0 +1,1 @@
+export { VideoDetailsPage } from "./ui/Page";
