@@ -1,4 +1,4 @@
-import { CustomLink, CopyValue } from "@shared/ui";
+import { CustomLink, CopyValue, Button } from "@shared/ui";
 import { makeYtChannelId } from "@shared/types";
 import { useTypedParams } from "@shared/hooks";
 
@@ -6,12 +6,14 @@ interface VideoHeaderProps {
   channelTitle: string;
   videoTitle: string;
   videoId: number;
+  onRefetch: () => void;
 }
 
 export function VideoHeader({
   channelTitle,
   videoTitle,
   videoId,
+  onRefetch,
 }: VideoHeaderProps) {
   const ytChannelId = useTypedParams("ytChannelId");
   const ytId = useTypedParams("ytVideoId");
@@ -34,6 +36,7 @@ export function VideoHeader({
         </h2>
         <CopyValue value={videoId.toString()} type="id" />
         <CopyValue value={ytId} type="youtube" />
+        <Button onClick={onRefetch}>Refetch</Button>
       </div>
     </div>
   );

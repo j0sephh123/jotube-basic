@@ -19,40 +19,65 @@ interface VideoFilesProps {
   totalSizeMB: number;
 }
 
-export function VideoFiles({ ytChannelId, ytVideoId, filesWithSize, directoriesWithSize, totalSizeMB }: VideoFilesProps) {
-  const hasFiles = (filesWithSize && filesWithSize.length > 0) || (directoriesWithSize && directoriesWithSize.length > 0);
+export function VideoFiles({
+  ytChannelId,
+  ytVideoId,
+  filesWithSize,
+  directoriesWithSize,
+  totalSizeMB,
+}: VideoFilesProps) {
+  const hasFiles =
+    (filesWithSize && filesWithSize.length > 0) ||
+    (directoriesWithSize && directoriesWithSize.length > 0);
 
   if (hasFiles) {
     return (
-      <div className="card bg-base-200">
-        <div className="card-body">
-          <div className="flex justify-between items-center">
-            <h3 className="card-title text-lg">Files</h3>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600">
+        <div className="p-6">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              Files
+            </h3>
             <OpenDirectoryButton
               ytChannelId={ytChannelId}
               ytVideoId={ytVideoId}
             />
           </div>
-          <div className="text-sm text-base-content/70 mb-2">
+          <div className="text-sm text-gray-600 dark:text-gray-400 mb-4">
             Total size: {totalSizeMB} MB
           </div>
           <div className="overflow-x-auto">
-            <table className="table table-zebra">
+            <table className="w-full border-collapse">
               <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Size (MB)</th>
-                  <th>Actions</th>
+                <tr className="border-b border-gray-200 dark:border-gray-600">
+                  <th className="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-300">
+                    Name
+                  </th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-300">
+                    Size (MB)
+                  </th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-700 dark:text-gray-300">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {filesWithSize.map((file, index) => (
-                  <tr key={`file-${index}`}>
-                    <td className="font-mono text-sm">
+                  <tr
+                    key={`file-${index}`}
+                    className={`border-b border-gray-100 dark:border-gray-700 ${
+                      index % 2 === 0
+                        ? "bg-white dark:bg-gray-800"
+                        : "bg-gray-50 dark:bg-gray-700"
+                    }`}
+                  >
+                    <td className="py-3 px-4 font-mono text-sm text-gray-900 dark:text-gray-100">
                       {file.name}
                     </td>
-                    <td>{file.sizeMB}</td>
-                    <td>
+                    <td className="py-3 px-4 text-gray-700 dark:text-gray-300">
+                      {file.sizeMB}
+                    </td>
+                    <td className="py-3 px-4">
                       <div className="flex gap-1">
                         {(file.name.endsWith(".mp4") ||
                           file.name.endsWith(".mkv") ||
@@ -105,12 +130,17 @@ export function VideoFiles({ ytChannelId, ytVideoId, filesWithSize, directoriesW
                   </tr>
                 ))}
                 {directoriesWithSize.map((directory, index) => (
-                  <tr key={`directory-${index}`}>
-                    <td className="font-mono text-sm">
+                  <tr
+                    key={`directory-${index}`}
+                    className="border-b border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800"
+                  >
+                    <td className="py-3 px-4 font-mono text-sm text-gray-900 dark:text-gray-100">
                       {directory.name}/
                     </td>
-                    <td>{directory.sizeMB}</td>
-                    <td>
+                    <td className="py-3 px-4 text-gray-700 dark:text-gray-300">
+                      {directory.sizeMB}
+                    </td>
+                    <td className="py-3 px-4">
                       <div className="flex gap-1">
                         {directory.name === "saved_screenshots" && (
                           <DeleteFileButton
@@ -155,16 +185,18 @@ export function VideoFiles({ ytChannelId, ytVideoId, filesWithSize, directoriesW
   }
 
   return (
-    <div className="card bg-base-200">
-      <div className="card-body">
-        <div className="flex justify-between items-center">
-          <h3 className="card-title text-lg">Files</h3>
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600">
+      <div className="p-6">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            Files
+          </h3>
           <OpenDirectoryButton
             ytChannelId={ytChannelId}
             ytVideoId={ytVideoId}
           />
         </div>
-        <div className="text-center text-gray-500 py-4">
+        <div className="text-center text-gray-500 dark:text-gray-400 py-8">
           No files found
         </div>
       </div>

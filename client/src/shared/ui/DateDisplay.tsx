@@ -1,5 +1,6 @@
 import React from "react";
 import { timeAgo } from "@shared/utils";
+import clsx from "clsx";
 
 type Props = {
   value: string;
@@ -25,38 +26,24 @@ export const DateDisplay: React.FC<Props> = ({
   className,
 }) => {
   const d = new Date(value);
-  if (Number.isNaN(d.getTime())) {
-    return (
-      <div
-        className={`stat bg-base-100 shadow-sm border border-base-300 ${
-          className || ""
-        }`}
-      >
-        <div className="stat-title text-xs uppercase tracking-wider text-base-content/60">
-          {label}
-        </div>
-        <div className="stat-value text-sm text-error">Invalid date</div>
-      </div>
-    );
-  }
-
   const primary = formatDate(d);
   const relative = timeAgo(d.toISOString());
 
   return (
     <div
-      className={`stat bg-base-100 shadow-sm border border-base-300 ${
-        className || ""
-      }`}
+      className={clsx(
+        "bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-200 dark:border-gray-700",
+        className
+      )}
     >
-      <div className="stat-title text-xs uppercase tracking-wider text-base-content/60">
+      <div className="text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1">
         {label}
       </div>
-      <div className="stat-value text-lg font-semibold text-base-content tabular-nums">
+      <div className="text-sm font-semibold text-gray-900 dark:text-gray-100 font-mono">
         {primary}
       </div>
-      <div className="stat-desc">
-        <span className="badge badge-outline badge-sm text-base-content/70">
+      <div className="mt-2">
+        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600">
           {relative}
         </span>
       </div>
