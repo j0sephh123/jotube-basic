@@ -67,7 +67,10 @@ export class DeleteFileService {
       const files = await fs.readdir(videoDir);
       const videoFile = files.find((file) => {
         const ext = path.extname(file).toLowerCase();
-        return ['.mp4', '.mkv', '.webm', '.avi', '.mov', '.m4v'].includes(ext);
+        return (
+          ['.mp4', '.mkv', '.webm', '.avi', '.mov', '.m4v'].includes(ext) ||
+          file.endsWith('.part')
+        );
       });
 
       if (!videoFile) {

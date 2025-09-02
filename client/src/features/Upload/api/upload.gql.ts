@@ -144,6 +144,11 @@ export const GET_VIDEO_BY_YT_ID = gql`
         name
         sizeMB
       }
+      directoriesWithSize {
+        name
+        sizeMB
+      }
+      totalSizeMB
     }
   }
 `;

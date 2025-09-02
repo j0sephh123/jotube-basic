@@ -10,6 +10,15 @@ export class FileWithSizeResponse {
 }
 
 @ObjectType()
+export class DirectorySizeResponse {
+  @Field()
+  name: string;
+
+  @Field()
+  sizeMB: number;
+}
+
+@ObjectType()
 export class VideoByYtIdResponse {
   @Field()
   id: number;
@@ -40,4 +49,10 @@ export class VideoByYtIdResponse {
 
   @Field(() => [FileWithSizeResponse])
   filesWithSize: FileWithSizeResponse[];
+
+  @Field(() => [DirectorySizeResponse])
+  directoriesWithSize: DirectorySizeResponse[];
+
+  @Field()
+  totalSizeMB: number;
 }

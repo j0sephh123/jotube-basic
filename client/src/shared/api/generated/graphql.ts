@@ -142,14 +142,40 @@ export type DeleteChannelResponse = {
   success: Scalars['Boolean']['output'];
 };
 
+export type DeleteFileDto = {
+  deleteType: DeleteType;
+  ytChannelId: Scalars['String']['input'];
+  ytVideoId: Scalars['String']['input'];
+};
+
+export type DeleteFileResponse = {
+  __typename?: 'DeleteFileResponse';
+  message?: Maybe<Scalars['String']['output']>;
+  success: Scalars['Boolean']['output'];
+};
+
 export type DeletePlaylistResponse = {
   __typename?: 'DeletePlaylistResponse';
   success: Scalars['Boolean']['output'];
 };
 
+/** Types of files/directories that can be deleted */
+export enum DeleteType {
+  AllScreenshots = 'ALL_SCREENSHOTS',
+  SavedScreenshots = 'SAVED_SCREENSHOTS',
+  Thumbnails = 'THUMBNAILS',
+  Video = 'VIDEO'
+}
+
 export type DeleteUploadsResponse = {
   __typename?: 'DeleteUploadsResponse';
   success: Scalars['Boolean']['output'];
+};
+
+export type DirectorySizeResponse = {
+  __typename?: 'DirectorySizeResponse';
+  name: Scalars['String']['output'];
+  sizeMB: Scalars['Float']['output'];
 };
 
 export type FeaturedScreenshotResponse = {
@@ -217,6 +243,7 @@ export type Mutation = {
   createChannel: CreateChannelResponse;
   createPlaylist: CreatePlaylistResponse;
   deleteChannel: DeleteChannelResponse;
+  deleteFileOrDirectory: DeleteFileResponse;
   deletePlaylist: DeletePlaylistResponse;
   deleteUploads: DeleteUploadsResponse;
   fetchUploads: FetchUploadsResponse;
@@ -245,6 +272,11 @@ export type MutationCreatePlaylistArgs = {
 
 export type MutationDeleteChannelArgs = {
   id: Scalars['Float']['input'];
+};
+
+
+export type MutationDeleteFileOrDirectoryArgs = {
+  deleteFileInput: DeleteFileDto;
 };
 
 
@@ -716,11 +748,13 @@ export type VideoByYtIdResponse = {
   artifact: Scalars['String']['output'];
   channelTitle: Scalars['String']['output'];
   createdAt: Scalars['String']['output'];
+  directoriesWithSize: Array<DirectorySizeResponse>;
   filesWithSize: Array<FileWithSizeResponse>;
   id: Scalars['Float']['output'];
   publishedAt: Scalars['String']['output'];
   src: Scalars['String']['output'];
   title: Scalars['String']['output'];
+  totalSizeMB: Scalars['Float']['output'];
   updatedAt: Scalars['String']['output'];
   ytId: Scalars['String']['output'];
 };
@@ -961,7 +995,14 @@ export type GetVideoByYtIdQueryVariables = Exact<{
 }>;
 
 
-export type GetVideoByYtIdQuery = { __typename?: 'Query', getVideoByYtId: { __typename?: 'VideoByYtIdResponse', id: number, createdAt: string, updatedAt: string, publishedAt: string, title: string, ytId: string, src: string, artifact: string, channelTitle: string, filesWithSize: Array<{ __typename?: 'FileWithSizeResponse', name: string, sizeMB: number }> } };
+export type GetVideoByYtIdQuery = { __typename?: 'Query', getVideoByYtId: { __typename?: 'VideoByYtIdResponse', id: number, createdAt: string, updatedAt: string, publishedAt: string, title: string, ytId: string, src: string, artifact: string, channelTitle: string, totalSizeMB: number, filesWithSize: Array<{ __typename?: 'FileWithSizeResponse', name: string, sizeMB: number }>, directoriesWithSize: Array<{ __typename?: 'DirectorySizeResponse', name: string, sizeMB: number }> } };
+
+export type DeleteFileOrDirectoryMutationVariables = Exact<{
+  deleteFileInput: DeleteFileDto;
+}>;
+
+
+export type DeleteFileOrDirectoryMutation = { __typename?: 'Mutation', deleteFileOrDirectory: { __typename?: 'DeleteFileResponse', success: boolean, message?: string | null } };
 
 export const ChannelFragmentFragmentDoc = gql`
     fragment ChannelFragment on PlaylistChannelResponse {
@@ -2319,6 +2360,11 @@ export const GetVideoByYtIdDocument = gql`
       name
       sizeMB
     }
+    directoriesWithSize {
+      name
+      sizeMB
+    }
+    totalSizeMB
   }
 }
     `;
@@ -2355,3 +2401,37 @@ export type GetVideoByYtIdQueryHookResult = ReturnType<typeof useGetVideoByYtIdQ
 export type GetVideoByYtIdLazyQueryHookResult = ReturnType<typeof useGetVideoByYtIdLazyQuery>;
 export type GetVideoByYtIdSuspenseQueryHookResult = ReturnType<typeof useGetVideoByYtIdSuspenseQuery>;
 export type GetVideoByYtIdQueryResult = Apollo.QueryResult<GetVideoByYtIdQuery, GetVideoByYtIdQueryVariables>;
+export const DeleteFileOrDirectoryDocument = gql`
+    mutation DeleteFileOrDirectory($deleteFileInput: DeleteFileDto!) {
+  deleteFileOrDirectory(deleteFileInput: $deleteFileInput) {
+    success
+    message
+  }
+}
+    `;
+export type DeleteFileOrDirectoryMutationFn = Apollo.MutationFunction<DeleteFileOrDirectoryMutation, DeleteFileOrDirectoryMutationVariables>;
+
+/**
+ * __useDeleteFileOrDirectoryMutation__
+ *
+ * To run a mutation, you first call `useDeleteFileOrDirectoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteFileOrDirectoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteFileOrDirectoryMutation, { data, loading, error }] = useDeleteFileOrDirectoryMutation({
+ *   variables: {
+ *      deleteFileInput: // value for 'deleteFileInput'
+ *   },
+ * });
+ */
+export function useDeleteFileOrDirectoryMutation(baseOptions?: Apollo.MutationHookOptions<DeleteFileOrDirectoryMutation, DeleteFileOrDirectoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteFileOrDirectoryMutation, DeleteFileOrDirectoryMutationVariables>(DeleteFileOrDirectoryDocument, options);
+      }
+export type DeleteFileOrDirectoryMutationHookResult = ReturnType<typeof useDeleteFileOrDirectoryMutation>;
+export type DeleteFileOrDirectoryMutationResult = Apollo.MutationResult<DeleteFileOrDirectoryMutation>;
+export type DeleteFileOrDirectoryMutationOptions = Apollo.BaseMutationOptions<DeleteFileOrDirectoryMutation, DeleteFileOrDirectoryMutationVariables>;

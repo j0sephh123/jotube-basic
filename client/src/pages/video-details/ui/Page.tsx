@@ -124,6 +124,9 @@ export function VideoDetailsPage() {
                           ytVideoId={ytId}
                         />
                       </div>
+                      <div className="text-sm text-base-content/70 mb-2">
+                        Total size: {video.totalSizeMB} MB
+                      </div>
                       <div className="overflow-x-auto">
                         <table className="table table-zebra">
                           <thead>
@@ -139,16 +142,17 @@ export function VideoDetailsPage() {
                                 <td className="font-mono text-sm">
                                   {file.name}
                                 </td>
-                                <td>{file.sizeMB.toFixed(2)}</td>
+                                <td>{file.sizeMB}</td>
                                 <td>
                                   <div className="flex gap-1">
-                                    {/* Check for common video file extensions */}
+                                    {/* Check for common video file extensions and partial downloads */}
                                     {(file.name.endsWith(".mp4") ||
                                       file.name.endsWith(".mkv") ||
                                       file.name.endsWith(".webm") ||
                                       file.name.endsWith(".avi") ||
                                       file.name.endsWith(".mov") ||
-                                      file.name.endsWith(".m4v")) && (
+                                      file.name.endsWith(".m4v") ||
+                                      file.name.endsWith(".part")) && (
                                       <DeleteFileButton
                                         ytChannelId={ytChannelId}
                                         ytVideoId={ytId}

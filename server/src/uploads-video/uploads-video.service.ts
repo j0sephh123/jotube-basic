@@ -498,42 +498,59 @@ export class UploadsVideoService {
   ): Promise<VideoByYtIdResponse> {
     const baseDir = `${this.filePathService.getBasePath()}/${ytChannelId}/${ytId}`;
     let filesWithSize: { name: string; sizeMB: number }[] = [];
+    let directoriesWithSize: { name: string; sizeMB: number }[] = [];
+    let totalSizeMB = 0;
 
     try {
       const files = await this.fileOperationService.listFiles(baseDir);
 
-      filesWithSize = await Promise.all(
-        files.map(async (f) => {
-          const full = `${baseDir}/${f}`;
-          try {
-            const st = await fs.stat(full);
+      const filePromises = files.map(async (f) => {
+        const full = `${baseDir}/${f}`;
+        try {
+          const st = await fs.stat(full);
 
-            if (st.isDirectory()) {
-              const { stdout } = await execAsync(`du -sb -- "${full}"`);
-              const sizeBytes = parseInt(stdout.split('\t')[0], 10);
-              return {
-                name: f,
-                sizeMB: Number(sizeBytes / (1024 * 1024)),
-              };
-            }
-
-            if (st.isFile()) {
-              const sizeBytes = st.size;
-              return {
-                name: f,
-                sizeMB: Number(sizeBytes / (1024 * 1024)),
-              };
-            }
-
-            return { name: f, sizeMB: 0 };
-          } catch {
-            return { name: f, sizeMB: 0 };
+          if (st.isDirectory()) {
+            const { stdout } = await execAsync(`du -sb -- "${full}"`);
+            const sizeBytes = parseInt(stdout.split('\t')[0], 10);
+            const sizeMB = Math.floor(sizeBytes / (1024 * 1024));
+            totalSizeMB += sizeMB;
+            return {
+              name: f,
+              sizeMB,
+              isDirectory: true,
+            };
           }
-        }),
-      );
+
+          if (st.isFile()) {
+            const sizeBytes = st.size;
+            const sizeMB = Math.floor(sizeBytes / (1024 * 1024));
+            totalSizeMB += sizeMB;
+            return {
+              name: f,
+              sizeMB,
+              isDirectory: false,
+            };
+          }
+
+          return { name: f, sizeMB: 0, isDirectory: false };
+        } catch {
+          return { name: f, sizeMB: 0, isDirectory: false };
+        }
+      });
+
+      const results = await Promise.all(filePromises);
+
+      filesWithSize = results
+        .filter((item) => !item.isDirectory)
+        .map((item) => ({ name: item.name, sizeMB: item.sizeMB }));
+
+      directoriesWithSize = results
+        .filter((item) => item.isDirectory)
+        .map((item) => ({ name: item.name, sizeMB: item.sizeMB }));
     } catch {
       console.log(`Directory not found: ${baseDir}`);
       filesWithSize = [];
+      directoriesWithSize = [];
     }
 
     const video = await this.prismaService.uploadsVideo.findUnique({
@@ -564,6 +581,8 @@ export class UploadsVideoService {
       ...video,
       channelTitle: video.channel.title,
       filesWithSize,
+      directoriesWithSize,
+      totalSizeMB,
       publishedAt: video.publishedAt,
       createdAt: video.createdAt.toISOString(),
       updatedAt: video.updatedAt.toISOString(),

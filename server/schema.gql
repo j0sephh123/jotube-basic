@@ -145,6 +145,11 @@ type DeleteUploadsResponse {
   success: Boolean!
 }
 
+type DirectorySizeResponse {
+  name: String!
+  sizeMB: Float!
+}
+
 type FeaturedScreenshotResponse {
   id: Int!
   second: Int!
@@ -523,11 +528,13 @@ type VideoByYtIdResponse {
   artifact: String!
   channelTitle: String!
   createdAt: String!
+  directoriesWithSize: [DirectorySizeResponse!]!
   filesWithSize: [FileWithSizeResponse!]!
   id: Float!
   publishedAt: String!
   src: String!
   title: String!
+  totalSizeMB: Float!
   updatedAt: String!
   ytId: String!
 }
