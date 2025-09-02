@@ -114,7 +114,9 @@ export function VideoDetailsPage() {
               </div>
 
               <div className="space-y-4">
-                {video.filesWithSize && video.filesWithSize.length > 0 && (
+                {(video.filesWithSize && video.filesWithSize.length > 0) ||
+                (video.directoriesWithSize &&
+                  video.directoriesWithSize.length > 0) ? (
                   <div className="card bg-base-200">
                     <div className="card-body">
                       <div className="flex justify-between items-center">
@@ -138,7 +140,7 @@ export function VideoDetailsPage() {
                           </thead>
                           <tbody>
                             {video.filesWithSize.map((file, index) => (
-                              <tr key={index}>
+                              <tr key={`file-${index}`}>
                                 <td className="font-mono text-sm">
                                   {file.name}
                                 </td>
@@ -196,8 +198,68 @@ export function VideoDetailsPage() {
                                 </td>
                               </tr>
                             ))}
+                            {video.directoriesWithSize.map(
+                              (directory, index) => (
+                                <tr key={`directory-${index}`}>
+                                  <td className="font-mono text-sm">
+                                    {directory.name}/
+                                  </td>
+                                  <td>{directory.sizeMB}</td>
+                                  <td>
+                                    <div className="flex gap-1">
+                                      {directory.name ===
+                                        "saved_screenshots" && (
+                                        <DeleteFileButton
+                                          ytChannelId={ytChannelId}
+                                          ytVideoId={ytId}
+                                          deleteType="SAVED_SCREENSHOTS"
+                                          className=""
+                                        >
+                                          <Trash2 className="w-4 h-4" />
+                                        </DeleteFileButton>
+                                      )}
+                                      {directory.name === "all_screenshots" && (
+                                        <DeleteFileButton
+                                          ytChannelId={ytChannelId}
+                                          ytVideoId={ytId}
+                                          deleteType="ALL_SCREENSHOTS"
+                                          className=""
+                                        >
+                                          <Trash2 className="w-4 h-4" />
+                                        </DeleteFileButton>
+                                      )}
+                                      {directory.name === "thumbnails" && (
+                                        <DeleteFileButton
+                                          ytChannelId={ytChannelId}
+                                          ytVideoId={ytId}
+                                          deleteType="THUMBNAILS"
+                                          className=""
+                                        >
+                                          <Trash2 className="w-4 h-4" />
+                                        </DeleteFileButton>
+                                      )}
+                                    </div>
+                                  </td>
+                                </tr>
+                              )
+                            )}
                           </tbody>
                         </table>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="card bg-base-200">
+                    <div className="card-body">
+                      <div className="flex justify-between items-center">
+                        <h3 className="card-title text-lg">Files</h3>
+                        <OpenDirectoryButton
+                          ytChannelId={ytChannelId}
+                          ytVideoId={ytId}
+                        />
+                      </div>
+                      <div className="text-center text-gray-500 py-4">
+                        No files found
                       </div>
                     </div>
                   </div>
