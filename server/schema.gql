@@ -118,8 +118,27 @@ type DeleteChannelResponse {
   success: Boolean!
 }
 
+input DeleteFileDto {
+  deleteType: DeleteType!
+  ytChannelId: String!
+  ytVideoId: String!
+}
+
+type DeleteFileResponse {
+  message: String
+  success: Boolean!
+}
+
 type DeletePlaylistResponse {
   success: Boolean!
+}
+
+"""Types of files/directories that can be deleted"""
+enum DeleteType {
+  ALL_SCREENSHOTS
+  SAVED_SCREENSHOTS
+  THUMBNAILS
+  VIDEO
 }
 
 type DeleteUploadsResponse {
@@ -185,6 +204,7 @@ type Mutation {
   createChannel(createChannelInput: CreateChannelInput!): CreateChannelResponse!
   createPlaylist(createPlaylistInput: CreatePlaylistInput!): CreatePlaylistResponse!
   deleteChannel(id: Float!): DeleteChannelResponse!
+  deleteFileOrDirectory(deleteFileInput: DeleteFileDto!): DeleteFileResponse!
   deletePlaylist(id: Int!): DeletePlaylistResponse!
   deleteUploads(ytChannelId: String!, ytVideoIds: [String!]!): DeleteUploadsResponse!
   fetchUploads(fetchUploadsInput: FetchUploadsInput!): FetchUploadsResponse!

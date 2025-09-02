@@ -6,9 +6,11 @@ import {
   CopyValue,
   CustomLink,
   DateDisplay,
+  DeleteFileButton,
 } from "@shared/ui";
 import { makeYtChannelId } from "@shared/types";
 import { useVideoPlayer } from "@features/Upload";
+import { Trash2 } from "lucide-react";
 
 export function VideoDetailsPage() {
   const ytChannelId = useTypedParams("ytChannelId");
@@ -128,6 +130,7 @@ export function VideoDetailsPage() {
                             <tr>
                               <th>Name</th>
                               <th>Size (MB)</th>
+                              <th>Actions</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -137,6 +140,56 @@ export function VideoDetailsPage() {
                                   {file.name}
                                 </td>
                                 <td>{file.sizeMB.toFixed(2)}</td>
+                                <td>
+                                  <div className="flex gap-1">
+                                    {/* Check for common video file extensions */}
+                                    {(file.name.endsWith(".mp4") ||
+                                      file.name.endsWith(".mkv") ||
+                                      file.name.endsWith(".webm") ||
+                                      file.name.endsWith(".avi") ||
+                                      file.name.endsWith(".mov") ||
+                                      file.name.endsWith(".m4v")) && (
+                                      <DeleteFileButton
+                                        ytChannelId={ytChannelId}
+                                        ytVideoId={ytId}
+                                        deleteType="VIDEO"
+                                        className=""
+                                      >
+                                        <Trash2 className="w-4 h-4" />
+                                      </DeleteFileButton>
+                                    )}
+                                    {file.name === "saved_screenshots" && (
+                                      <DeleteFileButton
+                                        ytChannelId={ytChannelId}
+                                        ytVideoId={ytId}
+                                        deleteType="SAVED_SCREENSHOTS"
+                                        className=""
+                                      >
+                                        <Trash2 className="w-4 h-4" />
+                                      </DeleteFileButton>
+                                    )}
+                                    {file.name === "all_screenshots" && (
+                                      <DeleteFileButton
+                                        ytChannelId={ytChannelId}
+                                        ytVideoId={ytId}
+                                        deleteType="ALL_SCREENSHOTS"
+                                        className=""
+                                      >
+                                        <Trash2 className="w-4 h-4" />
+                                      </DeleteFileButton>
+                                    )}
+                                    {file.name === "thumbnails" && (
+                                      <DeleteFileButton
+                                        ytChannelId={ytChannelId}
+                                        ytVideoId={ytId}
+                                        deleteType="THUMBNAILS"
+                                        className=""
+                                      >
+                                        <Trash2 className="w-4 h-4" />
+                                      </DeleteFileButton>
+                                    )}
+                                  </div>
+                                </td>
                               </tr>
                             ))}
                           </tbody>

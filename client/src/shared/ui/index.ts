@@ -41,5 +41,6 @@ export { useCreateEntityForm } from "./useCreateEntityForm";
 export { Select } from "./Select";
 export { CustomLink } from "./CustomLink";
 export { IconProcessingLog } from "./icons/IconProcessingLog";
-export { IconStoryboard } from "./icons/IconStoryboard";  
+export { IconStoryboard } from "./icons/IconStoryboard";
 export { DateDisplay } from "./DateDisplay";
+export { DeleteFileButton } from "./DeleteFileButton";
