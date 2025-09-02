@@ -59,7 +59,13 @@ export function ProcessingPhasePage() {
 
             return (
               <TableRow key={v.id}>
-                <TitleCell title={v.title} channelTitle={v.channel.title} />
+                <TitleCell
+                  videoId={v.id.toString()}
+                  title={v.title}
+                  ytId={v.ytId}
+                  channelTitle={v.channel.title}
+                  channelYtId={v.channel.ytId}
+                />
                 <StatusCell
                   chip={
                     <Chip
