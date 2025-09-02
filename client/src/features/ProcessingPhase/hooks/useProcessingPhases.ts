@@ -2,9 +2,12 @@ import { useGetProcessingPhasesQuery } from "@shared/api";
 import { useMemo } from "react";
 import { latestActivityIso } from "@shared/utils";
 import type { VideoWithPhases } from "../types";
+import { useQueue } from "@shared/hooks";
 
 export function useProcessingPhases() {
-  const { data, loading, error } = useGetProcessingPhasesQuery();
+  const { data, loading, error, refetch } = useGetProcessingPhasesQuery();
+  const asd = useQueue();
+  console.log(asd.data)
 
   const processedData = useMemo(() => {
     if (!data?.processingPhases) return [];
@@ -19,6 +22,7 @@ export function useProcessingPhases() {
           id: videoId,
           ytId: phase.uploadsVideo.ytId,
           title: phase.uploadsVideo.title,
+          channel: phase.uploadsVideo.channel,
           phases: [],
         });
       }
@@ -26,7 +30,7 @@ export function useProcessingPhases() {
       videoMap.get(videoId)!.phases.push({
         id: phase.id,
         uploadsVideoId: phase.uploadsVideoId,
-        phase: phase.phase as any,
+        phase: phase.phase,
         createdAt: phase.createdAt,
         endedAt: phase.endedAt,
         uploadsVideo: phase.uploadsVideo,
@@ -49,5 +53,6 @@ export function useProcessingPhases() {
     data: processedData,
     loading,
     error,
+    refetch,
   };
 }

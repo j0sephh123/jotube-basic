@@ -1,6 +1,12 @@
 import { Tooltip } from "@shared/ui";
 
-export function TitleCell({ title, ytId }: { title: string; ytId: string }) {
+export function TitleCell({
+  title,
+  channelTitle,
+}: {
+  title: string;
+  channelTitle: string;
+}) {
   return (
     <td>
       <div className="flex flex-col">
@@ -12,7 +18,7 @@ export function TitleCell({ title, ytId }: { title: string; ytId: string }) {
             {title}
           </span>
         </Tooltip>
-        <span className="text-xs opacity-70">{ytId}</span>
+        <span className="text-xs opacity-70">{channelTitle}</span>
       </div>
     </td>
   );

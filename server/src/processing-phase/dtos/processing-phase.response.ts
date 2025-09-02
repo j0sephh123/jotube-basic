@@ -7,6 +7,18 @@ registerEnumType(Phase, {
 });
 
 @ObjectType()
+export class ChannelInfo {
+  @Field()
+  id: number;
+
+  @Field()
+  title: string;
+
+  @Field()
+  ytId: string;
+}
+
+@ObjectType()
 export class UploadsVideoInfo {
   @Field()
   id: number;
@@ -16,6 +28,9 @@ export class UploadsVideoInfo {
 
   @Field()
   title: string;
+
+  @Field(() => ChannelInfo)
+  channel: ChannelInfo;
 }
 
 @ObjectType()

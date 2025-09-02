@@ -25,6 +25,13 @@ export type ChannelForPlaylistResponse = {
   title: Scalars['String']['output'];
 };
 
+export type ChannelInfo = {
+  __typename?: 'ChannelInfo';
+  id: Scalars['Float']['output'];
+  title: Scalars['String']['output'];
+  ytId: Scalars['String']['output'];
+};
+
 /** Possible messages for channel creation responses */
 export enum ChannelMessage {
   AlreadyExists = 'ALREADY_EXISTS',
@@ -643,6 +650,7 @@ export type UploadsListUploadResponse = {
 
 export type UploadsVideoInfo = {
   __typename?: 'UploadsVideoInfo';
+  channel: ChannelInfo;
   id: Scalars['Float']['output'];
   title: Scalars['String']['output'];
   ytId: Scalars['String']['output'];
@@ -809,7 +817,7 @@ export type FetchVideosDashboardQuery = { __typename?: 'Query', fetchVideosDashb
 export type GetProcessingPhasesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetProcessingPhasesQuery = { __typename?: 'Query', processingPhases: Array<{ __typename?: 'ProcessingPhaseResponse', id: number, uploadsVideoId: number, phase: Phase, createdAt: any, endedAt?: any | null, uploadsVideo: { __typename?: 'UploadsVideoInfo', id: number, ytId: string, title: string } }> };
+export type GetProcessingPhasesQuery = { __typename?: 'Query', processingPhases: Array<{ __typename?: 'ProcessingPhaseResponse', id: number, uploadsVideoId: number, phase: Phase, createdAt: any, endedAt?: any | null, uploadsVideo: { __typename?: 'UploadsVideoInfo', id: number, ytId: string, title: string, channel: { __typename?: 'ChannelInfo', id: number, title: string, ytId: string } } }> };
 
 export type SearchVideosQueryVariables = Exact<{
   searchInput: SearchInput;
@@ -1595,6 +1603,11 @@ export const GetProcessingPhasesDocument = gql`
       id
       ytId
       title
+      channel {
+        id
+        title
+        ytId
+      }
     }
   }
 }

@@ -8,6 +8,9 @@ export class ProcessingPhaseService {
 
   async findAll(): Promise<ProcessingPhaseResponse[]> {
     return this.prismaService.processingPhase.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
       take: 50,
       include: {
         uploadsVideo: {
@@ -15,6 +18,13 @@ export class ProcessingPhaseService {
             id: true,
             ytId: true,
             title: true,
+            channel: {
+              select: {
+                id: true,
+                title: true,
+                ytId: true,
+              },
+            },
           },
         },
       },

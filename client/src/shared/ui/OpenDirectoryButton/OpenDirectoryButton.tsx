@@ -1,7 +1,7 @@
 import { FolderOpen } from "lucide-react";
 import { useOpenDirectory } from "@shared/ui";
 
-export default function OpenExplorerButton(props: {
+export default function OpenDirectoryButton(props: {
   ytChannelId: string;
   ytVideoId?: string;
 }) {

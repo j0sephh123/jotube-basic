@@ -12,6 +12,11 @@ export const GET_PROCESSING_PHASES = gql`
         id
         ytId
         title
+        channel {
+          id
+          title
+          ytId
+        }
       }
     }
   }

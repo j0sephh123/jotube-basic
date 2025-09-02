@@ -1,9 +1,15 @@
-export function ActionsCell() {
+import { OpenDirectoryButton } from "@shared/ui";
+
+export function ActionsCell({
+  ytChannelId,
+  ytVideoId,
+}: {
+  ytChannelId: string;
+  ytVideoId: string;
+}) {
   return (
     <td>
-      <button className="btn btn-xs">Open video</button>
-      <button className="btn btn-xs btn-outline">Screenshots</button>
-      <button className="btn btn-xs btn-outline">Thumbnails</button>
+      <OpenDirectoryButton ytChannelId={ytChannelId} ytVideoId={ytVideoId} />
     </td>
   );
 }

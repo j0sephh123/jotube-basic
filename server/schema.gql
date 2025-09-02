@@ -7,6 +7,12 @@ type ChannelForPlaylistResponse {
   title: String!
 }
 
+type ChannelInfo {
+  id: Float!
+  title: String!
+  ytId: String!
+}
+
 """Possible messages for channel creation responses"""
 enum ChannelMessage {
   ALREADY_EXISTS
@@ -446,6 +452,7 @@ type UploadsListUploadResponse {
 }
 
 type UploadsVideoInfo {
+  channel: ChannelInfo!
   id: Float!
   title: String!
   ytId: String!

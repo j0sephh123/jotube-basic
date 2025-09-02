@@ -7,10 +7,14 @@ import { StatusCell } from "../StatusCell";
 import { ActionsCell } from "../ActionsCell";
 import { useProcessingPhases } from "@features/ProcessingPhase";
 import { TableRow } from "../TableRow";
-import { StaticStates } from "@shared/ui";
+import { Button, StaticStates } from "@shared/ui";
 
 export function ProcessingPhasePage() {
-  const { data: sorted, loading, error } = useProcessingPhases();
+  const { data: sorted, loading, error, refetch } = useProcessingPhases();
+
+  const handleSync = () => {
+    refetch();
+  };
 
   return (
     <StaticStates
@@ -18,6 +22,7 @@ export function ProcessingPhasePage() {
       isError={!!error}
       isEmpty={!sorted.length}
     >
+      <Button onClick={handleSync}>Sync</Button>
       <TableWrapper>
         <>
           {sorted.map((v) => {
@@ -28,7 +33,7 @@ export function ProcessingPhasePage() {
 
             return (
               <TableRow key={v.id}>
-                <TitleCell title={v.title} ytId={v.ytId} />
+                <TitleCell title={v.title} channelTitle={v.channel.title} />
                 <StatusCell
                   chip={
                     <Chip
@@ -63,7 +68,7 @@ export function ProcessingPhasePage() {
                     <span className="opacity-70">—</span>
                   )}
                 </td>
-                <ActionsCell />
+                <ActionsCell ytChannelId={v.channel.ytId} ytVideoId={v.ytId} />
               </TableRow>
             );
           })}
