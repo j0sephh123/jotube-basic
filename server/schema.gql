@@ -153,6 +153,11 @@ type FetchUploadsResponse {
   uploadIds: [String!]
 }
 
+type FileWithSizeResponse {
+  name: String!
+  sizeMB: Float!
+}
+
 type FinishProcessUploadResponse {
   artifact: String!
   id: Float!
@@ -168,6 +173,11 @@ type GetScreenshotsResponse {
   second: Float!
   src: String!
   ytVideoId: String!
+}
+
+input GetVideoByYtIdInput {
+  ytChannelId: String!
+  ytId: String!
 }
 
 type Mutation {
@@ -267,6 +277,7 @@ type Query {
   fetchDashboard(fetchDashboardInput: FetchDashboardInput!): ChannelsDashboardResponse!
   fetchVideosDashboard(page: Float, screenshotMax: Float, screenshotMin: Float, sortOrder: String): VideosDashboardResponse!
   getScreenshots(input: GetScreenshotsInput!): [GetScreenshotsResponse!]!
+  getVideoByYtId(getVideoByYtIdInput: GetVideoByYtIdInput!): VideoByYtIdResponse!
   playlistDetails(id: Int!): PlaylistDetailsResponse
   playlistUploadsList(playlistUploadsListInput: PlaylistUploadsListInput!): PlaylistUploadsListResponse!
   playlists: [PlaylistResponse!]!
@@ -486,6 +497,19 @@ type UploadsWithThumbnailsResponse {
   channelTitle: String!
   ytChannelId: String!
   ytVideoId: String!
+}
+
+type VideoByYtIdResponse {
+  artifact: String!
+  channelTitle: String!
+  createdAt: String!
+  filesWithSize: [FileWithSizeResponse!]!
+  id: Float!
+  publishedAt: String!
+  src: String!
+  title: String!
+  updatedAt: String!
+  ytId: String!
 }
 
 type VideosDashboardResponse {

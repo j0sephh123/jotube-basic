@@ -181,6 +181,12 @@ export type FetchUploadsResponse = {
   uploadIds?: Maybe<Array<Scalars['String']['output']>>;
 };
 
+export type FileWithSizeResponse = {
+  __typename?: 'FileWithSizeResponse';
+  name: Scalars['String']['output'];
+  sizeMB: Scalars['Float']['output'];
+};
+
 export type FinishProcessUploadResponse = {
   __typename?: 'FinishProcessUploadResponse';
   artifact: Scalars['String']['output'];
@@ -198,6 +204,11 @@ export type GetScreenshotsResponse = {
   second: Scalars['Float']['output'];
   src: Scalars['String']['output'];
   ytVideoId: Scalars['String']['output'];
+};
+
+export type GetVideoByYtIdInput = {
+  ytChannelId: Scalars['String']['input'];
+  ytId: Scalars['String']['input'];
 };
 
 export type Mutation = {
@@ -371,6 +382,7 @@ export type Query = {
   fetchDashboard: ChannelsDashboardResponse;
   fetchVideosDashboard: VideosDashboardResponse;
   getScreenshots: Array<GetScreenshotsResponse>;
+  getVideoByYtId: VideoByYtIdResponse;
   playlistDetails?: Maybe<PlaylistDetailsResponse>;
   playlistUploadsList: PlaylistUploadsListResponse;
   playlists: Array<PlaylistResponse>;
@@ -416,6 +428,11 @@ export type QueryFetchVideosDashboardArgs = {
 
 export type QueryGetScreenshotsArgs = {
   input: GetScreenshotsInput;
+};
+
+
+export type QueryGetVideoByYtIdArgs = {
+  getVideoByYtIdInput: GetVideoByYtIdInput;
 };
 
 
@@ -694,6 +711,20 @@ export type UploadsWithThumbnailsResponse = {
   ytVideoId: Scalars['String']['output'];
 };
 
+export type VideoByYtIdResponse = {
+  __typename?: 'VideoByYtIdResponse';
+  artifact: Scalars['String']['output'];
+  channelTitle: Scalars['String']['output'];
+  createdAt: Scalars['String']['output'];
+  filesWithSize: Array<FileWithSizeResponse>;
+  id: Scalars['Float']['output'];
+  publishedAt: Scalars['String']['output'];
+  src: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  updatedAt: Scalars['String']['output'];
+  ytId: Scalars['String']['output'];
+};
+
 export type VideosDashboardResponse = {
   __typename?: 'VideosDashboardResponse';
   total: Scalars['Int']['output'];
@@ -924,6 +955,13 @@ export type FinishProcessingUploadMutationVariables = Exact<{
 
 
 export type FinishProcessingUploadMutation = { __typename?: 'Mutation', finishProcessingUpload: { __typename?: 'FinishProcessUploadResponse', id: number, ytId: string, artifact: string } };
+
+export type GetVideoByYtIdQueryVariables = Exact<{
+  getVideoByYtIdInput: GetVideoByYtIdInput;
+}>;
+
+
+export type GetVideoByYtIdQuery = { __typename?: 'Query', getVideoByYtId: { __typename?: 'VideoByYtIdResponse', id: number, createdAt: string, updatedAt: string, publishedAt: string, title: string, ytId: string, src: string, artifact: string, channelTitle: string, filesWithSize: Array<{ __typename?: 'FileWithSizeResponse', name: string, sizeMB: number }> } };
 
 export const ChannelFragmentFragmentDoc = gql`
     fragment ChannelFragment on PlaylistChannelResponse {
@@ -2265,3 +2303,55 @@ export function useFinishProcessingUploadMutation(baseOptions?: Apollo.MutationH
 export type FinishProcessingUploadMutationHookResult = ReturnType<typeof useFinishProcessingUploadMutation>;
 export type FinishProcessingUploadMutationResult = Apollo.MutationResult<FinishProcessingUploadMutation>;
 export type FinishProcessingUploadMutationOptions = Apollo.BaseMutationOptions<FinishProcessingUploadMutation, FinishProcessingUploadMutationVariables>;
+export const GetVideoByYtIdDocument = gql`
+    query GetVideoByYtId($getVideoByYtIdInput: GetVideoByYtIdInput!) {
+  getVideoByYtId(getVideoByYtIdInput: $getVideoByYtIdInput) {
+    id
+    createdAt
+    updatedAt
+    publishedAt
+    title
+    ytId
+    src
+    artifact
+    channelTitle
+    filesWithSize {
+      name
+      sizeMB
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetVideoByYtIdQuery__
+ *
+ * To run a query within a React component, call `useGetVideoByYtIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetVideoByYtIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetVideoByYtIdQuery({
+ *   variables: {
+ *      getVideoByYtIdInput: // value for 'getVideoByYtIdInput'
+ *   },
+ * });
+ */
+export function useGetVideoByYtIdQuery(baseOptions: Apollo.QueryHookOptions<GetVideoByYtIdQuery, GetVideoByYtIdQueryVariables> & ({ variables: GetVideoByYtIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetVideoByYtIdQuery, GetVideoByYtIdQueryVariables>(GetVideoByYtIdDocument, options);
+      }
+export function useGetVideoByYtIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetVideoByYtIdQuery, GetVideoByYtIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetVideoByYtIdQuery, GetVideoByYtIdQueryVariables>(GetVideoByYtIdDocument, options);
+        }
+export function useGetVideoByYtIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetVideoByYtIdQuery, GetVideoByYtIdQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetVideoByYtIdQuery, GetVideoByYtIdQueryVariables>(GetVideoByYtIdDocument, options);
+        }
+export type GetVideoByYtIdQueryHookResult = ReturnType<typeof useGetVideoByYtIdQuery>;
+export type GetVideoByYtIdLazyQueryHookResult = ReturnType<typeof useGetVideoByYtIdLazyQuery>;
+export type GetVideoByYtIdSuspenseQueryHookResult = ReturnType<typeof useGetVideoByYtIdSuspenseQuery>;
+export type GetVideoByYtIdQueryResult = Apollo.QueryResult<GetVideoByYtIdQuery, GetVideoByYtIdQueryVariables>;

@@ -15,10 +15,11 @@ export enum DashboardType {
   VIDEOS = "videos",
 }
 
-type Variant = "ViewType" | "ytChannelId" | "DashboardParams";
+type Variant = "ViewType" | "ytChannelId" | "DashboardParams" | "ytVideoId";
 
 export function useTypedParams(variant: "ViewType"): ViewType | null;
 export function useTypedParams(variant: "ytChannelId"): string;
+export function useTypedParams(variant: "ytVideoId"): string;
 export function useTypedParams(variant: "DashboardParams"): {
   type: DashboardType;
   viewType: DashboardViewType;
@@ -38,6 +39,10 @@ export function useTypedParams(
 
   if (variant === "ViewType") {
     return mapViewTypeToGraphQL(params.viewType) ?? null;
+  }
+
+  if (variant === "ytVideoId") {
+    return params.ytVideoId as string;
   }
 
   if (variant === "DashboardParams") {

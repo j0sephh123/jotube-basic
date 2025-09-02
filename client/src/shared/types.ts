@@ -50,8 +50,11 @@ export type To =
   | VideoDetails;
 
 export function makeYtChannelId(s: string): YtChannelId {
-  if (s.length !== 24 || s.includes("/"))
-    throw new Error("Invalid YtChannelId");
+  // TODO: 
+  // i've mixed other series which are actually not channels, so this won't work for now
+  // until i find a better way to handle this
+  // if (s.length !== 24 || s.includes("/"))
+  //   throw new Error("Invalid YtChannelId");
   return s as YtChannelId;
 }
 

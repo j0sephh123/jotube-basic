@@ -127,3 +127,23 @@ export const FINISH_PROCESSING_UPLOAD = gql`
     }
   }
 `;
+
+export const GET_VIDEO_BY_YT_ID = gql`
+  query GetVideoByYtId($getVideoByYtIdInput: GetVideoByYtIdInput!) {
+    getVideoByYtId(getVideoByYtIdInput: $getVideoByYtIdInput) {
+      id
+      createdAt
+      updatedAt
+      publishedAt
+      title
+      ytId
+      src
+      artifact
+      channelTitle
+      filesWithSize {
+        name
+        sizeMB
+      }
+    }
+  }
+`;

@@ -1,4 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { exec } from 'child_process';
+import { promisify } from 'util';
+import * as fs from 'fs/promises';
+
+const execAsync = promisify(exec);
+
 import { FinishProcessUploadDto } from 'src/uploads-video/dtos/finish-process-upload.dto';
 import { saveUploadDto } from 'src/uploads-video/dtos/save-upload.dto';
 import { deleteUploadsDto } from 'src/uploads-video/dtos/delete-uploads.dto';
@@ -17,6 +23,7 @@ import { ArtifactType } from '@prisma/client';
 import { SortOrder } from './dtos/uploads-list.input';
 import { UploadsListResponse } from './dtos/uploads-list.response';
 import { UploadsListInput } from './dtos/uploads-list.input';
+import { VideoByYtIdResponse } from './dtos/get-video-by-ytid.response';
 
 @Injectable()
 export class UploadsVideoService {
@@ -482,6 +489,84 @@ export class UploadsVideoService {
 
     return {
       deletedCount: shortVideoIds.length,
+    };
+  }
+
+  async getVideoByYtId(
+    ytChannelId: string,
+    ytId: string,
+  ): Promise<VideoByYtIdResponse> {
+    const baseDir = `${this.filePathService.getBasePath()}/${ytChannelId}/${ytId}`;
+    let filesWithSize: { name: string; sizeMB: number }[] = [];
+
+    try {
+      const files = await this.fileOperationService.listFiles(baseDir);
+
+      filesWithSize = await Promise.all(
+        files.map(async (f) => {
+          const full = `${baseDir}/${f}`;
+          try {
+            const st = await fs.stat(full);
+
+            if (st.isDirectory()) {
+              const { stdout } = await execAsync(`du -sb -- "${full}"`);
+              const sizeBytes = parseInt(stdout.split('\t')[0], 10);
+              return {
+                name: f,
+                sizeMB: Number(sizeBytes / (1024 * 1024)),
+              };
+            }
+
+            if (st.isFile()) {
+              const sizeBytes = st.size;
+              return {
+                name: f,
+                sizeMB: Number(sizeBytes / (1024 * 1024)),
+              };
+            }
+
+            return { name: f, sizeMB: 0 };
+          } catch {
+            return { name: f, sizeMB: 0 };
+          }
+        }),
+      );
+    } catch {
+      console.log(`Directory not found: ${baseDir}`);
+      filesWithSize = [];
+    }
+
+    const video = await this.prismaService.uploadsVideo.findUnique({
+      where: { ytId },
+      select: {
+        id: true,
+        title: true,
+        ytId: true,
+        artifact: true,
+        src: true,
+        publishedAt: true,
+        createdAt: true,
+        updatedAt: true,
+        duration: true,
+        channel: {
+          select: {
+            title: true,
+          },
+        },
+      },
+    });
+
+    if (!video) {
+      throw new Error('Video not found');
+    }
+
+    return {
+      ...video,
+      channelTitle: video.channel.title,
+      filesWithSize,
+      publishedAt: video.publishedAt,
+      createdAt: video.createdAt.toISOString(),
+      updatedAt: video.updatedAt.toISOString(),
     };
   }
 }

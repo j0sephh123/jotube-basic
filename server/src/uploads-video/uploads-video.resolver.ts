@@ -13,6 +13,8 @@ import { CleanShortUploadsInput } from './dtos/clean-short-uploads.input';
 import { UploadsListResponse } from './dtos/uploads-list.response';
 import { UploadsListInput } from './dtos/uploads-list.input';
 import { UploadsVideoStoryboardResponse } from './dtos/storyboards.response';
+import { GetVideoByYtIdInput } from './dtos/get-video-by-ytid.input';
+import { VideoByYtIdResponse } from './dtos/get-video-by-ytid.response';
 
 @Resolver()
 export class UploadsVideoResolver {
@@ -135,6 +137,20 @@ export class UploadsVideoResolver {
       }));
     } catch {
       return [];
+    }
+  }
+
+  @Query(() => VideoByYtIdResponse)
+  async getVideoByYtId(
+    @Args('getVideoByYtIdInput') getVideoByYtIdInput: GetVideoByYtIdInput,
+  ): Promise<VideoByYtIdResponse> {
+    try {
+      return await this.uploadsVideoService.getVideoByYtId(
+        getVideoByYtIdInput.ytChannelId,
+        getVideoByYtIdInput.ytId,
+      );
+    } catch {
+      throw new Error('Failed to fetch video');
     }
   }
 }
