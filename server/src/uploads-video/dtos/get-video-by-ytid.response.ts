@@ -55,4 +55,7 @@ export class VideoByYtIdResponse {
 
   @Field()
   totalSizeMB: number;
+
+  @Field()
+  screenshots: number;
 }

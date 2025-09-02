@@ -752,6 +752,7 @@ export type VideoByYtIdResponse = {
   filesWithSize: Array<FileWithSizeResponse>;
   id: Scalars['Float']['output'];
   publishedAt: Scalars['String']['output'];
+  screenshots: Scalars['Float']['output'];
   src: Scalars['String']['output'];
   title: Scalars['String']['output'];
   totalSizeMB: Scalars['Float']['output'];
@@ -995,7 +996,7 @@ export type GetVideoByYtIdQueryVariables = Exact<{
 }>;
 
 
-export type GetVideoByYtIdQuery = { __typename?: 'Query', getVideoByYtId: { __typename?: 'VideoByYtIdResponse', id: number, createdAt: string, updatedAt: string, publishedAt: string, title: string, ytId: string, src: string, artifact: string, channelTitle: string, totalSizeMB: number, filesWithSize: Array<{ __typename?: 'FileWithSizeResponse', name: string, sizeMB: number }>, directoriesWithSize: Array<{ __typename?: 'DirectorySizeResponse', name: string, sizeMB: number }> } };
+export type GetVideoByYtIdQuery = { __typename?: 'Query', getVideoByYtId: { __typename?: 'VideoByYtIdResponse', id: number, createdAt: string, updatedAt: string, publishedAt: string, title: string, ytId: string, src: string, artifact: string, channelTitle: string, totalSizeMB: number, screenshots: number, filesWithSize: Array<{ __typename?: 'FileWithSizeResponse', name: string, sizeMB: number }>, directoriesWithSize: Array<{ __typename?: 'DirectorySizeResponse', name: string, sizeMB: number }> } };
 
 export type DeleteFileOrDirectoryMutationVariables = Exact<{
   deleteFileInput: DeleteFileDto;
@@ -2365,6 +2366,7 @@ export const GetVideoByYtIdDocument = gql`
       sizeMB
     }
     totalSizeMB
+    screenshots
   }
 }
     `;

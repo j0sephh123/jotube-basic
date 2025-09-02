@@ -149,6 +149,7 @@ export const GET_VIDEO_BY_YT_ID = gql`
         sizeMB
       }
       totalSizeMB
+      screenshots
     }
   }
 `;

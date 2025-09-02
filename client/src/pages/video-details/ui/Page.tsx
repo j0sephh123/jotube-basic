@@ -77,9 +77,19 @@ export function VideoDetailsPage() {
           <div className="space-y-4">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600 p-4">
               <div className="flex gap-2">
-                <Button onClick={handleGalleryClick}>Gallery</Button>
-                <Button onClick={() => handleViewScreenshots([ytChannelId])}>Screenshots</Button>
-                <Button onClick={handleViewThumbnails}>Thumbnails</Button>
+                {video.artifact === "SCREENSHOT" && (
+                  <>
+                    <Button onClick={handleGalleryClick}>Gallery</Button>
+                    <Button
+                      onClick={() => handleViewScreenshots([ytChannelId])}
+                    >
+                      Screenshots {`(${video.screenshots})`}
+                    </Button>
+                  </>
+                )}
+                {video.artifact === "THUMBNAIL" && (
+                  <Button onClick={handleViewThumbnails}>Thumbnails</Button>
+                )}
               </div>
             </div>
             <VideoFiles

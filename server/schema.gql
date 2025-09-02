@@ -532,6 +532,7 @@ type VideoByYtIdResponse {
   filesWithSize: [FileWithSizeResponse!]!
   id: Float!
   publishedAt: String!
+  screenshots: Float!
   src: String!
   title: String!
   totalSizeMB: Float!

@@ -577,12 +577,23 @@ export class UploadsVideoService {
       throw new Error('Video not found');
     }
 
+    let screenshots = 0;
+    if (video.artifact === ArtifactType.SCREENSHOT) {
+      const screenshotCount = await this.prismaService.screenshot.count({
+        where: {
+          ytVideoId: ytId,
+        },
+      });
+      screenshots = screenshotCount;
+    }
+
     return {
       ...video,
       channelTitle: video.channel.title,
       filesWithSize,
       directoriesWithSize,
       totalSizeMB,
+      screenshots,
       publishedAt: video.publishedAt,
       createdAt: video.createdAt.toISOString(),
       updatedAt: video.updatedAt.toISOString(),
