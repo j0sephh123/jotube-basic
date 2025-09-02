@@ -10,6 +10,7 @@ import { VideoPlayer } from "@features/Upload";
 import { VideoFiles } from "./VideoFiles";
 import { VideoDetailsWrapper } from "./VideoDetailsWrapper";
 import { setProcessingData } from "@shared/store";
+import { useScreenshotsForCarousel } from "@features/Screenshot";
 
 export function VideoDetailsPage() {
   const ytChannelId = useTypedParams("ytChannelId");
@@ -32,6 +33,8 @@ export function VideoDetailsPage() {
       },
     ] as UploadsWithThumbnailsResponse[]);
   };
+
+  const handleViewScreenshots = useScreenshotsForCarousel(ytVideoId);
 
   if (!data) return null;
 
@@ -66,8 +69,8 @@ export function VideoDetailsPage() {
           <div className="space-y-4">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600 p-4">
               <div className="flex gap-2">
-                <Button>Gallery</Button>
-                <Button>Screenshots</Button>
+                {/* <Button onClick={handleViewScreenshots}>Gallery</Button> */}
+                <Button onClick={() => handleViewScreenshots([ytChannelId])}>Screenshots</Button>
                 <Button onClick={handleViewThumbnails}>Thumbnails</Button>
               </div>
             </div>

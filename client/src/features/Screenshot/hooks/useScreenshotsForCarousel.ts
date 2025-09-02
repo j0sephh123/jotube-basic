@@ -1,13 +1,10 @@
 /* eslint-disable import/no-internal-modules */
 /* eslint-disable boundaries/element-types */
-import { useLazyQuery } from "@apollo/client";
-import { GET_SHUFFLED_SCREENSHOTS } from "@entities/Screenshot";
-import type { SlideImage } from "yet-another-react-lightbox";
-import { type ChannelScreenshot } from "./useFetchChannelScreenshots";
 import { setSlides } from "../model/carouselScreenshotsStore";
+import { useGetScreenshotsLazyQuery } from "@shared/api";
 
-export function useScreenshotsForCarousel() {
-  const [getScreenshotsQuery] = useLazyQuery(GET_SHUFFLED_SCREENSHOTS, {
+export function useScreenshotsForCarousel(ytVideoId?: string) {
+  const [getScreenshotsQuery] = useGetScreenshotsLazyQuery({
     fetchPolicy: "no-cache",
   });
   const handleFetch = async (ytChannelIds: string[]) => {
@@ -17,15 +14,21 @@ export function useScreenshotsForCarousel() {
           input: { ytChannelIds },
         },
       });
-      const data = result.data?.getScreenshots || [];
-      const transformedData: SlideImage[] = data.map(
-        (item: ChannelScreenshot) => ({
-          type: "image",
-          src: item.src,
-          alt: `Screenshot at ${item.second}s from video ${item.ytVideoId}`,
-        })
-      );
-      setSlides(transformedData);
+      if (!result.data) return;
+      if (ytVideoId) {
+        result.data.getScreenshots = result.data.getScreenshots.filter(
+          (item) => item.ytVideoId === ytVideoId
+        );
+      }
+      const transformedData = result.data?.getScreenshots.map((item) => ({
+        type: "image" as const,
+        src: item.src,
+        alt: `Screenshot at ${item.second}s from video ${item.ytVideoId}`,
+      }));
+
+      if (transformedData) {
+        setSlides(transformedData);
+      }
     } catch (error) {
       console.log(error);
     }
