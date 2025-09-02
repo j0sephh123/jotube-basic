@@ -8,6 +8,7 @@ import {
   DateDisplay,
 } from "@shared/ui";
 import { makeYtChannelId } from "@shared/types";
+import { useVideoPlayer } from "@features/Upload";
 
 export function VideoDetailsPage() {
   const ytChannelId = useTypedParams("ytChannelId");
@@ -20,6 +21,8 @@ export function VideoDetailsPage() {
       },
     },
   });
+
+  const { playingVideos, handleVideoClick, getEmbedUrl } = useVideoPlayer();
 
   if (!data) return null;
 
@@ -53,21 +56,43 @@ export function VideoDetailsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-4">
                 <div className="bg-base-200 rounded-lg overflow-hidden">
-                  <a
-                    href={video.src}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block"
-                  >
-                    <img
-                      src={video.src}
-                      alt="Video thumbnail"
-                      className="w-full h-48 object-cover rounded"
-                      onError={(e) => {
-                        e.currentTarget.style.display = "none";
-                      }}
-                    />
-                  </a>
+                  {playingVideos[video.ytId] ? (
+                    <div className="w-full aspect-video">
+                      <iframe
+                        src={getEmbedUrl(video.ytId)}
+                        title={video.title}
+                        className="w-full h-full"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </div>
+                  ) : (
+                    <figure
+                      className="relative cursor-pointer aspect-video"
+                      onClick={() => handleVideoClick(video.ytId)}
+                    >
+                      <img
+                        src={video.src}
+                        alt="Video thumbnail"
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.style.display = "none";
+                        }}
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-30">
+                        <div className="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="white"
+                            className="w-8 h-8"
+                          >
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </div>
+                      </div>
+                    </figure>
+                  )}
                 </div>
 
                 <div className="stats stats-vertical shadow">
