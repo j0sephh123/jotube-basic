@@ -29,7 +29,7 @@ export default function Navbar() {
           <IconVideos />
           <IconPlaylist />
           <IconSaved count={totalCounts?.totalSaved ?? 0} />
-          <IconThumbnails totalThumbnails={totalCounts?.totalThumbnails ?? 0} />
+          <IconThumbnails count={totalCounts?.totalThumbnails ?? 0} />
           <IconImageNavigator />
           <ViewGlobalScreenshots />
           <IconProcessingLog />

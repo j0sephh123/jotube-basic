@@ -4,8 +4,12 @@ import { useCallback, useMemo } from "react";
 import { useQueue } from "@shared/hooks";
 import { useSearchParams } from "react-router-dom";
 import { useApolloClient } from "@apollo/client";
+import { type UploadsType } from "../types";
 
-export function useUploads(ytChannelId: string, type: "default" | "saved") {
+export function useUploads(
+  ytChannelId: string,
+  type: UploadsType
+) {
   console.log({
     type,
   });

@@ -44,6 +44,7 @@ export class UploadsVideoService {
     take,
   }: UploadsListInput): Promise<UploadsListResponse> {
     const whereQuery = () => {
+      console.log({ type });
       if (type === 'default') {
         return {
           artifact: ArtifactType.VIDEO,
@@ -55,6 +56,12 @@ export class UploadsVideoService {
           artifact: {
             in: [ArtifactType.SAVED, ArtifactType.DOWNLOADED],
           },
+        };
+      }
+
+      if (type === 'thumbnails') {
+        return {
+          artifact: ArtifactType.THUMBNAIL,
         };
       }
 

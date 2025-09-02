@@ -1,4 +1,4 @@
-import { UploadsListItem } from "@features/Upload";
+import { UploadsListItem, type UploadsType } from "@features/Upload";
 import { type UploadsListQueryResult } from "@shared/api";
 import { useQueue } from "@shared/hooks";
 
@@ -6,7 +6,7 @@ export type UploadsListProps = {
   ytChannelId: string;
   handleSideEffect: () => void;
   data: UploadsListQueryResult["data"];
-  type: "default" | "saved";
+  type: UploadsType;
 };
 
 export default function UploadsList({

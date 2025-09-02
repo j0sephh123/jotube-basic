@@ -1,11 +1,11 @@
 import { useRefetchChannelMetadata } from "@entities/Channel";
 import { useQueue, useTypedParams } from "@shared/hooks";
-import { useRefetchChannelUploads } from "@features/Upload";
+import { type UploadsType, useRefetchChannelUploads } from "@features/Upload";
 import { useUploads } from "@features/Upload";
 import UploadsList from "./UploadsList";
 
 type Props = {
-  type: "default" | "saved";
+  type: UploadsType;
 };
 
 export function UploadsDecorator({ type }: Props) {

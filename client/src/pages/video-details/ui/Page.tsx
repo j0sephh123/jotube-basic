@@ -1,9 +1,6 @@
-import {
-  type UploadsWithThumbnailsResponse,
-  useGetVideoByYtIdQuery,
-} from "@shared/api";
+import { useGetVideoByYtIdQuery } from "@shared/api";
 import { useTypedParams, useCustomNavigate } from "@shared/hooks";
-import { StaticStates, DateDisplay, Button, CustomLink } from "@shared/ui";
+import { StaticStates, DateDisplay, Button } from "@shared/ui";
 import { VideoHeader } from "./VideoHeader";
 import { ArtifactControl } from "./ArtifactControl";
 import {
@@ -15,10 +12,11 @@ import {
 } from "@features/Upload";
 import { VideoFiles } from "./VideoFiles";
 import { VideoDetailsWrapper } from "./VideoDetailsWrapper";
-import { setProcessingData } from "@shared/store";
 import { useScreenshotsForCarousel } from "@features/Screenshot";
 import { setGalleryModal } from "@features/Gallery";
 import { makeYtChannelId } from "@shared/types";
+import { BackToChannel } from "./BackToChannel";
+import { ViewVideoThumbnails } from "@features/Thumbnails";
 
 export function VideoDetailsPage() {
   const navigate = useCustomNavigate();
@@ -34,16 +32,6 @@ export function VideoDetailsPage() {
     },
   });
 
-  const handleViewThumbnails = () => {
-    setProcessingData("thumbnails", [
-      {
-        ytChannelId,
-        ytVideoId,
-        channelTitle: data?.getVideoByYtId.channelTitle,
-      },
-    ] as UploadsWithThumbnailsResponse[]);
-  };
-
   const handleViewScreenshots = useScreenshotsForCarousel(ytVideoId);
 
   const handleGalleryClick = () => {
@@ -57,12 +45,7 @@ export function VideoDetailsPage() {
     return (
       <VideoDetailsWrapper>
         no data
-        <CustomLink
-          to={`/channels/${makeYtChannelId(ytChannelId)}`}
-          className="text-base text-blue-600 hover:text-blue-800 font-medium flex-shrink-0"
-        >
-          ← Back to Channel
-        </CustomLink>
+        <BackToChannel />
       </VideoDetailsWrapper>
     );
 
@@ -144,7 +127,11 @@ export function VideoDetailsPage() {
                   </>
                 )}
                 {video.artifact === "THUMBNAIL" && (
-                  <Button onClick={handleViewThumbnails}>Thumbnails</Button>
+                  <ViewVideoThumbnails
+                    ytChannelId={ytChannelId}
+                    ytVideoId={ytVideoId}
+                    channelTitle={video.channelTitle}
+                  />
                 )}
               </div>
             </div>

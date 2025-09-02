@@ -26,6 +26,7 @@ type PlaylistUploadsSaved = `/playlists/${number}/uploads/saved`;
 type ProcessingPhaseLatest = `/processing-phase/latest`;
 type ProcessingPhaseRunning = `/processing-phase/running`;
 type VideoDetails = `/channels/${YtChannelId}/videos/${YtVideoId}`;
+type SingleChannelThumbnails = `/channels/${YtChannelId}/thumbnails`;
 
 export type To =
   | Playlists
@@ -47,7 +48,8 @@ export type To =
   | PlaylistUploadsSaved
   | ProcessingPhaseLatest
   | ProcessingPhaseRunning
-  | VideoDetails;
+  | VideoDetails
+  | SingleChannelThumbnails;
 
 export function makeYtChannelId(s: string): YtChannelId {
   // TODO: 

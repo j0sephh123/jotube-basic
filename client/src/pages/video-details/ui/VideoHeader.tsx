@@ -1,6 +1,6 @@
-import { CustomLink, CopyValue, Button } from "@shared/ui";
-import { makeYtChannelId } from "@shared/types";
+import { CopyValue, Button } from "@shared/ui";
 import { useTypedParams } from "@shared/hooks";
+import { BackToChannel } from "./BackToChannel";
 
 interface VideoHeaderProps {
   channelTitle: string;
@@ -15,17 +15,11 @@ export function VideoHeader({
   videoId,
   onRefetch,
 }: VideoHeaderProps) {
-  const ytChannelId = useTypedParams("ytChannelId");
   const ytId = useTypedParams("ytVideoId");
 
   return (
     <div className="flex items-center gap-4 mb-4 min-w-0">
-      <CustomLink
-        to={`/channels/${makeYtChannelId(ytChannelId)}`}
-        className="text-base text-blue-600 hover:text-blue-800 font-medium flex-shrink-0"
-      >
-        ← Back to Channel
-      </CustomLink>
+      <BackToChannel />
       <div className="text-lg text-base-content font-semibold font-mono truncate min-w-0">
         {channelTitle}
       </div>

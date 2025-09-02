@@ -10,6 +10,7 @@ import {
 import { type UploadsListQuery } from "@shared/api";
 import { Card } from "@shared/ui";
 import { makeYtChannelId, makeYtVideoId } from "@shared/types";
+import { ViewVideoThumbnails } from "@features/Thumbnails";
 
 type Props = {
   upload: Pick<
@@ -17,7 +18,7 @@ type Props = {
     "id" | "ytId" | "title" | "publishedAt" | "duration" | "src"
   >;
   ytChannelId: string;
-  type: "default" | "saved";
+  type: "default" | "saved" | "thumbnails";
   handleSideEffect: () => void;
   channelTitleSlot?: ReactNode;
 };
@@ -56,6 +57,13 @@ export function UploadsListItem({
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
+            {type === "thumbnails" && (
+              <ViewVideoThumbnails
+                ytChannelId={ytChannelId}
+                ytVideoId={ytId}
+                channelTitle={title}
+              />
+            )}
             {type === "default" ? (
               <>
                 <SaveUpload
@@ -69,18 +77,20 @@ export function UploadsListItem({
                   handleSideEffect={handleSideEffect}
                 />
               </>
-            ) : (
+            ) : type !== "thumbnails" ? (
               <DownloadUpload
                 ytChannelId={ytChannelId}
                 handleSideEffect={handleSideEffect}
                 ytVideoId={ytId}
               />
+            ) : null}
+            {type !== "thumbnails" && (
+              <DeleteUpload
+                handleSideEffect={handleSideEffect}
+                ytChannelId={ytChannelId}
+                ytVideoIds={[ytId]}
+              />
             )}
-            <DeleteUpload
-              handleSideEffect={handleSideEffect}
-              ytChannelId={ytChannelId}
-              ytVideoIds={[ytId]}
-            />
           </div>
         </div>
       </Card.Content>

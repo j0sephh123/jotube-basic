@@ -5,6 +5,7 @@ import {
   IconNewGallery,
   IconUploads,
   IconSaved,
+  IconThumbnails,
 } from "@shared/ui";
 import { useChannelMetadataQuery } from "@entities/Channel";
 import { setGalleryModal } from "@features/Gallery/model/galleryModalStore";
@@ -18,6 +19,7 @@ export default function Tabs({ ytChannelId }: { ytChannelId: string }) {
     videoArtifactsCount,
     savedArtifactsCount,
     screenshotArtifactsCount,
+    thumbnailArtifactsCount,
   } = data;
 
   const uploads = (
@@ -27,6 +29,10 @@ export default function Tabs({ ytChannelId }: { ytChannelId: string }) {
   const saved = (
     <IconSaved ytChannelId={ytChannelId} count={savedArtifactsCount} />
   );
+
+  const thumbnails = (
+    <IconThumbnails ytChannelId={ytChannelId} count={thumbnailArtifactsCount} />
+  );  
 
   const gallery = <IconGallery ytChannelId={ytChannelId} />;
 
@@ -48,6 +54,7 @@ export default function Tabs({ ytChannelId }: { ytChannelId: string }) {
     <>
       {uploads}
       {saved}
+      {thumbnails}
       {gallery}
       {newGallery}
     </>
