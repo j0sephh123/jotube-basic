@@ -7,10 +7,20 @@ import { StatusCell } from "../StatusCell";
 import { ActionsCell } from "../ActionsCell";
 import { useProcessingPhases } from "@features/ProcessingPhase";
 import { TableRow } from "../TableRow";
-import { Button, StaticStates } from "@shared/ui";
+import { Button, CustomLink, StaticStates } from "@shared/ui";
+import clsx from "clsx";
+import { useParams } from "react-router-dom";
 
 export function ProcessingPhasePage() {
-  const { data: sorted, loading, error, refetch } = useProcessingPhases();
+  const params = useParams<{ variant: "latest" | "running" }>();
+  const variant = params.variant as "latest" | "running";
+
+  const {
+    data: sorted,
+    loading,
+    error,
+    refetch,
+  } = useProcessingPhases(variant);
 
   const handleSync = () => {
     refetch();
@@ -23,6 +33,22 @@ export function ProcessingPhasePage() {
       isEmpty={!sorted.length}
     >
       <Button onClick={handleSync}>Sync</Button>
+
+      <div role="tablist" className="tabs tabs-box tabs-xl">
+        <CustomLink
+          to={`/processing-phase/latest`}
+          className={clsx("tab flex-1", variant === "latest" && "tab-active")}
+        >
+          Latest
+        </CustomLink>
+        <CustomLink
+          to={`/processing-phase/running`}
+          className={clsx("tab flex-1", variant === "running" && "tab-active")}
+        >
+          Running
+        </CustomLink>
+      </div>
+
       <TableWrapper>
         <>
           {sorted.map((v) => {

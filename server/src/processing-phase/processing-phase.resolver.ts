@@ -1,4 +1,4 @@
-import { Resolver, Query } from '@nestjs/graphql';
+import { Resolver, Query, Args } from '@nestjs/graphql';
 import { ProcessingPhaseService } from './processing-phase.service';
 import { ProcessingPhaseResponse } from './dtos/processing-phase.response';
 
@@ -9,7 +9,10 @@ export class ProcessingPhaseResolver {
   ) {}
 
   @Query(() => [ProcessingPhaseResponse])
-  async processingPhases(): Promise<ProcessingPhaseResponse[]> {
-    return this.processingPhaseService.findAll();
+  async processingPhases(
+    @Args('variant', { type: () => String, defaultValue: 'latest' })
+    variant: 'latest' | 'running',
+  ): Promise<ProcessingPhaseResponse[]> {
+    return this.processingPhaseService.findAll(variant);
   }
 }

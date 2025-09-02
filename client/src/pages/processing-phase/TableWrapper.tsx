@@ -2,8 +2,8 @@ import type { ReactNode } from "react";
 
 export function TableWrapper({ children }: { children: ReactNode }) {
   return (
-    <div className="overflow-x-auto rounded-2xl shadow">
-      <table className="table table-zebra">
+    <div className="overflow-x-auto">
+      <table className="table table-pin-rows table-pin-cols">
         <thead>
           <tr>
             <th>Video</th>

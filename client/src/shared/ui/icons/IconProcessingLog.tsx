@@ -5,7 +5,7 @@ export function IconProcessingLog() {
   return (
     <IconButton
       icon={<DatabaseIcon />}
-      to={`/processing-phase`}
+      to={`/processing-phase/latest`}
       tooltip={{
         content: "processing log",
         position: "bottom",

@@ -6,8 +6,13 @@ import { ProcessingPhaseResponse } from './dtos/processing-phase.response';
 export class ProcessingPhaseService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async findAll(): Promise<ProcessingPhaseResponse[]> {
+  async findAll(
+    variant: 'latest' | 'running' = 'latest',
+  ): Promise<ProcessingPhaseResponse[]> {
+    const where = variant === 'running' ? { endedAt: null } : {};
+
     return this.prismaService.processingPhase.findMany({
+      where,
       orderBy: {
         createdAt: 'desc',
       },

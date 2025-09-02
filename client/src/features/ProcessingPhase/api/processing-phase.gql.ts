@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_PROCESSING_PHASES = gql`
-  query GetProcessingPhases {
-    processingPhases {
+  query GetProcessingPhases($variant: String) {
+    processingPhases(variant: $variant) {
       id
       uploadsVideoId
       phase

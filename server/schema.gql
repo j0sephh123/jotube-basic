@@ -270,7 +270,7 @@ type Query {
   playlistDetails(id: Int!): PlaylistDetailsResponse
   playlistUploadsList(playlistUploadsListInput: PlaylistUploadsListInput!): PlaylistUploadsListResponse!
   playlists: [PlaylistResponse!]!
-  processingPhases: [ProcessingPhaseResponse!]!
+  processingPhases(variant: String! = "latest"): [ProcessingPhaseResponse!]!
   searchChannels(searchInput: SearchInput!): [SearchChannelResult!]!
   searchVideos(searchInput: SearchInput!): [SearchVideoResult!]!
   statisticsCounts: StatisticsCountsResponse!

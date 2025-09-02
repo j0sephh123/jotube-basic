@@ -429,6 +429,11 @@ export type QueryPlaylistUploadsListArgs = {
 };
 
 
+export type QueryProcessingPhasesArgs = {
+  variant?: Scalars['String']['input'];
+};
+
+
 export type QuerySearchChannelsArgs = {
   searchInput: SearchInput;
 };
@@ -814,7 +819,9 @@ export type FetchVideosDashboardQueryVariables = Exact<{
 
 export type FetchVideosDashboardQuery = { __typename?: 'Query', fetchVideosDashboard: { __typename?: 'VideosDashboardResponse', total: number, videos: Array<{ __typename?: 'DashboardVideoResponse', id: number, ytId: string, title: string, src: string, channelId: number, channelTitle: string, channelYtId: string, screenshotCount: number, featuredScreenshots: Array<{ __typename?: 'FeaturedScreenshotResponse', src: string, id: number, second: number, ytVideoId: string }> }> } };
 
-export type GetProcessingPhasesQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetProcessingPhasesQueryVariables = Exact<{
+  variant?: InputMaybe<Scalars['String']['input']>;
+}>;
 
 
 export type GetProcessingPhasesQuery = { __typename?: 'Query', processingPhases: Array<{ __typename?: 'ProcessingPhaseResponse', id: number, uploadsVideoId: number, phase: Phase, createdAt: any, endedAt?: any | null, uploadsVideo: { __typename?: 'UploadsVideoInfo', id: number, ytId: string, title: string, channel: { __typename?: 'ChannelInfo', id: number, title: string, ytId: string } } }> };
@@ -1592,8 +1599,8 @@ export type FetchVideosDashboardLazyQueryHookResult = ReturnType<typeof useFetch
 export type FetchVideosDashboardSuspenseQueryHookResult = ReturnType<typeof useFetchVideosDashboardSuspenseQuery>;
 export type FetchVideosDashboardQueryResult = Apollo.QueryResult<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>;
 export const GetProcessingPhasesDocument = gql`
-    query GetProcessingPhases {
-  processingPhases {
+    query GetProcessingPhases($variant: String) {
+  processingPhases(variant: $variant) {
     id
     uploadsVideoId
     phase
@@ -1625,6 +1632,7 @@ export const GetProcessingPhasesDocument = gql`
  * @example
  * const { data, loading, error } = useGetProcessingPhasesQuery({
  *   variables: {
+ *      variant: // value for 'variant'
  *   },
  * });
  */

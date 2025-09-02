@@ -9,7 +9,10 @@ import { NotFound } from "@shared/ui";
 import { GalleryVideosList } from "@features/Gallery";
 import { UploadsDecorator } from "@features/Upload";
 import { PlaylistUploadsListPage } from "@pages/playlistUploadsList";
-import { ProcessingPhasePage } from "@pages/processing-phase";
+import {
+  ProcessingPhasePage,
+  ProcessingPhaseWrapper,
+} from "@pages/processing-phase";
 import { PageWrapper } from "@widgets/PageWrapper";
 
 export default function Router() {
@@ -41,8 +44,9 @@ export default function Router() {
             />
           </Route>
           <Route path="/image-navigator" element={<ImageNavigatorPage />} />
-          <Route path="/processing-phase" element={<PageWrapper />}>
-            <Route index element={<ProcessingPhasePage />} />
+          <Route path="/processing-phase" element={<ProcessingPhaseWrapper />}>
+            <Route path=":variant" element={<ProcessingPhasePage />} />
+            <Route path=":variant" element={<ProcessingPhasePage />} />
           </Route>
           <Route
             path="/thumbnails"
