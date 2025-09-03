@@ -3,18 +3,18 @@ import { Button } from "@shared/ui";
 import { useGetUploadsWithStoryboards } from "@features/Storyboard";
 
 type Props = {
-  ytChannelId: string;
+  channelId: number;
   storyboardArtifactsCount: number;
 };
 
 export default function ViewStoryboards({
-  ytChannelId,
+  channelId,
   storyboardArtifactsCount,
 }: Props) {
   const { mutateAsync: getStoryboards } = useGetUploadsWithStoryboards();
 
   const handleClick = () => {
-    getStoryboards(ytChannelId);
+    getStoryboards(channelId);
   };
 
   return (

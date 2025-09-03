@@ -15,7 +15,6 @@ import {
   useScreenshotsForCarousel,
 } from "@features/Screenshot";
 import { PlaylistControl } from "@features/Playlist";
-import { useRemoveFromPlaylist } from "@features/Playlist";
 import { useGetUploadsWithStoryboards } from "@features/Storyboard";
 import { useCustomNavigate } from "@shared/hooks";
 import { makeYtChannelId } from "@shared/types";
@@ -78,7 +77,7 @@ export default function ChannelDashboardCard({
       onNavigate={navigate}
       onViewScreenshots={() => handleViewScreenshots([ytId])}
       onViewThumbnails={viewThumbnails}
-      onViewStoryboards={() => viewStoryboards.mutateAsync(ytId)}
+      onViewStoryboards={() => viewStoryboards.mutateAsync(id)}
     />
   );
 
@@ -97,8 +96,6 @@ export default function ChannelDashboardCard({
   const fetchUploadsButton = (
     <FetchUploadsButton ytChannelId={ytId} videoCount={videoCount} />
   );
-
-  const removeFromPlaylist = useRemoveFromPlaylist();
 
   const getDeleteButtonSlot = () => {
     if (viewType === ViewType.NO_SCREENSHOTS) {

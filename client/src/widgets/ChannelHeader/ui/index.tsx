@@ -74,7 +74,7 @@ const ChannelHeader = () => {
           right={
             <div className="flex items-center gap-2">
               <ViewStoryboards
-                ytChannelId={ytChannelId}
+                channelId={id}
                 storyboardArtifactsCount={storyboardArtifactsCount}
               />
               <ViewThumbnails

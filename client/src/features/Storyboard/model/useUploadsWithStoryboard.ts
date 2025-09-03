@@ -1,6 +1,5 @@
 import { useUploadsWithStoryboardsLazyQuery } from "@shared/api";
 import { setProcessingData } from "@shared/store";
-import { useConvert } from "@shared/hooks";
 
 export function useGetUploadsWithStoryboards() {
   const [getUploadsWithStoryboards, { data, loading, error }] =
@@ -8,17 +7,10 @@ export function useGetUploadsWithStoryboards() {
       fetchPolicy: "no-cache",
     });
 
-  const convert = useConvert();
-
-  const mutateAsync = async (ytChannelId: string) => {
-    const { id } = await convert.mutateAsync({
-      type: "youtube",
-      value: ytChannelId,
-      resource: "channel",
-    });
+  const mutateAsync = async (channelId: number) => {
     const result = await getUploadsWithStoryboards({
       variables: {
-        input: { channelId: id },
+        input: { channelId },
       },
     });
     if (result.data?.uploadsWithStoryboards) {
