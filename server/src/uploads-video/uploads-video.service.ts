@@ -44,7 +44,6 @@ export class UploadsVideoService {
     take,
   }: UploadsListInput): Promise<UploadsListResponse> {
     const whereQuery = () => {
-      console.log({ type });
       if (type === 'default') {
         return {
           artifact: ArtifactType.VIDEO,

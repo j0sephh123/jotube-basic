@@ -4,6 +4,7 @@ import { nestFetcher } from "@shared/api";
 type VideoScreenshotCount = {
   ytVideoId: string;
   screenshotCount: number;
+  dateAdded: Date;
 };
 
 export function useVideoScreenshotCounts(ytChannelId: string) {

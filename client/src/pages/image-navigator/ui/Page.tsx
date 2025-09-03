@@ -254,15 +254,6 @@ function ImageNavigatorPageContent() {
     }
   };
 
-  console.log({
-    ytVideoId,
-    result,
-    currentChannelId,
-    currentVideoId,
-    currentVideoIndex,
-    currentSecondIndex,
-  });
-
   return (
     <Wrapper>
       {result &&

@@ -34,10 +34,6 @@ const ChannelHeader = () => {
     playlist,
   } = channelMetadata;
 
-  console.log({
-    playlist,
-  });
-
   return (
     <div className="bg-base-200 rounded-lg px-6 pt-16 shadow-md">
       <div className="flex flex-col">

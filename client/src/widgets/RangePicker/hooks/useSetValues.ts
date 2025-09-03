@@ -8,8 +8,6 @@ export function useSetValues({ minKey, maxKey }: RangePickerKeys) {
   const { isOpen } = useRangePickerState();
   const { min, max } = useParsedSearchParams({ minKey, maxKey });
 
-  console.log({ min, max });
-
   useEffect(() => {
     if (isOpen) {
       setDraftMin(min === null ? "" : String(min));

@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { ChannelHeader } from "@widgets/ChannelHeader";
 import { Grid } from "@widgets/Grid";
@@ -8,6 +8,8 @@ import { useTypedParams } from "@shared/hooks";
 
 export default function ChannelPageLayout() {
   const ytChannelId = useTypedParams("ytChannelId");
+  const pathname = useLocation().pathname;
+  const isGallery = pathname.includes("gallery");
   const { data: channelMetadata } = useChannelMetadataQuery(ytChannelId);
   const { add } = useRecentlyViewedChannels();
   const hasAddedRef = useRef(false);
@@ -26,9 +28,13 @@ export default function ChannelPageLayout() {
   return (
     <div className="container mx-auto px-4 py-2">
       <ChannelHeader />
-      <Grid cols={3}>
+      {isGallery ? (
         <Outlet />
-      </Grid>
+      ) : (
+        <Grid cols={3}>
+          <Outlet />
+        </Grid>
+      )}
     </div>
   );
 }

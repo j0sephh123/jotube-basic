@@ -106,11 +106,12 @@ export class ScreenshotsApiService {
 
   async getVideoScreenshotCounts(ytChannelId: string) {
     const results = await this.prismaService.$queryRaw<
-      { ytVideoId: string; screenshotCount: bigint }[]
+      { ytVideoId: string; screenshotCount: bigint; dateAdded: Date }[]
     >`
       SELECT 
         ytVideoId,
-        COUNT(*) as screenshotCount
+        COUNT(*) as screenshotCount,
+        MIN(createdAt) as dateAdded
       FROM Screenshot
       WHERE ytChannelId = ${ytChannelId}
       GROUP BY ytVideoId
@@ -120,6 +121,7 @@ export class ScreenshotsApiService {
     return results.map((result) => ({
       ytVideoId: result.ytVideoId,
       screenshotCount: Number(result.screenshotCount),
+      dateAdded: result.dateAdded,
     }));
   }
 }
