@@ -2,27 +2,9 @@ import { RefreshCw } from "lucide-react";
 import clsx from "clsx";
 import { useSyncUploads } from "@features/Upload";
 import { Button } from "@shared/ui";
+import { getLastSyncColor, formatLastSync } from "./utils";
 
-// Local utility functions to avoid shared dependency
-const getLastSyncColor = (lastSync: string | null) => {
-  if (!lastSync) return "text-gray-400";
-  const hoursSinceSync =
-    (Date.now() - new Date(lastSync).getTime()) / (1000 * 60 * 60);
-  if (hoursSinceSync < 1) return "text-green-400";
-  if (hoursSinceSync < 24) return "text-yellow-400";
-  return "text-red-400";
-};
-
-const formatLastSync = (lastSync: string | null) => {
-  if (!lastSync) return "Never";
-  const hoursSinceSync =
-    (Date.now() - new Date(lastSync).getTime()) / (1000 * 60 * 60);
-  if (hoursSinceSync < 1) return "Now";
-  if (hoursSinceSync < 24) return `${Math.floor(hoursSinceSync)}h`;
-  return `${Math.floor(hoursSinceSync / 24)}d`;
-};
-
-type SyncUploadsButtonProps = {
+type Props = {
   lastSyncedAt?: string | null;
   ytChannelId: string;
   id: number;
@@ -36,7 +18,7 @@ export default function SyncUploadsButton({
   id,
   onSuccess,
   isDisabled,
-}: SyncUploadsButtonProps) {
+}: Props) {
   const syncUploads = useSyncUploads(ytChannelId);
   const lastSync = lastSyncedAt || null;
 
@@ -45,7 +27,6 @@ export default function SyncUploadsButton({
 
     try {
       await syncUploads.mutateAsync({
-        ytChannelId,
         channelId: id,
       });
       onSuccess?.();

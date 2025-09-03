@@ -394,7 +394,6 @@ input StoryboardQueryInput {
 
 input SyncUploadsInput {
   channelId: Int!
-  ytChannelId: String!
 }
 
 type SyncUploadsResponse {

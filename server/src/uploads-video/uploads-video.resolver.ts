@@ -74,9 +74,7 @@ export class UploadsVideoResolver {
     @Args('syncUploadsInput') syncUploadsInput: SyncUploadsInput,
   ): Promise<SyncUploadsResponse> {
     try {
-      const result =
-        await this.uploadsVideoService.syncUploads(syncUploadsInput);
-      return result;
+      return this.uploadsVideoService.syncUploads(syncUploadsInput);
     } catch {
       return { count: 0 };
     }

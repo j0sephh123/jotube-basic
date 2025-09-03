@@ -5,7 +5,6 @@ import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMet
 import { useRefetchChannelsDashboardQuery } from "@features/Dashboard";
 
 export type SyncUploadsRequest = {
-  ytChannelId: string;
   channelId: number;
 };
 

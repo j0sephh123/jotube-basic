@@ -11,8 +11,15 @@ import {
 import { setGalleryModal } from "@features/Gallery/model/galleryModalStore";
 // eslint-disable-next-line import/no-internal-modules
 import { useChannelMetadataQuery } from "@entities/Channel/model/useChannelMetadata";
+import { YtIdToId } from "@shared/hoc";
 
-export default function Tabs({ ytChannelId, channelId }: { ytChannelId: string, channelId: number }) {
+function TabsInner({
+  ytChannelId,
+  channelId,
+}: {
+  ytChannelId: string;
+  channelId: number;
+}) {
   const { data } = useChannelMetadataQuery(channelId);
 
   if (!data) return [];
@@ -34,10 +41,13 @@ export default function Tabs({ ytChannelId, channelId }: { ytChannelId: string, 
 
   const thumbnails = (
     <IconThumbnails ytChannelId={ytChannelId} count={thumbnailArtifactsCount} />
-  );  
+  );
 
   const screenshots = (
-    <IconScreenshots ytChannelId={ytChannelId} count={screenshotArtifactsCount} />
+    <IconScreenshots
+      ytChannelId={ytChannelId}
+      count={screenshotArtifactsCount}
+    />
   );
 
   const gallery = <IconGallery ytChannelId={ytChannelId} />;
@@ -67,3 +77,6 @@ export default function Tabs({ ytChannelId, channelId }: { ytChannelId: string, 
     </>
   );
 }
+
+const Tabs = YtIdToId(TabsInner);
+export default Tabs;

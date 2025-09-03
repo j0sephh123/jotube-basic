@@ -339,10 +339,10 @@ export class UploadsVideoService {
     return result;
   }
 
-  async syncUploads({ channelId, ytChannelId }: syncUploadsDto) {
+  async syncUploads({ channelId }: syncUploadsDto) {
     const channel = await this.prismaService.channel.findUnique({
-      where: { ytId: ytChannelId },
-      select: { id: true, title: true },
+      where: { id: channelId },
+      select: { id: true, title: true, ytId: true },
     });
 
     if (!channel) throw new Error('Channel not found');
@@ -365,7 +365,7 @@ export class UploadsVideoService {
 
     const getLatestFetched = async () => {
       const channel = await this.prismaService.channel.findUnique({
-        where: { ytId: ytChannelId },
+        where: { id: channelId },
       });
 
       if (!channel) throw new Error('Channel not found');
@@ -405,14 +405,14 @@ export class UploadsVideoService {
     }
 
     const syncedUploads = await this.youtubeService.syncUploads(
-      ytChannelId,
+      channel.ytId,
       latestUpload.ytId,
       channelId,
     );
 
     if (syncedUploads[0]) {
       await this.prismaService.channel.update({
-        where: { ytId: ytChannelId },
+        where: { id: channelId },
         data: { fetchStartVideoId: syncedUploads[0].ytId },
       });
     }
@@ -435,7 +435,7 @@ export class UploadsVideoService {
     }
 
     await this.prismaService.channel.update({
-      where: { ytId: ytChannelId },
+      where: { id: channelId },
       data: { lastSyncedAt: new Date() },
     });
 

@@ -601,7 +601,6 @@ export type StoryboardQueryInput = {
 
 export type SyncUploadsInput = {
   channelId: Scalars['Int']['input'];
-  ytChannelId: Scalars['String']['input'];
 };
 
 export type SyncUploadsResponse = {

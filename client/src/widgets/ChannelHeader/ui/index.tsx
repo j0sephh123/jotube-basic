@@ -61,7 +61,7 @@ const ChannelHeaderInner = ({
           }
           center={
             <>
-              <Tabs ytChannelId={ytChannelId} channelId={channelId} />
+              <Tabs />
               <ChannelControls
                 leftSlot={
                   <>
