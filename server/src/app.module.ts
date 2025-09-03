@@ -37,6 +37,7 @@ import { StatisticsModule } from './statistics/statistics.module';
 import { AppGraphQLModule } from './graphql/graphql.module';
 import { ImageNavigatorModule } from './image-navigator/image-navigator.module';
 import { ProcessingPhaseModule } from './processing-phase/processing-phase.module';
+import { ConverterModule } from './converter/converter.module';
 
 @Module({
   imports: [
@@ -93,6 +94,7 @@ import { ProcessingPhaseModule } from './processing-phase/processing-phase.modul
     AppGraphQLModule,
     ImageNavigatorModule,
     ProcessingPhaseModule,
+    ConverterModule,
   ],
   controllers: [QueueController, SearchController, StatisticsController],
   providers: [

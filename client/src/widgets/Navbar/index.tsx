@@ -4,6 +4,7 @@ import {
   VideoProcessingInfo,
   ThemeSwitcher,
 } from "@widgets/Navbar";
+import Converter from "@widgets/Converter";
 import { useTotalCounts, useFreeSpace } from "@features/Statistics";
 import {
   IconHome,
@@ -41,6 +42,7 @@ export default function Navbar() {
           <QuickSearch />
           <Text text={`Free: ${freeSpace?.freeSpace ?? "..."}`} />
           <ThemeSwitcher />
+          <Converter />
           <VideoProcessingInfo />
         </div>
       </div>
