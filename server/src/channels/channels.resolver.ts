@@ -5,6 +5,7 @@ import { CreateChannelInput } from './dtos/create-channel.input';
 import { DeleteChannelResponse } from './dtos/delete-channel.response';
 import { ChannelForPlaylistResponse } from './dtos/channel-by-yt-id.response';
 import { ChannelMetadataResponse } from './dtos/channel-metadata.response';
+import { ChannelMetadataInput } from './dtos/channel-metadata.input';
 
 @Resolver()
 export class ChannelsResolver {
@@ -31,8 +32,8 @@ export class ChannelsResolver {
 
   @Query(() => ChannelMetadataResponse)
   async channelMetadata(
-    @Args('ytChannelId') ytChannelId: string,
+    @Args('channelMetadataInput') channelMetadataInput: ChannelMetadataInput,
   ): Promise<ChannelMetadataResponse> {
-    return this.channelService.metadata(ytChannelId);
+    return this.channelService.metadata(channelMetadataInput);
   }
 }

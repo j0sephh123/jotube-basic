@@ -12,14 +12,18 @@ import ViewThumbnails from "./ViewThumbnails";
 import { ViewScreenshots } from "@features/Thumbnails";
 import { ViewStoryboards } from "@widgets/Storyboard";
 import { makeYtChannelId } from "@shared/types";
-import { useTypedParams } from "@shared/hooks";
 import { PlaylistControl } from "@features/Playlist";
+import { YtIdToId } from "@shared/hoc";
 
-const ChannelHeader = () => {
-  const ytChannelId = useTypedParams("ytChannelId");
-
+const ChannelHeaderInner = ({
+  channelId,
+  ytChannelId,
+}: {
+  channelId: number;
+  ytChannelId: string;
+}) => {
   const { data: channelMetadata, refetch: refetchMetadata } =
-    useChannelMetadataQuery(ytChannelId);
+    useChannelMetadataQuery(channelId);
 
   if (!channelMetadata) return null;
 
@@ -56,7 +60,7 @@ const ChannelHeader = () => {
           }
           center={
             <>
-              <Tabs ytChannelId={ytChannelId} />
+              <Tabs ytChannelId={ytChannelId} channelId={channelId} />
               <ChannelControls
                 leftSlot={
                   <>
@@ -74,7 +78,7 @@ const ChannelHeader = () => {
           right={
             <div className="flex items-center gap-2">
               <ViewStoryboards
-                channelId={id}
+                channelId={channelId}
                 storyboardArtifactsCount={storyboardArtifactsCount}
               />
               <ViewThumbnails
@@ -100,4 +104,5 @@ const ChannelHeader = () => {
   );
 };
 
+const ChannelHeader = YtIdToId(ChannelHeaderInner);
 export default ChannelHeader;

@@ -11,8 +11,8 @@ import {
 import { useChannelMetadataQuery } from "@entities/Channel";
 import { setGalleryModal } from "@features/Gallery/model/galleryModalStore";
 
-export default function Tabs({ ytChannelId }: { ytChannelId: string }) {
-  const { data } = useChannelMetadataQuery(ytChannelId);
+export default function Tabs({ ytChannelId, channelId }: { ytChannelId: string, channelId: number }) {
+  const { data } = useChannelMetadataQuery(channelId);
 
   if (!data) return [];
 

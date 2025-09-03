@@ -4,13 +4,18 @@ import { ChannelHeader } from "@widgets/ChannelHeader";
 import { Grid } from "@widgets/Grid";
 import { useRecentlyViewedChannels } from "@features/Channel";
 import { useChannelMetadataQuery } from "@entities/Channel";
-import { useTypedParams } from "@shared/hooks";
+import { YtIdToId } from "@shared/hoc";
 
-export default function ChannelPageLayout() {
-  const ytChannelId = useTypedParams("ytChannelId");
+export const ChannelPageLayoutInner = ({
+  channelId,
+  ytChannelId,
+}: {
+  channelId: number;
+  ytChannelId: string;
+}) => {
   const pathname = useLocation().pathname;
   const isGallery = pathname.includes("gallery");
-  const { data: channelMetadata } = useChannelMetadataQuery(ytChannelId);
+  const { data: channelMetadata } = useChannelMetadataQuery(channelId);
   const { add } = useRecentlyViewedChannels();
   const hasAddedRef = useRef(false);
 
@@ -37,4 +42,6 @@ export default function ChannelPageLayout() {
       )}
     </div>
   );
-}
+};
+
+export const ChannelPageLayout = YtIdToId(ChannelPageLayoutInner);

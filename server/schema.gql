@@ -21,6 +21,10 @@ enum ChannelMessage {
   INVALID_VIDEO_ID
 }
 
+input ChannelMetadataInput {
+  channelId: Float!
+}
+
 type ChannelMetadataResponse {
   fetchedUntilEnd: Boolean!
   id: Int!
@@ -297,7 +301,7 @@ type ProcessingPhaseResponse {
 
 type Query {
   channelForPlaylist(ytChannelId: String!): ChannelForPlaylistResponse!
-  channelMetadata(ytChannelId: String!): ChannelMetadataResponse!
+  channelMetadata(channelMetadataInput: ChannelMetadataInput!): ChannelMetadataResponse!
   channelScreenshots(input: GetScreenshotsInput!): [GetScreenshotsResponse!]!
   fetchDashboard(fetchDashboardInput: FetchDashboardInput!): ChannelsDashboardResponse!
   fetchVideosDashboard(page: Float, screenshotMax: Float, screenshotMin: Float, sortOrder: String): VideosDashboardResponse!

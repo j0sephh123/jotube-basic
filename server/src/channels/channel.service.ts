@@ -6,6 +6,7 @@ import { ArtifactType } from '@prisma/client';
 import { ViewType, DashboardChannel } from 'src/dashboard/types';
 import { ArtifactsAggregatorService } from 'src/artifacts-aggregator/artifacts-aggregator.service';
 import { ChannelMessage } from './dtos/create-channel.response';
+import { ChannelMetadataInput } from './dtos/channel-metadata.input';
 
 @Injectable()
 export class ChannelService {
@@ -73,9 +74,9 @@ export class ChannelService {
     }
   }
 
-  async metadata(ytChannelId: string) {
+  async metadata({ channelId }: ChannelMetadataInput) {
     const channel = await this.prismaService.channel.findUnique({
-      where: { ytId: ytChannelId },
+      where: { id: channelId },
       select: {
         id: true,
         title: true,

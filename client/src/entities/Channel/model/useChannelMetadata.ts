@@ -1,10 +1,10 @@
 import { useApolloClient } from "@apollo/client";
 import { useGetChannelMetadataQuery } from "@shared/api";
 
-export function useChannelMetadataQuery(ytChannelId: string | undefined) {
+export function useChannelMetadataQuery(channelId: number) {
   const { data, loading, error, refetch } = useGetChannelMetadataQuery({
-    variables: { ytChannelId: ytChannelId || "" },
-    skip: !ytChannelId,
+    variables: { channelMetadataInput: { channelId } },
+    skip: !channelId,
   });
 
   return {

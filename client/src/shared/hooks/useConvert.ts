@@ -1,5 +1,5 @@
 /* eslint-disable boundaries/element-types */
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { nestFetcher } from "@shared/api";
 
 type ConverterRequest = {
@@ -29,5 +29,21 @@ export function useConvert() {
     onError: (error) => {
       console.error("Converter error:", error);
     },
+  });
+}
+
+export function useConvertQuery(
+  request: ConverterRequest,
+  enabled: boolean = true
+) {
+  return useQuery<ConverterResponse, Error>({
+    queryKey: ["convert", request],
+    queryFn: async () =>
+      nestFetcher<ConverterResponse>({
+        method: "POST",
+        url: "/converter",
+        body: request,
+      }),
+    enabled,
   });
 }

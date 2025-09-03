@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@shared/ui";
 import { useGetUploadsWithStoryboards } from "@features/Storyboard";
 

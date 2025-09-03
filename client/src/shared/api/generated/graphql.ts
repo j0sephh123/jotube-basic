@@ -40,6 +40,10 @@ export enum ChannelMessage {
   InvalidVideoId = 'INVALID_VIDEO_ID'
 }
 
+export type ChannelMetadataInput = {
+  channelId: Scalars['Float']['input'];
+};
+
 export type ChannelMetadataResponse = {
   __typename?: 'ChannelMetadataResponse';
   fetchedUntilEnd: Scalars['Boolean']['output'];
@@ -436,7 +440,7 @@ export type QueryChannelForPlaylistArgs = {
 
 
 export type QueryChannelMetadataArgs = {
-  ytChannelId: Scalars['String']['input'];
+  channelMetadataInput: ChannelMetadataInput;
 };
 
 
@@ -798,7 +802,7 @@ export type GetChannelForPlaylistQueryVariables = Exact<{
 export type GetChannelForPlaylistQuery = { __typename?: 'Query', channelForPlaylist: { __typename?: 'ChannelForPlaylistResponse', id: number, title: string } };
 
 export type GetChannelMetadataQueryVariables = Exact<{
-  ytChannelId: Scalars['String']['input'];
+  channelMetadataInput: ChannelMetadataInput;
 }>;
 
 
@@ -1121,8 +1125,8 @@ export type GetChannelForPlaylistLazyQueryHookResult = ReturnType<typeof useGetC
 export type GetChannelForPlaylistSuspenseQueryHookResult = ReturnType<typeof useGetChannelForPlaylistSuspenseQuery>;
 export type GetChannelForPlaylistQueryResult = Apollo.QueryResult<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>;
 export const GetChannelMetadataDocument = gql`
-    query GetChannelMetadata($ytChannelId: String!) {
-  channelMetadata(ytChannelId: $ytChannelId) {
+    query GetChannelMetadata($channelMetadataInput: ChannelMetadataInput!) {
+  channelMetadata(channelMetadataInput: $channelMetadataInput) {
     id
     title
     fetchedUntilEnd
@@ -1153,7 +1157,7 @@ export const GetChannelMetadataDocument = gql`
  * @example
  * const { data, loading, error } = useGetChannelMetadataQuery({
  *   variables: {
- *      ytChannelId: // value for 'ytChannelId'
+ *      channelMetadataInput: // value for 'channelMetadataInput'
  *   },
  * });
  */

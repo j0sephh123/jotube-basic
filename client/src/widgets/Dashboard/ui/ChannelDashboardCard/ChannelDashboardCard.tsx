@@ -1,4 +1,3 @@
-/* eslint-disable boundaries/element-types */
 import { ViewType } from "@features/Dashboard";
 import { SyncUploadsButton, FetchUploadsButton } from "@features/Upload";
 import { Button, Card } from "@shared/ui";

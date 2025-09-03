@@ -6,4 +6,4 @@ export { useRefetchQueue, type QueueItem } from "./useQueue";
 export { useCustomNavigate } from "./useCustomNavigate";
 export { useTypedParams } from "./useTypedParams";
 export { useDeleteFileOrDirectory } from "./useDeleteFileOrDirectory";
-export { useConvert } from "./useConvert";
+export { useConvert, useConvertQuery } from "./useConvert";

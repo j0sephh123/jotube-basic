@@ -1,1 +1,1 @@
-export { default as ChannelPageLayout } from "./ui/ChannelPageLayout";
+export { ChannelPageLayout } from "./ui/ChannelPageLayout";
