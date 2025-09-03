@@ -15,6 +15,7 @@ import {
   Text,
   IconProcessingLog,
   IconStoryboard,
+  IconRecentlyViewed,
 } from "@shared/ui";
 
 export default function Navbar() {
@@ -31,6 +32,7 @@ export default function Navbar() {
           <IconSaved count={totalCounts?.totalSaved ?? 0} />
           <IconThumbnails count={totalCounts?.totalThumbnails ?? 0} />
           <IconImageNavigator />
+          <IconRecentlyViewed />
           <ViewGlobalScreenshots />
           <IconProcessingLog />
           <IconStoryboard />

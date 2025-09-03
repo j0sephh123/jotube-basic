@@ -45,3 +45,4 @@ export { IconStoryboard } from "./icons/IconStoryboard";
 export { DateDisplay } from "./DateDisplay";
 export { DeleteFileButton } from "./DeleteFileButton";
 export { IconScreenshots } from "./icons/IconScreenshots";
+export { IconRecentlyViewed } from "./icons/IconRecentlyViewed";

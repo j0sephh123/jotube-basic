@@ -12,9 +12,11 @@ import CreateChannel from "@widgets/CreateChannel";
 import { Navbar } from "@widgets/Navbar";
 import PlaylistModal from "@widgets/PlaylistModal";
 import { usePlaylistModalState } from "@features/Playlist";
+import { useRecentlyViewedChannels } from "@features/Channel";
 
 export default function Layout(): JSX.Element {
   const { type } = usePlaylistModalState();
+  useRecentlyViewedChannels();
 
   return (
     <>
