@@ -35,6 +35,7 @@ export default function Router() {
             <Route index element={<UploadsDecorator type="default" />} />
             <Route path="saved" element={<UploadsDecorator type="saved" />} />
             <Route path="thumbnails" element={<UploadsDecorator type="thumbnails" />} />
+            <Route path="screenshots" element={<UploadsDecorator type="screenshots" />} />
             <Route path="gallery" element={<GalleryVideosList />} />
           </Route>
           <Route

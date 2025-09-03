@@ -8,17 +8,17 @@ import {
   VideoPlayer,
 } from "@features/Upload";
 import { type UploadsListQuery } from "@shared/api";
-import { Card } from "@shared/ui";
+import { Button, Card } from "@shared/ui";
 import { makeYtChannelId, makeYtVideoId } from "@shared/types";
 import { ViewVideoThumbnails } from "@features/Thumbnails";
+import { type UploadsType } from "../types";
+import { setGalleryModal } from "@features/Gallery";
+import { useScreenshotsForCarousel } from "@features/Screenshot";
 
 type Props = {
-  upload: Pick<
-    UploadsListQuery["uploadsList"]["uploads"][0],
-    "id" | "ytId" | "title" | "publishedAt" | "duration" | "src"
-  >;
+  upload: UploadsListQuery["uploadsList"]["uploads"][0];
   ytChannelId: string;
-  type: "default" | "saved" | "thumbnails";
+  type: UploadsType;
   handleSideEffect: () => void;
   channelTitleSlot?: ReactNode;
 };
@@ -30,6 +30,15 @@ export function UploadsListItem({
   handleSideEffect,
   channelTitleSlot,
 }: Props) {
+  const handleGalleryClick = () => {
+    setGalleryModal({
+      ytVideoId: ytId,
+      ytChannelIds: [ytChannelId],
+    });
+  };
+
+  const handleViewScreenshots = useScreenshotsForCarousel(ytId);
+
   return (
     <Card.Container>
       <div className="relative group">
@@ -57,14 +66,7 @@ export function UploadsListItem({
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            {type === "thumbnails" && (
-              <ViewVideoThumbnails
-                ytChannelId={ytChannelId}
-                ytVideoId={ytId}
-                channelTitle={title}
-              />
-            )}
-            {type === "default" ? (
+            {type === "default" && (
               <>
                 <SaveUpload
                   ytVideoId={ytId}
@@ -76,20 +78,41 @@ export function UploadsListItem({
                   ytChannelId={ytChannelId}
                   handleSideEffect={handleSideEffect}
                 />
+                <DeleteUpload
+                  handleSideEffect={handleSideEffect}
+                  ytChannelId={ytChannelId}
+                  ytVideoIds={[ytId]}
+                />
               </>
-            ) : type !== "thumbnails" ? (
-              <DownloadUpload
+            )}
+            {type === "saved" && (
+              <>
+                <DownloadUpload
+                  ytChannelId={ytChannelId}
+                  handleSideEffect={handleSideEffect}
+                  ytVideoId={ytId}
+                />
+                <DeleteUpload
+                  handleSideEffect={handleSideEffect}
+                  ytChannelId={ytChannelId}
+                  ytVideoIds={[ytId]}
+                />
+              </>
+            )}
+            {type === "thumbnails" && (
+              <ViewVideoThumbnails
                 ytChannelId={ytChannelId}
-                handleSideEffect={handleSideEffect}
                 ytVideoId={ytId}
+                channelTitle={title}
               />
-            ) : null}
-            {type !== "thumbnails" && (
-              <DeleteUpload
-                handleSideEffect={handleSideEffect}
-                ytChannelId={ytChannelId}
-                ytVideoIds={[ytId]}
-              />
+            )}
+            {type === "screenshots" && (
+              <>
+                <Button onClick={handleGalleryClick}>Gallery</Button>
+                <Button onClick={() => handleViewScreenshots([ytChannelId])}>
+                  Screenshots
+                </Button>
+              </>
             )}
           </div>
         </div>

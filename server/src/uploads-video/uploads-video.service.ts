@@ -65,6 +65,12 @@ export class UploadsVideoService {
         };
       }
 
+      if (type === 'screenshots') {
+        return {
+          artifact: ArtifactType.SCREENSHOT,
+        };
+      }
+
       throw new Error('Invalid type');
     };
 

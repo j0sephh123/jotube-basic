@@ -1,1 +1,1 @@
-export type UploadsType = "default" | "saved" | "thumbnails";
+export type UploadsType = "default" | "saved" | "thumbnails" | "screenshots";

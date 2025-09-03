@@ -44,3 +44,4 @@ export { IconProcessingLog } from "./icons/IconProcessingLog";
 export { IconStoryboard } from "./icons/IconStoryboard";
 export { DateDisplay } from "./DateDisplay";
 export { DeleteFileButton } from "./DeleteFileButton";
+export { IconScreenshots } from "./icons/IconScreenshots";

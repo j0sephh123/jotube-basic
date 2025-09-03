@@ -27,6 +27,7 @@ type ProcessingPhaseLatest = `/processing-phase/latest`;
 type ProcessingPhaseRunning = `/processing-phase/running`;
 type VideoDetails = `/channels/${YtChannelId}/videos/${YtVideoId}`;
 type SingleChannelThumbnails = `/channels/${YtChannelId}/thumbnails`;
+type SingleChannelScreenshots = `/channels/${YtChannelId}/screenshots`;
 
 export type To =
   | Playlists
@@ -49,7 +50,8 @@ export type To =
   | ProcessingPhaseLatest
   | ProcessingPhaseRunning
   | VideoDetails
-  | SingleChannelThumbnails;
+  | SingleChannelThumbnails
+  | SingleChannelScreenshots;
 
 export function makeYtChannelId(s: string): YtChannelId {
   // TODO: 
