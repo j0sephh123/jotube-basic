@@ -13,6 +13,7 @@ import { ViewScreenshots } from "@features/Thumbnails";
 import { ViewStoryboards } from "@widgets/Storyboard";
 import { makeYtChannelId } from "@shared/types";
 import { useTypedParams } from "@shared/hooks";
+import { PlaylistControl } from "@features/Playlist";
 
 const ChannelHeader = () => {
   const ytChannelId = useTypedParams("ytChannelId");
@@ -49,6 +50,12 @@ const ChannelHeader = () => {
                 <h2 className="text-xl font-bold pr-4">{title}</h2>
               </CustomLink>
               <CardMenu id={id} ytId={ytChannelId} />
+              <PlaylistControl
+                isPlaylistPage={false}
+                id={id}
+                playlistId={playlist?.id ?? 0}
+                playlistName={playlist?.name ?? "No playlist"}
+              />
             </>
           }
           center={

@@ -7,14 +7,14 @@ import type {
   DashboardChannelResponse,
   FeaturedScreenshotResponse,
 } from "@shared/api";
-import { ListMusic, Images } from "lucide-react";
+import { Images } from "lucide-react";
 import { useViewThumbnails } from "@features/Thumbnails";
 import { setGalleryModal } from "@features/Gallery";
 import {
   useFeaturedScreenshots,
   useScreenshotsForCarousel,
 } from "@features/Screenshot";
-import { setPlaylistModal } from "@features/Playlist";
+import { PlaylistControl } from "@features/Playlist";
 import { useRemoveFromPlaylist } from "@features/Playlist";
 import { useGetUploadsWithStoryboards } from "@features/Storyboard";
 import { useCustomNavigate } from "@shared/hooks";
@@ -100,33 +100,6 @@ export default function ChannelDashboardCard({
 
   const removeFromPlaylist = useRemoveFromPlaylist();
 
-  const playlistInfo = isPlaylistPage ? (
-    <Button
-      onClick={() => removeFromPlaylist.handleRemoveFromPlaylist(id)}
-      size="sm"
-    >
-      Remove
-    </Button>
-  ) : (
-    <div
-      className="flex items-center gap-2 text-sm cursor-pointer"
-      onClick={() =>
-        setPlaylistModal({
-          type: "modifyPlaylistForChannel",
-          channelId: id,
-          playlistId: playlist?.id ?? 0,
-        })
-      }
-    >
-      <ListMusic className="w-4 h-4" />
-      {playlist ? (
-        <span className="truncate">{playlist.name}</span>
-      ) : (
-        <span className="truncate">No playlist</span>
-      )}
-    </div>
-  );
-
   const getDeleteButtonSlot = () => {
     if (viewType === ViewType.NO_SCREENSHOTS) {
       return null;
@@ -179,7 +152,16 @@ export default function ChannelDashboardCard({
           <Images />
         </Button>
       }
-      playlistButtonSlot={playlistInfo}
+      playlistButtonSlot={
+        playlist ? (
+          <PlaylistControl
+            isPlaylistPage={!!isPlaylistPage}
+            id={id}
+            playlistId={playlist.id}
+            playlistName={playlist.name}
+          />
+        ) : null
+      }
     />
   );
 }

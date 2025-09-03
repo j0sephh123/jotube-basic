@@ -8,3 +8,4 @@ export { useRefetchPlaylist } from "@features/Playlist/hooks/useGetPlaylist";
 export { useRefetchPlaylists } from "@features/Playlist/hooks/useGetPlaylists";
 export { useGetPlaylistUploads } from "@features/Playlist/hooks/useGetPlaylistUploads";
 export { useRefetchPlaylistUploads } from "@features/Playlist/hooks/useGetPlaylistUploads";
+export { useRemoveFromPlaylist } from "@features/Playlist/hooks/useRemoveFromPlaylist";
