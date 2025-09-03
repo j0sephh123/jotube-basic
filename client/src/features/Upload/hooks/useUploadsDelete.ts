@@ -1,4 +1,4 @@
-import { useDeleteUploadsMutation } from "@shared/api";
+import { type DeleteUploadsInput, useDeleteUploadsMutation } from "@shared/api";
 import { useChannelsDashboardQuery } from "@features/Dashboard";
 
 export function useDeleteUploads(onSuccess: () => void) {
@@ -10,13 +10,10 @@ export function useDeleteUploads(onSuccess: () => void) {
     },
   });
 
-  return (variables: { ytChannelId: string; ytVideoIds: string[] }) =>
+  return (deleteUploadsInput: DeleteUploadsInput) =>
     deleteUploadsMutation({
       variables: {
-        deleteUploadsInput: {
-          ytChannelId: variables.ytChannelId,
-          ytVideoIds: variables.ytVideoIds,
-        },
+        deleteUploadsInput,
       },
     });
 }

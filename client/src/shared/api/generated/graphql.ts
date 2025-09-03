@@ -172,7 +172,7 @@ export enum DeleteType {
 }
 
 export type DeleteUploadsInput = {
-  ytChannelId: Scalars['String']['input'];
+  channelId: Scalars['Float']['input'];
   ytVideoIds: Array<Scalars['String']['input']>;
 };
 

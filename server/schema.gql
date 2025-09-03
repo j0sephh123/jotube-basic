@@ -146,7 +146,7 @@ enum DeleteType {
 }
 
 input DeleteUploadsInput {
-  ytChannelId: String!
+  channelId: Float!
   ytVideoIds: [String!]!
 }
 

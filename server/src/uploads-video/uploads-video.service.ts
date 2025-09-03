@@ -7,7 +7,6 @@ const execAsync = promisify(exec);
 
 import { FinishProcessUploadDto } from 'src/uploads-video/dtos/finish-process-upload.dto';
 import { saveUploadDto } from 'src/uploads-video/dtos/save-upload.dto';
-import { deleteUploadsDto } from 'src/uploads-video/dtos/delete-uploads.dto';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
 import { ThumbnailsManagerService } from 'src/thumbnails/manager/thumbnails-manager.service';
 import { ScreenshotsManagerService } from 'src/screenshots/manager/screenshots-manager.service';
@@ -25,6 +24,7 @@ import { UploadsListResponse } from './dtos/uploads-list.response';
 import { UploadsListInput } from './dtos/uploads-list.input';
 import { VideoByYtIdResponse } from './dtos/get-video-by-ytid.response';
 import { GetVideoByYtIdInput } from './dtos/get-video-by-ytid.input';
+import { DeleteUploadsInput } from './dtos/delete-uploads.input';
 
 @Injectable()
 export class UploadsVideoService {
@@ -247,32 +247,35 @@ export class UploadsVideoService {
     return result;
   }
 
-  async deleteUploads({ ytChannelId, ytVideoIds }: deleteUploadsDto) {
-    if (ytVideoIds.length === 0) {
-      const channel = await this.prismaService.channel.findUnique({
-        where: { ytId: ytChannelId },
-        select: {
-          id: true,
-          uploads: {
-            where: {
-              artifact: { in: [ArtifactType.SAVED, ArtifactType.DOWNLOADED] },
-            },
-            select: {
-              ytId: true,
-              id: true,
-            },
+  async deleteUploads({ channelId, ytVideoIds }: DeleteUploadsInput) {
+    const channel = await this.prismaService.channel.findUnique({
+      where: { id: channelId },
+      select: {
+        id: true,
+        ytId: true,
+        uploads: {
+          where: {
+            artifact: { in: [ArtifactType.SAVED, ArtifactType.DOWNLOADED] },
+          },
+          select: {
+            ytId: true,
+            id: true,
           },
         },
-      });
+      },
+    });
 
-      if (channel) {
-        await this.prismaService.uploadsVideo.deleteMany({
-          where: {
-            channelId: channel.id,
-            ytId: { in: channel.uploads.map((upload) => upload.ytId) },
-          },
-        });
-      }
+    if (!channel) {
+      throw new Error('Channel not found');
+    }
+
+    if (ytVideoIds.length === 0) {
+      await this.prismaService.uploadsVideo.deleteMany({
+        where: {
+          channelId: channel.id,
+          ytId: { in: channel.uploads.map((upload) => upload.ytId) },
+        },
+      });
 
       return { success: true };
     }
@@ -285,7 +288,7 @@ export class UploadsVideoService {
       });
 
       this.directoryService.deleteDirSync({
-        ytChannelId,
+        ytChannelId: channel.ytId,
         ytVideoId,
       });
     }

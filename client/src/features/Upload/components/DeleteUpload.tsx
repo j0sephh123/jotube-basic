@@ -3,19 +3,19 @@ import { useDeleteUploads } from "@features/Upload";
 
 type Props = {
   handleSideEffect: () => void;
-  ytChannelId: string;
+  channelId: number;
   ytVideoIds: string[];
 };
 
 export function DeleteUpload({
   handleSideEffect,
-  ytChannelId,
+  channelId,
   ytVideoIds,
 }: Props) {
   const deleteUploadFromDbMutation = useDeleteUploads(handleSideEffect);
   const handleDelete = (ytVideoIds: string[]) => {
     deleteUploadFromDbMutation({
-      ytChannelId,
+      channelId,
       ytVideoIds,
     }).then(handleSideEffect);
   };

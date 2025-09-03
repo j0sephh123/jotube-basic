@@ -4,6 +4,7 @@ import { useQueue } from "@shared/hooks";
 
 export type UploadsListProps = {
   ytChannelId: string;
+  channelId: number;
   handleSideEffect: () => void;
   data: UploadsListQueryResult["data"];
   type: UploadsType;
@@ -11,6 +12,7 @@ export type UploadsListProps = {
 
 export default function UploadsList({
   ytChannelId,
+  channelId,
   handleSideEffect,
   data,
   type,
@@ -33,6 +35,7 @@ export default function UploadsList({
         <UploadsListItem
           key={upload.id}
           upload={upload}
+          channelId={channelId}
           ytChannelId={ytChannelId}
           type={type}
           handleSideEffect={handleSideEffect}

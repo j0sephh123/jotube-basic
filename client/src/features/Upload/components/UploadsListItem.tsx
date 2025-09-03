@@ -18,6 +18,7 @@ import { useScreenshotsForCarousel } from "@features/Screenshot";
 type Props = {
   upload: UploadsListQuery["uploadsList"]["uploads"][0];
   ytChannelId: string;
+  channelId: number;
   type: UploadsType;
   handleSideEffect: () => void;
   channelTitleSlot?: ReactNode;
@@ -26,6 +27,7 @@ type Props = {
 export function UploadsListItem({
   upload: { id, ytId, title, publishedAt, duration, src },
   ytChannelId,
+  channelId,
   type,
   handleSideEffect,
   channelTitleSlot,
@@ -80,7 +82,7 @@ export function UploadsListItem({
                 />
                 <DeleteUpload
                   handleSideEffect={handleSideEffect}
-                  ytChannelId={ytChannelId}
+                  channelId={channelId}
                   ytVideoIds={[ytId]}
                 />
               </>
@@ -94,7 +96,7 @@ export function UploadsListItem({
                 />
                 <DeleteUpload
                   handleSideEffect={handleSideEffect}
-                  ytChannelId={ytChannelId}
+                  channelId={channelId}
                   ytVideoIds={[ytId]}
                 />
               </>

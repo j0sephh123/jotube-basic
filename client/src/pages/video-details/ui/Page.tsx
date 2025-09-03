@@ -101,7 +101,7 @@ function VideoDetailsPageInner({
                       handleSideEffect={() => {
                         navigate(`/channels/${makeYtChannelId(ytChannelId)}`);
                       }}
-                      ytChannelId={ytChannelId}
+                      channelId={channelId}
                       ytVideoIds={[ytVideoId]}
                     />
                   </>
@@ -117,7 +117,7 @@ function VideoDetailsPageInner({
                       handleSideEffect={() => {
                         navigate(`/channels/${makeYtChannelId(ytChannelId)}`);
                       }}
-                      ytChannelId={ytChannelId}
+                      channelId={channelId}
                       ytVideoIds={[ytVideoId]}
                     />
                   </>

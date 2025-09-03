@@ -1,11 +1,17 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { IsString, IsArray, ArrayNotEmpty, ArrayUnique } from 'class-validator';
+import {
+  IsString,
+  IsArray,
+  ArrayNotEmpty,
+  ArrayUnique,
+  IsNumber,
+} from 'class-validator';
 
 @InputType()
 export class DeleteUploadsInput {
   @Field()
-  @IsString()
-  ytChannelId: string;
+  @IsNumber()
+  channelId: number;
 
   @Field(() => [String])
   @IsArray()

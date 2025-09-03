@@ -35,7 +35,7 @@ export function ManualStoryboardsPicker() {
 
   const handleDelete = (ytVideoIds: string[]) => {
     deleteUploadFromDbMutation({
-      ytChannelId: upload.channel.ytId,
+      channelId: upload.channel.id,
       ytVideoIds,
     }).then(handleSideEffect);
   };
