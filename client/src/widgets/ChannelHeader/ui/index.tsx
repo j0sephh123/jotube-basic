@@ -15,7 +15,7 @@ import { makeYtChannelId } from "@shared/types";
 import { useTypedParams } from "@shared/hooks";
 
 const ChannelHeader = () => {
-  const ytChannelId = useTypedParams("ytChannelId");    
+  const ytChannelId = useTypedParams("ytChannelId");
 
   const { data: channelMetadata, refetch: refetchMetadata } =
     useChannelMetadataQuery(ytChannelId);
@@ -30,7 +30,12 @@ const ChannelHeader = () => {
     videoCount,
     fetchedUntilEnd,
     storyboardArtifactsCount,
+    playlist,
   } = channelMetadata;
+
+  console.log({
+    playlist,
+  });
 
   return (
     <div className="bg-base-200 rounded-lg px-6 pt-16 shadow-md">
@@ -38,7 +43,9 @@ const ChannelHeader = () => {
         <HeaderLayout
           left={
             <>
-              <CustomLink to={`/channels/${makeYtChannelId(ytChannelId)}/saved`}>
+              <CustomLink
+                to={`/channels/${makeYtChannelId(ytChannelId)}/saved`}
+              >
                 <h2 className="text-xl font-bold pr-4">{title}</h2>
               </CustomLink>
               <CardMenu id={id} ytId={ytChannelId} />

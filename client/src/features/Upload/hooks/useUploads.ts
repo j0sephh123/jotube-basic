@@ -6,13 +6,7 @@ import { useSearchParams } from "react-router-dom";
 import { useApolloClient } from "@apollo/client";
 import { type UploadsType } from "../types";
 
-export function useUploads(
-  ytChannelId: string,
-  type: UploadsType
-) {
-  console.log({
-    type,
-  });
+export function useUploads(ytChannelId: string, type: UploadsType) {
   const queue = useQueue();
   const [searchParams] = useSearchParams();
   const sortOrder = (searchParams.get("sort") || "DESC") as SortOrder;

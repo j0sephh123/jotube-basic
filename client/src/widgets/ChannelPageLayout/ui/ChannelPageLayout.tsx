@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { ChannelHeader } from "@widgets/ChannelHeader";
 import { Grid } from "@widgets/Grid";
 import { useRecentlyViewedChannels } from "@features/Channel";
@@ -10,9 +10,11 @@ export default function ChannelPageLayout() {
   const ytChannelId = useTypedParams("ytChannelId");
   const { data: channelMetadata } = useChannelMetadataQuery(ytChannelId);
   const { add } = useRecentlyViewedChannels();
+  const hasAddedRef = useRef(false);
 
   useEffect(() => {
-    if (channelMetadata) {
+    if (channelMetadata && !hasAddedRef.current) {
+      hasAddedRef.current = true;
       add({
         id: channelMetadata.id,
         ytId: ytChannelId,
