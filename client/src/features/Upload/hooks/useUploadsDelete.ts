@@ -11,5 +11,12 @@ export function useDeleteUploads(onSuccess: () => void) {
   });
 
   return (variables: { ytChannelId: string; ytVideoIds: string[] }) =>
-    deleteUploadsMutation({ variables });
+    deleteUploadsMutation({
+      variables: {
+        deleteUploadsInput: {
+          ytChannelId: variables.ytChannelId,
+          ytVideoIds: variables.ytVideoIds,
+        },
+      },
+    });
 }

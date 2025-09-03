@@ -171,6 +171,11 @@ export enum DeleteType {
   Video = 'VIDEO'
 }
 
+export type DeleteUploadsInput = {
+  ytChannelId: Scalars['String']['input'];
+  ytVideoIds: Array<Scalars['String']['input']>;
+};
+
 export type DeleteUploadsResponse = {
   __typename?: 'DeleteUploadsResponse';
   success: Scalars['Boolean']['output'];
@@ -290,8 +295,7 @@ export type MutationDeletePlaylistArgs = {
 
 
 export type MutationDeleteUploadsArgs = {
-  ytChannelId: Scalars['String']['input'];
-  ytVideoIds: Array<Scalars['String']['input']>;
+  deleteUploadsInput: DeleteUploadsInput;
 };
 
 
@@ -978,8 +982,7 @@ export type UploadsWithThumbnailsQueryVariables = Exact<{
 export type UploadsWithThumbnailsQuery = { __typename?: 'Query', uploadsWithThumbnails: Array<{ __typename?: 'UploadsWithThumbnailsResponse', ytChannelId: string, ytVideoId: string, channelTitle: string }> };
 
 export type DeleteUploadsMutationVariables = Exact<{
-  ytChannelId: Scalars['String']['input'];
-  ytVideoIds: Array<Scalars['String']['input']> | Scalars['String']['input'];
+  deleteUploadsInput: DeleteUploadsInput;
 }>;
 
 
@@ -2274,8 +2277,8 @@ export type UploadsWithThumbnailsLazyQueryHookResult = ReturnType<typeof useUplo
 export type UploadsWithThumbnailsSuspenseQueryHookResult = ReturnType<typeof useUploadsWithThumbnailsSuspenseQuery>;
 export type UploadsWithThumbnailsQueryResult = Apollo.QueryResult<UploadsWithThumbnailsQuery, UploadsWithThumbnailsQueryVariables>;
 export const DeleteUploadsDocument = gql`
-    mutation DeleteUploads($ytChannelId: String!, $ytVideoIds: [String!]!) {
-  deleteUploads(ytChannelId: $ytChannelId, ytVideoIds: $ytVideoIds) {
+    mutation DeleteUploads($deleteUploadsInput: DeleteUploadsInput!) {
+  deleteUploads(deleteUploadsInput: $deleteUploadsInput) {
     success
   }
 }
@@ -2295,8 +2298,7 @@ export type DeleteUploadsMutationFn = Apollo.MutationFunction<DeleteUploadsMutat
  * @example
  * const [deleteUploadsMutation, { data, loading, error }] = useDeleteUploadsMutation({
  *   variables: {
- *      ytChannelId: // value for 'ytChannelId'
- *      ytVideoIds: // value for 'ytVideoIds'
+ *      deleteUploadsInput: // value for 'deleteUploadsInput'
  *   },
  * });
  */

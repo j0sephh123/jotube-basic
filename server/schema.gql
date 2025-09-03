@@ -145,6 +145,11 @@ enum DeleteType {
   VIDEO
 }
 
+input DeleteUploadsInput {
+  ytChannelId: String!
+  ytVideoIds: [String!]!
+}
+
 type DeleteUploadsResponse {
   success: Boolean!
 }
@@ -215,7 +220,7 @@ type Mutation {
   deleteChannel(id: Float!): DeleteChannelResponse!
   deleteFileOrDirectory(deleteFileInput: DeleteFileDto!): DeleteFileResponse!
   deletePlaylist(id: Int!): DeletePlaylistResponse!
-  deleteUploads(ytChannelId: String!, ytVideoIds: [String!]!): DeleteUploadsResponse!
+  deleteUploads(deleteUploadsInput: DeleteUploadsInput!): DeleteUploadsResponse!
   fetchUploads(fetchUploadsInput: FetchUploadsInput!): FetchUploadsResponse!
   finishProcessingUpload(savedSeconds: [Float!]!, ytChannelId: String!, ytVideoId: String!): FinishProcessUploadResponse!
   saveUpload(saveUploadInput: SaveUploadInput!): SaveUploadResponse!

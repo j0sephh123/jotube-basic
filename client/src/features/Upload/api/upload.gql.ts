@@ -103,8 +103,8 @@ export const UPLOADS_WITH_THUMBNAILS = gql`
 `;
 
 export const DELETE_UPLOADS = gql`
-  mutation DeleteUploads($ytChannelId: String!, $ytVideoIds: [String!]!) {
-    deleteUploads(ytChannelId: $ytChannelId, ytVideoIds: $ytVideoIds) {
+  mutation DeleteUploads($deleteUploadsInput: DeleteUploadsInput!) {
+    deleteUploads(deleteUploadsInput: $deleteUploadsInput) {
       success
     }
   }

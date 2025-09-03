@@ -1,6 +1,7 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { UploadsVideoService } from './uploads-video.service';
 import { DeleteUploadsResponse } from './dtos/delete-uploads.response';
+import { DeleteUploadsInput } from './dtos/delete-uploads.input';
 import { FinishProcessUploadResponse } from './dtos/finish-process-upload.response';
 import { SaveUploadResponse } from './dtos/save-upload.response';
 import { SaveUploadInput } from './dtos/save-upload.input';
@@ -92,10 +93,9 @@ export class UploadsVideoResolver {
 
   @Mutation(() => DeleteUploadsResponse)
   async deleteUploads(
-    @Args('ytChannelId') ytChannelId: string,
-    @Args('ytVideoIds', { type: () => [String] }) ytVideoIds: string[],
+    @Args('deleteUploadsInput') deleteUploadsInput: DeleteUploadsInput,
   ): Promise<DeleteUploadsResponse> {
-    return this.uploadsVideoService.deleteUploads({ ytChannelId, ytVideoIds });
+    return this.uploadsVideoService.deleteUploads(deleteUploadsInput);
   }
 
   @Mutation(() => FinishProcessUploadResponse)
