@@ -8,7 +8,6 @@ export { useVideoPlayer } from "./hooks/useVideoPlayer";
 export { default as SyncUploadsButton } from "./components/SyncUploadsButton";
 export { default as CleanShortUploads } from "./components/CleanShortUploads";
 export { default as FetchUploadsButton } from "./components/FetchUploadsButton";
-export { default as SaveAll } from "../../widgets/ChannelHeader/ui/SaveAll";
 export {
   default as UploadsList,
   type UploadsListProps,
