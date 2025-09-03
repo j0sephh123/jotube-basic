@@ -1,20 +1,22 @@
-import { useQueue, useTypedParams } from "@shared/hooks";
+import { useQueue } from "@shared/hooks";
 import { type UploadsType, useRefetchChannelUploads } from "@features/Upload";
 import { useUploads } from "@features/Upload";
 import UploadsList from "./UploadsList";
 // eslint-disable-next-line import/no-internal-modules
 import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
+import { YtIdToId } from "@shared/hoc";
 
 type Props = {
   type: UploadsType;
+  channelId: number;
+  ytChannelId: string;
 };
 
-export function UploadsDecorator({ type }: Props) {
-  const ytChannelId = useTypedParams("ytChannelId");
+function UploadsDecoratorInner({ type, channelId, ytChannelId }: Props) {
   const refetchChannelMetadata = useRefetchChannelMetadata();
   const { refetch: refetchQueue } = useQueue();
-  const refetchDefaultUploads = useRefetchChannelUploads(ytChannelId);
-  const { data } = useUploads(ytChannelId, type);
+  const refetchDefaultUploads = useRefetchChannelUploads();
+  const { data } = useUploads(channelId, type);
 
   const handleSideEffect = () => {
     refetchChannelMetadata();
@@ -36,3 +38,5 @@ export function UploadsDecorator({ type }: Props) {
     />
   );
 }
+
+export const UploadsDecorator = YtIdToId(UploadsDecoratorInner);

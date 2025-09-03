@@ -6,7 +6,7 @@ import { useSearchParams } from "react-router-dom";
 import { useApolloClient } from "@apollo/client";
 import { type UploadsType } from "../types";
 
-export function useUploads(ytChannelId: string, type: UploadsType) {
+export function useUploads(channelId: number, type: UploadsType) {
   const queue = useQueue();
   const [searchParams] = useSearchParams();
   const sortOrder = (searchParams.get("sort") || "DESC") as SortOrder;
@@ -14,13 +14,12 @@ export function useUploads(ytChannelId: string, type: UploadsType) {
   const query = useUploadsListQuery({
     variables: {
       uploadsListInput: {
-        ytChannelId,
+        channelId,
         sortOrder,
         type,
         take: 50,
       },
     },
-    skip: !ytChannelId,
   });
 
   const filteredData = useMemo(() => {
@@ -41,13 +40,12 @@ export function useUploads(ytChannelId: string, type: UploadsType) {
   };
 }
 
-export function useRefetchChannelUploads(ytChannelId: string | undefined) {
+export function useRefetchChannelUploads() {
   const apolloClient = useApolloClient();
 
   return useCallback(() => {
-    if (!ytChannelId) return;
     apolloClient.refetchQueries({
       include: [UploadsListDocument],
     });
-  }, [apolloClient, ytChannelId]);
+  }, [apolloClient]);
 }

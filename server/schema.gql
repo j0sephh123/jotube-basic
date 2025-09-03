@@ -451,10 +451,10 @@ type UploadWithStoryboardResponse {
 }
 
 input UploadsListInput {
+  channelId: Int!
   sortOrder: SortOrder!
   take: Int!
   type: String!
-  ytChannelId: String!
 }
 
 type UploadsListMetadata {

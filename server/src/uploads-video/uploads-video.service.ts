@@ -38,7 +38,7 @@ export class UploadsVideoService {
   ) {}
 
   public async uploadsList({
-    ytChannelId,
+    channelId,
     sortOrder,
     type,
     take,
@@ -77,7 +77,7 @@ export class UploadsVideoService {
 
     const channel = await this.prismaService.channel.findUnique({
       where: {
-        ytId: ytChannelId,
+        id: channelId,
       },
       include: {
         uploads: {

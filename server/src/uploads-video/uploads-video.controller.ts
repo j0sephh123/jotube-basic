@@ -1,10 +1,9 @@
-import { Body, Controller, Post, Get, Param, Query } from '@nestjs/common';
+import { Body, Controller, Post, Get, Param } from '@nestjs/common';
 import { saveUploadDto } from 'src/uploads-video/dtos/save-upload.dto';
 import { UploadsVideoService } from './uploads-video.service';
 import { fetchUploadsDto } from 'src/uploads-video/dtos/fetch-uploads.dto';
 import { syncUploadsDto } from 'src/uploads-video/dtos/sync-uploads.dto';
 import { cleanShortUploadsDto } from './dtos/clean-short-uploads.dto';
-import { SortOrder } from './dtos/uploads-list.input';
 
 @Controller('uploads-video')
 export class UploadsVideoController {
@@ -28,20 +27,6 @@ export class UploadsVideoController {
   @Post('/clean-short-uploads')
   cleanShortUploads(@Body() body: cleanShortUploadsDto) {
     return this.uploadsVideoService.cleanShortUploads(body);
-  }
-
-  @Get('/uploads-list/:ytChannelId')
-  uploadsList(
-    @Param('ytChannelId') ytChannelId: string,
-    @Query('sortOrder') sortOrder: SortOrder,
-    @Query('type') type: string,
-  ) {
-    return this.uploadsVideoService.uploadsList({
-      ytChannelId,
-      sortOrder,
-      type,
-      take: 50,
-    });
   }
 
   @Get('/storyboards/:ytChannelId')

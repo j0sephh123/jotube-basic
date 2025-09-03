@@ -663,10 +663,10 @@ export type UploadWithStoryboardResponse = {
 };
 
 export type UploadsListInput = {
+  channelId: Scalars['Int']['input'];
   sortOrder: SortOrder;
   take: Scalars['Int']['input'];
   type: Scalars['String']['input'];
-  ytChannelId: Scalars['String']['input'];
 };
 
 export type UploadsListMetadata = {

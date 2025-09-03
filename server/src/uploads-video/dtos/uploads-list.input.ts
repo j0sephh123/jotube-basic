@@ -13,9 +13,9 @@ registerEnumType(SortOrder, {
 
 @InputType()
 export class UploadsListInput {
-  @Field()
-  @IsString()
-  ytChannelId: string;
+  @Field(() => Int)
+  @IsInt()
+  channelId: number;
 
   @Field(() => SortOrder)
   @IsEnum(SortOrder)

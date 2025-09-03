@@ -25,12 +25,7 @@ export class UploadsVideoResolver {
     @Args('uploadsListInput') uploadsListInput: UploadsListInput,
   ): Promise<UploadsListResponse> {
     try {
-      return this.uploadsVideoService.uploadsList({
-        ytChannelId: uploadsListInput.ytChannelId,
-        sortOrder: uploadsListInput.sortOrder,
-        type: uploadsListInput.type,
-        take: uploadsListInput.take,
-      });
+      return this.uploadsVideoService.uploadsList(uploadsListInput);
     } catch {
       throw new Error('Failed to fetch uploads');
     }
