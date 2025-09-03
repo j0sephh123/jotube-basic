@@ -3,6 +3,7 @@ import { ArtifactType, UploadsVideo } from '@prisma/client';
 import { spawn } from 'child_process';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
 import { UploadWithStoryboardResponse } from './dtos/upload-with-storyboard.response';
+import { StoryboardQueryInput } from './dtos/storyboard-query.input';
 
 interface VideoInfoResponse {
   success: boolean;
@@ -118,13 +119,13 @@ export class StoryboardService {
     });
   }
 
-  async getUploadsWithStoryboards(
-    ytChannelId: string,
-  ): Promise<UploadWithStoryboardResponse[]> {
+  async getUploadsWithStoryboards({
+    channelId,
+  }: StoryboardQueryInput): Promise<UploadWithStoryboardResponse[]> {
     const uploads = await this.prismaService.uploadsVideo.findMany({
       where: {
         channel: {
-          ytId: ytChannelId,
+          id: channelId,
         },
         artifact: ArtifactType.STORYBOARD,
       },

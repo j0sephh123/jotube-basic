@@ -14,7 +14,7 @@ export default function Converter() {
   const handleSubmit = () => {
     if (!value.trim()) return;
 
-    converterMutation.mutate({
+    converterMutation.mutateAsync({
       type,
       value: value.trim(),
       resource,

@@ -11,10 +11,6 @@ export class StoryboardResolver {
   async uploadsWithStoryboards(
     @Args('input') input: StoryboardQueryInput,
   ): Promise<UploadWithStoryboardResponse[]> {
-    const uploads = await this.storyboardService.getUploadsWithStoryboards(
-      input.ytChannelId,
-    );
-
-    return uploads;
+    return this.storyboardService.getUploadsWithStoryboards(input);
   }
 }

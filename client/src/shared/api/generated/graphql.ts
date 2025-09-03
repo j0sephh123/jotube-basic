@@ -592,7 +592,7 @@ export type StoryboardFragmentResponse = {
 };
 
 export type StoryboardQueryInput = {
-  ytChannelId: Scalars['String']['input'];
+  channelId: Scalars['Float']['input'];
 };
 
 export type SyncUploadsInput = {
