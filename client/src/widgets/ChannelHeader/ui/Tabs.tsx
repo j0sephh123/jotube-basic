@@ -8,8 +8,9 @@ import {
   IconThumbnails,
   IconScreenshots,
 } from "@shared/ui";
-import { useChannelMetadataQuery } from "@entities/Channel";
 import { setGalleryModal } from "@features/Gallery/model/galleryModalStore";
+// eslint-disable-next-line import/no-internal-modules
+import { useChannelMetadataQuery } from "@entities/Channel/model/useChannelMetadata";
 
 export default function Tabs({ ytChannelId, channelId }: { ytChannelId: string, channelId: number }) {
   const { data } = useChannelMetadataQuery(channelId);

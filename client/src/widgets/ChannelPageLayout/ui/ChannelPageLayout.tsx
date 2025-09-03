@@ -3,8 +3,9 @@ import { useEffect, useRef } from "react";
 import { ChannelHeader } from "@widgets/ChannelHeader";
 import { Grid } from "@widgets/Grid";
 import { useRecentlyViewedChannels } from "@features/Channel";
-import { useChannelMetadataQuery } from "@entities/Channel";
 import { YtIdToId } from "@shared/hoc";
+// eslint-disable-next-line import/no-internal-modules
+import { useChannelMetadataQuery } from "@entities/Channel/model/useChannelMetadata";
 
 export const ChannelPageLayoutInner = ({
   channelId,

@@ -104,7 +104,11 @@ export class ScreenshotsApiService {
     });
   }
 
-  async getVideoScreenshotCounts(ytChannelId: string) {
+  async getVideoScreenshotCounts(channelId: number) {
+    const channel = await this.prismaService.channel.findUnique({
+      where: { id: channelId },
+    });
+
     const results = await this.prismaService.$queryRaw<
       { ytVideoId: string; screenshotCount: bigint; dateAdded: Date }[]
     >`
@@ -113,7 +117,7 @@ export class ScreenshotsApiService {
         COUNT(*) as screenshotCount,
         MIN(createdAt) as dateAdded
       FROM Screenshot
-      WHERE ytChannelId = ${ytChannelId}
+      WHERE ytChannelId = ${channel.ytId}
       GROUP BY ytVideoId
       ORDER BY screenshotCount DESC
     `;

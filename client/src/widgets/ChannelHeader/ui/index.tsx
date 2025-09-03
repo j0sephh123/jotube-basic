@@ -1,4 +1,3 @@
-import { useChannelMetadataQuery } from "@entities/Channel";
 import HeaderLayout from "./HeaderLayout";
 import ChannelControls from "./ChannelControls";
 import {
@@ -14,6 +13,8 @@ import { ViewStoryboards } from "@widgets/Storyboard";
 import { makeYtChannelId } from "@shared/types";
 import { PlaylistControl } from "@features/Playlist";
 import { YtIdToId } from "@shared/hoc";
+// eslint-disable-next-line import/no-internal-modules
+import { useChannelMetadataQuery } from "@entities/Channel/model/useChannelMetadata";
 
 const ChannelHeaderInner = ({
   channelId,

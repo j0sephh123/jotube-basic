@@ -3,8 +3,9 @@ import type { DefaultError } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 import { nestFetcher } from "@shared/api";
 import { useRefetchChannelUploads } from "@features/Upload";
-import { useRefetchChannelMetadata } from "@entities/Channel";
 import { useRefetchQueue } from "@shared/hooks";
+// eslint-disable-next-line import/no-internal-modules
+import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
 
 type Body = {
   ytVideoId: string;

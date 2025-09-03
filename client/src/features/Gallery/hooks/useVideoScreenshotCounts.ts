@@ -7,14 +7,14 @@ type VideoScreenshotCount = {
   dateAdded: Date;
 };
 
-export function useVideoScreenshotCounts(ytChannelId: string) {
+export function useVideoScreenshotCounts(channelId: number) {
   return useQuery({
-    queryKey: ["video-screenshot-counts", ytChannelId],
+    queryKey: ["video-screenshot-counts", channelId],
     queryFn: () =>
       nestFetcher<VideoScreenshotCount[]>({
-        url: `/screenshots-api/channels/${ytChannelId}/video-screenshot-counts`,
+        url: `/screenshots-api/channels/${channelId}/video-screenshot-counts`,
         method: "GET",
       }),
-    enabled: !!ytChannelId,
+    enabled: !!channelId,
   });
 }

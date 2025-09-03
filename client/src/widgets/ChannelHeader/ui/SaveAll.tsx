@@ -1,8 +1,9 @@
 import { Button } from "@shared/ui";
 import { useSaveUpload } from "@features/Upload";
 import { useTypedParams } from "@shared/hooks";
-import { useRefetchChannelMetadata } from "@entities/Channel";
 import { useRefetchChannelUploads } from "@features/Upload";
+// eslint-disable-next-line import/no-internal-modules
+import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
 
 type Props = {
   uploadsToSave: {

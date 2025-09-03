@@ -2,9 +2,9 @@
 import { setGalleryModal } from "@features/Gallery";
 import { useVideoScreenshotCounts } from "@features/Gallery";
 import { StaticStates } from "@shared/ui";
-import { useTypedParams } from "@shared/hooks";
 import { timeAgo } from "@shared/utils";
 import { useState, useMemo } from "react";
+import { YtIdToId } from "@shared/hoc";
 
 type VideoScreenshotCount = {
   ytVideoId: string;
@@ -14,8 +14,13 @@ type VideoScreenshotCount = {
 
 type SortOption = "count" | "date";
 
-export function GalleryVideosList() {
-  const ytChannelId = useTypedParams("ytChannelId");
+function GalleryVideosListInner({
+  channelId,
+  ytChannelId,
+}: {
+  channelId: number;
+  ytChannelId: string;
+}) {
   const [sortBy, setSortBy] = useState<SortOption>("count");
 
   const handleVideoClick = (videoId: string) => {
@@ -29,7 +34,7 @@ export function GalleryVideosList() {
     data: videoScreenshotCounts,
     isLoading,
     error,
-  } = useVideoScreenshotCounts(ytChannelId);
+  } = useVideoScreenshotCounts(channelId);
 
   const sortedVideoCounts = useMemo(() => {
     if (!videoScreenshotCounts) return [];
@@ -96,3 +101,6 @@ export function GalleryVideosList() {
     </StaticStates>
   );
 }
+
+const GalleryVideosList = YtIdToId(GalleryVideosListInner);
+export { GalleryVideosList };

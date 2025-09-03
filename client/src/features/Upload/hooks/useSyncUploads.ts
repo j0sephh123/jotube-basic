@@ -1,6 +1,7 @@
 import { useSyncUploadsMutation } from "@shared/api";
-import { useRefetchChannelMetadata } from "@entities/Channel";
 import { useRefetchChannelUploads } from "@features/Upload";
+// eslint-disable-next-line import/no-internal-modules
+import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
 import { useRefetchChannelsDashboardQuery } from "@features/Dashboard";
 
 export type SyncUploadsRequest = {

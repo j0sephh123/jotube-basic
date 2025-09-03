@@ -1,8 +1,9 @@
-import { useRefetchChannelMetadata } from "@entities/Channel";
 import { useQueue, useTypedParams } from "@shared/hooks";
 import { type UploadsType, useRefetchChannelUploads } from "@features/Upload";
 import { useUploads } from "@features/Upload";
 import UploadsList from "./UploadsList";
+// eslint-disable-next-line import/no-internal-modules
+import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
 
 type Props = {
   type: UploadsType;

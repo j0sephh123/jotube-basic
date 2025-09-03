@@ -1,6 +1,7 @@
 import { Button } from "@shared/ui";
 import { useDialog } from "@shared/hooks";
-import { useDeleteChannel } from "@entities/Channel";
+// eslint-disable-next-line import/no-internal-modules, boundaries/element-types
+import useDeleteChannel from "@features/Channel/hooks/useDeleteChannel";
 
 export default function DeleteChannel({
   id,

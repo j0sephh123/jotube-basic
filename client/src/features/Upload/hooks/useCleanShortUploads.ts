@@ -1,7 +1,8 @@
 import { useCleanShortUploadsMutation } from "@shared/api";
 import { useRefetchChannelUploads } from "@features/Upload";
-import { useRefetchChannelMetadata } from "@entities/Channel";
 import { useState } from "react";
+// eslint-disable-next-line import/no-internal-modules
+import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
 
 export function useCleanShortUploads(ytChannelId: string) {
   const [currentVariables, setCurrentVariables] = useState<{

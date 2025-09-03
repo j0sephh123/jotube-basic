@@ -5,9 +5,11 @@ import { ScreenshotsApiService } from './screenshots-api.service';
 export class ScreenshotsApiController {
   constructor(private readonly screenshotsApiService: ScreenshotsApiService) {}
 
-  @Get('channels/:ytChannelId/video-screenshot-counts')
-  getVideoScreenshotCounts(@Param('ytChannelId') ytChannelId: string) {
-    return this.screenshotsApiService.getVideoScreenshotCounts(ytChannelId);
+  @Get('channels/:channelId/video-screenshot-counts')
+  getVideoScreenshotCounts(@Param('channelId') channelId: string) {
+    return this.screenshotsApiService.getVideoScreenshotCounts(
+      parseInt(channelId),
+    );
   }
 
   @Put('screenshots/:id')

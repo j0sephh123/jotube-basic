@@ -1,7 +1,6 @@
 import { ViewType } from "@features/Dashboard";
 import { SyncUploadsButton, FetchUploadsButton } from "@features/Upload";
 import { Button, Card } from "@shared/ui";
-import { DeleteChannel } from "@entities/Channel";
 import type {
   DashboardChannelResponse,
   FeaturedScreenshotResponse,
@@ -17,6 +16,8 @@ import { PlaylistControl } from "@features/Playlist";
 import { useGetUploadsWithStoryboards } from "@features/Storyboard";
 import { useCustomNavigate } from "@shared/hooks";
 import { makeYtChannelId } from "@shared/types";
+// eslint-disable-next-line import/no-internal-modules
+import { DeleteChannel } from "@entities/Channel/ui";
 
 const statsTypes = [
   ViewType.THUMBNAILS,
