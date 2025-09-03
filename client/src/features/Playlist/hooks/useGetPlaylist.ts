@@ -34,8 +34,6 @@ const GET_PLAYLIST_DETAILS = gql`
 export const useGetPlaylist = (idArgument: number | null) => {
   const id = useTypedParams("playlistId");
 
-  console.log({ id });
-
   return useQuery<GetPlaylistDetailsQuery>(GET_PLAYLIST_DETAILS, {
     variables: { id: idArgument ? idArgument : parseInt(id!) },
     skip: !id && !idArgument,

@@ -1,9 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@shared/ui";
-import {
-  type UploadWithStoryboard,
-  useGetUploadsWithStoryboards,
-} from "@features/Storyboard";
-import { setStoryboardProcessingData } from "@features/Storyboard";
+import { useGetUploadsWithStoryboards } from "@features/Storyboard";
 
 type Props = {
   ytChannelId: string;
@@ -14,19 +11,10 @@ export default function ViewStoryboards({
   ytChannelId,
   storyboardArtifactsCount,
 }: Props) {
-  const { data, mutateAsync: getStoryboards } = useGetUploadsWithStoryboards();
+  const { mutateAsync: getStoryboards } = useGetUploadsWithStoryboards();
 
   const handleClick = () => {
-    if (data) {
-      setStoryboardProcessingData([
-        {
-          ytChannelId,
-          uploads: data as unknown as UploadWithStoryboard[],
-        },
-      ]);
-    } else {
-      getStoryboards(ytChannelId);
-    }
+    getStoryboards(ytChannelId);
   };
 
   return (
