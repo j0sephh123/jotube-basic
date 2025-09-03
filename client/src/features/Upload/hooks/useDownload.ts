@@ -5,9 +5,8 @@ export default function useDownload(onSuccess?: () => void) {
   return useMutation({
     mutationFn: (
       body: {
-        downloadOption?: number;
-        ytChannelId?: string;
-        ytVideoIds?: string[];
+        channelId: number;
+        ytVideoIds: string[];
       }[]
     ) =>
       nestFetcher({

@@ -2,11 +2,11 @@ import { Button } from "@shared/ui";
 import { useDownload } from "@features/Upload";
 
 export function DownloadUpload({
-  ytChannelId,
+  channelId,
   handleSideEffect,
   ytVideoId,
 }: {
-  ytChannelId: string;
+  channelId: number;
   handleSideEffect: () => void;
   ytVideoId: string;
 }) {
@@ -15,7 +15,7 @@ export function DownloadUpload({
     handleDownloadMutation
       .mutateAsync([
         {
-          ytChannelId,
+          channelId,
           ytVideoIds: [ytVideoId],
         },
       ])

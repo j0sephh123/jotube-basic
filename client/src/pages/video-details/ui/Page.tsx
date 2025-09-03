@@ -109,7 +109,7 @@ function VideoDetailsPageInner({
                 {video.artifact === "SAVED" && (
                   <>
                     <DownloadUpload
-                      ytChannelId={ytChannelId}
+                      channelId={channelId}
                       handleSideEffect={refetch}
                       ytVideoId={ytVideoId}
                     />

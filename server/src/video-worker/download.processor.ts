@@ -15,6 +15,7 @@ export class DownloadProcessor {
 
   @Process()
   async processDownload(job: Job) {
+    console.log('processDownload', job.data);
     const videoId = await this.prismaService.uploadsVideo.findUnique({
       where: {
         ytId: job.data.ytVideoId,
@@ -27,12 +28,23 @@ export class DownloadProcessor {
     if (!videoId) {
       throw new Error('Video not found');
     }
-    await this.prismaService.processingPhase.create({
-      data: {
-        uploadsVideoId: videoId.id,
-        phase: Phase.DOWNLOAD,
+    const existingPhase = await this.prismaService.processingPhase.findUnique({
+      where: {
+        uploadsVideoId_phase: {
+          uploadsVideoId: videoId.id,
+          phase: Phase.DOWNLOAD,
+        },
       },
     });
+    if (!existingPhase) {
+      await this.prismaService.processingPhase.create({
+        data: {
+          uploadsVideoId: videoId.id,
+          phase: Phase.DOWNLOAD,
+        },
+      });
+    }
+
     await this.downloadService.download(job.data);
     await this.prismaService.processingPhase.update({
       where: {

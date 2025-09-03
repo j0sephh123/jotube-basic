@@ -3,10 +3,7 @@ import { QueueService } from './queue.service';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { LabelsDto } from 'src/queue/dtos/labels.dto';
 import { RemoveJobsDto } from 'src/queue/dtos/remove-jobs.dto';
-import {
-  AddVideosv2Dto,
-  AddVideosv2ArrayDto,
-} from 'src/queue/dtos/add-videos-v2.dto';
+import { AddVideosv2Dto } from 'src/queue/dtos/add-videos-v2.dto';
 import { AddStoryboardJobDto } from 'src/queue/dtos/add-storyboard-job.dto';
 import { ScreenshotsQueueJobDto } from 'src/queue/dtos/screenshots-queue-job.dto';
 
@@ -15,19 +12,8 @@ export class QueueController {
   constructor(private readonly queueService: QueueService) {}
 
   @Post('/add-uploads')
-  @ApiOperation({ summary: 'Add videos to the queue' })
-  async addVideosv2(@Body() body: AddVideosv2Dto[] | AddVideosv2ArrayDto) {
-    let items: AddVideosv2Dto[];
-
-    if (Array.isArray(body)) {
-      items = body;
-    } else if (body && body.items && Array.isArray(body.items)) {
-      items = body.items;
-    } else {
-      return { success: true };
-    }
-
-    return this.queueService.addUploads(items);
+  async addVideosv2(@Body() body: AddVideosv2Dto[]) {
+    return this.queueService.addUploads(body);
   }
 
   @Get('/queue')

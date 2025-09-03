@@ -5,7 +5,7 @@ import { queueNames } from 'src/shared/constants';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
 import { LabelsDto } from 'src/queue/dtos/labels.dto';
 import { RemoveJobsDto } from 'src/queue/dtos/remove-jobs.dto';
-import { ArtifactType } from '@prisma/client';
+import { AddVideosv2Dto } from './dtos/add-videos-v2.dto';
 
 @Injectable()
 export class QueueService {
@@ -17,80 +17,31 @@ export class QueueService {
     @InjectQueue(queueNames.video) private readonly videoProcessor: Queue,
   ) {}
 
-  async addUploads(
-    addVideosDto: {
-      downloadOption?: number;
-      ytChannelId?: string;
-      ytVideoIds?: string[];
-    }[],
-  ) {
-    if (
-      !addVideosDto ||
-      !Array.isArray(addVideosDto) ||
-      addVideosDto.length === 0
-    ) {
-      return { success: true };
+  async addUploads(addVideosDto: AddVideosv2Dto[]) {
+    const [firstItem] = addVideosDto;
+
+    const channel = await this.prismaService.channel.findUnique({
+      where: {
+        id: firstItem.channelId,
+      },
+    });
+
+    if (!channel) {
+      throw new Error('Channel not found');
     }
 
-    console.log(addVideosDto);
-
-    const allJobs = [];
-
-    for (const item of addVideosDto) {
-      if (item.ytVideoIds && item.ytVideoIds.length > 0) {
-        // Handle individual video downloads
-        const jobs = item.ytVideoIds.map((ytVideoId) => ({
-          ytVideoId,
-          ytChannelId: item.ytChannelId || '',
-          type: 'downloadAndCaptureScreenshotsAndGenerateThumbnails' as const,
-        }));
-        allJobs.push(...jobs);
-      } else if (item.ytChannelId && item.downloadOption !== undefined) {
-        // Handle channel-based downloads (original v2 logic)
-        const channel = await this.prismaService.channel.findFirst({
-          where: {
-            ytId: item.ytChannelId,
-          },
-          include: {
-            uploads: {
-              where: {
-                artifact: ArtifactType.SAVED,
-              },
-            },
-          },
-        });
-
-        if (!channel || channel.uploads.length === 0) {
-          continue;
-        }
-
-        let videosToProcess;
-        if (item.downloadOption === 0) {
-          videosToProcess = channel.uploads;
-        } else {
-          videosToProcess = channel.uploads.slice(0, item.downloadOption);
-        }
-
-        const jobs = videosToProcess.map((video) => ({
-          ytVideoId: video.ytId,
-          ytChannelId: item.ytChannelId,
-          type: 'downloadAndCaptureScreenshotsAndGenerateThumbnails' as const,
-        }));
-
-        allJobs.push(...jobs);
-      }
-    }
-
-    if (allJobs.length === 0) {
-      return { success: true };
-    }
+    const jobs = firstItem.ytVideoIds.map((ytVideoId) => ({
+      ytVideoId,
+      ytChannelId: channel.ytId,
+      type: 'downloadAndCaptureScreenshotsAndGenerateThumbnails' as const,
+    }));
 
     const existingJobs = await this.downloadProcessor.getJobs([
       'active',
       'waiting',
     ]);
     const existingYtVideoIds = existingJobs.map((job) => job.data.ytVideoId);
-    const jobsToAdd = allJobs.filter(
+    const jobsToAdd = jobs.filter(
       (job) => !existingYtVideoIds.includes(job.ytVideoId),
     );
 

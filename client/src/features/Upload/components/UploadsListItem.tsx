@@ -90,7 +90,7 @@ export function UploadsListItem({
             {type === "saved" && (
               <>
                 <DownloadUpload
-                  ytChannelId={ytChannelId}
+                  channelId={channelId}
                   handleSideEffect={handleSideEffect}
                   ytVideoId={ytId}
                 />

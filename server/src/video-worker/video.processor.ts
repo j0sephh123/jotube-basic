@@ -31,12 +31,22 @@ export class VideoProcessor {
       throw new Error('Video not found');
     }
 
-    await this.prismaService.processingPhase.create({
-      data: {
-        uploadsVideoId: videoId.id,
-        phase: Phase.SCREENSHOTS,
+    const existingPhase = await this.prismaService.processingPhase.findUnique({
+      where: {
+        uploadsVideoId_phase: {
+          uploadsVideoId: videoId.id,
+          phase: Phase.SCREENSHOTS,
+        },
       },
     });
+    if (!existingPhase) {
+      await this.prismaService.processingPhase.create({
+        data: {
+          uploadsVideoId: videoId.id,
+          phase: Phase.SCREENSHOTS,
+        },
+      });
+    }
     await this.screenshotsJobService.captureScreenshots({
       ytChannelId: job.data.ytChannelId,
       ytVideoId: job.data.ytVideoId,
@@ -53,12 +63,22 @@ export class VideoProcessor {
         endedAt: new Date(),
       },
     });
-    await this.prismaService.processingPhase.create({
-      data: {
-        uploadsVideoId: videoId.id,
-        phase: Phase.THUMBNAILS,
+    const existingPhase2 = await this.prismaService.processingPhase.findUnique({
+      where: {
+        uploadsVideoId_phase: {
+          uploadsVideoId: videoId.id,
+          phase: Phase.THUMBNAILS,
+        },
       },
     });
+    if (!existingPhase2) {
+      await this.prismaService.processingPhase.create({
+        data: {
+          uploadsVideoId: videoId.id,
+          phase: Phase.THUMBNAILS,
+        },
+      });
+    }
     await this.thumbnailsService.generateThumbnails({
       ytChannelId: job.data.ytChannelId,
       ytVideoId: job.data.ytVideoId,
