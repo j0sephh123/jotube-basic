@@ -237,7 +237,7 @@ export type GetScreenshotsResponse = {
 };
 
 export type GetVideoByYtIdInput = {
-  ytChannelId: Scalars['String']['input'];
+  channelId: Scalars['Float']['input'];
   ytId: Scalars['String']['input'];
 };
 

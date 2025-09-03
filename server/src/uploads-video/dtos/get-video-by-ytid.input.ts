@@ -1,5 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { IsString } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
 
 @InputType()
 export class GetVideoByYtIdInput {
@@ -8,6 +8,6 @@ export class GetVideoByYtIdInput {
   ytId: string;
 
   @Field()
-  @IsString()
-  ytChannelId: string;
+  @IsNumber()
+  channelId: number;
 }

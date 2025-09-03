@@ -1,13 +1,10 @@
 import { Card } from "@shared/ui";
 import { VideosDashboardContainer, VideoChannelInfo } from "@widgets/Dashboard";
-import { useCustomNavigate } from "@shared/hooks";
 import { type DashboardVideoResponse } from "@shared/api";
 import { setGalleryModal } from "@features/Gallery";
 import { makeYtChannelId, makeYtVideoId } from "@shared/types";
 
 export default function VideosDashboard() {
-  const navigate = useCustomNavigate();
-
   const handleThumbnailClick = (video: DashboardVideoResponse) => {
     setGalleryModal({
       ytVideoId: video.ytId,
@@ -28,9 +25,9 @@ export default function VideosDashboard() {
               title={video.title}
               src={video.src}
               onThumbnailClick={() => handleThumbnailClick(video)}
-              handleTitleClick={() => {
-                navigate(`/channels/${makeYtChannelId(video.channelYtId)}/gallery/${makeYtVideoId(video.ytId)}`);
-              }}
+              to={`/channels/${makeYtChannelId(
+                video.channelYtId
+              )}/gallery/${makeYtVideoId(video.ytId)}`}
               secondRow={
                 <VideoChannelInfo
                   channelTitle={`${video.channelTitle} (${video.screenshotCount})`}

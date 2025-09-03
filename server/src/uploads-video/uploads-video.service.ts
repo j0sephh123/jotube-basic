@@ -24,6 +24,7 @@ import { SortOrder } from './dtos/uploads-list.input';
 import { UploadsListResponse } from './dtos/uploads-list.response';
 import { UploadsListInput } from './dtos/uploads-list.input';
 import { VideoByYtIdResponse } from './dtos/get-video-by-ytid.response';
+import { GetVideoByYtIdInput } from './dtos/get-video-by-ytid.input';
 
 @Injectable()
 export class UploadsVideoService {
@@ -504,11 +505,20 @@ export class UploadsVideoService {
     };
   }
 
-  async getVideoByYtId(
-    ytChannelId: string,
-    ytId: string,
-  ): Promise<VideoByYtIdResponse> {
-    const baseDir = `${this.filePathService.getBasePath()}/${ytChannelId}/${ytId}`;
+  async getVideoByYtId({
+    channelId,
+    ytId,
+  }: GetVideoByYtIdInput): Promise<VideoByYtIdResponse> {
+    const channel = await this.prismaService.channel.findUnique({
+      where: { id: channelId },
+      select: { ytId: true },
+    });
+
+    if (!channel) {
+      throw new Error('Channel not found');
+    }
+
+    const baseDir = `${this.filePathService.getBasePath()}/${channel.ytId}/${ytId}`;
     let filesWithSize: { name: string; sizeMB: number }[] = [];
     let directoriesWithSize: { name: string; sizeMB: number }[] = [];
     let totalSizeMB = 0;

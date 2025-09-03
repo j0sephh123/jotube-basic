@@ -17,16 +17,22 @@ import { setGalleryModal } from "@features/Gallery";
 import { makeYtChannelId } from "@shared/types";
 import { BackToChannel } from "./BackToChannel";
 import { ViewVideoThumbnails } from "@features/Thumbnails";
+import { YtIdToId } from "@shared/hoc";
 
-export function VideoDetailsPage() {
+function VideoDetailsPageInner({
+  channelId,
+  ytChannelId,
+}: {
+  channelId: number;
+  ytChannelId: string;
+}) {
   const navigate = useCustomNavigate();
-  const ytChannelId = useTypedParams("ytChannelId");
   const ytVideoId = useTypedParams("ytVideoId");
 
   const { data, loading, error, refetch } = useGetVideoByYtIdQuery({
     variables: {
       getVideoByYtIdInput: {
-        ytChannelId,
+        channelId,
         ytId: ytVideoId,
       },
     },
@@ -148,3 +154,5 @@ export function VideoDetailsPage() {
     </StaticStates>
   );
 }
+
+export const VideoDetailsPage = YtIdToId(VideoDetailsPageInner);

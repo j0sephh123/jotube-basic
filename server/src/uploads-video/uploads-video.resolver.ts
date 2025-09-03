@@ -138,10 +138,7 @@ export class UploadsVideoResolver {
     @Args('getVideoByYtIdInput') getVideoByYtIdInput: GetVideoByYtIdInput,
   ): Promise<VideoByYtIdResponse> {
     try {
-      return await this.uploadsVideoService.getVideoByYtId(
-        getVideoByYtIdInput.ytChannelId,
-        getVideoByYtIdInput.ytId,
-      );
+      return this.uploadsVideoService.getVideoByYtId(getVideoByYtIdInput);
     } catch {
       throw new Error('Failed to fetch video');
     }
