@@ -1,6 +1,6 @@
 import { useQuery, gql, useApolloClient } from "@apollo/client";
 import type { GetPlaylistDetailsQuery } from "@shared/api";
-import { useParams } from "react-router-dom";
+import { useTypedParams } from "@shared/hooks";
 
 // Local GraphQL query to avoid entities dependency
 const GET_PLAYLIST_DETAILS = gql`
@@ -32,7 +32,10 @@ const GET_PLAYLIST_DETAILS = gql`
 `;
 
 export const useGetPlaylist = (idArgument: number | null) => {
-  const { id } = useParams<{ id: string }>();
+  const id = useTypedParams("playlistId");
+
+  console.log({ id });
+
   return useQuery<GetPlaylistDetailsQuery>(GET_PLAYLIST_DETAILS, {
     variables: { id: idArgument ? idArgument : parseInt(id!) },
     skip: !id && !idArgument,

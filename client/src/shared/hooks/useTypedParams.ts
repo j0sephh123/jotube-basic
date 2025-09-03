@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom";
 import { ViewType } from "@shared/api";
+// eslint-disable-next-line boundaries/element-types
+import { type UploadsType } from "@features/Upload";
 
 export enum DashboardViewType {
   SAVED = "saved",
@@ -15,11 +17,23 @@ export enum DashboardType {
   VIDEOS = "videos",
 }
 
-type Variant = "ViewType" | "ytChannelId" | "DashboardParams" | "ytVideoId";
+export type ProcessingPhaseType = "latest" | "running";
+
+type Variant =
+  | "ViewType"
+  | "ytChannelId"
+  | "DashboardParams"
+  | "ytVideoId"
+  | "playlistId"
+  | "uploadsType"
+  | "processingPhaseType";
 
 export function useTypedParams(variant: "ViewType"): ViewType | null;
 export function useTypedParams(variant: "ytChannelId"): string;
 export function useTypedParams(variant: "ytVideoId"): string;
+export function useTypedParams(variant: "playlistId"): string;
+export function useTypedParams(variant: "uploadsType"): UploadsType;
+export function useTypedParams(variant: "processingPhaseType"): ProcessingPhaseType;
 export function useTypedParams(variant: "DashboardParams"): {
   type: DashboardType;
   viewType: DashboardViewType;
@@ -43,6 +57,18 @@ export function useTypedParams(
 
   if (variant === "ytVideoId") {
     return params.ytVideoId as string;
+  }
+
+  if (variant === "playlistId") {
+    return params.playlistId as string;
+  }
+
+  if (variant === "uploadsType") {
+    return params.uploadsType as UploadsType;
+  }
+
+  if (variant === "processingPhaseType") {
+    return params.processingPhaseType as ProcessingPhaseType;
   }
 
   if (variant === "DashboardParams") {

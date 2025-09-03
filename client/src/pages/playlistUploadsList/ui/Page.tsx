@@ -6,16 +6,13 @@ import {
 import { UploadsListItem } from "@features/Upload";
 import { type PlaylistDetailsResponse } from "@shared/api";
 import { CustomLink, StaticStates } from "@shared/ui";
-import { useParams } from "react-router-dom";
 import { PlaylistDetailsHeader } from "@widgets/PlaylistDetails";
 import { Grid } from "@widgets/Grid";
 import { makeYtChannelId } from "@shared/types";
+import { useTypedParams } from "@shared/hooks";
 
 export function PlaylistUploadsListPage() {
-  const params = useParams<{
-    id: string;
-    uploadsType: "default" | "saved";
-  }>();
+  const uploadsType = useTypedParams("uploadsType");
 
   const { data, loading, error } = useGetPlaylistUploads();
 
@@ -32,6 +29,8 @@ export function PlaylistUploadsListPage() {
     refetchPlaylist();
     refetchPlaylistUploads();
   };
+
+  console.log(data);
 
   return (
     <StaticStates
@@ -61,12 +60,18 @@ export function PlaylistUploadsListPage() {
                 title,
                 publishedAt,
                 src,
+                artifact: "",
+                channelId: 0,
+                createdAt: "",
+                updatedAt: "",
               }}
               ytChannelId={ytChannelId}
-              type={params.uploadsType as "default" | "saved"}
+              type={uploadsType}
               handleSideEffect={handleSideEffect}
               channelTitleSlot={
-                <CustomLink to={`/channels/${makeYtChannelId(ytChannelId)}/saved`}>
+                <CustomLink
+                  to={`/channels/${makeYtChannelId(ytChannelId)}/saved`}
+                >
                   <div className="text text-gray-400">{channelTitle}</div>
                 </CustomLink>
               }

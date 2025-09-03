@@ -1,48 +1,15 @@
 import { useState } from "react";
 import { Settings } from "lucide-react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
-import { useMutation } from "@tanstack/react-query";
-import { nestFetcher } from "@shared/api";
 import { Button } from "@shared/ui";
-
-type ConverterRequest = {
-  type: "youtube" | "id";
-  value: string;
-  resource: "video" | "channel";
-};
-
-type ConverterResponse = {
-  id: number;
-  title: string;
-  ytId: string;
-  channelTitle?: string;
-};
+import { useConvert } from "@shared/hooks";
 
 export default function Converter() {
   const [isOpen, setIsOpen] = useState(false);
   const [type, setType] = useState<"youtube" | "id">("youtube");
   const [value, setValue] = useState("");
   const [resource, setResource] = useState<"video" | "channel">("video");
-
-  const converterMutation = useMutation<
-    ConverterResponse,
-    Error,
-    ConverterRequest
-  >({
-    mutationFn: async (body: ConverterRequest) => {
-      return nestFetcher<ConverterResponse>({
-        method: "POST",
-        url: "/converter",
-        body,
-      });
-    },
-    onSuccess: (data) => {
-      console.log("Converter response:", data);
-    },
-    onError: (error) => {
-      console.error("Converter error:", error);
-    },
-  });
+  const converterMutation = useConvert();
 
   const handleSubmit = () => {
     if (!value.trim()) return;

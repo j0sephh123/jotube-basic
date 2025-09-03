@@ -1,11 +1,10 @@
 import type { PlaylistDetailsResponse } from "@shared/api";
 import { ArrowLeft } from "lucide-react";
-import { useParams } from "react-router-dom";
 import { SmallCard } from "./SmallCard";
 import { useScreenshotsForCarousel } from "@features/Screenshot";
 import { setGalleryModal } from "@features/Gallery";
 import { CustomLink } from "@shared/ui";
-import { useCustomNavigate } from "@shared/hooks";
+import { useCustomNavigate, useTypedParams } from "@shared/hooks";
 
 type HeaderProps = {
   playlist: PlaylistDetailsResponse;
@@ -16,7 +15,7 @@ export default function PlaylistDetailsHeader({
 }: HeaderProps) {
   const handleGetScreenshots = useScreenshotsForCarousel();
 
-  const { uploadsType } = useParams<{ uploadsType: "default" | "saved" }>();
+  const uploadsType = useTypedParams("uploadsType");
 
   const totalCounts = channels.reduce(
     (acc, channel) => ({

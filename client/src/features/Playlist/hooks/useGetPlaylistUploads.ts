@@ -1,18 +1,19 @@
 import { useApolloClient } from "@apollo/client";
 import { GET_PLAYLIST_UPLOADS_LIST } from "@entities/Playlist";
 import { useGetPlaylistUploadsListQuery } from "@shared/api";
-import { useParams } from "react-router-dom";
+import { useTypedParams } from "@shared/hooks";
 
 export function useGetPlaylistUploads() {
-  const { id, uploadsType } = useParams<{
-    id: string;
-    uploadsType: "default" | "saved";
-  }>();
+  const id = useTypedParams("playlistId");
+  const uploadsType = useTypedParams("uploadsType");
+
+  console.log({ id });
+
   return useGetPlaylistUploadsListQuery({
     variables: {
       playlistUploadsListInput: {
         playlistId: Number(id),
-        uploadsType: uploadsType as "default" | "saved",
+        uploadsType,
       },
     },
   });

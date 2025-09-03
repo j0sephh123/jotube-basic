@@ -9,11 +9,10 @@ import { useProcessingPhases } from "@features/ProcessingPhase";
 import { TableRow } from "../TableRow";
 import { Button, CustomLink, StaticStates } from "@shared/ui";
 import clsx from "clsx";
-import { useParams } from "react-router-dom";
+import { useTypedParams } from "@shared/hooks";
 
 export function ProcessingPhasePage() {
-  const params = useParams<{ variant: "latest" | "running" }>();
-  const variant = params.variant as "latest" | "running";
+  const variant = useTypedParams("processingPhaseType");
 
   const {
     data: sorted,

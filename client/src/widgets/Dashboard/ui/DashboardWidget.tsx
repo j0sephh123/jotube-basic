@@ -1,10 +1,10 @@
 import { DashboardType } from "@features/Dashboard";
 import VideosDashboard from "./VideosDashboard";
 import ChannelsDashboard from "./ChannelsDashboard";
-import { useParams } from "react-router-dom";
+import { useTypedParams } from "@shared/hooks";
 
 export default function DashboardWidget() {
-  const { type } = useParams<{ type: DashboardType }>();
+  const { type } = useTypedParams("DashboardParams");
 
   if (type === DashboardType.CHANNELS) {
     return <ChannelsDashboard />;

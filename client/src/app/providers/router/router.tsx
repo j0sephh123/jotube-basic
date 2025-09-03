@@ -51,7 +51,7 @@ export default function Router() {
           />
           <Route path="/playlists" element={<PageWrapper />}>
             <Route index element={<PlaylistsPage />} />
-            <Route path=":id" element={<PlaylistDetailsPage />} />
+            <Route path=":playlistId" element={<PlaylistDetailsPage />} />
             <Route
               path=":id/uploads/:uploadsType"
               element={<PlaylistUploadsListPage />}
@@ -60,7 +60,6 @@ export default function Router() {
           <Route path="/image-navigator" element={<ImageNavigatorPage />} />
           <Route path="/recently-viewed" element={<RecentlyViewedPage />} />
           <Route path="/processing-phase" element={<ProcessingPhaseWrapper />}>
-            <Route path=":variant" element={<ProcessingPhasePage />} />
             <Route path=":variant" element={<ProcessingPhasePage />} />
           </Route>
           <Route
