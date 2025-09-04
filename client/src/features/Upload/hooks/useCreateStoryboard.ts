@@ -10,10 +10,9 @@ import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMet
 type Body = {
   ytVideoId: string;
 };
-type Response = unknown;
 
-export function useCreateStoryboard(ytChannelId: string) {
-  const refetchChannelUploads = useRefetchChannelUploads(ytChannelId);
+export function useCreateStoryboard() {
+  const refetchChannelUploads = useRefetchChannelUploads();
   const refetchChannelMetadata = useRefetchChannelMetadata();
   const refetchQueue = useRefetchQueue();
 
@@ -23,7 +22,7 @@ export function useCreateStoryboard(ytChannelId: string) {
     Body
   >({
     mutationFn: (body: Body) =>
-      nestFetcher<Response>({
+      nestFetcher({
         url: "/queues/add-storyboard",
         method: "POST",
         body: { data: body },

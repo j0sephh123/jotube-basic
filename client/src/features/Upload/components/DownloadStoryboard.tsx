@@ -2,14 +2,12 @@ import { useCreateStoryboard } from "@features/Upload";
 
 export function DownloadStoryboard({
   ytVideoId,
-  ytChannelId,
   handleSideEffect,
 }: {
   ytVideoId: string;
-  ytChannelId: string;
   handleSideEffect: () => void;
 }) {
-  const { mutateAsync } = useCreateStoryboard(ytChannelId);
+  const { mutateAsync } = useCreateStoryboard();
 
   const handleCreateStoryboard = (ytVideoId: string) => {
     mutateAsync({

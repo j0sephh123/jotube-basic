@@ -76,7 +76,6 @@ export function UploadsListItem({
                 />
                 <DownloadStoryboard
                   ytVideoId={ytId}
-                  ytChannelId={ytChannelId}
                   handleSideEffect={handleSideEffect}
                 />
                 <DeleteUpload
