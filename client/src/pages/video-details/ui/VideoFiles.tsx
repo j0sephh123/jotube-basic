@@ -39,8 +39,8 @@ export function VideoFiles({
               Files
             </h3>
             <OpenDirectoryButton
-              ytChannelId={ytChannelId}
-              ytVideoId={ytVideoId}
+              collection={ytChannelId}
+              media={ytVideoId}
             />
           </div>
           <div className="text-sm text-gray-600 dark:text-gray-400 mb-4">
@@ -192,8 +192,8 @@ export function VideoFiles({
             Files
           </h3>
           <OpenDirectoryButton
-            ytChannelId={ytChannelId}
-            ytVideoId={ytVideoId}
+            collection={ytChannelId}
+            media={ytVideoId}
           />
         </div>
         <div className="text-center text-gray-500 dark:text-gray-400 py-8">

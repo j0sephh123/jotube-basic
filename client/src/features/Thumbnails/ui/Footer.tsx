@@ -27,8 +27,8 @@ export default function Footer() {
       <div className="font-bold flex items-center gap-4">
         <div>Selected: {selectedImages.length}</div>
         <OpenDirectoryButton
-          ytChannelId={thumbnailsProcessingData[0]?.ytChannelId ?? ""}
-          ytVideoId={thumbnailsProcessingData[0]?.ytVideoId ?? ""}
+          collection={thumbnailsProcessingData[0]?.ytChannelId ?? ""}
+          media={thumbnailsProcessingData[0]?.ytVideoId ?? ""}
         />
       </div>
       <div className="flex items-center gap-2">

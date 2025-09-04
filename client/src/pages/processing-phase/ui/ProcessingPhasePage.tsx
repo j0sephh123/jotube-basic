@@ -4,10 +4,14 @@ import { TableWrapper } from "../TableWrapper";
 import { latestActivityIso, formatRelative, formatAbs } from "@shared/utils";
 import { TitleCell } from "../TitleCell";
 import { StatusCell } from "../StatusCell";
-import { ActionsCell } from "../ActionsCell";
 import { useProcessingPhases } from "@features/ProcessingPhase";
 import { TableRow } from "../TableRow";
-import { Button, CustomLink, StaticStates } from "@shared/ui";
+import {
+  Button,
+  CustomLink,
+  OpenDirectoryButton,
+  StaticStates,
+} from "@shared/ui";
 import clsx from "clsx";
 import { useTypedParams } from "@shared/hooks";
 
@@ -99,7 +103,10 @@ export function ProcessingPhasePage() {
                     <span className="opacity-70">—</span>
                   )}
                 </td>
-                <ActionsCell ytChannelId={v.channel.ytId} ytVideoId={v.ytId} />
+                <OpenDirectoryButton
+                  collection={v.channel.ytId}
+                  media={v.ytId}
+                />
               </TableRow>
             );
           })}

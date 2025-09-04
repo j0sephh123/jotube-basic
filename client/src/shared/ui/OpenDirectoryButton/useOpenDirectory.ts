@@ -2,16 +2,16 @@ import { useMutation } from "@tanstack/react-query";
 import { nestFetcher } from "@shared/api";
 
 export type OpenDirectoryRequest = {
-  ytChannelId: string;
-  ytVideoId?: string;
+  collection: string;
+  media?: string;
 };
 
 export function useOpenDirectory({
-  ytChannelId,
-  ytVideoId,
+  collection,
+  media,
 }: {
-  ytChannelId: string;
-  ytVideoId?: string;
+  collection: string;
+  media?: string;
 }) {
   const { mutateAsync } = useMutation<unknown, unknown, OpenDirectoryRequest>({
     mutationFn: (body: OpenDirectoryRequest) =>
@@ -24,7 +24,7 @@ export function useOpenDirectory({
 
   return () =>
     mutateAsync({
-      ytChannelId,
-      ytVideoId,
+      collection,
+      media,
     });
 }

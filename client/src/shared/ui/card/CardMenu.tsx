@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
-import { MoreVertical, FolderOpen } from "lucide-react";
-import { CopyValue, useOpenDirectory, useClickOutside } from "@shared/ui";
+import { MoreVertical } from "lucide-react";
+import { CopyValue, useClickOutside, OpenDirectoryButton } from "@shared/ui";
 
 type CardMenuProps = {
   id: number;
@@ -8,7 +8,6 @@ type CardMenuProps = {
 };
 
 function CardMenu({ id, ytId }: CardMenuProps) {
-  const handleOpenExplorer = useOpenDirectory({ ytChannelId: ytId });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -23,12 +22,6 @@ function CardMenu({ id, ytId }: CardMenuProps) {
   const handleCopyYoutubeId = (e: React.MouseEvent) => {
     e.stopPropagation();
     navigator.clipboard.writeText(ytId);
-    setIsMenuOpen(false);
-  };
-
-  const handleOpenExplorerClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    handleOpenExplorer();
     setIsMenuOpen(false);
   };
 
@@ -61,13 +54,7 @@ function CardMenu({ id, ytId }: CardMenuProps) {
               <CopyValue type="youtube" value={ytId} />
               <span>Copy YouTube ID</span>
             </button>
-            <button
-              onClick={handleOpenExplorerClick}
-              className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-200 hover:bg-gray-700 rounded transition-colors"
-            >
-              <FolderOpen className="w-4 h-4 text-gray-400" />
-              <span>Open Directory</span>
-            </button>
+            <OpenDirectoryButton collection={ytId} />
           </div>
         </div>
       )}

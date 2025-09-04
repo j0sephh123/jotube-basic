@@ -11,11 +11,11 @@ export class OpenDirectoryController {
   constructor(private readonly filePathService: FilePathService) {}
 
   @Post('/')
-  async openDirectory(@Body() { ytChannelId, ytVideoId }: OpenDirectoryDto) {
+  async openDirectory(@Body() { collection, media }: OpenDirectoryDto) {
     const basePath = this.filePathService.getBasePath();
-    const fullPath = ytVideoId
-      ? `${basePath}/${ytChannelId}/${ytVideoId}`
-      : `${basePath}/${ytChannelId}`;
+    const fullPath = media
+      ? `${basePath}/${collection}/${media}`
+      : `${basePath}/${collection}`;
 
     try {
       await execAsync(`nemo ${fullPath}`);
