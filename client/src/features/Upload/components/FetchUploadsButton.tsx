@@ -4,20 +4,20 @@ import clsx from "clsx";
 import { useRefetchChannelsDashboardQuery } from "@features/Dashboard";
 
 type Props = {
-  ytChannelId: string;
+  channelId: number;
   videoCount: number;
   onSuccess?: () => void;
 };
 
 export default function FetchUploadsButton({
-  ytChannelId,
+  channelId,
   videoCount,
   onSuccess,
 }: Props) {
   const refetchChannelsDashboardQuery = useRefetchChannelsDashboardQuery();
 
   const {
-    mutateAsync: handleFetchUploads,
+    mutateAsync,
     isPending,
     variables,
   } = useFetchUploads({
@@ -31,12 +31,12 @@ export default function FetchUploadsButton({
   });
 
   const isFetchingThisChannel =
-    variables?.ytChannelId === ytChannelId && isPending;
+    variables?.channelId === channelId && isPending;
 
   return (
     <button
       disabled={isFetchingThisChannel}
-      onClick={() => handleFetchUploads({ ytChannelId })}
+      onClick={() => mutateAsync({ channelId })}
       className={clsx(
         "btn btn-sm",
         isFetchingThisChannel ? "btn-disabled" : "btn-primary"

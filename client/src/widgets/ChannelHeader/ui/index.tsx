@@ -92,7 +92,7 @@ const ChannelHeaderInner = ({
               />
               {!fetchedUntilEnd && (
                 <FetchUploadsButton
-                  ytChannelId={ytChannelId}
+                  channelId={channelId}
                   videoCount={videoCount}
                   onSuccess={refetchMetadata}
                 />

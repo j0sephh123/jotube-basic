@@ -15,7 +15,6 @@ import { videoExtensions } from 'src/shared/constants';
 import { FileOperationService } from 'src/file/file-operation.service';
 import { DirectoryService } from 'src/file/directory.service';
 import { YoutubeService } from 'src/core/external-services/youtube-api/youtube.service';
-import { fetchUploadsDto } from 'src/uploads-video/dtos/fetch-uploads.dto';
 import { syncUploadsDto } from 'src/uploads-video/dtos/sync-uploads.dto';
 import { cleanShortUploadsDto } from 'src/uploads-video/dtos/clean-short-uploads.dto';
 import { ArtifactType } from '@prisma/client';
@@ -25,6 +24,7 @@ import { UploadsListInput } from './dtos/uploads-list.input';
 import { VideoByYtIdResponse } from './dtos/get-video-by-ytid.response';
 import { GetVideoByYtIdInput } from './dtos/get-video-by-ytid.input';
 import { DeleteUploadsInput } from './dtos/delete-uploads.input';
+import { FetchUploadsInput } from './dtos/fetch-uploads.input';
 
 @Injectable()
 export class UploadsVideoService {
@@ -296,9 +296,9 @@ export class UploadsVideoService {
     return { success: true };
   }
 
-  async fetchUploads({ ytChannelId }: fetchUploadsDto) {
+  async fetchUploads({ channelId }: FetchUploadsInput) {
     const channel = await this.prismaService.channel.findUnique({
-      where: { ytId: ytChannelId },
+      where: { id: channelId },
       select: {
         uploads: {
           orderBy: { publishedAt: 'asc' },
@@ -308,6 +308,7 @@ export class UploadsVideoService {
         fetchedUntilEnd: true,
         id: true,
         title: true,
+        ytId: true,
       },
     });
 
@@ -315,7 +316,7 @@ export class UploadsVideoService {
       throw new Error('Channel not found');
     }
 
-    const { fetchedUntilEnd, id } = channel;
+    const { fetchedUntilEnd, id, ytId: ytChannelId } = channel;
 
     if (fetchedUntilEnd) {
       throw new Error('we are done. no more uploads to fetch');

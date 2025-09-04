@@ -206,7 +206,7 @@ export type FetchDashboardInput = {
 };
 
 export type FetchUploadsInput = {
-  ytChannelId: Scalars['String']['input'];
+  channelId: Scalars['Float']['input'];
 };
 
 export type FetchUploadsResponse = {

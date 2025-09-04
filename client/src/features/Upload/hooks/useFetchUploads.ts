@@ -8,7 +8,7 @@ type UseFetchUploadsProps = {
 
 export function useFetchUploads({ onError, onSuccess }: UseFetchUploadsProps) {
   const [currentVariables, setCurrentVariables] = useState<{
-    ytChannelId: string;
+    channelId: number;
   } | null>(null);
 
   const [fetchUploadsMutation, { loading }] = useFetchUploadsMutation({
@@ -20,7 +20,7 @@ export function useFetchUploads({ onError, onSuccess }: UseFetchUploadsProps) {
     },
   });
 
-  const mutateAsync = (body: { ytChannelId: string }) => {
+  const mutateAsync = (body: { channelId: number }) => {
     setCurrentVariables(body);
     return fetchUploadsMutation({
       variables: {

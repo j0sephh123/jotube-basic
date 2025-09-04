@@ -177,7 +177,7 @@ input FetchDashboardInput {
 }
 
 input FetchUploadsInput {
-  ytChannelId: String!
+  channelId: Float!
 }
 
 type FetchUploadsResponse {

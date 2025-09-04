@@ -94,7 +94,7 @@ export default function ChannelDashboardCard({
   );
 
   const fetchUploadsButton = (
-    <FetchUploadsButton ytChannelId={ytId} videoCount={videoCount} />
+    <FetchUploadsButton channelId={id} videoCount={videoCount} />
   );
 
   const getDeleteButtonSlot = () => {
