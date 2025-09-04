@@ -1,0 +1,105 @@
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/core/database/prisma/prisma.service';
+import { CreateEpisodeInput, UpdateEpisodeInput, EpisodeMessage } from './dtos';
+
+@Injectable()
+export class EpisodeService {
+  constructor(private readonly prismaService: PrismaService) {}
+
+  async create({ identifier, title, publishedAt, tvId }: CreateEpisodeInput) {
+    try {
+      const episode = await this.prismaService.episode.create({
+        data: {
+          identifier,
+          title,
+          artifact: 'default', // TODO: Set appropriate default or generate artifact
+          publishedAt,
+          tvId,
+        },
+      });
+
+      return {
+        episode,
+        message: EpisodeMessage.CREATED_SUCCESSFULLY,
+      };
+    } catch {
+      return {
+        episode: null,
+        message: EpisodeMessage.FAILED_TO_CREATE,
+      };
+    }
+  }
+
+  async findAll() {
+    return this.prismaService.episode.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+      include: {
+        tv: true,
+      },
+    });
+  }
+
+  async findByTvId(tvId: number) {
+    return this.prismaService.episode.findMany({
+      where: { tvId },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      include: {
+        tv: true,
+      },
+    });
+  }
+
+  async findOne(id: number) {
+    return this.prismaService.episode.findUnique({
+      where: { id },
+      include: {
+        tv: true,
+      },
+    });
+  }
+
+  async update(
+    id: number,
+    { identifier, title, publishedAt }: UpdateEpisodeInput,
+  ) {
+    try {
+      const episode = await this.prismaService.episode.update({
+        where: { id },
+        data: {
+          identifier,
+          title,
+          publishedAt,
+        },
+        include: {
+          tv: true,
+        },
+      });
+
+      return {
+        episode,
+        message: EpisodeMessage.UPDATED_SUCCESSFULLY,
+      };
+    } catch {
+      return {
+        episode: null,
+        message: EpisodeMessage.FAILED_TO_UPDATE,
+      };
+    }
+  }
+
+  async delete(id: number) {
+    try {
+      await this.prismaService.episode.delete({
+        where: { id },
+      });
+
+      return { success: true, message: 'Episode deleted successfully' };
+    } catch {
+      return { success: false, message: 'Failed to delete episode' };
+    }
+  }
+}

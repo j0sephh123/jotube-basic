@@ -91,6 +91,20 @@ export type CreateChannelResponse = {
   ytChannelId?: Maybe<Scalars['String']['output']>;
 };
 
+export type CreateEpisodeInput = {
+  artifact: Scalars['String']['input'];
+  identifier: Scalars['String']['input'];
+  publishedAt?: InputMaybe<Scalars['String']['input']>;
+  title: Scalars['String']['input'];
+  tvId: Scalars['Int']['input'];
+};
+
+export type CreateEpisodeResponse = {
+  __typename?: 'CreateEpisodeResponse';
+  episode?: Maybe<Episode>;
+  message: Scalars['String']['output'];
+};
+
 export type CreatePlaylistInput = {
   name: Scalars['String']['input'];
 };
@@ -158,6 +172,16 @@ export type DeleteChannelResponse = {
   success: Scalars['Boolean']['output'];
 };
 
+export type DeleteEpisodeInput = {
+  id: Scalars['Int']['input'];
+};
+
+export type DeleteEpisodeResponse = {
+  __typename?: 'DeleteEpisodeResponse';
+  message: Scalars['String']['output'];
+  success: Scalars['Boolean']['output'];
+};
+
 export type DeleteFileDto = {
   deleteType: DeleteType;
   ytChannelId: Scalars['String']['input'];
@@ -209,6 +233,18 @@ export type DirectorySizeResponse = {
   sizeMB: Scalars['Float']['output'];
 };
 
+export type Episode = {
+  __typename?: 'Episode';
+  artifact: Scalars['String']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  identifier: Scalars['String']['output'];
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  title: Scalars['String']['output'];
+  tvId: Scalars['ID']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+};
+
 export type FeaturedScreenshotResponse = {
   __typename?: 'FeaturedScreenshotResponse';
   id: Scalars['Int']['output'];
@@ -251,6 +287,10 @@ export type FinishProcessUploadResponse = {
   ytId: Scalars['String']['output'];
 };
 
+export type GetEpisodeInput = {
+  id: Scalars['Int']['input'];
+};
+
 export type GetScreenshotsInput = {
   channelIds?: InputMaybe<Array<Scalars['Float']['input']>>;
 };
@@ -276,9 +316,11 @@ export type Mutation = {
   __typename?: 'Mutation';
   cleanShortUploads: CleanShortUploadsResponse;
   createChannel: CreateChannelResponse;
+  createEpisode: CreateEpisodeResponse;
   createPlaylist: CreatePlaylistResponse;
   createTv: CreateTvResponse;
   deleteChannel: DeleteChannelResponse;
+  deleteEpisode: DeleteEpisodeResponse;
   deleteFileOrDirectory: DeleteFileResponse;
   deletePlaylist: DeletePlaylistResponse;
   deleteTv: DeleteTvResponse;
@@ -288,6 +330,7 @@ export type Mutation = {
   saveUpload: SaveUploadResponse;
   syncUploads: SyncUploadsResponse;
   updateChannelPlaylist: UpdateChannelPlaylistResponse;
+  updateEpisode: UpdateEpisodeResponse;
   updatePlaylist: UpdatePlaylistResponse;
   updateTv: UpdateTvResponse;
 };
@@ -303,6 +346,11 @@ export type MutationCreateChannelArgs = {
 };
 
 
+export type MutationCreateEpisodeArgs = {
+  createEpisodeInput: CreateEpisodeInput;
+};
+
+
 export type MutationCreatePlaylistArgs = {
   createPlaylistInput: CreatePlaylistInput;
 };
@@ -315,6 +363,11 @@ export type MutationCreateTvArgs = {
 
 export type MutationDeleteChannelArgs = {
   id: Scalars['Float']['input'];
+};
+
+
+export type MutationDeleteEpisodeArgs = {
+  deleteEpisodeInput: DeleteEpisodeInput;
 };
 
 
@@ -362,6 +415,12 @@ export type MutationSyncUploadsArgs = {
 
 export type MutationUpdateChannelPlaylistArgs = {
   updateChannelPlaylistInput: UpdateChannelPlaylistInput;
+};
+
+
+export type MutationUpdateEpisodeArgs = {
+  id: Scalars['Float']['input'];
+  updateEpisodeInput: UpdateEpisodeInput;
 };
 
 
@@ -466,7 +525,10 @@ export type Query = {
   channelScreenshots: Array<GetScreenshotsResponse>;
   fetchDashboard: ChannelsDashboardResponse;
   fetchVideosDashboard: VideosDashboardResponse;
+  getAllEpisodes: Array<Episode>;
   getAllTvs: Array<Tv>;
+  getEpisode?: Maybe<Episode>;
+  getEpisodesByTvId: Array<Episode>;
   getScreenshots: Array<GetScreenshotsResponse>;
   getTv?: Maybe<Tv>;
   getVideoByYtId: VideoByYtIdResponse;
@@ -510,6 +572,16 @@ export type QueryFetchVideosDashboardArgs = {
   screenshotMax?: InputMaybe<Scalars['Float']['input']>;
   screenshotMin?: InputMaybe<Scalars['Float']['input']>;
   sortOrder?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryGetEpisodeArgs = {
+  getEpisodeInput: GetEpisodeInput;
+};
+
+
+export type QueryGetEpisodesByTvIdArgs = {
+  tvId: Scalars['Float']['input'];
 };
 
 
@@ -702,6 +774,19 @@ export type UpdateChannelPlaylistResponse = {
   title: Scalars['String']['output'];
   videoCount: Scalars['Int']['output'];
   ytId: Scalars['String']['output'];
+};
+
+export type UpdateEpisodeInput = {
+  artifact: Scalars['String']['input'];
+  identifier: Scalars['String']['input'];
+  publishedAt?: InputMaybe<Scalars['String']['input']>;
+  title: Scalars['String']['input'];
+};
+
+export type UpdateEpisodeResponse = {
+  __typename?: 'UpdateEpisodeResponse';
+  episode?: Maybe<Episode>;
+  message: Scalars['String']['output'];
 };
 
 export type UpdatePlaylistInput = {
@@ -969,6 +1054,47 @@ export type FetchVideosDashboardQueryVariables = Exact<{
 
 
 export type FetchVideosDashboardQuery = { __typename?: 'Query', fetchVideosDashboard: { __typename?: 'VideosDashboardResponse', total: number, videos: Array<{ __typename?: 'DashboardVideoResponse', id: number, ytId: string, title: string, src: string, channelId: number, channelTitle: string, channelYtId: string, screenshotCount: number, featuredScreenshots: Array<{ __typename?: 'FeaturedScreenshotResponse', src: string, id: number, second: number, ytVideoId: string }> }> } };
+
+export type GetAllEpisodesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllEpisodesQuery = { __typename?: 'Query', getAllEpisodes: Array<{ __typename?: 'Episode', id: string, identifier: string, title: string, artifact: string, publishedAt?: any | null, createdAt: any, updatedAt: any, tvId: string }> };
+
+export type GetEpisodesByTvIdQueryVariables = Exact<{
+  tvId: Scalars['Float']['input'];
+}>;
+
+
+export type GetEpisodesByTvIdQuery = { __typename?: 'Query', getEpisodesByTvId: Array<{ __typename?: 'Episode', id: string, identifier: string, title: string, artifact: string, publishedAt?: any | null, createdAt: any, updatedAt: any, tvId: string }> };
+
+export type GetEpisodeQueryVariables = Exact<{
+  getEpisodeInput: GetEpisodeInput;
+}>;
+
+
+export type GetEpisodeQuery = { __typename?: 'Query', getEpisode?: { __typename?: 'Episode', id: string, identifier: string, title: string, artifact: string, publishedAt?: any | null, createdAt: any, updatedAt: any, tvId: string } | null };
+
+export type CreateEpisodeMutationVariables = Exact<{
+  createEpisodeInput: CreateEpisodeInput;
+}>;
+
+
+export type CreateEpisodeMutation = { __typename?: 'Mutation', createEpisode: { __typename?: 'CreateEpisodeResponse', message: string, episode?: { __typename?: 'Episode', id: string, identifier: string, title: string, artifact: string, publishedAt?: any | null, createdAt: any, updatedAt: any, tvId: string } | null } };
+
+export type UpdateEpisodeMutationVariables = Exact<{
+  id: Scalars['Float']['input'];
+  updateEpisodeInput: UpdateEpisodeInput;
+}>;
+
+
+export type UpdateEpisodeMutation = { __typename?: 'Mutation', updateEpisode: { __typename?: 'UpdateEpisodeResponse', message: string, episode?: { __typename?: 'Episode', id: string, identifier: string, title: string, artifact: string, publishedAt?: any | null, createdAt: any, updatedAt: any, tvId: string } | null } };
+
+export type DeleteEpisodeMutationVariables = Exact<{
+  deleteEpisodeInput: DeleteEpisodeInput;
+}>;
+
+
+export type DeleteEpisodeMutation = { __typename?: 'Mutation', deleteEpisode: { __typename?: 'DeleteEpisodeResponse', success: boolean, message: string } };
 
 export type GetProcessingPhasesQueryVariables = Exact<{
   variant?: InputMaybe<Scalars['String']['input']>;
@@ -1796,6 +1922,267 @@ export type FetchVideosDashboardQueryHookResult = ReturnType<typeof useFetchVide
 export type FetchVideosDashboardLazyQueryHookResult = ReturnType<typeof useFetchVideosDashboardLazyQuery>;
 export type FetchVideosDashboardSuspenseQueryHookResult = ReturnType<typeof useFetchVideosDashboardSuspenseQuery>;
 export type FetchVideosDashboardQueryResult = Apollo.QueryResult<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>;
+export const GetAllEpisodesDocument = gql`
+    query GetAllEpisodes {
+  getAllEpisodes {
+    id
+    identifier
+    title
+    artifact
+    publishedAt
+    createdAt
+    updatedAt
+    tvId
+  }
+}
+    `;
+
+/**
+ * __useGetAllEpisodesQuery__
+ *
+ * To run a query within a React component, call `useGetAllEpisodesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllEpisodesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllEpisodesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllEpisodesQuery(baseOptions?: Apollo.QueryHookOptions<GetAllEpisodesQuery, GetAllEpisodesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllEpisodesQuery, GetAllEpisodesQueryVariables>(GetAllEpisodesDocument, options);
+      }
+export function useGetAllEpisodesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllEpisodesQuery, GetAllEpisodesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllEpisodesQuery, GetAllEpisodesQueryVariables>(GetAllEpisodesDocument, options);
+        }
+export function useGetAllEpisodesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAllEpisodesQuery, GetAllEpisodesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAllEpisodesQuery, GetAllEpisodesQueryVariables>(GetAllEpisodesDocument, options);
+        }
+export type GetAllEpisodesQueryHookResult = ReturnType<typeof useGetAllEpisodesQuery>;
+export type GetAllEpisodesLazyQueryHookResult = ReturnType<typeof useGetAllEpisodesLazyQuery>;
+export type GetAllEpisodesSuspenseQueryHookResult = ReturnType<typeof useGetAllEpisodesSuspenseQuery>;
+export type GetAllEpisodesQueryResult = Apollo.QueryResult<GetAllEpisodesQuery, GetAllEpisodesQueryVariables>;
+export const GetEpisodesByTvIdDocument = gql`
+    query GetEpisodesByTvId($tvId: Float!) {
+  getEpisodesByTvId(tvId: $tvId) {
+    id
+    identifier
+    title
+    artifact
+    publishedAt
+    createdAt
+    updatedAt
+    tvId
+  }
+}
+    `;
+
+/**
+ * __useGetEpisodesByTvIdQuery__
+ *
+ * To run a query within a React component, call `useGetEpisodesByTvIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEpisodesByTvIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEpisodesByTvIdQuery({
+ *   variables: {
+ *      tvId: // value for 'tvId'
+ *   },
+ * });
+ */
+export function useGetEpisodesByTvIdQuery(baseOptions: Apollo.QueryHookOptions<GetEpisodesByTvIdQuery, GetEpisodesByTvIdQueryVariables> & ({ variables: GetEpisodesByTvIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetEpisodesByTvIdQuery, GetEpisodesByTvIdQueryVariables>(GetEpisodesByTvIdDocument, options);
+      }
+export function useGetEpisodesByTvIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEpisodesByTvIdQuery, GetEpisodesByTvIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetEpisodesByTvIdQuery, GetEpisodesByTvIdQueryVariables>(GetEpisodesByTvIdDocument, options);
+        }
+export function useGetEpisodesByTvIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetEpisodesByTvIdQuery, GetEpisodesByTvIdQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetEpisodesByTvIdQuery, GetEpisodesByTvIdQueryVariables>(GetEpisodesByTvIdDocument, options);
+        }
+export type GetEpisodesByTvIdQueryHookResult = ReturnType<typeof useGetEpisodesByTvIdQuery>;
+export type GetEpisodesByTvIdLazyQueryHookResult = ReturnType<typeof useGetEpisodesByTvIdLazyQuery>;
+export type GetEpisodesByTvIdSuspenseQueryHookResult = ReturnType<typeof useGetEpisodesByTvIdSuspenseQuery>;
+export type GetEpisodesByTvIdQueryResult = Apollo.QueryResult<GetEpisodesByTvIdQuery, GetEpisodesByTvIdQueryVariables>;
+export const GetEpisodeDocument = gql`
+    query GetEpisode($getEpisodeInput: GetEpisodeInput!) {
+  getEpisode(getEpisodeInput: $getEpisodeInput) {
+    id
+    identifier
+    title
+    artifact
+    publishedAt
+    createdAt
+    updatedAt
+    tvId
+  }
+}
+    `;
+
+/**
+ * __useGetEpisodeQuery__
+ *
+ * To run a query within a React component, call `useGetEpisodeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEpisodeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEpisodeQuery({
+ *   variables: {
+ *      getEpisodeInput: // value for 'getEpisodeInput'
+ *   },
+ * });
+ */
+export function useGetEpisodeQuery(baseOptions: Apollo.QueryHookOptions<GetEpisodeQuery, GetEpisodeQueryVariables> & ({ variables: GetEpisodeQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetEpisodeQuery, GetEpisodeQueryVariables>(GetEpisodeDocument, options);
+      }
+export function useGetEpisodeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEpisodeQuery, GetEpisodeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetEpisodeQuery, GetEpisodeQueryVariables>(GetEpisodeDocument, options);
+        }
+export function useGetEpisodeSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetEpisodeQuery, GetEpisodeQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetEpisodeQuery, GetEpisodeQueryVariables>(GetEpisodeDocument, options);
+        }
+export type GetEpisodeQueryHookResult = ReturnType<typeof useGetEpisodeQuery>;
+export type GetEpisodeLazyQueryHookResult = ReturnType<typeof useGetEpisodeLazyQuery>;
+export type GetEpisodeSuspenseQueryHookResult = ReturnType<typeof useGetEpisodeSuspenseQuery>;
+export type GetEpisodeQueryResult = Apollo.QueryResult<GetEpisodeQuery, GetEpisodeQueryVariables>;
+export const CreateEpisodeDocument = gql`
+    mutation CreateEpisode($createEpisodeInput: CreateEpisodeInput!) {
+  createEpisode(createEpisodeInput: $createEpisodeInput) {
+    episode {
+      id
+      identifier
+      title
+      artifact
+      publishedAt
+      createdAt
+      updatedAt
+      tvId
+    }
+    message
+  }
+}
+    `;
+export type CreateEpisodeMutationFn = Apollo.MutationFunction<CreateEpisodeMutation, CreateEpisodeMutationVariables>;
+
+/**
+ * __useCreateEpisodeMutation__
+ *
+ * To run a mutation, you first call `useCreateEpisodeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateEpisodeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createEpisodeMutation, { data, loading, error }] = useCreateEpisodeMutation({
+ *   variables: {
+ *      createEpisodeInput: // value for 'createEpisodeInput'
+ *   },
+ * });
+ */
+export function useCreateEpisodeMutation(baseOptions?: Apollo.MutationHookOptions<CreateEpisodeMutation, CreateEpisodeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateEpisodeMutation, CreateEpisodeMutationVariables>(CreateEpisodeDocument, options);
+      }
+export type CreateEpisodeMutationHookResult = ReturnType<typeof useCreateEpisodeMutation>;
+export type CreateEpisodeMutationResult = Apollo.MutationResult<CreateEpisodeMutation>;
+export type CreateEpisodeMutationOptions = Apollo.BaseMutationOptions<CreateEpisodeMutation, CreateEpisodeMutationVariables>;
+export const UpdateEpisodeDocument = gql`
+    mutation UpdateEpisode($id: Float!, $updateEpisodeInput: UpdateEpisodeInput!) {
+  updateEpisode(id: $id, updateEpisodeInput: $updateEpisodeInput) {
+    episode {
+      id
+      identifier
+      title
+      artifact
+      publishedAt
+      createdAt
+      updatedAt
+      tvId
+    }
+    message
+  }
+}
+    `;
+export type UpdateEpisodeMutationFn = Apollo.MutationFunction<UpdateEpisodeMutation, UpdateEpisodeMutationVariables>;
+
+/**
+ * __useUpdateEpisodeMutation__
+ *
+ * To run a mutation, you first call `useUpdateEpisodeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateEpisodeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateEpisodeMutation, { data, loading, error }] = useUpdateEpisodeMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      updateEpisodeInput: // value for 'updateEpisodeInput'
+ *   },
+ * });
+ */
+export function useUpdateEpisodeMutation(baseOptions?: Apollo.MutationHookOptions<UpdateEpisodeMutation, UpdateEpisodeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateEpisodeMutation, UpdateEpisodeMutationVariables>(UpdateEpisodeDocument, options);
+      }
+export type UpdateEpisodeMutationHookResult = ReturnType<typeof useUpdateEpisodeMutation>;
+export type UpdateEpisodeMutationResult = Apollo.MutationResult<UpdateEpisodeMutation>;
+export type UpdateEpisodeMutationOptions = Apollo.BaseMutationOptions<UpdateEpisodeMutation, UpdateEpisodeMutationVariables>;
+export const DeleteEpisodeDocument = gql`
+    mutation DeleteEpisode($deleteEpisodeInput: DeleteEpisodeInput!) {
+  deleteEpisode(deleteEpisodeInput: $deleteEpisodeInput) {
+    success
+    message
+  }
+}
+    `;
+export type DeleteEpisodeMutationFn = Apollo.MutationFunction<DeleteEpisodeMutation, DeleteEpisodeMutationVariables>;
+
+/**
+ * __useDeleteEpisodeMutation__
+ *
+ * To run a mutation, you first call `useDeleteEpisodeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteEpisodeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteEpisodeMutation, { data, loading, error }] = useDeleteEpisodeMutation({
+ *   variables: {
+ *      deleteEpisodeInput: // value for 'deleteEpisodeInput'
+ *   },
+ * });
+ */
+export function useDeleteEpisodeMutation(baseOptions?: Apollo.MutationHookOptions<DeleteEpisodeMutation, DeleteEpisodeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteEpisodeMutation, DeleteEpisodeMutationVariables>(DeleteEpisodeDocument, options);
+      }
+export type DeleteEpisodeMutationHookResult = ReturnType<typeof useDeleteEpisodeMutation>;
+export type DeleteEpisodeMutationResult = Apollo.MutationResult<DeleteEpisodeMutation>;
+export type DeleteEpisodeMutationOptions = Apollo.BaseMutationOptions<DeleteEpisodeMutation, DeleteEpisodeMutationVariables>;
 export const GetProcessingPhasesDocument = gql`
     query GetProcessingPhases($variant: String) {
   processingPhases(variant: $variant) {

@@ -67,6 +67,18 @@ type CreateChannelResponse {
   ytChannelId: String
 }
 
+input CreateEpisodeInput {
+  identifier: String!
+  publishedAt: String
+  title: String!
+  tvId: Int!
+}
+
+type CreateEpisodeResponse {
+  episode: Episode
+  message: String!
+}
+
 input CreatePlaylistInput {
   name: String!
 }
@@ -133,6 +145,15 @@ type DeleteChannelResponse {
   success: Boolean!
 }
 
+input DeleteEpisodeInput {
+  id: Int!
+}
+
+type DeleteEpisodeResponse {
+  message: String!
+  success: Boolean!
+}
+
 input DeleteFileDto {
   deleteType: DeleteType!
   ytChannelId: String!
@@ -179,6 +200,17 @@ type DirectorySizeResponse {
   sizeMB: Float!
 }
 
+type Episode {
+  artifact: String!
+  createdAt: DateTime!
+  id: ID!
+  identifier: String!
+  publishedAt: DateTime
+  title: String!
+  tvId: ID!
+  updatedAt: DateTime!
+}
+
 type FeaturedScreenshotResponse {
   id: Int!
   second: Int!
@@ -217,6 +249,10 @@ type FinishProcessUploadResponse {
   ytId: String!
 }
 
+input GetEpisodeInput {
+  id: Int!
+}
+
 input GetScreenshotsInput {
   channelIds: [Float!]
 }
@@ -240,9 +276,11 @@ input GetVideoByYtIdInput {
 type Mutation {
   cleanShortUploads(cleanShortUploadsInput: CleanShortUploadsInput!): CleanShortUploadsResponse!
   createChannel(createChannelInput: CreateChannelInput!): CreateChannelResponse!
+  createEpisode(createEpisodeInput: CreateEpisodeInput!): CreateEpisodeResponse!
   createPlaylist(createPlaylistInput: CreatePlaylistInput!): CreatePlaylistResponse!
   createTv(createTvInput: CreateTvInput!): CreateTvResponse!
   deleteChannel(id: Float!): DeleteChannelResponse!
+  deleteEpisode(deleteEpisodeInput: DeleteEpisodeInput!): DeleteEpisodeResponse!
   deleteFileOrDirectory(deleteFileInput: DeleteFileDto!): DeleteFileResponse!
   deletePlaylist(id: Int!): DeletePlaylistResponse!
   deleteTv(deleteTvInput: DeleteTvInput!): DeleteTvResponse!
@@ -252,6 +290,7 @@ type Mutation {
   saveUpload(saveUploadInput: SaveUploadInput!): SaveUploadResponse!
   syncUploads(syncUploadsInput: SyncUploadsInput!): SyncUploadsResponse!
   updateChannelPlaylist(updateChannelPlaylistInput: UpdateChannelPlaylistInput!): UpdateChannelPlaylistResponse!
+  updateEpisode(id: Float!, updateEpisodeInput: UpdateEpisodeInput!): UpdateEpisodeResponse!
   updatePlaylist(id: Int!, updatePlaylistInput: UpdatePlaylistInput!): UpdatePlaylistResponse!
   updateTv(id: Float!, updateTvInput: UpdateTvInput!): UpdateTvResponse!
 }
@@ -337,7 +376,10 @@ type Query {
   channelScreenshots(input: GetScreenshotsInput!): [GetScreenshotsResponse!]!
   fetchDashboard(fetchDashboardInput: FetchDashboardInput!): ChannelsDashboardResponse!
   fetchVideosDashboard(page: Float, screenshotMax: Float, screenshotMin: Float, sortOrder: String): VideosDashboardResponse!
+  getAllEpisodes: [Episode!]!
   getAllTvs: [Tv!]!
+  getEpisode(getEpisodeInput: GetEpisodeInput!): Episode
+  getEpisodesByTvId(tvId: Float!): [Episode!]!
   getScreenshots(input: GetScreenshotsInput!): [GetScreenshotsResponse!]!
   getTv(getTvInput: GetTvInput!): Tv
   getVideoByYtId(getVideoByYtIdInput: GetVideoByYtIdInput!): VideoByYtIdResponse!
@@ -469,6 +511,17 @@ type UpdateChannelPlaylistResponse {
   title: String!
   videoCount: Int!
   ytId: String!
+}
+
+input UpdateEpisodeInput {
+  identifier: String!
+  publishedAt: String
+  title: String!
+}
+
+type UpdateEpisodeResponse {
+  episode: Episode
+  message: String!
 }
 
 input UpdatePlaylistInput {

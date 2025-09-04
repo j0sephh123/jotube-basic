@@ -1,6 +1,7 @@
 import { setTvModal, useGetAllTvs, useDeleteTv } from "@features/Tv";
 import { Button, StaticStates } from "@shared/ui";
 import { useDialog } from "@shared/hooks";
+import { Link } from "react-router-dom";
 
 export const TvPage = () => {
   const { data, loading, error } = useGetAllTvs();
@@ -48,6 +49,9 @@ export const TvPage = () => {
                 </p>
               )}
               <div className="card-actions justify-end">
+                <Link to={`/tv/${tv.id}`} className="btn btn-sm btn-outline">
+                  View Episodes
+                </Link>
                 <button
                   className="btn btn-sm btn-outline"
                   onClick={() => handleEdit(Number(tv.id))}

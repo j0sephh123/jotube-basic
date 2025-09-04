@@ -39,6 +39,7 @@ import { ImageNavigatorModule } from './image-navigator/image-navigator.module';
 import { ProcessingPhaseModule } from './processing-phase/processing-phase.module';
 import { ConverterModule } from './converter/converter.module';
 import { TvModule } from './tv/tv.module';
+import { EpisodeModule } from './episode/episode.module';
 
 @Module({
   imports: [
@@ -97,6 +98,7 @@ import { TvModule } from './tv/tv.module';
     ProcessingPhaseModule,
     ConverterModule,
     TvModule,
+    EpisodeModule,
   ],
   controllers: [QueueController, SearchController, StatisticsController],
   providers: [
