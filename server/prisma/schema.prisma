@@ -134,3 +134,30 @@ enum ArtifactType {
   THUMBNAIL
   SCREENSHOT
 }
+
+model TV {
+  id         Int      @id @default(autoincrement())
+  identifier String   @unique @db.VarChar(255)
+  title      String   @unique @db.VarChar(255)
+  // Optional, positive: use UNSIGNED to prevent negatives
+  duration   Int?     @db.UnsignedInt
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  episodes Episode[]
+}
+
+model Episode {
+  id          Int       @id @default(autoincrement())
+  identifier  String    @unique @db.VarChar(255)
+  title       String    @unique @db.VarChar(255)
+  artifact    String    @db.VarChar(255)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  tvId Int
+  tv   TV  @relation(fields: [tvId], references: [id], onDelete: Cascade)
+
+  @@index([tvId])
+}
