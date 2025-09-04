@@ -14,19 +14,13 @@ type VideoScreenshotCount = {
 
 type SortOption = "count" | "date";
 
-function GalleryVideosListInner({
-  channelId,
-  ytChannelId,
-}: {
-  channelId: number;
-  ytChannelId: string;
-}) {
+function GalleryVideosListInner({ channelId }: { channelId: number }) {
   const [sortBy, setSortBy] = useState<SortOption>("count");
 
   const handleVideoClick = (videoId: string) => {
     setGalleryModal({
       ytVideoId: videoId,
-      ytChannelIds: [ytChannelId],
+      channelIds: [channelId],
     });
   };
 

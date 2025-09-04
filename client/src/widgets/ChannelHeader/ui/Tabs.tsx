@@ -55,7 +55,7 @@ function TabsInner({
   const handleGalleryClick = () => {
     setGalleryModal({
       ytVideoId: "",
-      ytChannelIds: [ytChannelId],
+      channelIds: [channelId],
     });
   };
 

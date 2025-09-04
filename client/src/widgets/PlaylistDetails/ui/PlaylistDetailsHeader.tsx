@@ -70,7 +70,7 @@ export default function PlaylistDetailsHeader({
             onClick={() =>
               setGalleryModal({
                 ytVideoId: "",
-                ytChannelIds: channels.map((channel) => channel.ytId),
+                channelIds: channels.map((channel) => channel.id),
               })
             }
             title="Gallery"

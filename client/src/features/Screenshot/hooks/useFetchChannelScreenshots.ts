@@ -1,5 +1,6 @@
 import {
   type GetChannelScreenshotsQuery,
+  type GetScreenshotsInput,
   useGetChannelScreenshotsQuery,
 } from "@shared/api";
 import { useApolloClient } from "@apollo/client";
@@ -8,10 +9,10 @@ import { useCallback } from "react";
 export type ChannelScreenshot =
   GetChannelScreenshotsQuery["channelScreenshots"][number];
 
-export function useFetchChannelScreenshots(ytChannelIds: string[]) {
+export function useFetchChannelScreenshots(input: GetScreenshotsInput) {
   const { data, loading, error } = useGetChannelScreenshotsQuery({
-    variables: { input: { ytChannelIds } },
-    skip: !ytChannelIds?.length,
+    variables: { input },
+    skip: !input.channelIds?.length,
   });
 
   return {

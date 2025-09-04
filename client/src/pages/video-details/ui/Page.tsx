@@ -43,7 +43,7 @@ function VideoDetailsPageInner({
   const handleGalleryClick = () => {
     setGalleryModal({
       ytVideoId,
-      ytChannelIds: [ytChannelId],
+      channelIds: [channelId],
     });
   };
 
