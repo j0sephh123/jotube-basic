@@ -230,7 +230,7 @@ export type FinishProcessUploadResponse = {
 };
 
 export type GetScreenshotsInput = {
-  ytChannelIds?: InputMaybe<Array<Scalars['String']['input']>>;
+  channelIds?: InputMaybe<Array<Scalars['Float']['input']>>;
 };
 
 export type GetScreenshotsResponse = {

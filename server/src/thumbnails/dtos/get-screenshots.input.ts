@@ -1,11 +1,11 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { IsArray, IsString, IsOptional } from 'class-validator';
+import { IsArray, IsNumber, IsOptional } from 'class-validator';
 
 @InputType()
 export class GetScreenshotsInput {
-  @Field(() => [String], { nullable: true })
+  @Field(() => [Number], { nullable: true })
   @IsOptional()
   @IsArray()
-  @IsString({ each: true })
-  ytChannelIds?: string[];
+  @IsNumber({}, { each: true })
+  channelIds?: number[];
 }

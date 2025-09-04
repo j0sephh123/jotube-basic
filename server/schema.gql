@@ -198,7 +198,7 @@ type FinishProcessUploadResponse {
 }
 
 input GetScreenshotsInput {
-  ytChannelIds: [String!]
+  channelIds: [Float!]
 }
 
 type GetScreenshotsResponse {

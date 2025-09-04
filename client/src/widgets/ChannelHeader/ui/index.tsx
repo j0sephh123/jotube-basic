@@ -87,7 +87,7 @@ const ChannelHeaderInner = ({
                 thumbnailArtifactsCount={thumbnailArtifactsCount}
               />
               <ViewScreenshots
-                ytChannelId={ytChannelId}
+                channelId={channelId}
                 screenshotArtifactsCount={screenshotArtifactsCount}
               />
               {!fetchedUntilEnd && (

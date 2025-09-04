@@ -1,17 +1,20 @@
 /* eslint-disable import/no-internal-modules */
 /* eslint-disable boundaries/element-types */
 import { setSlides } from "../model/carouselScreenshotsStore";
-import { useGetScreenshotsLazyQuery } from "@shared/api";
+import {
+  type GetScreenshotsInput,
+  useGetScreenshotsLazyQuery,
+} from "@shared/api";
 
 export function useScreenshotsForCarousel(ytVideoId?: string) {
   const [getScreenshotsQuery] = useGetScreenshotsLazyQuery({
     fetchPolicy: "no-cache",
   });
-  const handleFetch = async (ytChannelIds: string[]) => {
+  const handleFetch = async (channelIds: GetScreenshotsInput["channelIds"]) => {
     try {
       const result = await getScreenshotsQuery({
         variables: {
-          input: { ytChannelIds },
+          input: { channelIds },
         },
       });
       if (!result.data) return;

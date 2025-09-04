@@ -19,13 +19,13 @@ export class ThumbnailsApiService {
     private readonly thumbnailsManagerService: ThumbnailsManagerService,
   ) {}
 
-  public async getScreenshots(ytChannelIds: string[]) {
-    if (ytChannelIds.length === 0) {
+  public async getScreenshots({ channelIds }: GetScreenshotsInput) {
+    if (channelIds.length === 0) {
       return this.getAllChannelsScreenshots();
     }
 
-    const screenshotsPromises = ytChannelIds.map((ytChannelIdArg) =>
-      this.getScreenshotsForChannel(ytChannelIdArg),
+    const screenshotsPromises = channelIds.map((channelId) =>
+      this.getScreenshotsForChannel(channelId),
     );
 
     const channelScreenshots = await Promise.all(screenshotsPromises);
@@ -33,10 +33,11 @@ export class ThumbnailsApiService {
     return channelScreenshots.flat();
   }
 
-  private async getScreenshotsForChannel(ytChannelId: string) {
+  private async getScreenshotsForChannel(channelId: number) {
     const randomScreenshots = await this.prismaService.$queryRaw<Item[]>`
-          SELECT * FROM Screenshot 
-          WHERE ytChannelId = ${ytChannelId}
+          SELECT s.* FROM Screenshot s
+          INNER JOIN Channel c ON s.ytChannelId = c.ytId
+          WHERE c.id = ${channelId}
           ORDER BY RAND() 
           -- LIMIT 50
         `;
@@ -138,10 +139,12 @@ export class ThumbnailsApiService {
     };
   }
 
-  public async getChannelScreenshots({ ytChannelIds }: GetScreenshotsInput) {
+  public async getChannelScreenshots({ channelIds }: GetScreenshotsInput) {
     const screenshots = await this.prismaService.screenshot.findMany({
       where: {
-        ytChannelId: { in: ytChannelIds },
+        channel: {
+          id: { in: channelIds },
+        },
       },
       orderBy: [{ ytVideoId: 'asc' }, { second: 'asc' }],
       select: {

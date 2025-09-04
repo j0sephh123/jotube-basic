@@ -110,7 +110,7 @@ export function UploadsListItem({
             {type === "screenshots" && (
               <>
                 <Button onClick={handleGalleryClick}>Gallery</Button>
-                <Button onClick={() => handleViewScreenshots([ytChannelId])}>
+                <Button onClick={() => handleViewScreenshots([channelId])}>
                   Screenshots
                 </Button>
               </>

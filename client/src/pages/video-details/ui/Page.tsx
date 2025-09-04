@@ -125,7 +125,7 @@ function VideoDetailsPageInner({
                   <>
                     <Button onClick={handleGalleryClick}>Gallery</Button>
                     <Button
-                      onClick={() => handleViewScreenshots([ytChannelId])}
+                      onClick={() => handleViewScreenshots([channelId])}
                     >
                       Screenshots {`(${video.screenshots})`}
                     </Button>

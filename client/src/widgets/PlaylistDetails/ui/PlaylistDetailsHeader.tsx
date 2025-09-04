@@ -80,7 +80,7 @@ export default function PlaylistDetailsHeader({
           />
           <SmallCard
             onClick={() =>
-              handleGetScreenshots(channels.map((channel) => channel.ytId))
+              handleGetScreenshots(channels.map((channel) => channel.id))
             }
             title="Screenshots"
             value={totalCounts.screenshotCount}

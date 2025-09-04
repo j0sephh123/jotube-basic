@@ -75,7 +75,7 @@ export default function ChannelDashboardCard({
       defaults={defaults}
       storyboard={storyboard}
       onNavigate={navigate}
-      onViewScreenshots={() => handleViewScreenshots([ytId])}
+      onViewScreenshots={() => handleViewScreenshots([id])}
       onViewThumbnails={viewThumbnails}
       onViewStoryboards={() => viewStoryboards.mutateAsync(id)}
     />
