@@ -1,13 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
 import { CreateTvInput, UpdateTvInput, TvMessage } from './dtos';
+import { FolderService } from 'src/file/folder.service';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class TvService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly folderService: FolderService,
+  ) {}
 
-  async create({ identifier, title, duration }: CreateTvInput) {
+  async create({ title, duration }: CreateTvInput) {
     try {
+      const identifier = randomUUID();
+
       const tv = await this.prismaService.tV.create({
         data: {
           identifier,
@@ -15,6 +22,8 @@ export class TvService {
           duration,
         },
       });
+
+      await this.folderService.createTvFolder(identifier);
 
       return {
         tv,
@@ -42,12 +51,11 @@ export class TvService {
     });
   }
 
-  async update(id: number, { identifier, title, duration }: UpdateTvInput) {
+  async update(id: number, { title, duration }: UpdateTvInput) {
     try {
       const tv = await this.prismaService.tV.update({
         where: { id },
         data: {
-          identifier,
           title,
           duration,
         },
@@ -67,6 +75,15 @@ export class TvService {
 
   async delete(id: number) {
     try {
+      const tv = await this.prismaService.tV.findUnique({
+        where: { id },
+        select: { identifier: true },
+      });
+
+      if (tv) {
+        await this.folderService.deleteTvFolder(tv.identifier);
+      }
+
       await this.prismaService.tV.delete({
         where: { id },
       });

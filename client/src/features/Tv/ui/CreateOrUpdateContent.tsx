@@ -8,14 +8,12 @@ import { useState, useEffect } from "react";
 export function CreateOrUpdateContent() {
   const { type, tvId } = useTvModalState();
   const { data: tvs } = useGetAllTvs();
-  const [identifier, setIdentifier] = useState("");
   const [title, setTitle] = useState("");
 
   useEffect(() => {
     if (type === "update" && tvId && tvs) {
       const tv = tvs.find((t) => t.id === String(tvId));
       if (tv) {
-        setIdentifier(tv.identifier);
         setTitle(tv.title);
       }
     }
@@ -23,13 +21,12 @@ export function CreateOrUpdateContent() {
 
   const handleCloseModal = () => {
     closeTvModal();
-    setIdentifier("");
     setTitle("");
   };
 
-  const submitHandler = useSubmit({ identifier, title });
+  const submitHandler = useSubmit({ title });
   const handleSubmit = async () => {
-    if (!identifier.trim() || !title.trim()) {
+    if (!title.trim()) {
       return;
     }
     await submitHandler();
@@ -40,16 +37,6 @@ export function CreateOrUpdateContent() {
     <div className="space-y-4">
       <Title />
       <div className="space-y-4">
-        <div>
-          <Label field="identifier" />
-          <input
-            type="text"
-            value={identifier}
-            onChange={(e) => setIdentifier(e.target.value)}
-            placeholder="Enter TV identifier"
-            className="input input-bordered w-full"
-          />
-        </div>
         <div>
           <Label field="title" />
           <input
@@ -64,7 +51,7 @@ export function CreateOrUpdateContent() {
       <Actions
         onSubmit={handleSubmit}
         onCancel={handleCloseModal}
-        disabled={!identifier.trim() || !title.trim()}
+        disabled={!title.trim()}
       />
     </div>
   );

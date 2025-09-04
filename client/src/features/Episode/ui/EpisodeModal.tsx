@@ -1,4 +1,7 @@
-import { useEpisodeModalState } from "../model/episodeModalStore";
+import {
+  useEpisodeModalState,
+  closeEpisodeModal,
+} from "../model/episodeModalStore";
 import { match } from "ts-pattern";
 import { CreateOrUpdateContent } from "./CreateOrUpdateContent";
 
@@ -16,10 +19,7 @@ export default function EpisodeModal() {
   return (
     <div className="modal modal-open">
       <div className="modal-box">{content}</div>
-      <div
-        className="modal-backdrop"
-        onClick={() => useEpisodeModalState.getState().closeEpisodeModal()}
-      ></div>
+      <div className="modal-backdrop" onClick={() => closeEpisodeModal()}></div>
     </div>
   );
 }

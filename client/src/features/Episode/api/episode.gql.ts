@@ -41,6 +41,11 @@ export const GET_EPISODE = gql`
       createdAt
       updatedAt
       tvId
+      tv {
+        id
+        identifier
+        title
+      }
     }
   }
 `;
@@ -56,6 +61,11 @@ export const GET_EPISODE_DETAILS = gql`
       createdAt
       updatedAt
       tvId
+      tv {
+        id
+        identifier
+        title
+      }
     }
   }
 `;

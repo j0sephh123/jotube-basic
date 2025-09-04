@@ -6,6 +6,7 @@ import { DirectoryService } from './directory.service';
 import { OpenDirectoryController } from './open-directory.controller';
 import { DeleteFileService } from './delete-file.service';
 import { DeleteFileResolver } from './delete-file.resolver';
+import { FolderService } from './folder.service';
 
 @Module({
   imports: [ConfigModule],
@@ -15,6 +16,7 @@ import { DeleteFileResolver } from './delete-file.resolver';
     DirectoryService,
     DeleteFileService,
     DeleteFileResolver,
+    FolderService,
   ],
   controllers: [OpenDirectoryController],
   exports: [
@@ -22,6 +24,7 @@ import { DeleteFileResolver } from './delete-file.resolver';
     FileOperationService,
     DirectoryService,
     DeleteFileService,
+    FolderService,
   ],
 })
 export class FileModule {}

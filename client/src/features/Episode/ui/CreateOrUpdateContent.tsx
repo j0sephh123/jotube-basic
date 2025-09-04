@@ -25,14 +25,12 @@ export function CreateOrUpdateContent({ tvId }: CreateOrUpdateContentProps) {
       : { getEpisodeInput: { id: 0 } }
   );
 
-  const [identifier, setIdentifier] = useState("");
   const [title, setTitle] = useState("");
   const [publishedAt, setPublishedAt] = useState("");
 
   useEffect(() => {
     if (type === "update" && episodeId && episodeData?.getEpisode) {
       const episode = episodeData.getEpisode;
-      setIdentifier(episode.identifier);
       setTitle(episode.title);
       setPublishedAt(
         episode.publishedAt
@@ -40,7 +38,6 @@ export function CreateOrUpdateContent({ tvId }: CreateOrUpdateContentProps) {
           : ""
       );
     } else if (type === "create") {
-      setIdentifier("");
       setTitle("");
       setPublishedAt("");
     }
@@ -48,18 +45,16 @@ export function CreateOrUpdateContent({ tvId }: CreateOrUpdateContentProps) {
 
   const handleCloseModal = () => {
     closeEpisodeModal();
-    setIdentifier("");
     setTitle("");
     setPublishedAt("");
   };
 
   const handleSubmit = async () => {
-    if (!identifier.trim() || !title.trim()) {
+    if (!title.trim()) {
       return;
     }
 
     const episodeData = {
-      identifier: identifier.trim(),
       title: title.trim(),
       publishedAt: publishedAt || undefined,
       tvId,
@@ -74,7 +69,6 @@ export function CreateOrUpdateContent({ tvId }: CreateOrUpdateContentProps) {
         variables: {
           id: episodeId,
           updateEpisodeInput: {
-            identifier: episodeData.identifier,
             title: episodeData.title,
             publishedAt: episodeData.publishedAt,
           },
@@ -91,18 +85,6 @@ export function CreateOrUpdateContent({ tvId }: CreateOrUpdateContentProps) {
         {type === "create" ? "Create Episode" : "Update Episode"}
       </h2>
       <div className="space-y-4">
-        <div>
-          <label className="label">
-            <span className="label-text">Identifier</span>
-          </label>
-          <input
-            type="text"
-            value={identifier}
-            onChange={(e) => setIdentifier(e.target.value)}
-            placeholder="Enter episode identifier"
-            className="input input-bordered w-full"
-          />
-        </div>
         <div>
           <label className="label">
             <span className="label-text">Title</span>
@@ -131,11 +113,7 @@ export function CreateOrUpdateContent({ tvId }: CreateOrUpdateContentProps) {
         <Button variant="outline" onClick={handleCloseModal}>
           Cancel
         </Button>
-        <Button
-          color="primary"
-          onClick={handleSubmit}
-          disabled={!identifier.trim() || !title.trim()}
-        >
+        <Button color="primary" onClick={handleSubmit} disabled={!title.trim()}>
           {type === "create" ? "Create" : "Update"}
         </Button>
       </div>

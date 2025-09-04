@@ -6,7 +6,7 @@ import {
   setEpisodeModal,
   EpisodeModal,
 } from "@features/Episode";
-import { Button, StaticStates } from "@shared/ui";
+import { Button, StaticStates, OpenDirectoryButton } from "@shared/ui";
 import { useDialog } from "@shared/hooks";
 import { Link } from "react-router-dom";
 
@@ -74,6 +74,7 @@ export const TvDetailsPage = () => {
             Duration: {tv.duration} seconds
           </p>
         )}
+        <OpenDirectoryButton collection={tv?.identifier || ""} />
       </div>
 
       <div className="mb-6">
@@ -102,9 +103,13 @@ export const TvDetailsPage = () => {
                     {new Date(episode.publishedAt).toLocaleDateString()}
                   </p>
                 )}
+                <OpenDirectoryButton
+                  collection={tv?.identifier || ""}
+                  media={episode.identifier}
+                />
                 <div className="card-actions justify-end">
                   <Link
-                    to={`/episode/${episode.id}`}
+                    to={`/tv/${tvIdNumber}/episode/${episode.id}`}
                     className="btn btn-sm btn-outline"
                   >
                     View Details

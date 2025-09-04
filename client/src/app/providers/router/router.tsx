@@ -63,9 +63,10 @@ export default function Router() {
           <Route path="/tv" element={<PageWrapper />}>
             <Route index element={<TvPage />} />
             <Route path=":tvId" element={<TvDetailsPage />} />
-          </Route>
-          <Route path="/episode/:episodeId" element={<PageWrapper />}>
-            <Route index element={<EpisodeDetailsPage />} />
+            <Route
+              path=":tvId/episode/:episodeId"
+              element={<EpisodeDetailsPage />}
+            />
           </Route>
           <Route path="/image-navigator" element={<ImageNavigatorPage />} />
           <Route path="/recently-viewed" element={<RecentlyViewedPage />} />

@@ -13,12 +13,6 @@ export class UpdateTvInput {
   @IsString()
   @IsNotEmpty()
   @MinLength(1)
-  identifier: string;
-
-  @Field()
-  @IsString()
-  @IsNotEmpty()
-  @MinLength(1)
   title: string;
 
   @Field(() => Int, { nullable: true })

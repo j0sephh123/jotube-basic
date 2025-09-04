@@ -14,12 +14,6 @@ export class CreateEpisodeInput {
   @IsString()
   @IsNotEmpty()
   @MinLength(1)
-  identifier: string;
-
-  @Field()
-  @IsString()
-  @IsNotEmpty()
-  @MinLength(1)
   title: string;
 
   @Field({ nullable: true })

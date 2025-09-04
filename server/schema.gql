@@ -68,7 +68,6 @@ type CreateChannelResponse {
 }
 
 input CreateEpisodeInput {
-  identifier: String!
   publishedAt: String
   title: String!
   tvId: Int!
@@ -92,7 +91,6 @@ type CreatePlaylistResponse {
 
 input CreateTvInput {
   duration: Int
-  identifier: String!
   title: String!
 }
 
@@ -207,6 +205,7 @@ type Episode {
   identifier: String!
   publishedAt: DateTime
   title: String!
+  tv: Tv
   tvId: ID!
   updatedAt: DateTime!
 }
@@ -515,7 +514,6 @@ type UpdateChannelPlaylistResponse {
 }
 
 input UpdateEpisodeInput {
-  identifier: String!
   publishedAt: String
   title: String!
 }
@@ -538,7 +536,6 @@ type UpdatePlaylistResponse {
 
 input UpdateTvInput {
   duration: Int
-  identifier: String!
   title: String!
 }
 

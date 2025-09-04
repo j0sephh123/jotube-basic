@@ -1,5 +1,5 @@
 import { setTvModal, useGetAllTvs, useDeleteTv } from "@features/Tv";
-import { Button, StaticStates } from "@shared/ui";
+import { Button, OpenDirectoryButton, StaticStates } from "@shared/ui";
 import { useDialog } from "@shared/hooks";
 import { Link } from "react-router-dom";
 
@@ -48,6 +48,7 @@ export const TvPage = () => {
                   Duration: {tv.duration} seconds
                 </p>
               )}
+              <OpenDirectoryButton collection={tv.identifier} />  
               <div className="card-actions justify-end">
                 <Link to={`/tv/${tv.id}`} className="btn btn-sm btn-outline">
                   View Episodes

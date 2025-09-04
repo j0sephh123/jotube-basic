@@ -1,8 +1,9 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useGetEpisodeDetails } from "@features/Episode";
+import { OpenDirectoryButton } from "@shared/ui";
 
 export const EpisodeDetailsPage = () => {
-  const { episodeId } = useParams<{ episodeId: string }>();
+  const { episodeId, tvId } = useParams<{ episodeId: string; tvId: string }>();
   const episodeIdNumber = Number(episodeId);
 
   const {
@@ -30,8 +31,15 @@ export const EpisodeDetailsPage = () => {
   return (
     <div className="container mx-auto p-6">
       <div className="mb-6">
+        <Link to={`/tv/${tvId}`} className="btn btn-outline btn-sm mb-4">
+          ← Back to {episode.tv?.title || "TV"}
+        </Link>
         <h1 className="text-3xl font-bold mb-2">{episode.title}</h1>
         <p className="text-gray-600 mb-4">{episode.identifier}</p>
+        <OpenDirectoryButton
+          collection={episode.tv?.identifier || ""}
+          media={episode.identifier}
+        />
       </div>
 
       <div className="bg-base-200 p-6 rounded-lg">

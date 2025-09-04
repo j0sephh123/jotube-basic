@@ -1,12 +1,6 @@
 import { useCreateTv, useUpdateTv, useTvModalState } from "@features/Tv";
 
-export function useSubmit({
-  identifier,
-  title,
-}: {
-  identifier: string;
-  title: string;
-}) {
+export function useSubmit({ title }: { title: string }) {
   const { type, tvId } = useTvModalState();
   const { mutate: createTvMutation } = useCreateTv();
   const { mutate: updateTvMutation } = useUpdateTv();
@@ -14,14 +8,14 @@ export function useSubmit({
   return async () => {
     if (type === "create") {
       await createTvMutation({
-        variables: { createTvInput: { identifier, title } },
+        variables: { createTvInput: { title } },
       });
     } else if (type === "update" && tvId) {
-      console.log("Updating TV:", { id: tvId, identifier, title });
+      console.log("Updating TV:", { id: tvId, title });
       await updateTvMutation({
         variables: {
           id: Number(tvId),
-          updateTvInput: { identifier, title },
+          updateTvInput: { title },
         },
       });
     }

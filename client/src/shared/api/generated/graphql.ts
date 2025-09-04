@@ -92,7 +92,6 @@ export type CreateChannelResponse = {
 };
 
 export type CreateEpisodeInput = {
-  identifier: Scalars['String']['input'];
   publishedAt?: InputMaybe<Scalars['String']['input']>;
   title: Scalars['String']['input'];
   tvId: Scalars['Int']['input'];
@@ -118,7 +117,6 @@ export type CreatePlaylistResponse = {
 
 export type CreateTvInput = {
   duration?: InputMaybe<Scalars['Int']['input']>;
-  identifier: Scalars['String']['input'];
   title: Scalars['String']['input'];
 };
 
@@ -240,6 +238,7 @@ export type Episode = {
   identifier: Scalars['String']['output'];
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   title: Scalars['String']['output'];
+  tv?: Maybe<Tv>;
   tvId: Scalars['ID']['output'];
   updatedAt: Scalars['DateTime']['output'];
 };
@@ -782,7 +781,6 @@ export type UpdateChannelPlaylistResponse = {
 };
 
 export type UpdateEpisodeInput = {
-  identifier: Scalars['String']['input'];
   publishedAt?: InputMaybe<Scalars['String']['input']>;
   title: Scalars['String']['input'];
 };
@@ -807,7 +805,6 @@ export type UpdatePlaylistResponse = {
 
 export type UpdateTvInput = {
   duration?: InputMaybe<Scalars['Int']['input']>;
-  identifier: Scalars['String']['input'];
   title: Scalars['String']['input'];
 };
 
@@ -1083,7 +1080,7 @@ export type GetEpisodeDetailsQueryVariables = Exact<{
 }>;
 
 
-export type GetEpisodeDetailsQuery = { __typename?: 'Query', getEpisodeDetails?: { __typename?: 'Episode', id: string, identifier: string, title: string, artifact: string, publishedAt?: any | null, createdAt: any, updatedAt: any, tvId: string } | null };
+export type GetEpisodeDetailsQuery = { __typename?: 'Query', getEpisodeDetails?: { __typename?: 'Episode', id: string, identifier: string, title: string, artifact: string, publishedAt?: any | null, createdAt: any, updatedAt: any, tvId: string, tv?: { __typename?: 'Tv', id: string, identifier: string, title: string } | null } | null };
 
 export type CreateEpisodeMutationVariables = Exact<{
   createEpisodeInput: CreateEpisodeInput;
@@ -2084,6 +2081,11 @@ export const GetEpisodeDetailsDocument = gql`
     createdAt
     updatedAt
     tvId
+    tv {
+      id
+      identifier
+      title
+    }
   }
 }
     `;

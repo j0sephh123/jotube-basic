@@ -6,13 +6,7 @@ export type OpenDirectoryRequest = {
   media?: string;
 };
 
-export function useOpenDirectory({
-  collection,
-  media,
-}: {
-  collection: string;
-  media?: string;
-}) {
+export function useOpenDirectory({ collection, media }: OpenDirectoryRequest) {
   const { mutateAsync } = useMutation<unknown, unknown, OpenDirectoryRequest>({
     mutationFn: (body: OpenDirectoryRequest) =>
       nestFetcher({

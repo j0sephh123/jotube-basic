@@ -1,4 +1,5 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { Tv } from 'src/tv/dtos/tv.model';
 
 @ObjectType()
 export class Episode {
@@ -25,4 +26,7 @@ export class Episode {
 
   @Field(() => ID)
   tvId: number;
+
+  @Field(() => Tv, { nullable: true })
+  tv?: Tv;
 }
