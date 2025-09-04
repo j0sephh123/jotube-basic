@@ -8,6 +8,7 @@ import {
 } from "@features/Episode";
 import { Button, StaticStates } from "@shared/ui";
 import { useDialog } from "@shared/hooks";
+import { Link } from "react-router-dom";
 
 export const TvDetailsPage = () => {
   const { tvId } = useParams<{ tvId: string }>();
@@ -102,6 +103,12 @@ export const TvDetailsPage = () => {
                   </p>
                 )}
                 <div className="card-actions justify-end">
+                  <Link
+                    to={`/episode/${episode.id}`}
+                    className="btn btn-sm btn-outline"
+                  >
+                    View Details
+                  </Link>
                   <button
                     className="btn btn-sm btn-outline"
                     onClick={() => handleEdit(Number(episode.id))}

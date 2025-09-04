@@ -55,4 +55,11 @@ export class EpisodeResolver {
   ): Promise<Episode | null> {
     return this.episodeService.findOne(getEpisodeInput.id);
   }
+
+  @Query(() => Episode, { nullable: true })
+  async getEpisodeDetails(
+    @Args('getEpisodeInput') getEpisodeInput: GetEpisodeInput,
+  ): Promise<Episode | null> {
+    return this.episodeService.findOne(getEpisodeInput.id);
+  }
 }

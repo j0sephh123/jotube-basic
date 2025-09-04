@@ -379,6 +379,7 @@ type Query {
   getAllEpisodes: [Episode!]!
   getAllTvs: [Tv!]!
   getEpisode(getEpisodeInput: GetEpisodeInput!): Episode
+  getEpisodeDetails(getEpisodeInput: GetEpisodeInput!): Episode
   getEpisodesByTvId(tvId: Float!): [Episode!]!
   getScreenshots(input: GetScreenshotsInput!): [GetScreenshotsResponse!]!
   getTv(getTvInput: GetTvInput!): Tv

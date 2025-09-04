@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
-import { useCreateEpisode, useUpdateEpisode } from "@features/Episode";
+import {
+  useCreateEpisode,
+  useUpdateEpisode,
+  useGetEpisode,
+} from "@features/Episode";
 import {
   closeEpisodeModal,
   useEpisodeModalState,
@@ -15,16 +19,32 @@ export function CreateOrUpdateContent({ tvId }: CreateOrUpdateContentProps) {
   const { mutate: createEpisode } = useCreateEpisode();
   const { mutate: updateEpisode } = useUpdateEpisode();
 
+  const { data: episodeData } = useGetEpisode(
+    episodeId
+      ? { getEpisodeInput: { id: episodeId } }
+      : { getEpisodeInput: { id: 0 } }
+  );
+
   const [identifier, setIdentifier] = useState("");
   const [title, setTitle] = useState("");
   const [publishedAt, setPublishedAt] = useState("");
 
   useEffect(() => {
-    if (type === "update" && episodeId) {
-      // TODO: Load episode data for editing
-      console.log("Load episode data for editing:", episodeId);
+    if (type === "update" && episodeId && episodeData?.getEpisode) {
+      const episode = episodeData.getEpisode;
+      setIdentifier(episode.identifier);
+      setTitle(episode.title);
+      setPublishedAt(
+        episode.publishedAt
+          ? new Date(episode.publishedAt).toISOString().slice(0, 16)
+          : ""
+      );
+    } else if (type === "create") {
+      setIdentifier("");
+      setTitle("");
+      setPublishedAt("");
     }
-  }, [type, episodeId]);
+  }, [type, episodeId, episodeData]);
 
   const handleCloseModal = () => {
     closeEpisodeModal();

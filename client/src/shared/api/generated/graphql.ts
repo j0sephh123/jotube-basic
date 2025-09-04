@@ -92,7 +92,6 @@ export type CreateChannelResponse = {
 };
 
 export type CreateEpisodeInput = {
-  artifact: Scalars['String']['input'];
   identifier: Scalars['String']['input'];
   publishedAt?: InputMaybe<Scalars['String']['input']>;
   title: Scalars['String']['input'];
@@ -528,6 +527,7 @@ export type Query = {
   getAllEpisodes: Array<Episode>;
   getAllTvs: Array<Tv>;
   getEpisode?: Maybe<Episode>;
+  getEpisodeDetails?: Maybe<Episode>;
   getEpisodesByTvId: Array<Episode>;
   getScreenshots: Array<GetScreenshotsResponse>;
   getTv?: Maybe<Tv>;
@@ -576,6 +576,11 @@ export type QueryFetchVideosDashboardArgs = {
 
 
 export type QueryGetEpisodeArgs = {
+  getEpisodeInput: GetEpisodeInput;
+};
+
+
+export type QueryGetEpisodeDetailsArgs = {
   getEpisodeInput: GetEpisodeInput;
 };
 
@@ -777,7 +782,6 @@ export type UpdateChannelPlaylistResponse = {
 };
 
 export type UpdateEpisodeInput = {
-  artifact: Scalars['String']['input'];
   identifier: Scalars['String']['input'];
   publishedAt?: InputMaybe<Scalars['String']['input']>;
   title: Scalars['String']['input'];
@@ -1073,6 +1077,13 @@ export type GetEpisodeQueryVariables = Exact<{
 
 
 export type GetEpisodeQuery = { __typename?: 'Query', getEpisode?: { __typename?: 'Episode', id: string, identifier: string, title: string, artifact: string, publishedAt?: any | null, createdAt: any, updatedAt: any, tvId: string } | null };
+
+export type GetEpisodeDetailsQueryVariables = Exact<{
+  getEpisodeInput: GetEpisodeInput;
+}>;
+
+
+export type GetEpisodeDetailsQuery = { __typename?: 'Query', getEpisodeDetails?: { __typename?: 'Episode', id: string, identifier: string, title: string, artifact: string, publishedAt?: any | null, createdAt: any, updatedAt: any, tvId: string } | null };
 
 export type CreateEpisodeMutationVariables = Exact<{
   createEpisodeInput: CreateEpisodeInput;
@@ -2062,6 +2073,53 @@ export type GetEpisodeQueryHookResult = ReturnType<typeof useGetEpisodeQuery>;
 export type GetEpisodeLazyQueryHookResult = ReturnType<typeof useGetEpisodeLazyQuery>;
 export type GetEpisodeSuspenseQueryHookResult = ReturnType<typeof useGetEpisodeSuspenseQuery>;
 export type GetEpisodeQueryResult = Apollo.QueryResult<GetEpisodeQuery, GetEpisodeQueryVariables>;
+export const GetEpisodeDetailsDocument = gql`
+    query GetEpisodeDetails($getEpisodeInput: GetEpisodeInput!) {
+  getEpisodeDetails(getEpisodeInput: $getEpisodeInput) {
+    id
+    identifier
+    title
+    artifact
+    publishedAt
+    createdAt
+    updatedAt
+    tvId
+  }
+}
+    `;
+
+/**
+ * __useGetEpisodeDetailsQuery__
+ *
+ * To run a query within a React component, call `useGetEpisodeDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEpisodeDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEpisodeDetailsQuery({
+ *   variables: {
+ *      getEpisodeInput: // value for 'getEpisodeInput'
+ *   },
+ * });
+ */
+export function useGetEpisodeDetailsQuery(baseOptions: Apollo.QueryHookOptions<GetEpisodeDetailsQuery, GetEpisodeDetailsQueryVariables> & ({ variables: GetEpisodeDetailsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetEpisodeDetailsQuery, GetEpisodeDetailsQueryVariables>(GetEpisodeDetailsDocument, options);
+      }
+export function useGetEpisodeDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEpisodeDetailsQuery, GetEpisodeDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetEpisodeDetailsQuery, GetEpisodeDetailsQueryVariables>(GetEpisodeDetailsDocument, options);
+        }
+export function useGetEpisodeDetailsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetEpisodeDetailsQuery, GetEpisodeDetailsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetEpisodeDetailsQuery, GetEpisodeDetailsQueryVariables>(GetEpisodeDetailsDocument, options);
+        }
+export type GetEpisodeDetailsQueryHookResult = ReturnType<typeof useGetEpisodeDetailsQuery>;
+export type GetEpisodeDetailsLazyQueryHookResult = ReturnType<typeof useGetEpisodeDetailsLazyQuery>;
+export type GetEpisodeDetailsSuspenseQueryHookResult = ReturnType<typeof useGetEpisodeDetailsSuspenseQuery>;
+export type GetEpisodeDetailsQueryResult = Apollo.QueryResult<GetEpisodeDetailsQuery, GetEpisodeDetailsQueryVariables>;
 export const CreateEpisodeDocument = gql`
     mutation CreateEpisode($createEpisodeInput: CreateEpisodeInput!) {
   createEpisode(createEpisodeInput: $createEpisodeInput) {

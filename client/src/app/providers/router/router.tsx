@@ -8,6 +8,7 @@ import { PlaylistDetailsPage } from "@pages/playlist-details";
 import { RecentlyViewedPage } from "@pages/recently-viewed";
 import { TvPage } from "@pages/tv";
 import { TvDetailsPage } from "@pages/tv-details";
+import { EpisodeDetailsPage } from "@pages/episode-details";
 import { NotFound } from "@shared/ui";
 import { GalleryVideosList } from "@features/Gallery";
 import { UploadsDecorator } from "@features/Upload";
@@ -62,6 +63,9 @@ export default function Router() {
           <Route path="/tv" element={<PageWrapper />}>
             <Route index element={<TvPage />} />
             <Route path=":tvId" element={<TvDetailsPage />} />
+          </Route>
+          <Route path="/episode/:episodeId" element={<PageWrapper />}>
+            <Route index element={<EpisodeDetailsPage />} />
           </Route>
           <Route path="/image-navigator" element={<ImageNavigatorPage />} />
           <Route path="/recently-viewed" element={<RecentlyViewedPage />} />

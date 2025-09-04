@@ -45,6 +45,21 @@ export const GET_EPISODE = gql`
   }
 `;
 
+export const GET_EPISODE_DETAILS = gql`
+  query GetEpisodeDetails($getEpisodeInput: GetEpisodeInput!) {
+    getEpisodeDetails(getEpisodeInput: $getEpisodeInput) {
+      id
+      identifier
+      title
+      artifact
+      publishedAt
+      createdAt
+      updatedAt
+      tvId
+    }
+  }
+`;
+
 export const CREATE_EPISODE = gql`
   mutation CreateEpisode($createEpisodeInput: CreateEpisodeInput!) {
     createEpisode(createEpisodeInput: $createEpisodeInput) {
