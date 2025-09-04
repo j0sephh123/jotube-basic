@@ -38,6 +38,7 @@ import { AppGraphQLModule } from './graphql/graphql.module';
 import { ImageNavigatorModule } from './image-navigator/image-navigator.module';
 import { ProcessingPhaseModule } from './processing-phase/processing-phase.module';
 import { ConverterModule } from './converter/converter.module';
+import { TvModule } from './tv/tv.module';
 
 @Module({
   imports: [
@@ -95,6 +96,7 @@ import { ConverterModule } from './converter/converter.module';
     ImageNavigatorModule,
     ProcessingPhaseModule,
     ConverterModule,
+    TvModule,
   ],
   controllers: [QueueController, SearchController, StatisticsController],
   providers: [

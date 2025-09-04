@@ -78,6 +78,17 @@ type CreatePlaylistResponse {
   updatedAt: String!
 }
 
+input CreateTvInput {
+  duration: Int
+  identifier: String!
+  title: String!
+}
+
+type CreateTvResponse {
+  message: TvMessage!
+  tv: Tv
+}
+
 type DashboardChannelResponse {
   createdAt: DateTime!
   defaults: Int!
@@ -134,6 +145,15 @@ type DeleteFileResponse {
 }
 
 type DeletePlaylistResponse {
+  success: Boolean!
+}
+
+input DeleteTvInput {
+  id: Int!
+}
+
+type DeleteTvResponse {
+  message: String!
   success: Boolean!
 }
 
@@ -208,6 +228,10 @@ type GetScreenshotsResponse {
   ytVideoId: String!
 }
 
+input GetTvInput {
+  id: Int!
+}
+
 input GetVideoByYtIdInput {
   channelId: Float!
   ytId: String!
@@ -217,9 +241,11 @@ type Mutation {
   cleanShortUploads(cleanShortUploadsInput: CleanShortUploadsInput!): CleanShortUploadsResponse!
   createChannel(createChannelInput: CreateChannelInput!): CreateChannelResponse!
   createPlaylist(createPlaylistInput: CreatePlaylistInput!): CreatePlaylistResponse!
+  createTv(createTvInput: CreateTvInput!): CreateTvResponse!
   deleteChannel(id: Float!): DeleteChannelResponse!
   deleteFileOrDirectory(deleteFileInput: DeleteFileDto!): DeleteFileResponse!
   deletePlaylist(id: Int!): DeletePlaylistResponse!
+  deleteTv(deleteTvInput: DeleteTvInput!): DeleteTvResponse!
   deleteUploads(deleteUploadsInput: DeleteUploadsInput!): DeleteUploadsResponse!
   fetchUploads(fetchUploadsInput: FetchUploadsInput!): FetchUploadsResponse!
   finishProcessingUpload(savedSeconds: [Float!]!, ytChannelId: String!, ytVideoId: String!): FinishProcessUploadResponse!
@@ -227,6 +253,7 @@ type Mutation {
   syncUploads(syncUploadsInput: SyncUploadsInput!): SyncUploadsResponse!
   updateChannelPlaylist(updateChannelPlaylistInput: UpdateChannelPlaylistInput!): UpdateChannelPlaylistResponse!
   updatePlaylist(id: Int!, updatePlaylistInput: UpdatePlaylistInput!): UpdatePlaylistResponse!
+  updateTv(id: Float!, updateTvInput: UpdateTvInput!): UpdateTvResponse!
 }
 
 """Processing phases for video uploads"""
@@ -310,7 +337,9 @@ type Query {
   channelScreenshots(input: GetScreenshotsInput!): [GetScreenshotsResponse!]!
   fetchDashboard(fetchDashboardInput: FetchDashboardInput!): ChannelsDashboardResponse!
   fetchVideosDashboard(page: Float, screenshotMax: Float, screenshotMin: Float, sortOrder: String): VideosDashboardResponse!
+  getAllTvs: [Tv!]!
   getScreenshots(input: GetScreenshotsInput!): [GetScreenshotsResponse!]!
+  getTv(getTvInput: GetTvInput!): Tv
   getVideoByYtId(getVideoByYtIdInput: GetVideoByYtIdInput!): VideoByYtIdResponse!
   playlistDetails(id: Int!): PlaylistDetailsResponse
   playlistUploadsList(playlistUploadsListInput: PlaylistUploadsListInput!): PlaylistUploadsListResponse!
@@ -411,6 +440,23 @@ type ThumbnailByVideoIdResponse {
   uploadsVideoId: Float!
 }
 
+type Tv {
+  createdAt: DateTime!
+  duration: Int
+  id: ID!
+  identifier: String!
+  title: String!
+  updatedAt: DateTime!
+}
+
+"""Possible messages for TV operation responses"""
+enum TvMessage {
+  CREATED_SUCCESSFULLY
+  FAILED_TO_CREATE
+  FAILED_TO_UPDATE
+  UPDATED_SUCCESSFULLY
+}
+
 input UpdateChannelPlaylistInput {
   channelId: Int!
   playlistId: Int
@@ -434,6 +480,17 @@ type UpdatePlaylistResponse {
   id: Int!
   name: String!
   updatedAt: String!
+}
+
+input UpdateTvInput {
+  duration: Int
+  identifier: String!
+  title: String!
+}
+
+type UpdateTvResponse {
+  message: TvMessage!
+  tv: Tv
 }
 
 type UploadWithStoryboardResponse {
