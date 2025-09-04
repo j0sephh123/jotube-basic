@@ -6,7 +6,6 @@ import { getLastSyncColor, formatLastSync } from "./utils";
 
 type Props = {
   lastSyncedAt?: string | null;
-  ytChannelId: string;
   id: number;
   onSuccess?: () => void;
   isDisabled?: boolean;
@@ -14,17 +13,14 @@ type Props = {
 
 export default function SyncUploadsButton({
   lastSyncedAt,
-  ytChannelId,
   id,
   onSuccess,
   isDisabled,
 }: Props) {
-  const syncUploads = useSyncUploads(ytChannelId);
+  const syncUploads = useSyncUploads();
   const lastSync = lastSyncedAt || null;
 
   const handleSync = async () => {
-    if (!ytChannelId) return;
-
     try {
       await syncUploads.mutateAsync({
         channelId: id,

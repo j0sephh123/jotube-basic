@@ -67,7 +67,6 @@ const ChannelHeaderInner = ({
                   <>
                     <SyncUploadsButton
                       lastSyncedAt={channelMetadata?.lastSyncedAt ?? null}
-                      ytChannelId={ytChannelId}
                       id={channelMetadata?.id ?? 0}
                     />
                     <CleanShortUploads channelId={channelId} />

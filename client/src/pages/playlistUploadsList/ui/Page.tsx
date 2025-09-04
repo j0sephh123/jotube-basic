@@ -30,8 +30,6 @@ export function PlaylistUploadsListPage() {
     refetchPlaylistUploads();
   };
 
-  console.log(data);
-
   return (
     <StaticStates
       isLoading={loading || isPlaylistLoading}
@@ -61,11 +59,12 @@ export function PlaylistUploadsListPage() {
                 publishedAt,
                 src,
                 artifact: "",
-                channelId: 0,
+                channelId: id,
                 createdAt: "",
                 updatedAt: "",
               }}
               ytChannelId={ytChannelId}
+              channelId={id}
               type={uploadsType}
               handleSideEffect={handleSideEffect}
               channelTitleSlot={

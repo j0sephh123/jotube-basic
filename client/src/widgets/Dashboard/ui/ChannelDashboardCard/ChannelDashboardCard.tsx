@@ -86,7 +86,7 @@ export default function ChannelDashboardCard({
   const cardMenu = <Card.Menu id={id} ytId={ytId} />;
 
   const syncButton = (
-    <SyncUploadsButton lastSyncedAt={lastSyncedAt} ytChannelId={ytId} id={id} />
+    <SyncUploadsButton lastSyncedAt={lastSyncedAt} id={id} />
   );
 
   const deleteChannelbutton = (

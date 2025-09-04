@@ -8,9 +8,9 @@ export type SyncUploadsRequest = {
   channelId: number;
 };
 
-export default function useSyncUploads(ytChannelId: string) {
+export default function useSyncUploads() {
   const refetchChannelMetadata = useRefetchChannelMetadata();
-  const refetchChannelUploads = useRefetchChannelUploads(ytChannelId);
+  const refetchChannelUploads = useRefetchChannelUploads();
   const refetchChannelsDashboard = useRefetchChannelsDashboardQuery();
 
   const [syncUploadsMutation, { loading }] = useSyncUploadsMutation({
