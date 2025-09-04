@@ -1,21 +1,7 @@
-import { useQuery, gql } from "@apollo/client";
-import { Tv } from "../types";
-
-const GET_ALL_TVS = gql`
-  query GetAllTvs {
-    getAllTvs {
-      id
-      identifier
-      title
-      duration
-      createdAt
-      updatedAt
-    }
-  }
-`;
+import { useGetAllTvsQuery } from "@shared/api/generated/graphql";
 
 export const useGetAllTvs = () => {
-  const { data, loading, error } = useQuery<{ getAllTvs: Tv[] }>(GET_ALL_TVS);
+  const { data, loading, error } = useGetAllTvsQuery();
 
   return {
     data: data?.getAllTvs,

@@ -13,7 +13,7 @@ export function CreateOrUpdateContent() {
 
   useEffect(() => {
     if (type === "update" && tvId && tvs) {
-      const tv = tvs.find((t) => t.id === tvId);
+      const tv = tvs.find((t) => t.id === String(tvId));
       if (tv) {
         setIdentifier(tv.identifier);
         setTitle(tv.title);
@@ -29,6 +29,9 @@ export function CreateOrUpdateContent() {
 
   const submitHandler = useSubmit({ identifier, title });
   const handleSubmit = async () => {
+    if (!identifier.trim() || !title.trim()) {
+      return;
+    }
     await submitHandler();
     handleCloseModal();
   };
@@ -58,7 +61,11 @@ export function CreateOrUpdateContent() {
           />
         </div>
       </div>
-      <Actions onSubmit={handleSubmit} onCancel={handleCloseModal} />
+      <Actions
+        onSubmit={handleSubmit}
+        onCancel={handleCloseModal}
+        disabled={!identifier.trim() || !title.trim()}
+      />
     </div>
   );
 }

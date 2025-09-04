@@ -3,9 +3,11 @@ import { useTvModalState } from "@features/Tv";
 export function Actions({
   onCancel,
   onSubmit,
+  disabled = false,
 }: {
   onCancel: () => void;
   onSubmit: () => void;
+  disabled?: boolean;
 }) {
   const { type } = useTvModalState();
 
@@ -18,6 +20,7 @@ export function Actions({
         className="btn btn-primary"
         type="submit"
         onClick={() => onSubmit()}
+        disabled={disabled}
       >
         {type === "create" ? "Create TV" : "Update TV"}
       </button>

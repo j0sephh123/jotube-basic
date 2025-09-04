@@ -1,11 +1,30 @@
-import { setTvModal, useGetAllTvs } from "@features/Tv";
+import { setTvModal, useGetAllTvs, useDeleteTv } from "@features/Tv";
 import { Button, StaticStates } from "@shared/ui";
+import { useDialog } from "@shared/hooks";
 
 export const TvPage = () => {
   const { data, loading, error } = useGetAllTvs();
+  const { mutate: deleteTvMutation, isPending: isDeleting } = useDeleteTv();
+  const dialogHook = useDialog();
 
   const handleEdit = (tvId: number) => {
     setTvModal({ type: "update", tvId });
+  };
+
+  const handleDelete = (tvId: number) => {
+    dialogHook.confirm({
+      title: "Delete TV",
+      message:
+        "Are you sure you want to delete this tv? This action cannot be undone.",
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      variant: "error",
+      onYes: () => {
+        deleteTvMutation({
+          variables: { deleteTvInput: { id: Number(tvId) } },
+        });
+      },
+    });
   };
 
   return (
@@ -31,9 +50,16 @@ export const TvPage = () => {
               <div className="card-actions justify-end">
                 <button
                   className="btn btn-sm btn-outline"
-                  onClick={() => handleEdit(tv.id)}
+                  onClick={() => handleEdit(Number(tv.id))}
                 >
                   Edit
+                </button>
+                <button
+                  className="btn btn-sm btn-outline"
+                  onClick={() => handleDelete(Number(tv.id))}
+                  disabled={isDeleting}
+                >
+                  {isDeleting ? "Deleting..." : "Delete"}
                 </button>
               </div>
             </div>

@@ -1010,6 +1010,40 @@ export type GetThumbnailByVideoIdQueryVariables = Exact<{
 
 export type GetThumbnailByVideoIdQuery = { __typename?: 'Query', thumbnailByVideoId?: { __typename?: 'ThumbnailByVideoIdResponse', createdAt: string, id: number, perRow: number, updatedAt: string, uploadsVideoId: number, totalSeconds: number, thumbnailsCount: number, uploadsVideo: { __typename?: 'UploadsVideoResponse', ytId: string, channel: { __typename?: 'ChannelResponse', id: number, ytId: string, title: string } } } | null };
 
+export type GetAllTvsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllTvsQuery = { __typename?: 'Query', getAllTvs: Array<{ __typename?: 'Tv', id: string, identifier: string, title: string, duration?: number | null, createdAt: any, updatedAt: any }> };
+
+export type GetTvQueryVariables = Exact<{
+  getTvInput: GetTvInput;
+}>;
+
+
+export type GetTvQuery = { __typename?: 'Query', getTv?: { __typename?: 'Tv', id: string, identifier: string, title: string, duration?: number | null, createdAt: any, updatedAt: any } | null };
+
+export type CreateTvMutationVariables = Exact<{
+  createTvInput: CreateTvInput;
+}>;
+
+
+export type CreateTvMutation = { __typename?: 'Mutation', createTv: { __typename?: 'CreateTvResponse', message: TvMessage, tv?: { __typename?: 'Tv', id: string, identifier: string, title: string, duration?: number | null, createdAt: any, updatedAt: any } | null } };
+
+export type UpdateTvMutationVariables = Exact<{
+  id: Scalars['Float']['input'];
+  updateTvInput: UpdateTvInput;
+}>;
+
+
+export type UpdateTvMutation = { __typename?: 'Mutation', updateTv: { __typename?: 'UpdateTvResponse', message: TvMessage, tv?: { __typename?: 'Tv', id: string, identifier: string, title: string, duration?: number | null, createdAt: any, updatedAt: any } | null } };
+
+export type DeleteTvMutationVariables = Exact<{
+  deleteTvInput: DeleteTvInput;
+}>;
+
+
+export type DeleteTvMutation = { __typename?: 'Mutation', deleteTv: { __typename?: 'DeleteTvResponse', success: boolean, message: string } };
+
 export type SaveUploadMutationVariables = Exact<{
   saveUploadInput: SaveUploadInput;
 }>;
@@ -2056,6 +2090,212 @@ export type GetThumbnailByVideoIdQueryHookResult = ReturnType<typeof useGetThumb
 export type GetThumbnailByVideoIdLazyQueryHookResult = ReturnType<typeof useGetThumbnailByVideoIdLazyQuery>;
 export type GetThumbnailByVideoIdSuspenseQueryHookResult = ReturnType<typeof useGetThumbnailByVideoIdSuspenseQuery>;
 export type GetThumbnailByVideoIdQueryResult = Apollo.QueryResult<GetThumbnailByVideoIdQuery, GetThumbnailByVideoIdQueryVariables>;
+export const GetAllTvsDocument = gql`
+    query GetAllTvs {
+  getAllTvs {
+    id
+    identifier
+    title
+    duration
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useGetAllTvsQuery__
+ *
+ * To run a query within a React component, call `useGetAllTvsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllTvsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllTvsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllTvsQuery(baseOptions?: Apollo.QueryHookOptions<GetAllTvsQuery, GetAllTvsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllTvsQuery, GetAllTvsQueryVariables>(GetAllTvsDocument, options);
+      }
+export function useGetAllTvsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllTvsQuery, GetAllTvsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllTvsQuery, GetAllTvsQueryVariables>(GetAllTvsDocument, options);
+        }
+export function useGetAllTvsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAllTvsQuery, GetAllTvsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAllTvsQuery, GetAllTvsQueryVariables>(GetAllTvsDocument, options);
+        }
+export type GetAllTvsQueryHookResult = ReturnType<typeof useGetAllTvsQuery>;
+export type GetAllTvsLazyQueryHookResult = ReturnType<typeof useGetAllTvsLazyQuery>;
+export type GetAllTvsSuspenseQueryHookResult = ReturnType<typeof useGetAllTvsSuspenseQuery>;
+export type GetAllTvsQueryResult = Apollo.QueryResult<GetAllTvsQuery, GetAllTvsQueryVariables>;
+export const GetTvDocument = gql`
+    query GetTv($getTvInput: GetTvInput!) {
+  getTv(getTvInput: $getTvInput) {
+    id
+    identifier
+    title
+    duration
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useGetTvQuery__
+ *
+ * To run a query within a React component, call `useGetTvQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTvQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTvQuery({
+ *   variables: {
+ *      getTvInput: // value for 'getTvInput'
+ *   },
+ * });
+ */
+export function useGetTvQuery(baseOptions: Apollo.QueryHookOptions<GetTvQuery, GetTvQueryVariables> & ({ variables: GetTvQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTvQuery, GetTvQueryVariables>(GetTvDocument, options);
+      }
+export function useGetTvLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTvQuery, GetTvQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTvQuery, GetTvQueryVariables>(GetTvDocument, options);
+        }
+export function useGetTvSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetTvQuery, GetTvQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetTvQuery, GetTvQueryVariables>(GetTvDocument, options);
+        }
+export type GetTvQueryHookResult = ReturnType<typeof useGetTvQuery>;
+export type GetTvLazyQueryHookResult = ReturnType<typeof useGetTvLazyQuery>;
+export type GetTvSuspenseQueryHookResult = ReturnType<typeof useGetTvSuspenseQuery>;
+export type GetTvQueryResult = Apollo.QueryResult<GetTvQuery, GetTvQueryVariables>;
+export const CreateTvDocument = gql`
+    mutation CreateTv($createTvInput: CreateTvInput!) {
+  createTv(createTvInput: $createTvInput) {
+    tv {
+      id
+      identifier
+      title
+      duration
+      createdAt
+      updatedAt
+    }
+    message
+  }
+}
+    `;
+export type CreateTvMutationFn = Apollo.MutationFunction<CreateTvMutation, CreateTvMutationVariables>;
+
+/**
+ * __useCreateTvMutation__
+ *
+ * To run a mutation, you first call `useCreateTvMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateTvMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createTvMutation, { data, loading, error }] = useCreateTvMutation({
+ *   variables: {
+ *      createTvInput: // value for 'createTvInput'
+ *   },
+ * });
+ */
+export function useCreateTvMutation(baseOptions?: Apollo.MutationHookOptions<CreateTvMutation, CreateTvMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateTvMutation, CreateTvMutationVariables>(CreateTvDocument, options);
+      }
+export type CreateTvMutationHookResult = ReturnType<typeof useCreateTvMutation>;
+export type CreateTvMutationResult = Apollo.MutationResult<CreateTvMutation>;
+export type CreateTvMutationOptions = Apollo.BaseMutationOptions<CreateTvMutation, CreateTvMutationVariables>;
+export const UpdateTvDocument = gql`
+    mutation UpdateTv($id: Float!, $updateTvInput: UpdateTvInput!) {
+  updateTv(id: $id, updateTvInput: $updateTvInput) {
+    tv {
+      id
+      identifier
+      title
+      duration
+      createdAt
+      updatedAt
+    }
+    message
+  }
+}
+    `;
+export type UpdateTvMutationFn = Apollo.MutationFunction<UpdateTvMutation, UpdateTvMutationVariables>;
+
+/**
+ * __useUpdateTvMutation__
+ *
+ * To run a mutation, you first call `useUpdateTvMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateTvMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateTvMutation, { data, loading, error }] = useUpdateTvMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      updateTvInput: // value for 'updateTvInput'
+ *   },
+ * });
+ */
+export function useUpdateTvMutation(baseOptions?: Apollo.MutationHookOptions<UpdateTvMutation, UpdateTvMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateTvMutation, UpdateTvMutationVariables>(UpdateTvDocument, options);
+      }
+export type UpdateTvMutationHookResult = ReturnType<typeof useUpdateTvMutation>;
+export type UpdateTvMutationResult = Apollo.MutationResult<UpdateTvMutation>;
+export type UpdateTvMutationOptions = Apollo.BaseMutationOptions<UpdateTvMutation, UpdateTvMutationVariables>;
+export const DeleteTvDocument = gql`
+    mutation DeleteTv($deleteTvInput: DeleteTvInput!) {
+  deleteTv(deleteTvInput: $deleteTvInput) {
+    success
+    message
+  }
+}
+    `;
+export type DeleteTvMutationFn = Apollo.MutationFunction<DeleteTvMutation, DeleteTvMutationVariables>;
+
+/**
+ * __useDeleteTvMutation__
+ *
+ * To run a mutation, you first call `useDeleteTvMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteTvMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteTvMutation, { data, loading, error }] = useDeleteTvMutation({
+ *   variables: {
+ *      deleteTvInput: // value for 'deleteTvInput'
+ *   },
+ * });
+ */
+export function useDeleteTvMutation(baseOptions?: Apollo.MutationHookOptions<DeleteTvMutation, DeleteTvMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteTvMutation, DeleteTvMutationVariables>(DeleteTvDocument, options);
+      }
+export type DeleteTvMutationHookResult = ReturnType<typeof useDeleteTvMutation>;
+export type DeleteTvMutationResult = Apollo.MutationResult<DeleteTvMutation>;
+export type DeleteTvMutationOptions = Apollo.BaseMutationOptions<DeleteTvMutation, DeleteTvMutationVariables>;
 export const SaveUploadDocument = gql`
     mutation SaveUpload($saveUploadInput: SaveUploadInput!) {
   saveUpload(saveUploadInput: $saveUploadInput) {

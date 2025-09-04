@@ -1,7 +1,7 @@
-import { useUpdateTvMutation } from "@shared/api/generated/graphql";
+import { useDeleteTvMutation } from "@shared/api/generated/graphql";
 
-export const useUpdateTv = () => {
-  const [mutate, result] = useUpdateTvMutation({
+export const useDeleteTv = () => {
+  const [mutate, result] = useDeleteTvMutation({
     refetchQueries: ["GetAllTvs"],
   });
 

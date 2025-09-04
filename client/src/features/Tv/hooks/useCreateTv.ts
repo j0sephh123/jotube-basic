@@ -1,23 +1,7 @@
-import { useMutation, gql } from "@apollo/client";
-
-const CREATE_TV = gql`
-  mutation CreateTv($createTvInput: CreateTvInput!) {
-    createTv(createTvInput: $createTvInput) {
-      tv {
-        id
-        identifier
-        title
-        duration
-        createdAt
-        updatedAt
-      }
-      message
-    }
-  }
-`;
+import { useCreateTvMutation } from "@shared/api/generated/graphql";
 
 export const useCreateTv = () => {
-  const [mutate, result] = useMutation(CREATE_TV, {
+  const [mutate, result] = useCreateTvMutation({
     refetchQueries: ["GetAllTvs"],
   });
 
