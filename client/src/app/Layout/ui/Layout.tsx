@@ -13,9 +13,11 @@ import { Navbar } from "@widgets/Navbar";
 import PlaylistModal from "@widgets/PlaylistModal";
 import { usePlaylistModalState } from "@features/Playlist";
 import { useRecentlyViewedChannels } from "@features/Channel";
+import { TvModal, useTvModalState } from "@features/Tv";
 
 export default function Layout(): JSX.Element {
   const { type } = usePlaylistModalState();
+  const { type: tvModalType } = useTvModalState();
   useRecentlyViewedChannels();
 
   return (
@@ -32,6 +34,7 @@ export default function Layout(): JSX.Element {
         <GalleryModal />
         <Notification />
         {type !== null && <PlaylistModal />}
+        {tvModalType !== null && <TvModal />}
       </DialogProvider>
       <VideoModal />
     </>

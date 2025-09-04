@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query, Float } from '@nestjs/graphql';
 import { TvService } from './tv.service';
 import {
   CreateTvResponse,
@@ -31,7 +31,7 @@ export class TvResolver {
 
   @Mutation(() => UpdateTvResponse)
   async updateTv(
-    @Args('id') id: number,
+    @Args('id', { type: () => Float }) id: number,
     @Args('updateTvInput') updateTvInput: UpdateTvInput,
   ): Promise<UpdateTvResponse> {
     return this.tvService.update(id, updateTvInput);

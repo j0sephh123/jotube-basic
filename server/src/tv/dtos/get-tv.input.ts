@@ -1,9 +1,9 @@
-import { InputType, Field, Int } from '@nestjs/graphql';
+import { InputType, Field, Float } from '@nestjs/graphql';
 import { IsNumber } from 'class-validator';
 
 @InputType()
 export class GetTvInput {
-  @Field(() => Int)
+  @Field(() => Float)
   @IsNumber()
   id: number;
 }

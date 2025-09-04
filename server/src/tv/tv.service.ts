@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
-import { CreateTvInput, TvMessage } from './dtos';
+import { CreateTvInput, UpdateTvInput, TvMessage } from './dtos';
 
 @Injectable()
 export class TvService {
@@ -42,7 +42,7 @@ export class TvService {
     });
   }
 
-  async update(id: number, { identifier, title, duration }: CreateTvInput) {
+  async update(id: number, { identifier, title, duration }: UpdateTvInput) {
     try {
       const tv = await this.prismaService.tV.update({
         where: { id },

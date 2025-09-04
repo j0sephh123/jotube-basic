@@ -103,6 +103,18 @@ export type CreatePlaylistResponse = {
   updatedAt: Scalars['String']['output'];
 };
 
+export type CreateTvInput = {
+  duration?: InputMaybe<Scalars['Int']['input']>;
+  identifier: Scalars['String']['input'];
+  title: Scalars['String']['input'];
+};
+
+export type CreateTvResponse = {
+  __typename?: 'CreateTvResponse';
+  message: TvMessage;
+  tv?: Maybe<Tv>;
+};
+
 export type DashboardChannelResponse = {
   __typename?: 'DashboardChannelResponse';
   createdAt: Scalars['DateTime']['output'];
@@ -160,6 +172,16 @@ export type DeleteFileResponse = {
 
 export type DeletePlaylistResponse = {
   __typename?: 'DeletePlaylistResponse';
+  success: Scalars['Boolean']['output'];
+};
+
+export type DeleteTvInput = {
+  id: Scalars['Float']['input'];
+};
+
+export type DeleteTvResponse = {
+  __typename?: 'DeleteTvResponse';
+  message: Scalars['String']['output'];
   success: Scalars['Boolean']['output'];
 };
 
@@ -241,6 +263,10 @@ export type GetScreenshotsResponse = {
   ytVideoId: Scalars['String']['output'];
 };
 
+export type GetTvInput = {
+  id: Scalars['Float']['input'];
+};
+
 export type GetVideoByYtIdInput = {
   channelId: Scalars['Float']['input'];
   ytId: Scalars['String']['input'];
@@ -251,9 +277,11 @@ export type Mutation = {
   cleanShortUploads: CleanShortUploadsResponse;
   createChannel: CreateChannelResponse;
   createPlaylist: CreatePlaylistResponse;
+  createTv: CreateTvResponse;
   deleteChannel: DeleteChannelResponse;
   deleteFileOrDirectory: DeleteFileResponse;
   deletePlaylist: DeletePlaylistResponse;
+  deleteTv: DeleteTvResponse;
   deleteUploads: DeleteUploadsResponse;
   fetchUploads: FetchUploadsResponse;
   finishProcessingUpload: FinishProcessUploadResponse;
@@ -261,6 +289,7 @@ export type Mutation = {
   syncUploads: SyncUploadsResponse;
   updateChannelPlaylist: UpdateChannelPlaylistResponse;
   updatePlaylist: UpdatePlaylistResponse;
+  updateTv: UpdateTvResponse;
 };
 
 
@@ -279,6 +308,11 @@ export type MutationCreatePlaylistArgs = {
 };
 
 
+export type MutationCreateTvArgs = {
+  createTvInput: CreateTvInput;
+};
+
+
 export type MutationDeleteChannelArgs = {
   id: Scalars['Float']['input'];
 };
@@ -291,6 +325,11 @@ export type MutationDeleteFileOrDirectoryArgs = {
 
 export type MutationDeletePlaylistArgs = {
   id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteTvArgs = {
+  deleteTvInput: DeleteTvInput;
 };
 
 
@@ -329,6 +368,12 @@ export type MutationUpdateChannelPlaylistArgs = {
 export type MutationUpdatePlaylistArgs = {
   id: Scalars['Int']['input'];
   updatePlaylistInput: UpdatePlaylistInput;
+};
+
+
+export type MutationUpdateTvArgs = {
+  id: Scalars['Float']['input'];
+  updateTvInput: UpdateTvInput;
 };
 
 /** Processing phases for video uploads */
@@ -421,7 +466,9 @@ export type Query = {
   channelScreenshots: Array<GetScreenshotsResponse>;
   fetchDashboard: ChannelsDashboardResponse;
   fetchVideosDashboard: VideosDashboardResponse;
+  getAllTvs: Array<Tv>;
   getScreenshots: Array<GetScreenshotsResponse>;
+  getTv?: Maybe<Tv>;
   getVideoByYtId: VideoByYtIdResponse;
   playlistDetails?: Maybe<PlaylistDetailsResponse>;
   playlistUploadsList: PlaylistUploadsListResponse;
@@ -468,6 +515,11 @@ export type QueryFetchVideosDashboardArgs = {
 
 export type QueryGetScreenshotsArgs = {
   input: GetScreenshotsInput;
+};
+
+
+export type QueryGetTvArgs = {
+  getTvInput: GetTvInput;
 };
 
 
@@ -619,6 +671,24 @@ export type ThumbnailByVideoIdResponse = {
   uploadsVideoId: Scalars['Float']['output'];
 };
 
+export type Tv = {
+  __typename?: 'Tv';
+  createdAt: Scalars['DateTime']['output'];
+  duration?: Maybe<Scalars['Int']['output']>;
+  id: Scalars['ID']['output'];
+  identifier: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+/** Possible messages for TV operation responses */
+export enum TvMessage {
+  CreatedSuccessfully = 'CREATED_SUCCESSFULLY',
+  FailedToCreate = 'FAILED_TO_CREATE',
+  FailedToUpdate = 'FAILED_TO_UPDATE',
+  UpdatedSuccessfully = 'UPDATED_SUCCESSFULLY'
+}
+
 export type UpdateChannelPlaylistInput = {
   channelId: Scalars['Int']['input'];
   playlistId?: InputMaybe<Scalars['Int']['input']>;
@@ -644,6 +714,18 @@ export type UpdatePlaylistResponse = {
   id: Scalars['Int']['output'];
   name: Scalars['String']['output'];
   updatedAt: Scalars['String']['output'];
+};
+
+export type UpdateTvInput = {
+  duration?: InputMaybe<Scalars['Int']['input']>;
+  identifier: Scalars['String']['input'];
+  title: Scalars['String']['input'];
+};
+
+export type UpdateTvResponse = {
+  __typename?: 'UpdateTvResponse';
+  message: TvMessage;
+  tv?: Maybe<Tv>;
 };
 
 export type UploadWithStoryboardResponse = {

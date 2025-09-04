@@ -149,7 +149,7 @@ type DeletePlaylistResponse {
 }
 
 input DeleteTvInput {
-  id: Int!
+  id: Float!
 }
 
 type DeleteTvResponse {
@@ -229,7 +229,7 @@ type GetScreenshotsResponse {
 }
 
 input GetTvInput {
-  id: Int!
+  id: Float!
 }
 
 input GetVideoByYtIdInput {
