@@ -51,7 +51,7 @@ type ChannelsDashboardResponse {
 }
 
 input CleanShortUploadsInput {
-  ytChannelId: String!
+  channelId: Float!
 }
 
 type CleanShortUploadsResponse {

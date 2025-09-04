@@ -1,9 +1,9 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { IsString } from 'class-validator';
+import { IsNumber } from 'class-validator';
 
 @InputType()
 export class CleanShortUploadsInput {
   @Field()
-  @IsString()
-  ytChannelId: string;
+  @IsNumber()
+  channelId: number;
 }

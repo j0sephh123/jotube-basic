@@ -70,7 +70,7 @@ const ChannelHeaderInner = ({
                       ytChannelId={ytChannelId}
                       id={channelMetadata?.id ?? 0}
                     />
-                    <CleanShortUploads ytChannelId={ytChannelId} />
+                    <CleanShortUploads channelId={channelId} />
                   </>
                 }
               />

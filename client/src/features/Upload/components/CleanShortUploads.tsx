@@ -4,22 +4,22 @@ import { useCleanShortUploads } from "@features/Upload";
 import { Button } from "@shared/ui";
 
 type CleanShortUploadsProps = {
-  ytChannelId: string;
+  channelId: number;
   isDisabled?: boolean;
 };
 
 export default function CleanShortUploads({
   isDisabled,
-  ytChannelId,
+  channelId,
 }: CleanShortUploadsProps) {
-  const cleanShortUploads = useCleanShortUploads(ytChannelId);
+  const cleanShortUploads = useCleanShortUploads();
 
   const handleClean = async () => {
-    if (!ytChannelId) return;
+    if (!channelId) return;
 
     try {
       await cleanShortUploads.mutateAsync({
-        ytChannelId,
+        channelId,
       });
     } catch (error) {
       console.error("Failed to clean short uploads:", error);

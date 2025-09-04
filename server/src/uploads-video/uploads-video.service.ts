@@ -15,7 +15,6 @@ import { FileOperationService } from 'src/file/file-operation.service';
 import { DirectoryService } from 'src/file/directory.service';
 import { YoutubeService } from 'src/core/external-services/youtube-api/youtube.service';
 import { syncUploadsDto } from 'src/uploads-video/dtos/sync-uploads.dto';
-import { cleanShortUploadsDto } from 'src/uploads-video/dtos/clean-short-uploads.dto';
 import { ArtifactType } from '@prisma/client';
 import { SortOrder } from './dtos/uploads-list.input';
 import { UploadsListResponse } from './dtos/uploads-list.response';
@@ -25,6 +24,7 @@ import { GetVideoByYtIdInput } from './dtos/get-video-by-ytid.input';
 import { DeleteUploadsInput } from './dtos/delete-uploads.input';
 import { FetchUploadsInput } from './dtos/fetch-uploads.input';
 import { SaveUploadInput } from './dtos/save-upload.input';
+import { CleanShortUploadsInput } from './dtos/clean-short-uploads.input';
 
 @Injectable()
 export class UploadsVideoService {
@@ -475,9 +475,9 @@ export class UploadsVideoService {
     }
   }
 
-  async cleanShortUploads({ ytChannelId }: cleanShortUploadsDto) {
+  async cleanShortUploads({ channelId }: CleanShortUploadsInput) {
     const channel = await this.prismaService.channel.findUnique({
-      where: { ytId: ytChannelId },
+      where: { id: channelId },
       select: {
         uploads: {
           where: { artifact: ArtifactType.VIDEO },

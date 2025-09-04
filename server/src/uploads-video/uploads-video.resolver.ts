@@ -82,10 +82,7 @@ export class UploadsVideoResolver {
     cleanShortUploadsInput: CleanShortUploadsInput,
   ): Promise<CleanShortUploadsResponse> {
     try {
-      const result = await this.uploadsVideoService.cleanShortUploads(
-        cleanShortUploadsInput,
-      );
-      return result;
+      return this.uploadsVideoService.cleanShortUploads(cleanShortUploadsInput);
     } catch {
       return { deletedCount: 0 };
     }

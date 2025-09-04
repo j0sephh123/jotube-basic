@@ -73,7 +73,7 @@ export type ChannelsDashboardResponse = {
 };
 
 export type CleanShortUploadsInput = {
-  ytChannelId: Scalars['String']['input'];
+  channelId: Scalars['Float']['input'];
 };
 
 export type CleanShortUploadsResponse = {
