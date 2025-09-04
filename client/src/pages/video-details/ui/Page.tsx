@@ -89,7 +89,6 @@ function VideoDetailsPageInner({
                   <>
                     <SaveUpload
                       ytVideoId={ytVideoId}
-                      ytChannelId={ytChannelId}
                       handleSideEffect={refetch}
                     />
                     <DownloadStoryboard

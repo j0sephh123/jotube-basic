@@ -1,13 +1,7 @@
-import { useSaveUploadMutation } from "@shared/api";
-
-export type SaveUploadItem = {
-  ytVideoId: string;
-  ytChannelId: string;
-};
-
-export type SaveUploadRequest = {
-  uploads: SaveUploadItem[];
-};
+import {
+  type SaveUploadMutationVariables,
+  useSaveUploadMutation,
+} from "@shared/api";
 
 export function useSaveUpload(onSuccess: () => void) {
   const [saveUploadMutation] = useSaveUploadMutation({
@@ -16,11 +10,10 @@ export function useSaveUpload(onSuccess: () => void) {
     },
   });
 
-  return (body: SaveUploadRequest) => {
-    return saveUploadMutation({
+  return (body: SaveUploadMutationVariables["saveUploadInput"]) =>
+    saveUploadMutation({
       variables: {
         saveUploadInput: body,
       },
     });
-  };
 }

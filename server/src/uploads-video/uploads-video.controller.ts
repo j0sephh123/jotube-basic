@@ -1,5 +1,4 @@
 import { Body, Controller, Post, Get, Param } from '@nestjs/common';
-import { saveUploadDto } from 'src/uploads-video/dtos/save-upload.dto';
 import { UploadsVideoService } from './uploads-video.service';
 import { syncUploadsDto } from 'src/uploads-video/dtos/sync-uploads.dto';
 import { cleanShortUploadsDto } from './dtos/clean-short-uploads.dto';
@@ -7,11 +6,6 @@ import { cleanShortUploadsDto } from './dtos/clean-short-uploads.dto';
 @Controller('uploads-video')
 export class UploadsVideoController {
   constructor(private readonly uploadsVideoService: UploadsVideoService) {}
-
-  @Post('/save-upload')
-  saveUpload(@Body() body: saveUploadDto) {
-    return this.uploadsVideoService.saveUpload(body);
-  }
 
   @Post('/sync-uploads')
   syncUploads(@Body() syncUploadsDto: syncUploadsDto) {

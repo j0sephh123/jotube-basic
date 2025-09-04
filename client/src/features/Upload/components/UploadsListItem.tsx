@@ -72,7 +72,6 @@ export function UploadsListItem({
               <>
                 <SaveUpload
                   ytVideoId={ytId}
-                  ytChannelId={ytChannelId}
                   handleSideEffect={handleSideEffect}
                 />
                 <DownloadStoryboard

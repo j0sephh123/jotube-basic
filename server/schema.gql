@@ -327,12 +327,7 @@ type Query {
 }
 
 input SaveUploadInput {
-  uploads: [SaveUploadItemInput!]!
-}
-
-input SaveUploadItemInput {
-  ytChannelId: String!
-  ytVideoId: String!
+  uploads: [String!]!
 }
 
 type SaveUploadResponse {

@@ -6,7 +6,6 @@ import * as fs from 'fs/promises';
 const execAsync = promisify(exec);
 
 import { FinishProcessUploadDto } from 'src/uploads-video/dtos/finish-process-upload.dto';
-import { saveUploadDto } from 'src/uploads-video/dtos/save-upload.dto';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
 import { ThumbnailsManagerService } from 'src/thumbnails/manager/thumbnails-manager.service';
 import { ScreenshotsManagerService } from 'src/screenshots/manager/screenshots-manager.service';
@@ -25,6 +24,7 @@ import { VideoByYtIdResponse } from './dtos/get-video-by-ytid.response';
 import { GetVideoByYtIdInput } from './dtos/get-video-by-ytid.input';
 import { DeleteUploadsInput } from './dtos/delete-uploads.input';
 import { FetchUploadsInput } from './dtos/fetch-uploads.input';
+import { SaveUploadInput } from './dtos/save-upload.input';
 
 @Injectable()
 export class UploadsVideoService {
@@ -138,9 +138,9 @@ export class UploadsVideoService {
     return storyboards;
   }
 
-  async saveUpload({ uploads }: saveUploadDto) {
+  async saveUpload({ uploads }: SaveUploadInput) {
     const results = await Promise.all(
-      uploads.map(async ({ ytVideoId }) => {
+      uploads.map(async (ytVideoId) => {
         const upload = await this.prismaService.uploadsVideo.update({
           where: { ytId: ytVideoId },
           data: { artifact: ArtifactType.SAVED },

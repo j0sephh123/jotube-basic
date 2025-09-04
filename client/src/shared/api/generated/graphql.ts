@@ -526,12 +526,7 @@ export type QueryUploadsWithThumbnailsArgs = {
 };
 
 export type SaveUploadInput = {
-  uploads: Array<SaveUploadItemInput>;
-};
-
-export type SaveUploadItemInput = {
-  ytChannelId: Scalars['String']['input'];
-  ytVideoId: Scalars['String']['input'];
+  uploads: Array<Scalars['String']['input']>;
 };
 
 export type SaveUploadResponse = {
