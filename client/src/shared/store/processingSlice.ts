@@ -41,7 +41,7 @@ export function setProcessingData(
   match(type)
     .with("thumbnails", () => {
       processingState.type = "thumbnails";
-      processingState.items = data as UploadsWithThumbnailsResponse[];
+      processingState.items = data;
       match(processingState)
         .with({ type: "thumbnails" }, (s) => {
           if (!Array.isArray(s.selectedItems)) s.selectedItems = [];
@@ -51,7 +51,7 @@ export function setProcessingData(
     })
     .with("storyboards", () => {
       processingState.type = "storyboards";
-      processingState.items = data as UploadWithStoryboardResponse[];
+      processingState.items = data;
     })
     .exhaustive();
 }

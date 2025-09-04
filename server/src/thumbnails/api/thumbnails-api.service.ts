@@ -75,7 +75,7 @@ export class ThumbnailsApiService {
       select: {
         ytId: true,
         channel: {
-          select: { ytId: true, title: true },
+          select: { ytId: true, title: true, id: true },
         },
       },
     });
@@ -84,6 +84,7 @@ export class ThumbnailsApiService {
       ytChannelId: video.channel.ytId,
       ytVideoId: video.ytId,
       channelTitle: video.channel.title,
+      channelId: video.channel.id,
     }));
   }
 

@@ -10,4 +10,7 @@ export class UploadsWithThumbnailsResponse {
 
   @Field()
   channelTitle: string;
+
+  @Field()
+  channelId: number;
 }
