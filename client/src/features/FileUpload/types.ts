@@ -1,3 +1,8 @@
+export interface UploadedFileInfo {
+  filename: string;
+  sizeInBytes: number;
+}
+
 export interface UploadFile {
   id: string;
   filename: string;

@@ -1,41 +1,44 @@
 import { Injectable } from '@nestjs/common';
-import { UploadFileResponse } from './dtos/upload-file.response';
 import { FileOperationService } from '../file/file-operation.service';
 import { FilePathService } from '../file/file-path.service';
 import * as fs from 'fs/promises';
 import * as path from 'path';
+import { PrismaService } from 'src/core/database/prisma/prisma.service';
+import { Episode } from '@prisma/client';
+import { GetUploadedFilesResponse } from './dtos/get-uploaded-files.response';
 
 @Injectable()
 export class FileUploadService {
   constructor(
     private readonly fileOperationService: FileOperationService,
     private readonly filePathService: FilePathService,
+    private readonly prisma: PrismaService,
   ) {}
 
-  async uploadFile(file: Express.Multer.File): Promise<UploadFileResponse> {
-    console.log('Uploading file:', file);
+  // async uploadFile(file: Express.Multer.File): Promise<UploadFileResponse> {
+  //   // TODO
+  // }
 
-    if (!file) {
-      throw new Error('No file provided');
+  async getUploadedFiles(
+    episodeId: Episode['id'],
+  ): Promise<GetUploadedFilesResponse[]> {
+    console.log({ episodeId });
+
+    const episode = await this.prisma.episode.findUnique({
+      where: { id: episodeId },
+      include: {
+        tv: true,
+      },
+    });
+
+    const basePath = this.filePathService.getBasePath();
+    const collectionPath = episode.tv.identifier;
+    const episodePath = episode.identifier;
+    const uploadDir = path.join(basePath, collectionPath, episodePath);
+
+    if (!episode) {
+      throw new Error(`Episode with ID ${episodeId} not found`);
     }
-
-    const fileId = path.parse(file.filename).name;
-    const fileName = file.filename;
-
-    return {
-      id: fileId,
-      filename: fileName,
-      originalName: file.originalname,
-      mimetype: file.mimetype,
-      size: file.size,
-      path: file.path,
-      uploadedAt: new Date(),
-      status: 'uploaded',
-    };
-  }
-
-  async getUploadedFiles(): Promise<UploadFileResponse[]> {
-    const uploadDir = path.join(process.cwd(), 'uploads');
 
     try {
       await fs.access(uploadDir);
@@ -44,30 +47,22 @@ export class FileUploadService {
     }
 
     const files = await fs.readdir(uploadDir);
-    const fileResponses: UploadFileResponse[] = [];
+    const fileInfos: GetUploadedFilesResponse[] = [];
 
-    for (const fileName of files) {
-      const filePath = path.join(uploadDir, fileName);
-      const stats = await fs.stat(filePath);
-
-      if (stats.isFile()) {
-        const fileId = path.parse(fileName).name;
-        fileResponses.push({
-          id: fileId,
-          filename: fileName,
-          originalName: fileName,
-          mimetype: 'application/octet-stream',
-          size: stats.size,
-          path: filePath,
-          uploadedAt: stats.birthtime,
-          status: 'uploaded',
+    for (const filename of files) {
+      const filePath = path.join(uploadDir, filename);
+      try {
+        const stats = await fs.stat(filePath);
+        fileInfos.push({
+          filename,
+          sizeInBytes: stats.size,
         });
+      } catch (error) {
+        console.warn(`Failed to get stats for file ${filename}:`, error);
       }
     }
 
-    return fileResponses.sort(
-      (a, b) => b.uploadedAt.getTime() - a.uploadedAt.getTime(),
-    );
+    return fileInfos;
   }
 
   async deleteUploadedFile(fileId: string): Promise<void> {

@@ -1,17 +1,20 @@
 import { useRef } from "react";
-import { Upload, Loader2 } from "lucide-react";
+import { Upload } from "lucide-react";
 import { useFileUpload, type UploadFile } from "@features/FileUpload";
+import { IconButton } from "@shared/ui";
 
 interface FileUploadDropzoneProps {
   onUploadComplete?: (file: UploadFile) => void;
   onUploadError?: (error: Error) => void;
   accept?: string;
+  episodeId: string;
 }
 
 export const FileUploadDropzone = ({
   onUploadComplete,
   onUploadError,
   accept,
+  episodeId,
 }: FileUploadDropzoneProps) => {
   const { uploadFile, isUploading } = useFileUpload();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -23,7 +26,7 @@ export const FileUploadDropzone = ({
     if (!file) return;
 
     try {
-      const result = await uploadFile(file);
+      const result = await uploadFile({ file, episodeId });
       onUploadComplete?.(result);
     } catch (error) {
       onUploadError?.(error as Error);
@@ -45,24 +48,7 @@ export const FileUploadDropzone = ({
         onChange={handleFileChange}
         className="hidden"
       />
-      <button
-        onClick={handleClick}
-        disabled={isUploading}
-        className={`btn ${isUploading ? "btn-disabled" : "btn-primary"} w-full`}
-        title={isUploading ? "Uploading..." : "Upload file"}
-      >
-        {isUploading ? (
-          <>
-            <Loader2 className="h-4 w-4 animate-spin" />
-            Uploading...
-          </>
-        ) : (
-          <>
-            <Upload className="h-4 w-4" />
-            Choose File to Upload
-          </>
-        )}
-      </button>
+      <IconButton onClick={handleClick} icon={<Upload className="h-4 w-4" />} />
     </>
   );
 };

@@ -1,37 +1,22 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { nestFetcher, nestFetcherFile } from "@shared/api";
 import type { UploadFile } from "@features/FileUpload";
-
-const QUERY_KEYS = {
-  uploadedFiles: ["uploadedFiles"] as const,
-};
+import { QUERY_KEYS } from "./constants";
 
 export const useFileUpload = () => {
   const queryClient = useQueryClient();
 
-  const {
-    data: uploadedFiles = [],
-    isLoading,
-    error,
-    refetch,
-  } = useQuery({
-    queryKey: QUERY_KEYS.uploadedFiles,
-    queryFn: async () => {
-      const files = await nestFetcher<UploadFile[]>({
-        method: "GET",
-        url: "/file-upload/files",
-      });
-      return files;
-    },
-  });
-
   const uploadMutation = useMutation({
-    mutationFn: async (file: File) => {
+    mutationFn: async ({
+      file,
+      episodeId,
+    }: {
+      file: File;
+      episodeId: string;
+    }) => {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("a", "5");
-
-      console.log(formData.get("a"));
+      formData.append("episodeId", episodeId);
 
       const result = await nestFetcherFile<UploadFile>({
         method: "POST",
@@ -58,10 +43,6 @@ export const useFileUpload = () => {
   });
 
   return {
-    uploadedFiles,
-    isLoading,
-    error,
-    refetch,
     uploadFile: uploadMutation.mutateAsync,
     isUploading: uploadMutation.isPending,
     deleteFile: deleteMutation.mutateAsync,

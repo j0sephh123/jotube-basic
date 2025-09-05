@@ -9,16 +9,22 @@ import {
   HttpException,
   HttpStatus,
   Body,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 import { FileUploadService } from './file-upload.service';
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
+import { PrismaService } from 'src/core/database/prisma/prisma.service';
+import { GetUploadedFilesResponse } from './dtos/get-uploaded-files.response';
 
 @Controller('file-upload')
 export class FileUploadController {
-  constructor(private readonly fileUploadService: FileUploadService) {}
+  constructor(
+    private readonly fileUploadService: FileUploadService,
+    private readonly prisma: PrismaService,
+  ) {}
 
   @Post()
   @UseInterceptors(
@@ -29,13 +35,28 @@ export class FileUploadController {
   )
   async uploadFile(
     @UploadedFile() file: Express.Multer.File,
-    @Body() body: { a: string },
+    @Body('episodeId', ParseIntPipe) episodeId: number,
   ) {
-    console.log({ a: body.a });
+    try {
+      const tv = await this.prisma.episode.findUnique({
+        where: { id: episodeId },
+      });
+      console.log(tv);
+    } catch (e: any) {
+      throw new HttpException(e.message, HttpStatus.BAD_REQUEST);
+    }
+
     if (!file) {
       console.error('No file received. Check field name and multipart setup.');
       throw new HttpException('Missing file', HttpStatus.BAD_REQUEST);
     }
+
+    // console.log({
+    //   name: file.originalname,
+    //   tv,
+    // });
+
+    // originalname
 
     const cwd = process.cwd();
     const uploadsRoot = path.resolve(cwd, 'uploads');
@@ -60,10 +81,12 @@ export class FileUploadController {
     return { ok: true, path: targetPath };
   }
 
-  @Get('files')
-  async getUploadedFiles() {
+  @Get('files/:fileId')
+  async getUploadedFiles(
+    @Param('fileId', ParseIntPipe) fileId: number,
+  ): Promise<GetUploadedFilesResponse[]> {
     try {
-      return await this.fileUploadService.getUploadedFiles();
+      return await this.fileUploadService.getUploadedFiles(fileId);
     } catch (error) {
       throw new HttpException(
         error.message || 'Failed to get uploaded files',
