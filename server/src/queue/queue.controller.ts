@@ -6,6 +6,7 @@ import { RemoveJobsDto } from 'src/queue/dtos/remove-jobs.dto';
 import { AddVideosv2Dto } from 'src/queue/dtos/add-videos-v2.dto';
 import { AddStoryboardJobDto } from 'src/queue/dtos/add-storyboard-job.dto';
 import { ScreenshotsQueueJobDto } from 'src/queue/dtos/screenshots-queue-job.dto';
+import { AddEpisodeJobDto } from './dtos/add-episode.dto';
 
 @Controller('queues')
 export class QueueController {
@@ -43,5 +44,10 @@ export class QueueController {
   @ApiOperation({ summary: 'Add storyboard job to queue' })
   addStoryboard(@Body() body: AddStoryboardJobDto) {
     return this.queueService.addStoryboardJob(body.data);
+  }
+
+  @Post('/add-episode')
+  addEpisode(@Body() body: AddEpisodeJobDto) {
+    return this.queueService.addEpisodeJob(body);
   }
 }

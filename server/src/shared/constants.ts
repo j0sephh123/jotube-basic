@@ -4,6 +4,7 @@ export const queueNames = {
   video: 'video',
   download: 'download',
   storyboard: 'storyboard',
+  episode: 'episode',
   // not used
   captureScreenshots: 'captureScreenshots',
   generateThumbnails: 'generateThumbnails',

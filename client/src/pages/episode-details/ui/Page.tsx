@@ -3,10 +3,12 @@ import { useGetEpisodeDetails } from "@features/Episode";
 import { OpenDirectoryButton, StaticStates } from "@shared/ui";
 import { FileUploadDropzone } from "@features/FileUpload";
 import { EpisodeList } from "@features/FileUpload/components/EpisodeList";
+import { useAddEpisodeToQueue } from "@features/Episode";
 
 export const EpisodeDetailsPage = () => {
   const { episodeId, tvId } = useParams<{ episodeId: string; tvId: string }>();
   const episodeIdNumber = Number(episodeId);
+  const addEpisodeToQueue = useAddEpisodeToQueue();
 
   const {
     data: episodeData,
@@ -15,6 +17,12 @@ export const EpisodeDetailsPage = () => {
   } = useGetEpisodeDetails({
     getEpisodeInput: { id: episodeIdNumber },
   });
+
+  const handleAddEpisodeToQueue = () => {
+    addEpisodeToQueue.mutateAsync({ episodeId: episodeIdNumber }).then(() => {
+      console.log("Episode added to queue");
+    });
+  };
 
   const episode = episodeData?.getEpisodeDetails;
 
@@ -25,6 +33,7 @@ export const EpisodeDetailsPage = () => {
           <Link to={`/tv/${tvId}`} className="btn btn-outline btn-sm mb-4">
             ← Back to {episode?.tv?.title || "TV"}
           </Link>
+          <button onClick={handleAddEpisodeToQueue}>Add to queue</button>
           <h1 className="text-3xl font-bold mb-2">{episode?.title}</h1>
           <p className="text-gray-600 mb-4">{episode?.identifier}</p>
           <div className="mb-6">

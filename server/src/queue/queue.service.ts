@@ -6,6 +6,7 @@ import { PrismaService } from 'src/core/database/prisma/prisma.service';
 import { LabelsDto } from 'src/queue/dtos/labels.dto';
 import { RemoveJobsDto } from 'src/queue/dtos/remove-jobs.dto';
 import { AddVideosv2Dto } from './dtos/add-videos-v2.dto';
+import { AddEpisodeJobDto } from './dtos/add-episode.dto';
 
 @Injectable()
 export class QueueService {
@@ -15,6 +16,7 @@ export class QueueService {
     private readonly storyboardProcessor: Queue,
     private readonly prismaService: PrismaService,
     @InjectQueue(queueNames.video) private readonly videoProcessor: Queue,
+    @InjectQueue(queueNames.episode) private readonly episodeProcessor: Queue,
   ) {}
 
   async addUploads(addVideosDto: AddVideosv2Dto[]) {
@@ -222,5 +224,19 @@ export class QueueService {
       videoTitle: videoTitles[item.ytVideoId] || item.ytVideoId,
       channelTitle: channelTitles[item.ytChannelId] || item.ytChannelId,
     }));
+  }
+
+  async addEpisodeJob({ episodeId }: AddEpisodeJobDto) {
+    const existingJobs = await this.episodeProcessor.getJobs([
+      'active',
+      'waiting',
+    ]);
+    const existingIds = existingJobs.map((job) => job.data.episodeId);
+
+    if (!existingIds.includes(episodeId)) {
+      await this.episodeProcessor.add({ episodeId });
+    }
+
+    return { success: true };
   }
 }

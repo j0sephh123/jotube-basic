@@ -41,6 +41,7 @@ import { ConverterModule } from './converter/converter.module';
 import { TvModule } from './tv/tv.module';
 import { EpisodeModule } from './episode/episode.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
+import { EpisodeProcessor } from './video-worker/episode.processor';
 
 @Module({
   imports: [
@@ -77,6 +78,9 @@ import { FileUploadModule } from './file-upload/file-upload.module';
     BullModule.registerQueue({
       name: queueNames.storyboard,
     }),
+    BullModule.registerQueue({
+      name: queueNames.episode,
+    }),
     LoggingModule,
     ImagesModule,
     NestConfigModule.forRoot(),
@@ -109,6 +113,7 @@ import { FileUploadModule } from './file-upload/file-upload.module';
     DownloadService,
     YouTubeDownloaderService,
     VideoProcessor,
+    EpisodeProcessor,
     DownloadProcessor,
     StoryboardProcessor,
     ScreenshotsManagerService,
