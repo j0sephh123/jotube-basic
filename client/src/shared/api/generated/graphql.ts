@@ -961,27 +961,6 @@ export type DeleteChannelMutationVariables = Exact<{
 
 export type DeleteChannelMutation = { __typename?: 'Mutation', deleteChannel: { __typename?: 'DeleteChannelResponse', success: boolean, message: string } };
 
-export type GetChannelForPlaylistQueryVariables = Exact<{
-  ytChannelId: Scalars['String']['input'];
-}>;
-
-
-export type GetChannelForPlaylistQuery = { __typename?: 'Query', channelForPlaylist: { __typename?: 'ChannelForPlaylistResponse', id: number, title: string } };
-
-export type GetChannelMetadataQueryVariables = Exact<{
-  channelMetadataInput: ChannelMetadataInput;
-}>;
-
-
-export type GetChannelMetadataQuery = { __typename?: 'Query', channelMetadata: { __typename?: 'ChannelMetadataResponse', id: number, title: string, fetchedUntilEnd: boolean, videoCount: number, lastSyncedAt?: string | null, videoArtifactsCount: number, savedArtifactsCount: number, thumbnailArtifactsCount: number, screenshotArtifactsCount: number, storyboardArtifactsCount: number, playlist?: { __typename?: 'PlaylistInfo', id: number, name: string } | null } };
-
-export type GetChannelScreenshotsQueryVariables = Exact<{
-  input: GetScreenshotsInput;
-}>;
-
-
-export type GetChannelScreenshotsQuery = { __typename?: 'Query', channelScreenshots: Array<{ __typename?: 'GetScreenshotsResponse', ytVideoId: string, id: number, second: number, src: string }> };
-
 export type ChannelFragmentFragment = { __typename?: 'PlaylistChannelResponse', id: number, ytId: string };
 
 export type CreatePlaylistMutationVariables = Exact<{
@@ -1073,7 +1052,7 @@ export type GetEpisodeQueryVariables = Exact<{
 }>;
 
 
-export type GetEpisodeQuery = { __typename?: 'Query', getEpisode?: { __typename?: 'Episode', id: string, identifier: string, title: string, artifact: string, publishedAt?: any | null, createdAt: any, updatedAt: any, tvId: string } | null };
+export type GetEpisodeQuery = { __typename?: 'Query', getEpisode?: { __typename?: 'Episode', id: string, identifier: string, title: string, artifact: string, publishedAt?: any | null, createdAt: any, updatedAt: any, tvId: string, tv?: { __typename?: 'Tv', id: string, identifier: string, title: string } | null } | null };
 
 export type GetEpisodeDetailsQueryVariables = Exact<{
   getEpisodeInput: GetEpisodeInput;
@@ -1331,143 +1310,6 @@ export function useDeleteChannelMutation(baseOptions?: Apollo.MutationHookOption
 export type DeleteChannelMutationHookResult = ReturnType<typeof useDeleteChannelMutation>;
 export type DeleteChannelMutationResult = Apollo.MutationResult<DeleteChannelMutation>;
 export type DeleteChannelMutationOptions = Apollo.BaseMutationOptions<DeleteChannelMutation, DeleteChannelMutationVariables>;
-export const GetChannelForPlaylistDocument = gql`
-    query GetChannelForPlaylist($ytChannelId: String!) {
-  channelForPlaylist(ytChannelId: $ytChannelId) {
-    id
-    title
-  }
-}
-    `;
-
-/**
- * __useGetChannelForPlaylistQuery__
- *
- * To run a query within a React component, call `useGetChannelForPlaylistQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetChannelForPlaylistQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetChannelForPlaylistQuery({
- *   variables: {
- *      ytChannelId: // value for 'ytChannelId'
- *   },
- * });
- */
-export function useGetChannelForPlaylistQuery(baseOptions: Apollo.QueryHookOptions<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables> & ({ variables: GetChannelForPlaylistQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>(GetChannelForPlaylistDocument, options);
-      }
-export function useGetChannelForPlaylistLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>(GetChannelForPlaylistDocument, options);
-        }
-export function useGetChannelForPlaylistSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>(GetChannelForPlaylistDocument, options);
-        }
-export type GetChannelForPlaylistQueryHookResult = ReturnType<typeof useGetChannelForPlaylistQuery>;
-export type GetChannelForPlaylistLazyQueryHookResult = ReturnType<typeof useGetChannelForPlaylistLazyQuery>;
-export type GetChannelForPlaylistSuspenseQueryHookResult = ReturnType<typeof useGetChannelForPlaylistSuspenseQuery>;
-export type GetChannelForPlaylistQueryResult = Apollo.QueryResult<GetChannelForPlaylistQuery, GetChannelForPlaylistQueryVariables>;
-export const GetChannelMetadataDocument = gql`
-    query GetChannelMetadata($channelMetadataInput: ChannelMetadataInput!) {
-  channelMetadata(channelMetadataInput: $channelMetadataInput) {
-    id
-    title
-    fetchedUntilEnd
-    videoCount
-    lastSyncedAt
-    playlist {
-      id
-      name
-    }
-    videoArtifactsCount
-    savedArtifactsCount
-    thumbnailArtifactsCount
-    screenshotArtifactsCount
-    storyboardArtifactsCount
-  }
-}
-    `;
-
-/**
- * __useGetChannelMetadataQuery__
- *
- * To run a query within a React component, call `useGetChannelMetadataQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetChannelMetadataQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetChannelMetadataQuery({
- *   variables: {
- *      channelMetadataInput: // value for 'channelMetadataInput'
- *   },
- * });
- */
-export function useGetChannelMetadataQuery(baseOptions: Apollo.QueryHookOptions<GetChannelMetadataQuery, GetChannelMetadataQueryVariables> & ({ variables: GetChannelMetadataQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>(GetChannelMetadataDocument, options);
-      }
-export function useGetChannelMetadataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>(GetChannelMetadataDocument, options);
-        }
-export function useGetChannelMetadataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>(GetChannelMetadataDocument, options);
-        }
-export type GetChannelMetadataQueryHookResult = ReturnType<typeof useGetChannelMetadataQuery>;
-export type GetChannelMetadataLazyQueryHookResult = ReturnType<typeof useGetChannelMetadataLazyQuery>;
-export type GetChannelMetadataSuspenseQueryHookResult = ReturnType<typeof useGetChannelMetadataSuspenseQuery>;
-export type GetChannelMetadataQueryResult = Apollo.QueryResult<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>;
-export const GetChannelScreenshotsDocument = gql`
-    query GetChannelScreenshots($input: GetScreenshotsInput!) {
-  channelScreenshots(input: $input) {
-    ytVideoId
-    id
-    second
-    src
-  }
-}
-    `;
-
-/**
- * __useGetChannelScreenshotsQuery__
- *
- * To run a query within a React component, call `useGetChannelScreenshotsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetChannelScreenshotsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetChannelScreenshotsQuery({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useGetChannelScreenshotsQuery(baseOptions: Apollo.QueryHookOptions<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables> & ({ variables: GetChannelScreenshotsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>(GetChannelScreenshotsDocument, options);
-      }
-export function useGetChannelScreenshotsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>(GetChannelScreenshotsDocument, options);
-        }
-export function useGetChannelScreenshotsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>(GetChannelScreenshotsDocument, options);
-        }
-export type GetChannelScreenshotsQueryHookResult = ReturnType<typeof useGetChannelScreenshotsQuery>;
-export type GetChannelScreenshotsLazyQueryHookResult = ReturnType<typeof useGetChannelScreenshotsLazyQuery>;
-export type GetChannelScreenshotsSuspenseQueryHookResult = ReturnType<typeof useGetChannelScreenshotsSuspenseQuery>;
-export type GetChannelScreenshotsQueryResult = Apollo.QueryResult<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>;
 export const CreatePlaylistDocument = gql`
     mutation CreatePlaylist($createPlaylistInput: CreatePlaylistInput!) {
   createPlaylist(createPlaylistInput: $createPlaylistInput) {
@@ -2034,6 +1876,11 @@ export const GetEpisodeDocument = gql`
     createdAt
     updatedAt
     tvId
+    tv {
+      id
+      identifier
+      title
+    }
   }
 }
     `;
