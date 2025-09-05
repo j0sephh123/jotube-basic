@@ -99,6 +99,7 @@ screenshots.json
 notes/
 ignore/
 server/openapi.yaml
+server/uploads/
 
 # Python (for download-service)
 __pycache__/

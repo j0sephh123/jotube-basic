@@ -9,6 +9,7 @@ import {
 import { Button, StaticStates, OpenDirectoryButton } from "@shared/ui";
 import { useDialog } from "@shared/hooks";
 import { Link } from "react-router-dom";
+import { FileUpload } from "@features/FileUpload";
 
 export const TvDetailsPage = () => {
   const { tvId } = useParams<{ tvId: string }>();
@@ -81,6 +82,10 @@ export const TvDetailsPage = () => {
         <Button variant="outline" color="primary" onClick={handleCreateEpisode}>
           Create Episode
         </Button>
+      </div>
+
+      <div className="mb-6">
+        <FileUpload />
       </div>
 
       <StaticStates

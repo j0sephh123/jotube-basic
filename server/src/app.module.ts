@@ -40,6 +40,7 @@ import { ProcessingPhaseModule } from './processing-phase/processing-phase.modul
 import { ConverterModule } from './converter/converter.module';
 import { TvModule } from './tv/tv.module';
 import { EpisodeModule } from './episode/episode.module';
+import { FileUploadModule } from './file-upload/file-upload.module';
 
 @Module({
   imports: [
@@ -99,6 +100,7 @@ import { EpisodeModule } from './episode/episode.module';
     ConverterModule,
     TvModule,
     EpisodeModule,
+    FileUploadModule,
   ],
   controllers: [QueueController, SearchController, StatisticsController],
   providers: [
