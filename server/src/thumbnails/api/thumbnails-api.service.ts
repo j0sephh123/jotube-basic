@@ -73,6 +73,7 @@ export class ThumbnailsApiService {
         artifact: ArtifactType.THUMBNAIL,
       },
       select: {
+        id: true,
         ytId: true,
         channel: {
           select: { ytId: true, title: true, id: true },
@@ -85,6 +86,7 @@ export class ThumbnailsApiService {
       ytVideoId: video.ytId,
       channelTitle: video.channel.title,
       channelId: video.channel.id,
+      videoId: video.id,
     }));
   }
 
@@ -109,9 +111,21 @@ export class ThumbnailsApiService {
     };
   }
 
-  async getByYtVideoId(ytVideoId: string) {
+  async getByYtVideoId(videoId: number) {
+    const video = await this.prismaService.uploadsVideo.findUnique({
+      where: { id: videoId },
+      select: {
+        ytId: true,
+        channel: { select: { ytId: true } },
+      },
+    });
+
+    if (!video) {
+      return null;
+    }
+
     const thumbnail = await this.prismaService.thumbnail.findFirst({
-      where: { uploadsVideo: { ytId: ytVideoId } },
+      where: { uploadsVideo: { ytId: video.ytId } },
       include: {
         uploadsVideo: {
           include: {
@@ -131,7 +145,7 @@ export class ThumbnailsApiService {
 
     const thumbnailsCount = await this.thumbnailsManagerService.countThumbnails(
       thumbnail.uploadsVideo.channel.ytId,
-      ytVideoId,
+      video.ytId,
     );
 
     return {

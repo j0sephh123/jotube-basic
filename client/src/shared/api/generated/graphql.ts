@@ -635,7 +635,7 @@ export type QueryStoryboardsArgs = {
 
 
 export type QueryThumbnailByVideoIdArgs = {
-  ytVideoId: Scalars['String']['input'];
+  videoId: Scalars['Float']['input'];
 };
 
 
@@ -910,6 +910,7 @@ export type UploadsWithThumbnailsResponse = {
   __typename?: 'UploadsWithThumbnailsResponse';
   channelId: Scalars['Float']['output'];
   channelTitle: Scalars['String']['output'];
+  videoId: Scalars['Float']['output'];
   ytChannelId: Scalars['String']['output'];
   ytVideoId: Scalars['String']['output'];
 };
@@ -1138,7 +1139,7 @@ export type StoryboardsQueryVariables = Exact<{
 export type StoryboardsQuery = { __typename?: 'Query', storyboards: Array<{ __typename?: 'UploadsVideoStoryboardResponse', id: number, ytId: string, title: string, src: string, publishedAt: string, createdAt: string, updatedAt: string, channelId: number, nextPageToken?: string | null, duration?: number | null, artifact: string, storyboard: { __typename?: 'StoryboardDataResponse', id: number, uploadsVideoId: number, fragments: number, url: string, createdAt: string, updatedAt: string } }> };
 
 export type GetThumbnailByVideoIdQueryVariables = Exact<{
-  ytVideoId: Scalars['String']['input'];
+  videoId: Scalars['Float']['input'];
 }>;
 
 
@@ -1225,7 +1226,7 @@ export type UploadsWithThumbnailsQueryVariables = Exact<{
 }>;
 
 
-export type UploadsWithThumbnailsQuery = { __typename?: 'Query', uploadsWithThumbnails: Array<{ __typename?: 'UploadsWithThumbnailsResponse', ytChannelId: string, ytVideoId: string, channelTitle: string, channelId: number }> };
+export type UploadsWithThumbnailsQuery = { __typename?: 'Query', uploadsWithThumbnails: Array<{ __typename?: 'UploadsWithThumbnailsResponse', ytChannelId: string, ytVideoId: string, channelTitle: string, channelId: number, videoId: number }> };
 
 export type DeleteUploadsMutationVariables = Exact<{
   deleteUploadsInput: DeleteUploadsInput;
@@ -2489,8 +2490,8 @@ export type StoryboardsLazyQueryHookResult = ReturnType<typeof useStoryboardsLaz
 export type StoryboardsSuspenseQueryHookResult = ReturnType<typeof useStoryboardsSuspenseQuery>;
 export type StoryboardsQueryResult = Apollo.QueryResult<StoryboardsQuery, StoryboardsQueryVariables>;
 export const GetThumbnailByVideoIdDocument = gql`
-    query GetThumbnailByVideoId($ytVideoId: String!) {
-  thumbnailByVideoId(ytVideoId: $ytVideoId) {
+    query GetThumbnailByVideoId($videoId: Float!) {
+  thumbnailByVideoId(videoId: $videoId) {
     createdAt
     id
     perRow
@@ -2522,7 +2523,7 @@ export const GetThumbnailByVideoIdDocument = gql`
  * @example
  * const { data, loading, error } = useGetThumbnailByVideoIdQuery({
  *   variables: {
- *      ytVideoId: // value for 'ytVideoId'
+ *      videoId: // value for 'videoId'
  *   },
  * });
  */
@@ -3011,6 +3012,7 @@ export const UploadsWithThumbnailsDocument = gql`
     ytVideoId
     channelTitle
     channelId
+    videoId
   }
 }
     `;

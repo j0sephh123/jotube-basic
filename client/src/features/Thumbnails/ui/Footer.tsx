@@ -5,15 +5,17 @@ import {
   usePaginate,
 } from "@features/Thumbnails";
 import { useThumbnailsProcessingState } from "@shared/store";
-import { OpenDirectoryButton } from "@shared/ui";
 import { ArrowLeft, ArrowRight, Save } from "lucide-react";
 import { Button } from "@shared/ui";
 
-export default function Footer() {
+export default function Footer({
+  slot,
+}: {
+  slot: React.ReactNode;
+}) {
   const { handlePrevious, handleNext } = usePaginate();
   const thumbnailsCount = useThumbnailsCount();
   const {
-    items: thumbnailsProcessingData,
     selectedItems: selectedImages,
     currentIndex,
   } = useThumbnailsProcessingState();
@@ -26,10 +28,7 @@ export default function Footer() {
     <div className="fixed bottom-0 left-0 right-0 bg-gray-800 p-4 flex items-center justify-between">
       <div className="font-bold flex items-center gap-4">
         <div>Selected: {selectedImages.length}</div>
-        <OpenDirectoryButton
-          collection={thumbnailsProcessingData[0]?.ytChannelId ?? ""}
-          media={thumbnailsProcessingData[0]?.ytVideoId ?? ""}
-        />
+        {slot}
       </div>
       <div className="flex items-center gap-2">
         <Button

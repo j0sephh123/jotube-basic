@@ -391,7 +391,7 @@ type Query {
   searchVideos(searchInput: SearchInput!): [SearchVideoResult!]!
   statisticsCounts: StatisticsCountsResponse!
   storyboards(ytChannelId: String!): [UploadsVideoStoryboardResponse!]!
-  thumbnailByVideoId(ytVideoId: String!): ThumbnailByVideoIdResponse
+  thumbnailByVideoId(videoId: Float!): ThumbnailByVideoIdResponse
   uploadsList(uploadsListInput: UploadsListInput!): UploadsListResponse!
   uploadsWithStoryboards(input: StoryboardQueryInput!): [UploadWithStoryboardResponse!]!
   uploadsWithThumbnails(input: UploadsWithThumbnailsInput!): [UploadsWithThumbnailsResponse!]!
@@ -632,6 +632,7 @@ input UploadsWithThumbnailsInput {
 type UploadsWithThumbnailsResponse {
   channelId: Float!
   channelTitle: String!
+  videoId: Float!
   ytChannelId: String!
   ytVideoId: String!
 }

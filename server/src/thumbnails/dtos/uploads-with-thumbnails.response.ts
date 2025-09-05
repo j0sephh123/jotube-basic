@@ -13,4 +13,7 @@ export class UploadsWithThumbnailsResponse {
 
   @Field()
   channelId: number;
+
+  @Field()
+  videoId: number;
 }

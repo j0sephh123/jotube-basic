@@ -5,7 +5,7 @@ export default function useIsLastItem() {
   const { items: thumbnailsProcessingData, currentIndex } =
     useThumbnailsProcessingState();
   const { data } = useThumbnailByVideoId(
-    thumbnailsProcessingData[0]?.ytVideoId ?? undefined
+    thumbnailsProcessingData[0]?.videoId ?? 0
   );
   const thumbnailsCount = data?.thumbnailsCount || 0;
 

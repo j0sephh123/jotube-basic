@@ -4,19 +4,22 @@ import { Button } from "@shared/ui";
 
 export function ViewVideoThumbnails({
   ytChannelId,
-  ytVideoId,
+  videoId,
   channelTitle,
+  ytVideoId,
 }: {
   ytChannelId: string;
-  ytVideoId: string;
+  videoId: number;
   channelTitle: string;
+  ytVideoId: string;
 }) {
   const handleViewThumbnails = () => {
     setProcessingData("thumbnails", [
       {
         ytChannelId,
-        ytVideoId,
         channelTitle,
+        videoId,
+        ytVideoId,
       },
     ] as UploadsWithThumbnailsResponse[]);
   };

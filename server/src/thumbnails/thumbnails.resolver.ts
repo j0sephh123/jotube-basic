@@ -26,9 +26,9 @@ export class ThumbnailsResolver {
 
   @Query(() => ThumbnailByVideoIdResponse, { nullable: true })
   async thumbnailByVideoId(
-    @Args('ytVideoId') ytVideoId: string,
+    @Args('videoId') videoId: number,
   ): Promise<ThumbnailByVideoIdResponse | null> {
-    const result = await this.thumbnailsApiService.getByYtVideoId(ytVideoId);
+    const result = await this.thumbnailsApiService.getByYtVideoId(videoId);
 
     if (!result) return null;
 

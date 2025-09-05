@@ -99,6 +99,7 @@ export const UPLOADS_WITH_THUMBNAILS = gql`
       ytVideoId
       channelTitle
       channelId
+      videoId
     }
   }
 `;

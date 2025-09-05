@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_THUMBNAIL_BY_VIDEO_ID = gql`
-  query GetThumbnailByVideoId($ytVideoId: String!) {
-    thumbnailByVideoId(ytVideoId: $ytVideoId) {
+  query GetThumbnailByVideoId($videoId: Float!) {
+    thumbnailByVideoId(videoId: $videoId) {
       createdAt
       id
       perRow

@@ -102,8 +102,9 @@ export function UploadsListItem({
             {type === "thumbnails" && (
               <ViewVideoThumbnails
                 ytChannelId={ytChannelId}
-                ytVideoId={ytId}
+                videoId={id}
                 channelTitle={title}
+                ytVideoId={ytId}
               />
             )}
             {type === "screenshots" && (

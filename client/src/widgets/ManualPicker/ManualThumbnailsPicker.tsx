@@ -15,6 +15,7 @@ import { setSelectedImages, useThumbnailsProcessingState } from "@shared/store";
 import { generateThumbnailUrl } from "@shared/utils";
 import { useRef } from "react";
 import { makeYtChannelId, type To } from "@shared/types";
+import { OpenDirectoryButton } from "@shared/ui";
 
 export function ManualThumbnailsPicker() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -49,7 +50,14 @@ export function ManualThumbnailsPicker() {
         <ThumbnailImage src={src} />
         <Grid handleZoom={handleZoom} />
       </Container>
-      <Footer />
+      <Footer
+        slot={
+          <OpenDirectoryButton
+            collection={thumbnailsProcessingData[0]?.ytChannelId ?? ""}
+            media={thumbnailsProcessingData[0]?.ytVideoId ?? ""}
+          />
+        }
+      />
     </>
   );
 }

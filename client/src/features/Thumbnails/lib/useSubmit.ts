@@ -16,7 +16,7 @@ export default function useSubmit() {
     useThumbnailsProcessingState();
   const refetchTotalCounts = useRefetchTotalCounts();
   const refetchThumbnailByVideoId = useRefetchThumbnailByVideoId(
-    thumbnailsProcessingData[0]?.ytVideoId
+    thumbnailsProcessingData[0]?.videoId ?? 0
   );
   const refetchAll = () => {
     refetchTotalCounts();

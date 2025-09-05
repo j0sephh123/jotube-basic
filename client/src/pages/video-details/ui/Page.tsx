@@ -133,8 +133,9 @@ function VideoDetailsPageInner({
                 {video.artifact === "THUMBNAIL" && (
                   <ViewVideoThumbnails
                     ytChannelId={ytChannelId}
-                    ytVideoId={ytVideoId}
+                    videoId={video.id}
                     channelTitle={video.channelTitle}
+                    ytVideoId={ytVideoId}
                   />
                 )}
               </div>
