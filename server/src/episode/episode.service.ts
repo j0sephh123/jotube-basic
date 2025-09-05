@@ -105,6 +105,20 @@ export class EpisodeService {
 
   async delete(id: number) {
     try {
+      const episode = await this.prismaService.episode.findUnique({
+        where: { id },
+        include: {
+          tv: true,
+        },
+      });
+
+      if (episode) {
+        await this.folderService.deleteEpisodeFolder(
+          episode.tv.identifier,
+          episode.identifier,
+        );
+      }
+
       await this.prismaService.episode.delete({
         where: { id },
       });

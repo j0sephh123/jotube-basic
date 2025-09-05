@@ -42,4 +42,18 @@ export class FolderService {
       throw new Error(`Failed to delete TV folder: ${error.message}`);
     }
   }
+
+  async deleteEpisodeFolder(
+    tvIdentifier: string,
+    episodeIdentifier: string,
+  ): Promise<void> {
+    const basePath = this.filePathService.getBasePath();
+    const episodePath = join(basePath, tvIdentifier, episodeIdentifier);
+
+    try {
+      await fs.rm(episodePath, { recursive: true, force: true });
+    } catch (error) {
+      throw new Error(`Failed to delete episode folder: ${error.message}`);
+    }
+  }
 }
