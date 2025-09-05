@@ -13,18 +13,18 @@ import { setZoom } from "@features/Screenshot";
 import { setSelectedImages, useThumbnailsProcessingState } from "@shared/store";
 import { generateThumbnailUrl } from "@shared/utils";
 import { useRef } from "react";
+import { makeYtChannelId, To } from "@shared/types";
 
 export function ManualThumbnailsPicker() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { items: thumbnailsProcessingData } = useThumbnailsProcessingState();
 
+  const ytChannelId = thumbnailsProcessingData[0]?.ytChannelId ?? "";
+  const ytVideoId = thumbnailsProcessingData[0]?.ytVideoId ?? "";
+
   const handleZoom = (index: number): void => {
-    const url = generateThumbnailUrl(
-      thumbnailsProcessingData[0]?.ytChannelId ?? "",
-      thumbnailsProcessingData[0]?.ytVideoId ?? "",
-      index
-    );
+    const url = generateThumbnailUrl(ytChannelId, ytVideoId, index);
     setZoom(url);
     setSelectedImages((prev) => [...prev, index]);
   };
@@ -35,9 +35,12 @@ export function ManualThumbnailsPicker() {
   useEvents(handleKeyDown, handleContainerWheel, containerRef);
   useResetSelection(containerRef);
 
+  const channelLink: To = `/channels/${makeYtChannelId(ytChannelId)}/saved`;
+  const videoLabel = `Video: ${ytVideoId ?? ""}`;
+
   return (
     <>
-      <Header />
+      <Header channelLink={channelLink} videoLabel={videoLabel} />
       <Container ref={containerRef}>
         <ThumbnailImage />
         <Grid handleZoom={handleZoom} />
