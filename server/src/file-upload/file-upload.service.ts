@@ -99,9 +99,15 @@ export class FileUploadService {
       const filePath = path.join(uploadDir, filename);
       try {
         const stats = await fs.stat(filePath);
+        let sizeInBytes = stats.size;
+
+        if (stats.isDirectory()) {
+          sizeInBytes = await this.calculateDirectorySize(filePath);
+        }
+
         fileInfos.push({
           filename,
-          sizeInBytes: stats.size,
+          sizeInBytes,
         });
       } catch (error) {
         console.warn(`Failed to get stats for file ${filename}:`, error);
@@ -109,6 +115,29 @@ export class FileUploadService {
     }
 
     return fileInfos;
+  }
+
+  private async calculateDirectorySize(dirPath: string): Promise<number> {
+    let totalSize = 0;
+
+    try {
+      const items = await fs.readdir(dirPath);
+
+      for (const item of items) {
+        const itemPath = path.join(dirPath, item);
+        const stats = await fs.stat(itemPath);
+
+        if (stats.isDirectory()) {
+          totalSize += await this.calculateDirectorySize(itemPath);
+        } else {
+          totalSize += stats.size;
+        }
+      }
+    } catch (error) {
+      console.warn(`Failed to calculate size for directory ${dirPath}:`, error);
+    }
+
+    return totalSize;
   }
 
   async deleteEpisodeFile(fileName: string, episodeId: number) {
