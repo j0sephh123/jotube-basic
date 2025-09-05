@@ -1,4 +1,3 @@
-import { setZoom } from "@features/Screenshot";
 import {
   ThumbnailGridCell,
   COLUMNS,
@@ -7,27 +6,16 @@ import {
 } from "@features/Thumbnails";
 import {
   toggleSelectedImage,
-  setSelectedImages,
   useThumbnailsProcessingState,
 } from "@shared/store";
-import { generateThumbnailUrl } from "@shared/utils";
 
-export default function Grid(): JSX.Element {
-  const {
-    currentIndex: batch,
-    selectedItems: selectedImages,
-    items: thumbnailsProcessingData,
-  } = useThumbnailsProcessingState();
+type Props = {
+  handleZoom: (index: number) => void;
+};
 
-  const handleZoom = (index: number): void => {
-    const url = generateThumbnailUrl(
-      thumbnailsProcessingData[0]?.ytChannelId ?? "",
-      thumbnailsProcessingData[0]?.ytVideoId ?? "",
-      index
-    );
-    setZoom(url);
-    setSelectedImages((prev) => [...prev, index]);
-  };
+export default function Grid({ handleZoom }: Props): JSX.Element {
+  const { currentIndex: batch, selectedItems: selectedImages } =
+    useThumbnailsProcessingState();
 
   return (
     <div
