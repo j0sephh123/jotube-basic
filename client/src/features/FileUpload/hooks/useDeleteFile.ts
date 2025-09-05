@@ -6,10 +6,17 @@ export function useDeleteFile() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (fileId: string) =>
+    mutationFn: async ({
+      episodeId,
+      fileName,
+    }: {
+      episodeId: string;
+      fileName: string;
+    }) =>
       nestFetcher({
         method: "DELETE",
-        url: `/file-upload/file/${fileId}`,
+        url: `/file-upload/file/${episodeId}`,
+        body: { fileName },
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.uploadedFiles });

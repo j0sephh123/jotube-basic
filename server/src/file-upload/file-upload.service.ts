@@ -1,5 +1,4 @@
-import { Injectable } from '@nestjs/common';
-import { FileOperationService } from '../file/file-operation.service';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { FilePathService } from '../file/file-path.service';
 import * as fs from 'fs/promises';
 import * as path from 'path';
@@ -10,14 +9,52 @@ import { GetUploadedFilesResponse } from './dtos/get-uploaded-files.response';
 @Injectable()
 export class FileUploadService {
   constructor(
-    private readonly fileOperationService: FileOperationService,
     private readonly filePathService: FilePathService,
     private readonly prisma: PrismaService,
   ) {}
 
-  // async uploadFile(file: Express.Multer.File): Promise<UploadFileResponse> {
-  //   // TODO
-  // }
+  async uploadFile(
+    file: Express.Multer.File,
+    episodeId: Episode['id'],
+  ): Promise<{ ok: boolean; path: string }> {
+    const episode = await this.prisma.episode.findUnique({
+      where: { id: episodeId },
+      include: {
+        tv: true,
+      },
+    });
+
+    if (!episode) {
+      throw new HttpException('Episode not found', HttpStatus.BAD_REQUEST);
+    }
+
+    if (!file) {
+      console.error('No file received. Check field name and multipart setup.');
+      throw new HttpException('Missing file', HttpStatus.BAD_REQUEST);
+    }
+
+    const basePath = this.filePathService.getBasePath();
+    const collectionPath = episode.tv.identifier;
+    const episodePath = episode.identifier;
+    const targetPath = path.join(
+      basePath,
+      collectionPath,
+      episodePath,
+      file.originalname,
+    );
+
+    try {
+      await fs.writeFile(targetPath, file.buffer, { flag: 'wx' });
+    } catch (e: any) {
+      console.error('fs write failed:', e?.code, e?.message);
+      throw new HttpException(
+        'Persist failed: ' + e?.message,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+
+    return { ok: true, path: file.path };
+  }
 
   async getUploadedFiles(
     episodeId: Episode['id'],
@@ -65,22 +102,27 @@ export class FileUploadService {
     return fileInfos;
   }
 
-  async deleteUploadedFile(fileId: string): Promise<void> {
-    console.log('Deleting file with ID:', fileId);
-
-    const uploadDir = path.join(process.cwd(), 'uploads');
-    const files = await fs.readdir(uploadDir);
-
-    const fileToDelete = files.find((fileName) => {
-      const parsedName = path.parse(fileName);
-      return parsedName.name === fileId;
+  async deleteEpisodeFile(fileName: string, episodeId: number) {
+    const episode = await this.prisma.episode.findUnique({
+      where: { id: episodeId },
+      include: {
+        tv: true,
+      },
     });
 
-    if (!fileToDelete) {
-      throw new Error(`File with ID ${fileId} not found`);
+    if (!episode) {
+      throw new HttpException('Episode not found', HttpStatus.BAD_REQUEST);
     }
 
-    const filePath = path.join(uploadDir, fileToDelete);
-    await fs.unlink(filePath);
+    const basePath = this.filePathService.getBasePath();
+    const collectionPath = episode.tv.identifier;
+    const episodePath = episode.identifier;
+    const targetPath = path.join(
+      basePath,
+      collectionPath,
+      episodePath,
+      fileName,
+    );
+    await fs.unlink(targetPath);
   }
 }

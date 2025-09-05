@@ -4,14 +4,19 @@ import { useEpisodeFiles } from "../hooks/useEpisodeFiles";
 import { StaticStates } from "@shared/ui";
 import { RefreshCw } from "lucide-react";
 import { useDeleteFile } from "../hooks/useDeleteFile";
+import { useParams } from "react-router-dom";
 
 export const EpisodeList = () => {
   const { uploadedFiles, refetch, isLoading, error } = useEpisodeFiles();
   const deleteFile = useDeleteFile();
+  const episodeId = useParams().episodeId;
 
   const handleDelete = async (filename: string) => {
     try {
-      await deleteFile.mutateAsync(filename);
+      await deleteFile.mutateAsync({
+        episodeId: episodeId as string,
+        fileName: filename,
+      });
     } catch (error) {
       console.error("Failed to delete file:", error);
     }

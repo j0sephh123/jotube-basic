@@ -5,6 +5,8 @@ type Props = PropsWithChildren<{
   isLoading: boolean;
   isError: boolean;
   isEmpty: boolean;
+  message?: string;
+  emptyMessage?: string;
 }>;
 
 export default function StaticStates({
@@ -12,17 +14,19 @@ export default function StaticStates({
   isError,
   isEmpty,
   children,
+  message,
+  emptyMessage,
 }: Props) {
   if (isLoading) {
     return <Loading />;
   }
 
   if (isError) {
-    return <ErrorMessage message="Error loading gallery" />;
+    return <ErrorMessage message={message || "Error loading gallery"} />;
   }
 
   if (isEmpty) {
-    return <NoDataAvailable message="No screenshots found" />;
+    return <NoDataAvailable message={emptyMessage || "No screenshots found"} />;
   }
 
   return children;
