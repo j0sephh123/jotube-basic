@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { nestFetcher, nestFetcherFile } from "@shared/api";
+import { nestFetcherFile } from "@shared/api";
 import type { UploadFile } from "@features/FileUpload";
 import { QUERY_KEYS } from "./constants";
 
@@ -30,22 +30,8 @@ export const useFileUpload = () => {
     },
   });
 
-  const deleteMutation = useMutation({
-    mutationFn: async (fileId: string) => {
-      await nestFetcher({
-        method: "DELETE",
-        url: `/file-upload/file/${fileId}`,
-      });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.uploadedFiles });
-    },
-  });
-
   return {
     uploadFile: uploadMutation.mutateAsync,
     isUploading: uploadMutation.isPending,
-    deleteFile: deleteMutation.mutateAsync,
-    isDeleting: deleteMutation.isPending,
   };
 };

@@ -1,28 +1,19 @@
 /* eslint-disable import/no-internal-modules */
-import { useState } from "react";
 import { formatFileSize } from "@shared/utils";
 import { useEpisodeFiles } from "../hooks/useEpisodeFiles";
-import { useFileUpload } from "../hooks/useFileUpload";
 import { StaticStates } from "@shared/ui";
 import { RefreshCw } from "lucide-react";
+import { useDeleteFile } from "../hooks/useDeleteFile";
 
 export const EpisodeList = () => {
   const { uploadedFiles, refetch, isLoading, error } = useEpisodeFiles();
-  const { deleteFile } = useFileUpload();
-  const [deletingFiles, setDeletingFiles] = useState<Set<string>>(new Set());
+  const deleteFile = useDeleteFile();
 
   const handleDelete = async (filename: string) => {
-    setDeletingFiles((prev) => new Set(prev).add(filename));
     try {
-      await deleteFile(filename);
+      await deleteFile.mutateAsync(filename);
     } catch (error) {
       console.error("Failed to delete file:", error);
-    } finally {
-      setDeletingFiles((prev) => {
-        const newSet = new Set(prev);
-        newSet.delete(filename);
-        return newSet;
-      });
     }
   };
 
@@ -66,14 +57,14 @@ export const EpisodeList = () => {
                 </div>
                 <button
                   onClick={() => handleDelete(file.filename)}
-                  disabled={deletingFiles.has(file.filename)}
+                  disabled={deleteFile.isPending}
                   className={`btn btn-sm ${
-                    deletingFiles.has(file.filename)
+                    deleteFile.isPending
                       ? "btn-disabled"
                       : "btn-ghost text-error"
                   }`}
                 >
-                  {deletingFiles.has(file.filename) ? "Deleting..." : "Delete"}
+                  {deleteFile.isPending ? "Deleting..." : "Delete"}
                 </button>
               </div>
             </div>
