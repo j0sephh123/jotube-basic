@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { type UploadFile } from "@features/FileUpload";
+import { formatFileSize } from "@shared/utils";
 
 interface FileListProps {
   files: UploadFile[];
@@ -24,18 +25,6 @@ export const FileList = ({ files, onDelete }: FileListProps) => {
     }
   };
 
-  const formatFileSize = (bytes: number) => {
-    if (bytes === 0) return "0 Bytes";
-    const k = 1024;
-    const sizes = ["Bytes", "KB", "MB", "GB"];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
-  };
-
-  const formatDate = (date: Date) => {
-    return new Date(date).toLocaleDateString();
-  };
-
   return (
     <div className="space-y-2">
       {files.map((file) => (
@@ -47,7 +36,9 @@ export const FileList = ({ files, onDelete }: FileListProps) => {
                 <div className="text-sm text-base-content/70 space-y-1">
                   <div>Size: {formatFileSize(file.size)}</div>
                   <div>Type: {file.mimetype}</div>
-                  <div>Uploaded: {formatDate(file.uploadedAt)}</div>
+                  <div>
+                    Uploaded: {new Date(file.uploadedAt).toLocaleDateString()}
+                  </div>
                   <div className="badge badge-sm badge-outline">
                     {file.status}
                   </div>

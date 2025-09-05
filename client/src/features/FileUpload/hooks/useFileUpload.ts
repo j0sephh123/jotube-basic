@@ -29,6 +29,9 @@ export const useFileUpload = () => {
     mutationFn: async (file: File) => {
       const formData = new FormData();
       formData.append("file", file);
+      formData.append("a", "5");
+
+      console.log(formData.get("a"));
 
       const result = await nestFetcherFile<UploadFile>({
         method: "POST",

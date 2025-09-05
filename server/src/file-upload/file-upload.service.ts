@@ -35,8 +35,6 @@ export class FileUploadService {
   }
 
   async getUploadedFiles(): Promise<UploadFileResponse[]> {
-    console.log('Getting uploaded files');
-
     const uploadDir = path.join(process.cwd(), 'uploads');
 
     try {
