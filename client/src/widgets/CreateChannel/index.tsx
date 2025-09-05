@@ -12,6 +12,7 @@ import { Actions, Label, Title } from "./ui";
 import { useCreateEntityForm } from "@shared/ui";
 import { setMessage } from "@widgets/Notification/notificationStore";
 import CreateEntityForm from "@shared/ui/CreateEntityForm";
+import { makeYtChannelId } from "@shared/types";
 
 export default function CreateChannel() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -28,7 +29,9 @@ export default function CreateChannel() {
           return;
         case ChannelMessage.AlreadyExists:
           handleCloseModal();
-          navigate(`/channels/${ytChannelId}`);
+          if (ytChannelId) {
+            navigate(`/channels/${makeYtChannelId(ytChannelId)}`);
+          }
           return;
         case ChannelMessage.InvalidVideoId:
           setMessage("Invalid YouTube video ID");
