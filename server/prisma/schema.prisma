@@ -107,6 +107,17 @@ model Screenshot {
   @@index([ytVideoId], map: "idx_screenshot_ytVideoId")
 }
 
+model EpisodeScreenshot {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  second    Int
+  episodeId Int
+  episode   Episode  @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+
+  @@index([episodeId])
+}
+
 model ChannelFeaturedScreenshot {
   id           Int        @id @default(autoincrement())
   createdAt    DateTime   @default(now())
@@ -162,7 +173,8 @@ model Episode {
   tvId Int
   tv   TV  @relation(fields: [tvId], references: [id], onDelete: Cascade)
 
-  thumbnail Thumbnail?
+  thumbnail   Thumbnail?
+  screenshots EpisodeScreenshot[]
 
   @@index([tvId])
 }
