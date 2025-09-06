@@ -20,6 +20,7 @@ type ThumbnailsState = {
 type StoryboardsState = {
   items: UploadWithStoryboardResponse[];
   type: "storyboards";
+  gridCols: number;
 };
 
 type EpisodesState = {
@@ -71,6 +72,11 @@ export function setProcessingData(
     .with("storyboards", () => {
       processingState.type = "storyboards";
       processingState.items = data;
+      match(processingState)
+        .with({ type: "storyboards" }, (s) => {
+          if (typeof s.gridCols !== "number") s.gridCols = 2;
+        })
+        .run();
     })
     .with("episodes", () => {
       processingState.type = "episodes";
@@ -138,6 +144,14 @@ export const setCurrentIndex = (index: number) => {
     })
     .with({ type: "episodes" }, (s) => {
       s.currentIndex = index;
+    })
+    .otherwise(() => {});
+};
+
+export const setGridCols = (cols: number) => {
+  match(processingState)
+    .with({ type: "storyboards" }, (s) => {
+      s.gridCols = cols;
     })
     .otherwise(() => {});
 };

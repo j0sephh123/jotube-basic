@@ -39,6 +39,7 @@ export { default as Notification } from "../../widgets/Notification/Notification
 export { default as CreateEntityForm } from "./CreateEntityForm";
 export { useCreateEntityForm } from "./useCreateEntityForm";
 export { Select } from "./Select";
+export { GenericSelect } from "./GenericSelect";
 export { CustomLink } from "./CustomLink";
 export { IconProcessingLog } from "./icons/IconProcessingLog";
 export { IconStoryboard } from "./icons/IconStoryboard";

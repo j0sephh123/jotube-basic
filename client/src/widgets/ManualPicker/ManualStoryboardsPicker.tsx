@@ -1,13 +1,15 @@
 import {
   setProcessingData,
   useStoryboardsProcessingState,
+  setGridCols,
 } from "@shared/store";
 import type { UploadWithStoryboardResponse } from "@shared/api/generated/graphql";
 import { Grid } from "@widgets/Grid";
 import { DeleteUpload, SaveUpload } from "@features/Upload";
+import { GenericSelect } from "@shared/ui";
 
 export function ManualStoryboardsPicker() {
-  const { items } = useStoryboardsProcessingState();
+  const { items, gridCols } = useStoryboardsProcessingState();
   const typesItems = items as UploadWithStoryboardResponse[];
 
   const handleSideEffect = () => {
@@ -30,16 +32,28 @@ export function ManualStoryboardsPicker() {
   return (
     <div>
       <div className="p-4 border-b border-base-300">
-        <h2 className="text-xl font-semibold">
-          {upload.title || "Storyboard"}
-        </h2>
+        <div className="flex">
+          <h2 className="font-semibold">{upload.title || "Storyboard"}</h2>
+          <div className="flex-1 flex justify-end mr-16">
+            <GenericSelect
+              value={gridCols}
+              onChange={setGridCols}
+              options={[
+                { value: 1, label: "1 Column" },
+                { value: 2, label: "2 Columns" },
+                { value: 3, label: "3 Columns" },
+                { value: 4, label: "4 Columns" },
+              ]}
+            />
+          </div>
+        </div>
         <p className="text-sm text-base-content/70">
           {storyboardFragments} fragment
           {storyboardFragments !== 1 ? "s" : ""}
         </p>
       </div>
       <div className="h-[84vh] overflow-scroll">
-        <Grid cols={2}>
+        <Grid cols={gridCols}>
           {storyboardItems.map(({ index, url }) => (
             <div
               key={index}

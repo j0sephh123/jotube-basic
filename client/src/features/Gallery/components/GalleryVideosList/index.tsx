@@ -1,7 +1,7 @@
 /* eslint-disable boundaries/element-types */
 import { setGalleryModal } from "@features/Gallery";
 import { useVideoScreenshotCounts } from "@features/Gallery";
-import { StaticStates } from "@shared/ui";
+import { StaticStates, GenericSelect } from "@shared/ui";
 import { timeAgo } from "@shared/utils";
 import { useState, useMemo } from "react";
 import { YtIdToId } from "@shared/hoc";
@@ -58,14 +58,14 @@ function GalleryVideosListInner({ channelId }: { channelId: number }) {
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <span className="text-xs text-gray-400">Sort by:</span>
-                <select
+                <GenericSelect
                   value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as SortOption)}
-                  className="text-xs bg-gray-800 text-gray-300 border border-gray-600 rounded px-2 py-1 focus:outline-none focus:border-gray-500"
-                >
-                  <option value="count">Screenshot Count</option>
-                  <option value="date">Date Added</option>
-                </select>
+                  onChange={setSortBy}
+                  options={[
+                    { value: "count", label: "Screenshot Count" },
+                    { value: "date", label: "Date Added" },
+                  ]}
+                />
               </div>
               <div className="text-sm text-gray-300">
                 Total: {videoScreenshotCounts?.length || 0}
