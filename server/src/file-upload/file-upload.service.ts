@@ -45,15 +45,6 @@ export class FileUploadService {
       newFileName,
     );
 
-    await this.prismaService.asset.create({
-      data: {
-        episodeId,
-        name: episode.identifier,
-        ext: path.extname(file.originalname).replace('.', ''),
-        sizeBytes: file.size,
-      },
-    });
-
     try {
       await fs.writeFile(targetPath, file.buffer, { flag: 'wx' });
     } catch (e: any) {
@@ -147,7 +138,6 @@ export class FileUploadService {
       where: { id: episodeId },
       include: {
         tv: true,
-        asset: true,
       },
     });
 
@@ -176,12 +166,6 @@ export class FileUploadService {
       if (error.code !== 'ENOENT') {
         throw error;
       }
-    }
-
-    if (episode.asset) {
-      await this.prismaService.asset.delete({
-        where: { episodeId },
-      });
     }
   }
 }
