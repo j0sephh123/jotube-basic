@@ -38,7 +38,7 @@ export default function Navbar() {
           <IconRecentlyViewed />
           <ViewGlobalScreenshots />
           <IconProcessingLog />
-          <IconStoryboard />
+          <IconStoryboard count={totalCounts?.totalStoryboards ?? 0} />
         </div>
         <div className="flex items-center gap-4">
           <QuickSearch />

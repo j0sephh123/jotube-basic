@@ -710,6 +710,7 @@ export type StatisticsCountsResponse = {
   __typename?: 'StatisticsCountsResponse';
   totalSaved: Scalars['Float']['output'];
   totalScreenshots: Scalars['Float']['output'];
+  totalStoryboards: Scalars['Float']['output'];
   totalThumbnails: Scalars['Float']['output'];
 };
 
@@ -1145,7 +1146,7 @@ export type SearchChannelsQuery = { __typename?: 'Query', searchChannels: Array<
 export type GetStatisticsCountsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetStatisticsCountsQuery = { __typename?: 'Query', statisticsCounts: { __typename?: 'StatisticsCountsResponse', totalScreenshots: number, totalThumbnails: number, totalSaved: number } };
+export type GetStatisticsCountsQuery = { __typename?: 'Query', statisticsCounts: { __typename?: 'StatisticsCountsResponse', totalScreenshots: number, totalThumbnails: number, totalSaved: number, totalStoryboards: number } };
 
 export type StoryboardsQueryVariables = Exact<{
   ytChannelId: Scalars['String']['input'];
@@ -2419,6 +2420,7 @@ export const GetStatisticsCountsDocument = gql`
     totalScreenshots
     totalThumbnails
     totalSaved
+    totalStoryboards
   }
 }
     `;

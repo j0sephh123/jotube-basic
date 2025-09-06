@@ -6,6 +6,7 @@ export const GET_STATISTICS_COUNTS = gql`
       totalScreenshots
       totalThumbnails
       totalSaved
+      totalStoryboards
     }
   }
 `;

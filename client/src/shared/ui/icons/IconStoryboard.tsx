@@ -1,7 +1,7 @@
 import { LayoutDashboard } from "lucide-react";
 import { IconButton } from "@shared/ui";
 
-export function IconStoryboard() {
+export function IconStoryboard({ count }: { count: number }) {
   return (
     <IconButton
       icon={<LayoutDashboard />}
@@ -11,6 +11,7 @@ export function IconStoryboard() {
         position: "bottom",
         color: "primary",
       }}
+      tip={count}
     />
   );
 }

@@ -444,6 +444,7 @@ enum SortOrder {
 type StatisticsCountsResponse {
   totalSaved: Float!
   totalScreenshots: Float!
+  totalStoryboards: Float!
   totalThumbnails: Float!
 }
 

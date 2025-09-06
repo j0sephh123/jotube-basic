@@ -10,4 +10,7 @@ export class StatisticsCountsResponse {
 
   @Field(() => Number)
   totalSaved: number;
+
+  @Field(() => Number)
+  totalStoryboards: number;
 }
