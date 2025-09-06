@@ -144,15 +144,19 @@ export const setCurrentIndex = (index: number) => {
 
 export const useProcessingState = () => useSnapshot(processingState);
 
-export const useThumbnailsProcessingState = () =>
-{
-  const state = useSnapshot(processingState as ThumbnailsState);;
+export const useThumbnailsProcessingState = () => {
+  const state = useSnapshot(processingState as ThumbnailsState);
 
   console.log(state);
 
   return state;
-}
-export const useStoryboardsProcessingState = () =>
-  useSnapshot(processingState as StoryboardsState);
+};
+export const useStoryboardsProcessingState = () => {
+  const state = useSnapshot(processingState as StoryboardsState);
+
+  console.log(state);
+
+  return state;
+};
 export const useEpisodesProcessingState = () =>
   useSnapshot(processingState as EpisodesState);

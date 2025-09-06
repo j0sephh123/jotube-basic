@@ -1222,7 +1222,7 @@ export type UploadsWithStoryboardsQueryVariables = Exact<{
 }>;
 
 
-export type UploadsWithStoryboardsQuery = { __typename?: 'Query', uploadsWithStoryboards: Array<{ __typename?: 'UploadWithStoryboardResponse', artifact: string, channelId: number, duration?: number | null, id: number, nextPageToken?: string | null, publishedAt: string, src: string, title: string, ytId: string, storyboard: { __typename?: 'StoryboardFragmentResponse', fragments: number, id: number, url: string }, channel: { __typename?: 'StoryboardChannelResponse', id: number, src: string, title: string, ytId: string } }> };
+export type UploadsWithStoryboardsQuery = { __typename?: 'Query', uploadsWithStoryboards: Array<{ __typename?: 'UploadWithStoryboardResponse', id: number, title: string, ytId: string, storyboard: { __typename?: 'StoryboardFragmentResponse', fragments: number, url: string }, channel: { __typename?: 'StoryboardChannelResponse', id: number } }> };
 
 export type SyncUploadsMutationVariables = Exact<{
   syncUploadsInput: SyncUploadsInput;
@@ -2887,25 +2887,15 @@ export type FetchUploadsMutationOptions = Apollo.BaseMutationOptions<FetchUpload
 export const UploadsWithStoryboardsDocument = gql`
     query UploadsWithStoryboards($input: StoryboardQueryInput!) {
   uploadsWithStoryboards(input: $input) {
-    artifact
-    channelId
-    duration
     id
-    nextPageToken
-    publishedAt
-    src
-    storyboard {
-      fragments
-      id
-      url
-    }
     title
     ytId
+    storyboard {
+      fragments
+      url
+    }
     channel {
       id
-      src
-      title
-      ytId
     }
   }
 }

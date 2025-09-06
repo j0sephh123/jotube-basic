@@ -22,25 +22,15 @@ export const FETCH_UPLOADS = gql`
 export const UPLOADS_WITH_STORYBOARDS = gql`
   query UploadsWithStoryboards($input: StoryboardQueryInput!) {
     uploadsWithStoryboards(input: $input) {
-      artifact
-      channelId
-      duration
       id
-      nextPageToken
-      publishedAt
-      src
-      storyboard {
-        fragments
-        id
-        url
-      }
       title
       ytId
+      storyboard {
+        fragments
+        url
+      }
       channel {
         id
-        src
-        title
-        ytId
       }
     }
   }

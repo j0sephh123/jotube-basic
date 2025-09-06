@@ -1,3 +1,3 @@
-export { useGetUploadsWithStoryboards } from "./model/useUploadsWithStoryboard";
+export { useGetUploadsWithStoryboards } from "./hooks/useUploadsWithStoryboard";
 export { STORYBOARDS } from "./api/storyboard.gql";
-export * from "./model";
+export * from "./hooks";

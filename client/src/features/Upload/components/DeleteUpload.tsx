@@ -25,6 +25,7 @@ export function DeleteUpload({
       color="error"
       variant="outline"
       onClick={() => handleDelete(ytVideoIds)}
+      className="flex-1"
     >
       Delete
     </Button>

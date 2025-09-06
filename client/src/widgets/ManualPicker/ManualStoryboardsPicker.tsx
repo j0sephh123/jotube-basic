@@ -38,21 +38,23 @@ export function ManualStoryboardsPicker() {
           {storyboardFragments !== 1 ? "s" : ""}
         </p>
       </div>
-      <Grid>
-        {storyboardItems.map(({ index, url }) => (
-          <div
-            key={index}
-            className="bg-base-200 rounded shadow-sm p-2 flex flex-col items-center"
-          >
-            <img
-              src={url}
-              alt={`Storyboard M${index}`}
-              className="w-full h-auto object-contain"
-            />
-            <div className="mt-2 text-xs text-base-content/70">M{index}</div>
-          </div>
-        ))}
-      </Grid>
+      <div className="h-[84vh] overflow-scroll">
+        <Grid cols={2}>
+          {storyboardItems.map(({ index, url }) => (
+            <div
+              key={index}
+              className="bg-base-200 rounded shadow-sm p-2 flex flex-col items-center"
+            >
+              <img
+                src={url}
+                alt={`Storyboard M${index}`}
+                className="w-full h-auto object-contain"
+              />
+              <div className="mt-2 text-xs text-base-content/70">M{index}</div>
+            </div>
+          ))}
+        </Grid>
+      </div>
 
       <div className="p-4 border-t border-base-300 flex justify-end gap-2">
         <DeleteUpload

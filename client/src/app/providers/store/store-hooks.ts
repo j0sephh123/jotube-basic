@@ -1,2 +1,2 @@
 /* eslint-disable import/no-internal-modules */
-export { useStoryboardState as useStoryboardProcessing } from "@features/Storyboard/model";
+export { useStoryboardState as useStoryboardProcessing } from "@features/Storyboard/hooks";
