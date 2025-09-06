@@ -142,7 +142,9 @@ export class ScreenshotsManagerService {
 
       const files = fs.readdirSync(dirPath);
       const videoFile = files.find((file) =>
-        ['.mp4', '.mkv', '.webm'].includes(path.extname(file).toLowerCase()),
+        ['.mp4', '.mkv', '.webm', 'wmv'].includes(
+          path.extname(file).toLowerCase(),
+        ),
       );
 
       return videoFile || null;

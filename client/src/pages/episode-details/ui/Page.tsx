@@ -2,7 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { useGetEpisodeDetails } from "@features/Episode";
 import { OpenDirectoryButton, StaticStates } from "@shared/ui";
 import { FileUploadDropzone } from "@features/FileUpload";
-import { EpisodeList } from "@features/FileUpload/components/EpisodeList";
+import { EpisodeList } from "@features/FileUpload";
 import { useAddEpisodeToQueue } from "@features/Episode";
 
 export const EpisodeDetailsPage = () => {
@@ -39,7 +39,7 @@ export const EpisodeDetailsPage = () => {
           <div className="mb-6">
             <div className="space-y-4">
               <FileUploadDropzone
-                accept="image/*,video/*,.pdf"
+                accept="image/*,video/*,.pdf,.wmv"
                 episodeId={episodeId as string}
               />
             </div>

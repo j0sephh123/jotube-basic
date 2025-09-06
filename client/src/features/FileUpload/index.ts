@@ -1,4 +1,5 @@
 export { FileUploadDropzone } from "./components/FileUploadDropzone";
+export { EpisodeList } from "./components/EpisodeList";
 
 export { useFileUpload } from "./hooks/useFileUpload";
 

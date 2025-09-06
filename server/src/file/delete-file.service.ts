@@ -68,8 +68,9 @@ export class DeleteFileService {
       const videoFile = files.find((file) => {
         const ext = path.extname(file).toLowerCase();
         return (
-          ['.mp4', '.mkv', '.webm', '.avi', '.mov', '.m4v'].includes(ext) ||
-          file.endsWith('.part')
+          ['.mp4', '.mkv', '.webm', '.avi', '.mov', '.m4v', 'wmv'].includes(
+            ext,
+          ) || file.endsWith('.part')
         );
       });
 

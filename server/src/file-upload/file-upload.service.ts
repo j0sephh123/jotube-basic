@@ -10,14 +10,14 @@ import { GetUploadedFilesResponse } from './dtos/get-uploaded-files.response';
 export class FileUploadService {
   constructor(
     private readonly filePathService: FilePathService,
-    private readonly prisma: PrismaService,
+    private readonly prismaService: PrismaService,
   ) {}
 
   async uploadFile(
     file: Express.Multer.File,
     episodeId: Episode['id'],
   ): Promise<{ ok: boolean; path: string }> {
-    const episode = await this.prisma.episode.findUnique({
+    const episode = await this.prismaService.episode.findUnique({
       where: { id: episodeId },
       include: {
         tv: true,
@@ -43,7 +43,7 @@ export class FileUploadService {
       file.originalname,
     );
 
-    await this.prisma.asset.create({
+    await this.prismaService.asset.create({
       data: {
         episodeId,
         name: path.basename(file.originalname, path.extname(file.originalname)),
@@ -70,7 +70,7 @@ export class FileUploadService {
   ): Promise<GetUploadedFilesResponse[]> {
     console.log({ episodeId });
 
-    const episode = await this.prisma.episode.findUnique({
+    const episode = await this.prismaService.episode.findUnique({
       where: { id: episodeId },
       include: {
         tv: true,
@@ -141,7 +141,7 @@ export class FileUploadService {
   }
 
   async deleteEpisodeFile(fileName: string, episodeId: number) {
-    const episode = await this.prisma.episode.findUnique({
+    const episode = await this.prismaService.episode.findUnique({
       where: { id: episodeId },
       include: {
         tv: true,
@@ -166,7 +166,7 @@ export class FileUploadService {
     await fs.unlink(targetPath);
 
     if (episode.asset) {
-      await this.prisma.asset.delete({
+      await this.prismaService.asset.delete({
         where: { episodeId },
       });
     }

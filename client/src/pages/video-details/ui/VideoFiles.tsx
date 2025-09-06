@@ -81,6 +81,7 @@ export function VideoFiles({
                       <div className="flex gap-1">
                         {(file.name.endsWith(".mp4") ||
                           file.name.endsWith(".mkv") ||
+                          file.name.endsWith(".wmv") ||
                           file.name.endsWith(".webm") ||
                           file.name.endsWith(".avi") ||
                           file.name.endsWith(".mov") ||
