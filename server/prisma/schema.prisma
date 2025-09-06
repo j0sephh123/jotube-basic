@@ -129,6 +129,7 @@ model Playlist {
 }
 
 enum ArtifactType {
+  EMPTY
   VIDEO
   SAVED
   DOWNLOADED
@@ -150,13 +151,13 @@ model TV {
 }
 
 model Episode {
-  id          Int       @id @default(autoincrement())
-  identifier  String    @unique @db.VarChar(255)
-  title       String    @unique @db.VarChar(255)
-  artifact    String    @db.VarChar(255) // business meaning, not file
+  id          Int          @id @default(autoincrement())
+  identifier  String       @unique @db.VarChar(255)
+  title       String       @unique @db.VarChar(255)
+  artifact    ArtifactType @default(EMPTY)
   publishedAt DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 
   tvId Int
   tv   TV  @relation(fields: [tvId], references: [id], onDelete: Cascade)

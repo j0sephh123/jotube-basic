@@ -3,6 +3,7 @@ import { PrismaService } from 'src/core/database/prisma/prisma.service';
 import { CreateEpisodeInput, UpdateEpisodeInput, EpisodeMessage } from './dtos';
 import { FolderService } from 'src/file/folder.service';
 import { randomUUID } from 'crypto';
+import { ArtifactType } from '@prisma/client';
 
 @Injectable()
 export class EpisodeService {
@@ -19,7 +20,7 @@ export class EpisodeService {
         data: {
           identifier,
           title,
-          artifact: 'default',
+          artifact: ArtifactType.EMPTY,
           publishedAt,
           tvId,
         },
