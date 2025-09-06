@@ -36,17 +36,19 @@ export class FileUploadService {
     const basePath = this.filePathService.getBasePath();
     const collectionPath = episode.tv.identifier;
     const episodePath = episode.identifier;
+    const fileExtension = path.extname(file.originalname);
+    const newFileName = `${episode.identifier}${fileExtension}`;
     const targetPath = path.join(
       basePath,
       collectionPath,
       episodePath,
-      file.originalname,
+      newFileName,
     );
 
     await this.prismaService.asset.create({
       data: {
         episodeId,
-        name: path.basename(file.originalname, path.extname(file.originalname)),
+        name: episode.identifier,
         ext: path.extname(file.originalname).replace('.', ''),
         sizeBytes: file.size,
       },

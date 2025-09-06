@@ -162,21 +162,7 @@ model Episode {
   tvId Int
   tv   TV  @relation(fields: [tvId], references: [id], onDelete: Cascade)
 
-  asset     Asset?
   thumbnail Thumbnail?
 
   @@index([tvId])
-}
-
-model Asset {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  episodeId Int     @unique
-  episode   Episode @relation(fields: [episodeId], references: [id], onDelete: Cascade)
-
-  name      String @db.VarChar(255)
-  ext       String @db.VarChar(10)
-  sizeBytes BigInt @db.UnsignedBigInt
 }
