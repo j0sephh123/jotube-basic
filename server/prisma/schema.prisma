@@ -71,13 +71,15 @@ model ProcessingPhase {
 }
 
 model Thumbnail {
-  id             Int          @id @default(autoincrement())
-  uploadsVideoId Int          @unique
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
+  id             Int           @id @default(autoincrement())
+  uploadsVideoId Int?          @unique
+  episodeId      Int?          @unique
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
   perRow         Int
-  totalSeconds   Int          @default(0)
-  uploadsVideo   UploadsVideo @relation(fields: [uploadsVideoId], references: [id], onDelete: Cascade)
+  totalSeconds   Int           @default(0)
+  uploadsVideo   UploadsVideo? @relation(fields: [uploadsVideoId], references: [id], onDelete: Cascade)
+  episode        Episode?      @relation(fields: [episodeId], references: [id], onDelete: Cascade)
 }
 
 model Storyboard {
@@ -159,7 +161,8 @@ model Episode {
   tvId Int
   tv   TV  @relation(fields: [tvId], references: [id], onDelete: Cascade)
 
-  asset Asset?
+  asset     Asset?
+  thumbnail Thumbnail?
 
   @@index([tvId])
 }
