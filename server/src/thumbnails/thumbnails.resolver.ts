@@ -5,6 +5,8 @@ import { UploadsWithThumbnailsResponse } from './dtos/uploads-with-thumbnails.re
 import { GetScreenshotsInput } from './dtos/get-screenshots.input';
 import { GetScreenshotsResponse } from './dtos/get-screenshots.response';
 import { ThumbnailByVideoIdResponse } from './dtos/thumbnail.response';
+import { EpisodesWithThumbnailsInput } from './dtos/episodes-with-thumbnails.input';
+import { EpisodesWithThumbnailsResponse } from './dtos/episodes-with-thumbnails.response';
 
 @Resolver()
 export class ThumbnailsResolver {
@@ -44,5 +46,12 @@ export class ThumbnailsResolver {
     @Args('input') input: GetScreenshotsInput,
   ): Promise<GetScreenshotsResponse[]> {
     return this.thumbnailsApiService.getChannelScreenshots(input);
+  }
+
+  @Query(() => [EpisodesWithThumbnailsResponse])
+  async episodesWithThumbnails(
+    @Args('input') input: EpisodesWithThumbnailsInput,
+  ): Promise<EpisodesWithThumbnailsResponse[]> {
+    return this.thumbnailsApiService.episodesWithThumbnails(input.episodeIds);
   }
 }

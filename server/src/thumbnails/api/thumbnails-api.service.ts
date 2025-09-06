@@ -90,6 +90,28 @@ export class ThumbnailsApiService {
     }));
   }
 
+  public async episodesWithThumbnails(
+    episodeIds: number[],
+  ): Promise<{ tvIdentifier: string; episodeIdentifier: string }[]> {
+    const resp = await this.prismaService.episode.findMany({
+      where: {
+        id: { in: episodeIds },
+        artifact: ArtifactType.THUMBNAIL,
+      },
+      select: {
+        identifier: true,
+        tv: {
+          select: { identifier: true },
+        },
+      },
+    });
+
+    return resp.map((episode) => ({
+      tvIdentifier: episode.tv.identifier,
+      episodeIdentifier: episode.identifier,
+    }));
+  }
+
   public async thumbnailByUpload(ytId: string) {
     const video = await this.prismaService.uploadsVideo.findFirst({
       where: { ytId, artifact: ArtifactType.THUMBNAIL },

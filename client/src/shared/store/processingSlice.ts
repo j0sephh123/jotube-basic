@@ -5,6 +5,11 @@ import type {
 import { proxy, useSnapshot } from "valtio";
 import { match } from "ts-pattern";
 
+type EpisodesProcessingData = {
+  tvIdentifier: string;
+  episodeIdentifier: string;
+};
+
 type ThumbnailsState = {
   items: UploadsWithThumbnailsResponse[];
   selectedItems: number[];
@@ -17,7 +22,14 @@ type StoryboardsState = {
   type: "storyboards";
 };
 
-type State = ThumbnailsState | StoryboardsState;
+type EpisodesState = {
+  items: EpisodesProcessingData[];
+  selectedItems: number[];
+  currentIndex: number;
+  type: "episodes";
+};
+
+type State = ThumbnailsState | StoryboardsState | EpisodesState;
 
 export const processingState = proxy<State>({
   items: [],
@@ -35,8 +47,15 @@ export function setProcessingData(
   data: UploadWithStoryboardResponse[]
 ): void;
 export function setProcessingData(
+  type: "episodes",
+  data: EpisodesProcessingData[]
+): void;
+export function setProcessingData(
   type: State["type"],
-  data: UploadsWithThumbnailsResponse[] | UploadWithStoryboardResponse[]
+  data:
+    | UploadsWithThumbnailsResponse[]
+    | UploadWithStoryboardResponse[]
+    | EpisodesProcessingData[]
 ): void {
   match(type)
     .with("thumbnails", () => {
@@ -53,6 +72,16 @@ export function setProcessingData(
       processingState.type = "storyboards";
       processingState.items = data;
     })
+    .with("episodes", () => {
+      processingState.type = "episodes";
+      processingState.items = data;
+      match(processingState)
+        .with({ type: "episodes" }, (s) => {
+          if (!Array.isArray(s.selectedItems)) s.selectedItems = [];
+          if (typeof s.currentIndex !== "number") s.currentIndex = 0;
+        })
+        .run();
+    })
     .exhaustive();
 }
 
@@ -60,6 +89,10 @@ export const clearProcessingData = () => {
   processingState.items = [];
   match(processingState)
     .with({ type: "thumbnails" }, (s) => {
+      s.selectedItems = [];
+      s.currentIndex = 0;
+    })
+    .with({ type: "episodes" }, (s) => {
       s.selectedItems = [];
       s.currentIndex = 0;
     })
@@ -74,12 +107,22 @@ export const setSelectedImages = (
       s.selectedItems =
         typeof arg === "function" ? arg(s.selectedItems) : [...arg];
     })
+    .with({ type: "episodes" }, (s) => {
+      s.selectedItems =
+        typeof arg === "function" ? arg(s.selectedItems) : [...arg];
+    })
     .otherwise(() => {});
 };
 
 export const toggleSelectedImage = (index: number, batch: number) => {
   match(processingState)
     .with({ type: "thumbnails" }, (s) => {
+      const imageIndex = batch * 40 + index + 1;
+      s.selectedItems = s.selectedItems.includes(imageIndex)
+        ? s.selectedItems.filter((i) => i !== imageIndex)
+        : [...s.selectedItems, imageIndex];
+    })
+    .with({ type: "episodes" }, (s) => {
       const imageIndex = batch * 40 + index + 1;
       s.selectedItems = s.selectedItems.includes(imageIndex)
         ? s.selectedItems.filter((i) => i !== imageIndex)
@@ -93,12 +136,23 @@ export const setCurrentIndex = (index: number) => {
     .with({ type: "thumbnails" }, (s) => {
       s.currentIndex = index;
     })
+    .with({ type: "episodes" }, (s) => {
+      s.currentIndex = index;
+    })
     .otherwise(() => {});
 };
 
 export const useProcessingState = () => useSnapshot(processingState);
 
 export const useThumbnailsProcessingState = () =>
-  useSnapshot(processingState as ThumbnailsState);
+{
+  const state = useSnapshot(processingState as ThumbnailsState);;
+
+  console.log(state);
+
+  return state;
+}
 export const useStoryboardsProcessingState = () =>
   useSnapshot(processingState as StoryboardsState);
+export const useEpisodesProcessingState = () =>
+  useSnapshot(processingState as EpisodesState);

@@ -3,6 +3,7 @@ import { clearProcessingData } from "@shared/store";
 import { useProcessingState } from "@shared/store";
 import { ManualThumbnailsPicker } from "./ManualThumbnailsPicker";
 import { ManualStoryboardsPicker } from "./ManualStoryboardsPicker";
+import { EpisodesPicker } from "./EpisodesPicker";
 import { match } from "ts-pattern";
 
 export default function ManualPicker() {
@@ -19,6 +20,7 @@ export default function ManualPicker() {
         {match(type)
           .with("thumbnails", () => <ManualThumbnailsPicker />)
           .with("storyboards", () => <ManualStoryboardsPicker />)
+          .with("episodes", () => <EpisodesPicker />)
           .otherwise(() => null)}
       </div>
     </Modal>

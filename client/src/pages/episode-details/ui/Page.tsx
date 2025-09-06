@@ -4,6 +4,7 @@ import { OpenDirectoryButton, StaticStates } from "@shared/ui";
 import { FileUploadDropzone } from "@features/FileUpload";
 import { EpisodeList } from "@features/FileUpload";
 import { useAddEpisodeToQueue } from "@features/Episode";
+import { ViewEpisodeThumbnails } from "@features/Thumbnails";
 
 export const EpisodeDetailsPage = () => {
   const { episodeId, tvId } = useParams<{ episodeId: string; tvId: string }>();
@@ -33,7 +34,13 @@ export const EpisodeDetailsPage = () => {
           <Link to={`/tv/${tvId}`} className="btn btn-outline btn-sm mb-4">
             ← Back to {episode?.tv?.title || "TV"}
           </Link>
-          <button onClick={handleAddEpisodeToQueue}>Add to queue</button>
+          <div className="flex gap-2 mb-4">
+            <button onClick={handleAddEpisodeToQueue}>Add to queue</button>
+            <ViewEpisodeThumbnails
+              tvIdentifier={episode?.tv?.identifier || ""}
+              episodeIdentifier={episode?.identifier || ""}
+            />
+          </div>
           <h1 className="text-3xl font-bold mb-2">{episode?.title}</h1>
           <p className="text-gray-600 mb-4">{episode?.identifier}</p>
           <div className="mb-6">

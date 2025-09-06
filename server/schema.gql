@@ -210,6 +210,15 @@ type Episode {
   updatedAt: DateTime!
 }
 
+input EpisodesWithThumbnailsInput {
+  episodeIds: [Float!]!
+}
+
+type EpisodesWithThumbnailsResponse {
+  episodeIdentifier: String!
+  tvIdentifier: String!
+}
+
 type FeaturedScreenshotResponse {
   id: Int!
   second: Int!
@@ -373,6 +382,7 @@ type Query {
   channelForPlaylist(ytChannelId: String!): ChannelForPlaylistResponse!
   channelMetadata(channelMetadataInput: ChannelMetadataInput!): ChannelMetadataResponse!
   channelScreenshots(input: GetScreenshotsInput!): [GetScreenshotsResponse!]!
+  episodesWithThumbnails(input: EpisodesWithThumbnailsInput!): [EpisodesWithThumbnailsResponse!]!
   fetchDashboard(fetchDashboardInput: FetchDashboardInput!): ChannelsDashboardResponse!
   fetchVideosDashboard(page: Float, screenshotMax: Float, screenshotMin: Float, sortOrder: String): VideosDashboardResponse!
   getAllEpisodes: [Episode!]!
