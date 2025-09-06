@@ -163,7 +163,18 @@ export class FileUploadService {
       fileName,
     );
 
-    await fs.unlink(targetPath);
+    try {
+      const stats = await fs.stat(targetPath);
+      if (stats.isDirectory()) {
+        await fs.rm(targetPath, { recursive: true, force: true });
+      } else {
+        await fs.unlink(targetPath);
+      }
+    } catch (error) {
+      if (error.code !== 'ENOENT') {
+        throw error;
+      }
+    }
 
     if (episode.asset) {
       await this.prismaService.asset.delete({
