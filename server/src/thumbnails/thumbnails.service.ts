@@ -38,14 +38,21 @@ export class ThumbnailsService {
     ytChannelId,
     ytVideoId,
     framesPerRow = 8,
+    screenshotsDirArg,
+    thumbnailsDirArg,
   }: {
     ytChannelId: string;
     ytVideoId: string;
     framesPerRow?: number;
+    screenshotsDirArg?: string;
+    thumbnailsDirArg?: string;
   }) {
     const basePath = this.filePathService.getBasePath();
-    const screenshotsDir = `${basePath}/${ytChannelId}/${ytVideoId}/all_screenshots`;
-    const thumbnailsDir = `${basePath}/${ytChannelId}/${ytVideoId}/thumbnails`;
+    const screenshotsDir =
+      screenshotsDirArg ||
+      `${basePath}/${ytChannelId}/${ytVideoId}/all_screenshots`;
+    const thumbnailsDir =
+      thumbnailsDirArg || `${basePath}/${ytChannelId}/${ytVideoId}/thumbnails`;
 
     console.log('thumbnails_start', ytVideoId);
 
