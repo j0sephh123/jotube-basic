@@ -1,4 +1,5 @@
-import { UploadsListItem, type UploadsType } from "@features/Upload";
+import { UploadsListItem } from "@features/Upload";
+import { type UploadsType } from "@shared/types";
 import { type UploadsListQueryResult } from "@shared/api";
 // eslint-disable-next-line boundaries/element-types
 import { Virtualizer } from "@widgets/Virtualizer";

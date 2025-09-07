@@ -1,1 +1,1 @@
-export * from "./ui";
+export { ChannelHeaderContainer as ChannelHeader } from "./ui/ChannelHeaderContainer";

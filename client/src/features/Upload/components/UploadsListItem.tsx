@@ -11,7 +11,7 @@ import { type UploadsListQuery } from "@shared/api";
 import { Button, Card, CustomLink } from "@shared/ui";
 import { makeYtChannelId, makeYtVideoId } from "@shared/types";
 import { ViewVideoThumbnails } from "@features/Thumbnails";
-import { type UploadsType } from "../types";
+import { type UploadsType } from "@shared/types";
 import { setGalleryModal } from "@features/Gallery";
 import { useScreenshotsForCarousel } from "@features/Screenshot";
 

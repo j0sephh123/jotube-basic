@@ -8,7 +8,7 @@ import { useCallback, useMemo } from "react";
 import { useQueue } from "@shared/hooks";
 import { useSearchParams } from "react-router-dom";
 import { useApolloClient } from "@apollo/client";
-import { type UploadsType } from "../types";
+import { type UploadsType } from "@shared/types";
 
 export function useUploads({
   id,

@@ -1,19 +1,21 @@
-import { useQueue } from "@shared/hooks";
-import { type UploadsType, useRefetchChannelUploads } from "@features/Upload";
+import { useQueue, useTypedParams } from "@shared/hooks";
+import { useRefetchChannelUploads } from "@features/Upload";
 import { useUploads } from "@features/Upload";
 import UploadsList from "./UploadsList";
 // eslint-disable-next-line import/no-internal-modules
 import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
 import { YtIdToId } from "@shared/hoc";
 import { IdType } from "@shared/api";
+import { GalleryVideosList } from "@features/Gallery";
 
 type Props = {
-  uploadsType: UploadsType;
   channelId: number;
   ytChannelId: string;
 };
 
-function UploadsDecoratorInner({ uploadsType, channelId }: Props) {
+function UploadsDecoratorInner({ channelId }: Props) {
+  const uploadsType = useTypedParams("uploadsType");
+  console.log("uploadsType", uploadsType);
   const refetchChannelMetadata = useRefetchChannelMetadata();
   const { refetch: refetchQueue } = useQueue();
   const refetchDefaultUploads = useRefetchChannelUploads();
@@ -31,10 +33,18 @@ function UploadsDecoratorInner({ uploadsType, channelId }: Props) {
     }
   };
 
+  if (uploadsType === "gallery") {
+    return <GalleryVideosList />;
+  }
+
   if (!data) return null;
 
   return (
-    <UploadsList handleSideEffect={handleSideEffect} data={data} uploadsType={uploadsType} />
+    <UploadsList
+      handleSideEffect={handleSideEffect}
+      data={data}
+      uploadsType={uploadsType}
+    />
   );
 }
 

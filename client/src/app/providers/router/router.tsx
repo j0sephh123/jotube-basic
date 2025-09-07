@@ -10,7 +10,6 @@ import { TvPage } from "@pages/tv";
 import { TvDetailsPage } from "@pages/tv-details";
 import { EpisodeDetailsPage } from "@pages/episode-details";
 import { NotFound } from "@shared/ui";
-import { GalleryVideosList } from "@features/Gallery";
 import { UploadsDecorator } from "@features/Upload";
 import { PlaylistUploadsListPage } from "@pages/playlistUploadsList";
 import {
@@ -35,20 +34,15 @@ export default function Router() {
               <Route path=":viewType" element={<DashboardWidget />} />
             </Route>
           </Route>
-          <Route path="/channels/:ytChannelId" element={<ChannelPageLayout />}>
-            <Route index element={<Navigate to="default" />} />
-            <Route path="default" element={<UploadsDecorator uploadsType="default" />} />
-            <Route path="saved" element={<UploadsDecorator uploadsType="saved" />} />
-            <Route
-              path="thumbnails"
-              element={<UploadsDecorator uploadsType="thumbnails" />}
-            />
-            <Route
-              path="screenshots"
-              element={<UploadsDecorator uploadsType="screenshots" />}
-            />
-            <Route path="gallery" element={<GalleryVideosList />} />
-          </Route>
+          <Route path="/channels/:ytChannelId" element={<Navigate to="default" />} />
+          <Route
+            path="/channels/:ytChannelId/:uploadsType"
+            element={
+              <ChannelPageLayout>
+                <UploadsDecorator />
+              </ChannelPageLayout>
+            }
+          />
           <Route
             path="/channels/:ytChannelId/videos/:ytVideoId"
             element={<VideoDetailsPage />}

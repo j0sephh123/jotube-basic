@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { ViewType } from "@shared/api";
 // eslint-disable-next-line boundaries/element-types
-import { type UploadsType } from "@features/Upload";
+import { type UploadsType } from "@shared/types";
 
 export enum DashboardViewType {
   SAVED = "saved",
