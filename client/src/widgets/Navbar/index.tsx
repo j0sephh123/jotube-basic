@@ -18,6 +18,7 @@ import {
   IconStoryboard,
   IconRecentlyViewed,
   IconTv,
+  Menu,
 } from "@shared/ui";
 
 export default function Navbar() {
@@ -29,6 +30,13 @@ export default function Navbar() {
       <div className="navbar shadow-sm flex justify-between items-center w-full">
         <div className="flex gap-2">
           <IconHome />
+          <Menu
+            buttonText="Quick Actions"
+            items={[
+              <IconStoryboard count={totalCounts?.totalStoryboards ?? 0} />,
+              <ViewGlobalScreenshots />,
+            ]}
+          />
           <IconVideos />
           <IconPlaylist />
           <IconTv />
@@ -36,9 +44,7 @@ export default function Navbar() {
           <IconThumbnails count={totalCounts?.totalThumbnails ?? 0} />
           <IconImageNavigator />
           <IconRecentlyViewed />
-          <ViewGlobalScreenshots />
           <IconProcessingLog />
-          <IconStoryboard count={totalCounts?.totalStoryboards ?? 0} />
         </div>
         <div className="flex items-center gap-4">
           <QuickSearch />

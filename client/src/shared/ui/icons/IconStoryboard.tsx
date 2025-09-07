@@ -16,6 +16,7 @@ export function IconStoryboard({ count }: { count: number }) {
         color: "primary",
       }}
       tip={count}
+      text="Storyboards"
     />
   );
 }
