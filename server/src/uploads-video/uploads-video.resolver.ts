@@ -11,7 +11,7 @@ import { SyncUploadsResponse } from './dtos/sync-uploads.response';
 import { SyncUploadsInput } from './dtos/sync-uploads.input';
 import { CleanShortUploadsResponse } from './dtos/clean-short-uploads.response';
 import { CleanShortUploadsInput } from './dtos/clean-short-uploads.input';
-import { UploadsListResponse } from './dtos/uploads-list.response';
+import { UploadsListUploadResponse } from './dtos/uploads-list.response';
 import { UploadsListInput } from './dtos/uploads-list.input';
 import { UploadsVideoStoryboardResponse } from './dtos/storyboards.response';
 import { GetVideoByYtIdInput } from './dtos/get-video-by-ytid.input';
@@ -21,10 +21,10 @@ import { VideoByYtIdResponse } from './dtos/get-video-by-ytid.response';
 export class UploadsVideoResolver {
   constructor(private readonly uploadsVideoService: UploadsVideoService) {}
 
-  @Query(() => UploadsListResponse)
+  @Query(() => [UploadsListUploadResponse])
   uploadsList(
     @Args('uploadsListInput') uploadsListInput: UploadsListInput,
-  ): Promise<UploadsListResponse> {
+  ): Promise<UploadsListUploadResponse[]> {
     try {
       return this.uploadsVideoService.uploadsList(uploadsListInput);
     } catch {

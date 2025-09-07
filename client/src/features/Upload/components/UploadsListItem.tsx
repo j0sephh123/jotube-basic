@@ -16,7 +16,7 @@ import { setGalleryModal } from "@features/Gallery";
 import { useScreenshotsForCarousel } from "@features/Screenshot";
 
 type Props = {
-  upload: UploadsListQuery["uploadsList"]["uploads"][0];
+  upload: UploadsListQuery["uploadsList"][0];
   ytChannelId: string;
   channelId: number;
   type: UploadsType;

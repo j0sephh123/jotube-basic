@@ -501,11 +501,6 @@ export type PlaylistUploadsListInput = {
   uploadsType: Scalars['String']['input'];
 };
 
-export type PlaylistUploadsListResponse = {
-  __typename?: 'PlaylistUploadsListResponse';
-  uploads: Array<PlaylistUploadsListUploadResponse>;
-};
-
 export type PlaylistUploadsListUploadResponse = {
   __typename?: 'PlaylistUploadsListUploadResponse';
   channelTitle: Scalars['String']['output'];
@@ -544,7 +539,7 @@ export type Query = {
   getTv?: Maybe<Tv>;
   getVideoByYtId: VideoByYtIdResponse;
   playlistDetails?: Maybe<PlaylistDetailsResponse>;
-  playlistUploadsList: PlaylistUploadsListResponse;
+  playlistUploadsList: Array<PlaylistUploadsListUploadResponse>;
   playlists: Array<PlaylistResponse>;
   processingPhases: Array<ProcessingPhaseResponse>;
   searchChannels: Array<SearchChannelResult>;
@@ -552,7 +547,7 @@ export type Query = {
   statisticsCounts: StatisticsCountsResponse;
   storyboards: Array<UploadsVideoStoryboardResponse>;
   thumbnailByVideoId?: Maybe<ThumbnailByVideoIdResponse>;
-  uploadsList: UploadsListResponse;
+  uploadsList: Array<UploadsListUploadResponse>;
   uploadsWithStoryboards: Array<UploadWithStoryboardResponse>;
   uploadsWithThumbnails: Array<UploadsWithThumbnailsResponse>;
 };
@@ -844,39 +839,13 @@ export type UploadsListInput = {
   type: Scalars['String']['input'];
 };
 
-export type UploadsListMetadata = {
-  __typename?: 'UploadsListMetadata';
-  take: Scalars['Int']['output'];
-};
-
-export type UploadsListResponse = {
-  __typename?: 'UploadsListResponse';
-  createdAt: Scalars['String']['output'];
-  fetchStartVideoId: Scalars['String']['output'];
-  fetchedUntilEnd: Scalars['Boolean']['output'];
-  id: Scalars['Int']['output'];
-  lastSyncedAt?: Maybe<Scalars['String']['output']>;
-  metadata: UploadsListMetadata;
-  src: Scalars['String']['output'];
-  title: Scalars['String']['output'];
-  updatedAt: Scalars['String']['output'];
-  uploads: Array<UploadsListUploadResponse>;
-  videoCount: Scalars['Int']['output'];
-  ytId: Scalars['String']['output'];
-};
-
 export type UploadsListUploadResponse = {
   __typename?: 'UploadsListUploadResponse';
-  artifact: Scalars['String']['output'];
   channelId: Scalars['Int']['output'];
-  createdAt: Scalars['String']['output'];
-  duration?: Maybe<Scalars['Int']['output']>;
   id: Scalars['Int']['output'];
-  nextPageToken?: Maybe<Scalars['String']['output']>;
   publishedAt: Scalars['String']['output'];
   src: Scalars['String']['output'];
   title: Scalars['String']['output'];
-  updatedAt: Scalars['String']['output'];
   ytId: Scalars['String']['output'];
 };
 
@@ -1039,7 +1008,7 @@ export type GetPlaylistUploadsListQueryVariables = Exact<{
 }>;
 
 
-export type GetPlaylistUploadsListQuery = { __typename?: 'Query', playlistUploadsList: { __typename?: 'PlaylistUploadsListResponse', uploads: Array<{ __typename?: 'PlaylistUploadsListUploadResponse', id: number, ytId: string, title: string, publishedAt: string, channelTitle: string, ytChannelId: string, src: string }> } };
+export type GetPlaylistUploadsListQuery = { __typename?: 'Query', playlistUploadsList: Array<{ __typename?: 'PlaylistUploadsListUploadResponse', id: number, ytId: string, title: string, publishedAt: string, channelTitle: string, ytChannelId: string, src: string }> };
 
 export type GetScreenshotsQueryVariables = Exact<{
   input: GetScreenshotsInput;
@@ -1234,7 +1203,7 @@ export type UploadsListQueryVariables = Exact<{
 }>;
 
 
-export type UploadsListQuery = { __typename?: 'Query', uploadsList: { __typename?: 'UploadsListResponse', uploads: Array<{ __typename?: 'UploadsListUploadResponse', id: number, ytId: string, title: string, publishedAt: string, src: string, channelId: number }> } };
+export type UploadsListQuery = { __typename?: 'Query', uploadsList: Array<{ __typename?: 'UploadsListUploadResponse', id: number, ytId: string, title: string, publishedAt: string, src: string, channelId: number }> };
 
 export type UploadsWithThumbnailsQueryVariables = Exact<{
   input: UploadsWithThumbnailsInput;
@@ -1738,15 +1707,13 @@ export type UpdateChannelPlaylistMutationOptions = Apollo.BaseMutationOptions<Up
 export const GetPlaylistUploadsListDocument = gql`
     query GetPlaylistUploadsList($playlistUploadsListInput: PlaylistUploadsListInput!) {
   playlistUploadsList(playlistUploadsListInput: $playlistUploadsListInput) {
-    uploads {
-      id
-      ytId
-      title
-      publishedAt
-      channelTitle
-      ytChannelId
-      src
-    }
+    id
+    ytId
+    title
+    publishedAt
+    channelTitle
+    ytChannelId
+    src
   }
 }
     `;
@@ -3001,14 +2968,12 @@ export type CleanShortUploadsMutationOptions = Apollo.BaseMutationOptions<CleanS
 export const UploadsListDocument = gql`
     query UploadsList($uploadsListInput: UploadsListInput!) {
   uploadsList(uploadsListInput: $uploadsListInput) {
-    uploads {
-      id
-      ytId
-      title
-      publishedAt
-      src
-      channelId
-    }
+    id
+    ytId
+    title
+    publishedAt
+    src
+    channelId
   }
 }
     `;

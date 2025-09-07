@@ -40,7 +40,7 @@ export function PlaylistUploadsListPage() {
         playlist={playlist?.playlistDetails as PlaylistDetailsResponse}
       />
       <Grid>
-        {data?.playlistUploadsList?.uploads.map(
+        {data?.playlistUploadsList?.map(
           ({
             ytId,
             id,

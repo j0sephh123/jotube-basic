@@ -17,7 +17,7 @@ import { YoutubeService } from 'src/core/external-services/youtube-api/youtube.s
 import { syncUploadsDto } from 'src/uploads-video/dtos/sync-uploads.dto';
 import { ArtifactType } from '@prisma/client';
 import { SortOrder } from './dtos/uploads-list.input';
-import { UploadsListResponse } from './dtos/uploads-list.response';
+import { UploadsListUploadResponse } from './dtos/uploads-list.response';
 import { UploadsListInput } from './dtos/uploads-list.input';
 import { VideoByYtIdResponse } from './dtos/get-video-by-ytid.response';
 import { GetVideoByYtIdInput } from './dtos/get-video-by-ytid.input';
@@ -43,7 +43,7 @@ export class UploadsVideoService {
     sortOrder,
     type,
     take,
-  }: UploadsListInput): Promise<UploadsListResponse> {
+  }: UploadsListInput): Promise<UploadsListUploadResponse[]> {
     const whereQuery = () => {
       if (type === 'default') {
         return {
@@ -71,7 +71,9 @@ export class UploadsVideoService {
         };
       }
 
-      throw new Error('Invalid type');
+      throw new Error(
+        'Invalid type, allowed types are: default, saved, thumbnails, screenshots',
+      );
     };
 
     const whereQueryResult = whereQuery();
@@ -93,20 +95,9 @@ export class UploadsVideoService {
       },
     });
 
-    return {
-      ...channel,
-      createdAt: channel.createdAt.toISOString(),
-      updatedAt: channel.updatedAt.toISOString(),
-      lastSyncedAt: channel.lastSyncedAt?.toISOString() || null,
-      uploads: channel.uploads.map((upload) => ({
-        ...upload,
-        createdAt: upload.createdAt.toISOString(),
-        updatedAt: upload.updatedAt.toISOString(),
-      })),
-      metadata: {
-        take,
-      },
-    };
+    return channel.uploads.map((upload) => ({
+      ...upload,
+    }));
   }
 
   public async storyboards(ytChannelId: string) {

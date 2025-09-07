@@ -55,14 +55,12 @@ export const CLEAN_SHORT_UPLOADS = gql`
 export const UPLOADS_LIST = gql`
   query UploadsList($uploadsListInput: UploadsListInput!) {
     uploadsList(uploadsListInput: $uploadsListInput) {
-      uploads {
-        id
-        ytId
-        title
-        publishedAt
-        src
-        channelId
-      }
+      id
+      ytId
+      title
+      publishedAt
+      src
+      channelId
     }
   }
 `;

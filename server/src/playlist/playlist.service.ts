@@ -5,7 +5,7 @@ import { UpdatePlaylistDto } from './dtos/update-playlist.dto';
 import { UpdateChannelPlaylistDto } from './dtos/update-channel-playlist.dto';
 import { PlaylistDetailsResponse } from './dtos/playlist.response';
 import { PlaylistUploadsListInput } from './dtos/playlist-uploads-list.input';
-import { PlaylistUploadsListResponse } from './dtos/playlist-uploads-list.response';
+import { PlaylistUploadsListUploadResponse } from './dtos/playlist-uploads-list.response';
 import { ArtifactType } from '@prisma/client';
 
 @Injectable()
@@ -178,7 +178,7 @@ export class PlaylistService {
 
   async playlistUploadsList(
     body: PlaylistUploadsListInput,
-  ): Promise<PlaylistUploadsListResponse> {
+  ): Promise<PlaylistUploadsListUploadResponse[]> {
     const whereQuery = () => {
       if (body.uploadsType === 'default') {
         return {
@@ -228,16 +228,14 @@ export class PlaylistService {
       skip: 0,
     });
 
-    return {
-      uploads: uploads.map((upload) => ({
-        id: upload.id,
-        ytId: upload.ytId,
-        title: upload.title,
-        publishedAt: upload.publishedAt,
-        channelTitle: upload.channel.title,
-        ytChannelId: upload.channel.ytId,
-        src: upload.src,
-      })),
-    };
+    return uploads.map((upload) => ({
+      id: upload.id,
+      ytId: upload.ytId,
+      title: upload.title,
+      publishedAt: upload.publishedAt,
+      channelTitle: upload.channel.title,
+      ytChannelId: upload.channel.ytId,
+      src: upload.src,
+    }));
   }
 }

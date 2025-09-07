@@ -24,8 +24,4 @@ export class PlaylistUploadsListUploadResponse {
   src: string;
 }
 
-@ObjectType()
-export class PlaylistUploadsListResponse {
-  @Field(() => [PlaylistUploadsListUploadResponse])
-  uploads: PlaylistUploadsListUploadResponse[];
-}
+export type PlaylistUploadsListResponse = PlaylistUploadsListUploadResponse[];

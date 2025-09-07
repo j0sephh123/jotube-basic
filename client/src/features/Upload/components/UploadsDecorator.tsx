@@ -34,7 +34,7 @@ function UploadsDecoratorInner({ type, channelId, ytChannelId }: Props) {
       ytChannelId={ytChannelId}
       channelId={channelId}
       handleSideEffect={handleSideEffect}
-      data={{ uploadsList: data }}
+      data={data}
       type={type}
     />
   );

@@ -22,7 +22,7 @@ export default function UploadsList({
 }: UploadsListProps) {
   const { data: queue } = useQueue();
 
-  const filteredUploads = data?.uploadsList?.uploads.filter((upload) => {
+  const filteredUploads = data?.uploadsList?.filter((upload) => {
     if (type === "saved") {
       const isDownloading = queue?.some(
         (item) => item.ytVideoId === upload.ytId
@@ -32,19 +32,21 @@ export default function UploadsList({
     return true;
   });
 
-  const uploadsToUse = useMemo(() => {
-    return filteredUploads?.map((upload) => ({
-      upload,
-      channelId,
-      ytChannelId,
-      type,
-      handleSideEffect,
-    }));
-  }, [channelId, filteredUploads, handleSideEffect, type, ytChannelId]);
+  const uploadsToUse = useMemo(
+    () =>
+      filteredUploads?.map((upload) => ({
+        upload,
+        channelId,
+        ytChannelId,
+        type,
+        handleSideEffect,
+      })) ?? [],
+    [channelId, filteredUploads, handleSideEffect, type, ytChannelId]
+  );
 
   return (
     <Virtualizer
-      items={uploadsToUse ?? []}
+      items={uploadsToUse}
       ItemComponent={({ item }) => (
         <UploadsListItem
           upload={item.upload}

@@ -1,4 +1,4 @@
-import type { SortOrder } from "@shared/api";
+import type { SortOrder, UploadsListQueryResult } from "@shared/api";
 import { UploadsListDocument, useUploadsListQuery } from "@shared/api";
 import { useCallback, useMemo } from "react";
 import { useQueue } from "@shared/hooks";
@@ -17,23 +17,22 @@ export function useUploads(channelId: number, type: UploadsType) {
         channelId,
         sortOrder,
         type,
-        take: 50,
+        take: 150,
       },
     },
   });
 
-  const filteredData = useMemo(() => {
-    const original = query.data?.uploadsList;
+  const filteredData = useMemo<UploadsListQueryResult["data"]>(() => {
+    const original = query.data;
     if (!original) return original;
     const queuedIds = new Set((queue.data ?? []).map((q) => q.ytVideoId));
     return {
       ...original,
-      uploads: original.uploads.filter((u) => !queuedIds.has(u.ytId)),
+      uploadsList: original.uploadsList.filter((u) => !queuedIds.has(u.ytId)),
     };
-  }, [query.data?.uploadsList, queue.data]);
+  }, [query.data, queue.data]);
 
   return {
-    ...query,
     data: filteredData,
     isLoading: query.loading,
     error: query.error,

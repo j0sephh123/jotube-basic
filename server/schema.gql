@@ -356,10 +356,6 @@ input PlaylistUploadsListInput {
   uploadsType: String!
 }
 
-type PlaylistUploadsListResponse {
-  uploads: [PlaylistUploadsListUploadResponse!]!
-}
-
 type PlaylistUploadsListUploadResponse {
   channelTitle: String!
   id: Int!
@@ -395,7 +391,7 @@ type Query {
   getTv(getTvInput: GetTvInput!): Tv
   getVideoByYtId(getVideoByYtIdInput: GetVideoByYtIdInput!): VideoByYtIdResponse!
   playlistDetails(id: Int!): PlaylistDetailsResponse
-  playlistUploadsList(playlistUploadsListInput: PlaylistUploadsListInput!): PlaylistUploadsListResponse!
+  playlistUploadsList(playlistUploadsListInput: PlaylistUploadsListInput!): [PlaylistUploadsListUploadResponse!]!
   playlists: [PlaylistResponse!]!
   processingPhases(variant: String! = "latest"): [ProcessingPhaseResponse!]!
   searchChannels(searchInput: SearchInput!): [SearchChannelResult!]!
@@ -403,7 +399,7 @@ type Query {
   statisticsCounts: StatisticsCountsResponse!
   storyboards(ytChannelId: String!): [UploadsVideoStoryboardResponse!]!
   thumbnailByVideoId(videoId: Float!): ThumbnailByVideoIdResponse
-  uploadsList(uploadsListInput: UploadsListInput!): UploadsListResponse!
+  uploadsList(uploadsListInput: UploadsListInput!): [UploadsListUploadResponse!]!
   uploadsWithStoryboards(input: StoryboardQueryInput!): [UploadWithStoryboardResponse!]!
   uploadsWithThumbnails(input: UploadsWithThumbnailsInput!): [UploadsWithThumbnailsResponse!]!
 }
@@ -567,36 +563,12 @@ input UploadsListInput {
   type: String!
 }
 
-type UploadsListMetadata {
-  take: Int!
-}
-
-type UploadsListResponse {
-  createdAt: String!
-  fetchStartVideoId: String!
-  fetchedUntilEnd: Boolean!
-  id: Int!
-  lastSyncedAt: String
-  metadata: UploadsListMetadata!
-  src: String!
-  title: String!
-  updatedAt: String!
-  uploads: [UploadsListUploadResponse!]!
-  videoCount: Int!
-  ytId: String!
-}
-
 type UploadsListUploadResponse {
-  artifact: String!
   channelId: Int!
-  createdAt: String!
-  duration: Int
   id: Int!
-  nextPageToken: String
   publishedAt: String!
   src: String!
   title: String!
-  updatedAt: String!
   ytId: String!
 }
 

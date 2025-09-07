@@ -1,6 +1,8 @@
 import { useApolloClient } from "@apollo/client";
-import { GET_PLAYLIST_UPLOADS_LIST } from "@entities/Playlist";
-import { useGetPlaylistUploadsListQuery } from "@shared/api";
+import {
+  GetPlaylistUploadsListDocument,
+  useGetPlaylistUploadsListQuery,
+} from "@shared/api";
 import { useTypedParams } from "@shared/hooks";
 
 export function useGetPlaylistUploads() {
@@ -21,7 +23,7 @@ export const useRefetchPlaylistUploads = () => {
   const apolloClient = useApolloClient();
   return () => {
     apolloClient.refetchQueries({
-      include: [GET_PLAYLIST_UPLOADS_LIST],
+      include: [GetPlaylistUploadsListDocument],
     });
   };
 };
