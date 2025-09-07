@@ -4,6 +4,7 @@ export type VirtualizerProps<T> = {
   itemsPerRow?: number;
   rowHeight?: number;
   className?: string;
+  flexibleHeight?: boolean;
 };
 
 export type VirtualizerItemProps<T> = {

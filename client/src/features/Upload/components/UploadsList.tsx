@@ -1,6 +1,9 @@
 import { UploadsListItem, type UploadsType } from "@features/Upload";
 import { type UploadsListQueryResult } from "@shared/api";
 import { useQueue } from "@shared/hooks";
+// eslint-disable-next-line boundaries/element-types
+import { Virtualizer } from "@widgets/Virtualizer";
+import { useMemo } from "react";
 
 export type UploadsListProps = {
   ytChannelId: string;
@@ -29,18 +32,29 @@ export default function UploadsList({
     return true;
   });
 
+  const uploadsToUse = useMemo(() => {
+    return filteredUploads?.map((upload) => ({
+      upload,
+      channelId,
+      ytChannelId,
+      type,
+      handleSideEffect,
+    }));
+  }, [channelId, filteredUploads, handleSideEffect, type, ytChannelId]);
+
   return (
-    <>
-      {filteredUploads?.map((upload) => (
+    <Virtualizer
+      items={uploadsToUse ?? []}
+      ItemComponent={({ item }) => (
         <UploadsListItem
-          key={upload.id}
-          upload={upload}
-          channelId={channelId}
-          ytChannelId={ytChannelId}
-          type={type}
-          handleSideEffect={handleSideEffect}
+          upload={item.upload}
+          channelId={item.channelId}
+          ytChannelId={item.ytChannelId}
+          type={item.type}
+          handleSideEffect={item.handleSideEffect}
         />
-      ))}
-    </>
+      )}
+      flexibleHeight={true}
+    />
   );
 }
