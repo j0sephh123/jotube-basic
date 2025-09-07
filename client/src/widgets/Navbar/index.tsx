@@ -33,18 +33,21 @@ export default function Navbar() {
           <Menu
             buttonText="Quick Actions"
             items={[
+              <IconThumbnails count={totalCounts?.totalThumbnails ?? 0} />,
               <IconStoryboard count={totalCounts?.totalStoryboards ?? 0} />,
               <ViewGlobalScreenshots />,
+              <IconImageNavigator />,
             ]}
           />
-          <IconVideos />
-          <IconPlaylist />
-          <IconTv />
+          <Menu
+            buttonText="History"
+            items={[<IconRecentlyViewed />, <IconProcessingLog />]}
+          />
+          <Menu
+            buttonText="Aggregates"
+            items={[<IconVideos />, <IconPlaylist />, <IconTv />]}
+          />
           <IconSaved count={totalCounts?.totalSaved ?? 0} />
-          <IconThumbnails count={totalCounts?.totalThumbnails ?? 0} />
-          <IconImageNavigator />
-          <IconRecentlyViewed />
-          <IconProcessingLog />
         </div>
         <div className="flex items-center gap-4">
           <QuickSearch />

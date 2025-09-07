@@ -23,6 +23,7 @@ export function IconThumbnails({
         position: "bottom",
         color: "primary",
       }}
+      text="Thumbnails"
     />
   );
 }

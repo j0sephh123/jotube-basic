@@ -11,6 +11,7 @@ export function IconPlaylist() {
         position: "bottom",
         color: "primary",
       }}
+      text="Playlists"
     />
   );
 }

@@ -11,7 +11,7 @@ export function IconImageNavigator() {
         position: "bottom",
         color: "primary",
       }}
+      text="Image Navigator"
     />
   );
 }
-  

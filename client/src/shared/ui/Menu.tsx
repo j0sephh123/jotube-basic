@@ -13,7 +13,7 @@ export default function Menu({ items, buttonText = "Menu" }: MenuProps) {
       </div>
       <ul
         tabIndex={0}
-        className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+        className="dropdown-content z-[1] menu p-2 shadow-lg bg-base-200 border border-base-300 rounded-box w-64"
       >
         {items.map((item, index) => (
           <li key={index}>{item}</li>

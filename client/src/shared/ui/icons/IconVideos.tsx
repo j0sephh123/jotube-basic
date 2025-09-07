@@ -11,6 +11,7 @@ export function IconVideos() {
         position: "bottom",
         color: "primary",
       }}
+      text="Videos"
     />
   );
 }

@@ -11,6 +11,7 @@ export function IconRecentlyViewed() {
         position: "bottom",
         color: "primary",
       }}
+      text="Recently Viewed"
     />
   );
 }

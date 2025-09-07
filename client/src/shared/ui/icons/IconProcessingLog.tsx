@@ -11,6 +11,7 @@ export function IconProcessingLog() {
         position: "bottom",
         color: "primary",
       }}
+      text="Processing Log"
     />
   );
 }

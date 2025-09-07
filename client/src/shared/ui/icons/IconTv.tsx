@@ -11,6 +11,7 @@ export function IconTv() {
         position: "bottom",
         color: "primary",
       }}
+      text="TV"
     />
   );
 }
