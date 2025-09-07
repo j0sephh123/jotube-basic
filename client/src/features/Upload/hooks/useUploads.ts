@@ -1,4 +1,8 @@
-import type { SortOrder, UploadsListQueryResult } from "@shared/api";
+import type {
+  SortOrder,
+  UploadsListInput,
+  UploadsListQueryResult,
+} from "@shared/api";
 import { UploadsListDocument, useUploadsListQuery } from "@shared/api";
 import { useCallback, useMemo } from "react";
 import { useQueue } from "@shared/hooks";
@@ -6,7 +10,13 @@ import { useSearchParams } from "react-router-dom";
 import { useApolloClient } from "@apollo/client";
 import { type UploadsType } from "../types";
 
-export function useUploads(channelId: number, type: UploadsType) {
+export function useUploads({
+  id,
+  uploadsType,
+}: {
+  id: UploadsListInput["id"];
+  uploadsType: UploadsType;
+}) {
   const queue = useQueue();
   const [searchParams] = useSearchParams();
   const sortOrder = (searchParams.get("sort") || "DESC") as SortOrder;
@@ -14,9 +24,9 @@ export function useUploads(channelId: number, type: UploadsType) {
   const query = useUploadsListQuery({
     variables: {
       uploadsListInput: {
-        channelId,
+        id,
         sortOrder,
-        type,
+        type: uploadsType,
         take: 150,
       },
     },
@@ -36,6 +46,7 @@ export function useUploads(channelId: number, type: UploadsType) {
     data: filteredData,
     isLoading: query.loading,
     error: query.error,
+    refetch: query.refetch,
   };
 }
 

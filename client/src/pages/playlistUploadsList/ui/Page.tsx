@@ -1,20 +1,22 @@
-import { useGetPlaylist, useGetPlaylistUploads } from "@features/Playlist";
-import {
-  useRefetchPlaylist,
-  useRefetchPlaylistUploads,
-} from "@features/Playlist";
-import { UploadsListItem } from "@features/Upload";
-import { type PlaylistDetailsResponse } from "@shared/api";
-import { CustomLink, StaticStates } from "@shared/ui";
+import { useGetPlaylist } from "@features/Playlist";
+import { useRefetchPlaylist } from "@features/Playlist";
+import { UploadsListItem, useUploads } from "@features/Upload";
+import { IdType, type PlaylistDetailsResponse } from "@shared/api";
+import { StaticStates } from "@shared/ui";
 import { PlaylistDetailsHeader } from "@widgets/PlaylistDetails";
 import { Grid } from "@widgets/Grid";
-import { makeYtChannelId } from "@shared/types";
 import { useTypedParams } from "@shared/hooks";
 
 export function PlaylistUploadsListPage() {
   const uploadsType = useTypedParams("uploadsType");
+  const playlistId = useTypedParams("playlistId");
 
-  const { data, loading, error } = useGetPlaylistUploads();
+  console.log({ uploadsType });
+
+  const { data, isLoading, error, refetch } = useUploads({
+    id: { type: IdType.Playlist, value: Number(playlistId) },
+    uploadsType,
+  });
 
   const {
     data: playlist,
@@ -23,16 +25,15 @@ export function PlaylistUploadsListPage() {
   } = useGetPlaylist(null);
 
   const refetchPlaylist = useRefetchPlaylist();
-  const refetchPlaylistUploads = useRefetchPlaylistUploads();
 
   const handleSideEffect = () => {
     refetchPlaylist();
-    refetchPlaylistUploads();
+    refetch();
   };
 
   return (
     <StaticStates
-      isLoading={loading || isPlaylistLoading}
+      isLoading={isLoading || isPlaylistLoading}
       isError={!!error || !!playlistError}
       isEmpty={!data}
     >
@@ -40,7 +41,7 @@ export function PlaylistUploadsListPage() {
         playlist={playlist?.playlistDetails as PlaylistDetailsResponse}
       />
       <Grid>
-        {data?.playlistUploadsList?.map(
+        {data?.uploadsList?.map(
           ({
             ytId,
             id,
@@ -59,18 +60,11 @@ export function PlaylistUploadsListPage() {
                 publishedAt,
                 src,
                 channelId: id,
+                channelTitle,
+                ytChannelId,
               }}
-              ytChannelId={ytChannelId}
-              channelId={id}
               type={uploadsType}
               handleSideEffect={handleSideEffect}
-              channelTitleSlot={
-                <CustomLink
-                  to={`/channels/${makeYtChannelId(ytChannelId)}/saved`}
-                >
-                  <div className="text text-gray-400">{channelTitle}</div>
-                </CustomLink>
-              }
             />
           )
         )}

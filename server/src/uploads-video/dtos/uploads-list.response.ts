@@ -19,6 +19,12 @@ export class UploadsListUploadResponse {
 
   @Field(() => Int)
   channelId: number;
+
+  @Field()
+  channelTitle: string;
+
+  @Field()
+  ytChannelId: string;
 }
 
 export type UploadsListResponse = UploadsListUploadResponse[];

@@ -8,7 +8,7 @@ import {
   VideoPlayer,
 } from "@features/Upload";
 import { type UploadsListQuery } from "@shared/api";
-import { Button, Card } from "@shared/ui";
+import { Button, Card, CustomLink } from "@shared/ui";
 import { makeYtChannelId, makeYtVideoId } from "@shared/types";
 import { ViewVideoThumbnails } from "@features/Thumbnails";
 import { type UploadsType } from "../types";
@@ -17,20 +17,24 @@ import { useScreenshotsForCarousel } from "@features/Screenshot";
 
 type Props = {
   upload: UploadsListQuery["uploadsList"][0];
-  ytChannelId: string;
-  channelId: number;
   type: UploadsType;
   handleSideEffect: () => void;
   channelTitleSlot?: ReactNode;
 };
 
 export function UploadsListItem({
-  upload: { id, ytId, title, publishedAt, src },
-  ytChannelId,
-  channelId,
+  upload: {
+    id,
+    ytId,
+    title,
+    publishedAt,
+    src,
+    channelId,
+    channelTitle,
+    ytChannelId,
+  },
   type,
   handleSideEffect,
-  channelTitleSlot,
 }: Props) {
   const handleGalleryClick = () => {
     setGalleryModal({
@@ -57,7 +61,11 @@ export function UploadsListItem({
           )}`}
         />
         <div className="flex justify-between gap-4 items-center">
-          {channelTitleSlot}
+          {channelTitle && (
+            <CustomLink to={`/channels/${makeYtChannelId(ytChannelId)}/saved`}>
+              <div className="text text-gray-400">{channelTitle}</div>
+            </CustomLink>
+          )}
           <PublishedTimeAgo date={publishedAt} />
         </div>
         <div className="flex items-center justify-between">

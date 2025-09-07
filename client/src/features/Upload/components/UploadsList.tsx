@@ -50,8 +50,6 @@ export default function UploadsList({
       ItemComponent={({ item }) => (
         <UploadsListItem
           upload={item.upload}
-          channelId={item.channelId}
-          ytChannelId={item.ytChannelId}
           type={item.type}
           handleSideEffect={item.handleSideEffect}
         />

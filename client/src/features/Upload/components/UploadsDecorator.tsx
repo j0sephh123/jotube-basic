@@ -5,6 +5,7 @@ import UploadsList from "./UploadsList";
 // eslint-disable-next-line import/no-internal-modules
 import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
 import { YtIdToId } from "@shared/hoc";
+import { IdType } from "@shared/api";
 
 type Props = {
   type: UploadsType;
@@ -16,7 +17,10 @@ function UploadsDecoratorInner({ type, channelId, ytChannelId }: Props) {
   const refetchChannelMetadata = useRefetchChannelMetadata();
   const { refetch: refetchQueue } = useQueue();
   const refetchDefaultUploads = useRefetchChannelUploads();
-  const { data } = useUploads(channelId, type);
+  const { data } = useUploads({
+    id: { type: IdType.Channel, value: channelId },
+    uploadsType: type,
+  });
 
   const handleSideEffect = () => {
     refetchChannelMetadata();

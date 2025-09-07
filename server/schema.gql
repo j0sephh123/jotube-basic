@@ -281,6 +281,17 @@ input GetVideoByYtIdInput {
   ytId: String!
 }
 
+input IdInput {
+  type: IdType!
+  value: Int!
+}
+
+"""Type of ID for uploads list"""
+enum IdType {
+  CHANNEL
+  PLAYLIST
+}
+
 type Mutation {
   cleanShortUploads(cleanShortUploadsInput: CleanShortUploadsInput!): CleanShortUploadsResponse!
   createChannel(createChannelInput: CreateChannelInput!): CreateChannelResponse!
@@ -557,7 +568,7 @@ type UploadWithStoryboardResponse {
 }
 
 input UploadsListInput {
-  channelId: Int!
+  id: IdInput!
   sortOrder: SortOrder!
   take: Int!
   type: String!
@@ -565,10 +576,12 @@ input UploadsListInput {
 
 type UploadsListUploadResponse {
   channelId: Int!
+  channelTitle: String!
   id: Int!
   publishedAt: String!
   src: String!
   title: String!
+  ytChannelId: String!
   ytId: String!
 }
 

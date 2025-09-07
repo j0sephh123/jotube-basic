@@ -61,6 +61,8 @@ export const UPLOADS_LIST = gql`
       publishedAt
       src
       channelId
+      channelTitle
+      ytChannelId
     }
   }
 `;

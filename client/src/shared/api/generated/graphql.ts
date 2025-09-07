@@ -320,6 +320,17 @@ export type GetVideoByYtIdInput = {
   ytId: Scalars['String']['input'];
 };
 
+export type IdInput = {
+  type: IdType;
+  value: Scalars['Int']['input'];
+};
+
+/** Type of ID for uploads list */
+export enum IdType {
+  Channel = 'CHANNEL',
+  Playlist = 'PLAYLIST'
+}
+
 export type Mutation = {
   __typename?: 'Mutation';
   cleanShortUploads: CleanShortUploadsResponse;
@@ -833,7 +844,7 @@ export type UploadWithStoryboardResponse = {
 };
 
 export type UploadsListInput = {
-  channelId: Scalars['Int']['input'];
+  id: IdInput;
   sortOrder: SortOrder;
   take: Scalars['Int']['input'];
   type: Scalars['String']['input'];
@@ -842,10 +853,12 @@ export type UploadsListInput = {
 export type UploadsListUploadResponse = {
   __typename?: 'UploadsListUploadResponse';
   channelId: Scalars['Int']['output'];
+  channelTitle: Scalars['String']['output'];
   id: Scalars['Int']['output'];
   publishedAt: Scalars['String']['output'];
   src: Scalars['String']['output'];
   title: Scalars['String']['output'];
+  ytChannelId: Scalars['String']['output'];
   ytId: Scalars['String']['output'];
 };
 
@@ -1203,7 +1216,7 @@ export type UploadsListQueryVariables = Exact<{
 }>;
 
 
-export type UploadsListQuery = { __typename?: 'Query', uploadsList: Array<{ __typename?: 'UploadsListUploadResponse', id: number, ytId: string, title: string, publishedAt: string, src: string, channelId: number }> };
+export type UploadsListQuery = { __typename?: 'Query', uploadsList: Array<{ __typename?: 'UploadsListUploadResponse', id: number, ytId: string, title: string, publishedAt: string, src: string, channelId: number, channelTitle: string, ytChannelId: string }> };
 
 export type UploadsWithThumbnailsQueryVariables = Exact<{
   input: UploadsWithThumbnailsInput;
@@ -2974,6 +2987,8 @@ export const UploadsListDocument = gql`
     publishedAt
     src
     channelId
+    channelTitle
+    ytChannelId
   }
 }
     `;

@@ -16,7 +16,7 @@ import { DirectoryService } from 'src/file/directory.service';
 import { YoutubeService } from 'src/core/external-services/youtube-api/youtube.service';
 import { syncUploadsDto } from 'src/uploads-video/dtos/sync-uploads.dto';
 import { ArtifactType } from '@prisma/client';
-import { SortOrder } from './dtos/uploads-list.input';
+import { SortOrder, IdType } from './dtos/uploads-list.input';
 import { UploadsListUploadResponse } from './dtos/uploads-list.response';
 import { UploadsListInput } from './dtos/uploads-list.input';
 import { VideoByYtIdResponse } from './dtos/get-video-by-ytid.response';
@@ -39,7 +39,7 @@ export class UploadsVideoService {
   ) {}
 
   public async uploadsList({
-    channelId,
+    id,
     sortOrder,
     type,
     take,
@@ -78,26 +78,65 @@ export class UploadsVideoService {
 
     const whereQueryResult = whereQuery();
 
-    const channel = await this.prismaService.channel.findUnique({
-      where: {
-        id: channelId,
-      },
-      include: {
-        uploads: {
-          where: {
-            ...whereQueryResult,
-          },
-          orderBy: {
-            publishedAt: sortOrder === SortOrder.ASC ? 'asc' : 'desc',
-          },
-          take,
+    if (id.type === IdType.CHANNEL) {
+      const channel = await this.prismaService.channel.findUnique({
+        where: {
+          id: id.value,
         },
-      },
-    });
+        include: {
+          uploads: {
+            where: {
+              ...whereQueryResult,
+            },
+            orderBy: {
+              publishedAt: sortOrder === SortOrder.ASC ? 'asc' : 'desc',
+            },
+            take,
+          },
+        },
+      });
 
-    return channel.uploads.map((upload) => ({
-      ...upload,
-    }));
+      return channel.uploads.map((upload) => ({
+        ...upload,
+        channelTitle: channel.title,
+        ytChannelId: channel.ytId,
+      }));
+    }
+
+    if (id.type === IdType.PLAYLIST) {
+      const channels = await this.prismaService.channel.findMany({
+        where: {
+          playlistId: id.value,
+        },
+      });
+
+      const uploads = await this.prismaService.uploadsVideo.findMany({
+        where: {
+          channelId: { in: channels.map((channel) => channel.id) },
+          ...whereQueryResult,
+        },
+        orderBy: {
+          publishedAt: sortOrder === SortOrder.ASC ? 'asc' : 'desc',
+        },
+        take,
+        include: {
+          channel: {
+            select: {
+              title: true,
+              ytId: true,
+            },
+          },
+        },
+      });
+
+      return uploads.map((upload) => ({
+        ...upload,
+        channelTitle: upload.channel.title,
+        ytChannelId: upload.channel.ytId,
+      }));
+    }
+
+    throw new Error('Invalid id type, allowed types are: channel, playlist');
   }
 
   public async storyboards(ytChannelId: string) {
