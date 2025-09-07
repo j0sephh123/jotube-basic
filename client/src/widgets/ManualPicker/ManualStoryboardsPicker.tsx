@@ -50,6 +50,8 @@ export function ManualStoryboardsPicker() {
         <p className="text-sm text-base-content/70">
           {storyboardFragments} fragment
           {storyboardFragments !== 1 ? "s" : ""}
+          {" | "}
+          Total uploads :{items.length}
         </p>
       </div>
       <div className="h-[84vh] overflow-scroll">
