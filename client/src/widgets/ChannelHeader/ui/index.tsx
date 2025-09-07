@@ -1,5 +1,5 @@
 /* eslint-disable import/no-internal-modules */
-import ChannelControls from "./ChannelControls";
+import { ChannelControls } from "./ChannelControls";
 import {
   SyncUploadsButton,
   CleanShortUploads,
@@ -11,13 +11,13 @@ import { ViewScreenshots } from "@features/Thumbnails";
 import { ViewStoryboards } from "@widgets/Storyboard";
 import { makeYtChannelId } from "@shared/types";
 import { PlaylistControl } from "@features/Playlist";
-import { YtIdToId } from "@shared/hoc";
 import { setGalleryModal } from "@features/Gallery/model/galleryModalStore";
 // eslint-disable-next-line import/no-internal-modules
 import { useChannelMetadataQuery } from "@entities/Channel/model/useChannelMetadata";
 import { useLocation } from "react-router-dom";
+import clsx from "clsx";
 
-const ChannelHeaderInner = ({
+export const ChannelHeader = ({
   channelId,
   ytChannelId,
 }: {
@@ -27,13 +27,7 @@ const ChannelHeaderInner = ({
   const { data: channelMetadata, refetch: refetchMetadata } =
     useChannelMetadataQuery(channelId);
   const location = useLocation();
-  const isUploadsPage =
-    location.pathname.includes("/channels/") &&
-    !location.pathname.includes("/saved") &&
-    !location.pathname.includes("/thumbnails") &&
-    !location.pathname.includes("/screenshots") &&
-    !location.pathname.includes("/gallery");
-
+  const isUploadsPage = location.pathname.includes("/default");
   const isSavedPage = location.pathname.includes("/saved");
   const isThumbnailsPage = location.pathname.includes("/thumbnails");
   const isScreenshotsPage = location.pathname.includes("/screenshots");
@@ -114,54 +108,46 @@ const ChannelHeaderInner = ({
         </div>
 
         <div className="flex justify-between items-center">
-          <ChannelControls leftSlot={<></>} />
+          <ChannelControls />
 
           <div className="tabs tabs-boxed bg-base-100">
             <CustomLink
               to={`/channels/${makeYtChannelId(ytChannelId)}`}
-              className={`tab tab-sm ${
-                isUploadsPage
-                  ? "tab-active bg-primary text-primary-content"
-                  : ""
-              }`}
+              className={clsx("tab tab-sm", {
+                "tab-active bg-primary text-primary-content": isUploadsPage,
+              })}
             >
               Uploads ({videoArtifactsCount})
             </CustomLink>
             <CustomLink
               to={`/channels/${makeYtChannelId(ytChannelId)}/saved`}
-              className={`tab tab-sm ${
-                isSavedPage ? "tab-active bg-primary text-primary-content" : ""
-              }`}
+              className={clsx("tab tab-sm", {
+                "tab-active bg-primary text-primary-content": isSavedPage,
+              })}
             >
               Saved ({savedArtifactsCount})
             </CustomLink>
             <CustomLink
               to={`/channels/${makeYtChannelId(ytChannelId)}/thumbnails`}
-              className={`tab tab-sm ${
-                isThumbnailsPage
-                  ? "tab-active bg-primary text-primary-content"
-                  : ""
-              }`}
+              className={clsx("tab tab-sm", {
+                "tab-active bg-primary text-primary-content": isThumbnailsPage,
+              })}
             >
               Thumbnails ({thumbnailArtifactsCount})
             </CustomLink>
             <CustomLink
               to={`/channels/${makeYtChannelId(ytChannelId)}/screenshots`}
-              className={`tab tab-sm ${
-                isScreenshotsPage
-                  ? "tab-active bg-primary text-primary-content"
-                  : ""
-              }`}
+              className={clsx("tab tab-sm", {
+                "tab-active bg-primary text-primary-content": isScreenshotsPage,
+              })}
             >
               Screenshots ({screenshotArtifactsCount})
             </CustomLink>
             <CustomLink
               to={`/channels/${makeYtChannelId(ytChannelId)}/gallery`}
-              className={`tab tab-sm ${
-                isGalleryPage
-                  ? "tab-active bg-primary text-primary-content"
-                  : ""
-              }`}
+              className={clsx("tab tab-sm", {
+                "tab-active bg-primary text-primary-content": isGalleryPage,
+              })}
             >
               Gallery
             </CustomLink>
@@ -171,6 +157,3 @@ const ChannelHeaderInner = ({
     </div>
   );
 };
-
-const ChannelHeader = YtIdToId(ChannelHeaderInner);
-export default ChannelHeader;

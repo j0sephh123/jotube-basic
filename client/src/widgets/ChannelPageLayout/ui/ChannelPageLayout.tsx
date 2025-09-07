@@ -30,7 +30,7 @@ export const ChannelPageLayoutInner = ({
 
   return (
     <div className="container mx-auto px-4 py-2">
-      <ChannelHeader />
+      <ChannelHeader channelId={channelId} ytChannelId={ytChannelId} />
       <Outlet />
     </div>
   );
