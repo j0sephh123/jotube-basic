@@ -1,47 +1,28 @@
 import { UploadsListItem, type UploadsType } from "@features/Upload";
 import { type UploadsListQueryResult } from "@shared/api";
-import { useQueue } from "@shared/hooks";
 // eslint-disable-next-line boundaries/element-types
 import { Virtualizer } from "@widgets/Virtualizer";
 import { useMemo } from "react";
 
 export type UploadsListProps = {
-  ytChannelId: string;
-  channelId: number;
   handleSideEffect: () => void;
   data: UploadsListQueryResult["data"];
-  type: UploadsType;
+  uploadsType: UploadsType;
 };
 
 export default function UploadsList({
-  ytChannelId,
-  channelId,
   handleSideEffect,
   data,
-  type,
+  uploadsType,
 }: UploadsListProps) {
-  const { data: queue } = useQueue();
-
-  const filteredUploads = data?.uploadsList?.filter((upload) => {
-    if (type === "saved") {
-      const isDownloading = queue?.some(
-        (item) => item.ytVideoId === upload.ytId
-      );
-      return !isDownloading;
-    }
-    return true;
-  });
-
   const uploadsToUse = useMemo(
     () =>
-      filteredUploads?.map((upload) => ({
+      data?.uploadsList?.map((upload) => ({
         upload,
-        channelId,
-        ytChannelId,
-        type,
+        uploadsType,
         handleSideEffect,
       })) ?? [],
-    [channelId, filteredUploads, handleSideEffect, type, ytChannelId]
+    [data?.uploadsList, handleSideEffect, uploadsType]
   );
 
   return (
@@ -50,7 +31,7 @@ export default function UploadsList({
       ItemComponent={({ item }) => (
         <UploadsListItem
           upload={item.upload}
-          type={item.type}
+          uploadsType={item.uploadsType}
           handleSideEffect={item.handleSideEffect}
         />
       )}

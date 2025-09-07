@@ -8,25 +8,25 @@ import { YtIdToId } from "@shared/hoc";
 import { IdType } from "@shared/api";
 
 type Props = {
-  type: UploadsType;
+  uploadsType: UploadsType;
   channelId: number;
   ytChannelId: string;
 };
 
-function UploadsDecoratorInner({ type, channelId, ytChannelId }: Props) {
+function UploadsDecoratorInner({ uploadsType, channelId }: Props) {
   const refetchChannelMetadata = useRefetchChannelMetadata();
   const { refetch: refetchQueue } = useQueue();
   const refetchDefaultUploads = useRefetchChannelUploads();
   const { data } = useUploads({
     id: { type: IdType.Channel, value: channelId },
-    uploadsType: type,
+    uploadsType,
   });
 
   const handleSideEffect = () => {
     refetchChannelMetadata();
     refetchDefaultUploads();
 
-    if (type === "saved") {
+    if (uploadsType === "saved") {
       refetchQueue();
     }
   };
@@ -34,13 +34,7 @@ function UploadsDecoratorInner({ type, channelId, ytChannelId }: Props) {
   if (!data) return null;
 
   return (
-    <UploadsList
-      ytChannelId={ytChannelId}
-      channelId={channelId}
-      handleSideEffect={handleSideEffect}
-      data={data}
-      type={type}
-    />
+    <UploadsList handleSideEffect={handleSideEffect} data={data} uploadsType={uploadsType} />
   );
 }
 

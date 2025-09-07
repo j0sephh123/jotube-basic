@@ -36,15 +36,15 @@ export default function Router() {
             </Route>
           </Route>
           <Route path="/channels/:ytChannelId" element={<ChannelPageLayout />}>
-            <Route index element={<UploadsDecorator type="default" />} />
-            <Route path="saved" element={<UploadsDecorator type="saved" />} />
+            <Route index element={<UploadsDecorator uploadsType="default" />} />
+            <Route path="saved" element={<UploadsDecorator uploadsType="saved" />} />
             <Route
               path="thumbnails"
-              element={<UploadsDecorator type="thumbnails" />}
+              element={<UploadsDecorator uploadsType="thumbnails" />}
             />
             <Route
               path="screenshots"
-              element={<UploadsDecorator type="screenshots" />}
+              element={<UploadsDecorator uploadsType="screenshots" />}
             />
             <Route path="gallery" element={<GalleryVideosList />} />
           </Route>

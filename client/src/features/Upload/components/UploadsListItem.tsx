@@ -15,9 +15,9 @@ import { type UploadsType } from "../types";
 import { setGalleryModal } from "@features/Gallery";
 import { useScreenshotsForCarousel } from "@features/Screenshot";
 
-type Props = {
+export type UploadsListItemProps = {
   upload: UploadsListQuery["uploadsList"][0];
-  type: UploadsType;
+  uploadsType: UploadsType;
   handleSideEffect: () => void;
   channelTitleSlot?: ReactNode;
 };
@@ -33,9 +33,9 @@ export function UploadsListItem({
     channelTitle,
     ytChannelId,
   },
-  type,
+  uploadsType,
   handleSideEffect,
-}: Props) {
+}: UploadsListItemProps) {
   const handleGalleryClick = () => {
     setGalleryModal({
       ytVideoId: ytId,
@@ -70,7 +70,7 @@ export function UploadsListItem({
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            {type === "default" && (
+            {uploadsType === "default" && (
               <>
                 <SaveUpload
                   ytVideoId={ytId}
@@ -87,7 +87,7 @@ export function UploadsListItem({
                 />
               </>
             )}
-            {type === "saved" && (
+            {uploadsType === "saved" && (
               <>
                 <DownloadUpload
                   channelId={channelId}
@@ -101,7 +101,7 @@ export function UploadsListItem({
                 />
               </>
             )}
-            {type === "thumbnails" && (
+            {uploadsType === "thumbnails" && (
               <ViewVideoThumbnails
                 ytChannelId={ytChannelId}
                 videoId={id}
@@ -109,7 +109,7 @@ export function UploadsListItem({
                 ytVideoId={ytId}
               />
             )}
-            {type === "screenshots" && (
+            {uploadsType === "screenshots" && (
               <>
                 <Button onClick={handleGalleryClick}>Gallery</Button>
                 <Button onClick={() => handleViewScreenshots([channelId])}>

@@ -1,17 +1,18 @@
 import type { PlaylistDetailsResponse } from "@shared/api";
 import { ArrowLeft } from "lucide-react";
-import { SmallCard } from "./SmallCard";
 import { useScreenshotsForCarousel } from "@features/Screenshot";
 import { setGalleryModal } from "@features/Gallery";
 import { CustomLink } from "@shared/ui";
 import { useCustomNavigate, useTypedParams } from "@shared/hooks";
 import { useGetUploadsWithStoryboards } from "@features/Storyboard";
+// eslint-disable-next-line import/no-internal-modules, boundaries/element-types
+import { SmallCard } from "@widgets/PlaylistDetails/ui/SmallCard";
 
 type HeaderProps = {
   playlist: PlaylistDetailsResponse;
 };
 
-export default function PlaylistDetailsHeader({
+export function PlaylistHeader({
   playlist: { id, name, channels },
 }: HeaderProps) {
   const handleGetScreenshots = useScreenshotsForCarousel();
