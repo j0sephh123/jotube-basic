@@ -58,6 +58,7 @@ export class PlaylistService {
           savedCount,
           screenshotCount,
           thumbnailCount,
+          storyboardCount,
           featuredScreenshots,
         ] = await Promise.all([
           this.prismaService.uploadsVideo.count({
@@ -83,6 +84,12 @@ export class PlaylistService {
               artifact: 'THUMBNAIL',
             },
           }),
+          this.prismaService.uploadsVideo.count({
+            where: {
+              channelId: channel.id,
+              artifact: 'STORYBOARD',
+            },
+          }),
           this.prismaService.channelFeaturedScreenshot.findMany({
             where: {
               channelId: channel.id,
@@ -106,6 +113,7 @@ export class PlaylistService {
             savedCount,
             screenshotCount,
             thumbnailCount,
+            storyboardCount,
           },
         };
       }),
@@ -125,6 +133,7 @@ export class PlaylistService {
         savedCount: channel.counts.savedCount,
         screenshotCount: channel.counts.screenshotCount,
         thumbnailCount: channel.counts.thumbnailCount,
+        storyboardCount: channel.counts.storyboardCount,
         featuredScreenshots: channel.featuredScreenshots,
         lastSyncedAt: channel.lastSyncedAt?.toISOString() || null,
       })),

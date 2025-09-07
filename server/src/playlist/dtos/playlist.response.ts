@@ -42,6 +42,9 @@ export class PlaylistChannelWithCountsResponse {
   @Field(() => Int)
   thumbnailCount: number;
 
+  @Field(() => Int)
+  storyboardCount: number;
+
   @Field(() => [FeaturedScreenshotResponse])
   featuredScreenshots: FeaturedScreenshotResponse[];
 }

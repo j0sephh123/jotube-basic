@@ -323,6 +323,7 @@ type PlaylistChannelWithCountsResponse {
   savedCount: Int!
   screenshotCount: Int!
   src: String!
+  storyboardCount: Int!
   thumbnailCount: Int!
   title: String!
   videoCount: Int!

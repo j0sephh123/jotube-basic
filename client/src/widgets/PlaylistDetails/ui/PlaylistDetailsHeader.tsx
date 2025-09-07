@@ -5,6 +5,7 @@ import { useScreenshotsForCarousel } from "@features/Screenshot";
 import { setGalleryModal } from "@features/Gallery";
 import { CustomLink } from "@shared/ui";
 import { useCustomNavigate, useTypedParams } from "@shared/hooks";
+import { useGetUploadsWithStoryboards } from "@features/Storyboard";
 
 type HeaderProps = {
   playlist: PlaylistDetailsResponse;
@@ -14,6 +15,7 @@ export default function PlaylistDetailsHeader({
   playlist: { id, name, channels },
 }: HeaderProps) {
   const handleGetScreenshots = useScreenshotsForCarousel();
+  const handleGetStoryboards = useGetUploadsWithStoryboards().mutateAsync;
 
   const uploadsType = useTypedParams("uploadsType");
 
@@ -23,12 +25,14 @@ export default function PlaylistDetailsHeader({
       savedCount: acc.savedCount + channel.savedCount,
       screenshotCount: acc.screenshotCount + channel.screenshotCount,
       thumbnailCount: acc.thumbnailCount + channel.thumbnailCount,
+      storyboardCount: acc.storyboardCount + channel.storyboardCount,
     }),
     {
       videoCount: 0,
       savedCount: 0,
       screenshotCount: 0,
       thumbnailCount: 0,
+      storyboardCount: 0,
     }
   );
 
@@ -93,6 +97,15 @@ export default function PlaylistDetailsHeader({
             value={totalCounts.thumbnailCount}
             className="text-info"
             wrapperClassName="bg-info/10"
+          />
+          <SmallCard
+            onClick={() =>
+              handleGetStoryboards(channels.map((channel) => channel.id))
+            }
+            title="Storyboards"
+            value={totalCounts.storyboardCount}
+            className="text-error"
+            wrapperClassName="bg-error/10"
           />
         </div>
       </div>
