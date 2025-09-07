@@ -7,8 +7,6 @@ export function useGetPlaylistUploads() {
   const id = useTypedParams("playlistId");
   const uploadsType = useTypedParams("uploadsType");
 
-  console.log({ id });
-
   return useGetPlaylistUploadsListQuery({
     variables: {
       playlistUploadsListInput: {

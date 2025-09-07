@@ -58,10 +58,7 @@ export function PlaylistUploadsListPage() {
                 title,
                 publishedAt,
                 src,
-                artifact: "",
                 channelId: id,
-                createdAt: "",
-                updatedAt: "",
               }}
               ytChannelId={ytChannelId}
               channelId={id}

@@ -55,28 +55,13 @@ export const CLEAN_SHORT_UPLOADS = gql`
 export const UPLOADS_LIST = gql`
   query UploadsList($uploadsListInput: UploadsListInput!) {
     uploadsList(uploadsListInput: $uploadsListInput) {
-      id
-      createdAt
-      updatedAt
-      title
-      ytId
-      src
-      videoCount
-      fetchStartVideoId
-      fetchedUntilEnd
-      lastSyncedAt
       uploads {
-        artifact
-        channelId
-        createdAt
-        duration
         id
-        nextPageToken
+        ytId
+        title
         publishedAt
         src
-        title
-        updatedAt
-        ytId
+        channelId
       }
     }
   }

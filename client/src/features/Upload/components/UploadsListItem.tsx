@@ -25,7 +25,7 @@ type Props = {
 };
 
 export function UploadsListItem({
-  upload: { id, ytId, title, publishedAt, duration, src },
+  upload: { id, ytId, title, publishedAt, src },
   ytChannelId,
   channelId,
   type,
@@ -44,13 +44,7 @@ export function UploadsListItem({
   return (
     <Card.Container>
       <div className="relative group">
-        <VideoPlayer
-          ytId={ytId}
-          src={src}
-          id={id}
-          title={title}
-          duration={duration}
-        />
+        <VideoPlayer ytId={ytId} src={src} id={id} title={title} />
         <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
           <Card.Menu id={id} ytId={ytId} />
         </div>

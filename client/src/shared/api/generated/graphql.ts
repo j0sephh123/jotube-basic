@@ -1234,7 +1234,7 @@ export type UploadsListQueryVariables = Exact<{
 }>;
 
 
-export type UploadsListQuery = { __typename?: 'Query', uploadsList: { __typename?: 'UploadsListResponse', id: number, createdAt: string, updatedAt: string, title: string, ytId: string, src: string, videoCount: number, fetchStartVideoId: string, fetchedUntilEnd: boolean, lastSyncedAt?: string | null, uploads: Array<{ __typename?: 'UploadsListUploadResponse', artifact: string, channelId: number, createdAt: string, duration?: number | null, id: number, nextPageToken?: string | null, publishedAt: string, src: string, title: string, updatedAt: string, ytId: string }> } };
+export type UploadsListQuery = { __typename?: 'Query', uploadsList: { __typename?: 'UploadsListResponse', uploads: Array<{ __typename?: 'UploadsListUploadResponse', id: number, ytId: string, title: string, publishedAt: string, src: string, channelId: number }> } };
 
 export type UploadsWithThumbnailsQueryVariables = Exact<{
   input: UploadsWithThumbnailsInput;
@@ -3001,28 +3001,13 @@ export type CleanShortUploadsMutationOptions = Apollo.BaseMutationOptions<CleanS
 export const UploadsListDocument = gql`
     query UploadsList($uploadsListInput: UploadsListInput!) {
   uploadsList(uploadsListInput: $uploadsListInput) {
-    id
-    createdAt
-    updatedAt
-    title
-    ytId
-    src
-    videoCount
-    fetchStartVideoId
-    fetchedUntilEnd
-    lastSyncedAt
     uploads {
-      artifact
-      channelId
-      createdAt
-      duration
       id
-      nextPageToken
+      ytId
+      title
       publishedAt
       src
-      title
-      updatedAt
-      ytId
+      channelId
     }
   }
 }
