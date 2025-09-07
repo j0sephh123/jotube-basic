@@ -49,3 +49,4 @@ export { IconScreenshots } from "./icons/IconScreenshots";
 export { IconRecentlyViewed } from "./icons/IconRecentlyViewed";
 export { IconTv } from "./icons/IconTv";
 export { default as Menu } from "./Menu";
+export { TabsLinksIterator } from "./TabsLinksIterator";
