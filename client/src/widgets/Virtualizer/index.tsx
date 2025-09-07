@@ -1,15 +1,14 @@
-import { AutoSizer, Grid } from "react-virtualized";
-import type { GridCellProps } from "react-virtualized";
-import type { WithSrc, GalleryProps } from "./types";
+import { AutoSizer, Grid as ReactVirtualizedGrid } from "react-virtualized";
+import type { GridCellProps as ReactVirtualizedGridCellProps } from "react-virtualized";
+import type { VirtualizerProps } from "./types";
 import clsx from "clsx";
 
-export function GalleryVirtualised<T extends WithSrc>({
+export function Virtualizer<T>({
   items,
   ItemComponent,
   itemsPerRow = 4,
-  onScrollProgress,
   className,
-}: GalleryProps<T>) {
+}: VirtualizerProps<T>) {
   return (
     <div className={clsx("w-full h-[78vh]", className)}>
       <AutoSizer>
@@ -35,19 +34,19 @@ export function GalleryVirtualised<T extends WithSrc>({
             rowIndex,
             key,
             style,
-          }: GridCellProps) => {
+          }: ReactVirtualizedGridCellProps) => {
             const index = rowIndex * colCount + columnIndex;
             if (index >= items.length) return <div key={key} style={style} />;
             const item = items[index]!;
             return (
               <div key={key} style={style} className="p-2 box-border">
-                <ItemComponent item={item} src={item.src} />
+                <ItemComponent item={item} />
               </div>
             );
           };
 
           return (
-            <Grid
+            <ReactVirtualizedGrid
               width={width}
               height={height}
               columnCount={colCount}
@@ -56,11 +55,6 @@ export function GalleryVirtualised<T extends WithSrc>({
               rowHeight={computedRowHeight}
               overscanRowCount={3}
               cellRenderer={cell}
-              onScroll={({ scrollTop }) => {
-                const totalHeight = rowCount * computedRowHeight;
-                const scrollProgress = Math.min(scrollTop / totalHeight, 1);
-                onScrollProgress?.(scrollProgress);
-              }}
             />
           );
         }}

@@ -11,7 +11,7 @@ import { StaticStates } from "..";
 import { GalleryItem } from "@features/Gallery";
 import { createPortal } from "react-dom";
 import { useKbdEvent } from "@features/Thumbnails";
-import { GalleryVirtualised } from "@features/Gallery";
+import { Virtualizer } from "@widgets/Virtualizer";
 
 export function GalleryModal() {
   const { isGalleryModalVisible, channelIds, ytVideoId } = useGalleryModal();
@@ -58,9 +58,8 @@ export function GalleryModal() {
             isError={!!error}
             isEmpty={screenshotsToUse?.length === 0}
           >
-            <GalleryVirtualised
+            <Virtualizer
               className="h-[97vh]"
-              onScrollProgress={() => undefined}
               items={screenshotsToUse ?? []}
               ItemComponent={({ item }) => (
                 <GalleryItem
