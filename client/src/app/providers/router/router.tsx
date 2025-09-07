@@ -56,7 +56,7 @@ export default function Router() {
             <Route index element={<PlaylistsPage />} />
             <Route path=":playlistId" element={<PlaylistDetailsPage />} />
             <Route
-              path=":id/uploads/:uploadsType"
+              path=":playlistId/uploads/:uploadsType"
               element={<PlaylistUploadsListPage />}
             />
           </Route>
