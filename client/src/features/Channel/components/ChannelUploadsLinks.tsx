@@ -3,6 +3,7 @@ import { TabsLinksIterator } from "@shared/ui";
 import { makeYtChannelId } from "@shared/types";
 import { useTypedParams } from "@shared/hooks";
 import { useChannelMetadataQuery } from "@entities/Channel/model/useChannelMetadata";
+import { useMemo } from "react";
 
 interface BottomRightProps {
   ytChannelId: string;
@@ -16,37 +17,48 @@ export const ChannelUploadsLinks = ({
   const uploadsType = useTypedParams("uploadsType");
   const { data: channelMetadata } = useChannelMetadataQuery(channelId);
 
-  if (!channelMetadata) return null;
-
   const {
     screenshotArtifactsCount,
     thumbnailArtifactsCount,
     videoArtifactsCount,
     savedArtifactsCount,
-  } = channelMetadata;
+  } = channelMetadata || {
+    screenshotArtifactsCount: 0,
+    thumbnailArtifactsCount: 0,
+    videoArtifactsCount: 0,
+    savedArtifactsCount: 0,
+  };
 
-  const items = [
-    {
-      name: "uploads",
-      count: videoArtifactsCount,
-    },
-    {
-      name: "saved",
-      count: savedArtifactsCount,
-    },
-    {
-      name: "thumbnails",
-      count: thumbnailArtifactsCount,
-    },
-    {
-      name: "screenshots",
-      count: screenshotArtifactsCount,
-    },
-    {
-      name: "gallery",
-      count: screenshotArtifactsCount,
-    },
-  ];
+  const items = useMemo(
+    () => [
+      {
+        name: "uploads",
+        count: videoArtifactsCount,
+      },
+      {
+        name: "saved",
+        count: savedArtifactsCount,
+      },
+      {
+        name: "thumbnails",
+        count: thumbnailArtifactsCount,
+      },
+      {
+        name: "screenshots",
+        count: screenshotArtifactsCount,
+      },
+      {
+        name: "gallery",
+        count: screenshotArtifactsCount,
+      },
+    ],
+    [
+      savedArtifactsCount,
+      screenshotArtifactsCount,
+      thumbnailArtifactsCount,
+      videoArtifactsCount,
+    ]
+  );
 
   return (
     <TabsLinksIterator
