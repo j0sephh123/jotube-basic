@@ -161,14 +161,10 @@ export const useProcessingState = () => useSnapshot(processingState);
 export const useThumbnailsProcessingState = () => {
   const state = useSnapshot(processingState as ThumbnailsState);
 
-  console.log(state);
-
   return state;
 };
 export const useStoryboardsProcessingState = () => {
   const state = useSnapshot(processingState as StoryboardsState);
-
-  console.log(state);
 
   return state;
 };

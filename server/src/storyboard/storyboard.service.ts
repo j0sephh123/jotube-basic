@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ArtifactType, UploadsVideo } from '@prisma/client';
+import { ArtifactType, Prisma, UploadsVideo } from '@prisma/client';
 import { spawn } from 'child_process';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
 import { UploadWithStoryboardResponse } from './dtos/upload-with-storyboard.response';
@@ -120,28 +120,28 @@ export class StoryboardService {
   }
 
   async getUploadsWithStoryboards({
-    channelId,
+    channelIds,
   }: StoryboardQueryInput): Promise<UploadWithStoryboardResponse[]> {
-    const uploads = await this.prismaService.uploadsVideo.findMany({
-      where: {
-        channel: {
-          id: channelId,
+    const whereCondition: Prisma.UploadsVideoWhereInput = {
+      artifact: ArtifactType.STORYBOARD,
+    };
+
+    if (channelIds && channelIds.length > 0) {
+      whereCondition.channel = {
+        id: {
+          in: channelIds,
         },
-        artifact: ArtifactType.STORYBOARD,
-      },
+      };
+    }
+
+    return this.prismaService.uploadsVideo.findMany({
+      where: whereCondition,
       select: {
         id: true,
         ytId: true,
         title: true,
-        src: true,
-        publishedAt: true,
-        channelId: true,
-        nextPageToken: true,
-        duration: true,
-        artifact: true,
         storyboard: {
           select: {
-            id: true,
             fragments: true,
             url: true,
           },
@@ -149,35 +149,9 @@ export class StoryboardService {
         channel: {
           select: {
             id: true,
-            title: true,
-            src: true,
-            ytId: true,
           },
         },
       },
     });
-
-    return uploads.map((upload) => ({
-      id: upload.id,
-      ytId: upload.ytId,
-      title: upload.title,
-      src: upload.src,
-      publishedAt: upload.publishedAt,
-      channelId: upload.channelId,
-      nextPageToken: upload.nextPageToken,
-      duration: upload.duration,
-      artifact: upload.artifact,
-      storyboard: {
-        id: upload.storyboard.id,
-        fragments: upload.storyboard.fragments,
-        url: upload.storyboard.url,
-      },
-      channel: {
-        id: upload.channel.id,
-        title: upload.channel.title,
-        src: upload.channel.src,
-        ytId: upload.channel.ytId,
-      },
-    }));
   }
 }

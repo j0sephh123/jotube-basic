@@ -450,9 +450,6 @@ type StatisticsCountsResponse {
 
 type StoryboardChannelResponse {
   id: Int!
-  src: String!
-  title: String!
-  ytId: String!
 }
 
 type StoryboardDataResponse {
@@ -466,12 +463,11 @@ type StoryboardDataResponse {
 
 type StoryboardFragmentResponse {
   fragments: Int!
-  id: Int!
   url: String!
 }
 
 input StoryboardQueryInput {
-  channelId: Float!
+  channelIds: [Float!]
 }
 
 input SyncUploadsInput {
@@ -556,14 +552,8 @@ type UpdateTvResponse {
 }
 
 type UploadWithStoryboardResponse {
-  artifact: String!
   channel: StoryboardChannelResponse!
-  channelId: Int!
-  duration: Int
   id: Int!
-  nextPageToken: String
-  publishedAt: String!
-  src: String!
   storyboard: StoryboardFragmentResponse!
   title: String!
   ytId: String!

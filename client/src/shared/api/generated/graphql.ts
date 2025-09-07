@@ -717,9 +717,6 @@ export type StatisticsCountsResponse = {
 export type StoryboardChannelResponse = {
   __typename?: 'StoryboardChannelResponse';
   id: Scalars['Int']['output'];
-  src: Scalars['String']['output'];
-  title: Scalars['String']['output'];
-  ytId: Scalars['String']['output'];
 };
 
 export type StoryboardDataResponse = {
@@ -735,12 +732,11 @@ export type StoryboardDataResponse = {
 export type StoryboardFragmentResponse = {
   __typename?: 'StoryboardFragmentResponse';
   fragments: Scalars['Int']['output'];
-  id: Scalars['Int']['output'];
   url: Scalars['String']['output'];
 };
 
 export type StoryboardQueryInput = {
-  channelId: Scalars['Float']['input'];
+  channelIds?: InputMaybe<Array<Scalars['Float']['input']>>;
 };
 
 export type SyncUploadsInput = {
@@ -833,14 +829,8 @@ export type UpdateTvResponse = {
 
 export type UploadWithStoryboardResponse = {
   __typename?: 'UploadWithStoryboardResponse';
-  artifact: Scalars['String']['output'];
   channel: StoryboardChannelResponse;
-  channelId: Scalars['Int']['output'];
-  duration?: Maybe<Scalars['Int']['output']>;
   id: Scalars['Int']['output'];
-  nextPageToken?: Maybe<Scalars['String']['output']>;
-  publishedAt: Scalars['String']['output'];
-  src: Scalars['String']['output'];
   storyboard: StoryboardFragmentResponse;
   title: Scalars['String']['output'];
   ytId: Scalars['String']['output'];

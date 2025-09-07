@@ -1,4 +1,7 @@
-import { useUploadsWithStoryboardsLazyQuery } from "@shared/api";
+import {
+  useUploadsWithStoryboardsLazyQuery,
+  type UploadWithStoryboardResponse,
+} from "@shared/api";
 import { setProcessingData } from "@shared/store";
 
 export function useGetUploadsWithStoryboards() {
@@ -7,14 +10,17 @@ export function useGetUploadsWithStoryboards() {
       fetchPolicy: "no-cache",
     });
 
-  const mutateAsync = async (channelId: number) => {
+  const mutateAsync = async (channelIds: number[]) => {
     const result = await getUploadsWithStoryboards({
       variables: {
-        input: { channelId },
+        input: { channelIds },
       },
     });
     if (result.data?.uploadsWithStoryboards) {
-      setProcessingData("storyboards", result.data.uploadsWithStoryboards);
+      setProcessingData(
+        "storyboards",
+        result.data.uploadsWithStoryboards as UploadWithStoryboardResponse[]
+      );
     }
   };
 

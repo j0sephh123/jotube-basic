@@ -13,7 +13,7 @@ export default function ViewStoryboards({
   const { mutateAsync: getStoryboards } = useGetUploadsWithStoryboards();
 
   const handleClick = () => {
-    getStoryboards(channelId);
+    getStoryboards([channelId]);
   };
 
   return (
