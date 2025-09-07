@@ -1,30 +1,28 @@
+/* eslint-disable import/no-internal-modules */
 import { CardMenu, CustomLink } from "@shared/ui";
 import { makeYtChannelId } from "@shared/types";
 import { PlaylistControl } from "@features/Playlist";
 import { SyncUploadsButton, CleanShortUploads } from "@features/Upload";
+import { useTypedParams } from "@shared/hooks";
+import { useChannelMetadataQuery } from "@entities/Channel/model/useChannelMetadata";
 
 interface TopLeftProps {
-  title: string;
-  id: number;
   ytChannelId: string;
-  playlist?: { id: number; name: string } | null;
-  isUploadsPage: boolean;
-  channelMetadata?: {
-    lastSyncedAt?: string | null | undefined;
-    id: number;
-  } | null;
   channelId: number;
 }
 
 export const ChannelTitleSection = ({
-  title,
-  id,
   ytChannelId,
-  playlist,
-  isUploadsPage,
-  channelMetadata,
   channelId,
 }: TopLeftProps) => {
+  const uploadsType = useTypedParams("uploadsType");
+
+  const { data: channelMetadata } = useChannelMetadataQuery(channelId);
+
+  if (!channelMetadata) return null;
+
+  const { title, id, playlist } = channelMetadata;
+
   return (
     <div className="flex items-center gap-2">
       <CustomLink to={`/channels/${makeYtChannelId(ytChannelId)}/saved`}>
@@ -37,7 +35,7 @@ export const ChannelTitleSection = ({
         playlistId={playlist?.id ?? 0}
         playlistName={playlist?.name ?? "No playlist"}
       />
-      {isUploadsPage && (
+      {uploadsType === "default" && (
         <>
           <SyncUploadsButton
             lastSyncedAt={channelMetadata?.lastSyncedAt ?? null}

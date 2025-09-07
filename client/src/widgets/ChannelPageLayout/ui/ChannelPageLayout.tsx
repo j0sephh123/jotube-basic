@@ -1,9 +1,7 @@
-import { useEffect, useRef } from "react";
+
 import { ChannelHeader } from "@widgets/ChannelHeader";
-import { useRecentlyViewedChannels } from "@features/Channel";
-import { YtIdToId } from "@shared/hoc";
-// eslint-disable-next-line import/no-internal-modules
-import { useChannelMetadataQuery } from "@entities/Channel/model/useChannelMetadata";
+import { YtIdToId } from "@shared/hoc";   
+import { useAddToRecentlyViewed } from "@features/Channel";
 
 export const ChannelPageLayoutInner = ({
   channelId,
@@ -14,20 +12,7 @@ export const ChannelPageLayoutInner = ({
   ytChannelId: string;
   children: React.ReactNode;
 }) => {
-  const { data: channelMetadata } = useChannelMetadataQuery(channelId);
-  const { add } = useRecentlyViewedChannels();
-  const hasAddedRef = useRef(false);
-
-  useEffect(() => {
-    if (channelMetadata && !hasAddedRef.current) {
-      hasAddedRef.current = true;
-      add({
-        id: channelMetadata.id,
-        ytId: ytChannelId,
-        title: channelMetadata.title,
-      });
-    }
-  }, [channelMetadata, add, ytChannelId]);
+  useAddToRecentlyViewed(channelId, ytChannelId);
 
   return (
     <div className="container mx-auto px-4 py-2">

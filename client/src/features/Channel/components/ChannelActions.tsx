@@ -5,28 +5,27 @@ import { ViewScreenshots } from "@features/Thumbnails";
 import { ViewStoryboards } from "@widgets/Storyboard";
 import { FetchUploadsButton } from "@features/Upload";
 import { setGalleryModal } from "@features/Gallery/model/galleryModalStore";
+import { useChannelMetadataQuery } from "@entities/Channel/model/useChannelMetadata";
 
 interface TopRightProps {
   channelId: number;
-  storyboardArtifactsCount: number;
-  id: number;
-  thumbnailArtifactsCount: number;
-  screenshotArtifactsCount: number;
-  fetchedUntilEnd: boolean;
-  videoCount: number;
-  onRefetchMetadata: () => void;
 }
 
-export const ChannelActions = ({
-  channelId,
-  storyboardArtifactsCount,
-  id,
-  thumbnailArtifactsCount,
-  screenshotArtifactsCount,
-  fetchedUntilEnd,
-  videoCount,
-  onRefetchMetadata,
-}: TopRightProps) => {
+export const ChannelActions = ({ channelId }: TopRightProps) => {
+  const { data: channelMetadata, refetch: refetchMetadata } =
+    useChannelMetadataQuery(channelId);
+
+  if (!channelMetadata) return null;
+
+  const {
+    screenshotArtifactsCount,
+    id,
+    thumbnailArtifactsCount,
+    videoCount,
+    fetchedUntilEnd,
+    storyboardArtifactsCount,
+  } = channelMetadata;
+
   const handleGalleryClick = () => {
     setGalleryModal({
       ytVideoId: "",
@@ -56,7 +55,7 @@ export const ChannelActions = ({
         <FetchUploadsButton
           channelId={channelId}
           videoCount={videoCount}
-          onSuccess={onRefetchMetadata}
+          onSuccess={refetchMetadata}
         />
       )}
     </div>

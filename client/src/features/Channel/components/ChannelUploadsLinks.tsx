@@ -1,32 +1,37 @@
+/* eslint-disable import/no-internal-modules */
 import { CustomLink } from "@shared/ui";
 import { makeYtChannelId } from "@shared/types";
 import clsx from "clsx";
+import { useTypedParams } from "@shared/hooks";
+import { useChannelMetadataQuery } from "@entities/Channel/model/useChannelMetadata";
 
 interface BottomRightProps {
   ytChannelId: string;
-  isUploadsPage: boolean;
-  isSavedPage: boolean;
-  isThumbnailsPage: boolean;
-  isScreenshotsPage: boolean;
-  isGalleryPage: boolean;
-  videoArtifactsCount: number;
-  savedArtifactsCount: number;
-  thumbnailArtifactsCount: number;
-  screenshotArtifactsCount: number;
+  channelId: number;
 }
 
 export const ChannelUploadsLinks = ({
   ytChannelId,
-  isUploadsPage,
-  isSavedPage,
-  isThumbnailsPage,
-  isScreenshotsPage,
-  isGalleryPage,
-  videoArtifactsCount,
-  savedArtifactsCount,
-  thumbnailArtifactsCount,
-  screenshotArtifactsCount,
+  channelId,
 }: BottomRightProps) => {
+  const uploadsType = useTypedParams("uploadsType");
+  const { data: channelMetadata } = useChannelMetadataQuery(channelId);
+
+  if (!channelMetadata) return null;
+
+  const {
+    screenshotArtifactsCount,
+    thumbnailArtifactsCount,
+    videoArtifactsCount,
+    savedArtifactsCount,
+  } = channelMetadata;
+
+  const isUploadsPage = uploadsType === "default";
+  const isSavedPage = uploadsType === "saved";
+  const isThumbnailsPage = uploadsType === "thumbnails";
+  const isScreenshotsPage = uploadsType === "screenshots";
+  const isGalleryPage = uploadsType === "gallery";
+
   return (
     <div className="flex items-center gap-2">
       <span className="text-sm font-medium text-base-content/70">uploads</span>
