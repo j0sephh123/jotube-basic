@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
 import { ThumbnailsManagerService } from 'src/thumbnails/manager/thumbnails-manager.service';
-import { ArtifactType } from '@prisma/client';
+import { ArtifactType, Prisma } from '@prisma/client';
 import { GetScreenshotsInput } from '../dtos/get-screenshots.input';
 import { UploadsWithThumbnailsResponse } from '../dtos/uploads-with-thumbnails.response';
+import {
+  IdType,
+  UploadsWithThumbnailsInput,
+} from '../dtos/uploads-with-thumbnails.input';
 
 type Item = {
   id: number;
@@ -64,12 +68,22 @@ export class ThumbnailsApiService {
     }));
   }
 
-  public async uploadsWithThumbnails(
-    channelIds: number[],
-  ): Promise<UploadsWithThumbnailsResponse[]> {
+  public async uploadsWithThumbnails({
+    idType,
+    channelIds,
+    playlistId,
+  }: UploadsWithThumbnailsInput): Promise<UploadsWithThumbnailsResponse[]> {
+    const whereCondition: Prisma.UploadsVideoWhereInput = {};
+
+    if (idType === IdType.CHANNEL) {
+      whereCondition.channelId = { in: channelIds };
+    } else if (idType === IdType.PLAYLIST) {
+      whereCondition.channel = { playlistId };
+    }
+
     const resp = await this.prismaService.uploadsVideo.findMany({
       where: {
-        channelId: { in: channelIds },
+        ...whereCondition,
         artifact: ArtifactType.THUMBNAIL,
       },
       select: {

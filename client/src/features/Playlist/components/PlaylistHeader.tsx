@@ -1,4 +1,4 @@
-import type { PlaylistDetailsResponse } from "@shared/api";
+import { IdType, type PlaylistDetailsResponse } from "@shared/api";
 import { ArrowLeft } from "lucide-react";
 import { useScreenshotsForCarousel } from "@features/Screenshot";
 import { setGalleryModal } from "@features/Gallery";
@@ -7,6 +7,7 @@ import { useCustomNavigate, useTypedParams } from "@shared/hooks";
 import { useGetUploadsWithStoryboards } from "@features/Storyboard";
 // eslint-disable-next-line import/no-internal-modules, boundaries/element-types
 import { SmallCard } from "@widgets/PlaylistDetails/ui/SmallCard";
+import { useViewThumbnails } from "@features/Thumbnails";
 
 type HeaderProps = {
   playlist: PlaylistDetailsResponse;
@@ -17,6 +18,10 @@ export function PlaylistHeader({
 }: HeaderProps) {
   const handleGetScreenshots = useScreenshotsForCarousel();
   const handleGetStoryboards = useGetUploadsWithStoryboards().mutateAsync;
+  const handleGetThumbnails = useViewThumbnails({
+    playlistId: id,
+    idType: IdType.Playlist,
+  });
 
   const uploadsType = useTypedParams("uploadsType");
 
@@ -93,7 +98,7 @@ export function PlaylistHeader({
             wrapperClassName="bg-warning/10"
           />
           <SmallCard
-            onClick={() => undefined}
+            onClick={() => handleGetThumbnails()}
             title="Thumbnails"
             value={totalCounts.thumbnailCount}
             className="text-info"

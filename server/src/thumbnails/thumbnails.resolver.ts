@@ -23,7 +23,7 @@ export class ThumbnailsResolver {
   async uploadsWithThumbnails(
     @Args('input') input: UploadsWithThumbnailsInput,
   ): Promise<UploadsWithThumbnailsResponse[]> {
-    return this.thumbnailsApiService.uploadsWithThumbnails(input.channelIds);
+    return this.thumbnailsApiService.uploadsWithThumbnails(input);
   }
 
   @Query(() => ThumbnailByVideoIdResponse, { nullable: true })

@@ -893,7 +893,9 @@ export type UploadsVideoStoryboardResponse = {
 };
 
 export type UploadsWithThumbnailsInput = {
-  channelIds: Array<Scalars['Float']['input']>;
+  channelIds?: InputMaybe<Array<Scalars['Float']['input']>>;
+  idType: IdType;
+  playlistId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type UploadsWithThumbnailsResponse = {

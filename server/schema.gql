@@ -613,7 +613,9 @@ type UploadsVideoStoryboardResponse {
 }
 
 input UploadsWithThumbnailsInput {
-  channelIds: [Float!]!
+  channelIds: [Float!]
+  idType: IdType!
+  playlistId: Int
 }
 
 type UploadsWithThumbnailsResponse {

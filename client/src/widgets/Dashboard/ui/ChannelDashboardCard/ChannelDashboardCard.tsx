@@ -1,9 +1,10 @@
 import { ViewType } from "@features/Dashboard";
 import { SyncUploadsButton, FetchUploadsButton } from "@features/Upload";
 import { Button, Card } from "@shared/ui";
-import type {
-  DashboardChannelResponse,
-  FeaturedScreenshotResponse,
+import {
+  IdType,
+  type DashboardChannelResponse,
+  type FeaturedScreenshotResponse,
 } from "@shared/api";
 import { Images } from "lucide-react";
 import { useViewThumbnails } from "@features/Thumbnails";
@@ -56,7 +57,10 @@ export default function ChannelDashboardCard({
 }: Props) {
   const navigate = useCustomNavigate();
   const handleViewScreenshots = useScreenshotsForCarousel();
-  const viewThumbnails = useViewThumbnails(id);
+  const viewThumbnails = useViewThumbnails({
+    channelIds: [id],
+    idType: IdType.Channel,
+  });
 
   const { getSrc, handleThumbnailClick } = useFeaturedScreenshots(
     featuredScreenshots,
@@ -85,9 +89,7 @@ export default function ChannelDashboardCard({
 
   const cardMenu = <Card.Menu id={id} ytId={ytId} />;
 
-  const syncButton = (
-    <SyncUploadsButton lastSyncedAt={lastSyncedAt} id={id} />
-  );
+  const syncButton = <SyncUploadsButton lastSyncedAt={lastSyncedAt} id={id} />;
 
   const deleteChannelbutton = (
     <DeleteChannel id={id} onSuccess={onChannelDelete} />

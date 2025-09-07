@@ -1,4 +1,7 @@
-import { useUploadsWithThumbnailsLazyQuery } from "@shared/api";
+import {
+  type UploadsWithThumbnailsInput,
+  useUploadsWithThumbnailsLazyQuery,
+} from "@shared/api";
 
 export function useGetUploadsWithThumbnails() {
   const [getUploadsWithThumbnails, { data, loading, error }] =
@@ -6,10 +9,10 @@ export function useGetUploadsWithThumbnails() {
       fetchPolicy: "no-cache",
     });
 
-  const mutateAsync = async (channelIds: number[]) => {
+  const mutateAsync = async (input: UploadsWithThumbnailsInput) => {
     const result = await getUploadsWithThumbnails({
       variables: {
-        input: { channelIds },
+        input,
       },
     });
     return result.data?.uploadsWithThumbnails || [];

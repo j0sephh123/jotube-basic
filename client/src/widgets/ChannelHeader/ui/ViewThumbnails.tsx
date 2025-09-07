@@ -1,5 +1,6 @@
 import { Button } from "@shared/ui";
 import { useViewThumbnails } from "@features/Thumbnails";
+import { IdType } from "@shared/api";
 
 type Props = {
   id: number;
@@ -7,7 +8,10 @@ type Props = {
 };
 
 export default function ViewThumbnails({ id, thumbnailArtifactsCount }: Props) {
-  const viewThumbnails = useViewThumbnails(id);
+  const viewThumbnails = useViewThumbnails({
+    channelIds: [id],
+    idType: IdType.Channel,
+  });
 
   const handleViewThumbnails = () => {
     viewThumbnails();
