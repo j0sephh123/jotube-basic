@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 
 export function ProcessingPhaseWrapper() {
   return (
-    <div className="container mx-auto p-6 mt-12">
+    <div className="container mx-auto p-6">
       <Outlet />
     </div>
   );

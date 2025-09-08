@@ -30,7 +30,6 @@ export const ChannelHeaderTitleSection = ({
       </CustomLink>
       <CardMenu id={id} ytId={ytChannelId} />
       <PlaylistControl
-        isPlaylistPage={false}
         id={id}
         playlistId={playlist?.id ?? 0}
         playlistName={playlist?.name ?? "No playlist"}

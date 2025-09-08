@@ -1,26 +1,14 @@
-import { Button } from "@shared/ui";
 import { setPlaylistModal } from "../model";
-import { useRemoveFromPlaylist } from "../hooks";
 import { ListMusic } from "lucide-react";
 
 type Props = {
-  isPlaylistPage: boolean;
   id: number;
   playlistId: number;
   playlistName: string;
 };
 
-export function PlaylistControl({ isPlaylistPage, id, playlistId, playlistName }: Props) {
-  const removeFromPlaylist = useRemoveFromPlaylist();
-
-  return isPlaylistPage ? (
-    <Button
-      onClick={() => removeFromPlaylist.handleRemoveFromPlaylist(id)}
-      size="sm"
-    >
-      Remove
-    </Button>
-  ) : (
+export function PlaylistControl({ id, playlistId, playlistName }: Props) {
+  return (
     <div
       className="flex items-center gap-2 text-sm cursor-pointer"
       onClick={() =>

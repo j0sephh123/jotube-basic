@@ -10,7 +10,7 @@ export const GenericHeaderContainer = ({
   bottomRight?: React.ReactNode;
 }) => {
   return (
-    <div className="bg-base-200 rounded-lg px-6 pt-16 shadow-md">
+    <div className="bg-base-200 rounded-lg px-6 shadow-md">
       <div className="flex flex-col gap-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">{topLeft}</div>

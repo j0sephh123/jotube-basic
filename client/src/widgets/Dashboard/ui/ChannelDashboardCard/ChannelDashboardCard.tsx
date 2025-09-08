@@ -153,7 +153,6 @@ export default function ChannelDashboardCard({
       playlistButtonSlot={
         playlist ? (
           <PlaylistControl
-            isPlaylistPage={!!isPlaylistPage}
             id={id}
             playlistId={playlist.id}
             playlistName={playlist.name}

@@ -25,7 +25,7 @@ export default function DashboardWrapper() {
   const Header = header[type];
 
   return (
-    <div className="h-screen flex flex-col p-2 mt-16 pb-14">
+    <div className="h-screen flex flex-col p-2 pb-14">
       <div className="bg-base-100 rounded-lg flex flex-col h-full">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <Header
