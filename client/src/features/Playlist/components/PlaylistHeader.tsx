@@ -20,10 +20,7 @@ export function PlaylistHeader({
 }: HeaderProps) {
   const handleGetScreenshots = useScreenshotsForCarousel();
   const handleGetStoryboards = useGetUploadsWithStoryboards().mutateAsync;
-  const handleGetThumbnails = useViewThumbnails({
-    playlistId: id,
-    idType: IdType.Playlist,
-  });
+  const handleGetThumbnails = useViewThumbnails();
 
   const uploadsType = useTypedParams("uploadsType");
 
@@ -76,7 +73,12 @@ export function PlaylistHeader({
             wrapperClassName="bg-warning/10"
           />
           <SmallCard
-            onClick={() => handleGetThumbnails()}
+            onClick={() =>
+              handleGetThumbnails({
+                playlistId: id,
+                idType: IdType.Playlist,
+              })
+            }
             title="Thumbnails"
             value={totalCounts.thumbnailCount}
             className="text-info"
@@ -108,6 +110,7 @@ export function PlaylistHeader({
             },
           ]}
           getActive={(name: string) => uploadsType === name}
+          variant="link"
         />
       }
     />

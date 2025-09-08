@@ -21,7 +21,6 @@ export { default as ThumbnailsProcessingContent } from "../../widgets/ManualPick
 export { default as ThumbnailGridCell } from "./ui/ThumbnailGridCell";
 export { default as SmoothProgressBar } from "./ui/SmoothProgressBar";
 export { HoverableDiv } from "./ui/HoverableDiv";
-export { default as ViewScreenshots } from "./ui/ViewScreenshots";
 export { default as useSubmit } from "./lib/useSubmit";
 export { default as useThumbnailsCount } from "./lib/useThumbnailsCount";
 export { default as usePaginate } from "./lib/usePaginate";

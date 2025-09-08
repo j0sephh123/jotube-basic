@@ -15,7 +15,6 @@ type Props = {
 
 function UploadsDecoratorInner({ channelId }: Props) {
   const uploadsType = useTypedParams("uploadsType");
-  console.log("uploadsType", uploadsType);
   const refetchChannelMetadata = useRefetchChannelMetadata();
   const { refetch: refetchQueue } = useQueue();
   const refetchDefaultUploads = useRefetchChannelUploads();

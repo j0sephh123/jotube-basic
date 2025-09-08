@@ -57,10 +57,7 @@ export default function ChannelDashboardCard({
 }: Props) {
   const navigate = useCustomNavigate();
   const handleViewScreenshots = useScreenshotsForCarousel();
-  const viewThumbnails = useViewThumbnails({
-    channelIds: [id],
-    idType: IdType.Channel,
-  });
+  const viewThumbnails = useViewThumbnails();
 
   const { getSrc, handleThumbnailClick } = useFeaturedScreenshots(
     featuredScreenshots,
@@ -80,7 +77,9 @@ export default function ChannelDashboardCard({
       storyboard={storyboard}
       onNavigate={navigate}
       onViewScreenshots={() => handleViewScreenshots([id])}
-      onViewThumbnails={viewThumbnails}
+      onViewThumbnails={() =>
+        viewThumbnails({ channelIds: [id], idType: IdType.Channel })
+      }
       onViewStoryboards={() => viewStoryboards.mutateAsync([id])}
     />
   );

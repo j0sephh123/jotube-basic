@@ -1,8 +1,9 @@
 /* eslint-disable import/no-internal-modules */
 import { Iterator } from "@shared/ui";
-import { makeYtChannelId } from "@shared/types";
+import { makeYtChannelId, UploadsType } from "@shared/types";
 import { useTypedParams } from "@shared/hooks";
 import { useChannelMetadataQuery } from "@entities/Channel/model/useChannelMetadata";
+import { useMemo } from "react";
 
 interface BottomRightProps {
   ytChannelId: string;
@@ -28,32 +29,43 @@ export const ChannelHeaderUploadsLinks = ({
     savedArtifactsCount: 0,
   };
 
+  const items = useMemo<{ name: UploadsType; count: number }[]>(
+    () => [
+      {
+        name: "default",
+        count: videoArtifactsCount,
+      },
+      {
+        name: "saved",
+        count: savedArtifactsCount,
+      },
+      {
+        name: "thumbnails",
+        count: thumbnailArtifactsCount,
+      },
+      {
+        name: "screenshots",
+        count: screenshotArtifactsCount,
+      },
+      {
+        name: "gallery",
+        count: screenshotArtifactsCount,
+      },
+    ],
+    [
+      savedArtifactsCount,
+      screenshotArtifactsCount,
+      thumbnailArtifactsCount,
+      videoArtifactsCount,
+    ]
+  );
+
   return (
     <Iterator
       baseLink={`/channels/${makeYtChannelId(ytChannelId)}`}
-      items={[
-        {
-          name: "uploads",
-          count: videoArtifactsCount,
-        },
-        {
-          name: "saved",
-          count: savedArtifactsCount,
-        },
-        {
-          name: "thumbnails",
-          count: thumbnailArtifactsCount,
-        },
-        {
-          name: "screenshots",
-          count: screenshotArtifactsCount,
-        },
-        {
-          name: "gallery",
-          count: screenshotArtifactsCount,
-        },
-      ]}
+      items={items}
       getActive={(name: string) => uploadsType === name}
+      variant="link"
     />
   );
 };
