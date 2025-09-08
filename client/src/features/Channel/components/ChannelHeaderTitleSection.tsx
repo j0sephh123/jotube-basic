@@ -24,7 +24,7 @@ export const ChannelHeaderTitleSection = ({
   const { title, id, playlist } = channelMetadata;
 
   return (
-    <div className="flex items-center gap-2">
+    <>
       <CustomLink to={`/channels/${makeYtChannelId(ytChannelId)}/saved`}>
         <h2 className="text-xl font-bold pr-4">{title}</h2>
       </CustomLink>
@@ -44,6 +44,6 @@ export const ChannelHeaderTitleSection = ({
           <CleanShortUploads channelId={channelId} />
         </>
       )}
-    </div>
+    </>
   );
 };

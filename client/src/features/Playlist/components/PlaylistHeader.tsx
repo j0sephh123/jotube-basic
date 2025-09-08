@@ -1,13 +1,15 @@
+/* eslint-disable boundaries/element-types */
 import { IdType, type PlaylistDetailsResponse } from "@shared/api";
-import { ArrowLeft } from "lucide-react";
 import { useScreenshotsForCarousel } from "@features/Screenshot";
 import { setGalleryModal } from "@features/Gallery";
-import { CustomLink } from "@shared/ui";
-import { useCustomNavigate, useTypedParams } from "@shared/hooks";
+import { Iterator } from "@shared/ui";
+import { useTypedParams } from "@shared/hooks";
 import { useGetUploadsWithStoryboards } from "@features/Storyboard";
 // eslint-disable-next-line import/no-internal-modules, boundaries/element-types
 import { SmallCard } from "@widgets/PlaylistDetails/ui/SmallCard";
 import { useViewThumbnails } from "@features/Thumbnails";
+import { GenericHeaderContainer } from "@widgets/GenericHeaderContainer";
+import { PlaylistHeaderTitleSection } from "./PlaylistHeaderTitleSection";
 
 type HeaderProps = {
   playlist: PlaylistDetailsResponse;
@@ -42,40 +44,16 @@ export function PlaylistHeader({
     }
   );
 
-  const navigate = useCustomNavigate();
-
   return (
-    <div className="flex items-center justify-between mb-6">
-      <div className="flex items-center gap-4">
-        <CustomLink
-          to={`/playlists`}
-          className="btn btn-ghost btn-sm btn-circle"
-        >
-          <ArrowLeft className="w-5 h-5" />
-        </CustomLink>
-        <div>
-          <h1 className="text-2xl font-bold">{name}</h1>
-          <p className="text-base-content/60">{channels.length} channels</p>
-        </div>
-      </div>
-      <div className="card bg-base-100 shadow-xl">
-        <div className="flex gap-4">
-          <SmallCard
-            hasDistinctBorder={uploadsType === "default"}
-            onClick={() => navigate(`/playlists/${id}/uploads/default`)}
-            title="Total Videos"
-            value={totalCounts.videoCount}
-            className="text-primary"
-            wrapperClassName="bg-primary/10"
-          />
-          <SmallCard
-            hasDistinctBorder={uploadsType === "saved"}
-            onClick={() => navigate(`/playlists/${id}/uploads/saved`)}
-            title="Saved Videos"
-            value={totalCounts.savedCount}
-            className="text-success"
-            wrapperClassName="bg-success/10"
-          />
+    <GenericHeaderContainer
+      topLeft={
+        <PlaylistHeaderTitleSection
+          name={name}
+          channelsLength={channels.length}
+        />
+      }
+      topRight={
+        <>
           <SmallCard
             onClick={() =>
               setGalleryModal({
@@ -113,8 +91,25 @@ export function PlaylistHeader({
             className="text-error"
             wrapperClassName="bg-error/10"
           />
-        </div>
-      </div>
-    </div>
+        </>
+      }
+      bottomLeft={null}
+      bottomRight={
+        <Iterator
+          baseLink={`/playlists/${id}/uploads`}
+          items={[
+            {
+              name: "default",
+              count: totalCounts.videoCount,
+            },
+            {
+              name: "saved",
+              count: totalCounts.savedCount,
+            },
+          ]}
+          getActive={(name: string) => uploadsType === name}
+        />
+      }
+    />
   );
 }

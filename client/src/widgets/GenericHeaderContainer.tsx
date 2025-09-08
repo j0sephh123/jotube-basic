@@ -13,13 +13,13 @@ export const GenericHeaderContainer = ({
     <div className="bg-base-200 rounded-lg px-6 pt-16 shadow-md">
       <div className="flex flex-col gap-4">
         <div className="flex justify-between items-center">
-          {topLeft}
-          {topRight}
+          <div className="flex items-center gap-2">{topLeft}</div>
+          <div className="flex items-center gap-2">{topRight}</div>
         </div>
 
         <div className="flex justify-between items-center">
-          {bottomLeft}
-          {bottomRight}
+          <div className="flex items-center gap-2">{bottomLeft}</div>
+          <div className="flex items-center gap-2">{bottomRight}</div>
         </div>
       </div>
     </div>

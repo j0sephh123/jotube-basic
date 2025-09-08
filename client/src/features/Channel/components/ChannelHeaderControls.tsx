@@ -14,11 +14,11 @@ export const ChannelHeaderControls = () => {
   };
 
   return (
-    <div className="flex items-center gap-2">
+    <>
       <Button onClick={toggleSort}>
         Sort:
         {sortOrder === "ASC" ? "↑ Oldest first" : "↓ Newest first"}
       </Button>
-    </div>
+    </>
   );
 };

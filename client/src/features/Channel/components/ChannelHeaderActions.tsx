@@ -3,7 +3,6 @@
 import ViewThumbnails from "../../../widgets/ChannelHeader/ui/ViewThumbnails";
 import { ViewScreenshots } from "@features/Thumbnails";
 import { ViewStoryboards } from "@widgets/Storyboard";
-import { FetchUploadsButton } from "@features/Upload";
 import { setGalleryModal } from "@features/Gallery/model/galleryModalStore";
 import { useChannelMetadataQuery } from "@entities/Channel/model/useChannelMetadata";
 
@@ -12,8 +11,7 @@ interface TopRightProps {
 }
 
 export const ChannelHeaderActions = ({ channelId }: TopRightProps) => {
-  const { data: channelMetadata, refetch: refetchMetadata } =
-    useChannelMetadataQuery(channelId);
+  const { data: channelMetadata } = useChannelMetadataQuery(channelId);
 
   if (!channelMetadata) return null;
 
@@ -21,8 +19,6 @@ export const ChannelHeaderActions = ({ channelId }: TopRightProps) => {
     screenshotArtifactsCount,
     id,
     thumbnailArtifactsCount,
-    videoCount,
-    fetchedUntilEnd,
     storyboardArtifactsCount,
   } = channelMetadata;
 
@@ -34,7 +30,7 @@ export const ChannelHeaderActions = ({ channelId }: TopRightProps) => {
   };
 
   return (
-    <div className="flex items-center gap-2">
+    <>
       <span className="text-sm font-medium text-base-content/70">actions</span>
       <ViewStoryboards
         channelId={channelId}
@@ -51,13 +47,6 @@ export const ChannelHeaderActions = ({ channelId }: TopRightProps) => {
       <button onClick={handleGalleryClick} className="btn btn-sm">
         Image Viewer ({screenshotArtifactsCount})
       </button>
-      {!fetchedUntilEnd && (
-        <FetchUploadsButton
-          channelId={channelId}
-          videoCount={videoCount}
-          onSuccess={refetchMetadata}
-        />
-      )}
-    </div>
+    </>
   );
 };
