@@ -1,7 +1,7 @@
-
-import { ChannelHeader } from "@widgets/ChannelHeader";
+/* eslint-disable import/no-internal-modules */
+import { ChannelHeader } from "@features/Channel/components/ChannelHeader";
 import { YtIdToId } from "@shared/hoc";   
-import { useAddToRecentlyViewed } from "@features/Channel";
+import { useAddToRecentlyViewed } from "@features/Channel/hooks";
 
 export const ChannelPageLayoutInner = ({
   channelId,

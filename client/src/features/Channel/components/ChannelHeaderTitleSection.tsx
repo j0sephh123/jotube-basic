@@ -11,7 +11,7 @@ interface TopLeftProps {
   channelId: number;
 }
 
-export const ChannelTitleSection = ({
+export const ChannelHeaderTitleSection = ({
   ytChannelId,
   channelId,
 }: TopLeftProps) => {

@@ -10,7 +10,7 @@ interface BottomRightProps {
   channelId: number;
 }
 
-export const ChannelUploadsLinks = ({
+export const ChannelHeaderUploadsLinks = ({
   ytChannelId,
   channelId,
 }: BottomRightProps) => {

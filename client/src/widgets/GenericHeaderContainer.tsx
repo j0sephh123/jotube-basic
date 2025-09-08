@@ -1,4 +1,4 @@
-export const ChannelHeader = ({
+export const GenericHeaderContainer = ({
   topLeft,
   topRight,
   bottomLeft,

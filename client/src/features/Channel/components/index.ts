@@ -1,4 +1,4 @@
-export { ChannelControls } from "./ChannelControls";
-export { ChannelTitleSection } from "./ChannelTitleSection";
-export { ChannelActions } from "./ChannelActions";
-export { ChannelUploadsLinks } from "./ChannelUploadsLinks";
+export { ChannelHeaderControls } from "./ChannelHeaderControls";
+export { ChannelHeaderTitleSection } from "./ChannelHeaderTitleSection";
+export { ChannelHeaderActions } from "./ChannelHeaderActions";
+export { ChannelHeaderUploadsLinks } from "./ChannelHeaderUploadsLinks";

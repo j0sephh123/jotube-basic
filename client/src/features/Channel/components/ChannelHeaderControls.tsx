@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import { Button } from "@shared/ui";
 
-export const ChannelControls = () => {
+export const ChannelHeaderControls = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const sortOrder = (searchParams.get("sort") || "DESC") as "ASC" | "DESC";
 

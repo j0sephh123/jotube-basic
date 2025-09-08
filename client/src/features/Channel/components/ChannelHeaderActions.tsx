@@ -11,7 +11,7 @@ interface TopRightProps {
   channelId: number;
 }
 
-export const ChannelActions = ({ channelId }: TopRightProps) => {
+export const ChannelHeaderActions = ({ channelId }: TopRightProps) => {
   const { data: channelMetadata, refetch: refetchMetadata } =
     useChannelMetadataQuery(channelId);
 
