@@ -1,14 +1,15 @@
 import React from "react";
 import { Eye, ListMusic, Edit, Plus } from "lucide-react";
 import { Tooltip } from "@shared/ui";
+import clsx from "clsx";
 
 type Label =
-  | "storyboard"
-  | "screenshot"
+  | "storyboards"
+  | "screenshots"
   | "gallery"
   | "default"
   | "saved"
-  | "thumbnail"
+  | "thumbnails"
   | "playlist";
 
 type Props = {
@@ -20,18 +21,19 @@ type Props = {
   playlistName?: string;
   playlistId?: number;
   size?: "sm" | "md";
+  isActive?: boolean;
 };
 
 function tone(label: Label) {
   switch (label) {
-    case "storyboard":
+    case "storyboards":
       return {
         text: "text-purple-400",
         hover: "hover:bg-purple-500/10",
         bg: "bg-purple-500/5",
         border: "border-purple-500/40",
       };
-    case "screenshot":
+    case "screenshots":
       return {
         text: "text-blue-400",
         hover: "hover:bg-blue-500/10",
@@ -52,7 +54,7 @@ function tone(label: Label) {
         bg: "bg-green-500/5",
         border: "border-green-500/40",
       };
-    case "thumbnail":
+    case "thumbnails":
       return {
         text: "text-amber-400",
         hover: "hover:bg-amber-500/10",
@@ -79,13 +81,13 @@ function tone(label: Label) {
 
 function getIcons(label: Label) {
   switch (label) {
-    case "storyboard":
+    case "storyboards":
       return { first: Eye, second: null };
-    case "screenshot":
+    case "screenshots":
       return { first: Eye, second: null };
     case "gallery":
       return { first: Eye, second: null };
-    case "thumbnail":
+    case "thumbnails":
       return { first: Eye, second: null };
     case "default":
       return { first: null, second: null };
@@ -107,6 +109,7 @@ export const DoubleAction: React.FC<Props> = ({
   playlistName,
   playlistId,
   size = "md",
+  isActive = false,
 }) => {
   const t = tone(label);
   const icons = getIcons(label);
@@ -124,18 +127,29 @@ export const DoubleAction: React.FC<Props> = ({
 
     return (
       <div
-        className={`inline-flex items-center overflow-hidden rounded-lg ${
-          isSmall ? "w-auto" : "w-full"
-        } bg-warning/5 border border-warning/40 ${className}`}
+        className={clsx(
+          "inline-flex items-center overflow-hidden rounded-lg border relative",
+          isSmall ? "w-auto" : "w-full",
+          isActive
+            ? "bg-warning/5 border-warning/40"
+            : "bg-warning/5 border-warning/40",
+          className
+        )}
       >
+        {isActive && (
+          <div className="absolute left-0 top-0 bottom-0 w-1 bg-warning rounded-l-lg" />
+        )}
         <div
-          className={`flex items-center gap-1 ${padding} flex-1 min-w-0 cursor-pointer hover:bg-warning/10 transition-colors rounded-l-lg`}
+          className={clsx(
+            "flex items-center gap-1 flex-1 min-w-0 cursor-pointer hover:bg-warning/10 transition-colors rounded-l-lg",
+            padding
+          )}
           onClick={hasPlaylist ? onNavigate : undefined}
         >
-          <ListMusic className={`${iconSize} shrink-0`} />
+          <ListMusic className={clsx(iconSize, "shrink-0")} />
           {hasPlaylist ? (
             <Tooltip content={playlistName} position="top" color="primary">
-              <span className={`truncate ${textSize}`}>{playlistName}</span>
+              <span className={clsx("truncate", textSize)}>{playlistName}</span>
             </Tooltip>
           ) : null}
         </div>
@@ -146,7 +160,10 @@ export const DoubleAction: React.FC<Props> = ({
             e.stopPropagation();
             onFirst?.();
           }}
-          className={`${padding} flex items-center justify-center hover:bg-warning/10 transition-colors rounded-r-lg border-l border-warning/40`}
+          className={clsx(
+            "flex items-center justify-center hover:bg-warning/10 transition-colors rounded-r-lg border-l border-warning/40",
+            padding
+          )}
         >
           {rightIcon && React.createElement(rightIcon, { className: iconSize })}
         </button>
@@ -156,21 +173,24 @@ export const DoubleAction: React.FC<Props> = ({
 
   return (
     <div
-      className={[
-        "inline-flex items-center overflow-visible rounded-lg w-full",
-        "border bg-gray-900/50 backdrop-blur-sm",
+      className={clsx(
+        "inline-flex items-center overflow-visible rounded-lg w-full border backdrop-blur-sm relative",
+        "bg-gray-900/50",
         t.border,
-        className,
-      ].join(" ")}
+        className
+      )}
     >
+      {isActive && (
+        <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 rounded-l-lg" />
+      )}
       <div
-        className={[
+        className={clsx(
           "px-3 py-2 text-[10px] font-medium uppercase tracking-wide text-center w-20 relative cursor-default hover:underline",
-          FirstIcon ? "border-r" : "",
+          FirstIcon && "border-r",
           "text-gray-300",
           t.bg,
-          t.border,
-        ].join(" ")}
+          t.border
+        )}
         onClick={onNavigate}
       >
         <span className="absolute -top-1 -left-1 text-[9px] bg-zinc-600 text-white rounded-full px-1 py-0 leading-tight min-w-4 text-center">
@@ -186,14 +206,13 @@ export const DoubleAction: React.FC<Props> = ({
             e.stopPropagation();
             onFirst();
           }}
-          className={[
-            "px-3 py-2 flex items-center justify-center w-14",
-            "text-gray-400 border-r border-gray-700 bg-gray-800/30 cursor-pointer",
-            "hover:bg-gray-600/40 hover:shadow-lg transition-all duration-200",
-            t.hover,
-          ].join(" ")}
+          className={clsx(
+            "px-3 py-2 flex items-center justify-center w-14 border-r border-gray-700 cursor-pointer hover:bg-gray-600/40 hover:shadow-lg transition-all duration-200",
+            "text-gray-400 bg-gray-800/30",
+            t.hover
+          )}
         >
-          <FirstIcon className={["w-4 h-4", t.text].join(" ")} />
+          <FirstIcon className={clsx("w-4 h-4", t.text)} />
         </button>
       )}
     </div>

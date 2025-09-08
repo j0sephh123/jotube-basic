@@ -29,6 +29,12 @@ type VideoDetails = `/channels/${YtChannelId}/videos/${YtVideoId}`;
 type SingleChannelThumbnails = `/channels/${YtChannelId}/thumbnails`;
 type SingleChannelScreenshots = `/channels/${YtChannelId}/screenshots`;
 type RecentlyViewed = `/recently-viewed`;
+type PlaylistThumbnails = `/playlists/${number}/thumbnails`;
+type PlaylistGallery = `/playlists/${number}/gallery`;
+type PlaylistStoryboards = `/playlists/${number}/storyboards`;
+type PlaylistScreenshots = `/playlists/${number}/screenshots`;
+type ChannelStoryboards = `/channels/${YtChannelId}/storyboards`;
+type ChannelSaved = `/channels/${YtChannelId}/saved`;
 
 export type To =
   | Playlists
@@ -53,7 +59,13 @@ export type To =
   | VideoDetails
   | SingleChannelThumbnails
   | SingleChannelScreenshots
-  | RecentlyViewed;
+  | RecentlyViewed
+  | PlaylistThumbnails
+  | PlaylistGallery
+  | PlaylistStoryboards
+  | PlaylistScreenshots
+  | ChannelStoryboards
+  | ChannelSaved;
 
 export type UploadsType =
   | "default"

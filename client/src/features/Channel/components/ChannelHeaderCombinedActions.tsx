@@ -6,7 +6,7 @@ import { Iterator } from "@shared/ui";
 import { useViewThumbnails } from "@features/Thumbnails";
 import { IdType } from "@shared/api";
 import { useScreenshotsForCarousel } from "@features/Screenshot";
-import { makeYtChannelId, type To } from "@shared/types";
+import { makeYtChannelId } from "@shared/types";
 import { useCustomNavigate } from "@shared/hooks";
 
 interface CombinedActionsProps {
@@ -35,7 +35,7 @@ export const ChannelHeaderCombinedActions = ({
   } = channelMetadata;
 
   const handleStoryboardNavigate = () => {
-    navigate(`/channels/${makeYtChannelId(ytChannelId)}/storyboards` as To);
+    navigate(`/channels/${makeYtChannelId(ytChannelId)}/storyboards`  );
   };
 
   const handleStoryboardAction = () => {
@@ -43,7 +43,7 @@ export const ChannelHeaderCombinedActions = ({
   };
 
   const handleScreenshotNavigate = () => {
-    navigate(`/channels/${makeYtChannelId(ytChannelId)}/screenshots` as To);
+    navigate(`/channels/${makeYtChannelId(ytChannelId)}/screenshots`  );
   };
 
   const handleScreenshotAction = () => {
@@ -51,7 +51,7 @@ export const ChannelHeaderCombinedActions = ({
   };
 
   const handleGalleryNavigate = () => {
-    navigate(`/channels/${makeYtChannelId(ytChannelId)}/gallery` as To);
+    navigate(`/channels/${makeYtChannelId(ytChannelId)}/gallery`  );
   };
 
   const handleGalleryAction = () => {
@@ -62,7 +62,7 @@ export const ChannelHeaderCombinedActions = ({
   };
 
   const handleThumbnailNavigate = () => {
-    navigate(`/channels/${makeYtChannelId(ytChannelId)}/thumbnails` as To);
+      navigate(`/channels/${makeYtChannelId(ytChannelId)}/thumbnails`  );
   };
 
   const handleThumbnailAction = () => {
@@ -73,28 +73,28 @@ export const ChannelHeaderCombinedActions = ({
   };
 
   const handleDefaultNavigate = () => {
-    navigate(`/channels/${makeYtChannelId(ytChannelId)}` as To);
+    navigate(`/channels/${makeYtChannelId(ytChannelId)}`  );
   };
 
   const handleSavedNavigate = () => {
-    navigate(`/channels/${makeYtChannelId(ytChannelId)}/saved` as To);
+    navigate(`/channels/${makeYtChannelId(ytChannelId)}/saved`  );
   };
 
   const items = [
-    { name: "storyboard", count: storyboardArtifactsCount },
-    { name: "screenshot", count: screenshotArtifactsCount },
+    { name: "storyboards", count: storyboardArtifactsCount },
+    { name: "screenshots", count: screenshotArtifactsCount },
     { name: "gallery", count: screenshotArtifactsCount },
-    { name: "thumbnail", count: thumbnailArtifactsCount },
+    { name: "thumbnails", count: thumbnailArtifactsCount },
     { name: "default", count: videoArtifactsCount },
     { name: "saved", count: savedArtifactsCount },
   ];
 
   const actions = {
-    storyboard: {
+    storyboards: {
       onNavigate: handleStoryboardNavigate,
       onFirst: handleStoryboardAction,
     },
-    screenshot: {
+    screenshots: {
       onNavigate: handleScreenshotNavigate,
       onFirst: handleScreenshotAction,
     },
@@ -102,7 +102,7 @@ export const ChannelHeaderCombinedActions = ({
       onNavigate: handleGalleryNavigate,
       onFirst: handleGalleryAction,
     },
-    thumbnail: {
+    thumbnails: {
       onNavigate: handleThumbnailNavigate,
       onFirst: handleThumbnailAction,
     },

@@ -8,7 +8,6 @@ import { useViewThumbnails } from "@features/Thumbnails";
 import { GenericHeaderContainer } from "@widgets/GenericHeaderContainer";
 import { PlaylistHeaderTitleSection } from "./PlaylistHeaderTitleSection";
 import { useCustomNavigate } from "@shared/hooks";
-import { type To } from "@shared/types";
 
 type HeaderProps = {
   playlist: PlaylistDetailsResponse;
@@ -40,7 +39,7 @@ export function PlaylistHeader({
   );
 
   const handleStoryboardNavigate = () => {
-    navigate(`/playlists/${id}/storyboards` as To);
+    navigate(`/playlists/${id}/storyboards`);
   };
 
   const handleStoryboardAction = () => {
@@ -48,7 +47,7 @@ export function PlaylistHeader({
   };
 
   const handleScreenshotNavigate = () => {
-    navigate(`/playlists/${id}/screenshots` as To);
+    navigate(`/playlists/${id}/screenshots`);
   };
 
   const handleScreenshotAction = () => {
@@ -56,7 +55,7 @@ export function PlaylistHeader({
   };
 
   const handleGalleryNavigate = () => {
-    navigate(`/playlists/${id}/gallery` as To);
+    navigate(`/playlists/${id}/gallery`);
   };
 
   const handleGalleryAction = () => {
@@ -67,7 +66,7 @@ export function PlaylistHeader({
   };
 
   const handleThumbnailNavigate = () => {
-    navigate(`/playlists/${id}/thumbnails` as To);
+    navigate(`/playlists/${id}/thumbnails`);
   };
 
   const handleThumbnailAction = () => {
@@ -78,28 +77,28 @@ export function PlaylistHeader({
   };
 
   const handleDefaultNavigate = () => {
-    navigate(`/playlists/${id}/uploads/default` as To);
+    navigate(`/playlists/${id}/uploads/default`);
   };
 
   const handleSavedNavigate = () => {
-    navigate(`/playlists/${id}/uploads/saved` as To);
+    navigate(`/playlists/${id}/uploads/saved`);
   };
 
   const items = [
-    { name: "storyboard", count: totalCounts.storyboardCount },
-    { name: "screenshot", count: totalCounts.screenshotCount },
+    { name: "storyboards", count: totalCounts.storyboardCount },
+    { name: "screenshots", count: totalCounts.screenshotCount },
     { name: "gallery", count: totalCounts.screenshotCount },
-    { name: "thumbnail", count: totalCounts.thumbnailCount },
+    { name: "thumbnails", count: totalCounts.thumbnailCount },
     { name: "default", count: totalCounts.videoCount },
     { name: "saved", count: totalCounts.savedCount },
   ];
 
   const actions = {
-    storyboard: {
+    storyboards: {
       onNavigate: handleStoryboardNavigate,
       onFirst: handleStoryboardAction,
     },
-    screenshot: {
+    screenshots: {
       onNavigate: handleScreenshotNavigate,
       onFirst: handleScreenshotAction,
     },
@@ -107,7 +106,7 @@ export function PlaylistHeader({
       onNavigate: handleGalleryNavigate,
       onFirst: handleGalleryAction,
     },
-    thumbnail: {
+    thumbnails: {
       onNavigate: handleThumbnailNavigate,
       onFirst: handleThumbnailAction,
     },

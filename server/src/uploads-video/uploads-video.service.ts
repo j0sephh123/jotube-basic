@@ -71,6 +71,12 @@ export class UploadsVideoService {
         };
       }
 
+      if (type === 'storyboards') {
+        return {
+          artifact: ArtifactType.STORYBOARD,
+        };
+      }
+
       throw new Error(
         'Invalid type, allowed types are: default, saved, thumbnails, screenshots',
       );

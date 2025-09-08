@@ -5,7 +5,7 @@ import { Button, CustomLink } from "@shared/ui";
 import useActions from "./useActions";
 import VideoProcessingInfoWrapper from "./Wrapper";
 import useGroupByChannel from "./useGroupByChannel";
-import { type To } from "@shared/types";
+import { makeYtChannelId } from "@shared/types";
 
 export default function VideoProcessingInfo() {
   const { data: queueData = [] } = useQueue();
@@ -48,7 +48,7 @@ export default function VideoProcessingInfo() {
               <div className="bg-zinc-800 px-3 py-2">
                 <div className="flex justify-between items-center">
                   <CustomLink
-                    to={`/channels/${channelId}/saved` as To}
+                    to={`/channels/${makeYtChannelId(channelId)}/saved`}
                     className="text-blue-400 hover:underline font-medium truncate max-w-[220px]"
                   >
                     {items[0]?.channelTitle}

@@ -1,12 +1,13 @@
+import { useTypedParams } from "@shared/hooks";
 import { DoubleAction } from "../DoubleAction";
 
 type Label =
-  | "storyboard"
-  | "screenshot"
+  | "storyboards"
+  | "screenshots"
   | "gallery"
   | "default"
   | "saved"
-  | "thumbnail";
+  | "thumbnails";
 
 export function Iterator({
   items,
@@ -15,6 +16,8 @@ export function Iterator({
   items: { name: string; count: number }[];
   actions: Record<string, { onNavigate: () => void; onFirst?: () => void }>;
 }) {
+  const uploadType = useTypedParams("uploadsType");
+
   return (
     <div className="grid grid-cols-3 gap-2">
       {items.map((item) => {
@@ -28,6 +31,7 @@ export function Iterator({
             count={item.count}
             onNavigate={action.onNavigate}
             onFirst={action.onFirst}
+            isActive={uploadType === item.name}
           />
         );
       })}
