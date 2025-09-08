@@ -2,8 +2,6 @@ import { Resolver, Query, Args } from '@nestjs/graphql';
 import { ThumbnailsApiService } from './api/thumbnails-api.service';
 import { UploadsWithThumbnailsInput } from './dtos/uploads-with-thumbnails.input';
 import { UploadsWithThumbnailsResponse } from './dtos/uploads-with-thumbnails.response';
-import { GetScreenshotsInput } from './dtos/get-screenshots.input';
-import { GetScreenshotsResponse } from './dtos/get-screenshots.response';
 import { ThumbnailByVideoIdResponse } from './dtos/thumbnail.response';
 import { EpisodesWithThumbnailsInput } from './dtos/episodes-with-thumbnails.input';
 import { EpisodesWithThumbnailsResponse } from './dtos/episodes-with-thumbnails.response';
@@ -11,13 +9,6 @@ import { EpisodesWithThumbnailsResponse } from './dtos/episodes-with-thumbnails.
 @Resolver()
 export class ThumbnailsResolver {
   constructor(private readonly thumbnailsApiService: ThumbnailsApiService) {}
-
-  @Query(() => [GetScreenshotsResponse])
-  async getScreenshots(
-    @Args('input') input: GetScreenshotsInput,
-  ): Promise<GetScreenshotsResponse[]> {
-    return this.thumbnailsApiService.getScreenshots(input);
-  }
 
   @Query(() => [UploadsWithThumbnailsResponse])
   async uploadsWithThumbnails(

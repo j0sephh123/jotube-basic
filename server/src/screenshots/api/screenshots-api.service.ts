@@ -1,6 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
 import { ScreenshotsManagerService } from 'src/screenshots/manager/screenshots-manager.service';
+import { GetScreenshotsInput } from 'src/thumbnails/dtos/get-screenshots.input';
+
+type Item = {
+  id: number;
+  second: number;
+  ytChannelId: string;
+  ytVideoId: string;
+};
 
 @Injectable()
 export class ScreenshotsApiService {
@@ -8,6 +16,51 @@ export class ScreenshotsApiService {
     private readonly prismaService: PrismaService,
     private readonly screenshotsManagerService: ScreenshotsManagerService,
   ) {}
+
+  public async getScreenshots({ channelIds }: GetScreenshotsInput) {
+    if (channelIds.length === 0) {
+      return this.getAllChannelsScreenshots();
+    }
+
+    const screenshotsPromises = channelIds.map((channelId) =>
+      this.getScreenshotsForChannel(channelId),
+    );
+
+    const channelScreenshots = await Promise.all(screenshotsPromises);
+
+    return channelScreenshots.flat();
+  }
+
+  private async getScreenshotsForChannel(channelId: number) {
+    const randomScreenshots = await this.prismaService.$queryRaw<Item[]>`
+          SELECT s.* FROM Screenshot s
+          INNER JOIN Channel c ON s.ytChannelId = c.ytId
+          WHERE c.id = ${channelId}
+          ORDER BY RAND() 
+          -- LIMIT 50
+        `;
+
+    return this.mapToScreenshots(randomScreenshots);
+  }
+
+  private async getAllChannelsScreenshots() {
+    const randomScreenshots = await this.prismaService.$queryRaw<Item[]>`
+      SELECT * FROM Screenshot 
+      ORDER BY RAND() 
+      -- LIMIT 50
+    `;
+
+    return this.mapToScreenshots(randomScreenshots);
+  }
+
+  private mapToScreenshots(screenshots: Item[]) {
+    return screenshots.map(({ id, second, ytChannelId, ytVideoId }) => ({
+      ytVideoId,
+      id,
+      second,
+      src: `http://localhost:3003/images/${ytChannelId}/${ytVideoId}/saved_screenshots/${ytVideoId}-${second}.png`,
+    }));
+  }
 
   async screenshots() {
     const results = await this.prismaService.$queryRaw<

@@ -540,7 +540,6 @@ export type Query = {
   __typename?: 'Query';
   channelForPlaylist: ChannelForPlaylistResponse;
   channelMetadata: ChannelMetadataResponse;
-  channelScreenshots: Array<GetScreenshotsResponse>;
   episodesWithThumbnails: Array<EpisodesWithThumbnailsResponse>;
   fetchDashboard: ChannelsDashboardResponse;
   fetchVideosDashboard: VideosDashboardResponse;
@@ -574,11 +573,6 @@ export type QueryChannelForPlaylistArgs = {
 
 export type QueryChannelMetadataArgs = {
   channelMetadataInput: ChannelMetadataInput;
-};
-
-
-export type QueryChannelScreenshotsArgs = {
-  input: GetScreenshotsInput;
 };
 
 
@@ -970,13 +964,6 @@ export type GetChannelMetadataQueryVariables = Exact<{
 
 
 export type GetChannelMetadataQuery = { __typename?: 'Query', channelMetadata: { __typename?: 'ChannelMetadataResponse', id: number, title: string, fetchedUntilEnd: boolean, videoCount: number, lastSyncedAt?: string | null, videoArtifactsCount: number, savedArtifactsCount: number, thumbnailArtifactsCount: number, screenshotArtifactsCount: number, storyboardArtifactsCount: number, playlist?: { __typename?: 'PlaylistInfo', id: number, name: string } | null } };
-
-export type GetChannelScreenshotsQueryVariables = Exact<{
-  input: GetScreenshotsInput;
-}>;
-
-
-export type GetChannelScreenshotsQuery = { __typename?: 'Query', channelScreenshots: Array<{ __typename?: 'GetScreenshotsResponse', ytVideoId: string, id: number, second: number, src: string }> };
 
 export type ChannelFragmentFragment = { __typename?: 'PlaylistChannelResponse', id: number, ytId: string };
 
@@ -1428,49 +1415,6 @@ export type GetChannelMetadataQueryHookResult = ReturnType<typeof useGetChannelM
 export type GetChannelMetadataLazyQueryHookResult = ReturnType<typeof useGetChannelMetadataLazyQuery>;
 export type GetChannelMetadataSuspenseQueryHookResult = ReturnType<typeof useGetChannelMetadataSuspenseQuery>;
 export type GetChannelMetadataQueryResult = Apollo.QueryResult<GetChannelMetadataQuery, GetChannelMetadataQueryVariables>;
-export const GetChannelScreenshotsDocument = gql`
-    query GetChannelScreenshots($input: GetScreenshotsInput!) {
-  channelScreenshots(input: $input) {
-    ytVideoId
-    id
-    second
-    src
-  }
-}
-    `;
-
-/**
- * __useGetChannelScreenshotsQuery__
- *
- * To run a query within a React component, call `useGetChannelScreenshotsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetChannelScreenshotsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetChannelScreenshotsQuery({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useGetChannelScreenshotsQuery(baseOptions: Apollo.QueryHookOptions<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables> & ({ variables: GetChannelScreenshotsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>(GetChannelScreenshotsDocument, options);
-      }
-export function useGetChannelScreenshotsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>(GetChannelScreenshotsDocument, options);
-        }
-export function useGetChannelScreenshotsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>(GetChannelScreenshotsDocument, options);
-        }
-export type GetChannelScreenshotsQueryHookResult = ReturnType<typeof useGetChannelScreenshotsQuery>;
-export type GetChannelScreenshotsLazyQueryHookResult = ReturnType<typeof useGetChannelScreenshotsLazyQuery>;
-export type GetChannelScreenshotsSuspenseQueryHookResult = ReturnType<typeof useGetChannelScreenshotsSuspenseQuery>;
-export type GetChannelScreenshotsQueryResult = Apollo.QueryResult<GetChannelScreenshotsQuery, GetChannelScreenshotsQueryVariables>;
 export const CreatePlaylistDocument = gql`
     mutation CreatePlaylist($createPlaylistInput: CreatePlaylistInput!) {
   createPlaylist(createPlaylistInput: $createPlaylistInput) {
