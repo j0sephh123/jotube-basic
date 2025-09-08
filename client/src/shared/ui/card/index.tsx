@@ -74,14 +74,16 @@ function Card({
         </div>
       </div>
       <Card.Content>
-        <Card.Title title={title} to={to} />
+        <div className="flex items-center justify-between">
+          <Card.Title title={title} to={to} />
+          {playlistButtonSlot}
+        </div>
         {secondRow}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             {actionButtonSlot}
             {downloadButtonSlot}
             {deleteButtonSlot}
-            {playlistButtonSlot}
             {galleryButtonSlot}
           </div>
         </div>

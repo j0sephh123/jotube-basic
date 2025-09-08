@@ -1,5 +1,6 @@
 import React from "react";
-import { Eye } from "lucide-react";
+import { Eye, ListMusic, Edit, Plus } from "lucide-react";
+import { Tooltip } from "@shared/ui";
 
 type Label =
   | "storyboard"
@@ -7,7 +8,8 @@ type Label =
   | "gallery"
   | "default"
   | "saved"
-  | "thumbnail";
+  | "thumbnail"
+  | "playlist";
 
 type Props = {
   label: Label;
@@ -15,6 +17,9 @@ type Props = {
   onNavigate: () => void;
   onFirst?: () => void;
   className?: string;
+  playlistName?: string;
+  playlistId?: number;
+  size?: "sm" | "md";
 };
 
 function tone(label: Label) {
@@ -62,6 +67,13 @@ function tone(label: Label) {
         bg: "bg-gray-500/5",
         border: "border-gray-500/40",
       };
+    case "playlist":
+      return {
+        text: "text-warning",
+        hover: "hover:bg-warning/10",
+        bg: "bg-warning/5",
+        border: "border-warning/40",
+      };
   }
 }
 
@@ -79,6 +91,8 @@ function getIcons(label: Label) {
       return { first: null, second: null };
     case "saved":
       return { first: null, second: null };
+    case "playlist":
+      return { first: Edit, second: Plus };
     default:
       return { first: null, second: null };
   }
@@ -90,10 +104,55 @@ export const DoubleAction: React.FC<Props> = ({
   onNavigate,
   onFirst,
   className = "",
+  playlistName,
+  playlistId,
+  size = "md",
 }) => {
   const t = tone(label);
   const icons = getIcons(label);
   const FirstIcon = icons.first;
+  const SecondIcon = icons.second;
+
+  if (label === "playlist") {
+    const hasPlaylist = playlistName && playlistId;
+    const rightIcon = hasPlaylist ? FirstIcon : SecondIcon;
+
+    const isSmall = size === "sm";
+    const iconSize = isSmall ? "w-3 h-3" : "w-4 h-4";
+    const padding = isSmall ? "px-2 py-1" : "px-3 py-2";
+    const textSize = isSmall ? "text-xs" : "text-sm";
+
+    return (
+      <div
+        className={`inline-flex items-center overflow-hidden rounded-lg ${
+          isSmall ? "w-auto" : "w-full"
+        } bg-warning/5 border border-warning/40 ${className}`}
+      >
+        <div
+          className={`flex items-center gap-1 ${padding} flex-1 min-w-0 cursor-pointer hover:bg-warning/10 transition-colors rounded-l-lg`}
+          onClick={hasPlaylist ? onNavigate : undefined}
+        >
+          <ListMusic className={`${iconSize} shrink-0`} />
+          {hasPlaylist ? (
+            <Tooltip content={playlistName} position="top" color="primary">
+              <span className={`truncate ${textSize}`}>{playlistName}</span>
+            </Tooltip>
+          ) : null}
+        </div>
+
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onFirst?.();
+          }}
+          className={`${padding} flex items-center justify-center hover:bg-warning/10 transition-colors rounded-r-lg border-l border-warning/40`}
+        >
+          {rightIcon && React.createElement(rightIcon, { className: iconSize })}
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div

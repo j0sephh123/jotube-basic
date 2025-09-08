@@ -1,30 +1,45 @@
 import { setPlaylistModal } from "../model";
-import { ListMusic } from "lucide-react";
+import { DoubleAction } from "@shared/ui";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   id: number;
-  playlistId: number;
-  playlistName: string;
+  playlistId?: number;
+  playlistName?: string;
+  size?: "sm" | "md";
 };
 
-export function PlaylistControl({ id, playlistId, playlistName }: Props) {
+export function PlaylistControl({
+  id,
+  playlistId,
+  playlistName,
+  size = "md",
+}: Props) {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    if (playlistId) {
+      navigate(`/playlists/${playlistId}`);
+    }
+  };
+
+  const handleEdit = () => {
+    setPlaylistModal({
+      type: "modifyPlaylistForChannel",
+      channelId: id,
+      playlistId: playlistId ?? 0,
+    });
+  };
+
   return (
-    <div
-      className="flex items-center gap-2 text-sm cursor-pointer"
-      onClick={() =>
-        setPlaylistModal({
-          type: "modifyPlaylistForChannel",
-          channelId: id,
-          playlistId: playlistId ?? 0,
-        })
-      }
-    >
-      <ListMusic className="w-4 h-4" />
-      {playlistName ? (
-        <span className="truncate">{playlistName}</span>
-      ) : (
-        <span className="truncate">No playlist</span>
-      )}
-    </div>
+    <DoubleAction
+      label="playlist"
+      count={0}
+      onNavigate={handleNavigate}
+      onFirst={handleEdit}
+      playlistName={playlistName}
+      playlistId={playlistId}
+      size={size}
+    />
   );
 }

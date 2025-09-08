@@ -151,13 +151,12 @@ export default function ChannelDashboardCard({
         </Button>
       }
       playlistButtonSlot={
-        playlist ? (
-          <PlaylistControl
-            id={id}
-            playlistId={playlist.id}
-            playlistName={playlist.name}
-          />
-        ) : null
+        <PlaylistControl
+          id={id}
+          playlistId={playlist?.id}
+          playlistName={playlist?.name}
+          size="sm"
+        />
       }
     />
   );
