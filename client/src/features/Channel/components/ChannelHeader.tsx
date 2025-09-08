@@ -3,8 +3,7 @@
 import { GenericHeaderContainer } from "@widgets/GenericHeaderContainer";
 import {
   ChannelHeaderTitleSection,
-  ChannelHeaderActions,
-  ChannelHeaderUploadsLinks,
+  ChannelHeaderCombinedActions,
   ChannelHeaderControls,
 } from "@features/Channel/components";
 
@@ -23,14 +22,13 @@ export const ChannelHeader = ({
           channelId={channelId}
         />
       }
-      topRight={<ChannelHeaderActions channelId={channelId} />}
-      bottomLeft={<ChannelHeaderControls />}
-      bottomRight={
-        <ChannelHeaderUploadsLinks
+      topRight={
+        <ChannelHeaderCombinedActions
           ytChannelId={ytChannelId}
           channelId={channelId}
         />
       }
+      bottomLeft={<ChannelHeaderControls />}
     />
   );
 };

@@ -1,52 +1,36 @@
-import { type To } from "@shared/types";
-import clsx from "clsx";
-import { useCustomNavigate } from "@shared/hooks";
-import { match } from "ts-pattern";
+import { DoubleAction } from "../DoubleAction";
+
+type Label =
+  | "storyboard"
+  | "screenshot"
+  | "gallery"
+  | "default"
+  | "saved"
+  | "thumbnail";
 
 export function Iterator({
   items,
-  onClick,
-  ...props
+  actions,
 }: {
   items: { name: string; count: number }[];
-  onClick?: (name: string) => void;
-} & (
-  | { variant: "link"; baseLink: string; getActive: (name: string) => boolean }
-  | { variant: "click" }
-)) {
-  const navigate = useCustomNavigate();
-
+  actions: Record<string, { onNavigate: () => void; onFirst?: () => void }>;
+}) {
   return (
-    <>
-      <span className="text-sm font-medium text-base-content/70">uploads</span>
-      <div className="tabs tabs-boxed bg-base-100">
-        {items.map((item) => {
-          return (
-            <button
-              onClick={() => {
-                match(props)
-                  .with({ variant: "click" }, () => {
-                    onClick?.(item.name);
-                  })
-                  .with({ variant: "link" }, ({ baseLink }) => {
-                    navigate(`${baseLink}/${item.name}` as To);
-                  })
-                  .run();
-              }}
-              className={clsx("tab tab-sm", {
-                "tab-active bg-primary text-primary-content": match(props)
-                  .with({ variant: "link" }, ({ getActive }) =>
-                    getActive(item.name)
-                  )
-                  .with({ variant: "click" }, () => false)
-                  .run(),
-              })}
-            >
-              {item.name} {item.count}
-            </button>
-          );
-        })}
-      </div>
-    </>
+    <div className="grid grid-cols-3 gap-2">
+      {items.map((item) => {
+        const action = actions[item.name];
+        if (!action) return null;
+
+        return (
+          <DoubleAction
+            key={item.name}
+            label={item.name as Label}
+            count={item.count}
+            onNavigate={action.onNavigate}
+            onFirst={action.onFirst}
+          />
+        );
+      })}
+    </div>
   );
 }

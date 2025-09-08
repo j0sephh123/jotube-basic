@@ -1,15 +1,14 @@
-/* eslint-disable boundaries/element-types */
 import { IdType, type PlaylistDetailsResponse } from "@shared/api";
 import { useScreenshotsForCarousel } from "@features/Screenshot";
 import { setGalleryModal } from "@features/Gallery";
 import { Iterator } from "@shared/ui";
-import { useTypedParams } from "@shared/hooks";
 import { useGetUploadsWithStoryboards } from "@features/Storyboard";
-// eslint-disable-next-line import/no-internal-modules, boundaries/element-types
 import { useViewThumbnails } from "@features/Thumbnails";
+// eslint-disable-next-line boundaries/element-types
 import { GenericHeaderContainer } from "@widgets/GenericHeaderContainer";
 import { PlaylistHeaderTitleSection } from "./PlaylistHeaderTitleSection";
-import { match } from "ts-pattern";
+import { useCustomNavigate } from "@shared/hooks";
+import { type To } from "@shared/types";
 
 type HeaderProps = {
   playlist: PlaylistDetailsResponse;
@@ -21,8 +20,7 @@ export function PlaylistHeader({
   const viewScreenshots = useScreenshotsForCarousel();
   const getStoryboards = useGetUploadsWithStoryboards().mutateAsync;
   const viewThumbnails = useViewThumbnails();
-
-  const uploadsType = useTypedParams("uploadsType");
+  const navigate = useCustomNavigate();
 
   const totalCounts = channels.reduce(
     (acc, channel) => ({
@@ -41,6 +39,86 @@ export function PlaylistHeader({
     }
   );
 
+  const handleStoryboardNavigate = () => {
+    navigate(`/playlists/${id}/storyboards` as To);
+  };
+
+  const handleStoryboardAction = () => {
+    getStoryboards(channels.map((channel) => channel.id));
+  };
+
+  const handleScreenshotNavigate = () => {
+    navigate(`/playlists/${id}/screenshots` as To);
+  };
+
+  const handleScreenshotAction = () => {
+    viewScreenshots(channels.map((channel) => channel.id));
+  };
+
+  const handleGalleryNavigate = () => {
+    navigate(`/playlists/${id}/gallery` as To);
+  };
+
+  const handleGalleryAction = () => {
+    setGalleryModal({
+      ytVideoId: "",
+      channelIds: channels.map((channel) => channel.id),
+    });
+  };
+
+  const handleThumbnailNavigate = () => {
+    navigate(`/playlists/${id}/thumbnails` as To);
+  };
+
+  const handleThumbnailAction = () => {
+    viewThumbnails({
+      idType: IdType.Playlist,
+      playlistId: id,
+    });
+  };
+
+  const handleDefaultNavigate = () => {
+    navigate(`/playlists/${id}/uploads/default` as To);
+  };
+
+  const handleSavedNavigate = () => {
+    navigate(`/playlists/${id}/uploads/saved` as To);
+  };
+
+  const items = [
+    { name: "storyboard", count: totalCounts.storyboardCount },
+    { name: "screenshot", count: totalCounts.screenshotCount },
+    { name: "gallery", count: totalCounts.screenshotCount },
+    { name: "thumbnail", count: totalCounts.thumbnailCount },
+    { name: "default", count: totalCounts.videoCount },
+    { name: "saved", count: totalCounts.savedCount },
+  ];
+
+  const actions = {
+    storyboard: {
+      onNavigate: handleStoryboardNavigate,
+      onFirst: handleStoryboardAction,
+    },
+    screenshot: {
+      onNavigate: handleScreenshotNavigate,
+      onFirst: handleScreenshotAction,
+    },
+    gallery: {
+      onNavigate: handleGalleryNavigate,
+      onFirst: handleGalleryAction,
+    },
+    thumbnail: {
+      onNavigate: handleThumbnailNavigate,
+      onFirst: handleThumbnailAction,
+    },
+    default: {
+      onNavigate: handleDefaultNavigate,
+    },
+    saved: {
+      onNavigate: handleSavedNavigate,
+    },
+  };
+
   return (
     <GenericHeaderContainer
       topLeft={
@@ -49,68 +127,7 @@ export function PlaylistHeader({
           channelsLength={channels.length}
         />
       }
-      topRight={
-        <Iterator
-          variant="click"
-          items={[
-            {
-              name: "gallery",
-              count: totalCounts.screenshotCount,
-            },
-            {
-              name: "storyboards",
-              count: totalCounts.storyboardCount,
-            },
-            {
-              name: "thumbnails",
-              count: totalCounts.thumbnailCount,
-            },
-            {
-              name: "screenshots",
-              count: totalCounts.screenshotCount,
-            },
-          ]}
-          onClick={(name) => {
-            match(name)
-              .with("storyboards", () => {
-                getStoryboards(channels.map((channel) => channel.id));
-              })
-              .with("thumbnails", () => {
-                viewThumbnails({
-                  idType: IdType.Playlist,
-                  playlistId: id,
-                });
-              })
-              .with("screenshots", () => {
-                viewScreenshots(channels.map((channel) => channel.id));
-              })
-              .with("gallery", () => {
-                setGalleryModal({
-                  ytVideoId: "",
-                  channelIds: channels.map((channel) => channel.id),
-                });
-              })
-              .run();
-          }}
-        />
-      }
-      bottomRight={
-        <Iterator
-          baseLink={`/playlists/${id}/uploads`}
-          items={[
-            {
-              name: "default",
-              count: totalCounts.videoCount,
-            },
-            {
-              name: "saved",
-              count: totalCounts.savedCount,
-            },
-          ]}
-          getActive={(name: string) => uploadsType === name}
-          variant="link"
-        />
-      }
+      topRight={<Iterator items={items} actions={actions} />}
     />
   );
 }
