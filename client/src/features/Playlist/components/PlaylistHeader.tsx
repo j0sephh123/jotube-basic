@@ -6,10 +6,10 @@ import { Iterator } from "@shared/ui";
 import { useTypedParams } from "@shared/hooks";
 import { useGetUploadsWithStoryboards } from "@features/Storyboard";
 // eslint-disable-next-line import/no-internal-modules, boundaries/element-types
-import { SmallCard } from "@widgets/PlaylistDetails/ui/SmallCard";
 import { useViewThumbnails } from "@features/Thumbnails";
 import { GenericHeaderContainer } from "@widgets/GenericHeaderContainer";
 import { PlaylistHeaderTitleSection } from "./PlaylistHeaderTitleSection";
+import { match } from "ts-pattern";
 
 type HeaderProps = {
   playlist: PlaylistDetailsResponse;
@@ -18,9 +18,9 @@ type HeaderProps = {
 export function PlaylistHeader({
   playlist: { id, name, channels },
 }: HeaderProps) {
-  const handleGetScreenshots = useScreenshotsForCarousel();
-  const handleGetStoryboards = useGetUploadsWithStoryboards().mutateAsync;
-  const handleGetThumbnails = useViewThumbnails();
+  const viewScreenshots = useScreenshotsForCarousel();
+  const getStoryboards = useGetUploadsWithStoryboards().mutateAsync;
+  const viewThumbnails = useViewThumbnails();
 
   const uploadsType = useTypedParams("uploadsType");
 
@@ -50,52 +50,50 @@ export function PlaylistHeader({
         />
       }
       topRight={
-        <>
-          <SmallCard
-            onClick={() =>
-              setGalleryModal({
-                ytVideoId: "",
-                channelIds: channels.map((channel) => channel.id),
+        <Iterator
+          variant="click"
+          items={[
+            {
+              name: "gallery",
+              count: totalCounts.screenshotCount,
+            },
+            {
+              name: "storyboards",
+              count: totalCounts.storyboardCount,
+            },
+            {
+              name: "thumbnails",
+              count: totalCounts.thumbnailCount,
+            },
+            {
+              name: "screenshots",
+              count: totalCounts.screenshotCount,
+            },
+          ]}
+          onClick={(name) => {
+            match(name)
+              .with("storyboards", () => {
+                getStoryboards(channels.map((channel) => channel.id));
               })
-            }
-            title="Gallery"
-            value={totalCounts.screenshotCount}
-            className="text-primary"
-            wrapperClassName="bg-primary/10"
-          />
-          <SmallCard
-            onClick={() =>
-              handleGetScreenshots(channels.map((channel) => channel.id))
-            }
-            title="Screenshots"
-            value={totalCounts.screenshotCount}
-            className="text-warning"
-            wrapperClassName="bg-warning/10"
-          />
-          <SmallCard
-            onClick={() =>
-              handleGetThumbnails({
-                playlistId: id,
-                idType: IdType.Playlist,
+              .with("thumbnails", () => {
+                viewThumbnails({
+                  idType: IdType.Playlist,
+                  playlistId: id,
+                });
               })
-            }
-            title="Thumbnails"
-            value={totalCounts.thumbnailCount}
-            className="text-info"
-            wrapperClassName="bg-info/10"
-          />
-          <SmallCard
-            onClick={() =>
-              handleGetStoryboards(channels.map((channel) => channel.id))
-            }
-            title="Storyboards"
-            value={totalCounts.storyboardCount}
-            className="text-error"
-            wrapperClassName="bg-error/10"
-          />
-        </>
+              .with("screenshots", () => {
+                viewScreenshots(channels.map((channel) => channel.id));
+              })
+              .with("gallery", () => {
+                setGalleryModal({
+                  ytVideoId: "",
+                  channelIds: channels.map((channel) => channel.id),
+                });
+              })
+              .run();
+          }}
+        />
       }
-      bottomLeft={null}
       bottomRight={
         <Iterator
           baseLink={`/playlists/${id}/uploads`}

@@ -4,10 +4,10 @@ export const GenericHeaderContainer = ({
   bottomLeft,
   bottomRight,
 }: {
-  topLeft: React.ReactNode;
-  topRight: React.ReactNode;
-  bottomLeft: React.ReactNode;
-  bottomRight: React.ReactNode;
+  topLeft?: React.ReactNode;
+  topRight?: React.ReactNode;
+  bottomLeft?: React.ReactNode;
+  bottomRight?: React.ReactNode;
 }) => {
   return (
     <div className="bg-base-200 rounded-lg px-6 pt-16 shadow-md">
