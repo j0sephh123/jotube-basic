@@ -18,9 +18,11 @@ export default function VideoProcessingInfoTrigger({
         disabled={isDisabled}
       >
         <Video className="h-5 w-5" />
-        <span className="absolute -top-1 -right-1 badge badge-xs badge-primary rounded-full">
-          {queueData.length}
-        </span>
+        {queueData.length > 0 && (
+          <span className="absolute -top-1 -right-1 badge badge-xs badge-primary rounded-full">
+            {queueData.length}
+          </span>
+        )}
       </Button>
     </PopoverPrimitive.Trigger>
   );

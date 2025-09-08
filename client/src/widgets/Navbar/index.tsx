@@ -2,6 +2,7 @@ import { QuickSearch } from "@widgets/Search";
 import {
   ViewGlobalScreenshots,
   VideoProcessingInfo,
+  PlaylistsPopover,
   ThemeSwitcher,
 } from "@widgets/Navbar";
 import Converter from "@widgets/Converter";
@@ -54,6 +55,7 @@ export default function Navbar() {
           <Text text={`Free: ${freeSpace?.freeSpace ?? "..."}`} />
           <ThemeSwitcher />
           <Converter />
+          <PlaylistsPopover />
           <VideoProcessingInfo />
         </div>
       </div>
