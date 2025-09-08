@@ -8,6 +8,7 @@ import { useViewThumbnails } from "@features/Thumbnails";
 import { GenericHeaderContainer } from "@widgets/GenericHeaderContainer";
 import { PlaylistHeaderTitleSection } from "./PlaylistHeaderTitleSection";
 import { useCustomNavigate } from "@shared/hooks";
+import { useMemo, useCallback } from "react";
 
 type HeaderProps = {
   playlist: PlaylistDetailsResponse;
@@ -38,85 +39,102 @@ export function PlaylistHeader({
     }
   );
 
-  const handleStoryboardNavigate = () => {
+  const handleStoryboardNavigate = useCallback(() => {
     navigate(`/playlists/${id}/storyboards`);
-  };
+  }, [navigate, id]);
 
-  const handleStoryboardAction = () => {
+  const handleStoryboardAction = useCallback(() => {
     getStoryboards(channels.map((channel) => channel.id));
-  };
+  }, [getStoryboards, channels]);
 
-  const handleScreenshotNavigate = () => {
+  const handleScreenshotNavigate = useCallback(() => {
     navigate(`/playlists/${id}/screenshots`);
-  };
+  }, [navigate, id]);
 
-  const handleScreenshotAction = () => {
+  const handleScreenshotAction = useCallback(() => {
     viewScreenshots(channels.map((channel) => channel.id));
-  };
+  }, [viewScreenshots, channels]);
 
-  const handleGalleryNavigate = () => {
+  const handleGalleryNavigate = useCallback(() => {
     navigate(`/playlists/${id}/gallery`);
-  };
+  }, [navigate, id]);
 
-  const handleGalleryAction = () => {
+  const handleGalleryAction = useCallback(() => {
     setGalleryModal({
       ytVideoId: "",
       channelIds: channels.map((channel) => channel.id),
     });
-  };
+  }, [channels]);
 
-  const handleThumbnailNavigate = () => {
+  const handleThumbnailNavigate = useCallback(() => {
     navigate(`/playlists/${id}/thumbnails`);
-  };
+  }, [navigate, id]);
 
-  const handleThumbnailAction = () => {
+  const handleThumbnailAction = useCallback(() => {
     viewThumbnails({
       idType: IdType.Playlist,
       playlistId: id,
     });
-  };
+  }, [viewThumbnails, id]);
 
-  const handleDefaultNavigate = () => {
+  const handleDefaultNavigate = useCallback(() => {
     navigate(`/playlists/${id}/uploads/default`);
-  };
+  }, [navigate, id]);
 
-  const handleSavedNavigate = () => {
+  const handleSavedNavigate = useCallback(() => {
     navigate(`/playlists/${id}/uploads/saved`);
-  };
+  }, [navigate, id]);
 
-  const items = [
-    { name: "storyboards", count: totalCounts.storyboardCount },
-    { name: "screenshots", count: totalCounts.screenshotCount },
-    { name: "gallery", count: totalCounts.screenshotCount },
-    { name: "thumbnails", count: totalCounts.thumbnailCount },
-    { name: "default", count: totalCounts.videoCount },
-    { name: "saved", count: totalCounts.savedCount },
-  ];
+  const items = useMemo(
+    () => [
+      { name: "storyboards", count: totalCounts.storyboardCount },
+      { name: "screenshots", count: totalCounts.screenshotCount },
+      { name: "gallery", count: totalCounts.screenshotCount },
+      { name: "thumbnails", count: totalCounts.thumbnailCount },
+      { name: "default", count: totalCounts.videoCount },
+      { name: "saved", count: totalCounts.savedCount },
+    ],
+    [totalCounts]
+  );
 
-  const actions = {
-    storyboards: {
-      onNavigate: handleStoryboardNavigate,
-      onFirst: handleStoryboardAction,
-    },
-    screenshots: {
-      onNavigate: handleScreenshotNavigate,
-      onFirst: handleScreenshotAction,
-    },
-    gallery: {
-      onNavigate: handleGalleryNavigate,
-      onFirst: handleGalleryAction,
-    },
-    thumbnails: {
-      onNavigate: handleThumbnailNavigate,
-      onFirst: handleThumbnailAction,
-    },
-    default: {
-      onNavigate: handleDefaultNavigate,
-    },
-    saved: {
-      onNavigate: handleSavedNavigate,
-    },
-  };
+  const actions = useMemo(
+    () => ({
+      storyboards: {
+        onNavigate: handleStoryboardNavigate,
+        onFirst: handleStoryboardAction,
+      },
+      screenshots: {
+        onNavigate: handleScreenshotNavigate,
+        onFirst: handleScreenshotAction,
+      },
+      gallery: {
+        onNavigate: handleGalleryNavigate,
+        onFirst: handleGalleryAction,
+      },
+      thumbnails: {
+        onNavigate: handleThumbnailNavigate,
+        onFirst: handleThumbnailAction,
+      },
+      default: {
+        onNavigate: handleDefaultNavigate,
+      },
+      saved: {
+        onNavigate: handleSavedNavigate,
+      },
+    }),
+    [
+      handleStoryboardNavigate,
+      handleStoryboardAction,
+      handleScreenshotNavigate,
+      handleScreenshotAction,
+      handleGalleryNavigate,
+      handleGalleryAction,
+      handleThumbnailNavigate,
+      handleThumbnailAction,
+      handleDefaultNavigate,
+      handleSavedNavigate,
+    ]
+  );
 
   return (
     <GenericHeaderContainer
