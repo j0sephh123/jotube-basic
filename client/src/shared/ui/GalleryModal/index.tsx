@@ -1,5 +1,5 @@
 /* eslint-disable boundaries/element-types */
-import { useGalleryModal } from "@app/providers";
+import { useGalleryModalState } from "@app/providers";
 import { closeGalleryModal } from "@features/Gallery";
 import { useScreenshotsForGallery } from "@features/Gallery";
 import {
@@ -14,7 +14,7 @@ import { useKbdEvent } from "@features/Thumbnails";
 import { Virtualizer } from "@widgets/Virtualizer";
 
 export function GalleryModal() {
-  const { isGalleryModalVisible, channelIds, ytVideoId } = useGalleryModal();
+  const { isGalleryModalVisible, channelIds, ytVideoId } = useGalleryModalState();
 
   const { videoScreenshots, screenshots, isLoading, error } =
     useScreenshotsForGallery({

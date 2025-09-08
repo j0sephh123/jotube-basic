@@ -1,6 +1,6 @@
 import { useGetVideoByYtIdQuery } from "@shared/api";
 import { useTypedParams, useCustomNavigate } from "@shared/hooks";
-import { StaticStates, DateDisplay, Button } from "@shared/ui";
+import { StaticStates, DateDisplay, Button, DoubleAction } from "@shared/ui";
 import { VideoHeader } from "./VideoHeader";
 import { ArtifactControl } from "./ArtifactControl";
 import {
@@ -60,6 +60,11 @@ function VideoDetailsPageInner({
   return (
     <StaticStates isLoading={loading} isError={!!error} isEmpty={!video}>
       <VideoDetailsWrapper>
+        <DoubleAction
+          label="storyboard"
+          onFirst={() => {}}
+          onSecond={() => {}}
+        />
         <VideoHeader
           channelTitle={video.channelTitle}
           videoTitle={video.title}
@@ -123,9 +128,7 @@ function VideoDetailsPageInner({
                 {video.artifact === "SCREENSHOT" && (
                   <>
                     <Button onClick={handleGalleryClick}>Gallery</Button>
-                    <Button
-                      onClick={() => handleViewScreenshots([channelId])}
-                    >
+                    <Button onClick={() => handleViewScreenshots([channelId])}>
                       Screenshots {`(${video.screenshots})`}
                     </Button>
                   </>

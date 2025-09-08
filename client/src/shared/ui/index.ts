@@ -48,3 +48,4 @@ export { IconRecentlyViewed } from "./icons/IconRecentlyViewed";
 export { IconTv } from "./icons/IconTv";
 export { default as Menu } from "./Menu";
 export { Iterator } from "./repeatable/Iterator";
+export { DoubleAction } from "./DoubleAction";

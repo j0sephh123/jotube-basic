@@ -34,7 +34,10 @@ export default function Router() {
               <Route path=":viewType" element={<DashboardWidget />} />
             </Route>
           </Route>
-          <Route path="/channels/:ytChannelId" element={<Navigate to="default" />} />
+          <Route
+            path="/channels/:ytChannelId"
+            element={<Navigate to="default" />}
+          />
           <Route
             path="/channels/:ytChannelId/:uploadsType"
             element={
