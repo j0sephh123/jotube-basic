@@ -125,6 +125,7 @@ export function PlaylistHeader({
         <PlaylistHeaderTitleSection
           name={name}
           channelsLength={channels.length}
+          playlistId={id}
         />
       }
       topRight={<Iterator items={items} actions={actions} />}
