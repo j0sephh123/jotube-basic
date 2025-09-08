@@ -52,6 +52,7 @@ export type ChannelMetadataResponse = {
   playlist?: Maybe<PlaylistInfo>;
   savedArtifactsCount: Scalars['Int']['output'];
   screenshotArtifactsCount: Scalars['Int']['output'];
+  src: Scalars['String']['output'];
   storyboardArtifactsCount: Scalars['Int']['output'];
   thumbnailArtifactsCount: Scalars['Int']['output'];
   title: Scalars['String']['output'];
@@ -964,7 +965,7 @@ export type GetChannelMetadataQueryVariables = Exact<{
 }>;
 
 
-export type GetChannelMetadataQuery = { __typename?: 'Query', channelMetadata: { __typename?: 'ChannelMetadataResponse', id: number, title: string, fetchedUntilEnd: boolean, videoCount: number, lastSyncedAt?: string | null, videoArtifactsCount: number, savedArtifactsCount: number, thumbnailArtifactsCount: number, screenshotArtifactsCount: number, storyboardArtifactsCount: number, playlist?: { __typename?: 'PlaylistInfo', id: number, name: string } | null } };
+export type GetChannelMetadataQuery = { __typename?: 'Query', channelMetadata: { __typename?: 'ChannelMetadataResponse', id: number, src: string, title: string, fetchedUntilEnd: boolean, videoCount: number, lastSyncedAt?: string | null, videoArtifactsCount: number, savedArtifactsCount: number, thumbnailArtifactsCount: number, screenshotArtifactsCount: number, storyboardArtifactsCount: number, playlist?: { __typename?: 'PlaylistInfo', id: number, name: string } | null } };
 
 export type ChannelFragmentFragment = { __typename?: 'PlaylistChannelResponse', id: number, ytId: string };
 
@@ -1367,6 +1368,7 @@ export const GetChannelMetadataDocument = gql`
     query GetChannelMetadata($channelMetadataInput: ChannelMetadataInput!) {
   channelMetadata(channelMetadataInput: $channelMetadataInput) {
     id
+    src
     title
     fetchedUntilEnd
     videoCount

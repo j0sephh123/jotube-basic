@@ -18,6 +18,9 @@ export class ChannelMetadataResponse {
   title: string;
 
   @Field()
+  src: string;
+
+  @Field()
   fetchedUntilEnd: boolean;
 
   @Field(() => Int)

@@ -32,6 +32,7 @@ type ChannelMetadataResponse {
   playlist: PlaylistInfo
   savedArtifactsCount: Int!
   screenshotArtifactsCount: Int!
+  src: String!
   storyboardArtifactsCount: Int!
   thumbnailArtifactsCount: Int!
   title: String!
