@@ -6,8 +6,7 @@ import {
 import { useApolloClient } from "@apollo/client";
 import { useCallback } from "react";
 
-export type ChannelScreenshot =
-  GetScreenshotsQuery["getScreenshots"][number];
+export type ChannelScreenshot = GetScreenshotsQuery["getScreenshots"][number];
 
 export function useFetchChannelScreenshots(input: GetScreenshotsInput) {
   const { data, loading, error } = useGetScreenshotsQuery({

@@ -302,6 +302,7 @@ export type GetEpisodeInput = {
 export type GetScreenshotsInput = {
   channelIds?: InputMaybe<Array<Scalars['Float']['input']>>;
   playlistId?: InputMaybe<Scalars['Float']['input']>;
+  shuffle?: InputMaybe<Scalars['Boolean']['input']>;
   type: Scalars['String']['input'];
   videoIds?: InputMaybe<Array<Scalars['Float']['input']>>;
 };

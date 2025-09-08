@@ -17,13 +17,16 @@ export class ScreenshotsApiService {
     private readonly screenshotsManagerService: ScreenshotsManagerService,
   ) {}
 
-  public async getScreenshots({ channelIds }: GetScreenshotsInput) {
+  public async getScreenshots({
+    channelIds,
+    shuffle = true,
+  }: GetScreenshotsInput) {
     if (channelIds.length === 0) {
-      return this.getAllChannelsScreenshots();
+      return this.getAllChannelsScreenshots(shuffle);
     }
 
     const screenshotsPromises = channelIds.map((channelId) =>
-      this.getScreenshotsForChannel(channelId),
+      this.getScreenshotsForChannel(channelId, shuffle),
     );
 
     const channelScreenshots = await Promise.all(screenshotsPromises);
@@ -31,24 +34,36 @@ export class ScreenshotsApiService {
     return channelScreenshots.flat();
   }
 
-  private async getScreenshotsForChannel(channelId: number) {
-    const randomScreenshots = await this.prismaService.$queryRaw<Item[]>`
+  private async getScreenshotsForChannel(channelId: number, shuffle: boolean) {
+    const randomScreenshots = shuffle
+      ? await this.prismaService.$queryRaw<Item[]>`
           SELECT s.* FROM Screenshot s
           INNER JOIN Channel c ON s.ytChannelId = c.ytId
           WHERE c.id = ${channelId}
-          ORDER BY RAND() 
+          ORDER BY RAND()
+          -- LIMIT 50
+        `
+      : await this.prismaService.$queryRaw<Item[]>`
+          SELECT s.* FROM Screenshot s
+          INNER JOIN Channel c ON s.ytChannelId = c.ytId
+          WHERE c.id = ${channelId}
           -- LIMIT 50
         `;
 
     return this.mapToScreenshots(randomScreenshots);
   }
 
-  private async getAllChannelsScreenshots() {
-    const randomScreenshots = await this.prismaService.$queryRaw<Item[]>`
-      SELECT * FROM Screenshot 
-      ORDER BY RAND() 
-      -- LIMIT 50
-    `;
+  private async getAllChannelsScreenshots(shuffle: boolean) {
+    const randomScreenshots = shuffle
+      ? await this.prismaService.$queryRaw<Item[]>`
+        SELECT * FROM Screenshot 
+        ORDER BY RAND()
+        -- LIMIT 50
+      `
+      : await this.prismaService.$queryRaw<Item[]>`
+        SELECT * FROM Screenshot 
+        -- LIMIT 50
+      `;
 
     return this.mapToScreenshots(randomScreenshots);
   }

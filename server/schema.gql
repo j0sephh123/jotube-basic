@@ -264,6 +264,7 @@ input GetEpisodeInput {
 input GetScreenshotsInput {
   channelIds: [Float!]
   playlistId: Float
+  shuffle: Boolean
   type: String!
   videoIds: [Float!]
 }

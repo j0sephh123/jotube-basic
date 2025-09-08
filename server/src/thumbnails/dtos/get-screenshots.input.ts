@@ -4,6 +4,7 @@ import {
   IsNumber,
   IsOptional,
   IsEnum,
+  IsBoolean,
   ValidateIf,
 } from 'class-validator';
 
@@ -39,4 +40,9 @@ export class GetScreenshotsInput {
   @IsNumber({}, { each: true })
   @ValidateIf((o) => o.type === ScreenshotType.VIDEO)
   videoIds?: number[];
+
+  @Field(() => Boolean, { nullable: true })
+  @IsOptional()
+  @IsBoolean()
+  shuffle?: boolean;
 }
