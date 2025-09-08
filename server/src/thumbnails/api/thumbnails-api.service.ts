@@ -36,24 +36,6 @@ export class ThumbnailsApiService {
 
     return channelScreenshots.flat();
   }
-  public async getChannelScreenshots({ channelIds }: GetScreenshotsInput) {
-    const screenshots = await this.prismaService.screenshot.findMany({
-      where: {
-        channel: {
-          id: { in: channelIds },
-        },
-      },
-      orderBy: [{ ytVideoId: 'asc' }, { second: 'asc' }],
-      select: {
-        id: true,
-        second: true,
-        ytChannelId: true,
-        ytVideoId: true,
-      },
-    });
-
-    return this.mapToScreenshots(screenshots);
-  }
 
   private async getScreenshotsForChannel(channelId: number) {
     const randomScreenshots = await this.prismaService.$queryRaw<Item[]>`

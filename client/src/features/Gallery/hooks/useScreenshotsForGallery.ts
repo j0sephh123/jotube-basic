@@ -11,7 +11,7 @@ export function useScreenshotsForGallery({ ytVideoId, channelIds }: Props) {
     data: screenshots,
     isLoading,
     error,
-  } = useFetchChannelScreenshots({ channelIds });
+  } = useFetchChannelScreenshots({ channelIds, type: "channel" });
 
   const videoScreenshots = useMemo(() => {
     if (!screenshots || !ytVideoId) return [];

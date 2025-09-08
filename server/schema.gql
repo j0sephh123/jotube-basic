@@ -263,6 +263,9 @@ input GetEpisodeInput {
 
 input GetScreenshotsInput {
   channelIds: [Float!]
+  playlistId: Float
+  type: String!
+  videoIds: [Float!]
 }
 
 type GetScreenshotsResponse {
@@ -389,7 +392,6 @@ type ProcessingPhaseResponse {
 type Query {
   channelForPlaylist(ytChannelId: String!): ChannelForPlaylistResponse!
   channelMetadata(channelMetadataInput: ChannelMetadataInput!): ChannelMetadataResponse!
-  channelScreenshots(input: GetScreenshotsInput!): [GetScreenshotsResponse!]!
   episodesWithThumbnails(input: EpisodesWithThumbnailsInput!): [EpisodesWithThumbnailsResponse!]!
   fetchDashboard(fetchDashboardInput: FetchDashboardInput!): ChannelsDashboardResponse!
   fetchVideosDashboard(page: Float, screenshotMax: Float, screenshotMin: Float, sortOrder: String): VideosDashboardResponse!

@@ -41,13 +41,6 @@ export class ThumbnailsResolver {
     };
   }
 
-  @Query(() => [GetScreenshotsResponse])
-  async channelScreenshots(
-    @Args('input') input: GetScreenshotsInput,
-  ): Promise<GetScreenshotsResponse[]> {
-    return this.thumbnailsApiService.getChannelScreenshots(input);
-  }
-
   @Query(() => [EpisodesWithThumbnailsResponse])
   async episodesWithThumbnails(
     @Args('input') input: EpisodesWithThumbnailsInput,
