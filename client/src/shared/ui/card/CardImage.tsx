@@ -1,6 +1,7 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { Avatar } from "@shared/ui";
-import { getPublicImgUrl } from "@shared/utils";
+// eslint-disable-next-line boundaries/element-types
+import { useSavedScreenshot } from "@features/Channel";
 
 type CardImageProps = {
   id: number;
@@ -26,23 +27,13 @@ function CardImage({
 }: CardImageProps) {
   const [screenshotIndex, setScreenshotIndex] = useState(0);
 
-  const computedSrc = useMemo(() => {
-    if (
-      screenshots &&
-      screenshots.length &&
-      screenshots.length > 0 &&
-      screenshots[0]?.ytVideoId
-    ) {
-      return getPublicImgUrl(
-        ytChannelId || ytId,
-        screenshots[screenshotIndex]?.ytVideoId || "0",
-        screenshots[screenshotIndex]?.second || 0,
-        "saved_screenshots"
-      );
-    }
-
-    return src;
-  }, [screenshots, screenshotIndex, ytChannelId, ytId, src]);
+  const computedSrc = useSavedScreenshot(
+    screenshots,
+    ytChannelId,
+    ytId,
+    src,
+    screenshotIndex
+  );
 
   const handleAvatarClick = (event: React.MouseEvent) => {
     event.stopPropagation();
