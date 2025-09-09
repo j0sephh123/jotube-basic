@@ -2,8 +2,7 @@ import { Video, Zap } from "lucide-react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { type QueueItem } from "@shared/hooks";
 import { Button } from "@shared/ui";
-// eslint-disable-next-line import/no-internal-modules
-import { useSettingsState } from "@shared/store/settingsSlice";
+import { useAutoDownloadQuery } from "@features/Settings";
 
 export default function VideoProcessingInfoTrigger({
   queueData,
@@ -12,7 +11,7 @@ export default function VideoProcessingInfoTrigger({
   queueData: QueueItem[];
   isDisabled: boolean;
 }) {
-  const { autoDownload } = useSettingsState();
+  const { data: autoDownload = false } = useAutoDownloadQuery();
 
   return (
     <PopoverPrimitive.Trigger asChild>

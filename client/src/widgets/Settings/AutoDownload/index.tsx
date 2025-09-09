@@ -1,11 +1,15 @@
 import {
-  useSettingsState,
-  toggleAutoDownload,
-// eslint-disable-next-line import/no-internal-modules
-} from "@shared/store/settingsSlice";
+  useAutoDownloadQuery,
+  useAutoDownloadMutation,
+} from "@features/Settings";
 
 export default function AutoDownload() {
-  const { autoDownload } = useSettingsState();
+  const { data: autoDownload = false, isLoading } = useAutoDownloadQuery();
+  const mutation = useAutoDownloadMutation();
+
+  const handleToggle = () => {
+    mutation.mutate(!autoDownload);
+  };
 
   return (
     <div className="space-y-4">
@@ -17,7 +21,8 @@ export default function AutoDownload() {
               type="checkbox"
               className="toggle toggle-primary"
               checked={autoDownload}
-              onChange={toggleAutoDownload}
+              onChange={handleToggle}
+              disabled={isLoading || mutation.isPending}
             />
           </label>
         </div>

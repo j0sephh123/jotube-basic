@@ -178,3 +178,9 @@ model Episode {
 
   @@index([tvId])
 }
+
+model Setting {
+  key       String   @id @db.VarChar(100)
+  boolValue Boolean?
+  updatedAt DateTime @updatedAt
+}

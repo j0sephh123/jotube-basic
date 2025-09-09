@@ -42,9 +42,13 @@ import { TvModule } from './tv/tv.module';
 import { EpisodeModule } from './episode/episode.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
 import { EpisodeProcessor } from './video-worker/episode.processor';
+import { SettingsModule } from './settings/settings.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { AutoDownloadModule } from './auto-download/auto-download.module';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     LoggerModule.forRoot({
       pinoHttp: {
         level: 'info',
@@ -105,6 +109,8 @@ import { EpisodeProcessor } from './video-worker/episode.processor';
     TvModule,
     EpisodeModule,
     FileUploadModule,
+    AutoDownloadModule,
+    SettingsModule,
   ],
   controllers: [QueueController, SearchController, StatisticsController],
   providers: [

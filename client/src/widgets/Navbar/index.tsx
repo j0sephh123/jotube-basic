@@ -53,7 +53,7 @@ export default function Navbar() {
         </div>
         <div className="flex items-center gap-4">
           <QuickSearch />
-          <Text text={`Free: ${freeSpace?.freeSpace ?? "..."}`} />
+          {freeSpace && <Text text={`Free: ${`${freeSpace}GB`}`} />}
           <ThemeSwitcher />
           <Settings />
           <VideoProcessingInfo />

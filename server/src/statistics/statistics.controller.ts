@@ -1,23 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
-import { PrismaService } from 'src/core/database/prisma/prisma.service';
-import { exec } from 'child_process';
+import { StatisticsService } from './statistics.service';
 
 @Controller('statistics')
 export class StatisticsController {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(private readonly statisticsService: StatisticsService) {}
 
   @Get('free-space')
-  async getFreeSpace() {
-    return new Promise((resolve, reject) => {
-      exec('df -h --output=avail /', (error, stdout) => {
-        if (error) {
-          console.error(`Error: ${error.message}`);
-          reject({ error: error.message });
-          return;
-        }
-        const freeSpace = stdout.split('\n')[1].trim();
-        resolve({ freeSpace });
-      });
-    });
+  async getFreeSpace(): Promise<number> {
+    return this.statisticsService.getFreeSpace();
   }
 }

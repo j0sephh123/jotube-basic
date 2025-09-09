@@ -6,15 +6,13 @@ import useActions from "./useActions";
 import VideoProcessingInfoWrapper from "./Wrapper";
 import useGroupByChannel from "./useGroupByChannel";
 import { makeYtChannelId } from "@shared/types";
-// eslint-disable-next-line import/no-internal-modules
-import { useSettingsState } from "@shared/store/settingsSlice";
-// eslint-disable-next-line import/no-internal-modules
-import AutoDownload from "@widgets/Settings/AutoDownload";
+import { useAutoDownloadQuery } from "@features/Settings";
+import { AutoDownload } from "@widgets/Settings";
 
 export default function VideoProcessingInfo() {
   const { data: queueData = [] } = useQueue();
   const [isOpen, setIsOpen] = useState(false);
-  const { autoDownload } = useSettingsState();
+  const { data: autoDownload = false } = useAutoDownloadQuery();
 
   const hasItems = queueData.length > 0;
   const hasWaitingItems = queueData.some((item) => item.state === "waiting");

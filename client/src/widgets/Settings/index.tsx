@@ -1,24 +1,19 @@
 import { useState } from "react";
 import Converter from "./Converter";
-import AutoDownload from "./AutoDownload";
 import { PopoverWrapper } from "./PopoverWrapper";
 
-type TabType = "auto-download" | "converter";
+type TabType = "converter" | "autoDownload";
 
 export function Settings() {
-  const [activeTab, setActiveTab] = useState<TabType>("auto-download");
+  const [activeTab, setActiveTab] = useState<TabType>("converter");
 
-  const tabs = [
-    { id: "auto-download" as TabType, label: "Auto Download" },
-    { id: "converter" as TabType, label: "Converter" },
-  ];
+  const tabs = [{ id: "converter" as TabType, label: "Converter" }];
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case "auto-download":
-        return <AutoDownload />;
       case "converter":
         return <Converter />;
+
       default:
         return null;
     }
@@ -44,3 +39,5 @@ export function Settings() {
     </PopoverWrapper>
   );
 }
+
+export { default as AutoDownload } from "./AutoDownload";

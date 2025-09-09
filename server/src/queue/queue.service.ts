@@ -239,4 +239,13 @@ export class QueueService {
 
     return { success: true };
   }
+
+  async getDlAndVideoJobs() {
+    const [downloadJobs, videoJobs] = await Promise.all([
+      this.downloadProcessor.getJobs(['active', 'waiting']),
+      this.videoProcessor.getJobs(['active', 'waiting']),
+    ]);
+
+    return { downloadJobs, videoJobs };
+  }
 }
