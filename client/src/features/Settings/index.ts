@@ -1,4 +1,4 @@
 export {
-  useAutoDownloadQuery,
-  useAutoDownloadMutation,
-} from "./hooks/useAutoDownload";
+  useSettingsQuery,
+  useSettingsMutation,
+} from "./hooks/useSettings";

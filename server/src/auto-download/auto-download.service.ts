@@ -33,13 +33,6 @@ export class AutoDownloadService {
 
     const freeSpace = await this.statisticsService.getFreeSpace();
 
-    console.log({
-      freeSpace,
-      downloadJobs: downloadJobs.length,
-      videoJobs: videoJobs.length,
-      date: new Date().toISOString(),
-    });
-
     if (downloadJobs.length > 0) return;
     if (videoJobs.length > 0) return;
     if (freeSpace < THRESHOLD_FREE_SPACE) return;

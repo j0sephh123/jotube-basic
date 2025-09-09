@@ -6,13 +6,13 @@ import useActions from "./useActions";
 import VideoProcessingInfoWrapper from "./Wrapper";
 import useGroupByChannel from "./useGroupByChannel";
 import { makeYtChannelId } from "@shared/types";
-import { useAutoDownloadQuery } from "@features/Settings";
+import { useSettingsQuery } from "@features/Settings";
 import { AutoDownload } from "@widgets/Settings";
 
 export default function VideoProcessingInfo() {
   const { data: queueData = [] } = useQueue();
   const [isOpen, setIsOpen] = useState(false);
-  const { data: autoDownload = false } = useAutoDownloadQuery();
+  const { data: { autoDownload = false } = {} } = useSettingsQuery();
 
   const hasItems = queueData.length > 0;
   const hasWaitingItems = queueData.some((item) => item.state === "waiting");

@@ -47,6 +47,7 @@ export class ScreenshotsApiService {
           SELECT s.* FROM Screenshot s
           INNER JOIN Channel c ON s.ytChannelId = c.ytId
           WHERE c.id = ${channelId}
+          ORDER BY s.ytVideoId, s.second
           -- LIMIT 50
         `;
 
@@ -62,6 +63,7 @@ export class ScreenshotsApiService {
       `
       : await this.prismaService.$queryRaw<Item[]>`
         SELECT * FROM Screenshot 
+        ORDER BY ytVideoId, second
         -- LIMIT 50
       `;
 
@@ -75,26 +77,6 @@ export class ScreenshotsApiService {
       second,
       src: `http://localhost:3003/images/${ytChannelId}/${ytVideoId}/saved_screenshots/${ytVideoId}-${second}.png`,
     }));
-  }
-
-  async screenshots() {
-    const results = await this.prismaService.$queryRaw<
-      Record<string, number>[]
-    >`
-      SELECT 
-        DATE_FORMAT(createdAt, '%Y-%m') as month,
-        COUNT(*) as count
-      FROM Screenshot
-      GROUP BY DATE_FORMAT(createdAt, '%Y-%m')
-      ORDER BY month
-    `;
-
-    const countsByMonth = {};
-    for (const row of results) {
-      countsByMonth[row.month] = parseInt(row.count.toString());
-    }
-
-    return countsByMonth;
   }
 
   async toggleFeaturedScreenshot(id: number) {

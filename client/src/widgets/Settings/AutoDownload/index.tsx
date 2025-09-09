@@ -1,14 +1,14 @@
 import {
-  useAutoDownloadQuery,
-  useAutoDownloadMutation,
+  useSettingsQuery,
+  useSettingsMutation,
 } from "@features/Settings";
 
 export default function AutoDownload() {
-  const { data: autoDownload = false, isLoading } = useAutoDownloadQuery();
-  const mutation = useAutoDownloadMutation();
+  const { data: { autoDownload = false } = {}, isLoading } = useSettingsQuery();
+  const mutation = useSettingsMutation();
 
   const handleToggle = () => {
-    mutation.mutate(!autoDownload);
+    mutation.mutate({ autoDownload: !autoDownload });
   };
 
   return (
@@ -20,7 +20,7 @@ export default function AutoDownload() {
             <input
               type="checkbox"
               className="toggle toggle-primary"
-              checked={autoDownload}
+              checked={autoDownload ?? false}
               onChange={handleToggle}
               disabled={isLoading || mutation.isPending}
             />

@@ -1,23 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
+import { SettingsI } from './types';
 
 @Injectable()
 export class SettingsService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async getAutoDownload(): Promise<boolean> {
+  async getSettings(): Promise<SettingsI> {
     const setting = await this.prismaService.setting.findUnique({
       where: { key: 'autoDownload' },
     });
-    return setting?.boolValue ?? false;
+    return { autoDownload: setting?.boolValue ?? false };
   }
 
-  async setAutoDownload(enabled: boolean): Promise<boolean> {
+  async setSettings(input: SettingsI): Promise<SettingsI> {
     await this.prismaService.setting.upsert({
       where: { key: 'autoDownload' },
-      update: { boolValue: enabled },
-      create: { key: 'autoDownload', boolValue: enabled },
+      update: { boolValue: input.autoDownload },
+      create: { key: 'autoDownload', boolValue: input.autoDownload },
     });
-    return enabled;
+    return input;
   }
 }
