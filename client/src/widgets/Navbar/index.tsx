@@ -5,7 +5,7 @@ import {
   PlaylistsPopover,
   ThemeSwitcher,
 } from "@widgets/Navbar";
-import Converter from "@widgets/Converter";
+import { Settings } from "@widgets/Settings";
 import { useTotalCounts, useFreeSpace } from "@features/Statistics";
 import {
   IconHome,
@@ -48,14 +48,14 @@ export default function Navbar() {
             buttonText="Aggregates"
             items={[<IconVideos />, <IconPlaylist />, <IconTv />]}
           />
+          <PlaylistsPopover />
           <IconSaved count={totalCounts?.totalSaved ?? 0} />
         </div>
         <div className="flex items-center gap-4">
           <QuickSearch />
           <Text text={`Free: ${freeSpace?.freeSpace ?? "..."}`} />
           <ThemeSwitcher />
-          <Converter />
-          <PlaylistsPopover />
+          <Settings />
           <VideoProcessingInfo />
         </div>
       </div>

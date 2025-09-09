@@ -8,19 +8,14 @@ export default function VideoProcessingInfoWrapper({
   isOpen,
   setIsOpen,
   queueData,
-  hasItems,
 }: PropsWithChildren<{
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   queueData: QueueItem[];
-  hasItems: boolean;
 }>) {
   return (
     <PopoverPrimitive.Root open={isOpen} onOpenChange={setIsOpen}>
-      <VideoProcessingInfoTrigger
-        queueData={queueData}
-        isDisabled={!hasItems}
-      />
+      <VideoProcessingInfoTrigger queueData={queueData} isDisabled={false} />
 
       <PopoverPrimitive.Portal>
         <PopoverPrimitive.Content

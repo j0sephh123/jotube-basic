@@ -19,9 +19,9 @@ export default function PlaylistsPopoverWrapper({
       <PopoverPrimitive.Portal>
         <PopoverPrimitive.Content
           side="bottom"
-          align="end"
+          align="center"
           sideOffset={5}
-          className="bg-zinc-900 shadow-md rounded-md border border-zinc-700 p-4 w-[400px] max-h-[600px] overflow-auto z-50"
+          className="bg-zinc-900 shadow-md rounded-md border border-zinc-700 p-4 w-[500px] max-h-[600px] overflow-auto z-50"
         >
           {children}
           <PopoverPrimitive.Arrow className="fill-zinc-900" />
