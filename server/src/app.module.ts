@@ -45,6 +45,7 @@ import { EpisodeProcessor } from './video-worker/episode.processor';
 import { SettingsModule } from './settings/settings.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { AutoDownloadModule } from './auto-download/auto-download.module';
+import { QueueModule } from './queue/queue.module';
 
 @Module({
   imports: [
@@ -52,7 +53,7 @@ import { AutoDownloadModule } from './auto-download/auto-download.module';
     LoggerModule.forRoot({
       pinoHttp: {
         level: 'info',
-        autoLogging: false, // don’t auto-log every request
+        autoLogging: false, // don't auto-log every request
         stream: pino.destination(path.join(process.cwd(), 'logs', 'app.log')),
         // Remove unwanted keys from request logs
         serializers: {
@@ -111,6 +112,7 @@ import { AutoDownloadModule } from './auto-download/auto-download.module';
     FileUploadModule,
     AutoDownloadModule,
     SettingsModule,
+    QueueModule,
   ],
   controllers: [QueueController, SearchController, StatisticsController],
   providers: [

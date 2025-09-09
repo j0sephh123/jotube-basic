@@ -538,6 +538,11 @@ export type ProcessingPhaseResponse = {
   uploadsVideoId: Scalars['Float']['output'];
 };
 
+export type ProcessingReadyUploadsResponse = {
+  __typename?: 'ProcessingReadyUploadsResponse';
+  count: Scalars['Int']['output'];
+};
+
 export type Query = {
   __typename?: 'Query';
   channelForPlaylist: ChannelForPlaylistResponse;
@@ -550,6 +555,7 @@ export type Query = {
   getEpisode?: Maybe<Episode>;
   getEpisodeDetails?: Maybe<Episode>;
   getEpisodesByTvId: Array<Episode>;
+  getProcessingReadyUploads: ProcessingReadyUploadsResponse;
   getScreenshots: Array<GetScreenshotsResponse>;
   getTv?: Maybe<Tv>;
   getVideoByYtId: VideoByYtIdResponse;
@@ -1016,6 +1022,11 @@ export type GetPlaylistUploadsListQueryVariables = Exact<{
 
 
 export type GetPlaylistUploadsListQuery = { __typename?: 'Query', playlistUploadsList: Array<{ __typename?: 'PlaylistUploadsListUploadResponse', id: number, ytId: string, title: string, publishedAt: string, channelTitle: string, ytChannelId: string, src: string }> };
+
+export type GetProcessingReadyUploadsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetProcessingReadyUploadsQuery = { __typename?: 'Query', getProcessingReadyUploads: { __typename?: 'ProcessingReadyUploadsResponse', count: number } };
 
 export type GetScreenshotsQueryVariables = Exact<{
   input: GetScreenshotsInput;
@@ -1715,6 +1726,45 @@ export type GetPlaylistUploadsListQueryHookResult = ReturnType<typeof useGetPlay
 export type GetPlaylistUploadsListLazyQueryHookResult = ReturnType<typeof useGetPlaylistUploadsListLazyQuery>;
 export type GetPlaylistUploadsListSuspenseQueryHookResult = ReturnType<typeof useGetPlaylistUploadsListSuspenseQuery>;
 export type GetPlaylistUploadsListQueryResult = Apollo.QueryResult<GetPlaylistUploadsListQuery, GetPlaylistUploadsListQueryVariables>;
+export const GetProcessingReadyUploadsDocument = gql`
+    query GetProcessingReadyUploads {
+  getProcessingReadyUploads {
+    count
+  }
+}
+    `;
+
+/**
+ * __useGetProcessingReadyUploadsQuery__
+ *
+ * To run a query within a React component, call `useGetProcessingReadyUploadsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProcessingReadyUploadsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProcessingReadyUploadsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetProcessingReadyUploadsQuery(baseOptions?: Apollo.QueryHookOptions<GetProcessingReadyUploadsQuery, GetProcessingReadyUploadsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetProcessingReadyUploadsQuery, GetProcessingReadyUploadsQueryVariables>(GetProcessingReadyUploadsDocument, options);
+      }
+export function useGetProcessingReadyUploadsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProcessingReadyUploadsQuery, GetProcessingReadyUploadsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetProcessingReadyUploadsQuery, GetProcessingReadyUploadsQueryVariables>(GetProcessingReadyUploadsDocument, options);
+        }
+export function useGetProcessingReadyUploadsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetProcessingReadyUploadsQuery, GetProcessingReadyUploadsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetProcessingReadyUploadsQuery, GetProcessingReadyUploadsQueryVariables>(GetProcessingReadyUploadsDocument, options);
+        }
+export type GetProcessingReadyUploadsQueryHookResult = ReturnType<typeof useGetProcessingReadyUploadsQuery>;
+export type GetProcessingReadyUploadsLazyQueryHookResult = ReturnType<typeof useGetProcessingReadyUploadsLazyQuery>;
+export type GetProcessingReadyUploadsSuspenseQueryHookResult = ReturnType<typeof useGetProcessingReadyUploadsSuspenseQuery>;
+export type GetProcessingReadyUploadsQueryResult = Apollo.QueryResult<GetProcessingReadyUploadsQuery, GetProcessingReadyUploadsQueryVariables>;
 export const GetScreenshotsDocument = gql`
     query GetScreenshots($input: GetScreenshotsInput!) {
   getScreenshots(input: $input) {

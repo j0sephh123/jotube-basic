@@ -1,11 +1,22 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { nestFetcher } from "@shared/api";
+import type { Phase } from "@shared/api/generated/graphql";
 
 export type QueueItem = {
   id: string;
   ytChannelId: string;
   ytVideoId: string;
   state: "active" | "waiting";
+  videoTitle: string;
+  channelTitle: string;
+  videoId: number;
+  phases?: {
+    id: number;
+    createdAt: Date;
+    uploadsVideoId: number;
+    phase: Phase;
+    endedAt: Date | null;
+  }[];
 };
 
 export function useQueue() {

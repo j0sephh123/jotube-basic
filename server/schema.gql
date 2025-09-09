@@ -391,6 +391,10 @@ type ProcessingPhaseResponse {
   uploadsVideoId: Float!
 }
 
+type ProcessingReadyUploadsResponse {
+  count: Int!
+}
+
 type Query {
   channelForPlaylist(ytChannelId: String!): ChannelForPlaylistResponse!
   channelMetadata(channelMetadataInput: ChannelMetadataInput!): ChannelMetadataResponse!
@@ -402,6 +406,7 @@ type Query {
   getEpisode(getEpisodeInput: GetEpisodeInput!): Episode
   getEpisodeDetails(getEpisodeInput: GetEpisodeInput!): Episode
   getEpisodesByTvId(tvId: Float!): [Episode!]!
+  getProcessingReadyUploads: ProcessingReadyUploadsResponse!
   getScreenshots(input: GetScreenshotsInput!): [GetScreenshotsResponse!]!
   getTv(getTvInput: GetTvInput!): Tv
   getVideoByYtId(getVideoByYtIdInput: GetVideoByYtIdInput!): VideoByYtIdResponse!

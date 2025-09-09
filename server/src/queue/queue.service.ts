@@ -120,6 +120,7 @@ export class QueueService {
         ytId: ytVideoId,
       },
       select: {
+        id: true,
         ytId: true,
         title: true,
         channel: {
@@ -212,18 +213,43 @@ export class QueueService {
     const videoTitles = Object.fromEntries(
       videoLabelsResponse
         .filter((item) => item !== null)
-        .map((item) => [item.ytId, item.title]),
+        .map((item) => [item.ytId, { title: item.title, id: item.id }]),
     );
 
     const channelTitles = Object.fromEntries(
       channelLabelsResponse.map((item) => [item.ytId, item.title]),
     );
 
-    return queueData.map((item) => ({
-      ...item,
-      videoTitle: videoTitles[item.ytVideoId] || item.ytVideoId,
+    const mappedQueueData = queueData.map((item) => ({
+      id: item.id,
+      state: item.state,
+      ytChannelId: item.ytChannelId,
+      ytVideoId: item.ytVideoId,
+      videoId: videoTitles[item.ytVideoId]?.id || null,
+      videoTitle: videoTitles[item.ytVideoId]?.title || item.ytVideoId,
       channelTitle: channelTitles[item.ytChannelId] || item.ytChannelId,
     }));
+
+    const queueDataWithSomePromises = mappedQueueData.map(async (item) => {
+      if (item.state === 'active') {
+        const phases = await this.prismaService.processingPhase.findMany({
+          where: {
+            uploadsVideoId: item.videoId,
+          },
+        });
+
+        return {
+          ...item,
+          phases,
+        };
+      }
+
+      return item;
+    });
+
+    const promisedQueueData = Promise.all(queueDataWithSomePromises);
+
+    return promisedQueueData;
   }
 
   async addEpisodeJob({ episodeId }: AddEpisodeJobDto) {
@@ -247,5 +273,18 @@ export class QueueService {
     ]);
 
     return { downloadJobs, videoJobs };
+  }
+
+  async getProcessingReadyUploads() {
+    const result = await this.prismaService.$queryRaw<[{ count: bigint }]>`
+      SELECT COUNT(*) as count
+      FROM UploadsVideo uv
+      INNER JOIN Channel c ON uv.channelId = c.id
+      LEFT JOIN Playlist p ON c.playlistId = p.id
+      WHERE uv.artifact = 'SAVED'
+      AND (p.name IS NULL OR p.name != 'SkipDL')
+    `;
+
+    return { count: Number(result[0].count) };
   }
 }

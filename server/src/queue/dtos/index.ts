@@ -11,3 +11,4 @@ export * from './add-thumbnail-job.dto';
 export * from './add-storyboard-job.dto';
 export * from './labels.dto';
 export * from './add-videos.dto';
+export * from './processing-ready-uploads';

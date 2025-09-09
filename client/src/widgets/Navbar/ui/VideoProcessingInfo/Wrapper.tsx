@@ -22,7 +22,7 @@ export default function VideoProcessingInfoWrapper({
           side="bottom"
           align="end"
           sideOffset={5}
-          className="bg-zinc-900 shadow-md rounded-md border border-zinc-700 p-4 w-[500px] max-h-[800px] overflow-auto z-50"
+          className="bg-zinc-900 shadow-md rounded-md border border-zinc-700 p-4 w-[50vw] max-h-[85vh] overflow-auto z-50"
         >
           {children}
           <PopoverPrimitive.Arrow className="fill-zinc-900" />
