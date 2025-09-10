@@ -24,7 +24,7 @@ export default function Layout(): JSX.Element {
     <>
       <DialogProvider>
         <Navbar />
-        <div className="w-full h-[99vh] overflow-auto pt-16">
+        <div className="w-full h-[99vh] overflow-auto">
           <Outlet />
         </div>
         <CreateChannel />

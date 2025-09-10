@@ -52,7 +52,7 @@ export function Virtualizer<T>({
             if (index >= items.length) return <div key={key} style={style} />;
             const item = items[index]!;
             return (
-              <div key={key} style={style} className="p-2 box-border">
+              <div key={key} style={style} className="box-border">
                 <ItemComponent item={item} />
               </div>
             );
