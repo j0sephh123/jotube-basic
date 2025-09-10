@@ -595,7 +595,6 @@ export type QueryFetchDashboardArgs = {
 
 
 export type QueryFetchVideosDashboardArgs = {
-  page?: InputMaybe<Scalars['Float']['input']>;
   screenshotMax?: InputMaybe<Scalars['Float']['input']>;
   screenshotMin?: InputMaybe<Scalars['Float']['input']>;
   sortOrder?: InputMaybe<Scalars['String']['input']>;
@@ -1043,7 +1042,6 @@ export type FetchDashboardQueryVariables = Exact<{
 export type FetchDashboardQuery = { __typename?: 'Query', fetchDashboard: { __typename?: 'ChannelsDashboardResponse', total: number, channels: Array<{ __typename?: 'DashboardChannelResponse', id: number, createdAt: any, title: string, ytId: string, src: string, lastSyncedAt?: any | null, videoCount: number, thumbnails: number, saved: number, defaults: number, storyboard: number, screenshotsCount: number, playlist?: { __typename?: 'DashboardPlaylistResponse', id: number, name: string } | null, featuredScreenshots: Array<{ __typename?: 'FeaturedScreenshotResponse', src: string, id: number, second: number, ytVideoId: string }> }> } };
 
 export type FetchVideosDashboardQueryVariables = Exact<{
-  page?: InputMaybe<Scalars['Float']['input']>;
   sortOrder?: InputMaybe<Scalars['String']['input']>;
   screenshotMin?: InputMaybe<Scalars['Float']['input']>;
   screenshotMax?: InputMaybe<Scalars['Float']['input']>;
@@ -1873,9 +1871,8 @@ export type FetchDashboardLazyQueryHookResult = ReturnType<typeof useFetchDashbo
 export type FetchDashboardSuspenseQueryHookResult = ReturnType<typeof useFetchDashboardSuspenseQuery>;
 export type FetchDashboardQueryResult = Apollo.QueryResult<FetchDashboardQuery, FetchDashboardQueryVariables>;
 export const FetchVideosDashboardDocument = gql`
-    query FetchVideosDashboard($page: Float, $sortOrder: String, $screenshotMin: Float, $screenshotMax: Float) {
+    query FetchVideosDashboard($sortOrder: String, $screenshotMin: Float, $screenshotMax: Float) {
   fetchVideosDashboard(
-    page: $page
     sortOrder: $sortOrder
     screenshotMin: $screenshotMin
     screenshotMax: $screenshotMax
@@ -1913,7 +1910,6 @@ export const FetchVideosDashboardDocument = gql`
  * @example
  * const { data, loading, error } = useFetchVideosDashboardQuery({
  *   variables: {
- *      page: // value for 'page'
  *      sortOrder: // value for 'sortOrder'
  *      screenshotMin: // value for 'screenshotMin'
  *      screenshotMax: // value for 'screenshotMax'

@@ -337,6 +337,7 @@ export class DashboardService {
         uv.id, uv.ytId, uv.title, uv.src, c.id, c.title, c.ytId
       HAVING COUNT(s.id) > 0
       ORDER BY screenshotCount ${Prisma.raw(orderDirection)}, uv.id DESC
+      LIMIT 150
     `);
 
     let filteredRows = rows;

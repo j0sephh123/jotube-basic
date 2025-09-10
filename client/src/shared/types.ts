@@ -84,7 +84,8 @@ export function makeYtChannelId(s: string): YtChannelId {
 }
 
 export function makeYtVideoId(s: string): YtVideoId {
-  if (s.length !== 11 || s.includes("/")) throw new Error("Invalid YtVideoId");
+  // TODO Fix similar to makeYtChannelId
+  // if (s.length !== 11 || s.includes("/")) throw new Error("Invalid YtVideoId");
   return s as YtVideoId;
 }
 

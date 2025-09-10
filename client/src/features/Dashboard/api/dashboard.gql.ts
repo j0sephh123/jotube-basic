@@ -34,13 +34,11 @@ export const FETCH_DASHBOARD = gql`
 
 export const FETCH_VIDEOS_DASHBOARD = gql`
   query FetchVideosDashboard(
-    $page: Float
     $sortOrder: String
     $screenshotMin: Float
     $screenshotMax: Float
   ) {
     fetchVideosDashboard(
-      page: $page
       sortOrder: $sortOrder
       screenshotMin: $screenshotMin
       screenshotMax: $screenshotMax

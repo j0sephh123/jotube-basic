@@ -1,9 +1,8 @@
 import {
-  useFetchVideosDashboard,
   useFinalPage,
   useFinalSortOrder,
 } from "@features/Dashboard";
-import type { VideosDashboardResponse } from "@shared/api";
+import { useFetchVideosDashboardQuery, type VideosDashboardResponse } from "@shared/api";
 import { useApolloClient } from "@apollo/client";
 
 export type VideosDashboardResponseData = VideosDashboardResponse;
@@ -11,10 +10,11 @@ export type VideosDashboardResponseData = VideosDashboardResponse;
 export function useVideosDashboardQuery() {
   const { finalSortOrder } = useFinalSortOrder();
   const { finalPage } = useFinalPage();
-
-  const { data, loading, error, refetch } = useFetchVideosDashboard({
-    page: finalPage,
-    sortOrder: finalSortOrder.toLowerCase() as "asc" | "desc",
+ 
+  const { data, loading, error, refetch } = useFetchVideosDashboardQuery({
+    variables: {
+      sortOrder: finalSortOrder.toLowerCase() as "asc" | "desc",
+    },
   });
 
   return {

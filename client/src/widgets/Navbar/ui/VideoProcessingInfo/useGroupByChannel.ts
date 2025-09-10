@@ -7,6 +7,7 @@ export default function useGroupByChannel(): [string, QueueItem[]][] {
   const { data: queueData = [] } = useQueue();
 
   return useMemo(() => {
-    return Object.entries(groupByChannel(queueData));
+    const queueArray = Array.isArray(queueData) ? queueData : [];
+    return Object.entries(groupByChannel(queueArray));
   }, [queueData]);
 }

@@ -11,7 +11,8 @@ export default function useActions() {
   const removeFromQueueMutation = useRemoveFromQueue();
 
   const handleCancelAll = async () => {
-    const waitingJobIds = getWaitingJobIds(queueData);
+    const queueArray = Array.isArray(queueData) ? queueData : [];
+    const waitingJobIds = getWaitingJobIds(queueArray);
 
     if (waitingJobIds.length > 0) {
       await removeFromQueueMutation(waitingJobIds);
@@ -20,7 +21,8 @@ export default function useActions() {
   };
 
   const handleCancelChannel = async (channelId: string) => {
-    const waitingJobIds = queueData
+    const queueArray = Array.isArray(queueData) ? queueData : [];
+    const waitingJobIds = queueArray
       .filter(
         (item) => item.ytChannelId === channelId && item.state === "waiting"
       )

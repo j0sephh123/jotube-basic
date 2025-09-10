@@ -3,6 +3,7 @@ import { VideosDashboardContainer, VideoChannelInfo } from "@widgets/Dashboard";
 import { type DashboardVideoResponse } from "@shared/api";
 import { setGalleryModal } from "@features/Gallery";
 import { makeYtChannelId, makeYtVideoId } from "@shared/types";
+import { Virtualizer } from "@widgets/Virtualizer";
 
 export default function VideosDashboard() {
   const handleThumbnailClick = (video: DashboardVideoResponse) => {
@@ -15,28 +16,30 @@ export default function VideosDashboard() {
   return (
     <VideosDashboardContainer>
       {(videos) => (
-        <>
-          {videos.map((video) => (
+        <Virtualizer
+          flexibleHeight={false}
+          items={videos}
+          ItemComponent={({ item }) => (
             <Card
-              key={video.id}
-              featuredScreenshotsLength={video.screenshotCount}
-              id={video.id}
-              ytId={video.ytId}
-              title={video.title}
-              src={video.src}
-              onThumbnailClick={() => handleThumbnailClick(video)}
+              key={item.id}
+              featuredScreenshotsLength={item.screenshotCount}
+              id={item.id}
+              ytId={item.ytId}
+              title={item.title}
+              src={item.src}
+              onThumbnailClick={() => handleThumbnailClick(item)}
               to={`/channels/${makeYtChannelId(
-                video.channelYtId
-              )}/gallery/${makeYtVideoId(video.ytId)}`}
+                item.channelYtId
+              )}/gallery/${makeYtVideoId(item.ytId)}`}
               secondRow={
                 <VideoChannelInfo
-                  channelTitle={`${video.channelTitle} (${video.screenshotCount})`}
-                  channelYtId={video.channelYtId}
+                  channelTitle={`${item.channelTitle} (${item.screenshotCount})`}
+                  channelYtId={item.channelYtId}
                 />
               }
             />
-          ))}
-        </>
+          )}
+        />
       )}
     </VideosDashboardContainer>
   );
