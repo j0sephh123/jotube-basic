@@ -8,10 +8,9 @@ export function IconProcessingLog() {
       to={`/processing-phase/latest`}
       tooltip={{
         content: "processing log",
-        position: "bottom",
+        position: "right",
         color: "primary",
       }}
-      text="Processing Log"
     />
   );
 }

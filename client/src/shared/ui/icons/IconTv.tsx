@@ -8,10 +8,9 @@ export function IconTv() {
       to={`/tv`}
       tooltip={{
         content: "tv",
-        position: "bottom",
+        position: "right",
         color: "primary",
       }}
-      text="TV"
     />
   );
 }

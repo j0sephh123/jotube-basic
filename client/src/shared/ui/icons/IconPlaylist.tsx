@@ -8,10 +8,9 @@ export function IconPlaylist() {
       to={`/playlists`}
       tooltip={{
         content: "playlists",
-        position: "bottom",
+        position: "right",
         color: "primary",
       }}
-      text="Playlists"
     />
   );
 }

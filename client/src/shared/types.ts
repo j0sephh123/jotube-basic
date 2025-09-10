@@ -35,6 +35,7 @@ type PlaylistStoryboards = `/playlists/${number}/storyboards`;
 type PlaylistScreenshots = `/playlists/${number}/screenshots`;
 type ChannelStoryboards = `/channels/${YtChannelId}/storyboards`;
 type ChannelSaved = `/channels/${YtChannelId}/saved`;
+type Tv = `/tv`;
 
 export type To =
   | Playlists
@@ -65,7 +66,8 @@ export type To =
   | PlaylistStoryboards
   | PlaylistScreenshots
   | ChannelStoryboards
-  | ChannelSaved;
+  | ChannelSaved
+  | Tv;
 
 export type UploadsType =
   | "default"

@@ -8,10 +8,9 @@ export function IconVideos() {
       to={`/dashboard/videos/all`}
       tooltip={{
         content: "videos",
-        position: "bottom",
+        position: "right",
         color: "primary",
       }}
-      text="Videos"
     />
   );
 }

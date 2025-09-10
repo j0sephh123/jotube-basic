@@ -8,10 +8,9 @@ export function IconRecentlyViewed() {
       to={`/recently-viewed`}
       tooltip={{
         content: "recently viewed",
-        position: "bottom",
+        position: "right",
         color: "primary",
       }}
-      text="Recently Viewed"
     />
   );
 }

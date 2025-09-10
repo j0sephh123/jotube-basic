@@ -14,6 +14,7 @@ import PlaylistModal from "@widgets/PlaylistModal";
 import { usePlaylistModalState } from "@features/Playlist";
 import { useRecentlyViewedChannels } from "@features/Channel";
 import { TvModal, useTvModalState } from "@features/Tv";
+import { Sidepanel } from "./Sidepanel";
 
 export default function Layout(): JSX.Element {
   const { type } = usePlaylistModalState();
@@ -23,9 +24,14 @@ export default function Layout(): JSX.Element {
   return (
     <>
       <DialogProvider>
-        <Navbar />
-        <div className="w-full h-[99vh] overflow-auto">
-          <Outlet />
+        <div className="div">
+          <Navbar />
+          <div className="flex">
+            <Sidepanel />
+            <div className="w-full h-[99vh] overflow-auto">
+              <Outlet />
+            </div>
+          </div>
         </div>
         <CreateChannel />
         <TheCarousel />

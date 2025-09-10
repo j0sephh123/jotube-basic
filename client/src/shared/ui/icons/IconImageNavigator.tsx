@@ -8,10 +8,9 @@ export function IconImageNavigator() {
       to={`/image-navigator`}
       tooltip={{
         content: "image navigator",
-        position: "bottom",
+        position: "right",
         color: "primary",
       }}
-      text="Image Navigator"
     />
   );
 }
