@@ -14,7 +14,7 @@ export default function VideoProcessingInfo() {
   const { data: queueData = [] } = useQueue();
 
   // Hardcoded queue items for testing UI
-  
+
   const [isOpen, setIsOpen] = useState(false);
   const { data: { autoDownload = false } = {} } = useSettingsQuery();
 
@@ -231,7 +231,7 @@ export default function VideoProcessingInfo() {
   const { data: { getProcessingReadyUploads: { count = 0 } = {} } = {} } =
     useGetProcessingReadyUploadsQuery();
 
-  console.log({count, queueData});
+  console.log({ count, queueData });
 
   return (
     <VideoProcessingInfoWrapper
@@ -251,7 +251,7 @@ export default function VideoProcessingInfo() {
         )}
       </div>
       {autoDownload && <AutoDlEnabledSection />}
-      <AutoDownload />
+      <AutoDownload availableVideos={count} />
       <div className="space-y-3">
         {hasItems ? (
           groupedByChannel.map(([channelId, items]) => (

@@ -1,6 +1,10 @@
 import { useSettingsQuery, useSettingsMutation } from "@features/Settings";
 
-export default function AutoDownload() {
+export default function AutoDownload({
+  availableVideos,
+}: {
+  availableVideos: number;
+}) {
   const { data: { autoDownload = false } = {}, isLoading } = useSettingsQuery();
   const mutation = useSettingsMutation();
 
@@ -22,9 +26,10 @@ export default function AutoDownload() {
                 className="toggle toggle-primary"
                 checked={autoDownload ?? false}
                 onChange={handleToggle}
-                disabled={isLoading || mutation.isPending}
+                disabled={isLoading || mutation.isPending || availableVideos === 0}
               />
             </label>
+            Availlable videos: {availableVideos}
           </div>
         </div>
       </div>

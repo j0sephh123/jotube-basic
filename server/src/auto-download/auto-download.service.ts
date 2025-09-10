@@ -37,9 +37,32 @@ export class AutoDownloadService {
     if (videoJobs.length > 0) return;
     if (freeSpace < THRESHOLD_FREE_SPACE) return;
 
+    // refactor to be like in `getProcessingReadyUploads`
+    const channels = await this.prismaService.channel.findMany({
+      where: {
+        playlist: {
+          name: 'SkipDL',
+        },
+      },
+      select: {
+        uploads: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+
+    const notIn = channels.flatMap((channel) =>
+      channel.uploads.map((upload) => upload.id),
+    );
+
     const video = await this.prismaService.uploadsVideo.findFirst({
       where: {
         artifact: ArtifactType.SAVED,
+        id: {
+          notIn,
+        },
       },
     });
 
