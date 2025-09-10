@@ -11,7 +11,7 @@ export function Virtualizer<T>({
   flexibleHeight = false,
 }: VirtualizerProps<T>) {
   return (
-    <div className={clsx("w-full h-[78vh]", className)}>
+    <div className={clsx("w-full h-[80vh]", className)}>
       <AutoSizer>
         {({ width, height }: { width: number; height: number }) => {
           const colCount = Math.max(1, itemsPerRow);

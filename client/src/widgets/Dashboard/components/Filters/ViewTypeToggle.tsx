@@ -20,7 +20,7 @@ export default function ViewTypeToggle() {
   };
 
   return (
-    <div className="grid grid-cols-3 grid-rows-2 gap-2">
+    <div className="flex gap-2">
       {viewTypeOrder.map((type) => (
         <DoubleAction
           key={type}

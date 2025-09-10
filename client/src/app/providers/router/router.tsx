@@ -19,8 +19,9 @@ import {
 import { PageWrapper } from "@widgets/PageWrapper";
 import { VideoDetailsPage } from "@pages/video-details";
 import { DashboardType } from "@features/Dashboard";
-import VideosDashboardPage from "@widgets/Dashboard/ui/VideosDashboardPage";
-import ChannelsDashboardPage from "@widgets/Dashboard/ui/ChannelsDashboardPage";
+import VideosDashboardPage from "@widgets/Dashboard/components/VideosDashboard/VideosDashboardPage";
+import ChannelsDashboardPage from "@widgets/Dashboard/components/ChannelsDashboard/ChannelsDashboardPage";
+import { CommonDashboardWrapper } from "@widgets/Dashboard/ui/CommonDashboardWrapper";
 
 export default function Router() {
   return (
@@ -31,14 +32,17 @@ export default function Router() {
             path="/"
             element={<Navigate to="/dashboard/channels/saved" />}
           />
-          <Route
-            path={`/dashboard/${DashboardType.CHANNELS}/:viewType`}
-            element={<ChannelsDashboardPage />}
-          />
-          <Route
-            path={`/dashboard/${DashboardType.VIDEOS}/:viewType`}
-            element={<VideosDashboardPage />}
-          />
+          <Route path="/dashboard" element={<CommonDashboardWrapper />}>
+            <Route
+              path={`${DashboardType.CHANNELS}/:viewType`}
+              element={<ChannelsDashboardPage />}
+            />
+            <Route
+              path={`${DashboardType.VIDEOS}/:viewType`}
+              element={<VideosDashboardPage />}
+            />
+          </Route>
+
           <Route
             path="/channels/:ytChannelId"
             element={<Navigate to="default" />}

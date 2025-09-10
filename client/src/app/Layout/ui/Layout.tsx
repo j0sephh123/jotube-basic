@@ -24,13 +24,11 @@ export default function Layout(): JSX.Element {
   return (
     <>
       <DialogProvider>
-        <div className="div">
-          <Navbar />
-          <div className="flex">
-            <Sidepanel />
-            <div className="w-full h-[99vh] overflow-auto">
-              <Outlet />
-            </div>
+        <Navbar />
+        <div className="flex">
+          <Sidepanel />
+          <div className="w-full h-[90vh] overflow-hidden">
+            <Outlet />
           </div>
         </div>
         <CreateChannel />

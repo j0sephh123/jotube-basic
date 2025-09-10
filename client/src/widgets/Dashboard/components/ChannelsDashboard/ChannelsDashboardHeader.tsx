@@ -1,12 +1,12 @@
 import { Button } from "@shared/ui";
 import { RangePicker } from "@widgets/RangePicker";
-import { SelectSortDirection, ViewTypeToggle } from "..";
+import { SortDirectionFilter, ViewTypeToggle } from "@widgets/Dashboard";
 
 export function ChannelsDashboardHeader() {
   return (
     <div className="flex flex-wrap items-center justify-between gap-4">
       <div className="flex items-center gap-4">
-        <SelectSortDirection />
+        <SortDirectionFilter />
         <RangePicker
           wrapperClassName="w-[120px]"
           minLabel="Min"

@@ -2,7 +2,7 @@ import { ArrowUp, ArrowDown } from "lucide-react";
 import { useFinalSortOrder, type FinalSortOrder } from "@features/Dashboard";
 import { Button } from "@shared/ui";
 
-export default function SelectSortDirection(): JSX.Element {
+export function SortDirectionFilter(): JSX.Element {
   const { finalSortOrder, toggleSortOrder } = useFinalSortOrder();
 
   const icons: Record<FinalSortOrder, JSX.Element> = {
