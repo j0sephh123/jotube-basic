@@ -34,14 +34,10 @@ export const FETCH_DASHBOARD = gql`
 
 export const FETCH_VIDEOS_DASHBOARD = gql`
   query FetchVideosDashboard(
-    $sortOrder: String
-    $screenshotMin: Float
-    $screenshotMax: Float
+    $fetchVideosDashboardInput: FetchVideosDashboardInput!
   ) {
     fetchVideosDashboard(
-      sortOrder: $sortOrder
-      screenshotMin: $screenshotMin
-      screenshotMax: $screenshotMax
+      fetchVideosDashboardInput: $fetchVideosDashboardInput
     ) {
       videos {
         id

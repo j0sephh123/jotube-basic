@@ -1,20 +1,35 @@
+import { useFinalSortOrder } from "@features/Dashboard";
 import {
-  useFinalPage,
-  useFinalSortOrder,
-} from "@features/Dashboard";
-import { useFetchVideosDashboardQuery, type VideosDashboardResponse } from "@shared/api";
+  type FetchVideosDashboardQueryVariables,
+  useFetchVideosDashboardQuery,
+  type VideosDashboardResponse,
+} from "@shared/api";
 import { useApolloClient } from "@apollo/client";
+import { useSearchParams } from "react-router-dom";
 
 export type VideosDashboardResponseData = VideosDashboardResponse;
 
 export function useVideosDashboardQuery() {
   const { finalSortOrder } = useFinalSortOrder();
-  const { finalPage } = useFinalPage();
- 
-  const { data, loading, error, refetch } = useFetchVideosDashboardQuery({
-    variables: {
+  const [searchParams] = useSearchParams();
+  const min = searchParams.get("min");
+  const max = searchParams.get("max");
+  const variables: FetchVideosDashboardQueryVariables = {
+    fetchVideosDashboardInput: {
       sortOrder: finalSortOrder.toLowerCase() as "asc" | "desc",
     },
+  };
+
+  if (min !== null) {
+    variables.fetchVideosDashboardInput.screenshotMin = parseInt(min);
+  }
+
+  if (max !== null) {
+    variables.fetchVideosDashboardInput.screenshotMax = parseInt(max);
+  }
+
+  const { data, loading, error, refetch } = useFetchVideosDashboardQuery({
+    variables,
   });
 
   return {

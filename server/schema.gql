@@ -247,6 +247,12 @@ type FetchUploadsResponse {
   uploadIds: [String!]
 }
 
+input FetchVideosDashboardInput {
+  screenshotMax: Float
+  screenshotMin: Float
+  sortOrder: String
+}
+
 type FileWithSizeResponse {
   name: String!
   sizeMB: Float!
@@ -400,7 +406,7 @@ type Query {
   channelMetadata(channelMetadataInput: ChannelMetadataInput!): ChannelMetadataResponse!
   episodesWithThumbnails(input: EpisodesWithThumbnailsInput!): [EpisodesWithThumbnailsResponse!]!
   fetchDashboard(fetchDashboardInput: FetchDashboardInput!): ChannelsDashboardResponse!
-  fetchVideosDashboard(screenshotMax: Float, screenshotMin: Float, sortOrder: String): VideosDashboardResponse!
+  fetchVideosDashboard(fetchVideosDashboardInput: FetchVideosDashboardInput!): VideosDashboardResponse!
   getAllEpisodes: [Episode!]!
   getAllTvs: [Tv!]!
   getEpisode(getEpisodeInput: GetEpisodeInput!): Episode

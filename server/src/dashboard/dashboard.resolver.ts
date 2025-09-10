@@ -1,6 +1,7 @@
 import { Resolver, Query, Args } from '@nestjs/graphql';
 import { DashboardService } from './dashboard.service';
 import { FetchDashboardInput } from './dtos/fetch-dashboard.input';
+import { FetchVideosDashboardInput } from './dtos/fetch-videos-dashboard.input';
 import {
   ChannelsDashboardResponse,
   VideosDashboardResponse,
@@ -19,14 +20,11 @@ export class DashboardResolver {
 
   @Query(() => VideosDashboardResponse)
   async fetchVideosDashboard(
-    @Args('sortOrder', { nullable: true }) sortOrder?: 'asc' | 'desc',
-    @Args('screenshotMin', { nullable: true }) screenshotMin?: number,
-    @Args('screenshotMax', { nullable: true }) screenshotMax?: number,
+    @Args('fetchVideosDashboardInput')
+    fetchVideosDashboardInput: FetchVideosDashboardInput,
   ): Promise<VideosDashboardResponse> {
-    return this.dashboardService.fetchVideosDashboard({
-      sortOrder,
-      screenshotMin,
-      screenshotMax,
-    });
+    return this.dashboardService.fetchVideosDashboard(
+      fetchVideosDashboardInput,
+    );
   }
 }

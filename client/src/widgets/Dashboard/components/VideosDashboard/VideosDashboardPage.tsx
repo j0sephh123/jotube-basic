@@ -1,20 +1,10 @@
-import { SortDirectionFilter, VideosDashboard } from "@widgets/Dashboard";
-import { CommonDashboardHeaderWrapper } from "@widgets/Dashboard";
-import { RangePicker } from "@widgets/RangePicker";
+import { VideosDashboard } from "@widgets/Dashboard";
+import { VideosDashboardHeader } from "./VideosDashboardHeader";
 
 export default function VideosDashboardPage() {
   return (
     <>
-      <CommonDashboardHeaderWrapper>
-        <SortDirectionFilter />
-        <RangePicker
-          minLabel="Min"
-          maxLabel="Max"
-          minKey="min"
-          maxKey="max"
-          identifier="videosMinMax"
-        />
-      </CommonDashboardHeaderWrapper>
+      <VideosDashboardHeader />
       <div className="flex-1 min-h-0 overflow-y-auto px-4">
         <VideosDashboard />
       </div>

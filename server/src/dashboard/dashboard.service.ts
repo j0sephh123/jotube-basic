@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { FetchDashboardInput } from './dtos/fetch-dashboard.input';
+import { FetchVideosDashboardInput } from './dtos/fetch-videos-dashboard.input';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
 import { DashboardChannel, ViewType, DashboardVideo } from './types';
 import {
@@ -307,54 +308,118 @@ export class DashboardService {
     );
   }
 
-  public async fetchVideosDashboard(filters?: {
-    sortOrder?: 'asc' | 'desc';
-    screenshotMin?: number;
-    screenshotMax?: number;
-  }): Promise<VideosDashboardResponse> {
+  public async fetchVideosDashboard(
+    filters: FetchVideosDashboardInput,
+  ): Promise<VideosDashboardResponse> {
     const sortOrder = filters?.sortOrder || 'desc';
     const screenshotMin = filters?.screenshotMin;
     const screenshotMax = filters?.screenshotMax;
 
+    console.log({
+      screenshotMax,
+      screenshotMin,
+    });
+
     const orderDirection = sortOrder === 'asc' ? 'ASC' : 'DESC';
 
-    const rows = await this.prismaService.$queryRaw<any[]>(Prisma.sql`
-      SELECT
-        uv.id,
-        uv.ytId,
-        uv.title,
-        uv.src,
-        c.id    AS channelId,
-        c.title AS channelTitle,
-        c.ytId  AS channelYtId,
-        COUNT(s.id) AS screenshotCount
-      FROM UploadsVideo AS uv
-      JOIN Channel AS c
-        ON c.id = uv.channelId
-      JOIN Screenshot AS s
-        ON s.ytVideoId = uv.ytId
-      GROUP BY
-        uv.id, uv.ytId, uv.title, uv.src, c.id, c.title, c.ytId
-      HAVING COUNT(s.id) > 0
-      ORDER BY screenshotCount ${Prisma.raw(orderDirection)}, uv.id DESC
-      LIMIT 150
-    `);
+    let rows: any[];
 
-    let filteredRows = rows;
-
-    if (screenshotMin !== undefined && screenshotMin > 0) {
-      filteredRows = filteredRows.filter(
-        (row) => Number(row.screenshotCount) >= screenshotMin,
-      );
+    if (
+      screenshotMin !== undefined &&
+      screenshotMin > 0 &&
+      screenshotMax !== undefined &&
+      screenshotMax > 0
+    ) {
+      rows = await this.prismaService.$queryRaw<any[]>(Prisma.sql`
+        SELECT
+          uv.id,
+          uv.ytId,
+          uv.title,
+          uv.src,
+          c.id    AS channelId,
+          c.title AS channelTitle,
+          c.ytId  AS channelYtId,
+          COUNT(s.id) AS screenshotCount
+        FROM UploadsVideo AS uv
+        JOIN Channel AS c
+          ON c.id = uv.channelId
+        JOIN Screenshot AS s
+          ON s.ytVideoId = uv.ytId
+        GROUP BY
+          uv.id, uv.ytId, uv.title, uv.src, c.id, c.title, c.ytId
+        HAVING COUNT(s.id) > 0 AND COUNT(s.id) >= ${screenshotMin} AND COUNT(s.id) <= ${screenshotMax}
+        ORDER BY screenshotCount ${Prisma.raw(orderDirection)}, uv.id DESC
+        LIMIT 150
+      `);
+    } else if (screenshotMin !== undefined && screenshotMin > 0) {
+      rows = await this.prismaService.$queryRaw<any[]>(Prisma.sql`
+        SELECT
+          uv.id,
+          uv.ytId,
+          uv.title,
+          uv.src,
+          c.id    AS channelId,
+          c.title AS channelTitle,
+          c.ytId  AS channelYtId,
+          COUNT(s.id) AS screenshotCount
+        FROM UploadsVideo AS uv
+        JOIN Channel AS c
+          ON c.id = uv.channelId
+        JOIN Screenshot AS s
+          ON s.ytVideoId = uv.ytId
+        GROUP BY
+          uv.id, uv.ytId, uv.title, uv.src, c.id, c.title, c.ytId
+        HAVING COUNT(s.id) > 0 AND COUNT(s.id) >= ${screenshotMin}
+        ORDER BY screenshotCount ${Prisma.raw(orderDirection)}, uv.id DESC
+        LIMIT 150
+      `);
+    } else if (screenshotMax !== undefined && screenshotMax > 0) {
+      rows = await this.prismaService.$queryRaw<any[]>(Prisma.sql`
+        SELECT
+          uv.id,
+          uv.ytId,
+          uv.title,
+          uv.src,
+          c.id    AS channelId,
+          c.title AS channelTitle,
+          c.ytId  AS channelYtId,
+          COUNT(s.id) AS screenshotCount
+        FROM UploadsVideo AS uv
+        JOIN Channel AS c
+          ON c.id = uv.channelId
+        JOIN Screenshot AS s
+          ON s.ytVideoId = uv.ytId
+        GROUP BY
+          uv.id, uv.ytId, uv.title, uv.src, c.id, c.title, c.ytId
+        HAVING COUNT(s.id) > 0 AND COUNT(s.id) <= ${screenshotMax}
+        ORDER BY screenshotCount ${Prisma.raw(orderDirection)}, uv.id DESC
+        LIMIT 150
+      `);
+    } else {
+      rows = await this.prismaService.$queryRaw<any[]>(Prisma.sql`
+        SELECT
+          uv.id,
+          uv.ytId,
+          uv.title,
+          uv.src,
+          c.id    AS channelId,
+          c.title AS channelTitle,
+          c.ytId  AS channelYtId,
+          COUNT(s.id) AS screenshotCount
+        FROM UploadsVideo AS uv
+        JOIN Channel AS c
+          ON c.id = uv.channelId
+        JOIN Screenshot AS s
+          ON s.ytVideoId = uv.ytId
+        GROUP BY
+          uv.id, uv.ytId, uv.title, uv.src, c.id, c.title, c.ytId
+        HAVING COUNT(s.id) > 0
+        ORDER BY screenshotCount ${Prisma.raw(orderDirection)}, uv.id DESC
+        LIMIT 150
+      `);
     }
 
-    if (screenshotMax !== undefined && screenshotMax > 0) {
-      filteredRows = filteredRows.filter(
-        (row) => Number(row.screenshotCount) <= screenshotMax,
-      );
-    }
-
-    const total = filteredRows.length;
+    const total = rows.length;
 
     const featuredScreenshotsData =
       await this.prismaService.channelFeaturedScreenshot.findMany({
@@ -367,7 +432,7 @@ export class DashboardService {
       });
 
     return {
-      videos: filteredRows.map(
+      videos: rows.map(
         (r): DashboardVideo => ({
           id: r.id,
           ytId: r.ytId,

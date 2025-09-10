@@ -283,6 +283,12 @@ export type FetchUploadsResponse = {
   uploadIds?: Maybe<Array<Scalars['String']['output']>>;
 };
 
+export type FetchVideosDashboardInput = {
+  screenshotMax?: InputMaybe<Scalars['Float']['input']>;
+  screenshotMin?: InputMaybe<Scalars['Float']['input']>;
+  sortOrder?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type FileWithSizeResponse = {
   __typename?: 'FileWithSizeResponse';
   name: Scalars['String']['output'];
@@ -595,9 +601,7 @@ export type QueryFetchDashboardArgs = {
 
 
 export type QueryFetchVideosDashboardArgs = {
-  screenshotMax?: InputMaybe<Scalars['Float']['input']>;
-  screenshotMin?: InputMaybe<Scalars['Float']['input']>;
-  sortOrder?: InputMaybe<Scalars['String']['input']>;
+  fetchVideosDashboardInput: FetchVideosDashboardInput;
 };
 
 
@@ -1042,9 +1046,7 @@ export type FetchDashboardQueryVariables = Exact<{
 export type FetchDashboardQuery = { __typename?: 'Query', fetchDashboard: { __typename?: 'ChannelsDashboardResponse', total: number, channels: Array<{ __typename?: 'DashboardChannelResponse', id: number, createdAt: any, title: string, ytId: string, src: string, lastSyncedAt?: any | null, videoCount: number, thumbnails: number, saved: number, defaults: number, storyboard: number, screenshotsCount: number, playlist?: { __typename?: 'DashboardPlaylistResponse', id: number, name: string } | null, featuredScreenshots: Array<{ __typename?: 'FeaturedScreenshotResponse', src: string, id: number, second: number, ytVideoId: string }> }> } };
 
 export type FetchVideosDashboardQueryVariables = Exact<{
-  sortOrder?: InputMaybe<Scalars['String']['input']>;
-  screenshotMin?: InputMaybe<Scalars['Float']['input']>;
-  screenshotMax?: InputMaybe<Scalars['Float']['input']>;
+  fetchVideosDashboardInput: FetchVideosDashboardInput;
 }>;
 
 
@@ -1871,12 +1873,8 @@ export type FetchDashboardLazyQueryHookResult = ReturnType<typeof useFetchDashbo
 export type FetchDashboardSuspenseQueryHookResult = ReturnType<typeof useFetchDashboardSuspenseQuery>;
 export type FetchDashboardQueryResult = Apollo.QueryResult<FetchDashboardQuery, FetchDashboardQueryVariables>;
 export const FetchVideosDashboardDocument = gql`
-    query FetchVideosDashboard($sortOrder: String, $screenshotMin: Float, $screenshotMax: Float) {
-  fetchVideosDashboard(
-    sortOrder: $sortOrder
-    screenshotMin: $screenshotMin
-    screenshotMax: $screenshotMax
-  ) {
+    query FetchVideosDashboard($fetchVideosDashboardInput: FetchVideosDashboardInput!) {
+  fetchVideosDashboard(fetchVideosDashboardInput: $fetchVideosDashboardInput) {
     videos {
       id
       ytId
@@ -1910,13 +1908,11 @@ export const FetchVideosDashboardDocument = gql`
  * @example
  * const { data, loading, error } = useFetchVideosDashboardQuery({
  *   variables: {
- *      sortOrder: // value for 'sortOrder'
- *      screenshotMin: // value for 'screenshotMin'
- *      screenshotMax: // value for 'screenshotMax'
+ *      fetchVideosDashboardInput: // value for 'fetchVideosDashboardInput'
  *   },
  * });
  */
-export function useFetchVideosDashboardQuery(baseOptions?: Apollo.QueryHookOptions<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>) {
+export function useFetchVideosDashboardQuery(baseOptions: Apollo.QueryHookOptions<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables> & ({ variables: FetchVideosDashboardQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>(FetchVideosDashboardDocument, options);
       }
