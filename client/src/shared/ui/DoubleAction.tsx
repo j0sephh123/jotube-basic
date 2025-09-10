@@ -3,17 +3,8 @@ import { Eye, ListMusic, Edit, Plus } from "lucide-react";
 import { Tooltip } from "@shared/ui";
 import clsx from "clsx";
 
-type Label =
-  | "storyboards"
-  | "screenshots"
-  | "gallery"
-  | "default"
-  | "saved"
-  | "thumbnails"
-  | "playlist";
-
 type Props = {
-  label: Label;
+  label: string;
   count: number;
   onNavigate: () => void;
   onFirst?: () => void;
@@ -24,7 +15,7 @@ type Props = {
   isActive?: boolean;
 };
 
-function tone(label: Label) {
+function tone(label: string) {
   switch (label) {
     case "storyboards":
       return {
@@ -79,7 +70,7 @@ function tone(label: Label) {
   }
 }
 
-function getIcons(label: Label) {
+function getIcons(label: string) {
   switch (label) {
     case "storyboards":
       return { first: Eye, second: null };
@@ -185,15 +176,15 @@ export const DoubleAction: React.FC<Props> = ({
       )}
       <div
         className={clsx(
-          "px-3 py-2 text-[10px] font-medium uppercase tracking-wide text-center w-20 relative cursor-default hover:underline",
+          "px-3 py-2 text-[12px] font-medium uppercase tracking-wide text-center w-28 relative cursor-default hover:underline",
           FirstIcon && "border-r",
-          "text-gray-300",
+          "text-gray-200",
           t.bg,
           t.border
         )}
         onClick={onNavigate}
       >
-        <span className="absolute -top-1 -left-1 text-[9px] bg-zinc-600 text-white rounded-full px-1 py-0 leading-tight min-w-4 text-center">
+        <span className="absolute -top-1 -left-1 text-[12px] bg-zinc-600 text-white rounded-full px-1 py-0 leading-tight min-w-4 text-center">
           {count}
         </span>
         {label}
