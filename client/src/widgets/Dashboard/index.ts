@@ -7,3 +7,4 @@ export { default as ChannelsDashboard } from "./components/ChannelsDashboard";
 export { default as ChannelsDashboardContainer } from "./components/ChannelsDashboard/ChannelsDashboardContainer";
 export { default as ChannelDashboardCard } from "./components/ChannelDashboardCard";
 export { SortDirectionFilter } from "./components/Filters/SortDirectionFilter";
+export { CommonDashboardHeaderWrapper } from "./ui/CommonDashboardHeaderWrapper";
