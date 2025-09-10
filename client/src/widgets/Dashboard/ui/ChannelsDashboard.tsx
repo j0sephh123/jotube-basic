@@ -4,35 +4,40 @@ import {
   ChannelDashboardCard,
   ChannelsDashboardContainer,
 } from "@widgets/Dashboard";
+import { Virtualizer } from "@widgets/Virtualizer";
 
 export default function ChannelsDashboard() {
   const { viewType } = useTypedParams("DashboardParams");
 
   return (
     <ChannelsDashboardContainer>
-      {(channels, refetch) =>
-        channels?.map((c) => (
-          <ChannelDashboardCard
-            key={c.id}
-            id={c.id}
-            ytId={c.ytId}
-            title={c.title}
-            src={c.src}
-            lastSyncedAt={c.lastSyncedAt}
-            screenshotsCount={c.screenshotsCount}
-            thumbnails={c.thumbnails}
-            saved={c.saved}
-            defaults={c.defaults}
-            storyboard={c.storyboard}
-            createdAt={c.createdAt}
-            videoCount={c.videoCount}
-            playlist={c.playlist}
-            viewType={viewType as unknown as ViewType}
-            onChannelDelete={refetch}
-            featuredScreenshots={c.featuredScreenshots}
-          />
-        ))
-      }
+      {(channels, refetch) => (
+        <Virtualizer
+          items={channels}
+          ItemComponent={({ item }) => (
+            <ChannelDashboardCard
+              key={item.id}
+              id={item.id}
+              ytId={item.ytId}
+              title={item.title}
+              src={item.src}
+              lastSyncedAt={item.lastSyncedAt}
+              screenshotsCount={item.screenshotsCount}
+              thumbnails={item.thumbnails}
+              saved={item.saved}
+              defaults={item.defaults}
+              storyboard={item.storyboard}
+              createdAt={item.createdAt}
+              videoCount={item.videoCount}
+              playlist={item.playlist}
+              viewType={viewType as unknown as ViewType}
+              onChannelDelete={refetch}
+              featuredScreenshots={item.featuredScreenshots}
+            />
+          )}
+          flexibleHeight={true}
+        />
+      )}
     </ChannelsDashboardContainer>
   );
 }

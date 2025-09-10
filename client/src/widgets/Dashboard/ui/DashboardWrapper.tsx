@@ -8,7 +8,6 @@ import {
 } from "@widgets/Dashboard";
 import { DashboardType } from "@features/Dashboard";
 import { useTypedParams } from "@shared/hooks";
-import { Grid } from "@widgets/Grid";
 import { RangePicker } from "@widgets/RangePicker";
 
 const header: Record<
@@ -54,9 +53,7 @@ export default function DashboardWrapper() {
           />
         </div>
         <div className="flex-1 min-h-0 overflow-y-auto px-4">
-          <Grid>
-            <Outlet />
-          </Grid>
+          <Outlet />
         </div>
       </div>
     </div>

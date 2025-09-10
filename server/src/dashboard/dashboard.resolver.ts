@@ -19,13 +19,11 @@ export class DashboardResolver {
 
   @Query(() => VideosDashboardResponse)
   async fetchVideosDashboard(
-    @Args('page', { nullable: true }) page?: number,
     @Args('sortOrder', { nullable: true }) sortOrder?: 'asc' | 'desc',
     @Args('screenshotMin', { nullable: true }) screenshotMin?: number,
     @Args('screenshotMax', { nullable: true }) screenshotMax?: number,
   ): Promise<VideosDashboardResponse> {
     return this.dashboardService.fetchVideosDashboard({
-      page,
       sortOrder,
       screenshotMin,
       screenshotMax,

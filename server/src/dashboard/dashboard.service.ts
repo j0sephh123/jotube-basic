@@ -10,8 +10,6 @@ import { ChannelService } from 'src/channels/channel.service';
 import { ServiceLogger } from 'src/logging/service-logger';
 import { ArtifactType, Prisma } from '@prisma/client';
 
-const PER_PAGE = 12;
-
 type ValueGetter = (channel: DashboardChannel) => number;
 
 const valueGetters: Record<string, ValueGetter> = {
@@ -36,7 +34,6 @@ export class DashboardService {
   }
 
   public async fetchDashboard({
-    page,
     sortOrder,
     min,
     max,
@@ -47,8 +44,6 @@ export class DashboardService {
     this.log.infoStart({
       viewType,
     });
-    const skip = (page - 1) * PER_PAGE;
-
     const rawChannels = await this.getChannelsForViewType(viewType);
     const allChannels: DashboardChannel[] =
       await this.getChannelsWithCounts(rawChannels);
@@ -84,7 +79,7 @@ export class DashboardService {
     }));
 
     return {
-      channels: channelsWithFeaturedScreenshots.slice(skip, skip + PER_PAGE),
+      channels: channelsWithFeaturedScreenshots,
       total: sorted.length,
     };
   }
@@ -313,16 +308,13 @@ export class DashboardService {
   }
 
   public async fetchVideosDashboard(filters?: {
-    page?: number;
     sortOrder?: 'asc' | 'desc';
     screenshotMin?: number;
     screenshotMax?: number;
   }): Promise<VideosDashboardResponse> {
-    const page = filters?.page || 1;
     const sortOrder = filters?.sortOrder || 'desc';
     const screenshotMin = filters?.screenshotMin;
     const screenshotMax = filters?.screenshotMax;
-    const offset = (page - 1) * PER_PAGE;
 
     const orderDirection = sortOrder === 'asc' ? 'ASC' : 'DESC';
 
@@ -362,7 +354,6 @@ export class DashboardService {
     }
 
     const total = filteredRows.length;
-    const paginatedRows = filteredRows.slice(offset, offset + PER_PAGE);
 
     const featuredScreenshotsData =
       await this.prismaService.channelFeaturedScreenshot.findMany({
@@ -375,7 +366,7 @@ export class DashboardService {
       });
 
     return {
-      videos: paginatedRows.map(
+      videos: filteredRows.map(
         (r): DashboardVideo => ({
           id: r.id,
           ytId: r.ytId,
