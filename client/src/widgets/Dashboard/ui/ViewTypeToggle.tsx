@@ -1,7 +1,6 @@
 import { useCustomNavigate, useTypedParams } from "@shared/hooks";
 import { ViewType } from "@features/Dashboard";
-import clsx from "clsx";
-import { Button } from "@shared/ui";
+import { DoubleAction } from "@shared/ui";
 
 const viewTypeOrder = [
   ViewType.NO_UPLOADS,
@@ -21,19 +20,16 @@ export default function ViewTypeToggle() {
   };
 
   return (
-    <div className="grid grid-cols-3 gap-2">
+    <div className="grid grid-cols-3 grid-rows-2 gap-2">
       {viewTypeOrder.map((type) => (
-        <Button
-          size="sm"
+        <DoubleAction
           key={type}
-          className={clsx("", {
-            "btn-primary": (viewType as unknown as ViewType) === type,
-            "btn-outline": (viewType as unknown as ViewType) !== type,
-          })}
-          onClick={() => handleToggle(type)}
-        >
-          {type}
-        </Button>
+          label={type}
+          count={0}
+          onNavigate={() => handleToggle(type)}
+          isActive={(viewType as unknown as ViewType) === type}
+          size="sm"
+        />
       ))}
     </div>
   );

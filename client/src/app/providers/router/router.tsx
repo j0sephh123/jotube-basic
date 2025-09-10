@@ -1,7 +1,7 @@
+/* eslint-disable import/no-internal-modules */
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "@app/Layout";
 import { ChannelPageLayout } from "@widgets/ChannelPageLayout";
-import { DashboardWidget, DashboardWrapper } from "@widgets/Dashboard";
 import { ImageNavigatorPage } from "@pages/image-navigator";
 import { PlaylistsPage } from "@pages/playlists";
 import { PlaylistDetailsPage } from "@pages/playlist-details";
@@ -18,6 +18,9 @@ import {
 } from "@pages/processing-phase";
 import { PageWrapper } from "@widgets/PageWrapper";
 import { VideoDetailsPage } from "@pages/video-details";
+import { DashboardType } from "@features/Dashboard";
+import VideosDashboardPage from "@widgets/Dashboard/ui/VideosDashboardPage";
+import ChannelsDashboardPage from "@widgets/Dashboard/ui/ChannelsDashboardPage";
 
 export default function Router() {
   return (
@@ -28,9 +31,14 @@ export default function Router() {
             path="/"
             element={<Navigate to="/dashboard/channels/saved" />}
           />
-          <Route path="dashboard" element={<DashboardWrapper />}>
-            <Route path=":type/:viewType" element={<DashboardWidget />} />
-          </Route>
+          <Route
+            path={`/dashboard/${DashboardType.CHANNELS}/:viewType`}
+            element={<ChannelsDashboardPage />}
+          />
+          <Route
+            path={`/dashboard/${DashboardType.VIDEOS}/:viewType`}
+            element={<VideosDashboardPage />}
+          />
           <Route
             path="/channels/:ytChannelId"
             element={<Navigate to="default" />}

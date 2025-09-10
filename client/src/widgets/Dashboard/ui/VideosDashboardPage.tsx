@@ -1,10 +1,13 @@
-import { Outlet } from "react-router-dom";
-import { SelectSortDirection, ViewTypeToggle } from "@widgets/Dashboard";
+import {
+  SelectSortDirection,
+  VideosDashboard,
+  ViewTypeToggle,
+} from "@widgets/Dashboard";
 import { DashboardType } from "@features/Dashboard";
 import { useTypedParams } from "@shared/hooks";
 import { RangePicker } from "@widgets/RangePicker";
 
-export default function DashboardWrapper() {
+export default function VideosDashboardPage() {
   const { type } = useTypedParams("DashboardParams");
 
   return (
@@ -33,7 +36,7 @@ export default function DashboardWrapper() {
           </div>
         </div>
         <div className="flex-1 min-h-0 overflow-y-auto px-4">
-          <Outlet />
+          <VideosDashboard />
         </div>
       </div>
     </div>
