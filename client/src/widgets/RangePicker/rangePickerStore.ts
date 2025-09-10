@@ -1,31 +1,69 @@
 import { proxy, useSnapshot } from "valtio";
 
-type State = {
-  isOpen: boolean;
-  draftMin: string;
-  draftMax: string;
+export type Identifier = string;
+
+type State = Record<
+  Identifier,
+  {
+    isOpen: boolean;
+    draftMin: string;
+    draftMax: string;
+  }
+>;
+
+const state = proxy<State>({});
+
+export const openRangePicker = (identifier: Identifier) => {
+  if (!state[identifier]) {
+    state[identifier] = {
+      isOpen: false,
+      draftMin: "",
+      draftMax: "",
+    };
+  }
+  state[identifier].isOpen = true;
 };
 
-const state = proxy<State>({
-  isOpen: false,
-  draftMin: "",
-  draftMax: "",
-});
-
-export const openRangePicker = () => {
-  state.isOpen = true;
+export const closeRangePicker = (identifier: Identifier) => {
+  if (!state[identifier]) {
+    state[identifier] = {
+      isOpen: false,
+      draftMin: "",
+      draftMax: "",
+    };
+  }
+  state[identifier].isOpen = false;
 };
 
-export const closeRangePicker = () => {
-  state.isOpen = false;
+export const setDraftMin = (identifier: Identifier, value: string) => {
+  if (!state[identifier]) {
+    state[identifier] = {
+      isOpen: false,
+      draftMin: "",
+      draftMax: "",
+    };
+  }
+  state[identifier].draftMin = value;
 };
 
-export const setDraftMin = (value: string) => {
-  state.draftMin = value;
+export const setDraftMax = (identifier: Identifier, value: string) => {
+  if (!state[identifier]) {
+    state[identifier] = {
+      isOpen: false,
+      draftMin: "",
+      draftMax: "",
+    };
+  }
+  state[identifier].draftMax = value;
 };
 
-export const setDraftMax = (value: string) => {
-  state.draftMax = value;
+export const useRangePickerState = (identifier: Identifier) => {
+  if (!state[identifier]) {
+    state[identifier] = {
+      isOpen: false,
+      draftMin: "",
+      draftMax: "",
+    };
+  }
+  return useSnapshot(state[identifier]);
 };
-
-export const useRangePickerState = () => useSnapshot(state);

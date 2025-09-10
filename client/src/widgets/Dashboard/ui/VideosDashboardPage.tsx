@@ -24,12 +24,14 @@ export default function VideosDashboardPage() {
                   maxLabel="Max"
                   minKey="min"
                   maxKey="max"
+                  identifier="videosMinMax"
                 />
                 <RangePicker
                   minLabel="Default Min"
                   maxLabel="Default Max"
                   minKey="defaultMin"
                   maxKey="defaultMax"
+                  identifier="videosDefaultMinMax"
                 />
               </>
             )}

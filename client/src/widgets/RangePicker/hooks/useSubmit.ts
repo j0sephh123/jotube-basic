@@ -3,9 +3,9 @@ import { useSearchParams } from "react-router-dom";
 import { closeRangePicker } from "../rangePickerStore";
 import { type RangePickerKeys } from "../types";
 
-export function useSubmit({ minKey, maxKey }: RangePickerKeys) {
+export function useSubmit({ minKey, maxKey, identifier }: RangePickerKeys) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const close = () => closeRangePicker();
+  const close = useCallback(() => closeRangePicker(identifier), [identifier]);
 
   const submit = useCallback(
     (draftMin: string, draftMax: string) => {
@@ -24,7 +24,7 @@ export function useSubmit({ minKey, maxKey }: RangePickerKeys) {
       setSearchParams(next);
       close();
     },
-    [maxKey, minKey, searchParams, setSearchParams]
+    [searchParams, minKey, maxKey, setSearchParams, close]
   );
 
   return submit;

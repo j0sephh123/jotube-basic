@@ -44,8 +44,6 @@ function GalleryVideosListInner({ channelId }: { channelId: number }) {
     });
   }, [videoScreenshotCounts, sortBy]);
 
-  console.log(videoScreenshotCounts);
-
   return (
     <StaticStates
       isLoading={isLoading}

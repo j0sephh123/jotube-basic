@@ -4,14 +4,14 @@ import { useRangePickerState } from "../rangePickerStore";
 import { useParsedSearchParams } from "./useParsedSearchParams";
 import { type RangePickerKeys } from "../types";
 
-export function useSetValues({ minKey, maxKey }: RangePickerKeys) {
-  const { isOpen } = useRangePickerState();
-  const { min, max } = useParsedSearchParams({ minKey, maxKey });
+export function useSetValues({ minKey, maxKey, identifier }: RangePickerKeys) {
+  const { isOpen } = useRangePickerState(identifier);
+  const { min, max } = useParsedSearchParams({ minKey, maxKey, identifier });
 
   useEffect(() => {
     if (isOpen) {
-      setDraftMin(min === null ? "" : String(min));
-      setDraftMax(max === null ? "" : String(max));
+      setDraftMin(identifier, min === null ? "" : String(min));
+      setDraftMax(identifier, max === null ? "" : String(max));
     }
-  }, [isOpen, min, max, minKey, maxKey]);
+  }, [isOpen, min, max, minKey, maxKey, identifier]);
 }

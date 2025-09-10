@@ -2,14 +2,11 @@ import { useGetProcessingPhasesQuery } from "@shared/api";
 import { useMemo } from "react";
 import { latestActivityIso } from "@shared/utils";
 import type { VideoWithPhases } from "../types";
-import { useQueue } from "@shared/hooks";
 
 export function useProcessingPhases(variant: "latest" | "running") {
   const { data, loading, error, refetch } = useGetProcessingPhasesQuery({
     variables: { variant },
   });
-  const queue = useQueue();
-  console.log(queue.data);
 
   const processedData = useMemo(() => {
     if (!data?.processingPhases) return [];
