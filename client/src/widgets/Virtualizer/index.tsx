@@ -15,7 +15,9 @@ export function Virtualizer<T>({
       <AutoSizer>
         {({ width, height }: { width: number; height: number }) => {
           const colCount = Math.max(1, itemsPerRow);
-          const colWidth = Math.floor(width / colCount);
+          // Account for gaps between columns (8px gap between each column)
+          const totalGapWidth = (colCount - 1) * 8;
+          const colWidth = Math.floor((width - totalGapWidth) / colCount);
 
           // Tailwind p-2 = 8px each side
           const gutter = 8;
@@ -51,8 +53,14 @@ export function Virtualizer<T>({
             const index = rowIndex * colCount + columnIndex;
             if (index >= items.length) return <div key={key} style={style} />;
             const item = items[index]!;
+            // Add gap spacing between columns
+            const gapOffset = columnIndex * 8;
+            const adjustedStyle = {
+              ...style,
+              left: (style.left as number) + gapOffset,
+            };
             return (
-              <div key={key} style={style} className="box-border">
+              <div key={key} style={adjustedStyle} className="box-border">
                 <ItemComponent item={item} />
               </div>
             );
