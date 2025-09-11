@@ -321,9 +321,46 @@ export class DashboardService {
     // thumbnails
     const videosDashboardViewType = filters.videosDashboardViewType;
 
-    if (videosDashboardViewType === 'storyboards') {
-      console.log('inside storyboards');
+    if (videosDashboardViewType === 'thumbnails') {
+      const rows = await this.prismaService.$queryRaw<any[]>(Prisma.sql`
+        SELECT
+          uv.id,
+          uv.ytId,
+          uv.title,
+          uv.src,
+          c.id    AS channelId,
+          c.title AS channelTitle,
+          c.ytId  AS channelYtId,
+          0 AS screenshotCount
+        FROM UploadsVideo AS uv
+        JOIN Channel AS c
+          ON c.id = uv.channelId
+        WHERE uv.artifact = 'THUMBNAIL'
+        ORDER BY uv.id DESC
+        LIMIT 150
+      `);
 
+      const total = rows.length;
+
+      return {
+        videos: rows.map(
+          (r): DashboardVideo => ({
+            id: r.id,
+            ytId: r.ytId,
+            title: r.title,
+            src: r.src,
+            channelId: r.channelId,
+            channelTitle: r.channelTitle,
+            channelYtId: r.channelYtId,
+            screenshotCount: 0,
+            featuredScreenshots: [],
+          }),
+        ) as any,
+        total,
+      };
+    }
+
+    if (videosDashboardViewType === 'storyboards') {
       const rows = await this.prismaService.$queryRaw<any[]>(Prisma.sql`
         SELECT
           uv.id,
@@ -363,8 +400,6 @@ export class DashboardService {
     }
 
     if (videosDashboardViewType === 'saved') {
-      console.log('inside saved');
-
       const rows = await this.prismaService.$queryRaw<any[]>(Prisma.sql`
         SELECT
           uv.id,
@@ -403,24 +438,18 @@ export class DashboardService {
       };
     }
 
-    if (videosDashboardViewType !== 'screenshots') {
-      return {
-        videos: [],
-        total: 0,
-      };
-    }
+    if (videosDashboardViewType === 'screenshots') {
+      const orderDirection = sortOrder === 'asc' ? 'ASC' : 'DESC';
 
-    const orderDirection = sortOrder === 'asc' ? 'ASC' : 'DESC';
+      let rows: any[];
 
-    let rows: any[];
-
-    if (
-      screenshotMin !== undefined &&
-      screenshotMin > 0 &&
-      screenshotMax !== undefined &&
-      screenshotMax > 0
-    ) {
-      rows = await this.prismaService.$queryRaw<any[]>(Prisma.sql`
+      if (
+        screenshotMin !== undefined &&
+        screenshotMin > 0 &&
+        screenshotMax !== undefined &&
+        screenshotMax > 0
+      ) {
+        rows = await this.prismaService.$queryRaw<any[]>(Prisma.sql`
         SELECT
           uv.id,
           uv.ytId,
@@ -441,8 +470,8 @@ export class DashboardService {
         ORDER BY screenshotCount ${Prisma.raw(orderDirection)}, uv.id DESC
         LIMIT 150
       `);
-    } else if (screenshotMin !== undefined && screenshotMin > 0) {
-      rows = await this.prismaService.$queryRaw<any[]>(Prisma.sql`
+      } else if (screenshotMin !== undefined && screenshotMin > 0) {
+        rows = await this.prismaService.$queryRaw<any[]>(Prisma.sql`
         SELECT
           uv.id,
           uv.ytId,
@@ -463,8 +492,8 @@ export class DashboardService {
         ORDER BY screenshotCount ${Prisma.raw(orderDirection)}, uv.id DESC
         LIMIT 150
       `);
-    } else if (screenshotMax !== undefined && screenshotMax > 0) {
-      rows = await this.prismaService.$queryRaw<any[]>(Prisma.sql`
+      } else if (screenshotMax !== undefined && screenshotMax > 0) {
+        rows = await this.prismaService.$queryRaw<any[]>(Prisma.sql`
         SELECT
           uv.id,
           uv.ytId,
@@ -485,8 +514,8 @@ export class DashboardService {
         ORDER BY screenshotCount ${Prisma.raw(orderDirection)}, uv.id DESC
         LIMIT 150
       `);
-    } else {
-      rows = await this.prismaService.$queryRaw<any[]>(Prisma.sql`
+      } else {
+        rows = await this.prismaService.$queryRaw<any[]>(Prisma.sql`
         SELECT
           uv.id,
           uv.ytId,
@@ -507,42 +536,43 @@ export class DashboardService {
         ORDER BY screenshotCount ${Prisma.raw(orderDirection)}, uv.id DESC
         LIMIT 150
       `);
+      }
+
+      const total = rows.length;
+
+      const featuredScreenshotsData =
+        await this.prismaService.channelFeaturedScreenshot.findMany({
+          include: {
+            screenshot: true,
+          },
+          orderBy: {
+            createdAt: 'desc',
+          },
+        });
+
+      return {
+        videos: rows.map(
+          (r): DashboardVideo => ({
+            id: r.id,
+            ytId: r.ytId,
+            title: r.title,
+            src: r.src,
+            channelId: r.channelId,
+            channelTitle: r.channelTitle,
+            channelYtId: r.channelYtId,
+            screenshotCount: Number(r.screenshotCount),
+            featuredScreenshots: featuredScreenshotsData
+              .filter((fs) => fs.screenshot.ytChannelId === r.channelYtId)
+              .map((fs) => ({
+                id: fs.screenshot.id,
+                second: fs.screenshot.second,
+                ytVideoId: fs.screenshot.ytVideoId,
+                src: `${fs.screenshot.ytChannelId}/${fs.screenshot.ytVideoId}/saved_screenshots/${fs.screenshot.ytVideoId}-${fs.screenshot.second}.png`,
+              })),
+          }),
+        ) as any,
+        total,
+      };
     }
-
-    const total = rows.length;
-
-    const featuredScreenshotsData =
-      await this.prismaService.channelFeaturedScreenshot.findMany({
-        include: {
-          screenshot: true,
-        },
-        orderBy: {
-          createdAt: 'desc',
-        },
-      });
-
-    return {
-      videos: rows.map(
-        (r): DashboardVideo => ({
-          id: r.id,
-          ytId: r.ytId,
-          title: r.title,
-          src: r.src,
-          channelId: r.channelId,
-          channelTitle: r.channelTitle,
-          channelYtId: r.channelYtId,
-          screenshotCount: Number(r.screenshotCount),
-          featuredScreenshots: featuredScreenshotsData
-            .filter((fs) => fs.screenshot.ytChannelId === r.channelYtId)
-            .map((fs) => ({
-              id: fs.screenshot.id,
-              second: fs.screenshot.second,
-              ytVideoId: fs.screenshot.ytVideoId,
-              src: `${fs.screenshot.ytChannelId}/${fs.screenshot.ytVideoId}/saved_screenshots/${fs.screenshot.ytVideoId}-${fs.screenshot.second}.png`,
-            })),
-        }),
-      ) as any,
-      total,
-    };
   }
 }
