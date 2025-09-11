@@ -42,7 +42,6 @@ export function useTypedParams(
   variant: Variant
 ):
   | string
-  | ViewType
   | null
   | { type: DashboardType; viewType: DashboardViewType } {
   const params = useParams();
@@ -52,7 +51,7 @@ export function useTypedParams(
   }
 
   if (variant === "ViewType") {
-    return mapViewTypeToGraphQL(params.viewType) ?? null;
+    return params.viewType as string;
   }
 
   if (variant === "ytVideoId") {

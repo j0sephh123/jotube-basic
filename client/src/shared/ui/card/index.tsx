@@ -31,7 +31,7 @@ type CardProps = {
   onThumbnailClick?: () => void;
   featuredScreenshotsLength?: number;
   to: To;
-  cardImageSlot: React.ReactNode;
+  cardImageSlot?: React.ReactNode;
 };
 
 function Card({

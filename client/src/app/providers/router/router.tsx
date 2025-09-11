@@ -18,10 +18,7 @@ import {
 } from "@pages/processing-phase";
 import { PageWrapper } from "@widgets/PageWrapper";
 import { VideoDetailsPage } from "@pages/video-details";
-import { DashboardType } from "@features/Dashboard";
-import VideosDashboardPage from "@widgets/Dashboard/components/VideosDashboard/VideosDashboardPage";
-import ChannelsDashboardPage from "@widgets/Dashboard/components/ChannelsDashboard/ChannelsDashboardPage";
-import { CommonDashboardWrapper } from "@widgets/Dashboard/ui/CommonDashboardWrapper";
+import DashboardPage from "@widgets/Dashboard/components/DashboardPage";
 
 export default function Router() {
   return (
@@ -32,17 +29,18 @@ export default function Router() {
             path="/"
             element={<Navigate to="/dashboard/channels/saved" />}
           />
-          <Route path="/dashboard" element={<CommonDashboardWrapper />}>
-            <Route
-              path={`${DashboardType.CHANNELS}/:viewType`}
-              element={<ChannelsDashboardPage />}
-            />
-            <Route
-              path={`${DashboardType.VIDEOS}/:videosDashboardViewType`}
-              element={<VideosDashboardPage />}
-            />
-          </Route>
-
+          <Route
+            path="/dashboard/videos/no-screenshots"
+            element={<Navigate to="/dashboard/videos/has-storyboards" />}
+          />
+          <Route
+            path="/dashboard/videos/no-uploads"
+            element={<Navigate to="/dashboard/videos/has-storyboards" />}
+          />
+          <Route
+            path={`/dashboard/:dashboardType/:viewType`}
+            element={<DashboardPage />}
+          />
           <Route
             path="/channels/:ytChannelId"
             element={<Navigate to="default" />}

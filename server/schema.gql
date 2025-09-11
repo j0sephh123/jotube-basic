@@ -234,7 +234,7 @@ input FetchDashboardInput {
   min: Float
   page: Float!
   sortOrder: String!
-  viewType: ViewType
+  viewType: String!
 }
 
 input FetchUploadsInput {
@@ -661,14 +661,4 @@ type VideoByYtIdResponse {
 type VideosDashboardResponse {
   total: Int!
   videos: [DashboardVideoResponse!]!
-}
-
-"""Available view types for dashboard filtering"""
-enum ViewType {
-  HAS_STORYBOARDS
-  NO_SCREENSHOTS
-  NO_UPLOADS
-  PROCESSED
-  SAVED
-  THUMBNAILS
 }

@@ -10,8 +10,8 @@ import { useParams, useSearchParams } from "react-router-dom";
 export type VideosDashboardResponseData = VideosDashboardResponse;
 
 export function useVideosDashboardQuery() {
-  const { videosDashboardViewType } = useParams<{
-    videosDashboardViewType: string;
+  const { viewType } = useParams<{
+    viewType: string;
   }>();
   const { finalSortOrder } = useFinalSortOrder();
   const [searchParams] = useSearchParams();
@@ -20,7 +20,7 @@ export function useVideosDashboardQuery() {
   const variables: FetchVideosDashboardQueryVariables = {
     fetchVideosDashboardInput: {
       sortOrder: finalSortOrder.toLowerCase() as "asc" | "desc",
-      videosDashboardViewType: videosDashboardViewType ?? "with-screenshots",
+      videosDashboardViewType: viewType,
     },
   };
 

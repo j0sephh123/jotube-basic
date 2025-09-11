@@ -26,6 +26,6 @@ export class FetchDashboardInput {
   @Field({ nullable: true })
   defaultMax?: number;
 
-  @Field(() => ViewType, { nullable: true })
-  viewType?: ViewType;
+  @Field()
+  viewType: string;
 }

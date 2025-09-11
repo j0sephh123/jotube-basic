@@ -42,10 +42,10 @@ export class DashboardService {
     defaultMax,
     viewType,
   }: FetchDashboardInput): Promise<ChannelsDashboardResponse> {
-    this.log.infoStart({
+    console.log({
       viewType,
     });
-    const rawChannels = await this.getChannelsForViewType(viewType);
+    const rawChannels = await this.getChannelsForViewType(viewType as ViewType);
     const allChannels: DashboardChannel[] =
       await this.getChannelsWithCounts(rawChannels);
     const filtered = this.filterChannels(allChannels, {
@@ -360,7 +360,7 @@ export class DashboardService {
       };
     }
 
-    if (videosDashboardViewType === 'storyboards') {
+    if (videosDashboardViewType === 'has-storyboards') {
       const rows = await this.prismaService.$queryRaw<any[]>(Prisma.sql`
         SELECT
           uv.id,
@@ -438,7 +438,7 @@ export class DashboardService {
       };
     }
 
-    if (videosDashboardViewType === 'screenshots') {
+    if (videosDashboardViewType === 'processed') {
       const orderDirection = sortOrder === 'asc' ? 'ASC' : 'DESC';
 
       let rows: any[];

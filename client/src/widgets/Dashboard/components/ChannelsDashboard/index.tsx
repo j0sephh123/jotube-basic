@@ -1,15 +1,14 @@
-import { type ViewType } from "@features/Dashboard";
 import {
   ChannelDashboardCard,
   ChannelsDashboardContainer,
 } from "@widgets/Dashboard";
 import { Virtualizer } from "@widgets/Virtualizer";
+import { useParams } from "react-router-dom";
+import { type ViewType } from "@shared/api";
 
-export default function ChannelsDashboard({
-  viewType,
-}: {
-  viewType: ViewType;
-}) {
+export default function ChannelsDashboard() {
+  const { viewType } = useParams<{ viewType: string }>();
+
   return (
     <ChannelsDashboardContainer>
       {(channels, refetch) => (
@@ -31,7 +30,7 @@ export default function ChannelsDashboard({
               createdAt={item.createdAt}
               videoCount={item.videoCount}
               playlist={item.playlist}
-              viewType={viewType}
+              viewType={viewType as unknown as ViewType}
               onChannelDelete={refetch}
               featuredScreenshots={item.featuredScreenshots}
             />

@@ -7,3 +7,4 @@ export { useCustomNavigate } from "./useCustomNavigate";
 export { useTypedParams } from "./useTypedParams";
 export { useDeleteFileOrDirectory } from "./useDeleteFileOrDirectory";
 export { useConvert, useConvertQuery } from "./useConvert";
+export { useSetUrlParam } from "./useSetParam";

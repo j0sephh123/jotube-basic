@@ -49,6 +49,8 @@ export function useChannelsDashboardQuery() {
     }
   );
 
+  console.log(error)
+
   return {
     data: data?.fetchDashboard,
     isLoading: loading,

@@ -21,16 +21,16 @@ import { makeYtChannelId } from "@shared/types";
 import { DeleteChannel } from "@entities/Channel/ui";
 
 const statsTypes = [
-  ViewType.THUMBNAILS,
-  ViewType.PROCESSED,
-  ViewType.SAVED,
-  ViewType.HAS_STORYBOARDS,
+'thumbnails',
+  'processed',
+  'saved',
+  'has-storyboards',
 ];
-const fetchUploadsTypes = [ViewType.NO_UPLOADS];
-const deleteChannelTypes = [ViewType.NO_UPLOADS];
+const fetchUploadsTypes = ['no-uploads'];
+const deleteChannelTypes = ['no-uploads'];
 
 type Props = DashboardChannelResponse & {
-  viewType: ViewType;
+  viewType: string;
   onChannelDelete?: () => void;
   featuredScreenshots: FeaturedScreenshotResponse[];
 };
