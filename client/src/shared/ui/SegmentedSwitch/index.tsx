@@ -63,7 +63,7 @@ export function SegmentedSwitch({
       <PlaylistsPopover
         customTrigger={customTrigger}
         onPlaylistClick={(playlistId) => {
-          navigate(`/dashboard/playlists/saved/${playlistId}` as To);
+          navigate(`/dashboard/playlists/channels/${playlistId}` as To);
         }}
       />
 
