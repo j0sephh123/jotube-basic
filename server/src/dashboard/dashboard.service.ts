@@ -321,6 +321,47 @@ export class DashboardService {
     // thumbnails
     const videosDashboardViewType = filters.videosDashboardViewType;
 
+    if (videosDashboardViewType === 'storyboards') {
+      console.log('inside storyboards');
+
+      const rows = await this.prismaService.$queryRaw<any[]>(Prisma.sql`
+        SELECT
+          uv.id,
+          uv.ytId,
+          uv.title,
+          uv.src,
+          c.id    AS channelId,
+          c.title AS channelTitle,
+          c.ytId  AS channelYtId,
+          0 AS screenshotCount
+        FROM UploadsVideo AS uv
+        JOIN Channel AS c
+          ON c.id = uv.channelId
+        WHERE uv.artifact = 'STORYBOARD'
+        ORDER BY uv.id DESC
+        LIMIT 150
+      `);
+
+      const total = rows.length;
+
+      return {
+        videos: rows.map(
+          (r): DashboardVideo => ({
+            id: r.id,
+            ytId: r.ytId,
+            title: r.title,
+            src: r.src,
+            channelId: r.channelId,
+            channelTitle: r.channelTitle,
+            channelYtId: r.channelYtId,
+            screenshotCount: 0,
+            featuredScreenshots: [],
+          }),
+        ) as any,
+        total,
+      };
+    }
+
     if (videosDashboardViewType === 'saved') {
       console.log('inside saved');
 
