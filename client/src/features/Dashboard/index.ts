@@ -1,4 +1,4 @@
-export { DashboardType, ViewType } from "./lib/useDashboardParams";
+export { ViewType } from "./lib/useDashboardParams";
 export {
   useChannelsDashboardQuery,
   useRefetchChannelsDashboardQuery,

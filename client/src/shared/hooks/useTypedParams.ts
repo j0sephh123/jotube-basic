@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { ViewType } from "@shared/api";
 // eslint-disable-next-line boundaries/element-types
 import { type UploadsType } from "@shared/types";
 
@@ -9,7 +8,7 @@ export enum DashboardViewType {
   NO_UPLOADS = "no-uploads",
   NO_SCREENSHOTS = "no-screenshots",
   THUMBNAILS = "thumbnails",
-  HAS_STORYBOARDS = "has-storyboards",
+  HAS_STORYBOARDS = "storyboards",
 }
 
 export enum DashboardType {
@@ -28,22 +27,21 @@ type Variant =
   | "uploadsType"
   | "processingPhaseType";
 
-export function useTypedParams(variant: "ViewType"): ViewType | null;
+export function useTypedParams(variant: "ViewType"): string | null;
 export function useTypedParams(variant: "ytChannelId"): string;
 export function useTypedParams(variant: "ytVideoId"): string;
 export function useTypedParams(variant: "playlistId"): string;
 export function useTypedParams(variant: "uploadsType"): UploadsType;
-export function useTypedParams(variant: "processingPhaseType"): ProcessingPhaseType;
+export function useTypedParams(
+  variant: "processingPhaseType"
+): ProcessingPhaseType;
 export function useTypedParams(variant: "DashboardParams"): {
   type: DashboardType;
   viewType: DashboardViewType;
 };
 export function useTypedParams(
   variant: Variant
-):
-  | string
-  | null
-  | { type: DashboardType; viewType: DashboardViewType } {
+): string | null | { type: DashboardType; viewType: DashboardViewType } {
   const params = useParams();
 
   if (variant === "ytChannelId") {
@@ -78,26 +76,3 @@ export function useTypedParams(
 
   return "";
 }
-
-const mapViewTypeToGraphQL = (
-  viewType: string | undefined
-): ViewType | undefined => {
-  if (!viewType) return undefined;
-
-  switch (viewType) {
-    case DashboardViewType.SAVED:
-      return ViewType.Saved;
-    case DashboardViewType.PROCESSED:
-      return ViewType.Processed;
-    case DashboardViewType.NO_UPLOADS:
-      return ViewType.NoUploads;
-    case DashboardViewType.NO_SCREENSHOTS:
-      return ViewType.NoScreenshots;
-    case DashboardViewType.THUMBNAILS:
-      return ViewType.Thumbnails;
-    case DashboardViewType.HAS_STORYBOARDS:
-      return ViewType.HasStoryboards;
-    default:
-      throw new Error(`Invalid view type: ${viewType}`);
-  }
-};

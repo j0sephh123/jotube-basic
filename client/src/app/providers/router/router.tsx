@@ -4,14 +4,12 @@ import Layout from "@app/Layout";
 import { ChannelPageLayout } from "@widgets/ChannelPageLayout";
 import { ImageNavigatorPage } from "@pages/image-navigator";
 import { PlaylistsPage } from "@pages/playlists";
-import { PlaylistDetailsPage } from "@pages/playlist-details";
 import { RecentlyViewedPage } from "@pages/recently-viewed";
 import { TvPage } from "@pages/tv";
 import { TvDetailsPage } from "@pages/tv-details";
 import { EpisodeDetailsPage } from "@pages/episode-details";
 import { NotFound } from "@shared/ui";
 import { UploadsDecorator } from "@features/Upload";
-import { PlaylistUploadsListPage } from "@pages/playlistUploadsList";
 import {
   ProcessingPhasePage,
   ProcessingPhaseWrapper,
@@ -31,14 +29,18 @@ export default function Router() {
           />
           <Route
             path="/dashboard/videos/no-screenshots"
-            element={<Navigate to="/dashboard/videos/has-storyboards" />}
+            element={<Navigate to="/dashboard/videos/storyboards" />}
           />
           <Route
             path="/dashboard/videos/no-uploads"
-            element={<Navigate to="/dashboard/videos/has-storyboards" />}
+            element={<Navigate to="/dashboard/videos/storyboards" />}
           />
           <Route
             path={`/dashboard/:dashboardType/:viewType`}
+            element={<DashboardPage />}
+          />
+          <Route
+            path={`/dashboard/:dashboardType/:viewType/:playlistId`}
             element={<DashboardPage />}
           />
           <Route
@@ -59,11 +61,6 @@ export default function Router() {
           />
           <Route path="/playlists" element={<PageWrapper />}>
             <Route index element={<PlaylistsPage />} />
-            <Route path=":playlistId" element={<PlaylistDetailsPage />} />
-            <Route
-              path=":playlistId/uploads/:uploadsType"
-              element={<PlaylistUploadsListPage />}
-            />
           </Route>
           <Route path="/tv" element={<PageWrapper />}>
             <Route index element={<TvPage />} />

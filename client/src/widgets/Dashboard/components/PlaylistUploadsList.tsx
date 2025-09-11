@@ -1,13 +1,16 @@
 import { useGetPlaylist } from "@features/Playlist";
 import { useRefetchPlaylist } from "@features/Playlist";
 import { UploadsList, useUploads } from "@features/Upload";
-import { IdType, type PlaylistDetailsResponse } from "@shared/api";
-import { PlaylistHeader } from "@features/Playlist";
+import { IdType } from "@shared/api";
 import { useTypedParams } from "@shared/hooks";
+import { useParams } from "react-router-dom";
+import { type UploadsType } from "@shared/types";
 
-export function PlaylistUploadsListPage() {
-  const uploadsType = useTypedParams("uploadsType");
+export function PlaylistUploadsList() {
+  const uploadsType = useParams().viewType as UploadsType;
   const playlistId = useTypedParams("playlistId");
+
+  console.log({ uploadsType });
 
   const { data, refetch } = useUploads({
     id: { type: IdType.Playlist, value: Number(playlistId) },
@@ -26,15 +29,10 @@ export function PlaylistUploadsListPage() {
   if (!data || !playlist) return null;
 
   return (
-    <div className="container mx-auto px-4 py-2">
-      <PlaylistHeader
-        playlist={playlist?.playlistDetails as PlaylistDetailsResponse}
-      />
-      <UploadsList
-        handleSideEffect={handleSideEffect}
-        data={data}
-        uploadsType={uploadsType}
-      />
-    </div>
+    <UploadsList
+      handleSideEffect={handleSideEffect}
+      data={data}
+      uploadsType={uploadsType}
+    />
   );
 }

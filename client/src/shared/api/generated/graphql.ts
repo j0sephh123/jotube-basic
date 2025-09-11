@@ -269,7 +269,7 @@ export type FetchDashboardInput = {
   min?: InputMaybe<Scalars['Float']['input']>;
   page: Scalars['Float']['input'];
   sortOrder: Scalars['String']['input'];
-  viewType?: InputMaybe<ViewType>;
+  viewType: Scalars['String']['input'];
 };
 
 export type FetchUploadsInput = {
@@ -938,16 +938,6 @@ export type VideosDashboardResponse = {
   total: Scalars['Int']['output'];
   videos: Array<DashboardVideoResponse>;
 };
-
-/** Available view types for dashboard filtering */
-export enum ViewType {
-  HasStoryboards = 'HAS_STORYBOARDS',
-  NoScreenshots = 'NO_SCREENSHOTS',
-  NoUploads = 'NO_UPLOADS',
-  Processed = 'PROCESSED',
-  Saved = 'SAVED',
-  Thumbnails = 'THUMBNAILS'
-}
 
 export type CreateChannelMutationVariables = Exact<{
   createChannelInput: CreateChannelInput;

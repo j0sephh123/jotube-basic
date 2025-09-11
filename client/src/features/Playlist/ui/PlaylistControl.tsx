@@ -19,7 +19,7 @@ export function PlaylistControl({
 
   const handleNavigate = () => {
     if (playlistId) {
-      navigate(`/playlists/${playlistId}`);
+      navigate(`/dashboard/playlists/channels/${playlistId}`);
     }
   };
 

@@ -20,14 +20,9 @@ import { makeYtChannelId } from "@shared/types";
 // eslint-disable-next-line import/no-internal-modules
 import { DeleteChannel } from "@entities/Channel/ui";
 
-const statsTypes = [
-'thumbnails',
-  'processed',
-  'saved',
-  'has-storyboards',
-];
-const fetchUploadsTypes = ['no-uploads'];
-const deleteChannelTypes = ['no-uploads'];
+const statsTypes = ["thumbnails", "processed", "saved", "storyboards"];
+const fetchUploadsTypes = ["no-uploads"];
+const deleteChannelTypes = ["no-uploads"];
 
 type Props = DashboardChannelResponse & {
   viewType: string;

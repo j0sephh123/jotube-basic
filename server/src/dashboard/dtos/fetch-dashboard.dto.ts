@@ -1,4 +1,4 @@
-import { IsNumber, IsString, IsIn, IsOptional, IsArray } from 'class-validator';
+import { IsNumber, IsString, IsIn, IsOptional } from 'class-validator';
 import { ViewType } from '../types';
 
 export class fetchDashboardDto {
@@ -27,6 +27,13 @@ export class fetchDashboardDto {
 
   @IsOptional()
   @IsString()
-  @IsIn(['saved', 'processed', 'no-uploads', 'no-screenshots', 'thumbnails', 'has-storyboards'])
+  @IsIn([
+    'saved',
+    'processed',
+    'no-uploads',
+    'no-screenshots',
+    'thumbnails',
+    'storyboards',
+  ])
   viewType?: ViewType;
 }

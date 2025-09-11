@@ -4,13 +4,19 @@ import { useNavigate } from "react-router-dom";
 
 export function PlaylistListItemNavbar({
   playlist,
+  onPlaylistClick,
 }: {
   playlist: PlaylistResponse;
+  onPlaylistClick?: (playlistId: number) => void;
 }) {
   const navigate = useNavigate();
 
   const handleItemClick = () => {
-    navigate(`/playlists/${playlist.id}`);
+    if (onPlaylistClick) {
+      onPlaylistClick(playlist.id);
+    } else {
+      navigate(`/playlists/${playlist.id}`);
+    }
   };
 
   return (

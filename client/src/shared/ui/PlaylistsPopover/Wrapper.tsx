@@ -1,20 +1,28 @@
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import PlaylistsPopoverTrigger from "./Trigger.tsx";
-import { type PropsWithChildren } from "react";
+import { type PropsWithChildren, ReactNode } from "react";
 
 export default function PlaylistsPopoverWrapper({
   children,
   isOpen,
   setIsOpen,
   playlistCount,
+  customTrigger,
+  onClick,
 }: PropsWithChildren<{
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   playlistCount: number;
+  customTrigger?: ReactNode;
+  onClick?: () => void;
 }>) {
   return (
     <PopoverPrimitive.Root open={isOpen} onOpenChange={setIsOpen}>
-      <PlaylistsPopoverTrigger playlistCount={playlistCount} />
+      <PlaylistsPopoverTrigger
+        playlistCount={playlistCount}
+        customTrigger={customTrigger}
+        onClick={onClick}
+      />
 
       <PopoverPrimitive.Portal>
         <PopoverPrimitive.Content

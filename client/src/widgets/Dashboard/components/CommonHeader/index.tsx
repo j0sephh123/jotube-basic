@@ -4,18 +4,29 @@ import { useParams } from "react-router-dom";
 import { type To } from "@shared/types";
 import { SortDirectionFilter } from "./SortDirectionFilter";
 import { DashboardTypeSwitcher } from "./DashboardTypeSwitcher";
+// eslint-disable-next-line import/no-internal-modules
+import { type DashboardType } from "@widgets/Dashboard/types";
+import { PlaylistHeaderActions } from "../PlaylistHeaderActions";
 
-const videoOrder = ["has-storyboards", "saved", "thumbnails", "processed"];
+const videoOrder = ["storyboards", "saved", "thumbnails", "processed"];
 
-const links: Record<"channels" | "videos", string[]> = {
+const links: Record<DashboardType, string[]> = {
   channels: ["no-uploads", "no-screenshots", ...videoOrder],
   videos: videoOrder,
+  playlists: [
+    "channels",
+    "default",
+    "saved",
+    "storyboards",
+    "thumbnails",
+    "screenshots",
+  ],
 };
 
 export function CommonHeader() {
   const { viewType, dashboardType } = useParams<{
     viewType: string;
-    dashboardType: "channels" | "videos";
+    dashboardType: DashboardType;
   }>();
 
   const showVideosRangePicker =
@@ -25,23 +36,36 @@ export function CommonHeader() {
   const showChannelsRangePicker =
     dashboardType === "channels" && viewType === "processed";
   const hideSortDirectionFilter =
-    dashboardType === "videos" && viewType !== "processed";
+    (dashboardType === "videos" && viewType !== "processed") ||
+    dashboardType === "playlists";
+  const showPlaylistsActions =
+    dashboardType === "playlists" && viewType !== "channels";
+
+  const playlistId = useParams().playlistId;
 
   return (
-    <div className="grid grid-cols-[200px_650px_auto] items-center gap-4 h-[62px]">
-      <DashboardTypeSwitcher />
-      <div role="tablist" className="tabs tabs-border">
-        {links[dashboardType as "channels" | "videos"].map((type) => {
-          return (
-            <CustomLink
-              key={type}
-              to={`/dashboard/${dashboardType}/${type}` as To}
-              className={`tab ${viewType === type ? "tab-active" : ""}`}
-            >
-              {type}
-            </CustomLink>
-          );
-        })}
+    <div className="flex justify-between items-center">
+      <div>
+        <DashboardTypeSwitcher />
+        <div role="tablist" className="tabs tabs-border">
+          {dashboardType &&
+            links[dashboardType].map((type) => {
+              let basePath = `/dashboard/${dashboardType}/${type}`;
+              if (dashboardType === "playlists") {
+                basePath += `/${playlistId}`;
+              }
+
+              return (
+                <CustomLink
+                  key={type}
+                  to={basePath as To}
+                  className={`tab ${viewType === type ? "tab-active" : ""}`}
+                >
+                  {type}
+                </CustomLink>
+              );
+            })}
+        </div>
       </div>
       <div className="flex items-center gap-4 justify-self-end">
         {!hideSortDirectionFilter && <SortDirectionFilter />}
@@ -73,6 +97,7 @@ export function CommonHeader() {
             identifier="videosMinMax"
           />
         )}
+        {showPlaylistsActions && <PlaylistHeaderActions />}
       </div>
     </div>
   );

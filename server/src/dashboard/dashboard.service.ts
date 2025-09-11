@@ -360,7 +360,7 @@ export class DashboardService {
       };
     }
 
-    if (videosDashboardViewType === 'has-storyboards') {
+    if (videosDashboardViewType === 'storyboards') {
       const rows = await this.prismaService.$queryRaw<any[]>(Prisma.sql`
         SELECT
           uv.id,

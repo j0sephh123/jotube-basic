@@ -1,1 +1,1 @@
-export * from "./ui/Page";
+export * from "../../widgets/Dashboard/components/PlaylistUploadsList";
