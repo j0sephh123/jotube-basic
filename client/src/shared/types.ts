@@ -17,7 +17,7 @@ type ImageNavigator = `/image-navigator`;
 type Thumbnails = `/thumbnails`;
 type DashboardThumbnails = `/dashboard/channels/thumbnails`;
 type SingleChannelUploads = `/channels/${YtChannelId}`;
-type DashboardVideos = `/dashboard/videos/all`;
+type DashboardVideos = `/dashboard/videos/screenshots`;
 type GalleryVideo = `/channels/${YtChannelId}/gallery/${YtVideoId}`;
 type ViewTypeType = `/dashboard/channels/${ViewType}`;
 type PlaylistUploads = `/playlists/${number}/uploads/${string}`;
@@ -35,6 +35,11 @@ type PlaylistStoryboards = `/playlists/${number}/storyboards`;
 type PlaylistScreenshots = `/playlists/${number}/screenshots`;
 type ChannelStoryboards = `/channels/${YtChannelId}/storyboards`;
 type ChannelSaved = `/channels/${YtChannelId}/saved`;
+type DashboardVideosSaved = `/dashboard/videos/saved`;
+type DashboardVideosStoryboards = `/dashboard/videos/storyboards`;
+type DashboardVideosThumbnails = `/dashboard/videos/thumbnails`;
+type DashboardVideosScreenshots = `/dashboard/videos/screenshots`;
+
 type Tv = `/tv`;
 
 export type To =
@@ -67,7 +72,11 @@ export type To =
   | PlaylistScreenshots
   | ChannelStoryboards
   | ChannelSaved
-  | Tv;
+  | Tv
+  | DashboardVideosSaved
+  | DashboardVideosStoryboards
+  | DashboardVideosThumbnails
+  | DashboardVideosScreenshots;
 
 export type UploadsType =
   | "default"

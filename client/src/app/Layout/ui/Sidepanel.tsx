@@ -10,10 +10,10 @@ import {
 export function Sidepanel() {
   return (
     <div className="flex flex-col gap-2">
+      <IconVideos />
       <IconRecentlyViewed />
       <IconProcessingLog />
       <IconImageNavigator />
-      <IconVideos />
       <IconPlaylist />
       <IconTv />
     </div>

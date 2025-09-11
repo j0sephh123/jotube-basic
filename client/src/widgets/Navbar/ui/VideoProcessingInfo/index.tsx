@@ -28,6 +28,8 @@ export default function VideoProcessingInfo() {
   const { data: { getProcessingReadyUploads: { count = 0 } = {} } = {} } =
     useGetProcessingReadyUploadsQuery();
 
+  const availableVideos = count;
+
   return (
     <VideoProcessingInfoWrapper
       isOpen={isOpen}
@@ -46,7 +48,7 @@ export default function VideoProcessingInfo() {
         )}
       </div>
       {autoDownload && <AutoDlEnabledSection />}
-      <AutoDownload availableVideos={count} />
+      <AutoDownload availableVideos={availableVideos} />
       <div className="space-y-3">
         {hasItems ? (
           groupedByChannel.map(([channelId, items]) => (

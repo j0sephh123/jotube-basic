@@ -314,11 +314,60 @@ export class DashboardService {
     const sortOrder = filters?.sortOrder || 'desc';
     const screenshotMin = filters?.screenshotMin;
     const screenshotMax = filters?.screenshotMax;
+    // DON'T REMOVE THIS COMMENT
+    // screenshots
+    // saved
+    // storyboards
+    // thumbnails
+    const videosDashboardViewType = filters.videosDashboardViewType;
 
-    console.log({
-      screenshotMax,
-      screenshotMin,
-    });
+    if (videosDashboardViewType === 'saved') {
+      console.log('inside saved');
+
+      const rows = await this.prismaService.$queryRaw<any[]>(Prisma.sql`
+        SELECT
+          uv.id,
+          uv.ytId,
+          uv.title,
+          uv.src,
+          c.id    AS channelId,
+          c.title AS channelTitle,
+          c.ytId  AS channelYtId,
+          0 AS screenshotCount
+        FROM UploadsVideo AS uv
+        JOIN Channel AS c
+          ON c.id = uv.channelId
+        WHERE uv.artifact = 'SAVED'
+        ORDER BY uv.id DESC
+        LIMIT 150
+      `);
+
+      const total = rows.length;
+
+      return {
+        videos: rows.map(
+          (r): DashboardVideo => ({
+            id: r.id,
+            ytId: r.ytId,
+            title: r.title,
+            src: r.src,
+            channelId: r.channelId,
+            channelTitle: r.channelTitle,
+            channelYtId: r.channelYtId,
+            screenshotCount: 0,
+            featuredScreenshots: [],
+          }),
+        ) as any,
+        total,
+      };
+    }
+
+    if (videosDashboardViewType !== 'screenshots') {
+      return {
+        videos: [],
+        total: 0,
+      };
+    }
 
     const orderDirection = sortOrder === 'asc' ? 'ASC' : 'DESC';
 

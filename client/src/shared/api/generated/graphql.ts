@@ -287,6 +287,7 @@ export type FetchVideosDashboardInput = {
   screenshotMax?: InputMaybe<Scalars['Float']['input']>;
   screenshotMin?: InputMaybe<Scalars['Float']['input']>;
   sortOrder?: InputMaybe<Scalars['String']['input']>;
+  videosDashboardViewType?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type FileWithSizeResponse = {

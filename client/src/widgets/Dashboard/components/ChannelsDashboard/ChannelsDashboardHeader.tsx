@@ -1,9 +1,8 @@
-import { Button } from "@shared/ui";
 import { RangePicker } from "@widgets/RangePicker";
 import {
   CommonDashboardHeaderWrapper,
   SortDirectionFilter,
-  ViewTypeToggle,
+  ChannelDashboardViewTypeToggle,
 } from "@widgets/Dashboard";
 
 export function ChannelsDashboardHeader() {
@@ -25,8 +24,7 @@ export function ChannelsDashboardHeader() {
         maxKey="defaultMax"
         identifier="channelsDefaultMinMax"
       />
-      <Button>Clear Filters</Button>
-      <ViewTypeToggle />
+      <ChannelDashboardViewTypeToggle />
     </CommonDashboardHeaderWrapper>
   );
 }

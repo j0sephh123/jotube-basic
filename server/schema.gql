@@ -251,6 +251,7 @@ input FetchVideosDashboardInput {
   screenshotMax: Float
   screenshotMin: Float
   sortOrder: String
+  videosDashboardViewType: String
 }
 
 type FileWithSizeResponse {

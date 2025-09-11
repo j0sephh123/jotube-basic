@@ -38,7 +38,7 @@ export default function Router() {
               element={<ChannelsDashboardPage />}
             />
             <Route
-              path={`${DashboardType.VIDEOS}/:viewType`}
+              path={`${DashboardType.VIDEOS}/:videosDashboardViewType`}
               element={<VideosDashboardPage />}
             />
           </Route>

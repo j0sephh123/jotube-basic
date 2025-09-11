@@ -26,7 +26,11 @@ export default function AutoDownload({
                 className="toggle toggle-primary"
                 checked={autoDownload ?? false}
                 onChange={handleToggle}
-                disabled={isLoading || mutation.isPending || availableVideos === 0}
+                disabled={
+                  isLoading ||
+                  mutation.isPending ||
+                  (availableVideos === 0 && !autoDownload)
+                }
               />
             </label>
             Availlable videos: {availableVideos}

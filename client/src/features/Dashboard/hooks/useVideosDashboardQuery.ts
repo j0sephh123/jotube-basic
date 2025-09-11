@@ -5,11 +5,14 @@ import {
   type VideosDashboardResponse,
 } from "@shared/api";
 import { useApolloClient } from "@apollo/client";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 export type VideosDashboardResponseData = VideosDashboardResponse;
 
 export function useVideosDashboardQuery() {
+  const { videosDashboardViewType } = useParams<{
+    videosDashboardViewType: string;
+  }>();
   const { finalSortOrder } = useFinalSortOrder();
   const [searchParams] = useSearchParams();
   const min = searchParams.get("min");
@@ -17,6 +20,7 @@ export function useVideosDashboardQuery() {
   const variables: FetchVideosDashboardQueryVariables = {
     fetchVideosDashboardInput: {
       sortOrder: finalSortOrder.toLowerCase() as "asc" | "desc",
+      videosDashboardViewType: videosDashboardViewType ?? "with-screenshots",
     },
   };
 
@@ -27,6 +31,8 @@ export function useVideosDashboardQuery() {
   if (max !== null) {
     variables.fetchVideosDashboardInput.screenshotMax = parseInt(max);
   }
+
+  console.log(variables);
 
   const { data, loading, error, refetch } = useFetchVideosDashboardQuery({
     variables,

@@ -11,7 +11,7 @@ const viewTypeOrder = [
   ViewType.HAS_STORYBOARDS,
 ];
 
-export default function ViewTypeToggle() {
+export function ChannelDashboardViewTypeToggle() {
   const navigate = useCustomNavigate();
   const { viewType } = useTypedParams("DashboardParams");
 

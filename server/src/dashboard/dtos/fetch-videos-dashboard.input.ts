@@ -10,4 +10,7 @@ export class FetchVideosDashboardInput {
 
   @Field({ nullable: true })
   screenshotMax?: number;
+
+  @Field({ nullable: true })
+  videosDashboardViewType?: string;
 }
