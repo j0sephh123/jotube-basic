@@ -11,18 +11,18 @@ import { setProcessingData } from "@shared/store";
 
 export function VideosDashboardCard({
   video,
-  videosDashboardViewType,
+  viewType,
 }: {
   video: DashboardVideoResponse;
-  videosDashboardViewType: string;
+  viewType: string;
 }) {
   const titleNavigate =
     `/channels/${video.channelYtId}/videos/${video.ytId}` as To;
 
-  const isScreenshots = videosDashboardViewType === "screenshots";
-  const isSaved = videosDashboardViewType === "saved";
-  const isThumbnails = videosDashboardViewType === "thumbnails";
-  const isStoryboards = videosDashboardViewType === "storyboards";
+  const isProcessed = viewType === "processed";
+  const isSaved = viewType === "saved";
+  const isThumbnails = viewType === "thumbnails";
+  const isStoryboards = viewType === "storyboards";
 
   const handleThumbnailClick = (video: DashboardVideoResponse) => {
     if (isThumbnails) {
@@ -39,7 +39,7 @@ export function VideosDashboardCard({
       // TODO
     }
 
-    if (isScreenshots) {
+    if (isProcessed) {
       setGalleryModal({
         ytVideoId: video.ytId,
         channelIds: [video.channelId],
@@ -73,7 +73,7 @@ export function VideosDashboardCard({
         )
       }
       featuredScreenshotsLength={
-        isScreenshots ? video.screenshotCount : undefined
+        isProcessed ? video.screenshotCount : undefined
       }
       downloadButtonSlot={
         isSaved && (

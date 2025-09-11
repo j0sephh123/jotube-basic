@@ -4,8 +4,8 @@ import { VideosDashboardCard } from "./VideosDashboardCard";
 import { useParams } from "react-router-dom";
 
 export default function VideosDashboard() {
-  const { videosDashboardViewType } = useParams<{
-    videosDashboardViewType: string;
+  const { viewType } = useParams<{
+    viewType: string;
   }>();
 
   return (
@@ -18,7 +18,7 @@ export default function VideosDashboard() {
             <VideosDashboardCard
               key={item.id}
               video={item}
-              videosDashboardViewType={videosDashboardViewType as string}
+              viewType={viewType as string}
             />
           )}
         />
