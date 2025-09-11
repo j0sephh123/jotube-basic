@@ -1,42 +1,24 @@
-import { Card } from "@shared/ui";
-import { VideosDashboardContainer, VideoChannelInfo } from "@widgets/Dashboard";
-import { type DashboardVideoResponse } from "@shared/api";
-import { setGalleryModal } from "@features/Gallery";
-import { makeYtChannelId, makeYtVideoId } from "@shared/types";
+import { VideosDashboardContainer } from "@widgets/Dashboard";
 import { Virtualizer } from "@widgets/Virtualizer";
+import { VideosDashboardCard } from "./VideosDashboardCard";
+import { useParams } from "react-router-dom";
 
 export default function VideosDashboard() {
-  const handleThumbnailClick = (video: DashboardVideoResponse) => {
-    setGalleryModal({
-      ytVideoId: video.ytId,
-      channelIds: [video.channelId],
-    });
-  };
+  const { videosDashboardViewType } = useParams<{
+    videosDashboardViewType: string;
+  }>();
 
   return (
     <VideosDashboardContainer>
       {(videos) => (
         <Virtualizer
-          flexibleHeight={false}
+          flexibleHeight
           items={videos}
           ItemComponent={({ item }) => (
-            <Card
+            <VideosDashboardCard
               key={item.id}
-              featuredScreenshotsLength={item.screenshotCount}
-              id={item.id}
-              ytId={item.ytId}
-              title={item.title}
-              src={item.src}
-              onThumbnailClick={() => handleThumbnailClick(item)}
-              to={`/channels/${makeYtChannelId(
-                item.channelYtId
-              )}/gallery/${makeYtVideoId(item.ytId)}`}
-              secondRow={
-                <VideoChannelInfo
-                  channelTitle={`${item.channelTitle} (${item.screenshotCount})`}
-                  channelYtId={item.channelYtId}
-                />
-              }
+              video={item}
+              videosDashboardViewType={videosDashboardViewType as string}
             />
           )}
         />

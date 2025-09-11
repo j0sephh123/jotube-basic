@@ -31,6 +31,7 @@ type CardProps = {
   onThumbnailClick?: () => void;
   featuredScreenshotsLength?: number;
   to: To;
+  cardImageSlot: React.ReactNode;
 };
 
 function Card({
@@ -50,28 +51,35 @@ function Card({
   onThumbnailClick,
   featuredScreenshotsLength,
   to,
+  cardImageSlot,
 }: CardProps) {
   return (
     <Card.Container>
       <div className="relative group">
-        <Card.Image
-          id={id}
-          ytId={ytId}
-          src={src}
-          ytChannelId={ytChannelId}
-          screenshots={screenshots}
-          onThumbnailClick={onThumbnailClick || (() => {})}
-        />
+        {cardImageSlot ? (
+          cardImageSlot
+        ) : (
+          <Card.Image
+            id={id}
+            ytId={ytId}
+            src={src}
+            ytChannelId={ytChannelId}
+            screenshots={screenshots}
+            onThumbnailClick={onThumbnailClick || (() => {})}
+          />
+        )}
         {cardMenuSlot && (
           <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
             {cardMenuSlot}
           </div>
         )}
-        <div className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
-          <div className="badge badge-primary">
-            {featuredScreenshotsLength ?? 0}
+        {featuredScreenshotsLength && (
+          <div className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+            <div className="badge badge-primary">
+              {featuredScreenshotsLength ?? 0}
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <Card.Content>
         <div className="flex items-center justify-between">

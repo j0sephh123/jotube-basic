@@ -13,14 +13,18 @@ export function VideosDashboardHeader() {
 
   return (
     <CommonDashboardHeaderWrapper>
-      <SortDirectionFilter />
-      <RangePicker
-        minLabel="Min"
-        maxLabel="Max"
-        minKey="min"
-        maxKey="max"
-        identifier="videosMinMax"
-      />
+      {videosDashboardViewType === "screenshots" && (
+        <>
+          <SortDirectionFilter />
+          <RangePicker
+            minLabel="Min"
+            maxLabel="Max"
+            minKey="min"
+            maxKey="max"
+            identifier="videosMinMax"
+          />
+        </>
+      )}
       <VideosDashboardViewTypeToggle />
     </CommonDashboardHeaderWrapper>
   );

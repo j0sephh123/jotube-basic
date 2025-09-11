@@ -33,7 +33,6 @@ type Props = DashboardChannelResponse & {
   viewType: ViewType;
   onChannelDelete?: () => void;
   featuredScreenshots: FeaturedScreenshotResponse[];
-  isPlaylistPage?: boolean;
 };
 
 export default function ChannelDashboardCard({
@@ -53,7 +52,6 @@ export default function ChannelDashboardCard({
   playlist,
   onChannelDelete,
   featuredScreenshots,
-  isPlaylistPage,
 }: Props) {
   const navigate = useCustomNavigate();
   const handleViewScreenshots = useScreenshotsForCarousel();

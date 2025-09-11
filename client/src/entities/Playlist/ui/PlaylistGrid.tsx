@@ -2,7 +2,7 @@
 /* eslint-disable boundaries/element-types */
 import type { PlaylistDetailsResponse } from "@shared/api";
 import { ViewType } from "@features/Dashboard";
-import DashboardChannelCard from "@widgets/Dashboard/components/ChannelDashboardCard";
+import DashboardChannelCard from "@widgets/Dashboard/components/ChannelsDashboard/ChannelDashboardCard";
 import { Grid } from "@widgets/Grid";
 
 type TableProps = {
@@ -30,7 +30,6 @@ export default function PlaylistGrid({ playlist }: TableProps) {
           thumbnails={channel.thumbnailCount}
           viewType={ViewType.THUMBNAILS}
           lastSyncedAt={channel.lastSyncedAt}
-          isPlaylistPage
         />
       ))}
     </Grid>

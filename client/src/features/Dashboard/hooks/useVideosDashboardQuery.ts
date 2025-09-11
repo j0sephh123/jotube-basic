@@ -32,8 +32,6 @@ export function useVideosDashboardQuery() {
     variables.fetchVideosDashboardInput.screenshotMax = parseInt(max);
   }
 
-  console.log(variables);
-
   const { data, loading, error, refetch } = useFetchVideosDashboardQuery({
     variables,
   });

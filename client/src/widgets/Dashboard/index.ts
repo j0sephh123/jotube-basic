@@ -5,7 +5,7 @@ export { ChannelDashboardViewTypeToggle } from "./components/ChannelsDashboard/C
 export { default as DashboardWrapper } from "./components/ChannelsDashboard/ChannelsDashboardPage";
 export { default as ChannelsDashboard } from "./components/ChannelsDashboard";
 export { default as ChannelsDashboardContainer } from "./components/ChannelsDashboard/ChannelsDashboardContainer";
-export { default as ChannelDashboardCard } from "./components/ChannelDashboardCard";
+export { default as ChannelDashboardCard } from "./components/ChannelsDashboard/ChannelDashboardCard";
 export { SortDirectionFilter } from "./components/Filters/SortDirectionFilter";
 export { CommonDashboardHeaderWrapper } from "./ui/CommonDashboardHeaderWrapper";
 export { VideosDashboardViewTypeToggle } from "./components/VideosDashboard/VideosDashboardViewTypeToggle";
