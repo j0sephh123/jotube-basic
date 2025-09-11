@@ -38,8 +38,7 @@ export function CommonHeader() {
   const hideSortDirectionFilter =
     (dashboardType === "videos" && viewType !== "processed") ||
     dashboardType === "playlists";
-  const showPlaylistsActions =
-    dashboardType === "playlists" && viewType !== "channels";
+  const showPlaylistsActions = dashboardType === "playlists";
 
   const playlistId = useParams().playlistId;
 
