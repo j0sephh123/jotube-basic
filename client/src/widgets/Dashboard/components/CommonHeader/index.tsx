@@ -21,7 +21,7 @@ const links: Record<DashboardType, string[]> = {
     "thumbnails",
     "screenshots",
   ],
-  tv: ["tvs", "episodes"],
+  tv: ["tvs", "saved"],
 };
 
 export function CommonHeader() {

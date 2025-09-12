@@ -34,6 +34,28 @@ export default function Router() {
             path="/dashboard/videos/no-uploads"
             element={<Navigate to="/dashboard/videos/storyboards" />}
           />
+
+          <Route
+            path="/dashboard/tv/no-uploads"
+            element={<Navigate to="/dashboard/tv/tvs" />}
+          />
+          <Route
+            path="/dashboard/tv/no-screenshots"
+            element={<Navigate to="/dashboard/tv/tvs" />}
+          />
+          <Route
+            path="/dashboard/tv/storyboards"
+            element={<Navigate to="/dashboard/tv/tvs" />}
+          />
+          <Route
+            path="/dashboard/tv/thumbnails"
+            element={<Navigate to="/dashboard/tv/tvs" />}
+          />
+          <Route
+            path="/dashboard/tv/processed"
+            element={<Navigate to="/dashboard/tv/tvs" />}
+          />
+
           <Route
             path={`/dashboard/:dashboardType/:viewType`}
             element={<DashboardPage />}

@@ -8,12 +8,12 @@ export const TvDashboard = () => {
   console.log(params);
 
   const isTvs = params.viewType === "tvs";
-  const isEpisodes = params.viewType === "episodes";
+  const isSavedEpisodes = params.viewType === "saved";
 
   return (
     <>
       {isTvs && <TvList />}
-      {isEpisodes && <EpisodesList tvIds={[]} />}
+      {isSavedEpisodes && <EpisodesList tvIds={[]} />}
     </>
   );
 };
