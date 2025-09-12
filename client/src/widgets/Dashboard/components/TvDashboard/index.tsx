@@ -13,7 +13,7 @@ export const TvDashboard = () => {
   return (
     <>
       {isTvs && <TvList />}
-      {isSavedEpisodes && <EpisodesList tvIds={[]} />}
+      {isSavedEpisodes && <EpisodesList tvIds={[]} artifact="SAVED" />}
     </>
   );
 };

@@ -11,7 +11,7 @@ export const TvDetailsPage = () => {
   return (
     <div className="container mx-auto p-6">
       <TvHeader />
-      {tvId && <EpisodesList tvIds={[tvIdNumber]} />}
+      {tvId && <EpisodesList tvIds={[tvIdNumber]} artifact="SAVED" />}
       <EpisodeModal />
     </div>
   );

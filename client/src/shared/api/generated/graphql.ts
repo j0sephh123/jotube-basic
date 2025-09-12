@@ -104,6 +104,19 @@ export type CreateEpisodeResponse = {
   message: Scalars['String']['output'];
 };
 
+export type CreateEpisodesFromPathInput = {
+  ignoreDirs: Array<Scalars['String']['input']>;
+  path: Scalars['String']['input'];
+  structure: Scalars['String']['input'];
+  tvId: Scalars['Int']['input'];
+};
+
+export type CreateEpisodesFromPathResponse = {
+  __typename?: 'CreateEpisodesFromPathResponse';
+  episodesCreated: Scalars['Int']['output'];
+  message: Scalars['String']['output'];
+};
+
 export type CreatePlaylistInput = {
   name: Scalars['String']['input'];
 };
@@ -301,6 +314,15 @@ export type FetchVideosDashboardInput = {
   videosDashboardViewType?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type FileInfo = {
+  __typename?: 'FileInfo';
+  duration: Scalars['Float']['output'];
+  fileName: Scalars['String']['output'];
+  format: Scalars['String']['output'];
+  fullPath: Scalars['String']['output'];
+  size: Scalars['Float']['output'];
+};
+
 export type FileWithSizeResponse = {
   __typename?: 'FileWithSizeResponse';
   name: Scalars['String']['output'];
@@ -312,6 +334,17 @@ export type FinishProcessUploadResponse = {
   artifact: Scalars['String']['output'];
   id: Scalars['Float']['output'];
   ytId: Scalars['String']['output'];
+};
+
+export type FolderScannerInput = {
+  ignoreDirs: Array<Scalars['String']['input']>;
+  path: Scalars['String']['input'];
+  structure: Scalars['String']['input'];
+};
+
+export type FolderScannerResponse = {
+  __typename?: 'FolderScannerResponse';
+  files: Array<FileInfo>;
 };
 
 export type GetAllEpisodesInput = {
@@ -327,6 +360,7 @@ export type GetAllEpisodesResponse = {
   identifier: Scalars['String']['output'];
   title: Scalars['String']['output'];
   tvId: Scalars['ID']['output'];
+  tvIdentifier: Scalars['String']['output'];
   tvTitle: Scalars['String']['output'];
 };
 
@@ -375,6 +409,7 @@ export type Mutation = {
   cleanShortUploads: CleanShortUploadsResponse;
   createChannel: CreateChannelResponse;
   createEpisode: CreateEpisodeResponse;
+  createEpisodesFromPath: CreateEpisodesFromPathResponse;
   createPlaylist: CreatePlaylistResponse;
   createTv: CreateTvResponse;
   deleteChannel: DeleteChannelResponse;
@@ -406,6 +441,11 @@ export type MutationCreateChannelArgs = {
 
 export type MutationCreateEpisodeArgs = {
   createEpisodeInput: CreateEpisodeInput;
+};
+
+
+export type MutationCreateEpisodesFromPathArgs = {
+  createEpisodesFromPathInput: CreateEpisodesFromPathInput;
 };
 
 
@@ -596,6 +636,7 @@ export type Query = {
   playlistUploadsList: Array<PlaylistUploadsListUploadResponse>;
   playlists: Array<PlaylistResponse>;
   processingPhases: Array<ProcessingPhaseResponse>;
+  scanFolder: FolderScannerResponse;
   searchChannels: Array<SearchChannelResult>;
   searchVideos: Array<SearchVideoResult>;
   statisticsCounts: StatisticsCountsResponse;
@@ -674,6 +715,11 @@ export type QueryPlaylistUploadsListArgs = {
 
 export type QueryProcessingPhasesArgs = {
   variant?: Scalars['String']['input'];
+};
+
+
+export type QueryScanFolderArgs = {
+  folderScannerInput: FolderScannerInput;
 };
 
 
@@ -1074,7 +1120,7 @@ export type GetAllEpisodesQueryVariables = Exact<{
 }>;
 
 
-export type GetAllEpisodesQuery = { __typename?: 'Query', getAllEpisodes: Array<{ __typename?: 'GetAllEpisodesResponse', id: string, identifier: string, title: string, artifact: string, createdAt: any, tvId: string, tvTitle: string }> };
+export type GetAllEpisodesQuery = { __typename?: 'Query', getAllEpisodes: Array<{ __typename?: 'GetAllEpisodesResponse', id: string, identifier: string, title: string, artifact: string, createdAt: any, tvId: string, tvTitle: string, tvIdentifier: string }> };
 
 export type GetEpisodeQueryVariables = Exact<{
   getEpisodeInput: GetEpisodeInput;
@@ -1950,6 +1996,7 @@ export const GetAllEpisodesDocument = gql`
     createdAt
     tvId
     tvTitle
+    tvIdentifier
   }
 }
     `;

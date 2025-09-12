@@ -83,6 +83,7 @@ export class EpisodeService {
         tv: {
           select: {
             title: true,
+            identifier: true,
           },
         },
       },
@@ -98,6 +99,7 @@ export class EpisodeService {
           createdAt: episode.createdAt,
           tvId: episode.tvId,
           tvTitle: episode.tv.title,
+          tvIdentifier: episode.tv.identifier,
         }) satisfies GetAllEpisodesResponse,
     );
   }

@@ -10,6 +10,7 @@ export const GET_ALL_EPISODES = gql`
       createdAt
       tvId
       tvTitle
+      tvIdentifier
     }
   }
 `;

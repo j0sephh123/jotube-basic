@@ -17,6 +17,8 @@ export class OpenDirectoryController {
       ? `${basePath}/${collection}/${media}`
       : `${basePath}/${collection}`;
 
+    console.log({ collection, media, fullPath });
+
     try {
       await execAsync(`nemo ${fullPath}`);
       return { success: true };

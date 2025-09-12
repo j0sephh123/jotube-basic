@@ -1,8 +1,6 @@
 import { type EpisodeResponse } from "@features/Episode";
 import { type To } from "@shared/types";
-import { Card, CustomLink } from "@shared/ui";
-
-// use EpisodeResponse here
+import { Card, CustomLink, OpenDirectoryButton, Tooltip } from "@shared/ui";
 
 type Props = EpisodeResponse & {
   handleEdit?: (id: number) => void;
@@ -16,6 +14,7 @@ export function EpisodeDashboardCard({
   createdAt,
   tvId,
   tvTitle,
+  tvIdentifier,
   handleEdit,
   handleDelete,
 }: Props) {
@@ -50,6 +49,17 @@ export function EpisodeDashboardCard({
 
   const cardCreatedAt = <Card.CreatedAt createdAt={createdAt} />;
 
+  const TruncatedTvTitle = () => (
+    <Tooltip content={tvTitle} position="top" color="primary">
+      <CustomLink
+        to={`/tv/${tvId}` as To}
+        className="truncate block max-w-[180px]"
+      >
+        {tvTitle}
+      </CustomLink>
+    </Tooltip>
+  );
+
   return (
     <Card
       id={typedId}
@@ -57,10 +67,9 @@ export function EpisodeDashboardCard({
       cardMenuSlot={cardMenu}
       to={`/tv/${tvId}/episode/${id}` as To}
       titleRightSlot={cardCreatedAt}
-      secondRow={
-        <CustomLink to={`/tv/${tvId}` as To}>
-          {tvTitle}
-        </CustomLink>
+      secondRow={<TruncatedTvTitle />}
+      actionButtonSlot={
+        <OpenDirectoryButton collection={tvIdentifier} media={identifier} />
       }
     />
   );

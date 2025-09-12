@@ -22,4 +22,7 @@ export class GetAllEpisodesResponse {
 
   @Field()
   tvTitle: string;
+
+  @Field()
+  tvIdentifier: string;
 }
