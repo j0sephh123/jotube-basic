@@ -5,7 +5,6 @@ import { ChannelPageLayout } from "@widgets/ChannelPageLayout";
 import { ImageNavigatorPage } from "@pages/image-navigator";
 import { PlaylistsPage } from "@pages/playlists";
 import { RecentlyViewedPage } from "@pages/recently-viewed";
-import { TvPage } from "@pages/tv";
 import { TvDetailsPage } from "@pages/tv-details";
 import { EpisodeDetailsPage } from "@pages/episode-details";
 import { NotFound } from "@shared/ui";
@@ -63,7 +62,6 @@ export default function Router() {
             <Route index element={<PlaylistsPage />} />
           </Route>
           <Route path="/tv" element={<PageWrapper />}>
-            <Route index element={<TvPage />} />
             <Route path=":tvId" element={<TvDetailsPage />} />
             <Route
               path=":tvId/episode/:episodeId"

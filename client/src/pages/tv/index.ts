@@ -1,1 +1,1 @@
-export { TvPage } from "./ui/Page";
+export { TvDashboard } from "../../widgets/Dashboard/components/TvDashboard";
