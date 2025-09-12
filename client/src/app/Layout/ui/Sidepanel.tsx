@@ -2,7 +2,6 @@ import {
   IconRecentlyViewed,
   IconProcessingLog,
   IconTv,
-  IconPlaylist,
   IconImageNavigator,
 } from "@shared/ui";
 
@@ -12,7 +11,6 @@ export function Sidepanel() {
       <IconRecentlyViewed />
       <IconProcessingLog />
       <IconImageNavigator />
-      <IconPlaylist />
       <IconTv />
     </div>
   );
