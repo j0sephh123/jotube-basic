@@ -4,3 +4,4 @@ export * from "./Title";
 export * from "./Label";
 export * from "./UpdateContent";
 export * from "./useSubmit";
+export * from "./TvHeader";
