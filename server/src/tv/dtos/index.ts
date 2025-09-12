@@ -8,3 +8,5 @@ export * from './update-tv.response';
 export * from './find-all-tvs.response';
 export * from './tv.model';
 export * from './extended-tv.model';
+export * from './create-episodes-from-path.input';
+export * from './create-episodes-from-path.response';

@@ -10,6 +10,8 @@ import {
   GetTvInput,
   Tv,
   ExtendedTv,
+  CreateEpisodesFromPathInput,
+  CreateEpisodesFromPathResponse,
 } from './dtos';
 
 @Resolver()
@@ -46,5 +48,18 @@ export class TvResolver {
   @Query(() => Tv, { nullable: true })
   async getTv(@Args('getTvInput') getTvInput: GetTvInput): Promise<Tv | null> {
     return this.tvService.findOne(getTvInput.id);
+  }
+
+  @Mutation(() => CreateEpisodesFromPathResponse)
+  async createEpisodesFromPath(
+    @Args('createEpisodesFromPathInput')
+    createEpisodesFromPathInput: CreateEpisodesFromPathInput,
+  ): Promise<CreateEpisodesFromPathResponse> {
+    return this.tvService.createEpisodesFromPath(
+      createEpisodesFromPathInput.tvId,
+      createEpisodesFromPathInput.path,
+      createEpisodesFromPathInput.structure,
+      createEpisodesFromPathInput.ignoreDirs,
+    );
   }
 }

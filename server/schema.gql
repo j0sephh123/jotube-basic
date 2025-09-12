@@ -79,6 +79,18 @@ type CreateEpisodeResponse {
   message: String!
 }
 
+input CreateEpisodesFromPathInput {
+  ignoreDirs: [String!]!
+  path: String!
+  structure: String!
+  tvId: Int!
+}
+
+type CreateEpisodesFromPathResponse {
+  episodesCreated: Int!
+  message: String!
+}
+
 input CreatePlaylistInput {
   name: String!
 }
@@ -350,6 +362,7 @@ type Mutation {
   cleanShortUploads(cleanShortUploadsInput: CleanShortUploadsInput!): CleanShortUploadsResponse!
   createChannel(createChannelInput: CreateChannelInput!): CreateChannelResponse!
   createEpisode(createEpisodeInput: CreateEpisodeInput!): CreateEpisodeResponse!
+  createEpisodesFromPath(createEpisodesFromPathInput: CreateEpisodesFromPathInput!): CreateEpisodesFromPathResponse!
   createPlaylist(createPlaylistInput: CreatePlaylistInput!): CreatePlaylistResponse!
   createTv(createTvInput: CreateTvInput!): CreateTvResponse!
   deleteChannel(id: Float!): DeleteChannelResponse!

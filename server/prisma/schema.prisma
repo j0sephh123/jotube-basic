@@ -174,8 +174,24 @@ model Episode {
 
   thumbnail   Thumbnail?
   screenshots EpisodeScreenshot[]
+  videoFile   VideoFile?
 
   @@index([tvId])
+}
+
+model VideoFile {
+  id        Int      @id @default(autoincrement())
+  fileName  String   @db.VarChar(255)
+  size      Int // Size in MB
+  duration  Int // Duration in seconds
+  format    String   @db.VarChar(10)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  episodeId Int     @unique
+  episode   Episode @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+
+  @@index([episodeId])
 }
 
 model Setting {

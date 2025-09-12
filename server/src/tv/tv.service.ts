@@ -1,7 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
-import { CreateTvInput, UpdateTvInput, TvMessage, ExtendedTv } from './dtos';
+import {
+  CreateTvInput,
+  UpdateTvInput,
+  TvMessage,
+  ExtendedTv,
+  CreateEpisodesFromPathResponse,
+} from './dtos';
 import { FolderService } from 'src/file/folder.service';
+import { FolderScannerService } from 'src/folder-scanner/folder-scanner.service';
+import { EpisodeService } from 'src/episode/episode.service';
 import { randomUUID } from 'crypto';
 
 @Injectable()
@@ -9,6 +17,8 @@ export class TvService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly folderService: FolderService,
+    private readonly folderScannerService: FolderScannerService,
+    private readonly episodeService: EpisodeService,
   ) {}
 
   async create({ title, duration }: CreateTvInput) {
@@ -103,6 +113,51 @@ export class TvService {
       return { success: true, message: 'TV deleted successfully' };
     } catch {
       return { success: false, message: 'Failed to delete TV' };
+    }
+  }
+
+  async createEpisodesFromPath(
+    tvId: number,
+    path: string,
+    structure: string,
+    ignoreDirs: string[],
+  ): Promise<CreateEpisodesFromPathResponse> {
+    try {
+      const scanResult = await this.folderScannerService.scanFolder({
+        path,
+        structure,
+        ignoreDirs,
+      });
+
+      let episodesCreated = 0;
+
+      for (const fileInfo of scanResult.files) {
+        const episodeResult = await this.episodeService.create({
+          title: fileInfo.fileName,
+          tvId,
+        });
+
+        await this.prismaService.videoFile.create({
+          data: {
+            fileName: fileInfo.fileName,
+            size: fileInfo.size,
+            duration: fileInfo.duration,
+            format: fileInfo.format,
+            episodeId: episodeResult.episode.id,
+          },
+        });
+        episodesCreated++;
+      }
+
+      return {
+        episodesCreated,
+        message: `Successfully created ${episodesCreated} episodes`,
+      };
+    } catch (error) {
+      return {
+        episodesCreated: 0,
+        message: `Failed to demo TV: ${error.message}`,
+      };
     }
   }
 }
