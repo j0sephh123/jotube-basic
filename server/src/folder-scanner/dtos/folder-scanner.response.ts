@@ -3,7 +3,10 @@ import { ObjectType, Field } from '@nestjs/graphql';
 @ObjectType()
 export class FileInfo {
   @Field()
-  fileName: string;
+  videoFileName: string;
+
+  @Field()
+  parentFolderName: string;
 
   @Field()
   size: number;

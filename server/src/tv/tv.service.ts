@@ -147,7 +147,7 @@ export class TvService {
 
       for (const fileInfo of scanResult.files) {
         const episodeResult = await this.episodeService.create({
-          title: fileInfo.fileName,
+          title: fileInfo.videoFileName,
           tvId,
         });
 
@@ -157,7 +157,7 @@ export class TvService {
           tv.identifier,
           episodeResult.episode.identifier,
         );
-        const fileName = fileInfo.fileName;
+        const fileName = fileInfo.videoFileName;
         const destinationPath = join(episodeFolderPath, fileName);
 
         await this.fileOperationService.moveFile(
@@ -167,7 +167,8 @@ export class TvService {
 
         await this.prismaService.videoFile.create({
           data: {
-            fileName: fileInfo.fileName,
+            fileName: fileInfo.videoFileName,
+            parentFolderName: fileInfo.parentFolderName,
             size: fileInfo.size,
             duration: fileInfo.duration,
             format: fileInfo.format,

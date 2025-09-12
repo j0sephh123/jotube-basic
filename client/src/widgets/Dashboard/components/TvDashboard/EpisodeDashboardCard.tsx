@@ -1,6 +1,12 @@
-import { type EpisodeResponse } from "@features/Episode";
+import { type EpisodeResponse, useAddEpisodeToQueue } from "@features/Episode";
 import { type To } from "@shared/types";
-import { Card, CustomLink, OpenDirectoryButton, Tooltip } from "@shared/ui";
+import {
+  Button,
+  Card,
+  CustomLink,
+  OpenDirectoryButton,
+  Tooltip,
+} from "@shared/ui";
 
 type Props = EpisodeResponse & {
   handleEdit?: (id: number) => void;
@@ -19,6 +25,7 @@ export function EpisodeDashboardCard({
   handleDelete,
 }: Props) {
   const typedId = +id;
+  const addEpisodeToQueue = useAddEpisodeToQueue();
 
   const cardMenu = (
     <Card.Menu
@@ -60,6 +67,12 @@ export function EpisodeDashboardCard({
     </Tooltip>
   );
 
+  const handleDownload = () => {
+    addEpisodeToQueue.mutateAsync({ episodeId: typedId }).then(() => {
+      console.log("Episode added to queue");
+    });
+  };
+
   return (
     <Card
       id={typedId}
@@ -73,6 +86,7 @@ export function EpisodeDashboardCard({
         </>
       }
       secondRow={<TruncatedTvTitle />}
+      actionButtonSlot={<Button onClick={handleDownload}>Download</Button>}
     />
   );
 }

@@ -64,11 +64,12 @@ export class FolderScannerService {
           const duration = await this.getVideoDuration(fullPath);
 
           return {
-            fileName: `${file}.${videoFile.split('.').slice(0, -1).join('.')}`,
+            videoFileName: videoFile,
+            parentFolderName: file,
             size: Math.round(stats.size / (1024 * 1024)),
             duration,
             format: videoFile.split('.').pop() || 'unknown',
-            fullPath: `${tvPath}/${input.path}/${file}/${videoFile}`,
+            fullPath,
           };
         },
       );

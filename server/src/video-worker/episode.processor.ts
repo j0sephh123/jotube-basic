@@ -34,26 +34,13 @@ export class EpisodeProcessor {
     }
 
     const basePath = this.filePathService.getBasePath();
-    const tvPath = `${basePath}/${episode.tv.identifier}`;
-    const episodePath = `${tvPath}/${episode.identifier}`;
+    const episodePath = `${basePath}/${episode.tv.identifier}/${episode.identifier}`;
 
-    const videoExtensions = ['.mp4', '.mkv', '.webm', '.wmv'];
-    let videoPath: string | null = null;
+    const videoPath = path.join(episodePath, episode.title);
 
-    for (const ext of videoExtensions) {
-      const potentialPath = path.join(
-        episodePath,
-        `${episode.identifier}${ext}`,
-      );
-      if (fs.existsSync(potentialPath)) {
-        videoPath = potentialPath;
-        break;
-      }
-    }
-
-    if (!videoPath) {
+    if (!fs.existsSync(videoPath)) {
       throw new Error(
-        `No video file found for episode ${episode.identifier} with extensions: ${videoExtensions.join(', ')}`,
+        `No video file found for episode ${episode.identifier} at path: ${videoPath}`,
       );
     }
     const allScreenshotsPath = path.join(episodePath, 'all_screenshots');

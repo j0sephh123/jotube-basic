@@ -278,10 +278,11 @@ input FetchVideosDashboardInput {
 
 type FileInfo {
   duration: Float!
-  fileName: String!
   format: String!
   fullPath: String!
+  parentFolderName: String!
   size: Float!
+  videoFileName: String!
 }
 
 type FileWithSizeResponse {
