@@ -1,29 +1,41 @@
 import { useState } from "react";
-import { PlusIcon } from "lucide-react";
+import { PlusIcon, TvIcon, RadioIcon } from "lucide-react";
 import { Modal } from "@shared/ui";
 import { CreateChannel } from "./CreateChannel";
 import { CreateTv } from "./CreateTv";
 
-const tabs = [
-  { id: "channel", label: "Channel" },
-  { id: "tv", label: "TV" },
-] as const;
-
-type TabType = (typeof tabs)[number]["id"];
+type ResourceType = "channel" | "tv";
 
 export default function CreateResource() {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedResource, setSelectedResource] = useState<ResourceType | null>(
+    null
+  );
+  const [isFabOpen, setIsFabOpen] = useState(false);
 
-  const [activeTab, setActiveTab] = useState<TabType>("channel");
+  const handleResourceSelect = (resourceType: ResourceType) => {
+    setSelectedResource(resourceType);
+    setIsModalVisible(true);
+    setIsFabOpen(false);
+  };
 
-  const renderTabContent = () => {
-    switch (activeTab) {
+  const handleClose = () => {
+    setIsModalVisible(false);
+    setSelectedResource(null);
+  };
+
+  const toggleFab = () => {
+    setIsFabOpen(!isFabOpen);
+  };
+
+  const renderModalContent = () => {
+    if (!selectedResource) return null;
+
+    switch (selectedResource) {
       case "channel":
-        return <CreateChannel onClose={() => setIsModalVisible(false)} />;
-
+        return <CreateChannel onClose={handleClose} />;
       case "tv":
-        return <CreateTv onClose={() => setIsModalVisible(false)} />;
-
+        return <CreateTv onClose={handleClose} />;
       default:
         return null;
     }
@@ -31,33 +43,60 @@ export default function CreateResource() {
 
   return (
     <>
-      <button
-        onClick={() => setIsModalVisible(true)}
-        className="btn btn-accent btn-circle fixed z-50 bottom-3 right-3"
-      >
-        <PlusIcon />
-      </button>
+      <div className="fixed bottom-4 right-4">
+        <div className="relative">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-lg btn-circle btn-primary"
+            onClick={toggleFab}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                toggleFab();
+              }
+            }}
+          >
+            <PlusIcon className="size-6" />
+          </div>
+
+          {isFabOpen && (
+            <>
+              <div
+                className="tooltip tooltip-left absolute bottom-0 right-0 mb-20"
+                data-tip="Create Channel"
+              >
+                <button
+                  className="btn btn-lg btn-circle"
+                  onClick={() => handleResourceSelect("channel")}
+                >
+                  <RadioIcon className="size-6" />
+                </button>
+              </div>
+
+              <div
+                className="tooltip tooltip-left absolute bottom-0 right-0 mb-40"
+                data-tip="Create TV"
+              >
+                <button
+                  className="btn btn-lg btn-circle"
+                  onClick={() => handleResourceSelect("tv")}
+                >
+                  <TvIcon className="size-6" />
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
       <Modal
         isModalVisible={isModalVisible}
-        onClose={() => setIsModalVisible(false)}
+        onClose={handleClose}
         maxWidth="600px"
         maxHeight="500px"
       >
-        <div role="tablist" className="tabs tabs-border">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              role="tab"
-              className={`tab ${activeTab === tab.id ? "tab-active" : ""}`}
-              onClick={() => setActiveTab(tab.id)}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-        <div role="tabpanel" className="tab-panel mt-8">
-          {renderTabContent()}
-        </div>
+        {renderModalContent()}
       </Modal>
     </>
   );
