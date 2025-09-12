@@ -9,6 +9,7 @@ import {
   DeleteTvInput,
   GetTvInput,
   Tv,
+  ExtendedTv,
 } from './dtos';
 
 @Resolver()
@@ -37,8 +38,8 @@ export class TvResolver {
     return this.tvService.update(id, updateTvInput);
   }
 
-  @Query(() => [Tv])
-  async getAllTvs(): Promise<Tv[]> {
+  @Query(() => [ExtendedTv])
+  async getAllTvs(): Promise<ExtendedTv[]> {
     return this.tvService.findAll();
   }
 

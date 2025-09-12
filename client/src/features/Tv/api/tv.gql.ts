@@ -9,6 +9,7 @@ export const GET_ALL_TVS = gql`
       duration
       createdAt
       updatedAt
+      amountOfEpisodes
     }
   }
 `;

@@ -220,6 +220,16 @@ type EpisodesWithThumbnailsResponse {
   tvIdentifier: String!
 }
 
+type ExtendedTv {
+  amountOfEpisodes: Int!
+  createdAt: DateTime!
+  duration: Int
+  id: ID!
+  identifier: String!
+  title: String!
+  updatedAt: DateTime!
+}
+
 type FeaturedScreenshotResponse {
   id: Int!
   second: Int!
@@ -409,7 +419,7 @@ type Query {
   fetchDashboard(fetchDashboardInput: FetchDashboardInput!): ChannelsDashboardResponse!
   fetchVideosDashboard(fetchVideosDashboardInput: FetchVideosDashboardInput!): VideosDashboardResponse!
   getAllEpisodes: [Episode!]!
-  getAllTvs: [Tv!]!
+  getAllTvs: [ExtendedTv!]!
   getEpisode(getEpisodeInput: GetEpisodeInput!): Episode
   getEpisodeDetails(getEpisodeInput: GetEpisodeInput!): Episode
   getEpisodesByTvId(tvId: Float!): [Episode!]!

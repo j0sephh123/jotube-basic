@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
-import { CreateTvInput, UpdateTvInput, TvMessage } from './dtos';
+import { CreateTvInput, UpdateTvInput, TvMessage, ExtendedTv } from './dtos';
 import { FolderService } from 'src/file/folder.service';
 import { randomUUID } from 'crypto';
 
@@ -37,12 +37,24 @@ export class TvService {
     }
   }
 
-  async findAll() {
-    return this.prismaService.tV.findMany({
+  async findAll(): Promise<ExtendedTv[]> {
+    const tvs = await this.prismaService.tV.findMany({
       orderBy: {
         createdAt: 'desc',
       },
+      include: {
+        _count: {
+          select: {
+            episodes: true,
+          },
+        },
+      },
     });
+
+    return tvs.map((tv) => ({
+      ...tv,
+      amountOfEpisodes: tv._count.episodes,
+    }));
   }
 
   async findOne(id: number) {

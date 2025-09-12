@@ -24,6 +24,7 @@ export const TvDashboard = () => {
             handleEdit={handleEdit}
             handleDelete={handleDelete}
             createdAt={tv.createdAt}
+            amountOfEpisodes={tv.amountOfEpisodes}
           />
         ))}
       </div>

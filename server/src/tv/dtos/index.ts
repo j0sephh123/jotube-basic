@@ -5,4 +5,6 @@ export * from './get-tv.input';
 export * from './create-tv.response';
 export * from './delete-tv.response';
 export * from './update-tv.response';
+export * from './find-all-tvs.response';
 export * from './tv.model';
+export * from './extended-tv.model';

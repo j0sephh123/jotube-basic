@@ -8,6 +8,7 @@ type Props = {
   handleEdit: (id: number) => void;
   handleDelete: (id: number) => void;
   createdAt: string;
+  amountOfEpisodes: number;
 };
 
 export function TvDashboardCard({
@@ -17,6 +18,7 @@ export function TvDashboardCard({
   handleEdit,
   handleDelete,
   createdAt,
+  amountOfEpisodes,
 }: Props) {
   const cardMenu = (
     <Card.Menu
@@ -50,6 +52,7 @@ export function TvDashboardCard({
       cardMenuSlot={cardMenu}
       to={`/tv/${id}` as To}
       titleRightSlot={cardCreatedAt}
+      secondRow={`${amountOfEpisodes} episodes`}
     />
   );
 }

@@ -254,6 +254,17 @@ export type EpisodesWithThumbnailsResponse = {
   tvIdentifier: Scalars['String']['output'];
 };
 
+export type ExtendedTv = {
+  __typename?: 'ExtendedTv';
+  amountOfEpisodes: Scalars['Int']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  duration?: Maybe<Scalars['Int']['output']>;
+  id: Scalars['ID']['output'];
+  identifier: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+};
+
 export type FeaturedScreenshotResponse = {
   __typename?: 'FeaturedScreenshotResponse';
   id: Scalars['Int']['output'];
@@ -558,7 +569,7 @@ export type Query = {
   fetchDashboard: ChannelsDashboardResponse;
   fetchVideosDashboard: VideosDashboardResponse;
   getAllEpisodes: Array<Episode>;
-  getAllTvs: Array<Tv>;
+  getAllTvs: Array<ExtendedTv>;
   getEpisode?: Maybe<Episode>;
   getEpisodeDetails?: Maybe<Episode>;
   getEpisodesByTvId: Array<Episode>;
@@ -1141,7 +1152,7 @@ export type GetThumbnailByVideoIdQuery = { __typename?: 'Query', thumbnailByVide
 export type GetAllTvsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllTvsQuery = { __typename?: 'Query', getAllTvs: Array<{ __typename?: 'Tv', id: string, identifier: string, title: string, duration?: number | null, createdAt: any, updatedAt: any }> };
+export type GetAllTvsQuery = { __typename?: 'Query', getAllTvs: Array<{ __typename?: 'ExtendedTv', id: string, identifier: string, title: string, duration?: number | null, createdAt: any, updatedAt: any, amountOfEpisodes: number }> };
 
 export type GetTvQueryVariables = Exact<{
   getTvInput: GetTvInput;
@@ -2582,6 +2593,7 @@ export const GetAllTvsDocument = gql`
     duration
     createdAt
     updatedAt
+    amountOfEpisodes
   }
 }
     `;
