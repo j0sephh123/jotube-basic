@@ -264,6 +264,13 @@ input FetchVideosDashboardInput {
   videosDashboardViewType: String
 }
 
+type FileInfo {
+  duration: Float!
+  fileName: String!
+  format: String!
+  size: Float!
+}
+
 type FileWithSizeResponse {
   name: String!
   sizeMB: Float!
@@ -273,6 +280,16 @@ type FinishProcessUploadResponse {
   artifact: String!
   id: Float!
   ytId: String!
+}
+
+input FolderScannerInput {
+  ignoreDirs: [String!]!
+  path: String!
+  structure: String!
+}
+
+type FolderScannerResponse {
+  files: [FileInfo!]!
 }
 
 input GetAllEpisodesInput {
@@ -445,6 +462,7 @@ type Query {
   playlistUploadsList(playlistUploadsListInput: PlaylistUploadsListInput!): [PlaylistUploadsListUploadResponse!]!
   playlists: [PlaylistResponse!]!
   processingPhases(variant: String! = "latest"): [ProcessingPhaseResponse!]!
+  scanFolder(folderScannerInput: FolderScannerInput!): FolderScannerResponse!
   searchChannels(searchInput: SearchInput!): [SearchChannelResult!]!
   searchVideos(searchInput: SearchInput!): [SearchVideoResult!]!
   statisticsCounts: StatisticsCountsResponse!

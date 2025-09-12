@@ -46,6 +46,7 @@ import { SettingsModule } from './settings/settings.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { AutoDownloadModule } from './auto-download/auto-download.module';
 import { QueueModule } from './queue/queue.module';
+import { FolderScannerModule } from './folder-scanner/folder-scanner.module';
 
 @Module({
   imports: [
@@ -113,6 +114,7 @@ import { QueueModule } from './queue/queue.module';
     AutoDownloadModule,
     SettingsModule,
     QueueModule,
+    FolderScannerModule,
   ],
   controllers: [QueueController, SearchController, StatisticsController],
   providers: [

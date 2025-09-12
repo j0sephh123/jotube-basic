@@ -12,4 +12,8 @@ export class FilePathService {
   public getPublicFolder() {
     return this.configService.get('PUBLIC_FOLDER');
   }
+
+  public getTvPath() {
+    return this.configService.get('TV_PATH');
+  }
 }
