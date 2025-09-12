@@ -23,6 +23,7 @@ export const TvDashboard = () => {
             id={Number(tv.id)}
             handleEdit={handleEdit}
             handleDelete={handleDelete}
+            createdAt={tv.createdAt}
           />
         ))}
       </div>

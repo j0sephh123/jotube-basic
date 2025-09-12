@@ -12,8 +12,8 @@ import CardCreatedAt from "./CardCreatedAt";
 
 type CardProps = {
   id: number;
-  src: string;
-  ytId: string;
+  src?: string;
+  ytId?: string;
   title: string;
   ytChannelId?: string;
   lastSyncedAt?: string | null;
@@ -26,7 +26,7 @@ type CardProps = {
   cardMenuSlot?: React.ReactNode;
   downloadButtonSlot?: React.ReactNode;
   deleteButtonSlot?: React.ReactNode;
-  playlistButtonSlot?: React.ReactNode;
+  titleRightSlot?: React.ReactNode;
   galleryButtonSlot?: React.ReactNode;
   onThumbnailClick?: () => void;
   featuredScreenshotsLength?: number;
@@ -46,7 +46,7 @@ function Card({
   cardMenuSlot,
   downloadButtonSlot,
   deleteButtonSlot,
-  playlistButtonSlot,
+  titleRightSlot,
   galleryButtonSlot,
   onThumbnailClick,
   featuredScreenshotsLength,
@@ -61,8 +61,8 @@ function Card({
         ) : (
           <Card.Image
             id={id}
-            ytId={ytId}
-            src={src}
+            ytId={ytId ?? ""}
+            src={src ?? ""}
             ytChannelId={ytChannelId}
             screenshots={screenshots}
             onThumbnailClick={onThumbnailClick || (() => {})}
@@ -84,7 +84,7 @@ function Card({
       <Card.Content>
         <div className="flex items-center justify-between">
           <Card.Title title={title} to={to} />
-          {playlistButtonSlot}
+          {titleRightSlot}
         </div>
         {secondRow}
         <div className="flex items-center justify-between">

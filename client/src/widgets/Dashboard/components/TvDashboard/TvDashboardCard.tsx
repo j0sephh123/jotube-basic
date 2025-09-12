@@ -1,5 +1,5 @@
-import { OpenDirectoryButton, Card } from "@shared/ui";
-import { Link } from "react-router-dom";
+import { type To } from "@shared/types";
+import { Card } from "@shared/ui";
 
 type Props = {
   title: string;
@@ -7,6 +7,7 @@ type Props = {
   id: number;
   handleEdit: (id: number) => void;
   handleDelete: (id: number) => void;
+  createdAt: string;
 };
 
 export function TvDashboardCard({
@@ -15,18 +16,14 @@ export function TvDashboardCard({
   id,
   handleEdit,
   handleDelete,
+  createdAt,
 }: Props) {
-  return (
-    <Card
+  const cardMenu = (
+    <Card.Menu
       id={id}
-      title={title}
-      secondRow={<p className="text-sm text-gray-600">{identifier}</p>}
-      actionButtonSlot={<OpenDirectoryButton collection={identifier} />}
-      cardMenuSlot={
+      ytId={identifier}
+      moreItems={
         <>
-          <Link to={`/tv/${id}`} className="btn btn-sm btn-outline">
-            View Episodes
-          </Link>
           <button
             className="btn btn-sm btn-outline"
             onClick={() => handleEdit(id)}
@@ -41,9 +38,18 @@ export function TvDashboardCard({
           </button>
         </>
       }
-      src={""}
-      ytId={""}
-      to={"/playlists"}
+    />
+  );
+
+  const cardCreatedAt = <Card.CreatedAt createdAt={createdAt} />;
+
+  return (
+    <Card
+      id={id}
+      title={title}
+      cardMenuSlot={cardMenu}
+      to={`/tv/${id}` as To}
+      titleRightSlot={cardCreatedAt}
     />
   );
 }

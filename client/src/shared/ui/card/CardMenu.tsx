@@ -5,9 +5,10 @@ import { CopyValue, useClickOutside, OpenDirectoryButton } from "@shared/ui";
 type CardMenuProps = {
   id: number;
   ytId: string;
+  moreItems?: React.ReactNode;
 };
 
-function CardMenu({ id, ytId }: CardMenuProps) {
+function CardMenu({ id, ytId, moreItems }: CardMenuProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -52,9 +53,10 @@ function CardMenu({ id, ytId }: CardMenuProps) {
               className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-200 hover:bg-gray-700 rounded transition-colors"
             >
               <CopyValue type="youtube" value={ytId} />
-              <span>Copy YouTube ID</span>
+              <span>Copy YouTube ID / Identifier</span>
             </button>
             <OpenDirectoryButton collection={ytId} />
+            {moreItems}
           </div>
         </div>
       )}

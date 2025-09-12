@@ -143,7 +143,7 @@ export default function ChannelDashboardCard({
           <Images />
         </Button>
       }
-      playlistButtonSlot={
+      titleRightSlot={
         <PlaylistControl
           id={id}
           playlistId={playlist?.id}
