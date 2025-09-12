@@ -1,35 +1,23 @@
-import { Actions } from "./Actions";
-import { Title } from "./Title";
-import { Label } from "./Label";
-import { useSubmit } from "./useSubmit";
-import { closeTvModal, useTvModalState, useGetAllTvs } from "@features/Tv";
-import { useState, useEffect } from "react";
+import { Actions, Label, Title, useCreateTv } from "@features/Tv";
+import { useState } from "react";
 
-export function CreateOrUpdateContent() {
-  const { type, tvId } = useTvModalState();
-  const { data: tvs } = useGetAllTvs();
+export function CreateTv({ onClose }: { onClose: () => void }) {
   const [title, setTitle] = useState("");
 
-  useEffect(() => {
-    if (type === "update" && tvId && tvs) {
-      const tv = tvs.find((t) => t.id === String(tvId));
-      if (tv) {
-        setTitle(tv.title);
-      }
-    }
-  }, [type, tvId, tvs]);
-
   const handleCloseModal = () => {
-    closeTvModal();
+    onClose();
     setTitle("");
   };
 
-  const submitHandler = useSubmit({ title });
+  const { mutate: createTvMutation } = useCreateTv();
+
   const handleSubmit = async () => {
     if (!title.trim()) {
       return;
     }
-    await submitHandler();
+    await createTvMutation({
+      variables: { createTvInput: { title } },
+    });
     handleCloseModal();
   };
 

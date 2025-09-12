@@ -1,8 +1,8 @@
-/* eslint-disable import/no-internal-modules */
 import { useState } from "react";
 import { PlusIcon } from "lucide-react";
 import { Modal } from "@shared/ui";
 import { CreateChannel } from "./CreateChannel";
+import { CreateTv } from "./CreateTv";
 
 const tabs = [
   { id: "channel", label: "Channel" },
@@ -22,7 +22,7 @@ export default function CreateResource() {
         return <CreateChannel onClose={() => setIsModalVisible(false)} />;
 
       case "tv":
-        return <div>tv</div>;
+        return <CreateTv onClose={() => setIsModalVisible(false)} />;
 
       default:
         return null;

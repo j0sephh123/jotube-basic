@@ -1,5 +1,5 @@
 import { setTvModal, useGetAllTvs, useDeleteTv } from "@features/Tv";
-import { Button, OpenDirectoryButton, StaticStates } from "@shared/ui";
+import { OpenDirectoryButton, StaticStates } from "@shared/ui";
 import { useDialog } from "@shared/hooks";
 import { Link } from "react-router-dom";
 
@@ -30,13 +30,6 @@ export const TvPage = () => {
 
   return (
     <StaticStates isLoading={loading} isError={!!error} isEmpty={!data}>
-      <Button
-        variant="outline"
-        color="primary"
-        onClick={() => setTvModal({ type: "create", tvId: null })}
-      >
-        Create TV
-      </Button>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {data?.map((tv) => (
           <div key={tv.id} className="card bg-base-100 shadow-xl">
@@ -48,7 +41,7 @@ export const TvPage = () => {
                   Duration: {tv.duration} seconds
                 </p>
               )}
-              <OpenDirectoryButton collection={tv.identifier} />  
+              <OpenDirectoryButton collection={tv.identifier} />
               <div className="card-actions justify-end">
                 <Link to={`/tv/${tv.id}`} className="btn btn-sm btn-outline">
                   View Episodes

@@ -1,5 +1,3 @@
-import { useTvModalState } from "@features/Tv";
-
 export function Actions({
   onCancel,
   onSubmit,
@@ -9,8 +7,6 @@ export function Actions({
   onSubmit: () => void;
   disabled?: boolean;
 }) {
-  const { type } = useTvModalState();
-
   return (
     <div className="flex justify-end gap-3 mt-4">
       <button className="btn btn-outline" onClick={onCancel}>
@@ -22,7 +18,7 @@ export function Actions({
         onClick={() => onSubmit()}
         disabled={disabled}
       >
-        {type === "create" ? "Create TV" : "Update TV"}
+        Create TV
       </button>
     </div>
   );

@@ -1,7 +1,7 @@
 import { proxy, useSnapshot } from "valtio";
 
 export type TvModalState = {
-  type: "create" | "update" | null;
+  type: "update" | null;
   tvId: number | null;
 };
 
