@@ -4,7 +4,7 @@ import {
 } from "@widgets/Dashboard";
 import { Virtualizer } from "@widgets/Virtualizer";
 import { useParams } from "react-router-dom";
-import { type ViewType } from "@shared/api";
+import { type ViewType } from "@shared/types";
 
 export default function ChannelsDashboard() {
   const { viewType } = useParams<{ viewType: string }>();

@@ -1,1 +1,1 @@
-export type DashboardType = "channels" | "videos" | "playlists";
+export type DashboardType = "channels" | "videos" | "playlists" | "tv";
