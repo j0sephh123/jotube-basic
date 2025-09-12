@@ -41,10 +41,10 @@ export class EpisodeResolver {
 
   @Query(() => [GetAllEpisodesResponse])
   async getAllEpisodes(
-    @Args('getAllEpisodesInput', { nullable: true })
-    getAllEpisodesInput?: GetAllEpisodesInput,
+    @Args('getAllEpisodesInput')
+    input: GetAllEpisodesInput,
   ): Promise<GetAllEpisodesResponse[]> {
-    return this.episodeService.findAll(getAllEpisodesInput?.tvIds);
+    return this.episodeService.findAll(input);
   }
 
   @Query(() => Episode, { nullable: true })

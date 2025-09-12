@@ -5,6 +5,7 @@ import {
   UpdateEpisodeInput,
   EpisodeMessage,
   GetAllEpisodesResponse,
+  GetAllEpisodesInput,
 } from './dtos';
 import { FolderService } from 'src/file/folder.service';
 import { randomUUID } from 'crypto';
@@ -25,7 +26,7 @@ export class EpisodeService {
         data: {
           identifier,
           title,
-          artifact: ArtifactType.EMPTY,
+          artifact: ArtifactType.SAVED,
           publishedAt,
           tvId,
         },
@@ -52,9 +53,20 @@ export class EpisodeService {
     }
   }
 
-  async findAll(tvIds?: number[]): Promise<GetAllEpisodesResponse[]> {
-    const whereClause =
-      tvIds && tvIds.length > 0 ? { tvId: { in: tvIds } } : {};
+  async findAll({
+    tvIds,
+    artifact,
+  }: GetAllEpisodesInput): Promise<GetAllEpisodesResponse[]> {
+    const whereClause: {
+      tvId?: { in: number[] };
+      artifact: ArtifactType;
+    } = {
+      artifact: artifact as ArtifactType,
+    };
+
+    if (tvIds && tvIds.length > 0) {
+      whereClause.tvId = { in: tvIds };
+    }
 
     const episodes = await this.prismaService.episode.findMany({
       where: whereClause,

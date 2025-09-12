@@ -140,7 +140,6 @@ model Playlist {
 }
 
 enum ArtifactType {
-  EMPTY
   VIDEO
   SAVED
   DOWNLOADED
@@ -165,7 +164,7 @@ model Episode {
   id          Int          @id @default(autoincrement())
   identifier  String       @unique @db.VarChar(255)
   title       String       @unique @db.VarChar(255)
-  artifact    ArtifactType @default(EMPTY)
+  artifact    ArtifactType @default(SAVED)
   publishedAt DateTime?
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt

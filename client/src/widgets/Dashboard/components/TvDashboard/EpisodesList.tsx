@@ -1,38 +1,20 @@
-import {
-  setEpisodeModal,
-  useDeleteEpisode,
-  useGetAllEpisodes,
-} from "@features/Episode";
-import { useDialog } from "@shared/hooks";
+import { setEpisodeModal, useGetAllEpisodes } from "@features/Episode";
 import { StaticStates } from "@shared/ui";
 import { EpisodeDashboardCard } from "./EpisodeDashboardCard";
 import { type GetAllEpisodesInput } from "@shared/api";
+import { useDeleteEpisodeConfirm } from "./useDeleteEpisodeConfirm";
 
 export function EpisodesList({ tvIds }: GetAllEpisodesInput) {
-  const { data, loading, error } = useGetAllEpisodes({ tvIds });
-
-  const { mutate: deleteEpisodeMutation } = useDeleteEpisode();
-  const dialogHook = useDialog();
+  const { data, loading, error } = useGetAllEpisodes({
+    tvIds,
+    artifact: "SAVED",
+  });
 
   const handleEdit = (tvId: number, episodeId: number) => {
     setEpisodeModal({ type: "update", episodeId, tvId });
   };
 
-  const handleDelete = (episodeId: number) => {
-    dialogHook.confirm({
-      title: "Delete Episode",
-      message:
-        "Are you sure you want to delete this episode? This action cannot be undone.",
-      confirmText: "Delete",
-      cancelText: "Cancel",
-      variant: "error",
-      onYes: () => {
-        deleteEpisodeMutation({
-          variables: { deleteEpisodeInput: { id: Number(episodeId) } },
-        });
-      },
-    });
-  };
+  const handleDelete = useDeleteEpisodeConfirm();
 
   return (
     <StaticStates isLoading={loading} isError={!!error} isEmpty={!data}>

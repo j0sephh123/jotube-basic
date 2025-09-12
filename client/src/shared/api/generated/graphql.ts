@@ -315,6 +315,7 @@ export type FinishProcessUploadResponse = {
 };
 
 export type GetAllEpisodesInput = {
+  artifact: Scalars['String']['input'];
   tvIds?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
@@ -632,7 +633,7 @@ export type QueryFetchVideosDashboardArgs = {
 
 
 export type QueryGetAllEpisodesArgs = {
-  getAllEpisodesInput?: InputMaybe<GetAllEpisodesInput>;
+  getAllEpisodesInput: GetAllEpisodesInput;
 };
 
 
@@ -1069,7 +1070,7 @@ export type FetchVideosDashboardQueryVariables = Exact<{
 export type FetchVideosDashboardQuery = { __typename?: 'Query', fetchVideosDashboard: { __typename?: 'VideosDashboardResponse', total: number, videos: Array<{ __typename?: 'DashboardVideoResponse', id: number, ytId: string, title: string, src: string, channelId: number, channelTitle: string, channelYtId: string, screenshotCount: number, featuredScreenshots: Array<{ __typename?: 'FeaturedScreenshotResponse', src: string, id: number, second: number, ytVideoId: string }> }> } };
 
 export type GetAllEpisodesQueryVariables = Exact<{
-  getAllEpisodesInput?: InputMaybe<GetAllEpisodesInput>;
+  getAllEpisodesInput: GetAllEpisodesInput;
 }>;
 
 
@@ -1940,7 +1941,7 @@ export type FetchVideosDashboardLazyQueryHookResult = ReturnType<typeof useFetch
 export type FetchVideosDashboardSuspenseQueryHookResult = ReturnType<typeof useFetchVideosDashboardSuspenseQuery>;
 export type FetchVideosDashboardQueryResult = Apollo.QueryResult<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>;
 export const GetAllEpisodesDocument = gql`
-    query GetAllEpisodes($getAllEpisodesInput: GetAllEpisodesInput) {
+    query GetAllEpisodes($getAllEpisodesInput: GetAllEpisodesInput!) {
   getAllEpisodes(getAllEpisodesInput: $getAllEpisodesInput) {
     id
     identifier
@@ -1969,7 +1970,7 @@ export const GetAllEpisodesDocument = gql`
  *   },
  * });
  */
-export function useGetAllEpisodesQuery(baseOptions?: Apollo.QueryHookOptions<GetAllEpisodesQuery, GetAllEpisodesQueryVariables>) {
+export function useGetAllEpisodesQuery(baseOptions: Apollo.QueryHookOptions<GetAllEpisodesQuery, GetAllEpisodesQueryVariables> & ({ variables: GetAllEpisodesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetAllEpisodesQuery, GetAllEpisodesQueryVariables>(GetAllEpisodesDocument, options);
       }

@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_ALL_EPISODES = gql`
-  query GetAllEpisodes($getAllEpisodesInput: GetAllEpisodesInput) {
+  query GetAllEpisodes($getAllEpisodesInput: GetAllEpisodesInput!) {
     getAllEpisodes(getAllEpisodesInput: $getAllEpisodesInput) {
       id
       identifier

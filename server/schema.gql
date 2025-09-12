@@ -276,6 +276,7 @@ type FinishProcessUploadResponse {
 }
 
 input GetAllEpisodesInput {
+  artifact: String!
   tvIds: [Int!]
 }
 
@@ -432,7 +433,7 @@ type Query {
   episodesWithThumbnails(input: EpisodesWithThumbnailsInput!): [EpisodesWithThumbnailsResponse!]!
   fetchDashboard(fetchDashboardInput: FetchDashboardInput!): ChannelsDashboardResponse!
   fetchVideosDashboard(fetchVideosDashboardInput: FetchVideosDashboardInput!): VideosDashboardResponse!
-  getAllEpisodes(getAllEpisodesInput: GetAllEpisodesInput): [GetAllEpisodesResponse!]!
+  getAllEpisodes(getAllEpisodesInput: GetAllEpisodesInput!): [GetAllEpisodesResponse!]!
   getAllTvs: [ExtendedTv!]!
   getEpisode(getEpisodeInput: GetEpisodeInput!): Episode
   getEpisodeDetails(getEpisodeInput: GetEpisodeInput!): Episode
