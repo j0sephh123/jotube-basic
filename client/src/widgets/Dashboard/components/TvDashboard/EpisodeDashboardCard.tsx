@@ -66,11 +66,13 @@ export function EpisodeDashboardCard({
       title={title}
       cardMenuSlot={cardMenu}
       to={`/tv/${tvId}/episode/${id}` as To}
-      titleRightSlot={cardCreatedAt}
-      secondRow={<TruncatedTvTitle />}
-      actionButtonSlot={
-        <OpenDirectoryButton collection={tvIdentifier} media={identifier} />
+      titleRightSlot={
+        <>
+          {cardCreatedAt}
+          <OpenDirectoryButton collection={tvIdentifier} media={identifier} />
+        </>
       }
+      secondRow={<TruncatedTvTitle />}
     />
   );
 }
