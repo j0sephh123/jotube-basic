@@ -68,6 +68,7 @@ export class FolderScannerService {
             size: Math.round(stats.size / (1024 * 1024)),
             duration,
             format: videoFile.split('.').pop() || 'unknown',
+            fullPath: `${tvPath}/${input.path}/${file}/${videoFile}`,
           };
         },
       );

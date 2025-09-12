@@ -280,6 +280,7 @@ type FileInfo {
   duration: Float!
   fileName: String!
   format: String!
+  fullPath: String!
   size: Float!
 }
 

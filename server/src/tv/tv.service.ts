@@ -10,7 +10,10 @@ import {
 import { FolderService } from 'src/file/folder.service';
 import { FolderScannerService } from 'src/folder-scanner/folder-scanner.service';
 import { EpisodeService } from 'src/episode/episode.service';
+import { FileOperationService } from 'src/file/file-operation.service';
+import { FilePathService } from 'src/file/file-path.service';
 import { randomUUID } from 'crypto';
+import { join } from 'path';
 
 @Injectable()
 export class TvService {
@@ -19,6 +22,8 @@ export class TvService {
     private readonly folderService: FolderService,
     private readonly folderScannerService: FolderScannerService,
     private readonly episodeService: EpisodeService,
+    private readonly fileOperationService: FileOperationService,
+    private readonly filePathService: FilePathService,
   ) {}
 
   async create({ title, duration }: CreateTvInput) {
@@ -129,6 +134,15 @@ export class TvService {
         ignoreDirs,
       });
 
+      const tv = await this.prismaService.tV.findUnique({
+        where: { id: tvId },
+        select: { identifier: true },
+      });
+
+      if (!tv) {
+        throw new Error('TV not found');
+      }
+
       let episodesCreated = 0;
 
       for (const fileInfo of scanResult.files) {
@@ -136,6 +150,20 @@ export class TvService {
           title: fileInfo.fileName,
           tvId,
         });
+
+        const basePath = this.filePathService.getBasePath();
+        const episodeFolderPath = join(
+          basePath,
+          tv.identifier,
+          episodeResult.episode.identifier,
+        );
+        const fileName = fileInfo.fileName;
+        const destinationPath = join(episodeFolderPath, fileName);
+
+        await this.fileOperationService.moveFile(
+          fileInfo.fullPath,
+          destinationPath,
+        );
 
         await this.prismaService.videoFile.create({
           data: {
@@ -151,7 +179,7 @@ export class TvService {
 
       return {
         episodesCreated,
-        message: `Successfully created ${episodesCreated} episodes`,
+        message: `Successfully created`,
       };
     } catch (error) {
       return {

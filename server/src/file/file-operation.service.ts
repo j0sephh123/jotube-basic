@@ -44,6 +44,14 @@ export class FileOperationService {
     }
   }
 
+  async moveFile(sourcePath: string, destinationPath: string) {
+    try {
+      await fs.rename(sourcePath, destinationPath);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async listFiles(directoryPath: string): Promise<string[]> {
     try {
       const files = await fs.readdir(directoryPath);

@@ -13,6 +13,9 @@ export class FileInfo {
 
   @Field()
   format: string;
+
+  @Field()
+  fullPath: string;
 }
 
 @ObjectType()
