@@ -41,7 +41,7 @@ export function PlaylistListItem({ playlist }: { playlist: PlaylistResponse }) {
   };
 
   const handleItemClick = () => {
-    navigate(`/playlists/${playlist.id}`);
+    navigate(`/dashboard/playlists/channels/${playlist.id}`);
   };
 
   return (

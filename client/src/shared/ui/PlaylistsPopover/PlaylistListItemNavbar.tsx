@@ -15,7 +15,7 @@ export function PlaylistListItemNavbar({
     if (onPlaylistClick) {
       onPlaylistClick(playlist.id);
     } else {
-      navigate(`/playlists/${playlist.id}`);
+      navigate(`/dashboard/playlists/channels/${playlist.id}`);
     }
   };
 
