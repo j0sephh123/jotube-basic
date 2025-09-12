@@ -314,6 +314,10 @@ export type FinishProcessUploadResponse = {
   ytId: Scalars['String']['output'];
 };
 
+export type GetAllEpisodesInput = {
+  tvIds?: InputMaybe<Array<Scalars['Int']['input']>>;
+};
+
 export type GetAllEpisodesResponse = {
   __typename?: 'GetAllEpisodesResponse';
   artifact: Scalars['String']['output'];
@@ -583,7 +587,6 @@ export type Query = {
   getAllTvs: Array<ExtendedTv>;
   getEpisode?: Maybe<Episode>;
   getEpisodeDetails?: Maybe<Episode>;
-  getEpisodesByTvId: Array<Episode>;
   getProcessingReadyUploads: ProcessingReadyUploadsResponse;
   getScreenshots: Array<GetScreenshotsResponse>;
   getTv?: Maybe<Tv>;
@@ -628,6 +631,11 @@ export type QueryFetchVideosDashboardArgs = {
 };
 
 
+export type QueryGetAllEpisodesArgs = {
+  getAllEpisodesInput?: InputMaybe<GetAllEpisodesInput>;
+};
+
+
 export type QueryGetEpisodeArgs = {
   getEpisodeInput: GetEpisodeInput;
 };
@@ -635,11 +643,6 @@ export type QueryGetEpisodeArgs = {
 
 export type QueryGetEpisodeDetailsArgs = {
   getEpisodeInput: GetEpisodeInput;
-};
-
-
-export type QueryGetEpisodesByTvIdArgs = {
-  tvId: Scalars['Float']['input'];
 };
 
 
@@ -1065,17 +1068,12 @@ export type FetchVideosDashboardQueryVariables = Exact<{
 
 export type FetchVideosDashboardQuery = { __typename?: 'Query', fetchVideosDashboard: { __typename?: 'VideosDashboardResponse', total: number, videos: Array<{ __typename?: 'DashboardVideoResponse', id: number, ytId: string, title: string, src: string, channelId: number, channelTitle: string, channelYtId: string, screenshotCount: number, featuredScreenshots: Array<{ __typename?: 'FeaturedScreenshotResponse', src: string, id: number, second: number, ytVideoId: string }> }> } };
 
-export type GetAllEpisodesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetAllEpisodesQuery = { __typename?: 'Query', getAllEpisodes: Array<{ __typename?: 'GetAllEpisodesResponse', id: string, identifier: string, title: string, artifact: string, createdAt: any, tvId: string, tvTitle: string }> };
-
-export type GetEpisodesByTvIdQueryVariables = Exact<{
-  tvId: Scalars['Float']['input'];
+export type GetAllEpisodesQueryVariables = Exact<{
+  getAllEpisodesInput?: InputMaybe<GetAllEpisodesInput>;
 }>;
 
 
-export type GetEpisodesByTvIdQuery = { __typename?: 'Query', getEpisodesByTvId: Array<{ __typename?: 'Episode', id: string, identifier: string, title: string, artifact: string, publishedAt?: any | null, createdAt: any, updatedAt: any, tvId: string }> };
+export type GetAllEpisodesQuery = { __typename?: 'Query', getAllEpisodes: Array<{ __typename?: 'GetAllEpisodesResponse', id: string, identifier: string, title: string, artifact: string, createdAt: any, tvId: string, tvTitle: string }> };
 
 export type GetEpisodeQueryVariables = Exact<{
   getEpisodeInput: GetEpisodeInput;
@@ -1942,8 +1940,8 @@ export type FetchVideosDashboardLazyQueryHookResult = ReturnType<typeof useFetch
 export type FetchVideosDashboardSuspenseQueryHookResult = ReturnType<typeof useFetchVideosDashboardSuspenseQuery>;
 export type FetchVideosDashboardQueryResult = Apollo.QueryResult<FetchVideosDashboardQuery, FetchVideosDashboardQueryVariables>;
 export const GetAllEpisodesDocument = gql`
-    query GetAllEpisodes {
-  getAllEpisodes {
+    query GetAllEpisodes($getAllEpisodesInput: GetAllEpisodesInput) {
+  getAllEpisodes(getAllEpisodesInput: $getAllEpisodesInput) {
     id
     identifier
     title
@@ -1967,6 +1965,7 @@ export const GetAllEpisodesDocument = gql`
  * @example
  * const { data, loading, error } = useGetAllEpisodesQuery({
  *   variables: {
+ *      getAllEpisodesInput: // value for 'getAllEpisodesInput'
  *   },
  * });
  */
@@ -1986,53 +1985,6 @@ export type GetAllEpisodesQueryHookResult = ReturnType<typeof useGetAllEpisodesQ
 export type GetAllEpisodesLazyQueryHookResult = ReturnType<typeof useGetAllEpisodesLazyQuery>;
 export type GetAllEpisodesSuspenseQueryHookResult = ReturnType<typeof useGetAllEpisodesSuspenseQuery>;
 export type GetAllEpisodesQueryResult = Apollo.QueryResult<GetAllEpisodesQuery, GetAllEpisodesQueryVariables>;
-export const GetEpisodesByTvIdDocument = gql`
-    query GetEpisodesByTvId($tvId: Float!) {
-  getEpisodesByTvId(tvId: $tvId) {
-    id
-    identifier
-    title
-    artifact
-    publishedAt
-    createdAt
-    updatedAt
-    tvId
-  }
-}
-    `;
-
-/**
- * __useGetEpisodesByTvIdQuery__
- *
- * To run a query within a React component, call `useGetEpisodesByTvIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetEpisodesByTvIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetEpisodesByTvIdQuery({
- *   variables: {
- *      tvId: // value for 'tvId'
- *   },
- * });
- */
-export function useGetEpisodesByTvIdQuery(baseOptions: Apollo.QueryHookOptions<GetEpisodesByTvIdQuery, GetEpisodesByTvIdQueryVariables> & ({ variables: GetEpisodesByTvIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetEpisodesByTvIdQuery, GetEpisodesByTvIdQueryVariables>(GetEpisodesByTvIdDocument, options);
-      }
-export function useGetEpisodesByTvIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEpisodesByTvIdQuery, GetEpisodesByTvIdQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetEpisodesByTvIdQuery, GetEpisodesByTvIdQueryVariables>(GetEpisodesByTvIdDocument, options);
-        }
-export function useGetEpisodesByTvIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetEpisodesByTvIdQuery, GetEpisodesByTvIdQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetEpisodesByTvIdQuery, GetEpisodesByTvIdQueryVariables>(GetEpisodesByTvIdDocument, options);
-        }
-export type GetEpisodesByTvIdQueryHookResult = ReturnType<typeof useGetEpisodesByTvIdQuery>;
-export type GetEpisodesByTvIdLazyQueryHookResult = ReturnType<typeof useGetEpisodesByTvIdLazyQuery>;
-export type GetEpisodesByTvIdSuspenseQueryHookResult = ReturnType<typeof useGetEpisodesByTvIdSuspenseQuery>;
-export type GetEpisodesByTvIdQueryResult = Apollo.QueryResult<GetEpisodesByTvIdQuery, GetEpisodesByTvIdQueryVariables>;
 export const GetEpisodeDocument = gql`
     query GetEpisode($getEpisodeInput: GetEpisodeInput!) {
   getEpisode(getEpisodeInput: $getEpisodeInput) {

@@ -10,6 +10,7 @@ import {
   GetEpisodeInput,
   Episode,
   GetAllEpisodesResponse,
+  GetAllEpisodesInput,
 } from './dtos';
 
 @Resolver()
@@ -39,15 +40,11 @@ export class EpisodeResolver {
   }
 
   @Query(() => [GetAllEpisodesResponse])
-  async getAllEpisodes(): Promise<GetAllEpisodesResponse[]> {
-    return this.episodeService.findAll();
-  }
-
-  @Query(() => [Episode])
-  async getEpisodesByTvId(
-    @Args('tvId', { type: () => Float }) tvId: number,
-  ): Promise<Episode[]> {
-    return this.episodeService.findByTvId(tvId);
+  async getAllEpisodes(
+    @Args('getAllEpisodesInput', { nullable: true })
+    getAllEpisodesInput?: GetAllEpisodesInput,
+  ): Promise<GetAllEpisodesResponse[]> {
+    return this.episodeService.findAll(getAllEpisodesInput?.tvIds);
   }
 
   @Query(() => Episode, { nullable: true })

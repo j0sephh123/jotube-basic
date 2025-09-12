@@ -1,14 +1,15 @@
 import { useParams } from "react-router-dom";
 import { useGetTv } from "@features/Tv";
 import {
-  useGetEpisodesByTvId,
   useDeleteEpisode,
   setEpisodeModal,
   EpisodeModal,
+  useGetAllEpisodes,
 } from "@features/Episode";
 import { Button, StaticStates, OpenDirectoryButton } from "@shared/ui";
 import { useDialog } from "@shared/hooks";
-import { Link } from "react-router-dom";
+// eslint-disable-next-line import/no-internal-modules
+import { EpisodeDashboardCard } from "@widgets/Dashboard/components/TvDashboard/EpisodeDashboardCard";
 
 export const TvDetailsPage = () => {
   const { tvId } = useParams<{ tvId: string }>();
@@ -24,7 +25,7 @@ export const TvDetailsPage = () => {
     data: episodesData,
     loading: episodesLoading,
     error: episodesError,
-  } = useGetEpisodesByTvId(tvIdNumber);
+  } = useGetAllEpisodes({ tvIds: [tvIdNumber] });
   const { mutate: deleteEpisodeMutation, isPending: isDeleting } =
     useDeleteEpisode();
   const dialogHook = useDialog();
@@ -62,7 +63,7 @@ export const TvDetailsPage = () => {
   }
 
   const tv = tvData?.getTv;
-  const episodes = episodesData?.getEpisodesByTvId || [];
+  const episodes = episodesData?.getAllEpisodes || [];
 
   return (
     <div className="container mx-auto p-6">
@@ -90,46 +91,18 @@ export const TvDetailsPage = () => {
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {episodes.map((episode) => (
-            <div key={episode.id} className="card bg-base-100 shadow-xl">
-              <div className="card-body">
-                <h2 className="card-title">{episode.title}</h2>
-                <p className="text-sm text-gray-600">{episode.identifier}</p>
-                <p className="text-sm text-gray-500">
-                  Artifact: {episode.artifact}
-                </p>
-                {episode.publishedAt && (
-                  <p className="text-sm text-gray-500">
-                    Published:{" "}
-                    {new Date(episode.publishedAt).toLocaleDateString()}
-                  </p>
-                )}
-                <OpenDirectoryButton
-                  collection={tv?.identifier || ""}
-                  media={episode.identifier}
-                />
-                <div className="card-actions justify-end">
-                  <Link
-                    to={`/tv/${tvIdNumber}/episode/${episode.id}`}
-                    className="btn btn-sm btn-outline"
-                  >
-                    View Details
-                  </Link>
-                  <button
-                    className="btn btn-sm btn-outline"
-                    onClick={() => handleEdit(Number(episode.id))}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="btn btn-sm btn-outline"
-                    onClick={() => handleDelete(Number(episode.id))}
-                    disabled={isDeleting}
-                  >
-                    {isDeleting ? "Deleting..." : "Delete"}
-                  </button>
-                </div>
-              </div>
-            </div>
+            <EpisodeDashboardCard
+              key={episode.id}
+              id={episode.id}
+              identifier={episode.identifier}
+              title={episode.title}
+              artifact={episode.artifact}
+              createdAt={episode.createdAt}
+              tvId={episode.tvId}
+              tvTitle={episode.tvTitle}
+              handleEdit={() => console.log("to edit")}
+              handleDelete={() => console.log("to delete")}
+            />
           ))}
         </div>
       </StaticStates>

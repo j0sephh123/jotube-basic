@@ -52,8 +52,12 @@ export class EpisodeService {
     }
   }
 
-  async findAll(): Promise<GetAllEpisodesResponse[]> {
+  async findAll(tvIds?: number[]): Promise<GetAllEpisodesResponse[]> {
+    const whereClause =
+      tvIds && tvIds.length > 0 ? { tvId: { in: tvIds } } : {};
+
     const episodes = await this.prismaService.episode.findMany({
+      where: whereClause,
       orderBy: {
         createdAt: 'desc',
       },
@@ -84,18 +88,6 @@ export class EpisodeService {
           tvTitle: episode.tv.title,
         }) satisfies GetAllEpisodesResponse,
     );
-  }
-
-  async findByTvId(tvId: number) {
-    return this.prismaService.episode.findMany({
-      where: { tvId },
-      orderBy: {
-        createdAt: 'desc',
-      },
-      include: {
-        tv: true,
-      },
-    });
   }
 
   async findOne(id: number) {

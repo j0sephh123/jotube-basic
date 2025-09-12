@@ -3,9 +3,7 @@ import { StaticStates } from "@shared/ui";
 import { EpisodeDashboardCard } from "./EpisodeDashboardCard";
 
 export function EpisodesList() {
-  const { data, loading, error } = useGetAllEpisodes();
-
-  console.log(data);
+  const { data, loading, error } = useGetAllEpisodes({ tvIds: [] });
 
   return (
     <StaticStates isLoading={loading} isError={!!error} isEmpty={!data}>
@@ -20,6 +18,8 @@ export function EpisodesList() {
             createdAt={episode.createdAt}
             tvId={episode.tvId}
             tvTitle={episode.tvTitle}
+            handleEdit={()=> console.log("to edit")}
+            handleDelete={()=> console.log("to delete")}
           />
         ))}
       </div>

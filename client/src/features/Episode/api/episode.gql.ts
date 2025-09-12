@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_ALL_EPISODES = gql`
-  query GetAllEpisodes {
-    getAllEpisodes {
+  query GetAllEpisodes($getAllEpisodesInput: GetAllEpisodesInput) {
+    getAllEpisodes(getAllEpisodesInput: $getAllEpisodesInput) {
       id
       identifier
       title
@@ -10,21 +10,6 @@ export const GET_ALL_EPISODES = gql`
       createdAt
       tvId
       tvTitle
-    }
-  }
-`;
-
-export const GET_EPISODES_BY_TV_ID = gql`
-  query GetEpisodesByTvId($tvId: Float!) {
-    getEpisodesByTvId(tvId: $tvId) {
-      id
-      identifier
-      title
-      artifact
-      publishedAt
-      createdAt
-      updatedAt
-      tvId
     }
   }
 `;

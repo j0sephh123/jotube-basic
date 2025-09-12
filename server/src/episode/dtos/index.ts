@@ -3,6 +3,7 @@ export * from './create-episode.input';
 export * from './update-episode.input';
 export * from './delete-episode.input';
 export * from './get-episode.input';
+export * from './get-all-episodes.input';
 export * from './create-episode.response';
 export * from './update-episode.response';
 export * from './delete-episode.response';
