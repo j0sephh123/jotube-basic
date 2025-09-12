@@ -13,7 +13,7 @@ export const TvDashboard = () => {
   return (
     <>
       {isTvs && <TvList />}
-      {isEpisodes && <EpisodesList />}
+      {isEpisodes && <EpisodesList tvIds={[]} />}
     </>
   );
 };

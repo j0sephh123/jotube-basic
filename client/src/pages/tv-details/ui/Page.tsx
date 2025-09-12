@@ -6,10 +6,10 @@ import {
   EpisodeModal,
   useGetAllEpisodes,
 } from "@features/Episode";
-import { Button, StaticStates, OpenDirectoryButton } from "@shared/ui";
+import { Button, OpenDirectoryButton } from "@shared/ui";
 import { useDialog } from "@shared/hooks";
 // eslint-disable-next-line import/no-internal-modules
-import { EpisodeDashboardCard } from "@widgets/Dashboard/components/TvDashboard/EpisodeDashboardCard";
+import { EpisodesList } from "@widgets/Dashboard/components/TvDashboard/EpisodesList";
 
 export const TvDetailsPage = () => {
   const { tvId } = useParams<{ tvId: string }>();
@@ -84,28 +84,7 @@ export const TvDetailsPage = () => {
         </Button>
       </div>
 
-      <StaticStates
-        isLoading={false}
-        isError={false}
-        isEmpty={!episodes.length}
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {episodes.map((episode) => (
-            <EpisodeDashboardCard
-              key={episode.id}
-              id={episode.id}
-              identifier={episode.identifier}
-              title={episode.title}
-              artifact={episode.artifact}
-              createdAt={episode.createdAt}
-              tvId={episode.tvId}
-              tvTitle={episode.tvTitle}
-              handleEdit={() => console.log("to edit")}
-              handleDelete={() => console.log("to delete")}
-            />
-          ))}
-        </div>
-      </StaticStates>
+      {tvId && <EpisodesList tvIds={[tvIdNumber]} />}
       <EpisodeModal />
     </div>
   );

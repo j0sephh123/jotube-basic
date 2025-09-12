@@ -2,8 +2,8 @@ import { useGetAllEpisodes } from "@features/Episode";
 import { StaticStates } from "@shared/ui";
 import { EpisodeDashboardCard } from "./EpisodeDashboardCard";
 
-export function EpisodesList() {
-  const { data, loading, error } = useGetAllEpisodes({ tvIds: [] });
+export function EpisodesList({ tvIds }: { tvIds: number[] }) {
+  const { data, loading, error } = useGetAllEpisodes({ tvIds });
 
   return (
     <StaticStates isLoading={loading} isError={!!error} isEmpty={!data}>
