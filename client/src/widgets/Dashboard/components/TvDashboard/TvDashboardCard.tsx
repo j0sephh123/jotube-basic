@@ -1,4 +1,4 @@
-import { OpenDirectoryButton } from "@shared/ui";
+import { OpenDirectoryButton, Card } from "@shared/ui";
 import { Link } from "react-router-dom";
 
 type Props = {
@@ -17,12 +17,13 @@ export function TvDashboardCard({
   handleDelete,
 }: Props) {
   return (
-    <div className="card bg-base-100 shadow-xl">
-      <div className="card-body">
-        <h2 className="card-title">{title}</h2>
-        <p className="text-sm text-gray-600">{identifier}</p>
-        <OpenDirectoryButton collection={identifier} />
-        <div className="card-actions justify-end">
+    <Card
+      id={id}
+      title={title}
+      secondRow={<p className="text-sm text-gray-600">{identifier}</p>}
+      actionButtonSlot={<OpenDirectoryButton collection={identifier} />}
+      cardMenuSlot={
+        <>
           <Link to={`/tv/${id}`} className="btn btn-sm btn-outline">
             View Episodes
           </Link>
@@ -38,8 +39,11 @@ export function TvDashboardCard({
           >
             Delete
           </button>
-        </div>
-      </div>
-    </div>
+        </>
+      }
+      src={""}
+      ytId={""}
+      to={"/playlists"}
+    />
   );
 }
