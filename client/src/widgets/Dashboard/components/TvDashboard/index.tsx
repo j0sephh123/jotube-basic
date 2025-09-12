@@ -1,33 +1,13 @@
-import { setTvModal, useGetAllTvs } from "@features/Tv";
-import { StaticStates } from "@shared/ui";
-import { useDeleteTvConfirm } from "./useDeleteTvConfirm";
-import { TvDashboardCard } from "./TvDashboardCard";
+import { useParams } from "react-router-dom";
+import { TvList } from "./TvList";
 
 export const TvDashboard = () => {
-  const { data, loading, error } = useGetAllTvs();
+  const params = useParams();
 
-  const handleEdit = (tvId: number) => {
-    setTvModal({ type: "update", tvId });
-  };
+  console.log(params);
 
-  const handleDelete = useDeleteTvConfirm();
+  const isTvs = params.viewType === "tvs";
+  const isEpisodes = params.viewType === "episodes";
 
-  return (
-    <StaticStates isLoading={loading} isError={!!error} isEmpty={!data}>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {data?.map((tv) => (
-          <TvDashboardCard
-            key={tv.id}
-            title={tv.title}
-            identifier={tv.identifier}
-            id={Number(tv.id)}
-            handleEdit={handleEdit}
-            handleDelete={handleDelete}
-            createdAt={tv.createdAt}
-            amountOfEpisodes={tv.amountOfEpisodes}
-          />
-        ))}
-      </div>
-    </StaticStates>
-  );
+  return isTvs ? <TvList /> : <div>episode list not implemented</div>;
 };
