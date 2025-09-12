@@ -10,8 +10,6 @@ export function PlaylistUploadsList() {
   const uploadsType = useParams().viewType as UploadsType;
   const playlistId = useTypedParams("playlistId");
 
-  console.log({ uploadsType });
-
   const { data, refetch } = useUploads({
     id: { type: IdType.Playlist, value: Number(playlistId) },
     uploadsType,
