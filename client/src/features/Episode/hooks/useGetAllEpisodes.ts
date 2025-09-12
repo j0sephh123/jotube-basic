@@ -1,7 +1,10 @@
-import { useQuery } from "@apollo/client";
-import { GET_ALL_EPISODES } from "../api/episode.gql";
-import type { GetAllEpisodesQuery } from "@shared/api/generated/graphql";
+import {
+  type GetAllEpisodesQuery,
+  useGetAllEpisodesQuery,
+} from "@shared/api/generated/graphql";
 
-export const useGetAllEpisodes = () => {
-  return useQuery<GetAllEpisodesQuery>(GET_ALL_EPISODES);
-};
+export type EpisodeResponse = GetAllEpisodesQuery["getAllEpisodes"][number];
+
+export function useGetAllEpisodes() {
+  return useGetAllEpisodesQuery();
+}

@@ -1,6 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/core/database/prisma/prisma.service';
-import { CreateEpisodeInput, UpdateEpisodeInput, EpisodeMessage } from './dtos';
+import {
+  CreateEpisodeInput,
+  UpdateEpisodeInput,
+  EpisodeMessage,
+  GetAllEpisodesResponse,
+} from './dtos';
 import { FolderService } from 'src/file/folder.service';
 import { randomUUID } from 'crypto';
 import { ArtifactType } from '@prisma/client';
@@ -47,15 +52,38 @@ export class EpisodeService {
     }
   }
 
-  async findAll() {
-    return this.prismaService.episode.findMany({
+  async findAll(): Promise<GetAllEpisodesResponse[]> {
+    const episodes = await this.prismaService.episode.findMany({
       orderBy: {
         createdAt: 'desc',
       },
-      include: {
-        tv: true,
+      select: {
+        id: true,
+        identifier: true,
+        title: true,
+        artifact: true,
+        createdAt: true,
+        tvId: true,
+        tv: {
+          select: {
+            title: true,
+          },
+        },
       },
     });
+
+    return episodes.map(
+      (episode) =>
+        ({
+          id: episode.id,
+          identifier: episode.identifier,
+          title: episode.title,
+          artifact: episode.artifact,
+          createdAt: episode.createdAt,
+          tvId: episode.tvId,
+          tvTitle: episode.tv.title,
+        }) satisfies GetAllEpisodesResponse,
+    );
   }
 
   async findByTvId(tvId: number) {

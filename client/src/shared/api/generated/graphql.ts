@@ -314,6 +314,17 @@ export type FinishProcessUploadResponse = {
   ytId: Scalars['String']['output'];
 };
 
+export type GetAllEpisodesResponse = {
+  __typename?: 'GetAllEpisodesResponse';
+  artifact: Scalars['String']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  identifier: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  tvId: Scalars['ID']['output'];
+  tvTitle: Scalars['String']['output'];
+};
+
 export type GetEpisodeInput = {
   id: Scalars['Int']['input'];
 };
@@ -568,7 +579,7 @@ export type Query = {
   episodesWithThumbnails: Array<EpisodesWithThumbnailsResponse>;
   fetchDashboard: ChannelsDashboardResponse;
   fetchVideosDashboard: VideosDashboardResponse;
-  getAllEpisodes: Array<Episode>;
+  getAllEpisodes: Array<GetAllEpisodesResponse>;
   getAllTvs: Array<ExtendedTv>;
   getEpisode?: Maybe<Episode>;
   getEpisodeDetails?: Maybe<Episode>;
@@ -1057,7 +1068,7 @@ export type FetchVideosDashboardQuery = { __typename?: 'Query', fetchVideosDashb
 export type GetAllEpisodesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllEpisodesQuery = { __typename?: 'Query', getAllEpisodes: Array<{ __typename?: 'Episode', id: string, identifier: string, title: string, artifact: string, publishedAt?: any | null, createdAt: any, updatedAt: any, tvId: string }> };
+export type GetAllEpisodesQuery = { __typename?: 'Query', getAllEpisodes: Array<{ __typename?: 'GetAllEpisodesResponse', id: string, identifier: string, title: string, artifact: string, createdAt: any, tvId: string, tvTitle: string }> };
 
 export type GetEpisodesByTvIdQueryVariables = Exact<{
   tvId: Scalars['Float']['input'];
@@ -1937,10 +1948,9 @@ export const GetAllEpisodesDocument = gql`
     identifier
     title
     artifact
-    publishedAt
     createdAt
-    updatedAt
     tvId
+    tvTitle
   }
 }
     `;

@@ -275,6 +275,16 @@ type FinishProcessUploadResponse {
   ytId: String!
 }
 
+type GetAllEpisodesResponse {
+  artifact: String!
+  createdAt: DateTime!
+  id: ID!
+  identifier: String!
+  title: String!
+  tvId: ID!
+  tvTitle: String!
+}
+
 input GetEpisodeInput {
   id: Int!
 }
@@ -418,7 +428,7 @@ type Query {
   episodesWithThumbnails(input: EpisodesWithThumbnailsInput!): [EpisodesWithThumbnailsResponse!]!
   fetchDashboard(fetchDashboardInput: FetchDashboardInput!): ChannelsDashboardResponse!
   fetchVideosDashboard(fetchVideosDashboardInput: FetchVideosDashboardInput!): VideosDashboardResponse!
-  getAllEpisodes: [Episode!]!
+  getAllEpisodes: [GetAllEpisodesResponse!]!
   getAllTvs: [ExtendedTv!]!
   getEpisode(getEpisodeInput: GetEpisodeInput!): Episode
   getEpisodeDetails(getEpisodeInput: GetEpisodeInput!): Episode

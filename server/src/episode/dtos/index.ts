@@ -6,4 +6,5 @@ export * from './get-episode.input';
 export * from './create-episode.response';
 export * from './update-episode.response';
 export * from './delete-episode.response';
+export * from './get-all-episodes.response';
 export * from './episode-message.enum';

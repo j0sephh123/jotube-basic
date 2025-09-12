@@ -7,10 +7,9 @@ export const GET_ALL_EPISODES = gql`
       identifier
       title
       artifact
-      publishedAt
       createdAt
-      updatedAt
       tvId
+      tvTitle
     }
   }
 `;

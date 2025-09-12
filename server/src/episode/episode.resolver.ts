@@ -9,6 +9,7 @@ import {
   DeleteEpisodeInput,
   GetEpisodeInput,
   Episode,
+  GetAllEpisodesResponse,
 } from './dtos';
 
 @Resolver()
@@ -37,8 +38,8 @@ export class EpisodeResolver {
     return this.episodeService.update(id, updateEpisodeInput);
   }
 
-  @Query(() => [Episode])
-  async getAllEpisodes(): Promise<Episode[]> {
+  @Query(() => [GetAllEpisodesResponse])
+  async getAllEpisodes(): Promise<GetAllEpisodesResponse[]> {
     return this.episodeService.findAll();
   }
 
