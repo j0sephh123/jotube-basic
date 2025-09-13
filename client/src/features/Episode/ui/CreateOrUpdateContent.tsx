@@ -7,6 +7,7 @@ import {
 import {
   closeEpisodeModal,
   useEpisodeModalState,
+// eslint-disable-next-line import/no-internal-modules
 } from "../model/episodeModalStore";
 import { Button } from "@shared/ui";
 

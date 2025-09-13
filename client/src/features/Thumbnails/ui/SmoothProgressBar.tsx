@@ -4,7 +4,7 @@ type Props = {
   className?: string;
 };
 
-export default function SmoothProgressBar({
+export function SmoothProgressBar({
   current,
   total,
   className = "",

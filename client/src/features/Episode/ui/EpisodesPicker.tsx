@@ -1,8 +1,6 @@
 import {
-  Container,
   Grid,
   Header,
-  ThumbnailImage,
   Footer,
   useEvents,
   useHandleContainerWheel,
@@ -14,7 +12,7 @@ import { setZoom } from "@features/Screenshot";
 import { setSelectedImages, useEpisodesProcessingState } from "@shared/store";
 import { generateEpisodeThumbnailUrl } from "@features/Thumbnails";
 import { useRef } from "react";
-import { OpenDirectoryButton } from "@shared/ui";
+import { OpenDirectoryButton, Container, ThumbnailImage } from "@shared/ui";
 import { type To } from "@shared/types";
 
 export function EpisodesPicker() {

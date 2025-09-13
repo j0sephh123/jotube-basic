@@ -49,3 +49,4 @@ export { Iterator } from "./repeatable/Iterator";
 export { DoubleAction } from "./DoubleAction";
 export { SegmentedSwitch } from "./SegmentedSwitch";
 export { default as PlaylistsPopover } from "./PlaylistsPopover";
+export * from './ManualPicker'

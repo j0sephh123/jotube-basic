@@ -1,8 +1,6 @@
 import {
-  Container,
   Grid,
   Header,
-  ThumbnailImage,
   Footer,
   useEvents,
   useHandleContainerWheel,
@@ -15,7 +13,7 @@ import { setSelectedImages, useThumbnailsProcessingState } from "@shared/store";
 import { generateThumbnailUrl } from "@shared/utils";
 import { useRef } from "react";
 import { makeYtChannelId, type To } from "@shared/types";
-import { OpenDirectoryButton } from "@shared/ui";
+import { OpenDirectoryButton, Container, ThumbnailImage } from "@shared/ui";
 
 export function ManualThumbnailsPicker() {
   const containerRef = useRef<HTMLDivElement>(null);

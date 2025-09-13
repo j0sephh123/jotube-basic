@@ -1,11 +1,12 @@
 import {
   useEpisodeModalState,
   closeEpisodeModal,
+// eslint-disable-next-line import/no-internal-modules
 } from "../model/episodeModalStore";
 import { match } from "ts-pattern";
 import { CreateOrUpdateContent } from "./CreateOrUpdateContent";
 
-export default function EpisodeModal() {
+export function EpisodeModal() {
   const { type, tvId } = useEpisodeModalState();
 
   const content = match(type)

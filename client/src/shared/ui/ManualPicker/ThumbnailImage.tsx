@@ -4,7 +4,7 @@ type Props = {
   src: string;
 };
 
-const ThumbnailImage = memo(({ src }: Props) => {
+export const ThumbnailImage = memo(({ src }: Props) => {
   return (
     <img
       className="w-full"
@@ -14,5 +14,3 @@ const ThumbnailImage = memo(({ src }: Props) => {
     />
   );
 });
-
-export default ThumbnailImage;

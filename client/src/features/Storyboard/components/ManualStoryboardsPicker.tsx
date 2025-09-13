@@ -4,6 +4,7 @@ import {
   setGridCols,
 } from "@shared/store";
 import type { UploadWithStoryboardResponse } from "@shared/api/generated/graphql";
+// eslint-disable-next-line boundaries/element-types
 import { Grid } from "@widgets/Grid";
 import { DeleteUpload, SaveUpload } from "@features/Upload";
 import { GenericSelect } from "@shared/ui";

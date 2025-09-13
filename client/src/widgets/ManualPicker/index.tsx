@@ -1,9 +1,9 @@
 import { Modal } from "@shared/ui";
 import { clearProcessingData } from "@shared/store";
 import { useProcessingState } from "@shared/store";
-import { ManualThumbnailsPicker } from "./ManualThumbnailsPicker";
-import { ManualStoryboardsPicker } from "./ManualStoryboardsPicker";
-import { EpisodesPicker } from "./EpisodesPicker";
+import { ManualThumbnailsPicker } from "@features/Thumbnails";
+import { ManualStoryboardsPicker } from "@features/Storyboard";
+import { EpisodesPicker } from "@features/Episode";
 import { match } from "ts-pattern";
 
 export default function ManualPicker() {
