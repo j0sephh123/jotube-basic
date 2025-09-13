@@ -2,18 +2,33 @@ import { useParams } from "react-router-dom";
 import { TvList } from "./TvList";
 import { EpisodesList } from "./EpisodesList";
 
+const mapViewTypeToArtifact = {
+  thumbnails: "THUMBNAIL",
+  saved: "SAVED",
+} as const;
+
 export const TvDashboard = () => {
   const params = useParams();
 
-  console.log(params);
-
   const isTvs = params.viewType === "tvs";
   const isSavedEpisodes = params.viewType === "saved";
+  const isThumbnails = params.viewType === "thumbnails";
+
+  const shouldShowEpisodesList = isSavedEpisodes || isThumbnails;
 
   return (
     <>
       {isTvs && <TvList />}
-      {isSavedEpisodes && <EpisodesList tvIds={[]} artifact="SAVED" />}
+      {shouldShowEpisodesList && (
+        <EpisodesList
+          tvIds={[]}
+          artifact={
+            mapViewTypeToArtifact[
+              params.viewType as keyof typeof mapViewTypeToArtifact
+            ]
+          }
+        />
+      )}
     </>
   );
 };

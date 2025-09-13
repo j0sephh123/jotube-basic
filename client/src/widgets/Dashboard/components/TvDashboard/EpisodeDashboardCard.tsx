@@ -1,4 +1,5 @@
 import { type EpisodeResponse, useAddEpisodeToQueue } from "@features/Episode";
+import { ViewEpisodeThumbnails } from "@features/Thumbnails";
 import { type To } from "@shared/types";
 import {
   Button,
@@ -7,6 +8,7 @@ import {
   OpenDirectoryButton,
   Tooltip,
 } from "@shared/ui";
+import { useMemo } from "react";
 
 type Props = EpisodeResponse & {
   handleEdit?: (id: number) => void;
@@ -23,6 +25,7 @@ export function EpisodeDashboardCard({
   tvIdentifier,
   handleEdit,
   handleDelete,
+  artifact,
 }: Props) {
   const typedId = +id;
   const addEpisodeToQueue = useAddEpisodeToQueue();
@@ -73,6 +76,27 @@ export function EpisodeDashboardCard({
     });
   };
 
+  // <ViewEpisodeThumbnails
+  //   tvIdentifier={episode?.tv?.identifier || ""}
+  //   episodeIdentifier={episode?.identifier || ""}
+  // />
+
+  const getActionButtonSlot = useMemo(() => {
+    if (artifact === "THUMBNAIL") {
+      return (
+        <ViewEpisodeThumbnails
+          tvIdentifier={tvIdentifier}
+          episodeIdentifier={identifier}
+        />
+      );
+    }
+    if (artifact === "SAVED") {
+      return <Button onClick={handleDownload}>Download</Button>;
+    }
+
+    return <></>;
+  }, [artifact, handleDownload, identifier, tvIdentifier]);
+
   return (
     <Card
       id={typedId}
@@ -86,7 +110,7 @@ export function EpisodeDashboardCard({
         </>
       }
       secondRow={<TruncatedTvTitle />}
-      actionButtonSlot={<Button onClick={handleDownload}>Download</Button>}
+      actionButtonSlot={getActionButtonSlot}
     />
   );
 }

@@ -47,10 +47,7 @@ export default function Router() {
             path="/dashboard/tv/storyboards"
             element={<Navigate to="/dashboard/tv/tvs" />}
           />
-          <Route
-            path="/dashboard/tv/thumbnails"
-            element={<Navigate to="/dashboard/tv/tvs" />}
-          />
+
           <Route
             path="/dashboard/tv/processed"
             element={<Navigate to="/dashboard/tv/tvs" />}
