@@ -15,6 +15,7 @@ import { setSelectedImages, useEpisodesProcessingState } from "@shared/store";
 import { generateEpisodeThumbnailUrl } from "@features/Thumbnails";
 import { useRef } from "react";
 import { OpenDirectoryButton } from "@shared/ui";
+import { type To } from "@shared/types";
 
 export function EpisodesPicker() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -52,7 +53,7 @@ export function EpisodesPicker() {
 
   return (
     <>
-      <Header channelLink={tvLink} videoLabel={episodeLabel} />
+      <Header channelLink={tvLink as To} videoLabel={episodeLabel} />
       <Container ref={containerRef}>
         <ThumbnailImage src={src} />
         <Grid handleZoom={handleZoom} />
