@@ -5,6 +5,7 @@ import { EpisodesList } from "./EpisodesList";
 const mapViewTypeToArtifact = {
   thumbnails: "THUMBNAIL",
   saved: "SAVED",
+  screenshots: "SCREENSHOT",
 } as const;
 
 export const TvDashboard = () => {
