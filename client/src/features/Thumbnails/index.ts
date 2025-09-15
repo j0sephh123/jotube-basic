@@ -8,9 +8,9 @@ export { useGetUploadsWithThumbnails } from "./lib/useGetUploadsWithThumbnails";
 export { useGetEpisodesWithThumbnails } from "./lib/useGetEpisodesWithThumbnails";
 export { default as useViewThumbnails } from "./hooks/useViewThumbnails";
 export {
-  useThumbnailByVideoId,
-  useRefetchThumbnailByVideoId,
-} from "./lib/useThumbnailByVideoId";
+  useGetThumbnail,
+  useRefetchGetThumbnail,
+} from "./lib/useGetThumbnail";
 export { default as ThumbnailsProcessing } from "../../widgets/ManualPicker";
 export { default as Footer } from "./ui/Footer";
 export { default as Grid } from "./ui/Grid";

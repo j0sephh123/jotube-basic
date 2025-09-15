@@ -7,6 +7,7 @@ import {
   IdType,
   UploadsWithThumbnailsInput,
 } from '../dtos/uploads-with-thumbnails.input';
+import { GetThumbnailResponse } from '../dtos/get-thumbnail.response';
 
 @Injectable()
 export class ThumbnailsApiService {
@@ -73,7 +74,21 @@ export class ThumbnailsApiService {
     }));
   }
 
-  async getByYtVideoId(videoId: number) {
+  async getThumbnail(
+    videoId: number,
+    type: string,
+  ): Promise<GetThumbnailResponse> {
+    if (type === 'upload') {
+      return this.getUploadThumbnail(videoId);
+    } else if (type === 'episode') {
+      return this.getEpisodeThumbnail(videoId);
+    }
+    return null;
+  }
+
+  private async getUploadThumbnail(
+    videoId: number,
+  ): Promise<GetThumbnailResponse> {
     const video = await this.prismaService.uploadsVideo.findUnique({
       where: { id: videoId },
       select: {
@@ -113,6 +128,46 @@ export class ThumbnailsApiService {
     return {
       ...thumbnail,
       thumbnailsCount: thumbnailsCount - 1,
+      createdAt: thumbnail.createdAt.toISOString(),
+      updatedAt: thumbnail.updatedAt.toISOString(),
+    };
+  }
+
+  private async getEpisodeThumbnail(
+    episodeId: number,
+  ): Promise<GetThumbnailResponse> {
+    const episode = await this.prismaService.episode.findUnique({
+      where: { id: episodeId },
+      select: {
+        identifier: true,
+        tv: { select: { identifier: true } },
+      },
+    });
+
+    if (!episode) {
+      return null;
+    }
+
+    const thumbnail = await this.prismaService.thumbnail.findFirst({
+      where: { episodeId },
+      include: {
+        episode: {
+          include: {
+            tv: true,
+          },
+        },
+      },
+    });
+
+    if (!thumbnail || !thumbnail.episode) {
+      return null;
+    }
+
+    return {
+      ...thumbnail,
+      thumbnailsCount: 0,
+      createdAt: thumbnail.createdAt.toISOString(),
+      updatedAt: thumbnail.updatedAt.toISOString(),
     };
   }
 }

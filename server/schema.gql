@@ -223,6 +223,11 @@ type Episode {
   updatedAt: DateTime!
 }
 
+type EpisodeResponse {
+  identifier: String!
+  tv: TVResponse!
+}
+
 input EpisodesWithThumbnailsInput {
   episodeIds: [Float!]!
 }
@@ -339,6 +344,24 @@ type GetScreenshotsResponse {
   second: Float!
   src: String!
   ytVideoId: String!
+}
+
+input GetThumbnailInput {
+  type: String!
+  videoId: Float!
+}
+
+type GetThumbnailResponse {
+  createdAt: String!
+  episode: EpisodeResponse
+  episodeId: Float
+  id: Float!
+  perRow: Float!
+  thumbnailsCount: Float!
+  totalSeconds: Float!
+  updatedAt: String!
+  uploadsVideo: UploadsVideoResponse
+  uploadsVideoId: Float
 }
 
 input GetTvInput {
@@ -472,6 +495,7 @@ type Query {
   getEpisodeDetails(getEpisodeInput: GetEpisodeInput!): Episode
   getProcessingReadyUploads: ProcessingReadyUploadsResponse!
   getScreenshots(input: GetScreenshotsInput!): [GetScreenshotsResponse!]!
+  getThumbnail(input: GetThumbnailInput!): GetThumbnailResponse
   getTv(getTvInput: GetTvInput!): Tv
   getVideoByYtId(getVideoByYtIdInput: GetVideoByYtIdInput!): VideoByYtIdResponse!
   playlistDetails(id: Int!): PlaylistDetailsResponse
@@ -483,7 +507,6 @@ type Query {
   searchVideos(searchInput: SearchInput!): [SearchVideoResult!]!
   statisticsCounts: StatisticsCountsResponse!
   storyboards(ytChannelId: String!): [UploadsVideoStoryboardResponse!]!
-  thumbnailByVideoId(videoId: Float!): ThumbnailByVideoIdResponse
   uploadsList(uploadsListInput: UploadsListInput!): [UploadsListUploadResponse!]!
   uploadsWithStoryboards(input: StoryboardQueryInput!): [UploadWithStoryboardResponse!]!
   uploadsWithThumbnails(input: UploadsWithThumbnailsInput!): [UploadsWithThumbnailsResponse!]!
@@ -560,15 +583,8 @@ type SyncUploadsResponse {
   count: Int!
 }
 
-type ThumbnailByVideoIdResponse {
-  createdAt: String!
-  id: Float!
-  perRow: Float!
-  thumbnailsCount: Float!
-  totalSeconds: Float!
-  updatedAt: String!
-  uploadsVideo: UploadsVideoResponse!
-  uploadsVideoId: Float!
+type TVResponse {
+  identifier: String!
 }
 
 type Tv {

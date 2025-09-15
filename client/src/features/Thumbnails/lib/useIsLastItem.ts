@@ -1,11 +1,11 @@
 import { useThumbnailsProcessingState } from "@shared/store";
-import { useThumbnailByVideoId } from "@features/Thumbnails";
+import { useGetThumbnail } from "@features/Thumbnails";
 
 export default function useIsLastItem() {
   const { items: thumbnailsProcessingData, currentIndex } =
     useThumbnailsProcessingState();
-  const { data } = useThumbnailByVideoId(
-    thumbnailsProcessingData[0]?.videoId ?? 0
+  const { data } = useGetThumbnail(
+    { videoId: thumbnailsProcessingData[0]?.videoId ?? 0, type: "upload" }
   );
   const thumbnailsCount = data?.thumbnailsCount || 0;
 

@@ -7,7 +7,7 @@ import {
 import { useCallback } from "react";
 import { useFinishProcessingUpload } from "@features/Upload";
 import { useRefetchTotalCounts } from "@features/Statistics";
-import { useRefetchThumbnailByVideoId } from "@features/Thumbnails";
+import { useRefetchGetThumbnail } from "@features/Thumbnails";
 import { useRefetchChannelsDashboardQuery } from "@features/Dashboard";
 
 export default function useSubmit() {
@@ -15,9 +15,9 @@ export default function useSubmit() {
   const { items: thumbnailsProcessingData, selectedItems: selectedImages } =
     useThumbnailsProcessingState();
   const refetchTotalCounts = useRefetchTotalCounts();
-  const refetchThumbnailByVideoId = useRefetchThumbnailByVideoId(
-    thumbnailsProcessingData[0]?.videoId ?? 0
-  );
+  const refetchThumbnailByVideoId = useRefetchGetThumbnail({
+    videoId: thumbnailsProcessingData[0]?.videoId ?? 0,
+  });
   const refetchAll = () => {
     refetchTotalCounts();
     refetchThumbnailByVideoId();

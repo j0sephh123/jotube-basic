@@ -2,9 +2,11 @@ import { Resolver, Query, Args } from '@nestjs/graphql';
 import { ThumbnailsApiService } from './api/thumbnails-api.service';
 import { UploadsWithThumbnailsInput } from './dtos/uploads-with-thumbnails.input';
 import { UploadsWithThumbnailsResponse } from './dtos/uploads-with-thumbnails.response';
-import { ThumbnailByVideoIdResponse } from './dtos/thumbnail.response';
+import { GetThumbnailResponse } from './dtos/get-thumbnail.response';
+import { GetThumbnailInput } from './dtos/get-thumbnail.input';
 import { EpisodesWithThumbnailsInput } from './dtos/episodes-with-thumbnails.input';
 import { EpisodesWithThumbnailsResponse } from './dtos/episodes-with-thumbnails.response';
+import { BadRequestException } from '@nestjs/common';
 
 @Resolver()
 export class ThumbnailsResolver {
@@ -17,19 +19,30 @@ export class ThumbnailsResolver {
     return this.thumbnailsApiService.uploadsWithThumbnails(input);
   }
 
-  @Query(() => ThumbnailByVideoIdResponse, { nullable: true })
-  async thumbnailByVideoId(
-    @Args('videoId') videoId: number,
-  ): Promise<ThumbnailByVideoIdResponse | null> {
-    const result = await this.thumbnailsApiService.getByYtVideoId(videoId);
+  @Query(() => GetThumbnailResponse, { nullable: true })
+  async getThumbnail(
+    @Args('input') input: GetThumbnailInput,
+  ): Promise<GetThumbnailResponse> {
+    if (!input.type) {
+      throw new BadRequestException(
+        'Type field is required. Possible values: "upload" or "episode"',
+      );
+    }
+
+    if (input.type !== 'upload' && input.type !== 'episode') {
+      throw new BadRequestException(
+        `Invalid type "${input.type}". Possible values: "upload" or "episode"`,
+      );
+    }
+
+    const result = await this.thumbnailsApiService.getThumbnail(
+      input.videoId,
+      input.type,
+    );
 
     if (!result) return null;
 
-    return {
-      ...result,
-      createdAt: result.createdAt.toISOString(),
-      updatedAt: result.updatedAt.toISOString(),
-    };
+    return result;
   }
 
   @Query(() => [EpisodesWithThumbnailsResponse])

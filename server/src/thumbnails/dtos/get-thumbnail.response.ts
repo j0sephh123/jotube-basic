@@ -22,7 +22,22 @@ export class UploadsVideoResponse {
 }
 
 @ObjectType()
-export class ThumbnailByVideoIdResponse {
+export class TVResponse {
+  @Field(() => String)
+  identifier: string;
+}
+
+@ObjectType()
+export class EpisodeResponse {
+  @Field(() => String)
+  identifier: string;
+
+  @Field(() => TVResponse)
+  tv: TVResponse;
+}
+
+@ObjectType()
+export class GetThumbnailResponse {
   @Field(() => String)
   createdAt: string;
 
@@ -35,14 +50,20 @@ export class ThumbnailByVideoIdResponse {
   @Field(() => String)
   updatedAt: string;
 
-  @Field(() => Number)
-  uploadsVideoId: number;
+  @Field(() => Number, { nullable: true })
+  uploadsVideoId?: number;
+
+  @Field(() => Number, { nullable: true })
+  episodeId?: number;
 
   @Field(() => Number)
   totalSeconds: number;
 
-  @Field(() => UploadsVideoResponse)
-  uploadsVideo: UploadsVideoResponse;
+  @Field(() => UploadsVideoResponse, { nullable: true })
+  uploadsVideo?: UploadsVideoResponse;
+
+  @Field(() => EpisodeResponse, { nullable: true })
+  episode?: EpisodeResponse;
 
   @Field(() => Number)
   thumbnailsCount: number;

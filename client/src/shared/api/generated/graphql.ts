@@ -257,6 +257,12 @@ export type Episode = {
   updatedAt: Scalars['DateTime']['output'];
 };
 
+export type EpisodeResponse = {
+  __typename?: 'EpisodeResponse';
+  identifier: Scalars['String']['output'];
+  tv: TvResponse;
+};
+
 export type EpisodesWithThumbnailsInput = {
   episodeIds: Array<Scalars['Float']['input']>;
 };
@@ -383,6 +389,25 @@ export type GetScreenshotsResponse = {
   second: Scalars['Float']['output'];
   src: Scalars['String']['output'];
   ytVideoId: Scalars['String']['output'];
+};
+
+export type GetThumbnailInput = {
+  type: Scalars['String']['input'];
+  videoId: Scalars['Float']['input'];
+};
+
+export type GetThumbnailResponse = {
+  __typename?: 'GetThumbnailResponse';
+  createdAt: Scalars['String']['output'];
+  episode?: Maybe<EpisodeResponse>;
+  episodeId?: Maybe<Scalars['Float']['output']>;
+  id: Scalars['Float']['output'];
+  perRow: Scalars['Float']['output'];
+  thumbnailsCount: Scalars['Float']['output'];
+  totalSeconds: Scalars['Float']['output'];
+  updatedAt: Scalars['String']['output'];
+  uploadsVideo?: Maybe<UploadsVideoResponse>;
+  uploadsVideoId?: Maybe<Scalars['Float']['output']>;
 };
 
 export type GetTvInput = {
@@ -631,6 +656,7 @@ export type Query = {
   getEpisodeDetails?: Maybe<Episode>;
   getProcessingReadyUploads: ProcessingReadyUploadsResponse;
   getScreenshots: Array<GetScreenshotsResponse>;
+  getThumbnail?: Maybe<GetThumbnailResponse>;
   getTv?: Maybe<Tv>;
   getVideoByYtId: VideoByYtIdResponse;
   playlistDetails?: Maybe<PlaylistDetailsResponse>;
@@ -642,7 +668,6 @@ export type Query = {
   searchVideos: Array<SearchVideoResult>;
   statisticsCounts: StatisticsCountsResponse;
   storyboards: Array<UploadsVideoStoryboardResponse>;
-  thumbnailByVideoId?: Maybe<ThumbnailByVideoIdResponse>;
   uploadsList: Array<UploadsListUploadResponse>;
   uploadsWithStoryboards: Array<UploadWithStoryboardResponse>;
   uploadsWithThumbnails: Array<UploadsWithThumbnailsResponse>;
@@ -694,6 +719,11 @@ export type QueryGetScreenshotsArgs = {
 };
 
 
+export type QueryGetThumbnailArgs = {
+  input: GetThumbnailInput;
+};
+
+
 export type QueryGetTvArgs = {
   getTvInput: GetTvInput;
 };
@@ -736,11 +766,6 @@ export type QuerySearchVideosArgs = {
 
 export type QueryStoryboardsArgs = {
   ytChannelId: Scalars['String']['input'];
-};
-
-
-export type QueryThumbnailByVideoIdArgs = {
-  videoId: Scalars['Float']['input'];
 };
 
 
@@ -837,16 +862,9 @@ export type SyncUploadsResponse = {
   count: Scalars['Int']['output'];
 };
 
-export type ThumbnailByVideoIdResponse = {
-  __typename?: 'ThumbnailByVideoIdResponse';
-  createdAt: Scalars['String']['output'];
-  id: Scalars['Float']['output'];
-  perRow: Scalars['Float']['output'];
-  thumbnailsCount: Scalars['Float']['output'];
-  totalSeconds: Scalars['Float']['output'];
-  updatedAt: Scalars['String']['output'];
-  uploadsVideo: UploadsVideoResponse;
-  uploadsVideoId: Scalars['Float']['output'];
+export type TvResponse = {
+  __typename?: 'TVResponse';
+  identifier: Scalars['String']['output'];
 };
 
 export type Tv = {
@@ -1199,12 +1217,12 @@ export type GetEpisodesWithThumbnailsQueryVariables = Exact<{
 
 export type GetEpisodesWithThumbnailsQuery = { __typename?: 'Query', episodesWithThumbnails: Array<{ __typename?: 'EpisodesWithThumbnailsResponse', tvIdentifier: string, episodeIdentifier: string }> };
 
-export type GetThumbnailByVideoIdQueryVariables = Exact<{
-  videoId: Scalars['Float']['input'];
+export type GetThumbnailQueryVariables = Exact<{
+  input: GetThumbnailInput;
 }>;
 
 
-export type GetThumbnailByVideoIdQuery = { __typename?: 'Query', thumbnailByVideoId?: { __typename?: 'ThumbnailByVideoIdResponse', createdAt: string, id: number, perRow: number, updatedAt: string, uploadsVideoId: number, totalSeconds: number, thumbnailsCount: number, uploadsVideo: { __typename?: 'UploadsVideoResponse', ytId: string, channel: { __typename?: 'ChannelResponse', id: number, ytId: string, title: string } } } | null };
+export type GetThumbnailQuery = { __typename?: 'Query', getThumbnail?: { __typename?: 'GetThumbnailResponse', createdAt: string, id: number, perRow: number, updatedAt: string, uploadsVideoId?: number | null, totalSeconds: number, thumbnailsCount: number, uploadsVideo?: { __typename?: 'UploadsVideoResponse', ytId: string, channel: { __typename?: 'ChannelResponse', id: number, ytId: string, title: string } } | null } | null };
 
 export type GetAllTvsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2541,9 +2559,9 @@ export type GetEpisodesWithThumbnailsQueryHookResult = ReturnType<typeof useGetE
 export type GetEpisodesWithThumbnailsLazyQueryHookResult = ReturnType<typeof useGetEpisodesWithThumbnailsLazyQuery>;
 export type GetEpisodesWithThumbnailsSuspenseQueryHookResult = ReturnType<typeof useGetEpisodesWithThumbnailsSuspenseQuery>;
 export type GetEpisodesWithThumbnailsQueryResult = Apollo.QueryResult<GetEpisodesWithThumbnailsQuery, GetEpisodesWithThumbnailsQueryVariables>;
-export const GetThumbnailByVideoIdDocument = gql`
-    query GetThumbnailByVideoId($videoId: Float!) {
-  thumbnailByVideoId(videoId: $videoId) {
+export const GetThumbnailDocument = gql`
+    query GetThumbnail($input: GetThumbnailInput!) {
+  getThumbnail(input: $input) {
     createdAt
     id
     perRow
@@ -2564,37 +2582,37 @@ export const GetThumbnailByVideoIdDocument = gql`
     `;
 
 /**
- * __useGetThumbnailByVideoIdQuery__
+ * __useGetThumbnailQuery__
  *
- * To run a query within a React component, call `useGetThumbnailByVideoIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetThumbnailByVideoIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetThumbnailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetThumbnailQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetThumbnailByVideoIdQuery({
+ * const { data, loading, error } = useGetThumbnailQuery({
  *   variables: {
- *      videoId: // value for 'videoId'
+ *      input: // value for 'input'
  *   },
  * });
  */
-export function useGetThumbnailByVideoIdQuery(baseOptions: Apollo.QueryHookOptions<GetThumbnailByVideoIdQuery, GetThumbnailByVideoIdQueryVariables> & ({ variables: GetThumbnailByVideoIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+export function useGetThumbnailQuery(baseOptions: Apollo.QueryHookOptions<GetThumbnailQuery, GetThumbnailQueryVariables> & ({ variables: GetThumbnailQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetThumbnailByVideoIdQuery, GetThumbnailByVideoIdQueryVariables>(GetThumbnailByVideoIdDocument, options);
+        return Apollo.useQuery<GetThumbnailQuery, GetThumbnailQueryVariables>(GetThumbnailDocument, options);
       }
-export function useGetThumbnailByVideoIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetThumbnailByVideoIdQuery, GetThumbnailByVideoIdQueryVariables>) {
+export function useGetThumbnailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetThumbnailQuery, GetThumbnailQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetThumbnailByVideoIdQuery, GetThumbnailByVideoIdQueryVariables>(GetThumbnailByVideoIdDocument, options);
+          return Apollo.useLazyQuery<GetThumbnailQuery, GetThumbnailQueryVariables>(GetThumbnailDocument, options);
         }
-export function useGetThumbnailByVideoIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetThumbnailByVideoIdQuery, GetThumbnailByVideoIdQueryVariables>) {
+export function useGetThumbnailSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetThumbnailQuery, GetThumbnailQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetThumbnailByVideoIdQuery, GetThumbnailByVideoIdQueryVariables>(GetThumbnailByVideoIdDocument, options);
+          return Apollo.useSuspenseQuery<GetThumbnailQuery, GetThumbnailQueryVariables>(GetThumbnailDocument, options);
         }
-export type GetThumbnailByVideoIdQueryHookResult = ReturnType<typeof useGetThumbnailByVideoIdQuery>;
-export type GetThumbnailByVideoIdLazyQueryHookResult = ReturnType<typeof useGetThumbnailByVideoIdLazyQuery>;
-export type GetThumbnailByVideoIdSuspenseQueryHookResult = ReturnType<typeof useGetThumbnailByVideoIdSuspenseQuery>;
-export type GetThumbnailByVideoIdQueryResult = Apollo.QueryResult<GetThumbnailByVideoIdQuery, GetThumbnailByVideoIdQueryVariables>;
+export type GetThumbnailQueryHookResult = ReturnType<typeof useGetThumbnailQuery>;
+export type GetThumbnailLazyQueryHookResult = ReturnType<typeof useGetThumbnailLazyQuery>;
+export type GetThumbnailSuspenseQueryHookResult = ReturnType<typeof useGetThumbnailSuspenseQuery>;
+export type GetThumbnailQueryResult = Apollo.QueryResult<GetThumbnailQuery, GetThumbnailQueryVariables>;
 export const GetAllTvsDocument = gql`
     query GetAllTvs {
   getAllTvs {
