@@ -1,4 +1,5 @@
 import { type EpisodeResponse, useAddEpisodeToQueue } from "@features/Episode";
+import { setGalleryModal } from "@features/Gallery";
 import { ViewEpisodeThumbnails } from "@features/Thumbnails";
 import { type To } from "@shared/types";
 import {
@@ -76,10 +77,14 @@ export function EpisodeDashboardCard({
     });
   }, [addEpisodeToQueue, typedId]);
 
-  // <ViewEpisodeThumbnails
-  //   tvIdentifier={episode?.tv?.identifier || ""}
-  //   episodeIdentifier={episode?.identifier || ""}
-  // />
+  const handleGalleryClick = useCallback(() => {
+    console.log('gallery');
+    
+    // setGalleryModal({
+    //   ytVideoId: "",
+    //   channelIds: [id],
+    // });
+  }, [id]);
 
   const getActionButtonSlot = useMemo(() => {
     if (artifact === "THUMBNAIL") {
@@ -93,6 +98,9 @@ export function EpisodeDashboardCard({
     }
     if (artifact === "SAVED") {
       return <Button onClick={handleDownload}>Download</Button>;
+    }
+    if (artifact === "SCREENSHOT") {
+      return <Button onClick={handleGalleryClick}>Gallery</Button>;
     }
 
     return <></>;
