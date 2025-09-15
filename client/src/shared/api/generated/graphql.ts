@@ -1222,7 +1222,7 @@ export type GetThumbnailQueryVariables = Exact<{
 }>;
 
 
-export type GetThumbnailQuery = { __typename?: 'Query', getThumbnail?: { __typename?: 'GetThumbnailResponse', createdAt: string, id: number, perRow: number, updatedAt: string, uploadsVideoId?: number | null, totalSeconds: number, thumbnailsCount: number, uploadsVideo?: { __typename?: 'UploadsVideoResponse', ytId: string, channel: { __typename?: 'ChannelResponse', id: number, ytId: string, title: string } } | null } | null };
+export type GetThumbnailQuery = { __typename?: 'Query', getThumbnail?: { __typename?: 'GetThumbnailResponse', createdAt: string, id: number, perRow: number, updatedAt: string, uploadsVideoId?: number | null, episodeId?: number | null, totalSeconds: number, thumbnailsCount: number, uploadsVideo?: { __typename?: 'UploadsVideoResponse', ytId: string, channel: { __typename?: 'ChannelResponse', id: number, ytId: string, title: string } } | null, episode?: { __typename?: 'EpisodeResponse', identifier: string, tv: { __typename?: 'TVResponse', identifier: string } } | null } | null };
 
 export type GetAllTvsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2567,6 +2567,7 @@ export const GetThumbnailDocument = gql`
     perRow
     updatedAt
     uploadsVideoId
+    episodeId
     totalSeconds
     thumbnailsCount
     uploadsVideo {
@@ -2575,6 +2576,12 @@ export const GetThumbnailDocument = gql`
         id
         ytId
         title
+      }
+    }
+    episode {
+      identifier
+      tv {
+        identifier
       }
     }
   }

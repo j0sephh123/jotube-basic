@@ -39,6 +39,7 @@ export const EpisodeDetailsPage = () => {
             <ViewEpisodeThumbnails
               tvIdentifier={episode?.tv?.identifier || ""}
               episodeIdentifier={episode?.identifier || ""}
+              episodeId={episodeIdNumber}
             />
           </div>
           <h1 className="text-3xl font-bold mb-2">{episode?.title}</h1>

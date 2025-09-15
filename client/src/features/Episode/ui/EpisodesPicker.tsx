@@ -1,11 +1,11 @@
+import { generateThumbnailUrl } from "@features/Thumbnails";
 import {
-  Footer,
   useEvents,
   useHandleContainerWheel,
   useHandleKeyDown,
   useResetSelection,
-  generateThumbnailUrl,
-} from "@features/Thumbnails";
+  Footer,
+} from "@features/Episode";
 import { setZoom } from "@features/Screenshot";
 import { setSelectedImages, useEpisodesProcessingState } from "@shared/store";
 import { useRef } from "react";

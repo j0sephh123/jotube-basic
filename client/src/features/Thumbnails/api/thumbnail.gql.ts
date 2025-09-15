@@ -8,6 +8,7 @@ export const GET_THUMBNAIL = gql`
       perRow
       updatedAt
       uploadsVideoId
+      episodeId
       totalSeconds
       thumbnailsCount
       uploadsVideo {
@@ -16,6 +17,12 @@ export const GET_THUMBNAIL = gql`
           id
           ytId
           title
+        }
+      }
+      episode {
+        identifier
+        tv {
+          identifier
         }
       }
     }

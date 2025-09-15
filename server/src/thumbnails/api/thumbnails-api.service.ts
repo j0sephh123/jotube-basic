@@ -127,7 +127,7 @@ export class ThumbnailsApiService {
 
     return {
       ...thumbnail,
-      thumbnailsCount: thumbnailsCount - 1,
+      thumbnailsCount: thumbnailsCount,
       createdAt: thumbnail.createdAt.toISOString(),
       updatedAt: thumbnail.updatedAt.toISOString(),
     };
@@ -163,9 +163,14 @@ export class ThumbnailsApiService {
       return null;
     }
 
+    const thumbnailsCount = await this.thumbnailsManagerService.countThumbnails(
+      episode.tv.identifier,
+      episode.identifier,
+    );
+
     return {
       ...thumbnail,
-      thumbnailsCount: 0,
+      thumbnailsCount: thumbnailsCount,
       createdAt: thumbnail.createdAt.toISOString(),
       updatedAt: thumbnail.updatedAt.toISOString(),
     };

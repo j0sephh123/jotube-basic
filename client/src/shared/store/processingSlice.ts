@@ -8,6 +8,7 @@ import { match } from "ts-pattern";
 type EpisodesProcessingData = {
   tvIdentifier: string;
   episodeIdentifier: string;
+  episodeId: number;
 };
 
 type ThumbnailsState = {

@@ -87,6 +87,7 @@ export function EpisodeDashboardCard({
         <ViewEpisodeThumbnails
           tvIdentifier={tvIdentifier}
           episodeIdentifier={identifier}
+          episodeId={typedId}
         />
       );
     }

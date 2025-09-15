@@ -17,6 +17,7 @@ export default function useSubmit() {
   const refetchTotalCounts = useRefetchTotalCounts();
   const refetchThumbnailByVideoId = useRefetchGetThumbnail({
     videoId: thumbnailsProcessingData[0]?.videoId ?? 0,
+    type: "upload",
   });
   const refetchAll = () => {
     refetchTotalCounts();
