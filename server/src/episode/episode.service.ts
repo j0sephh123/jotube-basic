@@ -6,6 +6,7 @@ import {
   EpisodeMessage,
   GetAllEpisodesResponse,
   GetAllEpisodesInput,
+  FinishProcessEpisodeInput,
 } from './dtos';
 import { FolderService } from 'src/file/folder.service';
 import { randomUUID } from 'crypto';
@@ -162,5 +163,76 @@ export class EpisodeService {
     } catch {
       return { success: false, message: 'Failed to delete episode' };
     }
+  }
+
+  async finishProcessingEpisode({
+    tvIdentifier,
+    episodeIdentifier,
+    savedSeconds,
+  }: FinishProcessEpisodeInput) {
+    const episode = await this.prismaService.episode.findFirst({
+      where: {
+        identifier: episodeIdentifier,
+        tv: {
+          identifier: tvIdentifier,
+        },
+      },
+    });
+
+    if (!episode) {
+      throw new Error('Episode not found');
+    }
+
+    const result = await this.prismaService.episode.update({
+      where: {
+        id: episode.id,
+      },
+      data: {
+        artifact: ArtifactType.SCREENSHOT,
+      },
+    });
+
+    try {
+      const thumbnail = await this.prismaService.thumbnail.findUnique({
+        where: {
+          episodeId: episode.id,
+        },
+      });
+
+      if (thumbnail) {
+        await this.prismaService.thumbnail.delete({
+          where: {
+            id: thumbnail.id,
+          },
+        });
+      }
+    } catch (e) {
+      console.error('Error deleting thumbnail:', e);
+    }
+
+    if (savedSeconds.length === 0) {
+      await this.folderService.deleteEpisodeFolder(
+        tvIdentifier,
+        episodeIdentifier,
+      );
+      await this.prismaService.episode.delete({
+        where: {
+          id: episode.id,
+        },
+      });
+    } else {
+      await Promise.all(
+        savedSeconds.map((second) =>
+          this.prismaService.episodeScreenshot.create({
+            data: {
+              second,
+              episodeId: episode.id,
+            },
+          }),
+        ),
+      );
+    }
+
+    return result;
   }
 }

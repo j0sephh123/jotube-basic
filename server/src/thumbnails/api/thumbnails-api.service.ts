@@ -78,6 +78,7 @@ export class ThumbnailsApiService {
     videoId: number,
     type: string,
   ): Promise<GetThumbnailResponse> {
+    console.log({ videoId, type });
     if (type === 'upload') {
       return this.getUploadThumbnail(videoId);
     } else if (type === 'episode') {
@@ -144,6 +145,8 @@ export class ThumbnailsApiService {
       },
     });
 
+    console.log('episode', episode);
+
     if (!episode) {
       return null;
     }
@@ -159,6 +162,8 @@ export class ThumbnailsApiService {
       },
     });
 
+    console.log('thumbnail', thumbnail);
+
     if (!thumbnail || !thumbnail.episode) {
       return null;
     }
@@ -167,6 +172,8 @@ export class ThumbnailsApiService {
       episode.tv.identifier,
       episode.identifier,
     );
+
+    console.log('thumbnailsCount', thumbnailsCount);
 
     return {
       ...thumbnail,

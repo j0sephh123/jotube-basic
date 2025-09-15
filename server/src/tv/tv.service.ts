@@ -165,6 +165,16 @@ export class TvService {
           destinationPath,
         );
 
+        console.log({
+          fileName: fileInfo.videoFileName,
+          parentFolderName: fileInfo.parentFolderName,
+          size: fileInfo.size,
+          duration: fileInfo.duration,
+          format: fileInfo.format,
+          episodeId: episodeResult.episode.id,
+          destinationPath,
+        });
+
         await this.prismaService.videoFile.create({
           data: {
             fileName: fileInfo.videoFileName,

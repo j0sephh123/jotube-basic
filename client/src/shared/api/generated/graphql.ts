@@ -336,6 +336,19 @@ export type FileWithSizeResponse = {
   sizeMB: Scalars['Float']['output'];
 };
 
+export type FinishProcessEpisodeInput = {
+  episodeIdentifier: Scalars['String']['input'];
+  savedSeconds: Array<Scalars['Float']['input']>;
+  tvIdentifier: Scalars['String']['input'];
+};
+
+export type FinishProcessEpisodeResponse = {
+  __typename?: 'FinishProcessEpisodeResponse';
+  artifact: Scalars['String']['output'];
+  id: Scalars['Float']['output'];
+  identifier: Scalars['String']['output'];
+};
+
 export type FinishProcessUploadResponse = {
   __typename?: 'FinishProcessUploadResponse';
   artifact: Scalars['String']['output'];
@@ -445,6 +458,7 @@ export type Mutation = {
   deleteTv: DeleteTvResponse;
   deleteUploads: DeleteUploadsResponse;
   fetchUploads: FetchUploadsResponse;
+  finishProcessingEpisode: FinishProcessEpisodeResponse;
   finishProcessingUpload: FinishProcessUploadResponse;
   saveUpload: SaveUploadResponse;
   syncUploads: SyncUploadsResponse;
@@ -517,6 +531,11 @@ export type MutationDeleteUploadsArgs = {
 
 export type MutationFetchUploadsArgs = {
   fetchUploadsInput: FetchUploadsInput;
+};
+
+
+export type MutationFinishProcessingEpisodeArgs = {
+  finishProcessEpisodeInput: FinishProcessEpisodeInput;
 };
 
 
@@ -1176,6 +1195,13 @@ export type DeleteEpisodeMutationVariables = Exact<{
 
 
 export type DeleteEpisodeMutation = { __typename?: 'Mutation', deleteEpisode: { __typename?: 'DeleteEpisodeResponse', success: boolean, message: string } };
+
+export type FinishProcessingEpisodeMutationVariables = Exact<{
+  finishProcessEpisodeInput: FinishProcessEpisodeInput;
+}>;
+
+
+export type FinishProcessingEpisodeMutation = { __typename?: 'Mutation', finishProcessingEpisode: { __typename?: 'FinishProcessEpisodeResponse', id: number, identifier: string, artifact: string } };
 
 export type GetProcessingPhasesQueryVariables = Exact<{
   variant?: InputMaybe<Scalars['String']['input']>;
@@ -2277,6 +2303,41 @@ export function useDeleteEpisodeMutation(baseOptions?: Apollo.MutationHookOption
 export type DeleteEpisodeMutationHookResult = ReturnType<typeof useDeleteEpisodeMutation>;
 export type DeleteEpisodeMutationResult = Apollo.MutationResult<DeleteEpisodeMutation>;
 export type DeleteEpisodeMutationOptions = Apollo.BaseMutationOptions<DeleteEpisodeMutation, DeleteEpisodeMutationVariables>;
+export const FinishProcessingEpisodeDocument = gql`
+    mutation FinishProcessingEpisode($finishProcessEpisodeInput: FinishProcessEpisodeInput!) {
+  finishProcessingEpisode(finishProcessEpisodeInput: $finishProcessEpisodeInput) {
+    id
+    identifier
+    artifact
+  }
+}
+    `;
+export type FinishProcessingEpisodeMutationFn = Apollo.MutationFunction<FinishProcessingEpisodeMutation, FinishProcessingEpisodeMutationVariables>;
+
+/**
+ * __useFinishProcessingEpisodeMutation__
+ *
+ * To run a mutation, you first call `useFinishProcessingEpisodeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useFinishProcessingEpisodeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [finishProcessingEpisodeMutation, { data, loading, error }] = useFinishProcessingEpisodeMutation({
+ *   variables: {
+ *      finishProcessEpisodeInput: // value for 'finishProcessEpisodeInput'
+ *   },
+ * });
+ */
+export function useFinishProcessingEpisodeMutation(baseOptions?: Apollo.MutationHookOptions<FinishProcessingEpisodeMutation, FinishProcessingEpisodeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<FinishProcessingEpisodeMutation, FinishProcessingEpisodeMutationVariables>(FinishProcessingEpisodeDocument, options);
+      }
+export type FinishProcessingEpisodeMutationHookResult = ReturnType<typeof useFinishProcessingEpisodeMutation>;
+export type FinishProcessingEpisodeMutationResult = Apollo.MutationResult<FinishProcessingEpisodeMutation>;
+export type FinishProcessingEpisodeMutationOptions = Apollo.BaseMutationOptions<FinishProcessingEpisodeMutation, FinishProcessingEpisodeMutationVariables>;
 export const GetProcessingPhasesDocument = gql`
     query GetProcessingPhases($variant: String) {
   processingPhases(variant: $variant) {

@@ -295,6 +295,18 @@ type FileWithSizeResponse {
   sizeMB: Float!
 }
 
+input FinishProcessEpisodeInput {
+  episodeIdentifier: String!
+  savedSeconds: [Float!]!
+  tvIdentifier: String!
+}
+
+type FinishProcessEpisodeResponse {
+  artifact: String!
+  id: Float!
+  identifier: String!
+}
+
 type FinishProcessUploadResponse {
   artifact: String!
   id: Float!
@@ -398,6 +410,7 @@ type Mutation {
   deleteTv(deleteTvInput: DeleteTvInput!): DeleteTvResponse!
   deleteUploads(deleteUploadsInput: DeleteUploadsInput!): DeleteUploadsResponse!
   fetchUploads(fetchUploadsInput: FetchUploadsInput!): FetchUploadsResponse!
+  finishProcessingEpisode(finishProcessEpisodeInput: FinishProcessEpisodeInput!): FinishProcessEpisodeResponse!
   finishProcessingUpload(savedSeconds: [Float!]!, ytChannelId: String!, ytVideoId: String!): FinishProcessUploadResponse!
   saveUpload(saveUploadInput: SaveUploadInput!): SaveUploadResponse!
   syncUploads(syncUploadsInput: SyncUploadsInput!): SyncUploadsResponse!

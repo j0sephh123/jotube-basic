@@ -8,7 +8,7 @@ import {
   OpenDirectoryButton,
   Tooltip,
 } from "@shared/ui";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 type Props = EpisodeResponse & {
   handleEdit?: (id: number) => void;
@@ -70,11 +70,11 @@ export function EpisodeDashboardCard({
     </Tooltip>
   );
 
-  const handleDownload = () => {
+  const handleDownload = useCallback(() => {
     addEpisodeToQueue.mutateAsync({ episodeId: typedId }).then(() => {
       console.log("Episode added to queue");
     });
-  };
+  }, [addEpisodeToQueue, typedId]);
 
   // <ViewEpisodeThumbnails
   //   tvIdentifier={episode?.tv?.identifier || ""}
@@ -96,7 +96,7 @@ export function EpisodeDashboardCard({
     }
 
     return <></>;
-  }, [artifact, handleDownload, identifier, tvIdentifier]);
+  }, [artifact, handleDownload, identifier, tvIdentifier, typedId]);
 
   return (
     <Card

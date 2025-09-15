@@ -8,5 +8,6 @@ export default function useEpisodesCount() {
     videoId: episodeId,
     type: "episode",
   });
+  console.log("episode", data);
   return data?.thumbnailsCount || 0;
 }

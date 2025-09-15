@@ -11,6 +11,8 @@ import {
   Episode,
   GetAllEpisodesResponse,
   GetAllEpisodesInput,
+  FinishProcessEpisodeResponse,
+  FinishProcessEpisodeInput,
 } from './dtos';
 
 @Resolver()
@@ -59,5 +61,15 @@ export class EpisodeResolver {
     @Args('getEpisodeInput') getEpisodeInput: GetEpisodeInput,
   ): Promise<Episode | null> {
     return this.episodeService.findOne(getEpisodeInput.id);
+  }
+
+  @Mutation(() => FinishProcessEpisodeResponse)
+  async finishProcessingEpisode(
+    @Args('finishProcessEpisodeInput')
+    finishProcessEpisodeInput: FinishProcessEpisodeInput,
+  ): Promise<FinishProcessEpisodeResponse> {
+    return this.episodeService.finishProcessingEpisode(
+      finishProcessEpisodeInput,
+    );
   }
 }

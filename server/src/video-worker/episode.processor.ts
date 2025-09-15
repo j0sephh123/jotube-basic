@@ -102,6 +102,13 @@ export class EpisodeProcessor {
       },
     });
 
+    await this.prismaService.thumbnail.create({
+      data: {
+        episodeId: episode.id,
+        perRow: 8,
+      },
+    });
+
     console.log(episode);
 
     return episode;

@@ -14,6 +14,7 @@ export class ThumbnailsManagerService {
     const thumbnailsFolder = `${this.filePathService.getBasePath()}/${channel}/${video}/thumbnails`;
     const thumbnailsFolderExists =
       await this.fileOperationService.fileExistsSafe(thumbnailsFolder);
+
     if (thumbnailsFolderExists) {
       await this.fileOperationService.deleteDirectory(thumbnailsFolder);
     }
@@ -21,11 +22,15 @@ export class ThumbnailsManagerService {
 
   async countThumbnails(channel: string, video: string): Promise<number> {
     const thumbnailsFolder = `${this.filePathService.getBasePath()}/${channel}/${video}/thumbnails`;
+
+    console.log('thumbnailsFolder', thumbnailsFolder);
+
     const thumbnailsFolderExists =
       await this.fileOperationService.fileExistsSafe(thumbnailsFolder);
     if (thumbnailsFolderExists) {
       const files = await this.fileOperationService.listFiles(thumbnailsFolder);
       return files.length;
     }
+    return 0;
   }
 }

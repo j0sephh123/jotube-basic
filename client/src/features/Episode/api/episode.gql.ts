@@ -102,3 +102,17 @@ export const DELETE_EPISODE = gql`
     }
   }
 `;
+
+export const FINISH_PROCESSING_EPISODE = gql`
+  mutation FinishProcessingEpisode(
+    $finishProcessEpisodeInput: FinishProcessEpisodeInput!
+  ) {
+    finishProcessingEpisode(
+      finishProcessEpisodeInput: $finishProcessEpisodeInput
+    ) {
+      id
+      identifier
+      artifact
+    }
+  }
+`;
