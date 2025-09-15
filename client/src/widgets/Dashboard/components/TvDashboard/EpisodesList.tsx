@@ -34,6 +34,7 @@ export function EpisodesList(input: GetAllEpisodesInput) {
           />
         )}
         flexibleHeight={true}
+        itemsPerRow={2}
       />
     </StaticStates>
   );

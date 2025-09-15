@@ -14,8 +14,10 @@ export const TvDashboard = () => {
   const isTvs = params.viewType === "tvs";
   const isSavedEpisodes = params.viewType === "saved";
   const isThumbnails = params.viewType === "thumbnails";
+  const isScreenshots = params.viewType === "screenshots";
 
-  const shouldShowEpisodesList = isSavedEpisodes || isThumbnails;
+  const shouldShowEpisodesList =
+    isSavedEpisodes || isThumbnails || isScreenshots;
 
   return (
     <>
