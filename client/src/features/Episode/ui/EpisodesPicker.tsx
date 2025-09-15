@@ -6,14 +6,14 @@ import {
   useHandleContainerWheel,
   useHandleKeyDown,
   useResetSelection,
-  generateEpisodeMainThumbnailUrl,
+  generateThumbnailUrl,
 } from "@features/Thumbnails";
 import { setZoom } from "@features/Screenshot";
 import { setSelectedImages, useEpisodesProcessingState } from "@shared/store";
-import { generateEpisodeThumbnailUrl } from "@features/Thumbnails";
 import { useRef } from "react";
 import { OpenDirectoryButton, Container, ThumbnailImage } from "@shared/ui";
 import { type To } from "@shared/types";
+import { generateEpisodeZoomImageUrl } from "@shared/utils";
 
 export function EpisodesPicker() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -24,14 +24,14 @@ export function EpisodesPicker() {
   const tvIdentifier = episodesProcessingData[0]?.tvIdentifier ?? "";
   const episodeIdentifier = episodesProcessingData[0]?.episodeIdentifier ?? "";
 
-  const src = generateEpisodeMainThumbnailUrl(
+  const src = generateThumbnailUrl(
     tvIdentifier,
     episodeIdentifier,
     currentIndex
   );
 
   const handleZoom = (index: number): void => {
-    const url = generateEpisodeThumbnailUrl(
+    const url = generateEpisodeZoomImageUrl(
       tvIdentifier,
       episodeIdentifier,
       index

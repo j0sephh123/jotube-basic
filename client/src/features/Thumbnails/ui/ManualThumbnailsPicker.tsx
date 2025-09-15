@@ -6,11 +6,10 @@ import {
   useHandleContainerWheel,
   useHandleKeyDown,
   useResetSelection,
-  generateMainThumbnailUrl,
 } from "@features/Thumbnails";
 import { setZoom } from "@features/Screenshot";
 import { setSelectedImages, useThumbnailsProcessingState } from "@shared/store";
-import { generateThumbnailUrl } from "@shared/utils";
+import { generateThumbnailUrl, generateZoomImageUrl } from "@shared/utils";
 import { useRef } from "react";
 import { makeYtChannelId, type To } from "@shared/types";
 import { OpenDirectoryButton, Container, ThumbnailImage } from "@shared/ui";
@@ -24,10 +23,10 @@ export function ManualThumbnailsPicker() {
   const ytChannelId = thumbnailsProcessingData[0]?.ytChannelId ?? "";
   const ytVideoId = thumbnailsProcessingData[0]?.ytVideoId ?? "";
 
-  const src = generateMainThumbnailUrl(ytChannelId, ytVideoId, currentIndex);
+  const src = generateThumbnailUrl(ytChannelId, ytVideoId, currentIndex);
 
   const handleZoom = (index: number): void => {
-    const url = generateThumbnailUrl(ytChannelId, ytVideoId, index);
+    const url = generateZoomImageUrl(ytChannelId, ytVideoId, index);
     setZoom(url);
     setSelectedImages((prev) => [...prev, index]);
   };

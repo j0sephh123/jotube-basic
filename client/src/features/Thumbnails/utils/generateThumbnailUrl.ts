@@ -1,6 +1,6 @@
 import { imagesBasePath } from "@shared/utils";
 
-export const generateMainThumbnailUrl = (
+export const generateThumbnailUrl = (
   ytChannelId: string,
   ytVideoId: string,
   index: number

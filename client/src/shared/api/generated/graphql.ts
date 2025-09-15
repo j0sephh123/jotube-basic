@@ -317,10 +317,11 @@ export type FetchVideosDashboardInput = {
 export type FileInfo = {
   __typename?: 'FileInfo';
   duration: Scalars['Float']['output'];
-  fileName: Scalars['String']['output'];
   format: Scalars['String']['output'];
   fullPath: Scalars['String']['output'];
+  parentFolderName: Scalars['String']['output'];
   size: Scalars['Float']['output'];
+  videoFileName: Scalars['String']['output'];
 };
 
 export type FileWithSizeResponse = {

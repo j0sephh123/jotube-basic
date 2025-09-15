@@ -28,4 +28,24 @@ export const generateThumbnailUrl = (
   ytVideoId: string,
   index: number
 ): string =>
+  `${imagesBasePath}/${ytChannelId}/${ytVideoId}/thumbnails/${index}.png`;
+
+export const generateZoomImageUrl = (
+  ytChannelId: string,
+  ytVideoId: string,
+  index: number
+): string =>
   `${imagesBasePath}/${ytChannelId}/${ytVideoId}/all_screenshots/${ytVideoId}-${index}.png`;
+
+export const generateEpisodeZoomImageUrl = (
+  tvIdentifier: string,
+  episodeIdentifier: string,
+  index: number
+): string => {
+  console.log({
+    tvIdentifier,
+    episodeIdentifier,
+    index,
+  });
+  return `${imagesBasePath}/${tvIdentifier}/${episodeIdentifier}/all_screenshots/${index}.png`;
+};
