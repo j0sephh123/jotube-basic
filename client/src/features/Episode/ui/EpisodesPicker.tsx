@@ -1,6 +1,4 @@
 import {
-  Grid,
-  Header,
   Footer,
   useEvents,
   useHandleContainerWheel,
@@ -14,6 +12,8 @@ import { useRef } from "react";
 import { OpenDirectoryButton, Container, ThumbnailImage } from "@shared/ui";
 import { type To } from "@shared/types";
 import { generateEpisodeZoomImageUrl } from "@shared/utils";
+import Grid from "./Grid";
+import Header from "./Header";
 
 export function EpisodesPicker() {
   const containerRef = useRef<HTMLDivElement>(null);
