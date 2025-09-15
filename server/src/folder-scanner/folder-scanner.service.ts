@@ -28,6 +28,34 @@ export class FolderScannerService {
     }
   }
 
+  private getFileFormat(fileName: string): string {
+    const validVideoFormats = [
+      'mp4',
+      'avi',
+      'mkv',
+      'mov',
+      'wmv',
+      'flv',
+      'webm',
+      'm4v',
+      '3gp',
+      'ogv',
+    ];
+
+    const lastDotIndex = fileName.lastIndexOf('.');
+    if (lastDotIndex === -1 || lastDotIndex === fileName.length - 1) {
+      return 'unknown';
+    }
+
+    const extension = fileName.substring(lastDotIndex + 1).toLowerCase();
+
+    if (validVideoFormats.includes(extension)) {
+      return extension;
+    }
+
+    return 'unknown';
+  }
+
   async scanFolder(input: FolderScannerInput): Promise<FolderScannerResponse> {
     const tvPath = this.filePathService.getTvPath();
 
@@ -68,7 +96,7 @@ export class FolderScannerService {
             parentFolderName: file,
             size: Math.round(stats.size / (1024 * 1024)),
             duration,
-            format: videoFile.split('.').pop() || 'unknown',
+            format: this.getFileFormat(videoFile),
             fullPath,
           };
         },

@@ -74,9 +74,15 @@ export class ScreenshotsManagerService {
     ytChannelId: string,
     ytVideoId: string,
     savedSeconds: number[],
+    isEpisode?: boolean,
   ): Promise<void> {
     await this.createSavedScreenshotsDirectory(ytChannelId, ytVideoId);
-    await this.copyScreenshotsToSaved(ytChannelId, ytVideoId, savedSeconds);
+    await this.copyScreenshotsToSaved(
+      ytChannelId,
+      ytVideoId,
+      savedSeconds,
+      isEpisode,
+    );
     await this.deleteAllScreenshots({ ytChannelId, ytVideoId });
   }
 
@@ -94,11 +100,12 @@ export class ScreenshotsManagerService {
     ytChannelId: string,
     ytVideoId: string,
     savedSeconds: number[],
+    isEpisode?: boolean,
   ): Promise<void> {
     const uploadPath = `${this.filePathService.getBasePath()}/${ytChannelId}/${ytVideoId}`;
 
     for (const second of savedSeconds) {
-      const name = `${ytVideoId}-${second}.png`;
+      const name = isEpisode ? `${second}.png` : `${ytVideoId}-${second}.png`;
       const sourcePath = `${uploadPath}/all_screenshots/${name}`;
       const destinationPath = `${uploadPath}/saved_screenshots/${name}`;
       await this.fileOperationService.handleCopyImage(

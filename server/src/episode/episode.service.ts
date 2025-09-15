@@ -11,12 +11,16 @@ import {
 import { FolderService } from 'src/file/folder.service';
 import { randomUUID } from 'crypto';
 import { ArtifactType } from '@prisma/client';
+import { ThumbnailsManagerService } from 'src/thumbnails/manager/thumbnails-manager.service';
+import { ScreenshotsManagerService } from 'src/screenshots/manager/screenshots-manager.service';
 
 @Injectable()
 export class EpisodeService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly folderService: FolderService,
+    private readonly thumbnailsManagerService: ThumbnailsManagerService,
+    private readonly screenshotsManagerService: ScreenshotsManagerService,
   ) {}
 
   async create({ title, publishedAt, tvId }: CreateEpisodeInput) {
@@ -221,6 +225,20 @@ export class EpisodeService {
         },
       });
     } else {
+      // diff to process upload not deleting the downloaded video for a reason
+
+      await this.screenshotsManagerService.processScreenshotsForUpload(
+        tvIdentifier,
+        episodeIdentifier,
+        savedSeconds,
+        true,
+      );
+
+      await this.thumbnailsManagerService.deleteThumbnail(
+        tvIdentifier,
+        episodeIdentifier,
+      );
+
       await Promise.all(
         savedSeconds.map((second) =>
           this.prismaService.episodeScreenshot.create({
