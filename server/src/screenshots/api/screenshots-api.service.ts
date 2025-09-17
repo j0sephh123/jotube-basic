@@ -19,17 +19,16 @@ export class ScreenshotsApiService {
 
   public async getScreenshots({
     channelIds,
-    shuffle,
     // type,
     // playlistId,
     // videoIds,
   }: GetScreenshotsInput) {
     if (channelIds.length === 0) {
-      return this.getAllChannelsScreenshots(shuffle);
+      return this.getAllChannelsScreenshots();
     }
 
     const screenshotsPromises = channelIds.map((channelId) =>
-      this.getScreenshotsForChannel(channelId, shuffle),
+      this.getScreenshotsForChannel(channelId),
     );
 
     const channelScreenshots = await Promise.all(screenshotsPromises);
@@ -37,39 +36,24 @@ export class ScreenshotsApiService {
     return channelScreenshots.flat();
   }
 
-  private async getScreenshotsForChannel(channelId: number, shuffle: boolean) {
-    const randomScreenshots = shuffle
-      ? await this.prismaService.$queryRaw<Item[]>`
-          SELECT s.* FROM Screenshot s
-          INNER JOIN Channel c ON s.ytChannelId = c.ytId
-          WHERE c.id = ${channelId}
-          ORDER BY RAND()
-          -- LIMIT 50
-        `
-      : await this.prismaService.$queryRaw<Item[]>`
-          SELECT s.* FROM Screenshot s
-          INNER JOIN Channel c ON s.ytChannelId = c.ytId
-          WHERE c.id = ${channelId}
-          ORDER BY s.ytVideoId, s.second
-          -- LIMIT 50
-        `;
+  private async getScreenshotsForChannel(channelId: number) {
+    const randomScreenshots = await this.prismaService.$queryRaw<Item[]>`
+    SELECT s.* FROM Screenshot s
+    INNER JOIN Channel c ON s.ytChannelId = c.ytId
+    WHERE c.id = ${channelId}
+    ORDER BY s.ytVideoId, s.second
+    -- LIMIT 50
+  `;
 
     return this.mapToScreenshots(randomScreenshots);
   }
 
-  private async getAllChannelsScreenshots(shuffle: boolean) {
-    console.log({ where: 'getAllChannelsScreenshots', shuffle });
-    const randomScreenshots = shuffle
-      ? await this.prismaService.$queryRaw<Item[]>`
-        SELECT * FROM Screenshot 
-        ORDER BY RAND()
-        -- LIMIT 50
-      `
-      : await this.prismaService.$queryRaw<Item[]>`
-        SELECT * FROM Screenshot 
-        ORDER BY ytVideoId, second
-        -- LIMIT 50
-      `;
+  private async getAllChannelsScreenshots() {
+    const randomScreenshots = await this.prismaService.$queryRaw<Item[]>`
+    SELECT * FROM Screenshot 
+    ORDER BY RAND()
+    -- LIMIT 50
+  `;
 
     return this.mapToScreenshots(randomScreenshots);
   }

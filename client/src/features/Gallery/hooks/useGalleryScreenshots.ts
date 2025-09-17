@@ -19,7 +19,6 @@ export function useGalleryScreenshots({
       input: {
         channelIds: collectionIds,
         type: "channel",
-        shuffle: false,
       },
     },
   });
