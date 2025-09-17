@@ -63,6 +63,8 @@ export const UPLOADS_LIST = gql`
       channelId
       channelTitle
       ytChannelId
+      dateAdded
+      screenshotCount
     }
   }
 `;

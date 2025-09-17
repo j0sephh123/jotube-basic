@@ -972,8 +972,10 @@ export type UploadsListUploadResponse = {
   __typename?: 'UploadsListUploadResponse';
   channelId: Scalars['Int']['output'];
   channelTitle: Scalars['String']['output'];
+  dateAdded?: Maybe<Scalars['String']['output']>;
   id: Scalars['Int']['output'];
   publishedAt: Scalars['String']['output'];
+  screenshotCount?: Maybe<Scalars['Int']['output']>;
   src: Scalars['String']['output'];
   title: Scalars['String']['output'];
   ytChannelId: Scalars['String']['output'];
@@ -1323,7 +1325,7 @@ export type UploadsListQueryVariables = Exact<{
 }>;
 
 
-export type UploadsListQuery = { __typename?: 'Query', uploadsList: Array<{ __typename?: 'UploadsListUploadResponse', id: number, ytId: string, title: string, publishedAt: string, src: string, channelId: number, channelTitle: string, ytChannelId: string }> };
+export type UploadsListQuery = { __typename?: 'Query', uploadsList: Array<{ __typename?: 'UploadsListUploadResponse', id: number, ytId: string, title: string, publishedAt: string, src: string, channelId: number, channelTitle: string, ytChannelId: string, dateAdded?: string | null, screenshotCount?: number | null }> };
 
 export type UploadsWithThumbnailsQueryVariables = Exact<{
   input: UploadsWithThumbnailsInput;
@@ -3082,6 +3084,8 @@ export const UploadsListDocument = gql`
     channelId
     channelTitle
     ytChannelId
+    dateAdded
+    screenshotCount
   }
 }
     `;

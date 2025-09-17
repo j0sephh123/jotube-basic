@@ -78,7 +78,7 @@ export class UploadsVideoService {
       }
 
       throw new Error(
-        'Invalid type, allowed types are: default, saved, thumbnails, screenshots',
+        'Invalid type, allowed types are: default, saved, thumbnails, screenshots, storyboards',
       );
     };
 
@@ -101,6 +101,37 @@ export class UploadsVideoService {
           },
         },
       });
+
+      if (type === 'screenshots') {
+        const uploadsWithScreenshots = await Promise.all(
+          channel.uploads.map(async (upload) => {
+            const screenshotData = await this.prismaService.$queryRaw<
+              { screenshotCount: bigint; dateAdded: Date }[]
+            >`
+              SELECT 
+                COUNT(*) as screenshotCount,
+                MIN(createdAt) as dateAdded
+              FROM Screenshot
+              WHERE ytVideoId = ${upload.ytId}
+            `;
+
+            const screenshotInfo = screenshotData[0] || {
+              screenshotCount: 0n,
+              dateAdded: new Date(),
+            };
+
+            return {
+              ...upload,
+              channelTitle: channel.title,
+              ytChannelId: channel.ytId,
+              screenshotCount: Number(screenshotInfo.screenshotCount),
+              dateAdded: screenshotInfo.dateAdded.toISOString(),
+            };
+          }),
+        );
+
+        return uploadsWithScreenshots;
+      }
 
       return channel.uploads.map((upload) => ({
         ...upload,
@@ -134,6 +165,37 @@ export class UploadsVideoService {
           },
         },
       });
+
+      if (type === 'screenshots') {
+        const uploadsWithScreenshots = await Promise.all(
+          uploads.map(async (upload) => {
+            const screenshotData = await this.prismaService.$queryRaw<
+              { screenshotCount: bigint; dateAdded: Date }[]
+            >`
+              SELECT 
+                COUNT(*) as screenshotCount,
+                MIN(createdAt) as dateAdded
+              FROM Screenshot
+              WHERE ytVideoId = ${upload.ytId}
+            `;
+
+            const screenshotInfo = screenshotData[0] || {
+              screenshotCount: 0n,
+              dateAdded: new Date(),
+            };
+
+            return {
+              ...upload,
+              channelTitle: upload.channel.title,
+              ytChannelId: upload.channel.ytId,
+              screenshotCount: Number(screenshotInfo.screenshotCount),
+              dateAdded: screenshotInfo.dateAdded.toISOString(),
+            };
+          }),
+        );
+
+        return uploadsWithScreenshots;
+      }
 
       return uploads.map((upload) => ({
         ...upload,

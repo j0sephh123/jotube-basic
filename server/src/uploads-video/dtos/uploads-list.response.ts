@@ -25,6 +25,12 @@ export class UploadsListUploadResponse {
 
   @Field()
   ytChannelId: string;
+
+  @Field(() => String, { nullable: true })
+  dateAdded?: string;
+
+  @Field(() => Int, { nullable: true })
+  screenshotCount?: number;
 }
 
 export type UploadsListResponse = UploadsListUploadResponse[];

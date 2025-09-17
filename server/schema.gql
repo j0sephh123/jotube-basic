@@ -679,8 +679,10 @@ input UploadsListInput {
 type UploadsListUploadResponse {
   channelId: Int!
   channelTitle: String!
+  dateAdded: String
   id: Int!
   publishedAt: String!
+  screenshotCount: Int
   src: String!
   title: String!
   ytChannelId: String!

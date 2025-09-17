@@ -32,6 +32,8 @@ export function UploadsListItem({
     channelId,
     channelTitle,
     ytChannelId,
+    screenshotCount,
+    dateAdded,
   },
   uploadsType,
   handleSideEffect,
@@ -42,29 +44,47 @@ export function UploadsListItem({
       collectionIds: [channelId],
     });
   };
+  const isScreenshots = uploadsType === "screenshots";
 
   const handleViewScreenshots = useScreenshotsForCarousel(ytId);
 
   return (
     <Card.Container>
       <div className="relative group">
-        <VideoPlayer ytId={ytId} src={src} id={id} title={title} />
-        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
-          <Card.Menu id={id} ytId={ytId} />
-        </div>
+        {!isScreenshots && (
+          <VideoPlayer ytId={ytId} src={src} id={id} title={title} />
+        )}
+        {isScreenshots && <img src={src} alt={title} />}
+        {!isScreenshots && (
+          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+            <Card.Menu id={id} ytId={ytId} />
+          </div>
+        )}
       </div>
       <Card.Content>
-        <Card.Title
-          title={title}
-          to={`/channels/${makeYtChannelId(ytChannelId)}/videos/${makeYtVideoId(
-            ytId
-          )}`}
-        />
+        {!isScreenshots ? (
+          <Card.Title
+            title={title}
+            to={`/channels/${makeYtChannelId(
+              ytChannelId
+            )}/videos/${makeYtVideoId(ytId)}`}
+          />
+        ) : (
+          <div className="text-base font-medium text-gray-200 hover:text-blue-400 hover:underline transition-colors truncate cursor-pointer max-w-[140px]">
+            {title}
+          </div>
+        )}
         <div className="flex justify-between gap-4 items-center">
-          {channelTitle && (
+          {!isScreenshots && channelTitle && (
             <CustomLink to={`/channels/${makeYtChannelId(ytChannelId)}/saved`}>
               <div className="text text-gray-400">{channelTitle}</div>
             </CustomLink>
+          )}
+          {isScreenshots && (
+            <div className="text text-gray-400">
+              {screenshotCount} screenshots •{" "}
+              {dateAdded && new Date(dateAdded).toLocaleDateString()}
+            </div>
           )}
           <PublishedTimeAgo date={publishedAt} />
         </div>

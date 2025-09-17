@@ -34,6 +34,7 @@ export function useUploads({
 
   const filteredData = useMemo<UploadsListQueryResult["data"]>(() => {
     const original = query.data;
+    console.log(original);
     if (!original) return original;
     const queuedIds = new Set((queue.data ?? []).map((q) => q.ytVideoId));
     return {

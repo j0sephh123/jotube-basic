@@ -6,7 +6,6 @@ import UploadsList from "./UploadsList";
 import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
 import { YtIdToId } from "@shared/hoc";
 import { IdType } from "@shared/api";
-import { GalleryVideosList } from "@features/Gallery";
 
 type Props = {
   channelId: number;
@@ -31,10 +30,6 @@ function UploadsDecoratorInner({ channelId }: Props) {
       refetchQueue();
     }
   };
-
-  if (uploadsType === "gallery") {
-    return <GalleryVideosList />;
-  }
 
   if (!data) return null;
 

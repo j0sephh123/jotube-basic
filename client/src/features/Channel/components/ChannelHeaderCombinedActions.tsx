@@ -99,7 +99,6 @@ export const ChannelHeaderCombinedActions = ({
       onFirst: handleScreenshotAction,
     },
     gallery: {
-      onNavigate: handleGalleryNavigate,
       onFirst: handleGalleryAction,
     },
     thumbnails: {
