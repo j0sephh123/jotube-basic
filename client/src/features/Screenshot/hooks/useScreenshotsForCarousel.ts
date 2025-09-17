@@ -14,7 +14,7 @@ export function useScreenshotsForCarousel(ytVideoId?: string) {
     try {
       const result = await getScreenshotsQuery({
         variables: {
-          input: { channelIds, type: "channel" },
+          input: { channelIds, type: "channel", shuffle: true },
         },
       });
       if (!result.data) return;

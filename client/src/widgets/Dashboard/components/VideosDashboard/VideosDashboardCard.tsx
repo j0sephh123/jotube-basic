@@ -41,8 +41,8 @@ export function VideosDashboardCard({
 
     if (isProcessed) {
       setGalleryModal({
-        ytVideoId: video.ytId,
-        channelIds: [video.channelId],
+        collectionItemId: video.ytId,
+        collectionIds: [video.channelId],
       });
     }
   };

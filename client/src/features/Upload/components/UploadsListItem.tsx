@@ -38,8 +38,8 @@ export function UploadsListItem({
 }: UploadsListItemProps) {
   const handleGalleryClick = () => {
     setGalleryModal({
-      ytVideoId: ytId,
-      channelIds: [channelId],
+      collectionItemId: ytId,
+      collectionIds: [channelId],
     });
   };
 

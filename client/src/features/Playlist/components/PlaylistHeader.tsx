@@ -42,8 +42,8 @@ export function PlaylistHeader({ playlist: { id, channels } }: HeaderProps) {
 
   const handleGalleryAction = useCallback(() => {
     setGalleryModal({
-      ytVideoId: "",
-      channelIds: channels.map((channel) => channel.id),
+      collectionItemId: "",
+      collectionIds: channels.map((channel) => channel.id),
     });
   }, [channels]);
 

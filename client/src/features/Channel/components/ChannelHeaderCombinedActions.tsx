@@ -56,8 +56,8 @@ export const ChannelHeaderCombinedActions = ({
 
   const handleGalleryAction = () => {
     setGalleryModal({
-      ytVideoId: "",
-      channelIds: [channelId],
+      collectionItemId: "",
+      collectionIds: [channelId],
     });
   };
 

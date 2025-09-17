@@ -20,6 +20,9 @@ export class ScreenshotsApiService {
   public async getScreenshots({
     channelIds,
     shuffle = true,
+    // type,
+    // playlistId,
+    // videoIds,
   }: GetScreenshotsInput) {
     if (channelIds.length === 0) {
       return this.getAllChannelsScreenshots(shuffle);
@@ -55,6 +58,7 @@ export class ScreenshotsApiService {
   }
 
   private async getAllChannelsScreenshots(shuffle: boolean) {
+    console.log({ where: 'getAllChannelsScreenshots', shuffle });
     const randomScreenshots = shuffle
       ? await this.prismaService.$queryRaw<Item[]>`
         SELECT * FROM Screenshot 

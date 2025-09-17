@@ -42,8 +42,8 @@ function VideoDetailsPageInner({
 
   const handleGalleryClick = () => {
     setGalleryModal({
-      ytVideoId,
-      channelIds: [channelId],
+      collectionItemId: ytVideoId,
+      collectionIds: [channelId],
     });
   };
 
@@ -62,8 +62,9 @@ function VideoDetailsPageInner({
       <VideoDetailsWrapper>
         <DoubleAction
           label="storyboard"
+          count={0}
           onFirst={() => {}}
-          onSecond={() => {}}
+          onNavigate={() => {}}
         />
         <VideoHeader
           channelTitle={video.channelTitle}

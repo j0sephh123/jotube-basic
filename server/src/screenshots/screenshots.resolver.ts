@@ -11,6 +11,7 @@ export class ScreenshotsResolver {
   async getScreenshots(
     @Args('input') input: GetScreenshotsInput,
   ): Promise<GetScreenshotsResponse[]> {
+    console.log({ where: 'getScreenshots', input });
     return this.screenshotsApiService.getScreenshots(input);
   }
 }

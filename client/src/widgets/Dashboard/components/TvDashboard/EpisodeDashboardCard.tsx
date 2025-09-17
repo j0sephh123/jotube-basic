@@ -1,5 +1,4 @@
 import { type EpisodeResponse, useAddEpisodeToQueue } from "@features/Episode";
-import { setGalleryModal } from "@features/Gallery";
 import { ViewEpisodeThumbnails } from "@features/Thumbnails";
 import { type To } from "@shared/types";
 import {

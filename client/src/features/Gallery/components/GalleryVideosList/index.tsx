@@ -19,8 +19,8 @@ function GalleryVideosListInner({ channelId }: { channelId: number }) {
 
   const handleVideoClick = (videoId: string) => {
     setGalleryModal({
-      ytVideoId: videoId,
-      channelIds: [channelId],
+      collectionItemId: videoId,
+      collectionIds: [channelId],
     });
   };
 

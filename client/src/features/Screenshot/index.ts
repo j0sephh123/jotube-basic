@@ -1,8 +1,5 @@
 export { default as TheCarousel } from "./components/TheCarousel";
-export {
-  useFetchChannelScreenshots,
-  useRefetchChannelScreenshots,
-} from "./hooks/useFetchChannelScreenshots";
+export { useRefetchChannelScreenshots } from "./hooks/useFetchChannelScreenshots";
 export { useDeleteChannelScreenshot } from "./hooks/useDeleteChannelScreenshot";
 export { useUpdateChannelScreenshot } from "./hooks/useUpdateChannelScreenshot";
 export { useZoomState as useZoom } from "./model/zoomStore";

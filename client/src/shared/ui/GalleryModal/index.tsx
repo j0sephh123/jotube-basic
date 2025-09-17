@@ -1,7 +1,7 @@
 /* eslint-disable boundaries/element-types */
 import { useGalleryModalState } from "@app/providers";
 import { closeGalleryModal } from "@features/Gallery";
-import { useScreenshotsForGallery } from "@features/Gallery";
+import { useGalleryScreenshots } from "@features/Gallery";
 import {
   useDeleteWithConfirm,
   useSetFeaturedScreenshot,
@@ -14,16 +14,16 @@ import { Virtualizer } from "@widgets/Virtualizer";
 import { GalleryModalWrapper } from "./GalleryModalWrapper";
 
 export function GalleryModal() {
-  const { isGalleryModalVisible, channelIds, ytVideoId } =
-    useGalleryModalState();
+  const { isVisible, collectionIds, collectionItemId } = useGalleryModalState();
 
   const { videoScreenshots, screenshots, isLoading, error } =
-    useScreenshotsForGallery({
-      ytVideoId,
-      channelIds: [...channelIds],
+    useGalleryScreenshots({
+      collectionItemId,
+      collectionIds: [...collectionIds],
     });
 
-  const screenshotsToUse = ytVideoId === "" ? screenshots : videoScreenshots;
+  const screenshotsToUse =
+    collectionItemId === "" ? screenshots : videoScreenshots;
 
   const handleZoom = useZoomScreenshot();
   const handleSetFeatured = useSetFeaturedScreenshot();
@@ -33,7 +33,7 @@ export function GalleryModal() {
     closeGalleryModal();
   }, "Escape");
 
-  if (!isGalleryModalVisible) return null;
+  if (!isVisible) return null;
 
   return (
     <GalleryModalWrapper>

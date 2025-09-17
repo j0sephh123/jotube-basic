@@ -1,30 +1,30 @@
 import { proxy, useSnapshot } from "valtio";
 
 type State = {
-  isGalleryModalVisible: boolean;
-  ytVideoId: string;
-  channelIds: number[];
+  isVisible: boolean;
+  collectionItemId: string;
+  collectionIds: number[];
 };
 
 const state = proxy<State>({
-  isGalleryModalVisible: false,
-  ytVideoId: "",
-  channelIds: [],
+  isVisible: false,
+  collectionItemId: "",
+  collectionIds: [],
 });
 
 export const setGalleryModal = (props: {
-  ytVideoId: string;
-  channelIds: readonly number[];
+  collectionItemId: string;
+  collectionIds: readonly number[];
 }) => {
-  state.isGalleryModalVisible = true;
-  state.ytVideoId = props.ytVideoId;
-  state.channelIds = [...props.channelIds];
+  state.isVisible = true;
+  state.collectionItemId = props.collectionItemId;
+  state.collectionIds = [...props.collectionIds];
 };
 
 export const closeGalleryModal = () => {
-  state.isGalleryModalVisible = false;
-  state.ytVideoId = "";
-  state.channelIds = [];
+  state.isVisible = false;
+  state.collectionItemId = "";
+  state.collectionIds = [];
 };
 
 export const useGalleryModalState = () => useSnapshot(state);
