@@ -19,7 +19,7 @@ export class ScreenshotsApiService {
 
   public async getScreenshots({
     channelIds,
-    shuffle = true,
+    shuffle,
     // type,
     // playlistId,
     // videoIds,
