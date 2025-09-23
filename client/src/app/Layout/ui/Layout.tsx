@@ -15,10 +15,12 @@ import { usePlaylistModalState } from "@features/Playlist";
 import { useRecentlyViewedChannels } from "@features/Channel";
 import { TvModal, useTvModalState } from "@features/Tv";
 import { Sidepanel } from "./Sidepanel";
+import { useGalleryModalState } from "@features/Gallery";
 
 export default function Layout(): JSX.Element {
   const { type } = usePlaylistModalState();
   const { type: tvModalType } = useTvModalState();
+  const { isVisible } = useGalleryModalState();
   useRecentlyViewedChannels();
 
   return (
@@ -35,7 +37,7 @@ export default function Layout(): JSX.Element {
         <TheCarousel />
         <ThumbnailsProcessing />
         <ZoomModal />
-        <GalleryModal />
+        {isVisible && <GalleryModal />}
         <Notification />
         {type !== null && <PlaylistModal />}
         {tvModalType !== null && <TvModal />}
