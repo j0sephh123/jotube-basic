@@ -19,7 +19,7 @@ export function useChannelsDashboardQuery() {
 
   const fetchDashboardInput: FetchDashboardInput = {
     page: finalPage,
-    viewType,
+    viewType: viewType || "",
     sortOrder: finalSortOrder,
   };
 

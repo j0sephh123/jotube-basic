@@ -42,12 +42,8 @@ export class DashboardService {
     defaultMax,
     viewType,
   }: FetchDashboardInput): Promise<ChannelsDashboardResponse> {
-    console.log({
-      viewType,
-    });
     const rawChannels = await this.getChannelsForViewType(viewType as ViewType);
-    const allChannels: DashboardChannel[] =
-      await this.getChannelsWithCounts(rawChannels);
+    const allChannels = await this.getChannelsWithCounts(rawChannels);
     const filtered = this.filterChannels(allChannels, {
       min,
       max,
