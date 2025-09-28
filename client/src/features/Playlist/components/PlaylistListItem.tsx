@@ -7,7 +7,13 @@ import { useNavigate } from "react-router-dom";
 import { useDeletePlaylist, useRefetchPlaylists } from "../hooks";
 import { setPlaylistModal } from "../model";
 
-export function PlaylistListItem({ playlist }: { playlist: PlaylistResponse }) {
+export function PlaylistListItem({
+  playlist,
+  onPlaylistClick,
+}: {
+  playlist: PlaylistResponse;
+  onPlaylistClick?: (playlistId: number) => void;
+}) {
   const deletePlaylist = useDeletePlaylist();
   const refetchPlaylists = useRefetchPlaylists();
   const dialogHook = useDialog();
@@ -41,6 +47,12 @@ export function PlaylistListItem({ playlist }: { playlist: PlaylistResponse }) {
   };
 
   const handleItemClick = () => {
+    if (onPlaylistClick) {
+      onPlaylistClick(playlist.id);
+    } else {
+      navigate(`/dashboard/playlists/channels/${playlist.id}`);
+    }
+
     navigate(`/dashboard/playlists/channels/${playlist.id}`);
   };
 

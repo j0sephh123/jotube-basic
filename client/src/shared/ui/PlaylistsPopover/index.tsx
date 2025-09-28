@@ -1,8 +1,7 @@
 import { useState } from "react";
 // eslint-disable-next-line boundaries/element-types
-import { useGetPlaylists } from "@features/Playlist";
+import { PlaylistListItem, useGetPlaylists } from "@features/Playlist";
 import PlaylistsPopoverWrapper from "./Wrapper";
-import { PlaylistListItemNavbar } from "./PlaylistListItemNavbar";
 import { type ReactNode } from "react";
 import { ListMusic } from "lucide-react";
 import { CustomLink } from "@shared/ui";
@@ -56,7 +55,7 @@ export default function PlaylistsPopover({
         ) : (
           <div className="space-y-2 max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-700">
             {playlists.map((playlist) => (
-              <PlaylistListItemNavbar
+              <PlaylistListItem
                 key={playlist.id}
                 playlist={playlist}
                 onPlaylistClick={onPlaylistClick}
