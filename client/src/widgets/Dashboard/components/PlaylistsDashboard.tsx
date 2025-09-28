@@ -1,6 +1,6 @@
 /* eslint-disable boundaries/element-types */
-import { PlaylistDetailsPage } from "@pages/playlist-details";
 import { PlaylistUploadsList } from "@pages/playlistUploadsList";
+import { PlaylistChannels } from "./PlaylistChannels";
 import { useParams } from "react-router-dom";
 
 export function PlaylistsDashboard() {
@@ -9,7 +9,7 @@ export function PlaylistsDashboard() {
   return (
     <>
       {viewType === "channels" ? (
-        <PlaylistDetailsPage />
+        <PlaylistChannels />
       ) : (
         <PlaylistUploadsList />
       )}

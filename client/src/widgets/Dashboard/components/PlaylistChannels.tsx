@@ -1,7 +1,7 @@
 import { PlaylistGrid } from "@entities/Playlist";
 import { PlaylistDetailsContainer } from "@widgets/PlaylistDetails";
 
-export const PlaylistDetailsPage = () => {
+export const PlaylistChannels = () => {
   return (
     <PlaylistDetailsContainer>
       {(playlist, refetch) => (
