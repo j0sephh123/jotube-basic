@@ -8,11 +8,11 @@ type CardTitleProps = {
 
 export default function CardTitle({ title, to }: CardTitleProps) {
   return (
-    <div data-testid="card-title" className="flex flex-col gap-1">
+    <div data-testid="CardTitle" className="flex flex-col gap-1">
       <CustomLink to={to}>
         <Tooltip content={title} position="top" color="primary">
           <div
-            data-testid="card-title-text"
+            data-testid="CardTitle-text"
             className="text-base font-medium text-gray-200 hover:text-blue-400 hover:underline transition-colors truncate cursor-pointer max-w-[140px]"
           >
             {title}

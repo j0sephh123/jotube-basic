@@ -55,7 +55,7 @@ function Card({
 }: CardProps) {
   return (
     <Card.Container>
-      <div data-testid="card-image-container" className="relative group">
+      <div data-testid="Card-image-container" className="relative group">
         {cardImageSlot ? (
           cardImageSlot
         ) : (
@@ -70,29 +70,29 @@ function Card({
         )}
         {cardMenuSlot && (
           <div
-            data-testid="card-menu-container"
+            data-testid="Card-menu-container"
             className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
           >
             {cardMenuSlot}
           </div>
         )}
-        {featuredScreenshotsLength && (
+        {featuredScreenshotsLength ? (
           <div
-            data-testid="card-screenshots-badge"
+            data-testid="Card-screenshots-badge"
             className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
           >
             <div
-              data-testid="card-screenshots-count"
+              data-testid="Card-screenshots-count"
               className="badge badge-primary"
             >
               {featuredScreenshotsLength ?? 0}
             </div>
           </div>
-        )}
+        ) : null}
       </div>
       <Card.Content>
         <div
-          data-testid="card-title-row"
+          data-testid="Card-title-row"
           className="flex items-center justify-between"
         >
           <Card.Title title={title} to={to} />
@@ -100,11 +100,11 @@ function Card({
         </div>
         {secondRow}
         <div
-          data-testid="card-actions-row"
+          data-testid="Card-actions-row"
           className="flex items-center justify-between"
         >
           <div
-            data-testid="card-action-buttons"
+            data-testid="Card-action-buttons"
             className="flex items-center gap-2"
           >
             {actionButtonSlot}

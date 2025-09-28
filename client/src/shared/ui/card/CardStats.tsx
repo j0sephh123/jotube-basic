@@ -63,7 +63,7 @@ export default function CardStats({
 
   return (
     <div
-      data-testid="card-stats"
+      data-testid="CardStats"
       className="flex items-center justify-between gap-1"
     >
       {stats.map((stat, index) => (
@@ -75,7 +75,7 @@ export default function CardStats({
             className="cursor-pointer"
           >
             <span
-              data-testid={`card-stat-${stat.tooltip
+              data-testid={`CardStats-${stat.tooltip
                 .toLowerCase()
                 .replace(/\s+/g, "-")}`}
               className={`${stat.color} transition-colors`}
@@ -86,7 +86,7 @@ export default function CardStats({
           </Tooltip>
           {index < stats.length - 1 && (
             <span
-              data-testid="card-stats-separator"
+              data-testid="CardStats-separator"
               className="text-base-content/50"
             >
               |

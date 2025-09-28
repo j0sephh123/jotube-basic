@@ -8,7 +8,7 @@ type CardContentProps = {
 function CardContent({ children, className = "" }: CardContentProps) {
   return (
     <div
-      data-testid="card-content"
+      data-testid="CardContent"
       className={`p-3 flex flex-col gap-2 ${className}`}
     >
       {children}
