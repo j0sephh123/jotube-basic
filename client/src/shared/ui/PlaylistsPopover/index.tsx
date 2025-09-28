@@ -4,6 +4,8 @@ import { useGetPlaylists } from "@features/Playlist";
 import PlaylistsPopoverWrapper from "./Wrapper";
 import { PlaylistListItemNavbar } from "./PlaylistListItemNavbar";
 import { type ReactNode } from "react";
+import { ListMusic } from "lucide-react";
+import { CustomLink } from "@shared/ui";
 
 type PlaylistsPopoverProps = {
   customTrigger?: ReactNode;
@@ -34,6 +36,12 @@ export default function PlaylistsPopover({
       }}
     >
       <div className="space-y-3">
+        <div className="text-center mb-4">
+          <CustomLink to="/playlists" className="btn btn-primary btn-sm w-full">
+            <ListMusic className="w-4 h-4 mr-2" />
+            Visit Playlists Page
+          </CustomLink>
+        </div>
         <div className="flex items-center justify-between mb-2">
           <h3 className="text-lg font-semibold text-white">Playlists</h3>
           <span className="text-sm text-zinc-400">

@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { PlusIcon, TvIcon, RadioIcon } from "lucide-react";
+import { PlusIcon, TvIcon, RadioIcon, MusicIcon } from "lucide-react";
 import { Modal } from "@shared/ui";
 import { CreateChannel } from "./CreateChannel";
 import { CreateTv } from "./CreateTv";
+import { setPlaylistModal } from "@features/Playlist";
 
-type ResourceType = "channel" | "tv";
+type ResourceType = "channel" | "tv" | "playlist";
 
 export default function CreateResource() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -14,6 +15,11 @@ export default function CreateResource() {
   const [isFabOpen, setIsFabOpen] = useState(false);
 
   const handleResourceSelect = (resourceType: ResourceType) => {
+    if (resourceType === "playlist") {
+      setPlaylistModal({ type: "create" });
+      setIsFabOpen(false);
+      return;
+    }
     setSelectedResource(resourceType);
     setIsModalVisible(true);
     setIsFabOpen(false);
@@ -62,27 +68,33 @@ export default function CreateResource() {
 
           {isFabOpen && (
             <>
-              <div
-                className="tooltip tooltip-left absolute bottom-0 right-0 mb-20"
-                data-tip="Create Channel"
-              >
+              <div className="absolute bottom-0 right-0 mb-20">
                 <button
-                  className="btn btn-lg btn-circle"
+                  className="btn btn-lg bg-gray-700 hover:bg-gray-600 text-white border-gray-600 hover:border-gray-500 flex items-center gap-2 px-4 py-3 rounded-full shadow-lg"
                   onClick={() => handleResourceSelect("channel")}
                 >
-                  <RadioIcon className="size-6" />
+                  <RadioIcon className="size-5" />
+                  <span className="text-sm font-medium">Channel</span>
                 </button>
               </div>
 
-              <div
-                className="tooltip tooltip-left absolute bottom-0 right-0 mb-40"
-                data-tip="Create TV"
-              >
+              <div className="absolute bottom-0 right-0 mb-40">
                 <button
-                  className="btn btn-lg btn-circle"
+                  className="btn btn-lg bg-gray-700 hover:bg-gray-600 text-white border-gray-600 hover:border-gray-500 flex items-center gap-2 px-4 py-3 rounded-full shadow-lg"
                   onClick={() => handleResourceSelect("tv")}
                 >
-                  <TvIcon className="size-6" />
+                  <TvIcon className="size-5" />
+                  <span className="text-sm font-medium">TV</span>
+                </button>
+              </div>
+
+              <div className="absolute bottom-0 right-0 mb-60">
+                <button
+                  className="btn btn-lg bg-gray-700 hover:bg-gray-600 text-white border-gray-600 hover:border-gray-500 flex items-center gap-2 px-4 py-3 rounded-full shadow-lg"
+                  onClick={() => handleResourceSelect("playlist")}
+                >
+                  <MusicIcon className="size-5" />
+                  <span className="text-sm font-medium">Playlist</span>
                 </button>
               </div>
             </>
