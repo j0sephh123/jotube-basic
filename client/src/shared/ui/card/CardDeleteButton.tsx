@@ -27,6 +27,7 @@ function CardDeleteButton({ ytChannelId, onDelete }: CardDeleteButtonProps) {
 
   return (
     <button
+      data-testid="card-delete-button"
       onClick={handleDeleteClick}
       className="btn btn-ghost btn-sm btn-circle hover:bg-gray-700/50 transition-colors"
       title="Delete"

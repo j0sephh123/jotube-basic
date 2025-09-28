@@ -27,8 +27,13 @@ function CardMenu({ id, ytId, moreItems }: CardMenuProps) {
   };
 
   return (
-    <div className="relative flex-shrink-0" ref={menuRef}>
+    <div
+      data-testid="card-menu"
+      className="relative flex-shrink-0"
+      ref={menuRef}
+    >
       <button
+        data-testid="card-menu-button"
         onClick={(e) => {
           e.stopPropagation();
           setIsMenuOpen(!isMenuOpen);
@@ -39,9 +44,13 @@ function CardMenu({ id, ytId, moreItems }: CardMenuProps) {
       </button>
 
       {isMenuOpen && (
-        <div className="absolute right-0 top-8 bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-2 min-w-[200px] z-50">
-          <div className="flex flex-col gap-1">
+        <div
+          data-testid="card-menu-dropdown"
+          className="absolute right-0 top-8 bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-2 min-w-[200px] z-50"
+        >
+          <div data-testid="card-menu-items" className="flex flex-col gap-1">
             <button
+              data-testid="card-menu-copy-id"
               onClick={handleCopyId}
               className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-200 hover:bg-gray-700 rounded transition-colors"
             >
@@ -49,6 +58,7 @@ function CardMenu({ id, ytId, moreItems }: CardMenuProps) {
               <span>Copy ID</span>
             </button>
             <button
+              data-testid="card-menu-copy-youtube-id"
               onClick={handleCopyYoutubeId}
               className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-200 hover:bg-gray-700 rounded transition-colors"
             >

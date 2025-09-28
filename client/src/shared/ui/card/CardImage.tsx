@@ -45,7 +45,7 @@ function CardImage({
   };
 
   return (
-    <div className={`relative ${className}`}>
+    <div data-testid="card-image" className={`relative ${className}`}>
       <Avatar
         ytId={ytId}
         id={id}

@@ -62,7 +62,10 @@ export default function CardStats({
   ];
 
   return (
-    <div className="flex items-center justify-between gap-1">
+    <div
+      data-testid="card-stats"
+      className="flex items-center justify-between gap-1"
+    >
       {stats.map((stat, index) => (
         <Fragment key={stat.tooltip}>
           <Tooltip
@@ -72,6 +75,9 @@ export default function CardStats({
             className="cursor-pointer"
           >
             <span
+              data-testid={`card-stat-${stat.tooltip
+                .toLowerCase()
+                .replace(/\s+/g, "-")}`}
               className={`${stat.color} transition-colors`}
               onClick={stat.onClick}
             >
@@ -79,7 +85,12 @@ export default function CardStats({
             </span>
           </Tooltip>
           {index < stats.length - 1 && (
-            <span className="text-base-content/50">|</span>
+            <span
+              data-testid="card-stats-separator"
+              className="text-base-content/50"
+            >
+              |
+            </span>
           )}
         </Fragment>
       ))}

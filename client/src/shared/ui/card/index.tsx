@@ -55,7 +55,7 @@ function Card({
 }: CardProps) {
   return (
     <Card.Container>
-      <div className="relative group">
+      <div data-testid="card-image-container" className="relative group">
         {cardImageSlot ? (
           cardImageSlot
         ) : (
@@ -69,26 +69,44 @@ function Card({
           />
         )}
         {cardMenuSlot && (
-          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+          <div
+            data-testid="card-menu-container"
+            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+          >
             {cardMenuSlot}
           </div>
         )}
         {featuredScreenshotsLength && (
-          <div className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
-            <div className="badge badge-primary">
+          <div
+            data-testid="card-screenshots-badge"
+            className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+          >
+            <div
+              data-testid="card-screenshots-count"
+              className="badge badge-primary"
+            >
               {featuredScreenshotsLength ?? 0}
             </div>
           </div>
         )}
       </div>
       <Card.Content>
-        <div className="flex items-center justify-between">
+        <div
+          data-testid="card-title-row"
+          className="flex items-center justify-between"
+        >
           <Card.Title title={title} to={to} />
           {titleRightSlot}
         </div>
         {secondRow}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
+        <div
+          data-testid="card-actions-row"
+          className="flex items-center justify-between"
+        >
+          <div
+            data-testid="card-action-buttons"
+            className="flex items-center gap-2"
+          >
             {actionButtonSlot}
             {downloadButtonSlot}
             {deleteButtonSlot}

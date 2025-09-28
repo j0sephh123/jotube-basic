@@ -17,6 +17,7 @@ export default function CardDownloadButton({
 
   return (
     <button
+      data-testid="card-download-button"
       onClick={() => handleDownload(id)}
       className="btn btn-ghost btn-sm btn-circle hover:bg-gray-700/50 transition-colors"
       title="Download"

@@ -6,8 +6,13 @@ type CardCreatedAtProps = {
 
 export default function CardCreatedAt({ createdAt }: CardCreatedAtProps) {
   return (
-    <div className="flex items-center justify-between gap-1">
-      <span className="text-gray-400">{timeAgo(createdAt)}</span>
+    <div
+      data-testid="card-created-at"
+      className="flex items-center justify-between gap-1"
+    >
+      <span data-testid="card-created-at-time" className="text-gray-400">
+        {timeAgo(createdAt)}
+      </span>
     </div>
   );
 }
