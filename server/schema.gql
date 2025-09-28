@@ -588,7 +588,7 @@ input StoryboardQueryInput {
 }
 
 input SyncUploadsInput {
-  channelId: Int!
+  channelIds: [Int!]!
 }
 
 type SyncUploadsResponse {

@@ -21,7 +21,7 @@ export default function SyncUploadsButton({
   const handleSync = async () => {
     try {
       await syncUploads.mutateAsync({
-        channelId: id,
+        channelIds: [id],
       });
       onSuccess?.();
     } catch (error) {

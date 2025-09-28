@@ -3,6 +3,7 @@ import { useRefetchChannelUploads } from "@features/Upload";
 // eslint-disable-next-line import/no-internal-modules
 import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
 import { useRefetchChannelsDashboardQuery } from "@features/Dashboard";
+import { type SyncUploadsInput } from "@shared/api";
 
 export type SyncUploadsRequest = {
   channelId: number;
@@ -22,10 +23,10 @@ export default function useSyncUploads() {
   });
 
   return {
-    mutateAsync: (body: SyncUploadsRequest) => {
+    mutateAsync: (syncUploadsInput: SyncUploadsInput) => {
       return syncUploadsMutation({
         variables: {
-          syncUploadsInput: body,
+          syncUploadsInput,
         },
       });
     },

@@ -1,9 +1,10 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
-import { IsNumber } from 'class-validator';
+import { IsNumber, IsArray } from 'class-validator';
 
 @InputType()
 export class SyncUploadsInput {
-  @Field(() => Int)
-  @IsNumber()
-  channelId: number;
+  @Field(() => [Int])
+  @IsArray()
+  @IsNumber({}, { each: true })
+  channelIds: number[];
 }

@@ -872,7 +872,7 @@ export type StoryboardQueryInput = {
 };
 
 export type SyncUploadsInput = {
-  channelId: Scalars['Int']['input'];
+  channelIds: Array<Scalars['Int']['input']>;
 };
 
 export type SyncUploadsResponse = {

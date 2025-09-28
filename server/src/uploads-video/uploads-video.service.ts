@@ -14,7 +14,7 @@ import { videoExtensions } from 'src/shared/constants';
 import { FileOperationService } from 'src/file/file-operation.service';
 import { DirectoryService } from 'src/file/directory.service';
 import { YoutubeService } from 'src/core/external-services/youtube-api/youtube.service';
-import { syncUploadsDto } from 'src/uploads-video/dtos/sync-uploads.dto';
+import { SyncUploadsInput } from 'src/uploads-video/dtos/sync-uploads.input';
 import { ArtifactType } from '@prisma/client';
 import { SortOrder, IdType } from './dtos/uploads-list.input';
 import { UploadsListUploadResponse } from './dtos/uploads-list.response';
@@ -442,107 +442,124 @@ export class UploadsVideoService {
     return result;
   }
 
-  async syncUploads({ channelId }: syncUploadsDto) {
-    const channel = await this.prismaService.channel.findUnique({
-      where: { id: channelId },
+  async syncUploads({ channelIds }: SyncUploadsInput) {
+    const channels = await this.prismaService.channel.findMany({
+      where: { id: { in: channelIds } },
       select: { id: true, title: true, ytId: true },
     });
 
-    if (!channel) throw new Error('Channel not found');
+    if (channels.length === 0) throw new Error('No channels found');
 
-    const getLatestSaved = async () => {
-      const [latestSaved] = await this.prismaService.uploadsVideo.findMany({
-        where: { channelId },
-        take: 1,
-        orderBy: { publishedAt: 'desc' },
-        select: { ytId: true, publishedAt: true },
-      });
+    const syncChannel = async (channelId: number) => {
+      const channel = channels.find((c) => c.id === channelId);
+      if (!channel) throw new Error(`Channel ${channelId} not found`);
 
-      if (!latestSaved) return null;
+      const getLatestSaved = async () => {
+        const [latestSaved] = await this.prismaService.uploadsVideo.findMany({
+          where: { channelId },
+          take: 1,
+          orderBy: { publishedAt: 'desc' },
+          select: { ytId: true, publishedAt: true },
+        });
 
-      return {
-        ...latestSaved,
-        publishedAtDate: new Date(latestSaved.publishedAt),
+        if (!latestSaved) return null;
+
+        return {
+          ...latestSaved,
+          publishedAtDate: new Date(latestSaved.publishedAt),
+        };
       };
-    };
 
-    const getLatestFetched = async () => {
-      const channel = await this.prismaService.channel.findUnique({
-        where: { id: channelId },
-      });
+      const getLatestFetched = async () => {
+        const channel = await this.prismaService.channel.findUnique({
+          where: { id: channelId },
+        });
 
-      if (!channel) throw new Error('Channel not found');
+        if (!channel) throw new Error('Channel not found');
 
-      const fetchStartVideo = await this.prismaService.uploadsVideo.findUnique({
-        where: { ytId: channel.fetchStartVideoId },
-        select: { ytId: true, publishedAt: true },
-      });
+        const fetchStartVideo =
+          await this.prismaService.uploadsVideo.findUnique({
+            where: { ytId: channel.fetchStartVideoId },
+            select: { ytId: true, publishedAt: true },
+          });
 
-      if (!fetchStartVideo) return null;
+        if (!fetchStartVideo) return null;
 
-      return {
-        ...fetchStartVideo,
-        publishedAtDate: new Date(fetchStartVideo.publishedAt),
+        return {
+          ...fetchStartVideo,
+          publishedAtDate: new Date(fetchStartVideo.publishedAt),
+        };
       };
-    };
 
-    const lastSaved = await getLatestSaved();
-    const latestFetched = await getLatestFetched();
+      const lastSaved = await getLatestSaved();
+      const latestFetched = await getLatestFetched();
 
-    let latestUpload;
-    if (!lastSaved && !latestFetched) {
-      latestUpload = null;
-    } else if (!lastSaved) {
-      latestUpload = latestFetched;
-    } else if (!latestFetched) {
-      latestUpload = lastSaved;
-    } else {
-      latestUpload =
-        lastSaved.publishedAtDate > latestFetched.publishedAtDate
-          ? lastSaved
-          : latestFetched;
-    }
+      let latestUpload;
+      if (!lastSaved && !latestFetched) {
+        latestUpload = null;
+      } else if (!lastSaved) {
+        latestUpload = latestFetched;
+      } else if (!latestFetched) {
+        latestUpload = lastSaved;
+      } else {
+        latestUpload =
+          lastSaved.publishedAtDate > latestFetched.publishedAtDate
+            ? lastSaved
+            : latestFetched;
+      }
 
-    if (!latestUpload) {
-      return { count: 0 };
-    }
+      if (!latestUpload) {
+        return { count: 0, channelId };
+      }
 
-    const syncedUploads = await this.youtubeService.syncUploads(
-      channel.ytId,
-      latestUpload.ytId,
-      channelId,
-    );
+      const syncedUploads = await this.youtubeService.syncUploads(
+        channel.ytId,
+        latestUpload.ytId,
+        channelId,
+      );
 
-    if (syncedUploads[0]) {
+      if (syncedUploads[0]) {
+        await this.prismaService.channel.update({
+          where: { id: channelId },
+          data: { fetchStartVideoId: syncedUploads[0].ytId },
+        });
+      }
+
+      const existingUploads = await this.prismaService.uploadsVideo.findMany({
+        where: {
+          ytId: { in: syncedUploads.map((upload) => upload.ytId) },
+        },
+        select: { ytId: true },
+      });
+
+      const existingIds = new Set(existingUploads.map((x) => x.ytId));
+      const newUploads = syncedUploads.filter((u) => !existingIds.has(u.ytId));
+
+      let result = { count: 0 };
+      if (newUploads.length > 0) {
+        result = await this.prismaService.uploadsVideo.createMany({
+          data: newUploads,
+        });
+      }
+
       await this.prismaService.channel.update({
         where: { id: channelId },
-        data: { fetchStartVideoId: syncedUploads[0].ytId },
+        data: { lastSyncedAt: new Date() },
       });
-    }
 
-    const existingUploads = await this.prismaService.uploadsVideo.findMany({
-      where: {
-        ytId: { in: syncedUploads.map((upload) => upload.ytId) },
-      },
-      select: { ytId: true },
-    });
+      return { ...result, channelId };
+    };
 
-    const existingIds = new Set(existingUploads.map((x) => x.ytId));
-    const newUploads = syncedUploads.filter((u) => !existingIds.has(u.ytId));
+    const results = await Promise.all(
+      channelIds.map((channelId) => syncChannel(channelId)),
+    );
 
-    let result = { count: 0 };
-    if (newUploads.length > 0) {
-      result = await this.prismaService.uploadsVideo.createMany({
-        data: newUploads,
-      });
-    }
+    const totalCount = results.reduce((sum, result) => sum + result.count, 0);
 
-    await this.prismaService.channel.update({
-      where: { id: channelId },
-      data: { lastSyncedAt: new Date() },
-    });
-
-    return result;
+    return {
+      count: totalCount,
+      results,
+    };
   }
 
   private async deleteDownloadedVideo({
