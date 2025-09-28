@@ -28,6 +28,7 @@ type Props = DashboardChannelResponse & {
   viewType: string;
   onChannelDelete?: () => void;
   featuredScreenshots: FeaturedScreenshotResponse[];
+  onSyncUploads?: () => void;
 };
 
 export default function ChannelDashboardCard({
@@ -47,6 +48,7 @@ export default function ChannelDashboardCard({
   playlist,
   onChannelDelete,
   featuredScreenshots,
+  onSyncUploads,
 }: Props) {
   const navigate = useCustomNavigate();
   const handleViewScreenshots = useScreenshotsForCarousel();
@@ -81,7 +83,9 @@ export default function ChannelDashboardCard({
 
   const cardMenu = <Card.Menu id={id} ytId={ytId} />;
 
-  const syncButton = <SyncUploadsButton lastSyncedAt={lastSyncedAt} id={id} />;
+  const syncButton = (
+    <SyncUploadsButton lastSyncedAt={lastSyncedAt} id={id} onSuccess={onSyncUploads} />
+  );
 
   const deleteChannelbutton = (
     <DeleteChannel id={id} onSuccess={onChannelDelete} />

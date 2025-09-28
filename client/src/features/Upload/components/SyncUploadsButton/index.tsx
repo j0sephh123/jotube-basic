@@ -8,14 +8,12 @@ type Props = {
   lastSyncedAt?: string | null;
   id: number;
   onSuccess?: () => void;
-  isDisabled?: boolean;
 };
 
 export default function SyncUploadsButton({
   lastSyncedAt,
   id,
   onSuccess,
-  isDisabled,
 }: Props) {
   const syncUploads = useSyncUploads();
   const lastSync = lastSyncedAt || null;
@@ -34,7 +32,6 @@ export default function SyncUploadsButton({
   return (
     <Button
       onClick={handleSync}
-      disabled={isDisabled}
       className="text-xs flex items-center gap-1 hover:bg-gray-700/50 p-1 rounded transition-colors w-20 justify-center"
     >
       <RefreshCw

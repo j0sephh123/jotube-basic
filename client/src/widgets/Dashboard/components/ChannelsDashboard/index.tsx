@@ -4,7 +4,7 @@ import {
 } from "@widgets/Dashboard";
 import { Virtualizer } from "@widgets/Virtualizer";
 import { useParams } from "react-router-dom";
-import { type ViewType } from "@shared/types";
+import { type ViewType } from "@features/Dashboard";
 
 export default function ChannelsDashboard() {
   const { viewType } = useParams<{ viewType: string }>();
@@ -32,6 +32,7 @@ export default function ChannelsDashboard() {
               playlist={item.playlist}
               viewType={viewType as unknown as ViewType}
               onChannelDelete={refetch}
+              onSyncUploads={refetch}
               featuredScreenshots={item.featuredScreenshots}
             />
           )}
