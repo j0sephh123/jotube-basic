@@ -4,7 +4,9 @@ import { PlaylistDetailsContainer } from "@widgets/PlaylistDetails";
 export const PlaylistDetailsPage = () => {
   return (
     <PlaylistDetailsContainer>
-      {(playlist) => <PlaylistGrid playlist={playlist} />}
+      {(playlist, refetch) => (
+        <PlaylistGrid playlist={playlist} refetch={refetch} />
+      )}
     </PlaylistDetailsContainer>
   );
 };

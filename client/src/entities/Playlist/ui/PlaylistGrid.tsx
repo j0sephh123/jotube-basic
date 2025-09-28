@@ -7,9 +7,10 @@ import { Grid } from "@widgets/Grid";
 
 type TableProps = {
   playlist: PlaylistDetailsResponse;
+  refetch: () => void;
 };
 
-export default function PlaylistGrid({ playlist }: TableProps) {
+export default function PlaylistGrid({ playlist, refetch }: TableProps) {
   return (
     <Grid>
       {playlist.channels.map((channel) => (
@@ -21,6 +22,7 @@ export default function PlaylistGrid({ playlist }: TableProps) {
           src={channel.src}
           videoCount={channel.videoCount}
           onChannelDelete={() => {}}
+          onSyncUploads={refetch}
           featuredScreenshots={channel.featuredScreenshots}
           createdAt={playlist.createdAt}
           defaults={channel.videoCount}

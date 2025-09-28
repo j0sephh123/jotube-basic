@@ -5,9 +5,14 @@ import type { PlaylistDetailsResponse } from "@shared/api";
 export default function PlaylistDetailsContainer({
   children,
 }: {
-  children: (playlist: PlaylistDetailsResponse) => React.ReactNode;
+  children: (playlist: PlaylistDetailsResponse, refetch: () => void) => React.ReactNode;
 }) {
-  const { data: playlist, loading: isLoading, error } = useGetPlaylist(null);
+  const {
+    data: playlist,
+    loading: isLoading,
+    error,
+    refetch,
+  } = useGetPlaylist(null);
 
   return (
     <StaticStates
@@ -15,7 +20,7 @@ export default function PlaylistDetailsContainer({
       isError={!!error}
       isEmpty={!playlist?.playlistDetails}
     >
-      {children(playlist?.playlistDetails as PlaylistDetailsResponse)}
+      {children(playlist?.playlistDetails as PlaylistDetailsResponse, refetch)}
     </StaticStates>
   );
 }
