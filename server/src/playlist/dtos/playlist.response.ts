@@ -34,7 +34,7 @@ export class PlaylistChannelWithCountsResponse {
   videoCount: number;
 
   @Field(() => Int)
-  savedCount: number;
+  saved: number;
 
   @Field(() => Int)
   screenshotCount: number;
@@ -47,6 +47,9 @@ export class PlaylistChannelWithCountsResponse {
 
   @Field(() => [FeaturedScreenshotResponse])
   featuredScreenshots: FeaturedScreenshotResponse[];
+
+  @Field()
+  createdAt: Date;
 }
 
 @ObjectType()

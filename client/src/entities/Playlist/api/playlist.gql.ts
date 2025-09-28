@@ -47,11 +47,12 @@ export const GET_PLAYLIST_DETAILS = gql`
         ytId
         src
         videoCount
-        savedCount
+        saved
         screenshotCount
         thumbnailCount
         storyboardCount
         lastSyncedAt
+        createdAt
         featuredScreenshots {
           id
           second

@@ -433,10 +433,11 @@ type PlaylistChannelResponse {
 }
 
 type PlaylistChannelWithCountsResponse {
+  createdAt: DateTime!
   featuredScreenshots: [FeaturedScreenshotResponse!]!
   id: Int!
   lastSyncedAt: String
-  savedCount: Int!
+  saved: Int!
   screenshotCount: Int!
   src: String!
   storyboardCount: Int!
