@@ -8,7 +8,8 @@ import { useRefetchQueue } from "@shared/hooks";
 import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
 
 export type UseCreateStoryboardBody = {
-  ytVideoIds: string[];
+  ids: string[];
+  resourceType: "channel" | "video";
 };
 
 export function useCreateStoryboard() {
@@ -25,7 +26,7 @@ export function useCreateStoryboard() {
       nestFetcher({
         url: "/queues/add-storyboards",
         method: "POST",
-        body: { data: body },
+        body,
       }),
     onSuccess: (_data) => {
       refetchChannelUploads();

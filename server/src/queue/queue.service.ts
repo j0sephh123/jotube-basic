@@ -8,6 +8,7 @@ import { RemoveJobsDto } from 'src/queue/dtos/remove-jobs.dto';
 import { AddVideosv2Dto } from './dtos/add-videos-v2.dto';
 import { AddEpisodeJobDto } from './dtos/add-episode.dto';
 import { AddStoryboardJobDto } from './dtos/add-storyboard-job.dto';
+import { ArtifactType } from '@prisma/client';
 
 @Injectable()
 export class QueueService {
@@ -68,30 +69,59 @@ export class QueueService {
     return results;
   }
 
-  async addStoryboardJob({ data: { ytVideoIds } }: AddStoryboardJobDto) {
+  async addStoryboardJob({ ids, resourceType }: AddStoryboardJobDto) {
     const existingJobs = await this.storyboardProcessor.getJobs([
       'active',
       'waiting',
     ]);
-    const existingIds = existingJobs.map((job) => job.data.ytVideoId);
+    const existingVideoIds = existingJobs.map((job) => job.data.ytVideoId);
 
-    ytVideoIds.map(async (ytVideoId) => {
-      if (existingIds.includes(ytVideoId)) {
-        return;
-      }
+    if (resourceType === 'video') {
+      ids.map(async (ytVideoId) => {
+        if (existingVideoIds.includes(ytVideoId)) {
+          return;
+        }
 
-      const upload = await this.prismaService.uploadsVideo.findUnique({
-        where: { ytId: ytVideoId },
-        select: {
-          channel: { select: { ytId: true } },
-        },
+        const upload = await this.prismaService.uploadsVideo.findUnique({
+          where: { ytId: ytVideoId },
+          select: {
+            channel: { select: { ytId: true } },
+          },
+        });
+
+        const ytChannelId = upload?.channel?.ytId || '';
+        await this.storyboardProcessor.add({ ytVideoId, ytChannelId });
       });
 
-      const ytChannelId = upload?.channel?.ytId || '';
-      await this.storyboardProcessor.add({ ytVideoId, ytChannelId });
-    });
+      return { success: true };
+    }
 
-    return { success: true };
+    if (resourceType === 'channel') {
+      const videoIds = await this.prismaService.uploadsVideo.findMany({
+        where: {
+          channel: {
+            ytId: {
+              in: ids,
+            },
+          },
+          artifact: ArtifactType.VIDEO,
+        },
+        select: { ytId: true, channel: { select: { ytId: true } } },
+      });
+
+      videoIds.map(async (videoId) => {
+        if (existingVideoIds.includes(videoId.ytId)) {
+          return;
+        }
+
+        await this.storyboardProcessor.add({
+          ytVideoId: videoId.ytId,
+          ytChannelId: videoId.channel.ytId,
+        });
+      });
+
+      return { success: true };
+    }
   }
 
   public getLabels({ items }: LabelsDto) {

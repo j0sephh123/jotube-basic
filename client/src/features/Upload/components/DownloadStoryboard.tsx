@@ -11,9 +11,10 @@ export function DownloadStoryboard({
 }) {
   const { mutateAsync } = useCreateStoryboard();
 
-  const handleCreateStoryboard = (ytVideoIds: UseCreateStoryboardBody["ytVideoIds"]) => {
+  const handleCreateStoryboard = (ids: UseCreateStoryboardBody["ids"]) => {
     mutateAsync({
-      ytVideoIds,
+      ids,
+      resourceType: "video",
     }).then(handleSideEffect);
   };
 

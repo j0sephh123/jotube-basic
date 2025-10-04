@@ -2,7 +2,11 @@
 import { CardMenu, CustomLink } from "@shared/ui";
 import { makeYtChannelId } from "@shared/types";
 import { PlaylistControl } from "@features/Playlist";
-import { SyncUploadsButton, CleanShortUploads } from "@features/Upload";
+import {
+  SyncUploadsButton,
+  CleanShortUploads,
+  useCreateStoryboard,
+} from "@features/Upload";
 import { useTypedParams } from "@shared/hooks";
 import { useChannelMetadataQuery } from "@entities/Channel/model/useChannelMetadata";
 
@@ -18,6 +22,7 @@ export const ChannelHeaderTitleSection = ({
   const uploadsType = useTypedParams("uploadsType");
 
   const { data: channelMetadata } = useChannelMetadataQuery(channelId);
+  const { mutateAsync: downloadStoryboards } = useCreateStoryboard();
 
   if (!channelMetadata) return null;
 
@@ -34,6 +39,7 @@ export const ChannelHeaderTitleSection = ({
         playlistId={playlist?.id ?? 0}
         playlistName={playlist?.name ?? "No playlist"}
       />
+
       {uploadsType === "default" && (
         <>
           <SyncUploadsButton
@@ -41,6 +47,17 @@ export const ChannelHeaderTitleSection = ({
             id={channelMetadata?.id ?? 0}
           />
           <CleanShortUploads channelId={channelId} />
+          <button
+            className="btn btn-secondary btn-outline"
+            onClick={() =>
+              downloadStoryboards({
+                ids: [ytChannelId],
+                resourceType: "channel",
+              })
+            }
+          >
+            Get Storyboards
+          </button>
         </>
       )}
     </>
