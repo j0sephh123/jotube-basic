@@ -4,5 +4,5 @@ import { IsObject } from 'class-validator';
 export class AddStoryboardJobDto {
   @ApiProperty({ description: 'Storyboard job payload' })
   @IsObject()
-  data: { ytVideoId: string };
+  data: { ytVideoIds: string[] };
 }

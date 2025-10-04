@@ -7,8 +7,8 @@ import { useRefetchQueue } from "@shared/hooks";
 // eslint-disable-next-line import/no-internal-modules
 import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
 
-type Body = {
-  ytVideoId: string;
+export type UseCreateStoryboardBody = {
+  ytVideoIds: string[];
 };
 
 export function useCreateStoryboard() {
@@ -19,9 +19,9 @@ export function useCreateStoryboard() {
   const { mutateAsync, isPending, variables } = useMutation<
     Response,
     DefaultError,
-    Body
+    UseCreateStoryboardBody
   >({
-    mutationFn: (body: Body) =>
+    mutationFn: (body) =>
       nestFetcher({
         url: "/queues/add-storyboard",
         method: "POST",

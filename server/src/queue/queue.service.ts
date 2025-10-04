@@ -7,6 +7,7 @@ import { LabelsDto } from 'src/queue/dtos/labels.dto';
 import { RemoveJobsDto } from 'src/queue/dtos/remove-jobs.dto';
 import { AddVideosv2Dto } from './dtos/add-videos-v2.dto';
 import { AddEpisodeJobDto } from './dtos/add-episode.dto';
+import { AddStoryboardJobDto } from './dtos/add-storyboard-job.dto';
 
 @Injectable()
 export class QueueService {
@@ -67,27 +68,28 @@ export class QueueService {
     return results;
   }
 
-  async addStoryboardJob({ ytVideoId }: { ytVideoId: string }) {
+  async addStoryboardJob({ data: { ytVideoIds } }: AddStoryboardJobDto) {
     const existingJobs = await this.storyboardProcessor.getJobs([
       'active',
       'waiting',
     ]);
     const existingIds = existingJobs.map((job) => job.data.ytVideoId);
 
-    if (!existingIds.includes(ytVideoId)) {
+    ytVideoIds.map(async (ytVideoId) => {
+      if (existingIds.includes(ytVideoId)) {
+        return;
+      }
+
       const upload = await this.prismaService.uploadsVideo.findUnique({
         where: { ytId: ytVideoId },
         select: {
-          channel: {
-            select: { ytId: true },
-          },
+          channel: { select: { ytId: true } },
         },
       });
 
       const ytChannelId = upload?.channel?.ytId || '';
-
       await this.storyboardProcessor.add({ ytVideoId, ytChannelId });
-    }
+    });
 
     return { success: true };
   }

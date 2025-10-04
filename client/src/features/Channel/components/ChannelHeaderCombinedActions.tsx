@@ -35,7 +35,7 @@ export const ChannelHeaderCombinedActions = ({
   } = channelMetadata;
 
   const handleStoryboardNavigate = () => {
-    navigate(`/channels/${makeYtChannelId(ytChannelId)}/storyboards`  );
+    navigate(`/channels/${makeYtChannelId(ytChannelId)}/storyboards`);
   };
 
   const handleStoryboardAction = () => {
@@ -43,15 +43,11 @@ export const ChannelHeaderCombinedActions = ({
   };
 
   const handleScreenshotNavigate = () => {
-    navigate(`/channels/${makeYtChannelId(ytChannelId)}/screenshots`  );
+    navigate(`/channels/${makeYtChannelId(ytChannelId)}/screenshots`);
   };
 
   const handleScreenshotAction = () => {
     viewScreenshots([channelId]);
-  };
-
-  const handleGalleryNavigate = () => {
-    navigate(`/channels/${makeYtChannelId(ytChannelId)}/gallery`  );
   };
 
   const handleGalleryAction = () => {
@@ -62,7 +58,7 @@ export const ChannelHeaderCombinedActions = ({
   };
 
   const handleThumbnailNavigate = () => {
-      navigate(`/channels/${makeYtChannelId(ytChannelId)}/thumbnails`  );
+    navigate(`/channels/${makeYtChannelId(ytChannelId)}/thumbnails`);
   };
 
   const handleThumbnailAction = () => {
@@ -73,11 +69,11 @@ export const ChannelHeaderCombinedActions = ({
   };
 
   const handleDefaultNavigate = () => {
-    navigate(`/channels/${makeYtChannelId(ytChannelId)}`  );
+    navigate(`/channels/${makeYtChannelId(ytChannelId)}`);
   };
 
   const handleSavedNavigate = () => {
-    navigate(`/channels/${makeYtChannelId(ytChannelId)}/saved`  );
+    navigate(`/channels/${makeYtChannelId(ytChannelId)}/saved`);
   };
 
   const items = [

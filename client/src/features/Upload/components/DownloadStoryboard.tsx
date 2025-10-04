@@ -1,24 +1,26 @@
 import { useCreateStoryboard } from "@features/Upload";
+// eslint-disable-next-line import/no-internal-modules
+import { type UseCreateStoryboardBody } from "../hooks/useCreateStoryboard";
 
 export function DownloadStoryboard({
-  ytVideoId,
+  ytVideoIds,
   handleSideEffect,
 }: {
-  ytVideoId: string;
+  ytVideoIds: string[];
   handleSideEffect: () => void;
 }) {
   const { mutateAsync } = useCreateStoryboard();
 
-  const handleCreateStoryboard = (ytVideoId: string) => {
+  const handleCreateStoryboard = (ytVideoIds: UseCreateStoryboardBody["ytVideoIds"]) => {
     mutateAsync({
-      ytVideoId,
+      ytVideoIds,
     }).then(handleSideEffect);
   };
 
   return (
     <button
       className="btn btn-soft btn-warning btn-md flex-1"
-      onClick={() => handleCreateStoryboard(ytVideoId)}
+      onClick={() => handleCreateStoryboard(ytVideoIds)}
     >
       Storyboard
     </button>

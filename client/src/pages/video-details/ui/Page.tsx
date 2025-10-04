@@ -98,7 +98,7 @@ function VideoDetailsPageInner({
                       handleSideEffect={refetch}
                     />
                     <DownloadStoryboard
-                      ytVideoId={ytVideoId}
+                      ytVideoIds={[ytVideoId]}
                       handleSideEffect={refetch}
                     />
                     <DeleteUpload

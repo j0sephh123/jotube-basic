@@ -97,7 +97,7 @@ export function UploadsListItem({
                   handleSideEffect={handleSideEffect}
                 />
                 <DownloadStoryboard
-                  ytVideoId={ytId}
+                  ytVideoIds={[ytId]}
                   handleSideEffect={handleSideEffect}
                 />
                 <DeleteUpload
