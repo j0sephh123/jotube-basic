@@ -30,7 +30,7 @@ export class QueueController {
     return this.queueService.getLabels(labelsDto);
   }
 
-  @Post('/add-storyboard')
+  @Post('/add-storyboards')
   addStoryboard(@Body() body: AddStoryboardJobDto) {
     return this.queueService.addStoryboardJob(body);
   }

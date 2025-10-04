@@ -23,7 +23,7 @@ export function useCreateStoryboard() {
   >({
     mutationFn: (body) =>
       nestFetcher({
-        url: "/queues/add-storyboard",
+        url: "/queues/add-storyboards",
         method: "POST",
         body: { data: body },
       }),
