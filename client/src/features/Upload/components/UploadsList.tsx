@@ -3,8 +3,9 @@ import { type UploadsType } from "@shared/types";
 import { type UploadsListQueryResult } from "@shared/api";
 // eslint-disable-next-line boundaries/element-types
 import { Virtualizer } from "@widgets/Virtualizer";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useQueue, useRefetchQueue } from "@shared/hooks";
+import { useSelectedItemsState, toggleSelectedItem } from "@shared/store";
 
 export type UploadsListProps = {
   handleSideEffect: () => void;
@@ -17,7 +18,7 @@ export default function UploadsList({
   data,
   uploadsType,
 }: UploadsListProps) {
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const selectedItemsState = useSelectedItemsState();
 
   const uploadsToUse = useMemo(
     () =>
@@ -34,12 +35,7 @@ export default function UploadsList({
   const refetchQueue = useRefetchQueue();
 
   const handleCardSelect = (id: string) => {
-    console.log("Card clicked", id);
-    setSelectedIds((prev) =>
-      prev.includes(id)
-        ? prev.filter((selectedId) => selectedId !== id)
-        : [...prev, id]
-    );
+    toggleSelectedItem(id);
   };
 
   return (
@@ -78,7 +74,9 @@ export default function UploadsList({
             processingState={queueItem?.state ?? "waiting"}
             processingType={queueItem?.processingType}
             onCardClick={handleCardSelect}
-            isSelected={selectedIds.includes(item.upload.id.toString())}
+            isSelected={selectedItemsState.selectedIds.includes(
+              item.upload.ytId
+            )}
           />
         );
       }}

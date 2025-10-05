@@ -9,6 +9,7 @@ import {
 } from "@features/Upload";
 import { useTypedParams } from "@shared/hooks";
 import { useChannelMetadataQuery } from "@entities/Channel/model/useChannelMetadata";
+import { useSelectedItemsState } from "@shared/store";
 
 interface TopLeftProps {
   ytChannelId: string;
@@ -23,6 +24,22 @@ export const ChannelHeaderTitleSection = ({
 
   const { data: channelMetadata } = useChannelMetadataQuery(channelId);
   const { mutateAsync: downloadStoryboards } = useCreateStoryboard();
+  const selectedItemsState = useSelectedItemsState();
+  console.log("selectedItemsState:", selectedItemsState);
+
+  const handleGetStoryboards = () => {
+    if (selectedItemsState.selectedIds.length === 0) {
+      downloadStoryboards({
+        ids: [ytChannelId],
+        resourceType: "channel",
+      });
+    } else {
+      downloadStoryboards({
+        ids: selectedItemsState.selectedIds.slice(),
+        resourceType: "video",
+      });
+    }
+  };
 
   if (!channelMetadata) return null;
 
@@ -49,12 +66,7 @@ export const ChannelHeaderTitleSection = ({
           <CleanShortUploads channelId={channelId} />
           <button
             className="btn btn-secondary btn-outline"
-            onClick={() =>
-              downloadStoryboards({
-                ids: [ytChannelId],
-                resourceType: "channel",
-              })
-            }
+            onClick={handleGetStoryboards}
           >
             Get Storyboards
           </button>

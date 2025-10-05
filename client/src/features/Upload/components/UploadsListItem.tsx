@@ -62,7 +62,7 @@ export function UploadsListItem({
 
   const handleCardClick = () => {
     if (onCardClick) {
-      onCardClick(id.toString());
+      onCardClick(ytId);
     }
   };
 
