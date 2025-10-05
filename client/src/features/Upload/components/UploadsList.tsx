@@ -3,7 +3,7 @@ import { type UploadsType } from "@shared/types";
 import { type UploadsListQueryResult } from "@shared/api";
 // eslint-disable-next-line boundaries/element-types
 import { Virtualizer } from "@widgets/Virtualizer";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useQueue, useRefetchQueue } from "@shared/hooks";
 
 export type UploadsListProps = {
@@ -17,6 +17,8 @@ export default function UploadsList({
   data,
   uploadsType,
 }: UploadsListProps) {
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
   const uploadsToUse = useMemo(
     () =>
       data?.uploadsList?.map((upload) => ({
@@ -30,6 +32,15 @@ export default function UploadsList({
   const queue = useQueue();
   const removeFromQueue = useRemoveFromQueue();
   const refetchQueue = useRefetchQueue();
+
+  const handleCardSelect = (id: string) => {
+    console.log("Card clicked", id);
+    setSelectedIds((prev) =>
+      prev.includes(id)
+        ? prev.filter((selectedId) => selectedId !== id)
+        : [...prev, id]
+    );
+  };
 
   return (
     <Virtualizer
@@ -66,6 +77,8 @@ export default function UploadsList({
             }}
             processingState={queueItem?.state ?? "waiting"}
             processingType={queueItem?.processingType}
+            onCardClick={handleCardSelect}
+            isSelected={selectedIds.includes(item.upload.id.toString())}
           />
         );
       }}
