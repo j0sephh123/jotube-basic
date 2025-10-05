@@ -37,3 +37,28 @@ export const clearSelectedItems = () => {
 
 export const isItemSelected = (id: string) =>
   selectedItemsState.selectedIds.includes(id);
+
+export const selectAllItems = (ids: string[]) => {
+  selectedItemsState.selectedIds = [
+    ...new Set([...selectedItemsState.selectedIds, ...ids]),
+  ];
+};
+
+export const deselectAllItems = () => {
+  selectedItemsState.selectedIds = [];
+};
+
+export const toggleSelectAll = (allIds: string[]) => {
+  const allSelected = allIds.every((id) =>
+    selectedItemsState.selectedIds.includes(id)
+  );
+  if (allSelected) {
+    selectedItemsState.selectedIds = selectedItemsState.selectedIds.filter(
+      (id) => !allIds.includes(id)
+    );
+  } else {
+    selectedItemsState.selectedIds = [
+      ...new Set([...selectedItemsState.selectedIds, ...allIds]),
+    ];
+  }
+};
