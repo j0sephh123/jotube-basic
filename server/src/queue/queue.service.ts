@@ -179,10 +179,12 @@ export class QueueService {
         return {
           id: job.id,
           state,
+          processingType: 'download',
           ...job.data,
         } as {
           id: string;
           state: string;
+          processingType: 'download';
           ytChannelId: string;
           ytVideoId: string;
         };
@@ -195,10 +197,12 @@ export class QueueService {
         return {
           id: job.id,
           state,
+          processingType: 'processing',
           ...job.data,
         } as {
           id: string;
           state: string;
+          processingType: 'processing';
           ytChannelId: string;
           ytVideoId: string;
         };
@@ -219,11 +223,13 @@ export class QueueService {
         return {
           id: job.id,
           state,
+          processingType: 'storyboarding',
           ytVideoId: job.data.ytVideoId,
           ytChannelId: ytChannelId || '',
         } as {
           id: string;
           state: string;
+          processingType: 'storyboarding';
           ytChannelId: string;
           ytVideoId: string;
         };
@@ -255,6 +261,7 @@ export class QueueService {
     const mappedQueueData = queueData.map((item) => ({
       id: item.id,
       state: item.state,
+      processingType: item.processingType,
       ytChannelId: item.ytChannelId,
       ytVideoId: item.ytVideoId,
       videoId: videoTitles[item.ytVideoId]?.id || null,

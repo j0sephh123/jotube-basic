@@ -20,6 +20,10 @@ export type UploadsListItemProps = {
   uploadsType: UploadsType;
   handleSideEffect: () => void;
   channelTitleSlot?: ReactNode;
+  processingStatus: "none" | "processing" | "storyboarding";
+  processingState: "active" | "waiting";
+  onProcessingCancel: () => void;
+  processingType?: "download" | "storyboarding" | "processing";
 };
 
 export function UploadsListItem({
@@ -37,6 +41,10 @@ export function UploadsListItem({
   },
   uploadsType,
   handleSideEffect,
+  processingStatus = "none",
+  processingState,
+  onProcessingCancel,
+  processingType,
 }: UploadsListItemProps) {
   const handleGalleryClick = () => {
     setGalleryModal({
@@ -48,9 +56,39 @@ export function UploadsListItem({
 
   const handleViewScreenshots = useScreenshotsForCarousel(ytId);
 
+  const getOverlayClasses = () => {
+    if (processingStatus === "processing") {
+      return processingState === "active"
+        ? "border-4 border-orange-500 group-hover:bg-orange-500/50"
+        : "border-4 border-orange-500 group-hover:bg-orange-500/50";
+    }
+    if (processingStatus === "storyboarding") {
+      return processingState === "active"
+        ? "border-4 border-pink-500 group-hover:bg-pink-500/50"
+        : "border-4 border-pink-500 group-hover:bg-pink-500/50";
+    }
+    return "";
+  };
+
+  const getOverlayText = () => {
+    if (processingStatus === "processing") {
+      return processingState === "active" ? "Processing..." : "Processing...";
+    }
+    if (processingStatus === "storyboarding") {
+      return processingState === "active"
+        ? "Creating Storyboard..."
+        : "Creating Storyboard...";
+    }
+    return "";
+  };
+
   return (
-    <Card.Container>
-      <div className="relative group">
+    <Card.Container
+      className={`relative group ${
+        processingStatus !== "none" ? "pointer-events-none" : ""
+      }`}
+    >
+      <div className="relative">
         {!isScreenshots && (
           <VideoPlayer ytId={ytId} src={src} id={id} title={title} />
         )}
@@ -140,6 +178,43 @@ export function UploadsListItem({
           </div>
         </div>
       </Card.Content>
+      {processingStatus !== "none" && (
+        <>
+          <div
+            className={`absolute inset-0 ${getOverlayClasses()} transition-all duration-200 z-20 pointer-events-auto`}
+          >
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+              <div className="text-center text-white">
+                <div className="text-lg font-semibold mb-2">
+                  {getOverlayText()}
+                </div>
+                {processingState === "waiting" && (
+                  <Button
+                    onClick={onProcessingCancel}
+                    className="bg-white/20 hover:bg-white/30 text-white border-white/30"
+                  >
+                    Cancel
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="absolute top-2 left-2 z-30 flex gap-2">
+            <div
+              className={`px-2 py-1 rounded text-xs font-medium ${
+                processingState === "active"
+                  ? "bg-green-500 text-white"
+                  : "bg-yellow-500 text-black"
+              }`}
+            >
+              {processingState === "active" ? "Active" : "Waiting"}
+            </div>
+            <div className="px-2 py-1 rounded text-xs font-medium bg-blue-500 text-white">
+              {processingType}
+            </div>
+          </div>
+        </>
+      )}
     </Card.Container>
   );
 }

@@ -4,9 +4,10 @@ import type { Phase } from "@shared/api/generated/graphql";
 
 export type QueueItem = {
   id: string;
+  processingType: "download" | "storyboarding" | "processing";
+  state: "active" | "waiting";
   ytChannelId: string;
   ytVideoId: string;
-  state: "active" | "waiting";
   videoTitle: string;
   channelTitle: string;
   videoId: number;

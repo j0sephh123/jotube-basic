@@ -1,11 +1,6 @@
-import type {
-  SortOrder,
-  UploadsListInput,
-  UploadsListQueryResult,
-} from "@shared/api";
+import type { SortOrder, UploadsListInput } from "@shared/api";
 import { UploadsListDocument, useUploadsListQuery } from "@shared/api";
-import { useCallback, useMemo } from "react";
-import { useQueue } from "@shared/hooks";
+import { useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useApolloClient } from "@apollo/client";
 import { type UploadsType } from "@shared/types";
@@ -17,7 +12,6 @@ export function useUploads({
   id: UploadsListInput["id"];
   uploadsType: UploadsType;
 }) {
-  const queue = useQueue();
   const [searchParams] = useSearchParams();
   const sortOrder = (searchParams.get("sort") || "DESC") as SortOrder;
 
@@ -32,19 +26,8 @@ export function useUploads({
     },
   });
 
-  const filteredData = useMemo<UploadsListQueryResult["data"]>(() => {
-    const original = query.data;
-    console.log(original);
-    if (!original) return original;
-    const queuedIds = new Set((queue.data ?? []).map((q) => q.ytVideoId));
-    return {
-      ...original,
-      uploadsList: original.uploadsList.filter((u) => !queuedIds.has(u.ytId)),
-    };
-  }, [query.data, queue.data]);
-
   return {
-    data: filteredData,
+    data: query.data,
     isLoading: query.loading,
     error: query.error,
     refetch: query.refetch,
