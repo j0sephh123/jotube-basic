@@ -15,7 +15,7 @@ export const ChannelPageLayoutInner = ({
   useAddToRecentlyViewed(channelId, ytChannelId);
 
   return (
-    <div className="container mx-auto px-4 py-2">
+    <div className="px-4 py-2">
       <ChannelHeader channelId={channelId} ytChannelId={ytChannelId} />
       {children}
     </div>
