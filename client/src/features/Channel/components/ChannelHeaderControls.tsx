@@ -6,6 +6,7 @@ import {
   deselectAllItems,
 } from "@shared/store";
 import { type UploadsListQueryResult } from "@shared/api";
+import { ButtonWithDropdown } from "@widgets/ButtonWithDropdown";
 
 interface ChannelHeaderControlsProps {
   uploadsData?: UploadsListQueryResult["data"];
@@ -46,6 +47,25 @@ export const ChannelHeaderControls = ({
         Sort:
         {sortOrder === "ASC" ? "↑ Oldest first" : "↓ Newest first"}
       </Button>
+
+      <ButtonWithDropdown
+        buttonText="Demo Actions"
+        onButtonClick={() => console.log("Demo button clicked")}
+        dropdownItems={[
+          <button key="1" onClick={() => console.log("Download selected")}>
+            Download Selected
+          </button>,
+          <button key="2" onClick={() => console.log("Delete selected")}>
+            Delete Selected
+          </button>,
+          <button key="3" onClick={() => console.log("Export selected")}>
+            Export Selected
+          </button>,
+          <button key="4" onClick={() => console.log("Share selected")}>
+            Share Selected
+          </button>,
+        ]}
+      />
 
       {hasSelection && (
         <>

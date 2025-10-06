@@ -106,6 +106,7 @@ export function Virtualizer<T>({
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
+                        pointerEvents: "auto",
                       }}
                     >
                       <button
