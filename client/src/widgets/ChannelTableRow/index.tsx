@@ -1,6 +1,5 @@
 import {
   Button,
-  Tooltip,
   CopyValue,
   OpenDirectoryButton,
   useClickOutside,
@@ -141,13 +140,6 @@ export default function ChannelTableRow({
     src
   );
 
-  const handleGalleryClick = () => {
-    setGalleryModal({
-      collectionItemId: "",
-      collectionIds: [id],
-    });
-  };
-
   const getActionButton = () => {
     if (viewType === "no-screenshots") {
       return null;
@@ -215,6 +207,18 @@ export default function ChannelTableRow({
           statType: "storyboards" as const,
           onClick: () => viewStoryboards.mutateAsync([id]),
         },
+        {
+          icon: <Images className="w-4 h-4" />,
+          text: "Gallery",
+          value: screenshotsCount,
+          statType: "screenshots" as const,
+          onClick: () => {
+            setGalleryModal({
+              collectionItemId: "",
+              collectionIds: [id],
+            });
+          },
+        },
       ];
 
       return (
@@ -232,7 +236,7 @@ export default function ChannelTableRow({
             ))}
           </div>
           <div className="flex items-center gap-2">
-            {stats.slice(3, 5).map((stat) => (
+            {stats.slice(3, 6).map((stat) => (
               <ButtonWithBadge
                 key={stat.text}
                 icon={stat.icon}
@@ -313,11 +317,6 @@ export default function ChannelTableRow({
         <div className="flex items-center gap-2">
           {getActionButton()}
           {getDeleteButton()}
-          <Tooltip content="View Gallery" position="top">
-            <Button onClick={handleGalleryClick} size="sm">
-              <Images className="w-4 h-4" />
-            </Button>
-          </Tooltip>
           <CardMenu id={id} ytId={ytId} />
         </div>
       </td>

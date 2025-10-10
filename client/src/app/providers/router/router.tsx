@@ -63,7 +63,7 @@ export default function Router() {
           />
           <Route
             path="/channels/:ytChannelId"
-            element={<Navigate to="default" />}
+            element={<Navigate to="default" replace />}
           />
           <Route
             path="/channels/:ytChannelId/:uploadsType"
