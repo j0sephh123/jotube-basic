@@ -5,6 +5,7 @@ import {
   useClickOutside,
   ButtonWithBadge,
 } from "@shared/ui";
+import { StoryboardButton } from "@features/Channel/components/StoryboardButton";
 import { IdType, type FeaturedScreenshotResponse } from "@shared/api";
 import {
   Images,
@@ -317,6 +318,7 @@ export default function ChannelTableRow({
         <div className="flex items-center gap-2">
           {getActionButton()}
           {getDeleteButton()}
+          <StoryboardButton ytChannelId={ytId} className="btn-sm" />
           <CardMenu id={id} ytId={ytId} />
         </div>
       </td>

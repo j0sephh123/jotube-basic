@@ -69,7 +69,7 @@ export class QueueService {
     return results;
   }
 
-  async addStoryboardJob({ ids, resourceType }: AddStoryboardJobDto) {
+  async addStoryboardJob({ ids, resourceType, limit }: AddStoryboardJobDto) {
     const existingJobs = await this.storyboardProcessor.getJobs([
       'active',
       'waiting',
@@ -77,7 +77,9 @@ export class QueueService {
     const existingVideoIds = existingJobs.map((job) => job.data.ytVideoId);
 
     if (resourceType === 'video') {
-      ids.map(async (ytVideoId) => {
+      const videosToProcess = limit ? ids.slice(0, limit) : ids;
+
+      videosToProcess.map(async (ytVideoId) => {
         if (existingVideoIds.includes(ytVideoId)) {
           return;
         }
@@ -109,7 +111,9 @@ export class QueueService {
         select: { ytId: true, channel: { select: { ytId: true } } },
       });
 
-      videoIds.map(async (videoId) => {
+      const videosToProcess = limit ? videoIds.slice(0, limit) : videoIds;
+
+      videosToProcess.map(async (videoId) => {
         if (existingVideoIds.includes(videoId.ytId)) {
           return;
         }

@@ -2,14 +2,10 @@
 import { CardMenu, CustomLink } from "@shared/ui";
 import { makeYtChannelId } from "@shared/types";
 import { PlaylistControl } from "@features/Playlist";
-import {
-  SyncUploadsButton,
-  CleanShortUploads,
-  useCreateStoryboard,
-} from "@features/Upload";
+import { SyncUploadsButton, CleanShortUploads } from "@features/Upload";
 import { useTypedParams } from "@shared/hooks";
 import { useChannelMetadataQuery } from "@entities/Channel/model/useChannelMetadata";
-import { useSelectedItemsState } from "@shared/store";
+import { StoryboardButton } from "./StoryboardButton";
 
 interface TopLeftProps {
   ytChannelId: string;
@@ -23,23 +19,6 @@ export const ChannelHeaderTitleSection = ({
   const uploadsType = useTypedParams("uploadsType");
 
   const { data: channelMetadata } = useChannelMetadataQuery(channelId);
-  const { mutateAsync: downloadStoryboards } = useCreateStoryboard();
-  const selectedItemsState = useSelectedItemsState();
-  console.log("selectedItemsState:", selectedItemsState);
-
-  const handleGetStoryboards = () => {
-    if (selectedItemsState.selectedIds.length === 0) {
-      downloadStoryboards({
-        ids: [ytChannelId],
-        resourceType: "channel",
-      });
-    } else {
-      downloadStoryboards({
-        ids: selectedItemsState.selectedIds.slice(),
-        resourceType: "video",
-      });
-    }
-  };
 
   if (!channelMetadata) return null;
 
@@ -64,12 +43,7 @@ export const ChannelHeaderTitleSection = ({
             id={channelMetadata?.id ?? 0}
           />
           <CleanShortUploads channelId={channelId} />
-          <button
-            className="btn btn-secondary btn-outline"
-            onClick={handleGetStoryboards}
-          >
-            Get Storyboards
-          </button>
+          <StoryboardButton ytChannelId={ytChannelId} />
         </>
       )}
     </>

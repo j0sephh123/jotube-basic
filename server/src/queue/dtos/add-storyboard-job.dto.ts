@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsString, IsIn } from 'class-validator';
+import {
+  IsArray,
+  IsString,
+  IsIn,
+  IsOptional,
+  IsNumber,
+  Min,
+} from 'class-validator';
 
 export class AddStoryboardJobDto {
   @ApiProperty({ description: 'Array of YouTube video IDs' })
@@ -15,4 +22,14 @@ export class AddStoryboardJobDto {
     message: 'Resource type must be either "channel" or "video"',
   })
   resourceType: 'channel' | 'video';
+
+  @ApiProperty({
+    description: 'Optional limit for number of videos to process',
+    required: false,
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsNumber()
+  @Min(1)
+  limit?: number;
 }
