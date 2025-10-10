@@ -27,7 +27,7 @@ export const PlaylistChannels = () => {
                   thumbnails={channel.thumbnailCount}
                   saved={channel.saved}
                   defaults={channel.videoCount}
-                  storyboard={0}
+                  storyboard={channel.storyboardCount}
                   createdAt=""
                   videoCount={channel.videoCount}
                   featuredScreenshots={channel.featuredScreenshots}
