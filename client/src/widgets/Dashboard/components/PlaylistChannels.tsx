@@ -10,7 +10,8 @@ export const PlaylistChannels = () => {
             <thead className="sticky top-0 bg-base-100 z-10 shadow-sm">
               <tr>
                 <th className="bg-base-100">Channel</th>
-                <th className="bg-base-100">Videos</th>
+                <th className="bg-base-100">Default</th>
+                <th className="bg-base-100">Saved</th>
                 <th className="bg-base-100">Screenshots</th>
                 <th className="bg-base-100">Storyboards</th>
                 <th className="bg-base-100">Thumbnails</th>

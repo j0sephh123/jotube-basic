@@ -1,4 +1,3 @@
-import { ButtonWithBadge } from "@shared/ui";
 import StatWithActions from "@widgets/StatWithActions";
 import { IdType, type FeaturedScreenshotResponse } from "@shared/api";
 import { FileVideo, Bookmark, Camera, Image, ListMusic } from "lucide-react";
@@ -114,24 +113,33 @@ export default function ChannelTableRow({
     ) : null;
   };
 
-  const getVideosDisplay = () => {
+  const getDefaultVideosDisplay = () => {
     return (
-      <div className="flex flex-col gap-1">
-        <ButtonWithBadge
-          icon={<FileVideo className="w-4 h-4" />}
-          text="Default"
-          numVal={defaults}
-          statType="default"
-          onClick={() => navigate(`/channels/${makeYtChannelId(ytId)}`)}
-        />
-        <ButtonWithBadge
-          icon={<Bookmark className="w-4 h-4" />}
-          text="Saved"
-          numVal={saved}
-          statType="saved"
-          onClick={() => navigate(`/channels/${makeYtChannelId(ytId)}/saved`)}
-        />
-      </div>
+      <StatWithActions
+        label="Default"
+        value={defaults}
+        layout="horizontal"
+        leftAction={{
+          icon: <FileVideo className="w-4 h-4" />,
+          tooltip: "View Default Videos",
+          onClick: () => navigate(`/channels/${makeYtChannelId(ytId)}`),
+        }}
+      />
+    );
+  };
+
+  const getSavedVideosDisplay = () => {
+    return (
+      <StatWithActions
+        label="Saved"
+        value={saved}
+        layout="horizontal"
+        leftAction={{
+          icon: <Bookmark className="w-4 h-4" />,
+          tooltip: "View Saved Videos",
+          onClick: () => navigate(`/channels/${makeYtChannelId(ytId)}/saved`),
+        }}
+      />
     );
   };
 
@@ -180,17 +188,17 @@ export default function ChannelTableRow({
 
   const getThumbnailsDisplay = () => {
     return (
-      <div className="flex items-center gap-2">
-        <ButtonWithBadge
-          icon={<Image className="w-4 h-4" />}
-          text="Thumbnails"
-          numVal={thumbnails}
-          statType="thumbnails"
-          onClick={() =>
-            viewThumbnails({ channelIds: [id], idType: IdType.Channel })
-          }
-        />
-      </div>
+      <StatWithActions
+        label="Thumbnails"
+        value={thumbnails}
+        layout="horizontal"
+        leftAction={{
+          icon: <Image className="w-4 h-4" />,
+          tooltip: "View Thumbnails",
+          onClick: () =>
+            viewThumbnails({ channelIds: [id], idType: IdType.Channel }),
+        }}
+      />
     );
   };
 
@@ -246,7 +254,10 @@ export default function ChannelTableRow({
         </div>
       </td>
       <td className="py-2">
-        <div className="flex flex-col gap-1">{getVideosDisplay()}</div>
+        <div className="flex flex-col gap-1">{getDefaultVideosDisplay()}</div>
+      </td>
+      <td className="py-2">
+        <div className="flex flex-col gap-1">{getSavedVideosDisplay()}</div>
       </td>
       <td className="py-2">
         <div className="flex flex-col gap-1">{getScreenshotsDisplay()}</div>
