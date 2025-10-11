@@ -1,7 +1,8 @@
 import { PlaylistDetailsContainer } from "@widgets/PlaylistDetails";
 import ChannelTableRow from "@widgets/ChannelTableRow";
 import { useState } from "react";
-import { ChevronUp, ChevronDown } from "lucide-react";
+import { ChevronUp, ChevronDown, X, Camera } from "lucide-react";
+import { useCreateStoryboard } from "@features/Upload";
 
 type SortField =
   | "videoCount"
@@ -14,6 +15,8 @@ type SortDirection = "asc" | "desc" | null;
 export const PlaylistChannels = () => {
   const [sortField, setSortField] = useState<SortField | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>(null);
+  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
+  const { mutateAsync: createStoryboards, isPending } = useCreateStoryboard();
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -46,6 +49,52 @@ export const PlaylistChannels = () => {
     );
   };
 
+  const handleToggleSelect = (id: number) => {
+    setSelectedIds((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      return newSet;
+    });
+  };
+
+  const handleSelectAll = (channels: { id: number }[]) => {
+    const allIds = new Set(channels.map((channel) => channel.id));
+    const isAllSelected =
+      channels.length > 0 && selectedIds.size === channels.length;
+
+    if (isAllSelected) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(allIds);
+    }
+  };
+
+  const handleClearSelection = () => {
+    setSelectedIds(new Set());
+  };
+
+  const handleBulkStoryboards = async (
+    channels: { id: number; ytId: string }[]
+  ) => {
+    if (selectedIds.size === 0) return;
+
+    const selectedChannels = channels.filter((channel) =>
+      selectedIds.has(channel.id)
+    );
+    const ytChannelIds = selectedChannels.map((channel) => channel.ytId);
+
+    await createStoryboards({
+      ids: ytChannelIds,
+      resourceType: "channel",
+    });
+
+    setSelectedIds(new Set());
+  };
+
   return (
     <PlaylistDetailsContainer>
       {(playlist, refetch) => {
@@ -71,6 +120,19 @@ export const PlaylistChannels = () => {
               <table className="table w-full">
                 <thead className="sticky top-0 bg-base-100 z-10 shadow-sm">
                   <tr>
+                    <th className="bg-base-100">
+                      <label className="cursor-pointer">
+                        <input
+                          type="checkbox"
+                          className="checkbox checkbox-sm checkbox-primary"
+                          checked={
+                            sortedChannels?.length > 0 &&
+                            selectedIds.size === sortedChannels.length
+                          }
+                          onChange={() => handleSelectAll(sortedChannels || [])}
+                        />
+                      </label>
+                    </th>
                     <th className="bg-base-100">Channel</th>
                     <th
                       className="bg-base-100 cursor-pointer hover:bg-base-200 transition-colors"
@@ -142,11 +204,46 @@ export const PlaylistChannels = () => {
                       playlist={{ id: playlist.id, name: playlist.name }}
                       hidePlaylistName={true}
                       viewType="thumbnails"
+                      isSelected={selectedIds.has(channel.id)}
+                      onToggleSelect={() => handleToggleSelect(channel.id)}
                     />
                   )) || []}
                 </tbody>
               </table>
             </div>
+            {selectedIds.size > 0 && (
+              <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-1/2 bg-base-200 border border-base-300 shadow-lg backdrop-blur-sm z-50 rounded-t-lg">
+                <div className="flex items-center justify-between px-6 py-4">
+                  <div className="flex items-center gap-3">
+                    <span className="badge badge-primary badge-lg">
+                      {selectedIds.size} selected
+                    </span>
+                    <span className="text-sm text-base-content/70">
+                      {selectedIds.size === 1 ? "channel" : "channels"} selected
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      className="btn btn-sm btn-primary"
+                      onClick={() =>
+                        handleBulkStoryboards(sortedChannels || [])
+                      }
+                      disabled={isPending}
+                    >
+                      <Camera className="w-4 h-4" />
+                      {isPending ? "Processing..." : "Capture Storyboards"}
+                    </button>
+                    <button
+                      className="btn btn-sm btn-ghost"
+                      onClick={handleClearSelection}
+                    >
+                      <X className="w-4 h-4" />
+                      Clear
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         );
       }}

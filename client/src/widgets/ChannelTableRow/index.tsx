@@ -44,6 +44,8 @@ type ChannelTableRowProps = {
   showPlaylistColumn?: boolean;
   viewType?: string;
   hidePlaylistName?: boolean;
+  isSelected?: boolean;
+  onToggleSelect?: () => void;
 };
 
 export default function ChannelTableRow({
@@ -66,6 +68,8 @@ export default function ChannelTableRow({
   showPlaylistColumn = true,
   viewType,
   hidePlaylistName = false,
+  isSelected = false,
+  onToggleSelect,
 }: ChannelTableRowProps) {
   const navigate = useCustomNavigate();
   const location = useLocation();
@@ -135,6 +139,11 @@ export default function ChannelTableRow({
           tooltip: "View Default Videos",
           onClick: () => navigate(`/channels/${makeYtChannelId(ytId)}`),
         }}
+        rightAction={{
+          icon: <StoryboardButton ytChannelId={ytId} />,
+          tooltip: "Generate Storyboards",
+          onClick: () => {},
+        }}
       />
     );
   };
@@ -188,11 +197,6 @@ export default function ChannelTableRow({
           tooltip: "View Storyboards",
           onClick: () => viewStoryboards.mutateAsync([id]),
         }}
-        rightAction={{
-          icon: <StoryboardButton ytChannelId={ytId} />,
-          tooltip: "Generate Storyboards",
-          onClick: () => {},
-        }}
       />
     );
   };
@@ -217,8 +221,20 @@ export default function ChannelTableRow({
     <tr
       className={`hover group transition-colors ${
         isProcessingStoryboards ? "bg-pink-50/30" : ""
-      }`}
+      } ${isSelected ? "bg-primary/10" : ""}`}
     >
+      <td className="py-2">
+        {onToggleSelect && (
+          <label className="cursor-pointer">
+            <input
+              type="checkbox"
+              className="checkbox checkbox-sm checkbox-primary"
+              checked={isSelected}
+              onChange={onToggleSelect}
+            />
+          </label>
+        )}
+      </td>
       <td className="py-2">
         <div className="flex items-center gap-3">
           <div className="avatar">

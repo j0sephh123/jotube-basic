@@ -1,8 +1,9 @@
 import { PlaylistHeader } from "@features/Playlist";
-import { useGetPlaylist } from "@features/Playlist";
+import { useGetPlaylist, useRefetchPlaylist } from "@features/Playlist";
 
 export function PlaylistHeaderActions() {
   const { data: playlist } = useGetPlaylist(null);
+  const refetchPlaylist = useRefetchPlaylist();
 
   if (!playlist) return null;
 
@@ -15,6 +16,7 @@ export function PlaylistHeaderActions() {
         name: playlist.playlistDetails?.name || "",
         updatedAt: playlist.playlistDetails?.updatedAt || "",
       }}
+      onRefresh={refetchPlaylist}
     />
   );
 }

@@ -58,12 +58,32 @@ export class QueueService {
     const results: { jobId: string; message: string }[] = [];
 
     for (const jobId of removeJobsDto.jobIds) {
-      const job = await this.downloadProcessor.getJob(jobId);
+      let job = await this.downloadProcessor.getJob(jobId);
+      let processorType = 'download';
+
+      if (!job) {
+        job = await this.storyboardProcessor.getJob(jobId);
+        processorType = 'storyboard';
+      }
+
+      if (!job) {
+        job = await this.videoProcessor.getJob(jobId);
+        processorType = 'video';
+      }
+
+      if (!job) {
+        job = await this.episodeProcessor.getJob(jobId);
+        processorType = 'episode';
+      }
+
       if (!job) {
         results.push({ jobId, message: 'Job not found' });
       } else {
         await job.remove();
-        results.push({ jobId, message: `Job ${jobId} removed successfully` });
+        results.push({
+          jobId,
+          message: `Job ${jobId} removed successfully from ${processorType} queue`,
+        });
       }
     }
     return results;

@@ -4,16 +4,20 @@ import { setGalleryModal } from "@features/Gallery";
 import { useGetUploadsWithStoryboards } from "@features/Storyboard";
 import { useViewThumbnails } from "@features/Thumbnails";
 import { useCallback } from "react";
-import { Camera } from "lucide-react";
+import { Camera, RefreshCw } from "lucide-react";
 import { StoryboardButton } from "@features/Channel";
 // eslint-disable-next-line boundaries/element-types
 import StatWithActions from "@widgets/StatWithActions";
 
 type HeaderProps = {
   playlist: PlaylistDetailsResponse;
+  onRefresh?: () => void;
 };
 
-export function PlaylistHeader({ playlist: { id, channels } }: HeaderProps) {
+export function PlaylistHeader({
+  playlist: { id, channels },
+  onRefresh,
+}: HeaderProps) {
   const viewScreenshots = useScreenshotsForCarousel();
   const getStoryboards = useGetUploadsWithStoryboards().mutateAsync;
   const viewThumbnails = useViewThumbnails();
@@ -59,6 +63,17 @@ export function PlaylistHeader({ playlist: { id, channels } }: HeaderProps) {
 
   return (
     <div className="flex gap-2">
+      {onRefresh && (
+        <StatWithActions
+          label="Refresh"
+          value={0}
+          leftAction={{
+            icon: <RefreshCw className="w-4 h-4" />,
+            tooltip: "Refresh Playlist Data",
+            onClick: onRefresh,
+          }}
+        />
+      )}
       <StatWithActions
         label="storyboards"
         value={totalCounts.storyboardCount}

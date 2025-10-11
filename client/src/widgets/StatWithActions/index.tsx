@@ -153,6 +153,11 @@ export default function StatWithActions({
             onClick={leftAction.onClick}
             className="flex items-center gap-0 cursor-pointer transition-all duration-200 rounded-l-lg px-2 py-1 hover:text-primary"
           >
+            {leftAction.icon && (
+              <div className="flex items-center justify-center mr-1">
+                {leftAction.icon}
+              </div>
+            )}
             <div
               className={`min-w-0 ${
                 layout === "vertical"
