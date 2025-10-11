@@ -5,6 +5,7 @@ import { ChevronUp, ChevronDown, X, Camera } from "lucide-react";
 import { useCreateStoryboard } from "@features/Upload";
 
 type SortField =
+  | "title"
   | "videoCount"
   | "saved"
   | "screenshotCount"
@@ -13,8 +14,8 @@ type SortField =
 type SortDirection = "asc" | "desc" | null;
 
 export const PlaylistChannels = () => {
-  const [sortField, setSortField] = useState<SortField | null>(null);
-  const [sortDirection, setSortDirection] = useState<SortDirection>(null);
+  const [sortField, setSortField] = useState<SortField | null>("title");
+  const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
   const { mutateAsync: createStoryboards, isPending } = useCreateStoryboard();
 
@@ -103,8 +104,19 @@ export const PlaylistChannels = () => {
             return playlist?.channels;
 
           return [...playlist.channels].sort((a, b) => {
-            const aValue = a[sortField];
-            const bValue = b[sortField];
+            if (sortField === "title") {
+              const aValue = a[sortField] as string;
+              const bValue = b[sortField] as string;
+
+              if (sortDirection === "desc") {
+                return bValue.localeCompare(aValue);
+              } else {
+                return aValue.localeCompare(bValue);
+              }
+            }
+
+            const aValue = a[sortField] as number;
+            const bValue = b[sortField] as number;
 
             if (sortDirection === "desc") {
               return bValue - aValue;
@@ -133,7 +145,15 @@ export const PlaylistChannels = () => {
                         />
                       </label>
                     </th>
-                    <th className="bg-base-100">Channel</th>
+                    <th
+                      className="bg-base-100 cursor-pointer hover:bg-base-200 transition-colors"
+                      onClick={() => handleSort("title")}
+                    >
+                      <div className="flex items-center gap-1">
+                        Channel
+                        {getSortIcon("title")}
+                      </div>
+                    </th>
                     <th
                       className="bg-base-100 cursor-pointer hover:bg-base-200 transition-colors"
                       onClick={() => handleSort("videoCount")}

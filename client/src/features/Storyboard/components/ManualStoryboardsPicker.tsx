@@ -6,16 +6,25 @@ import {
 import type { UploadWithStoryboardResponse } from "@shared/api/generated/graphql";
 // eslint-disable-next-line boundaries/element-types
 import { Grid } from "@widgets/Grid";
-import { DeleteUpload, SaveUpload } from "@features/Upload";
+import { useDeleteUploads, useSaveUpload } from "@features/Upload";
 import { GenericSelect } from "@shared/ui";
+import { useState, useEffect } from "react";
 
 export function ManualStoryboardsPicker() {
   const { items, gridCols } = useStoryboardsProcessingState();
   const typesItems = items as UploadWithStoryboardResponse[];
+  const [actionsVisible, setActionsVisible] = useState(false);
 
   const handleSideEffect = () => {
     setProcessingData("storyboards", typesItems.slice(1));
   };
+
+  const deleteUploadFromDbMutation = useDeleteUploads(handleSideEffect);
+  const save = useSaveUpload(handleSideEffect);
+
+  useEffect(() => {
+    setActionsVisible(true);
+  }, []);
 
   const upload = typesItems[0];
 
@@ -31,7 +40,7 @@ export function ManualStoryboardsPicker() {
   );
 
   return (
-    <div>
+    <div className="relative">
       <div className="p-4 border-b border-base-300">
         <div className="flex">
           <h2 className="font-semibold">{upload.title || "Storyboard"}</h2>
@@ -55,7 +64,39 @@ export function ManualStoryboardsPicker() {
           Total uploads :{items.length}
         </p>
       </div>
-      <div className="h-[84vh] overflow-scroll">
+      <div
+        className="h-[84vh] overflow-scroll relative"
+        onMouseMove={(e) => {
+          if (!actionsVisible) return;
+          const rect = e.currentTarget.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const width = rect.width;
+
+          if (x < width / 2) {
+            e.currentTarget.style.backgroundColor = "rgba(0, 0, 255, 0.1)";
+          } else {
+            e.currentTarget.style.backgroundColor = "rgba(255, 0, 0, 0.1)";
+          }
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = "transparent";
+        }}
+        onClick={(e) => {
+          if (!actionsVisible) return;
+          const rect = e.currentTarget.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const width = rect.width;
+
+          if (x < width / 2) {
+            deleteUploadFromDbMutation({
+              channelId: upload.channel.id,
+              ytVideoIds: [upload.ytId],
+            }).then(handleSideEffect);
+          } else {
+            save({ uploads: [upload.ytId] });
+          }
+        }}
+      >
         <Grid cols={gridCols}>
           {storyboardItems.map(({ index, url }) => (
             <div
@@ -71,18 +112,6 @@ export function ManualStoryboardsPicker() {
             </div>
           ))}
         </Grid>
-      </div>
-
-      <div className="p-4 border-t border-base-300 flex justify-end gap-2">
-        <DeleteUpload
-          handleSideEffect={handleSideEffect}
-          channelId={upload.channel.id}
-          ytVideoIds={[upload.ytId]}
-        />
-        <SaveUpload
-          ytVideoId={upload.ytId}
-          handleSideEffect={handleSideEffect}
-        />
       </div>
     </div>
   );

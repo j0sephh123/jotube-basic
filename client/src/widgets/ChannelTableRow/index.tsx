@@ -8,7 +8,11 @@ import {
 } from "@features/Screenshot";
 import { useViewThumbnails } from "@features/Thumbnails";
 import { useGetUploadsWithStoryboards } from "@features/Storyboard";
-import { StoryboardButton, BulkDownloadButton } from "@features/Channel";
+import {
+  StoryboardButton,
+  BulkDownloadButton,
+  useSavedVideos,
+} from "@features/Channel";
 import {
   PlaylistControl,
   setPlaylistModal,
@@ -56,7 +60,7 @@ export default function ChannelTableRow({
   lastSyncedAt,
   screenshotsCount,
   thumbnails,
-  saved,
+  saved: _saved,
   defaults,
   storyboard,
   createdAt: _createdAt,
@@ -78,6 +82,7 @@ export default function ChannelTableRow({
   const viewStoryboards = useGetUploadsWithStoryboards();
   const { handleRemoveFromPlaylist } = useRemoveFromPlaylist();
   const { data: queueData = [] } = useQueue();
+  const { savedVideos } = useSavedVideos(id);
 
   const isInPlaylistContext = location.pathname.includes(
     "/playlists/channels/"
@@ -158,10 +163,11 @@ export default function ChannelTableRow({
   };
 
   const getSavedVideosDisplay = () => {
+    const actualSavedCount = savedVideos?.length || 0;
     return (
       <StatWithActions
         label="Saved"
-        value={saved}
+        value={actualSavedCount}
         layout="horizontal"
         leftAction={{
           icon: <Bookmark className="w-4 h-4" />,
