@@ -45,6 +45,7 @@ type ChannelTableRowProps = {
   featuredScreenshots: FeaturedScreenshotResponse[];
   onChannelDelete?: () => void;
   onSyncUploads?: () => void;
+  onUploadAction?: () => void;
   showPlaylistColumn?: boolean;
   viewType?: string;
   hidePlaylistName?: boolean;
@@ -69,6 +70,7 @@ export default function ChannelTableRow({
   featuredScreenshots,
   onChannelDelete,
   onSyncUploads,
+  onUploadAction,
   showPlaylistColumn = true,
   viewType,
   hidePlaylistName = false,
@@ -175,7 +177,12 @@ export default function ChannelTableRow({
           onClick: () => navigate(`/channels/${makeYtChannelId(ytId)}/saved`),
         }}
         rightAction={{
-          icon: <BulkDownloadButton channelId={id} />,
+          icon: (
+            <BulkDownloadButton
+              channelId={id}
+              onUploadAction={onUploadAction}
+            />
+          ),
           tooltip: "Bulk Download Videos",
           onClick: () => {},
         }}

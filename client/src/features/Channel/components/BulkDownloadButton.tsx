@@ -7,15 +7,18 @@ import { useSavedVideos } from "@features/Channel";
 type BulkDownloadButtonProps = {
   channelId: number;
   className?: string;
+  onUploadAction?: () => void;
 };
 
 export function BulkDownloadButton({
   channelId,
   className,
+  onUploadAction,
 }: BulkDownloadButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [numberValue, setNumberValue] = useState<string>("10");
-  const { mutateAsync: downloadVideos, isPending } = useDownload();
+  const { mutateAsync: downloadVideos, isPending } =
+    useDownload(onUploadAction);
   const { savedVideos, isLoading } = useSavedVideos(channelId);
   const inputRef = useRef<HTMLInputElement>(null);
 

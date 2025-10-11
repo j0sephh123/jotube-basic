@@ -9,14 +9,26 @@ import { Grid } from "@widgets/Grid";
 import { useDeleteUploads, useSaveUpload } from "@features/Upload";
 import { GenericSelect } from "@shared/ui";
 import { useState, useEffect } from "react";
+import { useTypedParams } from "@shared/hooks";
+import { useRefetchPlaylist } from "@features/Playlist";
+import { useRefetchChannelUploads } from "@features/Upload";
+// eslint-disable-next-line import/no-internal-modules
+import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMetadata";
 
 export function ManualStoryboardsPicker() {
   const { items, gridCols } = useStoryboardsProcessingState();
   const typesItems = items as UploadWithStoryboardResponse[];
   const [actionsVisible, setActionsVisible] = useState(false);
+  const playlistId = useTypedParams("playlistId");
+  const refetchPlaylist = useRefetchPlaylist();
+  const refetchChannelUploads = useRefetchChannelUploads();
+  const refetchChannelMetadata = useRefetchChannelMetadata();
 
   const handleSideEffect = () => {
     setProcessingData("storyboards", typesItems.slice(1));
+    if (playlistId) {
+      refetchPlaylist();
+    }
   };
 
   const deleteUploadFromDbMutation = useDeleteUploads(handleSideEffect);
@@ -81,19 +93,31 @@ export function ManualStoryboardsPicker() {
         onMouseLeave={(e) => {
           e.currentTarget.style.backgroundColor = "transparent";
         }}
-        onClick={(e) => {
+        onClick={async (e) => {
           if (!actionsVisible) return;
           const rect = e.currentTarget.getBoundingClientRect();
           const x = e.clientX - rect.left;
           const width = rect.width;
 
           if (x < width / 2) {
-            deleteUploadFromDbMutation({
+            await deleteUploadFromDbMutation({
               channelId: upload.channel.id,
               ytVideoIds: [upload.ytId],
-            }).then(handleSideEffect);
+            });
+            handleSideEffect();
+            refetchChannelMetadata();
+            refetchChannelUploads();
+            if (playlistId) {
+              refetchPlaylist();
+            }
           } else {
-            save({ uploads: [upload.ytId] });
+            await save({ uploads: [upload.ytId] });
+            handleSideEffect();
+            refetchChannelMetadata();
+            refetchChannelUploads();
+            if (playlistId) {
+              refetchPlaylist();
+            }
           }
         }}
       >

@@ -220,6 +220,7 @@ export const PlaylistChannels = () => {
                       videoCount={channel.videoCount}
                       featuredScreenshots={channel.featuredScreenshots}
                       onSyncUploads={refetch}
+                      onUploadAction={refetch}
                       showPlaylistColumn={false}
                       playlist={{ id: playlist.id, name: playlist.name }}
                       hidePlaylistName={true}
