@@ -146,12 +146,12 @@ export default function StatWithActions({
   rightAction,
 }: StatWithActionsProps) {
   return (
-    <div className="flex items-center gap-0 w-fit bg-base-200 border border-base-300 rounded-lg px-1 py-1 hover:bg-base-100 hover:border-primary/40 transition-all shadow-md">
+    <div className="flex items-center gap-0 w-fit bg-base-200 border border-base-300 rounded-lg px-1 py-1 hover:bg-base-100 hover:border-primary/30 transition-all shadow-md">
       {leftAction && (
         <DelayedTooltip content={leftAction.tooltip} position="top">
           <div
             onClick={leftAction.onClick}
-            className="flex items-center gap-0 cursor-pointer hover:bg-primary/20 transition-all duration-200 rounded-l-lg px-2 py-1"
+            className="flex items-center gap-0 cursor-pointer transition-all duration-200 rounded-l-lg px-2 py-1 hover:text-primary"
           >
             <div
               className={`min-w-0 ${
@@ -163,9 +163,7 @@ export default function StatWithActions({
               <span className="text-sm font-semibold tabular-nums">
                 {value.toLocaleString()}
               </span>
-              <span className="text-xs text-base-content/60 truncate">
-                {label}
-              </span>
+              <span className="text-xs truncate">{label}</span>
             </div>
           </div>
         </DelayedTooltip>
@@ -190,7 +188,7 @@ export default function StatWithActions({
         <DelayedTooltip content={rightAction.tooltip} position="top">
           <button
             onClick={rightAction.onClick}
-            className="shrink-0 h-8 w-8 flex items-center justify-center rounded-md hover:bg-primary/30 hover:border-primary/50 cursor-pointer transition-all duration-200 border border-transparent"
+            className="shrink-0 h-8 w-8 flex items-center justify-center rounded-md hover:bg-primary/20 hover:text-primary cursor-pointer transition-all duration-200"
           >
             {rightAction.text ? (
               <span className="text-xs font-medium">{rightAction.text}</span>
