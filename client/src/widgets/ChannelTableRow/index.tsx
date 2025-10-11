@@ -1,6 +1,4 @@
 import { ButtonWithBadge } from "@shared/ui";
-/* eslint-disable import/no-internal-modules */
-import { StoryboardButton } from "@features/Channel/components/StoryboardButton";
 import { IdType, type FeaturedScreenshotResponse } from "@shared/api";
 import {
   Images,
@@ -27,7 +25,6 @@ import { useCustomNavigate } from "@shared/hooks";
 import { useLocation } from "react-router-dom";
 import { makeYtChannelId } from "@shared/types";
 import { DeleteChannel } from "@entities/Channel";
-import { formatLastSync } from "@shared/ui";
 import { SyncUploadsButton, FetchUploadsButton } from "@features/Upload";
 import { CardMenu } from "./CardMenu";
 
@@ -67,7 +64,7 @@ export default function ChannelTableRow({
   saved,
   defaults,
   storyboard,
-  createdAt,
+  createdAt: _createdAt,
   videoCount: _videoCount,
   playlist,
   featuredScreenshots,
@@ -170,45 +167,33 @@ export default function ChannelTableRow({
     );
   };
 
-  const getStatsDisplay = () => {
-    const statsTypes = ["thumbnails", "processed", "saved", "storyboards"];
-
-    if (statsTypes.includes(viewType || "")) {
-      const stats = [
-        {
-          icon: <Image className="w-4 h-4" />,
-          text: "Thumbnails",
-          value: thumbnails,
-          statType: "thumbnails" as const,
-          onClick: () =>
-            viewThumbnails({ channelIds: [id], idType: IdType.Channel }),
-        },
-        {
-          icon: <Film className="w-4 h-4" />,
-          text: "Storyboards",
-          value: storyboard,
-          statType: "storyboards" as const,
-          onClick: () => viewStoryboards.mutateAsync([id]),
-        },
-      ];
-
-      return (
-        <div className="flex items-center gap-2">
-          {stats.map((stat) => (
-            <ButtonWithBadge
-              key={stat.text}
-              icon={stat.icon}
-              text={stat.text}
-              numVal={stat.value}
-              statType={stat.statType}
-              onClick={stat.onClick}
-            />
-          ))}
-        </div>
-      );
-    }
+  const getStoryboardsDisplay = () => {
     return (
-      <span className="text-sm text-gray-400">{formatLastSync(createdAt)}</span>
+      <div className="flex items-center gap-2">
+        <ButtonWithBadge
+          icon={<Film className="w-4 h-4" />}
+          text="Storyboards"
+          numVal={storyboard}
+          statType="storyboards"
+          onClick={() => viewStoryboards.mutateAsync([id])}
+        />
+      </div>
+    );
+  };
+
+  const getThumbnailsDisplay = () => {
+    return (
+      <div className="flex items-center gap-2">
+        <ButtonWithBadge
+          icon={<Image className="w-4 h-4" />}
+          text="Thumbnails"
+          numVal={thumbnails}
+          statType="thumbnails"
+          onClick={() =>
+            viewThumbnails({ channelIds: [id], idType: IdType.Channel })
+          }
+        />
+      </div>
     );
   };
 
@@ -228,7 +213,7 @@ export default function ChannelTableRow({
           </div>
           <div className="flex-1">
             <div
-              className="font-bold cursor-pointer hover:text-blue-400 transition-colors"
+              className="font-bold text-lg cursor-pointer hover:text-blue-400 transition-colors"
               onClick={() => navigate(`/channels/${makeYtChannelId(ytId)}`)}
             >
               {title}
@@ -270,7 +255,10 @@ export default function ChannelTableRow({
         <div className="flex flex-col gap-1">{getScreenshotsDisplay()}</div>
       </td>
       <td className="py-2">
-        <div className="flex flex-col gap-1">{getStatsDisplay()}</div>
+        <div className="flex flex-col gap-1">{getStoryboardsDisplay()}</div>
+      </td>
+      <td className="py-2">
+        <div className="flex flex-col gap-1">{getThumbnailsDisplay()}</div>
       </td>
       {showPlaylistColumn && (
         <td>
@@ -309,7 +297,6 @@ export default function ChannelTableRow({
       <td className="py-2">
         <div className="flex items-center gap-2">
           {getDeleteButton()}
-          <StoryboardButton ytChannelId={ytId} className="btn-sm" />
           <CardMenu
             id={id}
             ytId={ytId}

@@ -12,7 +12,8 @@ export const PlaylistChannels = () => {
                 <th className="bg-base-100">Channel</th>
                 <th className="bg-base-100">Videos</th>
                 <th className="bg-base-100">Screenshots</th>
-                <th className="bg-base-100">Stats</th>
+                <th className="bg-base-100">Storyboards</th>
+                <th className="bg-base-100">Thumbnails</th>
                 <th className="bg-base-100">Actions</th>
               </tr>
             </thead>
