@@ -8,7 +8,7 @@ import {
 } from "@features/Screenshot";
 import { useViewThumbnails } from "@features/Thumbnails";
 import { useGetUploadsWithStoryboards } from "@features/Storyboard";
-import { StoryboardIcon } from "@features/Channel";
+import { StoryboardButton } from "@features/Channel";
 import {
   PlaylistControl,
   setPlaylistModal,
@@ -178,7 +178,7 @@ export default function ChannelTableRow({
           onClick: () => viewStoryboards.mutateAsync([id]),
         }}
         rightAction={{
-          icon: <StoryboardIcon ytChannelId={ytId} />,
+          icon: <StoryboardButton ytChannelId={ytId} />,
           tooltip: "Generate Storyboards",
           onClick: () => {},
         }}

@@ -126,6 +126,80 @@ export class QueueService {
 
       return { success: true };
     }
+
+    if (resourceType === 'playlist') {
+      const channels = await this.prismaService.channel.findMany({
+        where: { playlistId: { in: ids.map((id) => parseInt(id)) } },
+        select: { id: true, ytId: true },
+      });
+
+      if (channels.length === 0) {
+        return { success: true };
+      }
+
+      const limitPerChannel = limit
+        ? Math.ceil(limit / channels.length)
+        : undefined;
+
+      const videoIds = await this.prismaService.uploadsVideo.findMany({
+        where: {
+          channelId: { in: channels.map((c) => c.id) },
+          artifact: ArtifactType.VIDEO,
+        },
+        select: {
+          ytId: true,
+          channelId: true,
+          channel: { select: { ytId: true } },
+        },
+        orderBy: { publishedAt: 'desc' },
+      });
+
+      const videosToProcess = limitPerChannel
+        ? this.distributeVideosEvenly(videoIds, channels, limitPerChannel)
+        : videoIds;
+
+      videosToProcess.map(async (videoId) => {
+        if (existingVideoIds.includes(videoId.ytId)) {
+          return;
+        }
+
+        await this.storyboardProcessor.add({
+          ytVideoId: videoId.ytId,
+          ytChannelId: videoId.channel.ytId,
+        });
+      });
+
+      return { success: true };
+    }
+  }
+
+  private distributeVideosEvenly(
+    videoIds: Array<{
+      ytId: string;
+      channelId: number;
+      channel: { ytId: string };
+    }>,
+    channels: Array<{ id: number; ytId: string }>,
+    limitPerChannel: number,
+  ) {
+    const videosByChannel = new Map<number, typeof videoIds>();
+
+    videoIds.forEach((video) => {
+      if (!videosByChannel.has(video.channelId)) {
+        videosByChannel.set(video.channelId, []);
+      }
+      videosByChannel.get(video.channelId)!.push(video);
+    });
+
+    const result: typeof videoIds = [];
+
+    channels.forEach((channel) => {
+      const channelVideos = videosByChannel.get(channel.id) || [];
+      const videosToTake = channelVideos.slice(0, limitPerChannel);
+      result.push(...videosToTake);
+    });
+
+    return result;
   }
 
   public getLabels({ items }: LabelsDto) {

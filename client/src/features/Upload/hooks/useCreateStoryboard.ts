@@ -9,7 +9,7 @@ import { useRefetchChannelMetadata } from "@entities/Channel/model/useChannelMet
 
 export type UseCreateStoryboardBody = {
   ids: string[];
-  resourceType: "channel" | "video";
+  resourceType: "channel" | "video" | "playlist";
   limit?: number;
 };
 

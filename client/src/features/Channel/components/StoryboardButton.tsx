@@ -5,12 +5,14 @@ import { Film } from "lucide-react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 
 type StoryboardIconProps = {
-  ytChannelId: string;
+  ytChannelId?: string;
+  playlistId?: number;
   className?: string;
 };
 
-export function StoryboardIcon({
+export function StoryboardButton({
   ytChannelId,
+  playlistId,
   className,
 }: StoryboardIconProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,18 +33,27 @@ export function StoryboardIcon({
   }, [isOpen]);
 
   const handleGetStoryboards = (limit?: number) => {
-    const payload =
-      selectedItemsState.selectedIds.length === 0
-        ? {
-            ids: [ytChannelId],
-            resourceType: "channel" as const,
-            ...(limit && { limit }),
-          }
-        : {
-            ids: selectedItemsState.selectedIds.slice(),
-            resourceType: "video" as const,
-            ...(limit && { limit }),
-          };
+    let payload;
+
+    if (playlistId) {
+      payload = {
+        ids: [playlistId.toString()],
+        resourceType: "playlist" as const,
+        ...(limit && { limit }),
+      };
+    } else if (selectedItemsState.selectedIds.length === 0) {
+      payload = {
+        ids: [ytChannelId!],
+        resourceType: "channel" as const,
+        ...(limit && { limit }),
+      };
+    } else {
+      payload = {
+        ids: selectedItemsState.selectedIds.slice(),
+        resourceType: "video" as const,
+        ...(limit && { limit }),
+      };
+    }
 
     downloadStoryboards(payload);
     setIsOpen(false);
@@ -95,9 +106,13 @@ export function StoryboardIcon({
           className="bg-zinc-900 shadow-md rounded-md border border-zinc-700 p-4 w-[300px] z-50"
         >
           <div className="space-y-4">
-            <h3 className="font-bold text-lg text-white">Get Storyboards</h3>
+            <h3 className="font-bold text-lg text-white">
+              {playlistId ? "Get Playlist Storyboards" : "Get Storyboards"}
+            </h3>
             <p className="text-zinc-400 text-sm">
-              How many storyboards would you like to fetch?
+              {playlistId
+                ? "How many storyboards would you like to fetch for this playlist?"
+                : "How many storyboards would you like to fetch?"}
             </p>
 
             <div className="space-y-3">

@@ -1,10 +1,12 @@
 import { IdType, type PlaylistDetailsResponse } from "@shared/api";
 import { useScreenshotsForCarousel } from "@features/Screenshot";
 import { setGalleryModal } from "@features/Gallery";
-import { Iterator } from "@shared/ui";
 import { useGetUploadsWithStoryboards } from "@features/Storyboard";
 import { useViewThumbnails } from "@features/Thumbnails";
-import { useMemo, useCallback } from "react";
+import { useCallback } from "react";
+import { Camera } from "lucide-react";
+// eslint-disable-next-line boundaries/element-types
+import StatWithActions from "@widgets/StatWithActions";
 
 type HeaderProps = {
   playlist: PlaylistDetailsResponse;
@@ -18,7 +20,7 @@ export function PlaylistHeader({ playlist: { id, channels } }: HeaderProps) {
   const totalCounts = channels.reduce(
     (acc, channel) => ({
       videoCount: acc.videoCount + channel.videoCount,
-      savedCount: acc.savedCount + channel.savedCount,
+      savedCount: acc.savedCount + channel.saved,
       screenshotCount: acc.screenshotCount + channel.screenshotCount,
       thumbnailCount: acc.thumbnailCount + channel.thumbnailCount,
       storyboardCount: acc.storyboardCount + channel.storyboardCount,
@@ -54,38 +56,38 @@ export function PlaylistHeader({ playlist: { id, channels } }: HeaderProps) {
     });
   }, [viewThumbnails, id]);
 
-  const items = useMemo(
-    () => [
-      { name: "storyboards", count: totalCounts.storyboardCount },
-      { name: "screenshots", count: totalCounts.screenshotCount },
-      { name: "gallery", count: totalCounts.screenshotCount },
-      { name: "thumbnails", count: totalCounts.thumbnailCount },
-    ],
-    [totalCounts]
+  return (
+    <div className="flex gap-2">
+      <StatWithActions
+        label="storyboards"
+        value={totalCounts.storyboardCount}
+        leftAction={{
+          tooltip: "View storyboards",
+          onClick: handleStoryboardAction,
+        }}
+      />
+      <StatWithActions
+        label="Screenshots"
+        value={totalCounts.screenshotCount}
+        layout="horizontal"
+        leftAction={{
+          tooltip: "View Screenshots",
+          onClick: handleScreenshotAction,
+        }}
+        rightAction={{
+          icon: <Camera className="w-4 h-4" />,
+          tooltip: "View Gallery",
+          onClick: handleGalleryAction,
+        }}
+      />
+      <StatWithActions
+        label="thumbnails"
+        value={totalCounts.thumbnailCount}
+        leftAction={{
+          tooltip: "View thumbnails",
+          onClick: handleThumbnailAction,
+        }}
+      />
+    </div>
   );
-
-  const actions = useMemo(
-    () => ({
-      storyboards: {
-        onFirst: handleStoryboardAction,
-      },
-      screenshots: {
-        onFirst: handleScreenshotAction,
-      },
-      gallery: {
-        onFirst: handleGalleryAction,
-      },
-      thumbnails: {
-        onFirst: handleThumbnailAction,
-      },
-    }),
-    [
-      handleStoryboardAction,
-      handleScreenshotAction,
-      handleGalleryAction,
-      handleThumbnailAction,
-    ]
-  );
-
-  return <Iterator items={items} actions={actions} cols={2} />;
 }

@@ -16,12 +16,12 @@ export class AddStoryboardJobDto {
 
   @ApiProperty({
     description: 'Resource type for storyboard job',
-    enum: ['channel', 'video'],
+    enum: ['channel', 'video', 'playlist'],
   })
-  @IsIn(['channel', 'video'], {
-    message: 'Resource type must be either "channel" or "video"',
+  @IsIn(['channel', 'video', 'playlist'], {
+    message: 'Resource type must be either "channel", "video", or "playlist"',
   })
-  resourceType: 'channel' | 'video';
+  resourceType: 'channel' | 'video' | 'playlist';
 
   @ApiProperty({
     description: 'Optional limit for number of videos to process',
