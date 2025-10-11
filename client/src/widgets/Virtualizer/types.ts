@@ -5,7 +5,6 @@ export type VirtualizerProps<T> = {
   rowHeight?: number;
   className?: string;
   flexibleHeight?: boolean;
-  getItemId?: (item: T) => string;
 };
 
 export type VirtualizerItemProps<T> = {

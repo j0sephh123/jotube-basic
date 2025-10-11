@@ -1,7 +1,7 @@
 import { ButtonWithBadge } from "@shared/ui";
+import StatWithActions from "@widgets/StatWithActions";
 import { IdType, type FeaturedScreenshotResponse } from "@shared/api";
 import {
-  Images,
   FileVideo,
   Bookmark,
   Camera,
@@ -143,41 +143,44 @@ export default function ChannelTableRow({
 
   const getScreenshotsDisplay = () => {
     return (
-      <div className="flex flex-col gap-1">
-        <ButtonWithBadge
-          icon={<Camera className="w-4 h-4" />}
-          text="Screenshots"
-          numVal={screenshotsCount}
-          statType="screenshots"
-          onClick={() => handleViewScreenshots([id])}
-        />
-        <ButtonWithBadge
-          icon={<Images className="w-4 h-4" />}
-          text="Gallery"
-          numVal={screenshotsCount}
-          statType="screenshots"
-          onClick={() => {
+      <StatWithActions
+        label="Screenshots"
+        value={screenshotsCount}
+        layout="horizontal"
+        leftAction={{
+          tooltip: "View Screenshots",
+          onClick: () => handleViewScreenshots([id]),
+        }}
+        rightAction={{
+          icon: <Camera className="w-4 h-4" />,
+          tooltip: "View Gallery",
+          onClick: () => {
             setGalleryModal({
               collectionItemId: "",
               collectionIds: [id],
             });
-          }}
-        />
-      </div>
+          },
+        }}
+      />
     );
   };
 
   const getStoryboardsDisplay = () => {
     return (
-      <div className="flex items-center gap-2">
-        <ButtonWithBadge
-          icon={<Film className="w-4 h-4" />}
-          text="Storyboards"
-          numVal={storyboard}
-          statType="storyboards"
-          onClick={() => viewStoryboards.mutateAsync([id])}
-        />
-      </div>
+      <StatWithActions
+        label="Storyboards"
+        value={storyboard}
+        layout="horizontal"
+        leftAction={{
+          tooltip: "View Storyboards",
+          onClick: () => viewStoryboards.mutateAsync([id]),
+        }}
+        rightAction={{
+          icon: <Film className="w-4 h-4" />,
+          tooltip: "Generate Storyboards",
+          onClick: () => console.log("Generate storyboards clicked"),
+        }}
+      />
     );
   };
 

@@ -24,8 +24,6 @@ export type UploadsListItemProps = {
   processingState: "active" | "waiting";
   onProcessingCancel: () => void;
   processingType?: "download" | "storyboarding" | "processing";
-  onCardClick?: (id: string) => void;
-  isSelected?: boolean;
 };
 
 export function UploadsListItem({
@@ -47,8 +45,6 @@ export function UploadsListItem({
   processingState,
   onProcessingCancel,
   processingType,
-  onCardClick,
-  isSelected = false,
 }: UploadsListItemProps) {
   const handleGalleryClick = () => {
     setGalleryModal({
@@ -59,12 +55,6 @@ export function UploadsListItem({
   const isScreenshots = uploadsType === "screenshots";
 
   const handleViewScreenshots = useScreenshotsForCarousel(ytId);
-
-  const handleCardClick = () => {
-    if (onCardClick) {
-      onCardClick(ytId);
-    }
-  };
 
   const getOverlayClasses = () => {
     if (processingStatus === "processing") {
@@ -93,12 +83,9 @@ export function UploadsListItem({
   };
 
   return (
-    <div
-      onClick={handleCardClick}
-      className={`${isSelected ? "border-2 border-blue-500" : ""}`}
-    >
+    <div>
       <Card.Container
-        className={`relative group cursor-pointer ${
+        className={`relative group ${
           processingStatus !== "none" ? "pointer-events-none" : ""
         }`}
       >
@@ -107,29 +94,6 @@ export function UploadsListItem({
             <VideoPlayer ytId={ytId} src={src} id={id} title={title} />
           )}
           {isScreenshots && <img src={src} alt={title} />}
-          <div className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
-            <div
-              className={`rounded-full p-1.5 shadow-lg ${
-                isSelected
-                  ? "bg-blue-500 text-white"
-                  : "bg-white/20 hover:bg-white/30 text-white border border-white/30"
-              }`}
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            </div>
-          </div>
           {!isScreenshots && (
             <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
               <Card.Menu id={id} ytId={ytId} />

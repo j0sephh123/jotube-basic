@@ -5,7 +5,6 @@ import { type UploadsListQueryResult } from "@shared/api";
 import { Virtualizer } from "@widgets/Virtualizer";
 import { useMemo } from "react";
 import { useQueue, useRefetchQueue } from "@shared/hooks";
-import { useSelectedItemsState, toggleSelectedItem } from "@shared/store";
 
 export type UploadsListProps = {
   handleSideEffect: () => void;
@@ -18,8 +17,6 @@ export default function UploadsList({
   data,
   uploadsType,
 }: UploadsListProps) {
-  const selectedItemsState = useSelectedItemsState();
-
   const uploadsToUse = useMemo(
     () =>
       data?.uploadsList?.map((upload) => ({
@@ -33,10 +30,6 @@ export default function UploadsList({
   const queue = useQueue();
   const removeFromQueue = useRemoveFromQueue();
   const refetchQueue = useRefetchQueue();
-
-  const handleCardSelect = (id: string) => {
-    toggleSelectedItem(id);
-  };
 
   return (
     <Virtualizer
@@ -74,10 +67,6 @@ export default function UploadsList({
             }}
             processingState={queueItem?.state ?? "waiting"}
             processingType={queueItem?.processingType}
-            onCardClick={handleCardSelect}
-            isSelected={selectedItemsState.selectedIds.includes(
-              item.upload.ytId
-            )}
           />
         );
       }}
