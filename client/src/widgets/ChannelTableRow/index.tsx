@@ -1,14 +1,7 @@
 import { ButtonWithBadge } from "@shared/ui";
 import StatWithActions from "@widgets/StatWithActions";
 import { IdType, type FeaturedScreenshotResponse } from "@shared/api";
-import {
-  FileVideo,
-  Bookmark,
-  Camera,
-  Image,
-  Film,
-  ListMusic,
-} from "lucide-react";
+import { FileVideo, Bookmark, Camera, Image, ListMusic } from "lucide-react";
 import { setGalleryModal } from "@features/Gallery";
 import {
   useFeaturedScreenshots,
@@ -16,6 +9,7 @@ import {
 } from "@features/Screenshot";
 import { useViewThumbnails } from "@features/Thumbnails";
 import { useGetUploadsWithStoryboards } from "@features/Storyboard";
+import { StoryboardIcon } from "@features/Channel";
 import {
   PlaylistControl,
   setPlaylistModal,
@@ -176,9 +170,9 @@ export default function ChannelTableRow({
           onClick: () => viewStoryboards.mutateAsync([id]),
         }}
         rightAction={{
-          icon: <Film className="w-4 h-4" />,
+          icon: <StoryboardIcon ytChannelId={ytId} />,
           tooltip: "Generate Storyboards",
-          onClick: () => console.log("Generate storyboards clicked"),
+          onClick: () => {},
         }}
       />
     );

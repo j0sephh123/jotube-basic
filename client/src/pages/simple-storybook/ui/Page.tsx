@@ -1,5 +1,6 @@
 import StatWithActions from "@widgets/StatWithActions";
-import { Camera, Images, Film, Download } from "lucide-react";
+import { Camera, Images, Download } from "lucide-react";
+import { StoryboardIcon } from "@features/Channel";
 
 export default function SimpleStorybookPage() {
   const demoValue = 42;
@@ -48,9 +49,9 @@ export default function SimpleStorybookPage() {
               onClick: () => console.log("View storyboards clicked"),
             }}
             rightAction={{
-              icon: <Film className="w-4 h-4" />,
+              icon: <StoryboardIcon ytChannelId="demo-channel-id" />,
               tooltip: "Generate Storyboards",
-              onClick: () => console.log("Generate storyboards clicked"),
+              onClick: () => {},
             }}
           />
         </div>
