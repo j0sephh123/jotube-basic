@@ -1,6 +1,5 @@
 import { PlaylistDetailsContainer } from "@widgets/PlaylistDetails";
 import ChannelTableRow from "@widgets/ChannelTableRow";
-import { StoryboardButton } from "@features/Channel";
 import { useState } from "react";
 import { ChevronUp, ChevronDown } from "lucide-react";
 
@@ -68,9 +67,6 @@ export const PlaylistChannels = () => {
 
         return (
           <div className="space-y-4">
-            <div className="flex justify-end">
-              {playlist && <StoryboardButton playlistId={playlist.id} />}
-            </div>
             <div className="max-h-[calc(100vh-200px)] overflow-auto">
               <table className="table table-zebra w-full">
                 <thead className="sticky top-0 bg-base-100 z-10 shadow-sm">

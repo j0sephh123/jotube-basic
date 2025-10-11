@@ -137,10 +137,6 @@ export class QueueService {
         return { success: true };
       }
 
-      const limitPerChannel = limit
-        ? Math.ceil(limit / channels.length)
-        : undefined;
-
       const videoIds = await this.prismaService.uploadsVideo.findMany({
         where: {
           channelId: { in: channels.map((c) => c.id) },
@@ -152,11 +148,10 @@ export class QueueService {
           channel: { select: { ytId: true } },
         },
         orderBy: { publishedAt: 'desc' },
+        ...(limit && { take: limit }),
       });
 
-      const videosToProcess = limitPerChannel
-        ? this.distributeVideosEvenly(videoIds, channels, limitPerChannel)
-        : videoIds;
+      const videosToProcess = videoIds;
 
       videosToProcess.map(async (videoId) => {
         if (existingVideoIds.includes(videoId.ytId)) {
@@ -171,35 +166,6 @@ export class QueueService {
 
       return { success: true };
     }
-  }
-
-  private distributeVideosEvenly(
-    videoIds: Array<{
-      ytId: string;
-      channelId: number;
-      channel: { ytId: string };
-    }>,
-    channels: Array<{ id: number; ytId: string }>,
-    limitPerChannel: number,
-  ) {
-    const videosByChannel = new Map<number, typeof videoIds>();
-
-    videoIds.forEach((video) => {
-      if (!videosByChannel.has(video.channelId)) {
-        videosByChannel.set(video.channelId, []);
-      }
-      videosByChannel.get(video.channelId)!.push(video);
-    });
-
-    const result: typeof videoIds = [];
-
-    channels.forEach((channel) => {
-      const channelVideos = videosByChannel.get(channel.id) || [];
-      const videosToTake = channelVideos.slice(0, limitPerChannel);
-      result.push(...videosToTake);
-    });
-
-    return result;
   }
 
   public getLabels({ items }: LabelsDto) {

@@ -5,6 +5,7 @@ import { useGetUploadsWithStoryboards } from "@features/Storyboard";
 import { useViewThumbnails } from "@features/Thumbnails";
 import { useCallback } from "react";
 import { Camera } from "lucide-react";
+import { StoryboardButton } from "@features/Channel";
 // eslint-disable-next-line boundaries/element-types
 import StatWithActions from "@widgets/StatWithActions";
 
@@ -64,6 +65,11 @@ export function PlaylistHeader({ playlist: { id, channels } }: HeaderProps) {
         leftAction={{
           tooltip: "View storyboards",
           onClick: handleStoryboardAction,
+        }}
+        rightAction={{
+          icon: <StoryboardButton playlistId={id} />,
+          tooltip: "Generate Storyboards",
+          onClick: () => {},
         }}
       />
       <StatWithActions
