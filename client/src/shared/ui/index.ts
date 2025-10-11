@@ -45,7 +45,6 @@ export { DeleteFileButton } from "./DeleteFileButton";
 export { IconScreenshots } from "./icons/IconScreenshots";
 export { IconRecentlyViewed } from "./icons/IconRecentlyViewed";
 export { IconTv } from "./icons/IconTv";
-export { IconSimpleStorybook } from "./icons/IconSimpleStorybook";
 export { Iterator } from "./repeatable/Iterator";
 export { DoubleAction } from "./DoubleAction";
 export { SegmentedSwitch } from "./SegmentedSwitch";

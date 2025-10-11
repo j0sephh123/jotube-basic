@@ -6,7 +6,7 @@ import { SyncUploadsButton, CleanShortUploads } from "@features/Upload";
 import FetchUploadsButton from "@features/Upload/components/FetchUploadsButton";
 import { useTypedParams } from "@shared/hooks";
 import { useChannelMetadataQuery } from "@entities/Channel/model/useChannelMetadata";
-import { StoryboardButton } from "./StoryboardButton";
+import { StoryboardIcon } from "./StoryboardButton";
 
 interface TopLeftProps {
   ytChannelId: string;
@@ -48,7 +48,7 @@ export const ChannelHeaderTitleSection = ({
             <FetchUploadsButton channelId={channelId} videoCount={videoCount} />
           )}
           <CleanShortUploads channelId={channelId} />
-          <StoryboardButton ytChannelId={ytChannelId} />
+          <StoryboardIcon ytChannelId={ytChannelId} />
         </>
       )}
     </>

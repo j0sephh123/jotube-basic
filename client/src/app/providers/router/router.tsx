@@ -5,7 +5,6 @@ import { ChannelPageLayout } from "@widgets/ChannelPageLayout";
 import { ImageNavigatorPage } from "@pages/image-navigator";
 import { PlaylistsPage } from "@pages/playlists";
 import { RecentlyViewedPage } from "@pages/recently-viewed";
-import SimpleStorybookPage from "@pages/simple-storybook";
 import { TvDetailsPage } from "@pages/tv-details";
 import { EpisodeDetailsPage } from "@pages/episode-details";
 import { NotFound } from "@shared/ui";
@@ -90,7 +89,6 @@ export default function Router() {
           </Route>
           <Route path="/image-navigator" element={<ImageNavigatorPage />} />
           <Route path="/recently-viewed" element={<RecentlyViewedPage />} />
-          <Route path="/simple-storybook" element={<SimpleStorybookPage />} />
           <Route path="/processing-phase" element={<ProcessingPhaseWrapper />}>
             <Route path=":variant" element={<ProcessingPhasePage />} />
           </Route>
