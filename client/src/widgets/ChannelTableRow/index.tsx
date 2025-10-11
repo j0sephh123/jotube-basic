@@ -1,15 +1,9 @@
-import {
-  Button,
-  CopyValue,
-  OpenDirectoryButton,
-  useClickOutside,
-  ButtonWithBadge,
-} from "@shared/ui";
+import { ButtonWithBadge } from "@shared/ui";
+/* eslint-disable import/no-internal-modules */
 import { StoryboardButton } from "@features/Channel/components/StoryboardButton";
 import { IdType, type FeaturedScreenshotResponse } from "@shared/api";
 import {
   Images,
-  MoreVertical,
   FileVideo,
   Bookmark,
   Camera,
@@ -24,13 +18,18 @@ import {
 } from "@features/Screenshot";
 import { useViewThumbnails } from "@features/Thumbnails";
 import { useGetUploadsWithStoryboards } from "@features/Storyboard";
-import { PlaylistControl, setPlaylistModal } from "@features/Playlist";
+import {
+  PlaylistControl,
+  setPlaylistModal,
+  useRemoveFromPlaylist,
+} from "@features/Playlist";
 import { useCustomNavigate } from "@shared/hooks";
+import { useLocation } from "react-router-dom";
 import { makeYtChannelId } from "@shared/types";
 import { DeleteChannel } from "@entities/Channel";
 import { formatLastSync } from "@shared/ui";
-import { SyncUploadsButton } from "@features/Upload";
-import { useState, useRef } from "react";
+import { SyncUploadsButton, FetchUploadsButton } from "@features/Upload";
+import { CardMenu } from "./CardMenu";
 
 type ChannelTableRowProps = {
   id: number;
@@ -54,62 +53,8 @@ type ChannelTableRowProps = {
   onSyncUploads?: () => void;
   showPlaylistColumn?: boolean;
   viewType?: string;
+  hidePlaylistName?: boolean;
 };
-
-function CardMenu({ id, ytId }: { id: number; ytId: string }) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  useClickOutside(menuRef, () => setIsMenuOpen(false), isMenuOpen);
-
-  const handleCopyId = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    navigator.clipboard.writeText(id.toString());
-    setIsMenuOpen(false);
-  };
-
-  const handleCopyYoutubeId = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    navigator.clipboard.writeText(ytId);
-    setIsMenuOpen(false);
-  };
-
-  return (
-    <div className="relative flex-shrink-0" ref={menuRef}>
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          setIsMenuOpen(!isMenuOpen);
-        }}
-        className="btn btn-ghost btn-sm btn-circle transition-colors hover:bg-gray-700"
-      >
-        <MoreVertical className="w-4 h-4 text-gray-400" />
-      </button>
-
-      {isMenuOpen && (
-        <div className="absolute right-0 top-8 bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-2 min-w-[200px] z-50">
-          <div className="flex flex-col gap-1">
-            <button
-              onClick={handleCopyId}
-              className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-200 hover:bg-gray-700 rounded transition-colors"
-            >
-              <CopyValue type="id" value={id.toString()} />
-              <span>Copy ID</span>
-            </button>
-            <button
-              onClick={handleCopyYoutubeId}
-              className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-200 hover:bg-gray-700 rounded transition-colors"
-            >
-              <CopyValue type="youtube" value={ytId} />
-              <span>Copy YouTube ID</span>
-            </button>
-            <OpenDirectoryButton collection={ytId} />
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
 
 export default function ChannelTableRow({
   id,
@@ -130,11 +75,18 @@ export default function ChannelTableRow({
   onSyncUploads,
   showPlaylistColumn = true,
   viewType,
+  hidePlaylistName = false,
 }: ChannelTableRowProps) {
   const navigate = useCustomNavigate();
+  const location = useLocation();
   const handleViewScreenshots = useScreenshotsForCarousel();
   const viewThumbnails = useViewThumbnails();
   const viewStoryboards = useGetUploadsWithStoryboards();
+  const { handleRemoveFromPlaylist } = useRemoveFromPlaylist();
+
+  const isInPlaylistContext = location.pathname.includes(
+    "/playlists/channels/"
+  );
 
   const { getSrc, handleThumbnailClick } = useFeaturedScreenshots(
     featuredScreenshots,
@@ -147,7 +99,11 @@ export default function ChannelTableRow({
     }
     const fetchUploadsTypes = ["no-uploads"];
     return fetchUploadsTypes.includes(viewType || "") ? (
-      <Button size="sm">Fetch Uploads</Button>
+      <FetchUploadsButton
+        channelId={id}
+        videoCount={_videoCount}
+        onSuccess={onSyncUploads}
+      />
     ) : (
       <SyncUploadsButton
         lastSyncedAt={lastSyncedAt}
@@ -167,32 +123,58 @@ export default function ChannelTableRow({
     ) : null;
   };
 
+  const getVideosDisplay = () => {
+    return (
+      <div className="flex flex-col gap-1">
+        <ButtonWithBadge
+          icon={<FileVideo className="w-4 h-4" />}
+          text="Default"
+          numVal={defaults}
+          statType="default"
+          onClick={() => navigate(`/channels/${makeYtChannelId(ytId)}`)}
+        />
+        <ButtonWithBadge
+          icon={<Bookmark className="w-4 h-4" />}
+          text="Saved"
+          numVal={saved}
+          statType="saved"
+          onClick={() => navigate(`/channels/${makeYtChannelId(ytId)}/saved`)}
+        />
+      </div>
+    );
+  };
+
+  const getScreenshotsDisplay = () => {
+    return (
+      <div className="flex flex-col gap-1">
+        <ButtonWithBadge
+          icon={<Camera className="w-4 h-4" />}
+          text="Screenshots"
+          numVal={screenshotsCount}
+          statType="screenshots"
+          onClick={() => handleViewScreenshots([id])}
+        />
+        <ButtonWithBadge
+          icon={<Images className="w-4 h-4" />}
+          text="Gallery"
+          numVal={screenshotsCount}
+          statType="screenshots"
+          onClick={() => {
+            setGalleryModal({
+              collectionItemId: "",
+              collectionIds: [id],
+            });
+          }}
+        />
+      </div>
+    );
+  };
+
   const getStatsDisplay = () => {
     const statsTypes = ["thumbnails", "processed", "saved", "storyboards"];
 
     if (statsTypes.includes(viewType || "")) {
       const stats = [
-        {
-          icon: <FileVideo className="w-4 h-4" />,
-          text: "Default",
-          value: defaults,
-          statType: "default" as const,
-          onClick: () => navigate(`/channels/${makeYtChannelId(ytId)}`),
-        },
-        {
-          icon: <Bookmark className="w-4 h-4" />,
-          text: "Saved",
-          value: saved,
-          statType: "saved" as const,
-          onClick: () => navigate(`/channels/${makeYtChannelId(ytId)}/saved`),
-        },
-        {
-          icon: <Camera className="w-4 h-4" />,
-          text: "Screenshots",
-          value: screenshotsCount,
-          statType: "screenshots" as const,
-          onClick: () => handleViewScreenshots([id]),
-        },
         {
           icon: <Image className="w-4 h-4" />,
           text: "Thumbnails",
@@ -208,46 +190,20 @@ export default function ChannelTableRow({
           statType: "storyboards" as const,
           onClick: () => viewStoryboards.mutateAsync([id]),
         },
-        {
-          icon: <Images className="w-4 h-4" />,
-          text: "Gallery",
-          value: screenshotsCount,
-          statType: "screenshots" as const,
-          onClick: () => {
-            setGalleryModal({
-              collectionItemId: "",
-              collectionIds: [id],
-            });
-          },
-        },
       ];
 
       return (
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-2">
-            {stats.slice(0, 3).map((stat) => (
-              <ButtonWithBadge
-                key={stat.text}
-                icon={stat.icon}
-                text={stat.text}
-                numVal={stat.value}
-                statType={stat.statType}
-                onClick={stat.onClick}
-              />
-            ))}
-          </div>
-          <div className="flex items-center gap-2">
-            {stats.slice(3, 6).map((stat) => (
-              <ButtonWithBadge
-                key={stat.text}
-                icon={stat.icon}
-                text={stat.text}
-                numVal={stat.value}
-                statType={stat.statType}
-                onClick={stat.onClick}
-              />
-            ))}
-          </div>
+        <div className="flex items-center gap-2">
+          {stats.map((stat) => (
+            <ButtonWithBadge
+              key={stat.text}
+              icon={stat.icon}
+              text={stat.text}
+              numVal={stat.value}
+              statType={stat.statType}
+              onClick={stat.onClick}
+            />
+          ))}
         </div>
       );
     }
@@ -258,10 +214,10 @@ export default function ChannelTableRow({
 
   return (
     <tr className="hover group">
-      <td>
+      <td className="py-2">
         <div className="flex items-center gap-3">
           <div className="avatar">
-            <div className="mask mask-squircle w-12 h-12">
+            <div className="mask mask-squircle w-16 h-16">
               <img
                 src={getSrc}
                 alt={title}
@@ -277,23 +233,59 @@ export default function ChannelTableRow({
             >
               {title}
             </div>
-            <div className="text-sm opacity-50">{ytId}</div>
+            <div className="mt-1 flex items-center gap-2">
+              {playlist && !hidePlaylistName ? (
+                <PlaylistControl
+                  id={id}
+                  playlistId={playlist.id}
+                  playlistName={playlist.name}
+                  size="sm"
+                />
+              ) : !isInPlaylistContext ? (
+                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  <button
+                    className="btn btn-sm flex items-center gap-1 px-2 py-1 rounded-md text-sm"
+                    onClick={() =>
+                      setPlaylistModal({
+                        type: "modifyPlaylistForChannel",
+                        channelId: id,
+                        playlistId: 0,
+                      })
+                    }
+                  >
+                    <ListMusic className="w-4 h-4" />
+                    <span className="text-xs">Add to Playlist</span>
+                  </button>
+                </div>
+              ) : null}
+              {getActionButton()}
+            </div>
           </div>
         </div>
       </td>
-      <td>
+      <td className="py-2">
+        <div className="flex flex-col gap-1">{getVideosDisplay()}</div>
+      </td>
+      <td className="py-2">
+        <div className="flex flex-col gap-1">{getScreenshotsDisplay()}</div>
+      </td>
+      <td className="py-2">
         <div className="flex flex-col gap-1">{getStatsDisplay()}</div>
       </td>
       {showPlaylistColumn && (
         <td>
           <div className="flex items-center gap-2">
             {playlist ? (
-              <PlaylistControl
-                id={id}
-                playlistId={playlist.id}
-                playlistName={playlist.name}
-                size="sm"
-              />
+              <div className="flex items-center gap-1">
+                {!hidePlaylistName && (
+                  <PlaylistControl
+                    id={id}
+                    playlistId={playlist.id}
+                    playlistName={playlist.name}
+                    size="sm"
+                  />
+                )}
+              </div>
             ) : (
               <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                 <button
@@ -314,12 +306,16 @@ export default function ChannelTableRow({
           </div>
         </td>
       )}
-      <td>
+      <td className="py-2">
         <div className="flex items-center gap-2">
-          {getActionButton()}
           {getDeleteButton()}
           <StoryboardButton ytChannelId={ytId} className="btn-sm" />
-          <CardMenu id={id} ytId={ytId} />
+          <CardMenu
+            id={id}
+            ytId={ytId}
+            playlist={playlist}
+            onRemoveFromPlaylist={handleRemoveFromPlaylist}
+          />
         </div>
       </td>
     </tr>

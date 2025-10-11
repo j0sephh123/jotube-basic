@@ -11,10 +11,10 @@ export default function DashboardPage() {
   }>();
 
   return (
-    <div className="h-screen flex flex-col p-2 pb-14">
+    <div className="h-full flex flex-col p-2">
       <div className="bg-base-100 rounded-lg flex flex-col h-full">
         <CommonHeader />
-        <div className="flex-1 min-h-0 overflow-y-auto px-4">
+        <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-20">
           {dashboardType === "channels" && <ChannelsDashboard />}
           {dashboardType === "videos" && <VideosDashboard />}
           {dashboardType === "playlists" && <PlaylistsDashboard />}

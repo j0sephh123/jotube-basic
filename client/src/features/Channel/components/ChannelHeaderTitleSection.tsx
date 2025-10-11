@@ -3,6 +3,7 @@ import { CardMenu, CustomLink } from "@shared/ui";
 import { makeYtChannelId } from "@shared/types";
 import { PlaylistControl } from "@features/Playlist";
 import { SyncUploadsButton, CleanShortUploads } from "@features/Upload";
+import FetchUploadsButton from "@features/Upload/components/FetchUploadsButton";
 import { useTypedParams } from "@shared/hooks";
 import { useChannelMetadataQuery } from "@entities/Channel/model/useChannelMetadata";
 import { StoryboardButton } from "./StoryboardButton";
@@ -19,10 +20,11 @@ export const ChannelHeaderTitleSection = ({
   const uploadsType = useTypedParams("uploadsType");
 
   const { data: channelMetadata } = useChannelMetadataQuery(channelId);
+  console.log("channelMetadata:", channelMetadata);
 
   if (!channelMetadata) return null;
 
-  const { title, id, playlist } = channelMetadata;
+  const { title, id, playlist, fetchedUntilEnd, videoCount } = channelMetadata;
 
   return (
     <>
@@ -42,6 +44,9 @@ export const ChannelHeaderTitleSection = ({
             lastSyncedAt={channelMetadata?.lastSyncedAt ?? null}
             id={channelMetadata?.id ?? 0}
           />
+          {!fetchedUntilEnd && (
+            <FetchUploadsButton channelId={channelId} videoCount={videoCount} />
+          )}
           <CleanShortUploads channelId={channelId} />
           <StoryboardButton ytChannelId={ytChannelId} />
         </>

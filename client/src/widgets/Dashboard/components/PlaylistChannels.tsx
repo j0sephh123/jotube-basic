@@ -5,13 +5,15 @@ export const PlaylistChannels = () => {
   return (
     <PlaylistDetailsContainer>
       {(playlist, refetch) => (
-        <div className="overflow-x-auto">
+        <div className="max-h-[calc(100vh-200px)] overflow-auto">
           <table className="table table-zebra w-full">
-            <thead>
+            <thead className="sticky top-0 bg-base-100 z-10 shadow-sm">
               <tr>
-                <th>Channel</th>
-                <th>Stats</th>
-                <th>Actions</th>
+                <th className="bg-base-100">Channel</th>
+                <th className="bg-base-100">Videos</th>
+                <th className="bg-base-100">Screenshots</th>
+                <th className="bg-base-100">Stats</th>
+                <th className="bg-base-100">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -33,6 +35,8 @@ export const PlaylistChannels = () => {
                   featuredScreenshots={channel.featuredScreenshots}
                   onSyncUploads={refetch}
                   showPlaylistColumn={false}
+                  playlist={{ id: playlist.id, name: playlist.name }}
+                  hidePlaylistName={true}
                   viewType="thumbnails"
                 />
               )) || []}
