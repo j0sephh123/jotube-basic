@@ -8,7 +8,7 @@ import {
 } from "@features/Screenshot";
 import { useViewThumbnails } from "@features/Thumbnails";
 import { useGetUploadsWithStoryboards } from "@features/Storyboard";
-import { StoryboardButton } from "@features/Channel";
+import { StoryboardButton, BulkDownloadButton } from "@features/Channel";
 import {
   PlaylistControl,
   setPlaylistModal,
@@ -90,8 +90,17 @@ export default function ChannelTableRow({
       (item.state === "active" || item.state === "waiting")
   );
 
+  const downloadJobs = queueData.filter(
+    (item) =>
+      item.processingType === "download" &&
+      item.ytChannelId === ytId &&
+      (item.state === "active" || item.state === "waiting")
+  );
+
   const isProcessingStoryboards = storyboardJobs.length > 0;
   const storyboardCount = storyboardJobs.length;
+  const isProcessingDownloads = downloadJobs.length > 0;
+  const downloadCount = downloadJobs.length;
 
   const { getSrc, handleThumbnailClick } = useFeaturedScreenshots(
     featuredScreenshots,
@@ -159,6 +168,11 @@ export default function ChannelTableRow({
           tooltip: "View Saved Videos",
           onClick: () => navigate(`/channels/${makeYtChannelId(ytId)}/saved`),
         }}
+        rightAction={{
+          icon: <BulkDownloadButton channelId={id} />,
+          tooltip: "Bulk Download Videos",
+          onClick: () => {},
+        }}
       />
     );
   };
@@ -221,7 +235,9 @@ export default function ChannelTableRow({
     <tr
       className={`hover group transition-colors ${
         isProcessingStoryboards ? "bg-pink-50/30" : ""
-      } ${isSelected ? "bg-primary/10" : ""}`}
+      } ${isProcessingDownloads ? "bg-sky-50/30" : ""} ${
+        isSelected ? "bg-primary/10" : ""
+      }`}
     >
       <td className="py-2">
         {onToggleSelect && (
@@ -258,6 +274,11 @@ export default function ChannelTableRow({
               {isProcessingStoryboards && (
                 <span className="badge badge-sm badge-warning">
                   {storyboardCount} storyboard
+                </span>
+              )}
+              {isProcessingDownloads && (
+                <span className="badge badge-sm bg-sky-500 text-white">
+                  {downloadCount} downloading
                 </span>
               )}
             </div>
