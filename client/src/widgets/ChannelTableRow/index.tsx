@@ -14,7 +14,7 @@ import {
   setPlaylistModal,
   useRemoveFromPlaylist,
 } from "@features/Playlist";
-import { useCustomNavigate } from "@shared/hooks";
+import { useCustomNavigate, useQueue } from "@shared/hooks";
 import { useLocation } from "react-router-dom";
 import { makeYtChannelId } from "@shared/types";
 import { DeleteChannel } from "@entities/Channel";
@@ -73,10 +73,21 @@ export default function ChannelTableRow({
   const viewThumbnails = useViewThumbnails();
   const viewStoryboards = useGetUploadsWithStoryboards();
   const { handleRemoveFromPlaylist } = useRemoveFromPlaylist();
+  const { data: queueData = [] } = useQueue();
 
   const isInPlaylistContext = location.pathname.includes(
     "/playlists/channels/"
   );
+
+  const storyboardJobs = queueData.filter(
+    (item) =>
+      item.processingType === "storyboarding" &&
+      item.ytChannelId === ytId &&
+      (item.state === "active" || item.state === "waiting")
+  );
+
+  const isProcessingStoryboards = storyboardJobs.length > 0;
+  const storyboardCount = storyboardJobs.length;
 
   const { getSrc, handleThumbnailClick } = useFeaturedScreenshots(
     featuredScreenshots,
@@ -203,7 +214,11 @@ export default function ChannelTableRow({
   };
 
   return (
-    <tr className="hover group">
+    <tr
+      className={`hover group transition-colors ${
+        isProcessingStoryboards ? "bg-pink-50/30" : ""
+      }`}
+    >
       <td className="py-2">
         <div className="flex items-center gap-3">
           <div className="avatar">
@@ -217,11 +232,18 @@ export default function ChannelTableRow({
             </div>
           </div>
           <div className="flex-1">
-            <div
-              className="font-bold text-lg cursor-pointer hover:text-blue-400 transition-colors"
-              onClick={() => navigate(`/channels/${makeYtChannelId(ytId)}`)}
-            >
-              {title}
+            <div className="flex items-center gap-2">
+              <div
+                className="font-bold text-lg cursor-pointer hover:text-blue-400 transition-colors"
+                onClick={() => navigate(`/channels/${makeYtChannelId(ytId)}`)}
+              >
+                {title}
+              </div>
+              {isProcessingStoryboards && (
+                <span className="badge badge-sm badge-warning">
+                  {storyboardCount} storyboard
+                </span>
+              )}
             </div>
             <div className="mt-1 flex items-center gap-2">
               {playlist && !hidePlaylistName ? (

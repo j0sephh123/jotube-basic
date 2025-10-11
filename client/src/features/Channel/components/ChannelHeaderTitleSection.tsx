@@ -20,7 +20,6 @@ export const ChannelHeaderTitleSection = ({
   const uploadsType = useTypedParams("uploadsType");
 
   const { data: channelMetadata } = useChannelMetadataQuery(channelId);
-  console.log("channelMetadata:", channelMetadata);
 
   if (!channelMetadata) return null;
 
