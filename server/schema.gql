@@ -456,6 +456,7 @@ type PlaylistChannelWithCountsResponse {
   storyboardCount: Int!
   thumbnailCount: Int!
   title: String!
+  totalVideos: Int!
   videoCount: Int!
   ytId: String!
 }

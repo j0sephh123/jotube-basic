@@ -34,6 +34,9 @@ export class PlaylistChannelWithCountsResponse {
   videoCount: number;
 
   @Field(() => Int)
+  totalVideos: number;
+
+  @Field(() => Int)
   saved: number;
 
   @Field(() => Int)

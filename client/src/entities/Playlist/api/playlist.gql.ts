@@ -47,6 +47,7 @@ export const GET_PLAYLIST_DETAILS = gql`
         ytId
         src
         videoCount
+        totalVideos
         saved
         screenshotCount
         thumbnailCount

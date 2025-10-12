@@ -617,6 +617,7 @@ export type PlaylistChannelWithCountsResponse = {
   storyboardCount: Scalars['Int']['output'];
   thumbnailCount: Scalars['Int']['output'];
   title: Scalars['String']['output'];
+  totalVideos: Scalars['Int']['output'];
   videoCount: Scalars['Int']['output'];
   ytId: Scalars['String']['output'];
 };
@@ -1136,7 +1137,7 @@ export type GetPlaylistDetailsQueryVariables = Exact<{
 }>;
 
 
-export type GetPlaylistDetailsQuery = { __typename?: 'Query', playlistDetails?: { __typename?: 'PlaylistDetailsResponse', id: number, name: string, createdAt: string, updatedAt: string, channels: Array<{ __typename?: 'PlaylistChannelWithCountsResponse', id: number, title: string, ytId: string, src: string, videoCount: number, saved: number, screenshotCount: number, thumbnailCount: number, storyboardCount: number, lastSyncedAt?: string | null, createdAt: any, fetchedUntilEnd: boolean, featuredScreenshots: Array<{ __typename?: 'FeaturedScreenshotResponse', id: number, second: number, ytVideoId: string, src: string }> }> } | null };
+export type GetPlaylistDetailsQuery = { __typename?: 'Query', playlistDetails?: { __typename?: 'PlaylistDetailsResponse', id: number, name: string, createdAt: string, updatedAt: string, channels: Array<{ __typename?: 'PlaylistChannelWithCountsResponse', id: number, title: string, ytId: string, src: string, videoCount: number, totalVideos: number, saved: number, screenshotCount: number, thumbnailCount: number, storyboardCount: number, lastSyncedAt?: string | null, createdAt: any, fetchedUntilEnd: boolean, featuredScreenshots: Array<{ __typename?: 'FeaturedScreenshotResponse', id: number, second: number, ytVideoId: string, src: string }> }> } | null };
 
 export type UpdatePlaylistMutationVariables = Exact<{
   id: Scalars['Int']['input'];
@@ -1681,6 +1682,7 @@ export const GetPlaylistDetailsDocument = gql`
       ytId
       src
       videoCount
+      totalVideos
       saved
       screenshotCount
       thumbnailCount

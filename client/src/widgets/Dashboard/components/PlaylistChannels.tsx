@@ -217,7 +217,7 @@ export const PlaylistChannels = () => {
                       defaults={channel.videoCount}
                       storyboard={channel.storyboardCount}
                       createdAt=""
-                      videoCount={channel.videoCount}
+                      videoCount={channel.totalVideos - channel.videoCount}
                       fetchedUntilEnd={channel.fetchedUntilEnd}
                       featuredScreenshots={channel.featuredScreenshots}
                       onSyncUploads={refetch}
