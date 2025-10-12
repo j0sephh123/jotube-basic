@@ -4,10 +4,13 @@ import { setGalleryModal } from "@features/Gallery";
 import { useGetUploadsWithStoryboards } from "@features/Storyboard";
 import { useViewThumbnails } from "@features/Thumbnails";
 import { useCallback } from "react";
-import { Camera, RefreshCw } from "lucide-react";
+import { Camera, RefreshCw, FileVideo, Bookmark } from "lucide-react";
 import { StoryboardButton } from "@features/Channel";
+import { PlaylistBulkDownloadButton } from "@features/Playlist";
+import { useCustomNavigate } from "@shared/hooks";
 // eslint-disable-next-line boundaries/element-types
 import StatWithActions from "@widgets/StatWithActions";
+import { To } from "@shared/types";
 
 type HeaderProps = {
   playlist: PlaylistDetailsResponse;
@@ -18,6 +21,7 @@ export function PlaylistHeader({
   playlist: { id, channels },
   onRefresh,
 }: HeaderProps) {
+  const navigate = useCustomNavigate();
   const viewScreenshots = useScreenshotsForCarousel();
   const getStoryboards = useGetUploadsWithStoryboards().mutateAsync;
   const viewThumbnails = useViewThumbnails();
@@ -61,6 +65,14 @@ export function PlaylistHeader({
     });
   }, [viewThumbnails, id]);
 
+  const handleDefaultVideosAction = useCallback(() => {
+    navigate(`/dashboard/playlists/default/${id}` as To);
+  }, [navigate, id]);
+
+  const handleSavedVideosAction = useCallback(() => {
+    navigate(`/dashboard/playlists/saved/${id}` as To);
+  }, [navigate, id]);
+
   return (
     <div className="flex gap-2">
       {onRefresh && (
@@ -75,15 +87,32 @@ export function PlaylistHeader({
         />
       )}
       <StatWithActions
-        label="storyboards"
-        value={totalCounts.storyboardCount}
+        label="Default"
+        value={totalCounts.videoCount}
+        layout="horizontal"
         leftAction={{
-          tooltip: "View storyboards",
-          onClick: handleStoryboardAction,
+          icon: <FileVideo className="w-4 h-4" />,
+          tooltip: "View Default Videos",
+          onClick: handleDefaultVideosAction,
         }}
         rightAction={{
           icon: <StoryboardButton playlistId={id} />,
           tooltip: "Generate Storyboards",
+          onClick: () => {},
+        }}
+      />
+      <StatWithActions
+        label="Saved"
+        value={totalCounts.savedCount}
+        layout="horizontal"
+        leftAction={{
+          icon: <Bookmark className="w-4 h-4" />,
+          tooltip: "View Saved Videos",
+          onClick: handleSavedVideosAction,
+        }}
+        rightAction={{
+          icon: <PlaylistBulkDownloadButton playlistId={id} />,
+          tooltip: "Bulk Download Videos",
           onClick: () => {},
         }}
       />
@@ -99,6 +128,19 @@ export function PlaylistHeader({
           icon: <Camera className="w-4 h-4" />,
           tooltip: "View Gallery",
           onClick: handleGalleryAction,
+        }}
+      />
+      <StatWithActions
+        label="storyboards"
+        value={totalCounts.storyboardCount}
+        leftAction={{
+          tooltip: "View storyboards",
+          onClick: handleStoryboardAction,
+        }}
+        rightAction={{
+          icon: <StoryboardButton playlistId={id} />,
+          tooltip: "Generate Storyboards",
+          onClick: () => {},
         }}
       />
       <StatWithActions
