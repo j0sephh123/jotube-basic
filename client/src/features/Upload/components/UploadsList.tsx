@@ -34,7 +34,6 @@ export default function UploadsList({
   return (
     <Virtualizer
       items={uploadsToUse}
-      getItemId={(item) => item.upload.ytId}
       ItemComponent={({ item }) => {
         const queueItem = queue.data?.find(
           (q) => q.ytVideoId === item.upload.ytId
