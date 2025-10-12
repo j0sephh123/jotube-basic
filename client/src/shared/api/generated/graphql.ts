@@ -73,6 +73,17 @@ export type ChannelsDashboardResponse = {
   total: Scalars['Int']['output'];
 };
 
+export type ChannelsYearMonthCountResponse = {
+  __typename?: 'ChannelsYearMonthCountResponse';
+  count: Scalars['Int']['output'];
+  month: Scalars['Int']['output'];
+  year: Scalars['Int']['output'];
+};
+
+export type ChannelsYearMonthCountsInput = {
+  viewType: Scalars['String']['input'];
+};
+
 export type CleanShortUploadsInput = {
   channelId: Scalars['Float']['input'];
 };
@@ -297,9 +308,11 @@ export type FetchDashboardInput = {
   defaultMin?: InputMaybe<Scalars['Float']['input']>;
   max?: InputMaybe<Scalars['Float']['input']>;
   min?: InputMaybe<Scalars['Float']['input']>;
+  month?: InputMaybe<Scalars['Float']['input']>;
   page: Scalars['Float']['input'];
   sortOrder: Scalars['String']['input'];
   viewType: Scalars['String']['input'];
+  year?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type FetchUploadsInput = {
@@ -666,6 +679,7 @@ export type Query = {
   __typename?: 'Query';
   channelForPlaylist: ChannelForPlaylistResponse;
   channelMetadata: ChannelMetadataResponse;
+  channelsYearMonthCounts: Array<ChannelsYearMonthCountResponse>;
   episodesWithThumbnails: Array<EpisodesWithThumbnailsResponse>;
   fetchDashboard: ChannelsDashboardResponse;
   fetchVideosDashboard: VideosDashboardResponse;
@@ -701,6 +715,11 @@ export type QueryChannelForPlaylistArgs = {
 
 export type QueryChannelMetadataArgs = {
   channelMetadataInput: ChannelMetadataInput;
+};
+
+
+export type QueryChannelsYearMonthCountsArgs = {
+  channelsYearMonthCountsInput: ChannelsYearMonthCountsInput;
 };
 
 
@@ -1158,6 +1177,13 @@ export type GetScreenshotsQueryVariables = Exact<{
 
 
 export type GetScreenshotsQuery = { __typename?: 'Query', getScreenshots: Array<{ __typename?: 'GetScreenshotsResponse', ytVideoId: string, id: number, second: number, src: string }> };
+
+export type ChannelsYearMonthCountsQueryVariables = Exact<{
+  channelsYearMonthCountsInput: ChannelsYearMonthCountsInput;
+}>;
+
+
+export type ChannelsYearMonthCountsQuery = { __typename?: 'Query', channelsYearMonthCounts: Array<{ __typename?: 'ChannelsYearMonthCountResponse', year: number, month: number, count: number }> };
 
 export type FetchDashboardQueryVariables = Exact<{
   fetchDashboardInput: FetchDashboardInput;
@@ -1939,6 +1965,50 @@ export type GetScreenshotsQueryHookResult = ReturnType<typeof useGetScreenshotsQ
 export type GetScreenshotsLazyQueryHookResult = ReturnType<typeof useGetScreenshotsLazyQuery>;
 export type GetScreenshotsSuspenseQueryHookResult = ReturnType<typeof useGetScreenshotsSuspenseQuery>;
 export type GetScreenshotsQueryResult = Apollo.QueryResult<GetScreenshotsQuery, GetScreenshotsQueryVariables>;
+export const ChannelsYearMonthCountsDocument = gql`
+    query ChannelsYearMonthCounts($channelsYearMonthCountsInput: ChannelsYearMonthCountsInput!) {
+  channelsYearMonthCounts(
+    channelsYearMonthCountsInput: $channelsYearMonthCountsInput
+  ) {
+    year
+    month
+    count
+  }
+}
+    `;
+
+/**
+ * __useChannelsYearMonthCountsQuery__
+ *
+ * To run a query within a React component, call `useChannelsYearMonthCountsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChannelsYearMonthCountsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChannelsYearMonthCountsQuery({
+ *   variables: {
+ *      channelsYearMonthCountsInput: // value for 'channelsYearMonthCountsInput'
+ *   },
+ * });
+ */
+export function useChannelsYearMonthCountsQuery(baseOptions: Apollo.QueryHookOptions<ChannelsYearMonthCountsQuery, ChannelsYearMonthCountsQueryVariables> & ({ variables: ChannelsYearMonthCountsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ChannelsYearMonthCountsQuery, ChannelsYearMonthCountsQueryVariables>(ChannelsYearMonthCountsDocument, options);
+      }
+export function useChannelsYearMonthCountsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ChannelsYearMonthCountsQuery, ChannelsYearMonthCountsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ChannelsYearMonthCountsQuery, ChannelsYearMonthCountsQueryVariables>(ChannelsYearMonthCountsDocument, options);
+        }
+export function useChannelsYearMonthCountsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ChannelsYearMonthCountsQuery, ChannelsYearMonthCountsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ChannelsYearMonthCountsQuery, ChannelsYearMonthCountsQueryVariables>(ChannelsYearMonthCountsDocument, options);
+        }
+export type ChannelsYearMonthCountsQueryHookResult = ReturnType<typeof useChannelsYearMonthCountsQuery>;
+export type ChannelsYearMonthCountsLazyQueryHookResult = ReturnType<typeof useChannelsYearMonthCountsLazyQuery>;
+export type ChannelsYearMonthCountsSuspenseQueryHookResult = ReturnType<typeof useChannelsYearMonthCountsSuspenseQuery>;
+export type ChannelsYearMonthCountsQueryResult = Apollo.QueryResult<ChannelsYearMonthCountsQuery, ChannelsYearMonthCountsQueryVariables>;
 export const FetchDashboardDocument = gql`
     query FetchDashboard($fetchDashboardInput: FetchDashboardInput!) {
   fetchDashboard(fetchDashboardInput: $fetchDashboardInput) {

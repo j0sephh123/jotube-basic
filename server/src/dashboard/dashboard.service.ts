@@ -41,8 +41,14 @@ export class DashboardService {
     defaultMin,
     defaultMax,
     viewType,
+    year,
+    month,
   }: FetchDashboardInput): Promise<ChannelsDashboardResponse> {
-    const rawChannels = await this.getChannelsForViewType(viewType as ViewType);
+    const rawChannels = await this.getChannelsForViewType(
+      viewType as ViewType,
+      year,
+      month,
+    );
     const allChannels = await this.getChannelsWithCounts(rawChannels);
     const filtered = this.filterChannels(allChannels, {
       min,
@@ -83,6 +89,8 @@ export class DashboardService {
 
   private async getChannelsForViewType(
     viewType: ViewType,
+    year?: number,
+    month?: number,
   ): Promise<
     Array<
       Pick<
@@ -109,6 +117,8 @@ export class DashboardService {
       case ViewType.NO_SCREENSHOTS:
         return this.channelService.getChannelsWithoutUploadsOrScreenshots(
           viewType,
+          year,
+          month,
         );
 
       default:
@@ -570,5 +580,39 @@ export class DashboardService {
         total,
       };
     }
+  }
+
+  public async channelsYearMonthCounts(
+    viewType: ViewType,
+  ): Promise<{ year: number; month: number; count: number }[]> {
+    const isNoScreenshotsView = viewType === ViewType.NO_SCREENSHOTS;
+
+    const result = await this.prismaService.$queryRaw<
+      { year: bigint; month: bigint; count: bigint }[]
+    >`
+      SELECT 
+        YEAR(createdAt) as year,
+        MONTH(createdAt) as month,
+        COUNT(*) as count
+      FROM Channel
+      WHERE fetchedUntilEnd = ${isNoScreenshotsView}
+        ${
+          isNoScreenshotsView
+            ? Prisma.sql`AND id IN (
+          SELECT DISTINCT channelId 
+          FROM UploadsVideo 
+          WHERE artifact = ${ArtifactType.VIDEO}
+        )`
+            : Prisma.empty
+        }
+      GROUP BY YEAR(createdAt), MONTH(createdAt)
+      ORDER BY year DESC, month DESC
+    `;
+
+    return result.map((row) => ({
+      year: Number(row.year),
+      month: Number(row.month),
+      count: Number(row.count),
+    }));
   }
 }

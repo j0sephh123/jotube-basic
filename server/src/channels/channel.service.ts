@@ -115,16 +115,29 @@ export class ChannelService {
     };
   }
 
-  public async getChannelsWithoutUploadsOrScreenshots(viewType: ViewType) {
+  public async getChannelsWithoutUploadsOrScreenshots(
+    viewType: ViewType,
+    year?: number,
+    month?: number,
+  ) {
     const isNoScreenshotsView = viewType === ViewType.NO_SCREENSHOTS;
 
+    const whereClause: any = {
+      fetchedUntilEnd: isNoScreenshotsView,
+      ...(isNoScreenshotsView
+        ? { uploads: { every: { artifact: ArtifactType.VIDEO } } }
+        : {}),
+    };
+
+    if (year && month) {
+      whereClause.createdAt = {
+        gte: new Date(year, month - 1, 1),
+        lt: new Date(year, month, 1),
+      };
+    }
+
     return this.prismaService.channel.findMany({
-      where: {
-        fetchedUntilEnd: isNoScreenshotsView,
-        ...(isNoScreenshotsView
-          ? { uploads: { every: { artifact: ArtifactType.VIDEO } } }
-          : {}),
-      },
+      where: whereClause,
       select: {
         id: true,
         ytId: true,

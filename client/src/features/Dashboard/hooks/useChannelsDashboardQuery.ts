@@ -13,6 +13,8 @@ export function useChannelsDashboardQuery() {
   const max = searchParams.get("max");
   const defaultMin = searchParams.get("defaultMin");
   const defaultMax = searchParams.get("defaultMax");
+  const year = searchParams.get("year");
+  const month = searchParams.get("month");
 
   const { finalSortOrder } = useFinalSortOrder();
   const { finalPage } = useFinalPage();
@@ -37,6 +39,14 @@ export function useChannelsDashboardQuery() {
 
   if (defaultMax !== null) {
     fetchDashboardInput.defaultMax = parseInt(defaultMax);
+  }
+
+  if (year !== null) {
+    fetchDashboardInput.year = parseInt(year);
+  }
+
+  if (month !== null) {
+    fetchDashboardInput.month = parseInt(month);
   }
 
   const { data, loading, error, refetch } = useFetchDashboard(

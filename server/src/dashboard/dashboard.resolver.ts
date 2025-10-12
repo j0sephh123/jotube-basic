@@ -6,6 +6,9 @@ import {
   ChannelsDashboardResponse,
   VideosDashboardResponse,
 } from './dtos/dashboard.response';
+import { ChannelsYearMonthCountsInput } from './dtos/channels-year-month-counts.input';
+import { ChannelsYearMonthCountResponse } from './dtos/channels-year-month-counts.response';
+import { ViewType } from './types';
 
 @Resolver()
 export class DashboardResolver {
@@ -25,6 +28,16 @@ export class DashboardResolver {
   ): Promise<VideosDashboardResponse> {
     return this.dashboardService.fetchVideosDashboard(
       fetchVideosDashboardInput,
+    );
+  }
+
+  @Query(() => [ChannelsYearMonthCountResponse])
+  async channelsYearMonthCounts(
+    @Args('channelsYearMonthCountsInput')
+    channelsYearMonthCountsInput: ChannelsYearMonthCountsInput,
+  ): Promise<ChannelsYearMonthCountResponse[]> {
+    return this.dashboardService.channelsYearMonthCounts(
+      channelsYearMonthCountsInput.viewType as ViewType,
     );
   }
 }

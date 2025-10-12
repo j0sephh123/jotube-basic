@@ -51,6 +51,16 @@ type ChannelsDashboardResponse {
   total: Int!
 }
 
+type ChannelsYearMonthCountResponse {
+  count: Int!
+  month: Int!
+  year: Int!
+}
+
+input ChannelsYearMonthCountsInput {
+  viewType: String!
+}
+
 input CleanShortUploadsInput {
   channelId: Float!
 }
@@ -259,9 +269,11 @@ input FetchDashboardInput {
   defaultMin: Float
   max: Float
   min: Float
+  month: Float
   page: Float!
   sortOrder: String!
   viewType: String!
+  year: Float
 }
 
 input FetchUploadsInput {
@@ -499,6 +511,7 @@ type ProcessingReadyUploadsResponse {
 type Query {
   channelForPlaylist(ytChannelId: String!): ChannelForPlaylistResponse!
   channelMetadata(channelMetadataInput: ChannelMetadataInput!): ChannelMetadataResponse!
+  channelsYearMonthCounts(channelsYearMonthCountsInput: ChannelsYearMonthCountsInput!): [ChannelsYearMonthCountResponse!]!
   episodesWithThumbnails(input: EpisodesWithThumbnailsInput!): [EpisodesWithThumbnailsResponse!]!
   fetchDashboard(fetchDashboardInput: FetchDashboardInput!): ChannelsDashboardResponse!
   fetchVideosDashboard(fetchVideosDashboardInput: FetchVideosDashboardInput!): VideosDashboardResponse!

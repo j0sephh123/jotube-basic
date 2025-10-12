@@ -1,10 +1,12 @@
 import { ChannelsDashboardContainer } from "@widgets/Dashboard";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { type ViewType } from "@features/Dashboard";
 import ChannelTableRow from "@widgets/ChannelTableRow";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { ChevronUp, ChevronDown } from "lucide-react";
 import type { DashboardChannelResponse } from "@shared/api";
+import { useChannelsYearMonthCounts } from "@features/Dashboard/hooks/useChannelsYearMonthCounts";
+import { YearMonthFilter } from "@features/Dashboard/components/YearMonthFilter";
 
 type SortField =
   | "defaults"
@@ -158,15 +160,74 @@ function ChannelsTable({
 
 export default function ChannelsDashboard() {
   const { viewType } = useParams<{ viewType: string }>();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedYearMonth, setSelectedYearMonth] = useState<{
+    year: number;
+    month: number;
+  } | null>(null);
+
+  const { yearMonthCounts } = useChannelsYearMonthCounts(viewType || "");
+
+  useEffect(() => {
+    const urlYear = searchParams.get("year");
+    const urlMonth = searchParams.get("month");
+
+    if (urlYear && urlMonth) {
+      setSelectedYearMonth({
+        year: parseInt(urlYear),
+        month: parseInt(urlMonth),
+      });
+    } else if (yearMonthCounts.length > 0 && selectedYearMonth === null) {
+      const mostRecent = yearMonthCounts[0];
+      if (mostRecent) {
+        setSelectedYearMonth({
+          year: mostRecent.year,
+          month: mostRecent.month,
+        });
+        setSearchParams((prev) => {
+          const newParams = new URLSearchParams(prev);
+          newParams.set("year", mostRecent.year.toString());
+          newParams.set("month", mostRecent.month.toString());
+          return newParams;
+        });
+      }
+    }
+  }, [yearMonthCounts, selectedYearMonth, setSearchParams, searchParams]);
+
+  const handleYearMonthChange = (
+    yearMonth: { year: number; month: number } | null
+  ) => {
+    setSelectedYearMonth(yearMonth);
+    setSearchParams((prev) => {
+      const newParams = new URLSearchParams(prev);
+      if (yearMonth) {
+        newParams.set("year", yearMonth.year.toString());
+        newParams.set("month", yearMonth.month.toString());
+      } else {
+        newParams.delete("year");
+        newParams.delete("month");
+      }
+      return newParams;
+    });
+  };
 
   return (
     <ChannelsDashboardContainer>
       {(channels, refetch) => (
-        <ChannelsTable
-          channels={channels || []}
-          refetch={refetch}
-          viewType={viewType as unknown as ViewType}
-        />
+        <>
+          {viewType === "no-uploads" && (
+            <YearMonthFilter
+              yearMonthCounts={yearMonthCounts}
+              selectedYearMonth={selectedYearMonth}
+              onYearMonthChange={handleYearMonthChange}
+            />
+          )}
+          <ChannelsTable
+            channels={channels || []}
+            refetch={refetch}
+            viewType={viewType as unknown as ViewType}
+          />
+        </>
       )}
     </ChannelsDashboardContainer>
   );

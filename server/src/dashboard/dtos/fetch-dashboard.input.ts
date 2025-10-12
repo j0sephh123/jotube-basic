@@ -28,4 +28,10 @@ export class FetchDashboardInput {
 
   @Field()
   viewType: string;
+
+  @Field({ nullable: true })
+  year?: number;
+
+  @Field({ nullable: true })
+  month?: number;
 }
