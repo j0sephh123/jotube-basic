@@ -3,7 +3,6 @@ import { CommonHeader } from "./CommonHeader";
 import VideosDashboard from "./VideosDashboard";
 import { useParams } from "react-router-dom";
 import { PlaylistsDashboard } from "./PlaylistsDashboard";
-import { TvDashboard } from "./TvDashboard";
 
 export default function DashboardPage() {
   const { dashboardType } = useParams<{
@@ -18,7 +17,6 @@ export default function DashboardPage() {
           {dashboardType === "channels" && <ChannelsDashboard />}
           {dashboardType === "videos" && <VideosDashboard />}
           {dashboardType === "playlists" && <PlaylistsDashboard />}
-          {dashboardType === "tv" && <TvDashboard />}
         </div>
       </div>
     </div>

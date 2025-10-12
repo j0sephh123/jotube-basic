@@ -59,9 +59,6 @@ export function SegmentedSwitch({
       >
         {leftLabel}
       </SegmentedButton>
-      <SegmentedButton isActive={value === "tv"} onClick={() => onChange("tv")}>
-        TV
-      </SegmentedButton>
 
       <PlaylistsPopover
         customTrigger={customTrigger}

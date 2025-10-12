@@ -21,7 +21,6 @@ const links: Record<DashboardType, string[]> = {
     "thumbnails",
     "screenshots",
   ],
-  tv: ["tvs", "saved", 'thumbnails', 'screenshots'],
 };
 
 export function CommonHeader() {
@@ -45,7 +44,7 @@ export function CommonHeader() {
 
   return (
     <div className="flex justify-between items-center">
-      <div>
+      <div data-testid="common-header-left">
         <DashboardTypeSwitcher />
         <div role="tablist" className="tabs tabs-border">
           {dashboardType &&
