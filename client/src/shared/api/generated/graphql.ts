@@ -690,6 +690,7 @@ export type Query = {
   uploadsList: Array<UploadsListUploadResponse>;
   uploadsWithStoryboards: Array<UploadWithStoryboardResponse>;
   uploadsWithThumbnails: Array<UploadsWithThumbnailsResponse>;
+  uploadsYearCounts: Array<UploadsYearCountResponse>;
 };
 
 
@@ -800,6 +801,11 @@ export type QueryUploadsWithStoryboardsArgs = {
 
 export type QueryUploadsWithThumbnailsArgs = {
   input: UploadsWithThumbnailsInput;
+};
+
+
+export type QueryUploadsYearCountsArgs = {
+  uploadsYearCountsInput: UploadsYearCountsInput;
 };
 
 export type SaveUploadInput = {
@@ -967,6 +973,7 @@ export type UploadsListInput = {
   sortOrder: SortOrder;
   take: Scalars['Int']['input'];
   type: Scalars['String']['input'];
+  year?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type UploadsListUploadResponse = {
@@ -1026,6 +1033,17 @@ export type UploadsWithThumbnailsResponse = {
   videoId: Scalars['Float']['output'];
   ytChannelId: Scalars['String']['output'];
   ytVideoId: Scalars['String']['output'];
+};
+
+export type UploadsYearCountResponse = {
+  __typename?: 'UploadsYearCountResponse';
+  count: Scalars['Int']['output'];
+  year: Scalars['Int']['output'];
+};
+
+export type UploadsYearCountsInput = {
+  id: IdInput;
+  type: Scalars['String']['input'];
 };
 
 export type VideoByYtIdResponse = {
@@ -1364,6 +1382,13 @@ export type DeleteFileOrDirectoryMutationVariables = Exact<{
 
 
 export type DeleteFileOrDirectoryMutation = { __typename?: 'Mutation', deleteFileOrDirectory: { __typename?: 'DeleteFileResponse', success: boolean, message?: string | null } };
+
+export type UploadsYearCountsQueryVariables = Exact<{
+  uploadsYearCountsInput: UploadsYearCountsInput;
+}>;
+
+
+export type UploadsYearCountsQuery = { __typename?: 'Query', uploadsYearCounts: Array<{ __typename?: 'UploadsYearCountResponse', year: number, count: number }> };
 
 export const ChannelFragmentFragmentDoc = gql`
     fragment ChannelFragment on PlaylistChannelResponse {
@@ -3334,3 +3359,44 @@ export function useDeleteFileOrDirectoryMutation(baseOptions?: Apollo.MutationHo
 export type DeleteFileOrDirectoryMutationHookResult = ReturnType<typeof useDeleteFileOrDirectoryMutation>;
 export type DeleteFileOrDirectoryMutationResult = Apollo.MutationResult<DeleteFileOrDirectoryMutation>;
 export type DeleteFileOrDirectoryMutationOptions = Apollo.BaseMutationOptions<DeleteFileOrDirectoryMutation, DeleteFileOrDirectoryMutationVariables>;
+export const UploadsYearCountsDocument = gql`
+    query UploadsYearCounts($uploadsYearCountsInput: UploadsYearCountsInput!) {
+  uploadsYearCounts(uploadsYearCountsInput: $uploadsYearCountsInput) {
+    year
+    count
+  }
+}
+    `;
+
+/**
+ * __useUploadsYearCountsQuery__
+ *
+ * To run a query within a React component, call `useUploadsYearCountsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUploadsYearCountsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUploadsYearCountsQuery({
+ *   variables: {
+ *      uploadsYearCountsInput: // value for 'uploadsYearCountsInput'
+ *   },
+ * });
+ */
+export function useUploadsYearCountsQuery(baseOptions: Apollo.QueryHookOptions<UploadsYearCountsQuery, UploadsYearCountsQueryVariables> & ({ variables: UploadsYearCountsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UploadsYearCountsQuery, UploadsYearCountsQueryVariables>(UploadsYearCountsDocument, options);
+      }
+export function useUploadsYearCountsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UploadsYearCountsQuery, UploadsYearCountsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UploadsYearCountsQuery, UploadsYearCountsQueryVariables>(UploadsYearCountsDocument, options);
+        }
+export function useUploadsYearCountsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<UploadsYearCountsQuery, UploadsYearCountsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<UploadsYearCountsQuery, UploadsYearCountsQueryVariables>(UploadsYearCountsDocument, options);
+        }
+export type UploadsYearCountsQueryHookResult = ReturnType<typeof useUploadsYearCountsQuery>;
+export type UploadsYearCountsLazyQueryHookResult = ReturnType<typeof useUploadsYearCountsLazyQuery>;
+export type UploadsYearCountsSuspenseQueryHookResult = ReturnType<typeof useUploadsYearCountsSuspenseQuery>;
+export type UploadsYearCountsQueryResult = Apollo.QueryResult<UploadsYearCountsQuery, UploadsYearCountsQueryVariables>;

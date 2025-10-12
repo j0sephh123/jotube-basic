@@ -2,10 +2,14 @@ import {
   type SaveUploadMutationVariables,
   useSaveUploadMutation,
 } from "@shared/api";
+import { useRefetchUploadsYearCounts } from "./useUploads";
 
 export function useSaveUpload(onSuccess: () => void) {
+  const refetchYearCounts = useRefetchUploadsYearCounts();
+
   const [saveUploadMutation] = useSaveUploadMutation({
     onCompleted: () => {
+      refetchYearCounts();
       onSuccess();
     },
   });

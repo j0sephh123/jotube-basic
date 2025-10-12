@@ -43,6 +43,7 @@ export class UploadsVideoService {
     sortOrder,
     type,
     take,
+    year,
   }: UploadsListInput): Promise<UploadsListUploadResponse[]> {
     const whereQuery = () => {
       if (type === 'default') {
@@ -84,6 +85,15 @@ export class UploadsVideoService {
 
     const whereQueryResult = whereQuery();
 
+    const yearFilter = year
+      ? {
+          publishedAt: {
+            gte: `${year}-01-01T00:00:00.000Z`,
+            lt: `${year + 1}-01-01T00:00:00.000Z`,
+          },
+        }
+      : {};
+
     if (id.type === IdType.CHANNEL) {
       const channel = await this.prismaService.channel.findUnique({
         where: {
@@ -93,6 +103,7 @@ export class UploadsVideoService {
           uploads: {
             where: {
               ...whereQueryResult,
+              ...yearFilter,
             },
             orderBy: {
               publishedAt: sortOrder === SortOrder.ASC ? 'asc' : 'desc',
@@ -151,6 +162,7 @@ export class UploadsVideoService {
         where: {
           channelId: { in: channels.map((channel) => channel.id) },
           ...whereQueryResult,
+          ...yearFilter,
         },
         orderBy: {
           publishedAt: sortOrder === SortOrder.ASC ? 'asc' : 'desc',
@@ -201,6 +213,109 @@ export class UploadsVideoService {
         ...upload,
         channelTitle: upload.channel.title,
         ytChannelId: upload.channel.ytId,
+      }));
+    }
+
+    throw new Error('Invalid id type, allowed types are: channel, playlist');
+  }
+
+  public async uploadsYearCounts({
+    id,
+    type,
+  }: {
+    id: { type: 'channel' | 'playlist'; value: number };
+    type: string;
+  }): Promise<{ year: number; count: number }[]> {
+    const whereQuery = () => {
+      if (type === 'default') {
+        return {
+          artifact: ArtifactType.VIDEO,
+        };
+      }
+
+      if (type === 'saved') {
+        return {
+          artifact: {
+            in: [ArtifactType.SAVED, ArtifactType.DOWNLOADED],
+          },
+        };
+      }
+
+      if (type === 'thumbnails') {
+        return {
+          artifact: ArtifactType.THUMBNAIL,
+        };
+      }
+
+      if (type === 'screenshots') {
+        return {
+          artifact: ArtifactType.SCREENSHOT,
+        };
+      }
+
+      if (type === 'storyboards') {
+        return {
+          artifact: ArtifactType.STORYBOARD,
+        };
+      }
+
+      throw new Error(
+        'Invalid type, allowed types are: default, saved, thumbnails, screenshots, storyboards',
+      );
+    };
+
+    const whereQueryResult = whereQuery();
+
+    if (id.type === IdType.CHANNEL) {
+      const result = await this.prismaService.$queryRaw<
+        { year: bigint; count: bigint }[]
+      >`
+        SELECT 
+          YEAR(publishedAt) as year,
+          COUNT(*) as count
+        FROM UploadsVideo
+        WHERE channelId = ${id.value}
+          AND artifact = ${whereQueryResult.artifact}
+        GROUP BY YEAR(publishedAt)
+        ORDER BY year DESC
+      `;
+
+      return result.map((row) => ({
+        year: Number(row.year),
+        count: Number(row.count),
+      }));
+    }
+
+    if (id.type === IdType.PLAYLIST) {
+      const channels = await this.prismaService.channel.findMany({
+        where: {
+          playlistId: id.value,
+        },
+        select: { id: true },
+      });
+
+      const channelIds = channels.map((channel) => channel.id);
+
+      if (channelIds.length === 0) {
+        return [];
+      }
+
+      const result = await this.prismaService.$queryRaw<
+        { year: bigint; count: bigint }[]
+      >`
+        SELECT 
+          YEAR(publishedAt) as year,
+          COUNT(*) as count
+        FROM UploadsVideo
+        WHERE channelId IN (${channelIds.join(',')})
+          AND artifact = ${whereQueryResult.artifact}
+        GROUP BY YEAR(publishedAt)
+        ORDER BY year DESC
+      `;
+
+      return result.map((row) => ({
+        year: Number(row.year),
+        count: Number(row.count),
       }));
     }
 

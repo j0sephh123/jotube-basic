@@ -13,6 +13,8 @@ import { CleanShortUploadsResponse } from './dtos/clean-short-uploads.response';
 import { CleanShortUploadsInput } from './dtos/clean-short-uploads.input';
 import { UploadsListUploadResponse } from './dtos/uploads-list.response';
 import { UploadsListInput } from './dtos/uploads-list.input';
+import { UploadsYearCountResponse } from './dtos/uploads-year-counts.response';
+import { UploadsYearCountsInput } from './dtos/uploads-year-counts.input';
 import { UploadsVideoStoryboardResponse } from './dtos/storyboards.response';
 import { GetVideoByYtIdInput } from './dtos/get-video-by-ytid.input';
 import { VideoByYtIdResponse } from './dtos/get-video-by-ytid.response';
@@ -29,6 +31,18 @@ export class UploadsVideoResolver {
       return this.uploadsVideoService.uploadsList(uploadsListInput);
     } catch {
       throw new Error('Failed to fetch uploads');
+    }
+  }
+
+  @Query(() => [UploadsYearCountResponse])
+  uploadsYearCounts(
+    @Args('uploadsYearCountsInput')
+    uploadsYearCountsInput: UploadsYearCountsInput,
+  ): Promise<UploadsYearCountResponse[]> {
+    try {
+      return this.uploadsVideoService.uploadsYearCounts(uploadsYearCountsInput);
+    } catch {
+      throw new Error('Failed to fetch uploads year counts');
     }
   }
 

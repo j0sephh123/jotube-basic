@@ -523,6 +523,7 @@ type Query {
   uploadsList(uploadsListInput: UploadsListInput!): [UploadsListUploadResponse!]!
   uploadsWithStoryboards(input: StoryboardQueryInput!): [UploadWithStoryboardResponse!]!
   uploadsWithThumbnails(input: UploadsWithThumbnailsInput!): [UploadsWithThumbnailsResponse!]!
+  uploadsYearCounts(uploadsYearCountsInput: UploadsYearCountsInput!): [UploadsYearCountResponse!]!
 }
 
 input SaveUploadInput {
@@ -675,6 +676,7 @@ input UploadsListInput {
   sortOrder: SortOrder!
   take: Int!
   type: String!
+  year: Int
 }
 
 type UploadsListUploadResponse {
@@ -729,6 +731,16 @@ type UploadsWithThumbnailsResponse {
   videoId: Float!
   ytChannelId: String!
   ytVideoId: String!
+}
+
+type UploadsYearCountResponse {
+  count: Int!
+  year: Int!
+}
+
+input UploadsYearCountsInput {
+  id: IdInput!
+  type: String!
 }
 
 type VideoByYtIdResponse {

@@ -5,6 +5,7 @@ import {
   IsInt,
   ValidateNested,
   IsObject,
+  IsOptional,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -58,4 +59,9 @@ export class UploadsListInput {
   @Field(() => Int)
   @IsInt()
   take: number;
+
+  @Field(() => Int, { nullable: true })
+  @IsOptional()
+  @IsInt()
+  year?: number;
 }
