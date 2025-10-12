@@ -5,7 +5,9 @@ import ChannelTableRow from "@widgets/ChannelTableRow";
 import { useState, useMemo, useEffect } from "react";
 import { ChevronUp, ChevronDown } from "lucide-react";
 import type { DashboardChannelResponse } from "@shared/api";
+// eslint-disable-next-line import/no-internal-modules
 import { useChannelsYearMonthCounts } from "@features/Dashboard/hooks/useChannelsYearMonthCounts";
+// eslint-disable-next-line import/no-internal-modules
 import { YearMonthFilter } from "@features/Dashboard/components/YearMonthFilter";
 
 type SortField =
@@ -215,7 +217,7 @@ export default function ChannelsDashboard() {
     <ChannelsDashboardContainer>
       {(channels, refetch) => (
         <>
-          {viewType === "no-uploads" && (
+          {(viewType === "no-uploads" || viewType === "no-screenshots") && (
             <YearMonthFilter
               yearMonthCounts={yearMonthCounts}
               selectedYearMonth={selectedYearMonth}
