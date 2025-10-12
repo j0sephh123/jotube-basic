@@ -50,6 +50,9 @@ export class PlaylistChannelWithCountsResponse {
 
   @Field()
   createdAt: Date;
+
+  @Field()
+  fetchedUntilEnd: boolean;
 }
 
 @ObjectType()

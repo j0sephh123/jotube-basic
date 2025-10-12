@@ -447,6 +447,7 @@ type PlaylistChannelResponse {
 type PlaylistChannelWithCountsResponse {
   createdAt: DateTime!
   featuredScreenshots: [FeaturedScreenshotResponse!]!
+  fetchedUntilEnd: Boolean!
   id: Int!
   lastSyncedAt: String
   saved: Int!

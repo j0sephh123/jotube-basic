@@ -38,6 +38,7 @@ type ChannelTableRowProps = {
   storyboard: number;
   createdAt: string;
   videoCount: number;
+  fetchedUntilEnd?: boolean;
   playlist?: {
     id: number;
     name: string;
@@ -66,6 +67,7 @@ export default function ChannelTableRow({
   storyboard,
   createdAt: _createdAt,
   videoCount: _videoCount,
+  fetchedUntilEnd = true,
   playlist,
   featuredScreenshots,
   onChannelDelete,
@@ -119,7 +121,10 @@ export default function ChannelTableRow({
       return null;
     }
     const fetchUploadsTypes = ["no-uploads"];
-    return fetchUploadsTypes.includes(viewType || "") ? (
+    const shouldShowFetchButton =
+      fetchUploadsTypes.includes(viewType || "") || !fetchedUntilEnd;
+
+    return shouldShowFetchButton ? (
       <FetchUploadsButton
         channelId={id}
         videoCount={_videoCount}

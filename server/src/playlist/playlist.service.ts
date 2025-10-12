@@ -129,7 +129,7 @@ export class PlaylistService {
         title: channel.title,
         ytId: channel.ytId,
         src: channel.src,
-        videoCount: channel.counts.videoCount,
+        videoCount: channel.videoCount,
         saved: channel.counts.savedCount,
         screenshotCount: channel.counts.screenshotCount,
         thumbnailCount: channel.counts.thumbnailCount,
@@ -137,6 +137,7 @@ export class PlaylistService {
         featuredScreenshots: channel.featuredScreenshots,
         lastSyncedAt: channel.lastSyncedAt?.toISOString() || null,
         createdAt: channel.createdAt,
+        fetchedUntilEnd: channel.fetchedUntilEnd,
       })),
     };
   }

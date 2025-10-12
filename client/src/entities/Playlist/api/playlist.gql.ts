@@ -53,6 +53,7 @@ export const GET_PLAYLIST_DETAILS = gql`
         storyboardCount
         lastSyncedAt
         createdAt
+        fetchedUntilEnd
         featuredScreenshots {
           id
           second
@@ -104,7 +105,9 @@ export const UPDATE_CHANNEL_PLAYLIST = gql`
 `;
 
 export const GET_PLAYLIST_UPLOADS_LIST = gql`
-  query GetPlaylistUploadsList($playlistUploadsListInput: PlaylistUploadsListInput!) {
+  query GetPlaylistUploadsList(
+    $playlistUploadsListInput: PlaylistUploadsListInput!
+  ) {
     playlistUploadsList(playlistUploadsListInput: $playlistUploadsListInput) {
       id
       ytId
